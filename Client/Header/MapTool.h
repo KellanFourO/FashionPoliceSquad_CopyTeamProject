@@ -29,12 +29,10 @@ private:
 	HRESULT				Ready_Layer_Environment(LAYERTAG eLayerTag);
 	void				BUILD_NOP_MODE();
 
-	HRESULT				Build_Cube();
-	HRESULT				Build_OBJ();
+	HRESULT				Build_Map();
+	HRESULT				Delete_Map();
 
 	HRESULT				Load_Cube(const TCHAR* pFilePath);
-	HRESULT				Delete_Cube();
-	HRESULT				Delete_ALL_Cube();
 	bool				CheckDuplicateCube(const _vec3& pPos, const _vec3& pSize);
 
 public:
@@ -48,12 +46,10 @@ public:
 	void				CubeSize_Update();
 
 	vector<IDirect3DCubeTexture9*>&		Get_VecTempCube()  { return m_VecTempCube; }
-	vector<IDirect3DBaseTexture9*>&		Get_VecTempCross() { return m_VecTempCross; }
 	vector<IDirect3DBaseTexture9*>&		Get_VecTempPlane() { return m_VecTempPlane; }
 
 private:
 	vector<IDirect3DCubeTexture9*> m_VecTempCube;
-	vector<IDirect3DBaseTexture9*> m_VecTempCross;
 	vector<IDirect3DBaseTexture9*> m_VecTempPlane;
 
 	CLayer*				m_pLayer				= nullptr;
@@ -74,11 +70,11 @@ private:
 														  //(맵을 제일 큰 단위로 놓을 것.)
 	//텍스쳐 인덱스
 	const int			cubeTextureStartIndex	= 1000;
-	const int			crossTextureStartIndex	= 2000;
 	const int			planeTextureStartIndex	= 3000;
 
 	bool				m_BUILD_NOP_MODE		= false;
-	
+	CHAR*				pTag					= nullptr; //Load 때 쓰는 녀석.
+
 	vector<OBJData*>	m_VecOBJData;
 	vector<CUBE*>		m_VecCubeData;
 

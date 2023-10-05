@@ -120,6 +120,7 @@ namespace Engine
 		_uint					uITextureNum;	//텍스쳐 넘버
 		_vec3					vSize;			//x, y, z 길이
 		_vec3					vPos;			//x, y, z 중점
+		_uint					iRotateCount;	//90도 단위로 회전 몇 번 시킬건데(Y축)
 		_uint					iIndex;			//몇 번째로 만들어지는 녀석이냐
 		OBJ_TYPE				m_OBJ_TYPE;		//OBJ 타입 enum class
 

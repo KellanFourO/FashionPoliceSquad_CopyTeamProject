@@ -58,9 +58,6 @@ public:
 	bool		Get_Load_Check() { return m_bLoad_Check; }
 	void	 	Set_Load_Check() { m_bLoad_Check = !m_bLoad_Check; }
 
-	bool		Get_ALLDelete_Check() { return m_bALLDelete_Check; }
-	void		Set_ALLDelete_Check() { m_bALLDelete_Check = !m_bALLDelete_Check; }
-
 	bool		Get_DeleteMode_Check() { return m_bDelete_Mode_Check; }
 	bool		Get_NotNormal_Check() { return m_bNotNormal_Check; }
 	bool		Get_BuildModeCheck() { return m_bBuild_Mode_Check; }
@@ -89,7 +86,6 @@ private:
 	float								m_fCubeHeightLevel		 = 0.f;
 	bool								m_bLoad_Check			 = false;
 
-	bool								m_bALLDelete_Check		 = false;
 	bool								m_bDelete_Mode_Check	 = false;
 	bool								m_bNotNormal_Check		 = false;
 	bool								m_bRotate_Check			 = false;
@@ -115,6 +111,11 @@ public:
 	vector<IDirect3DCubeTexture9*>&		Get_CubeTextureObjVector() { return m_pCubeTextureObj; }
 	vector<IDirect3DBaseTexture9*>&		Get_PlaneTextureObjVector() { return m_pPlaneTexture0; }
 
+	_uint				Get_OBJ_RotateCountCW() { return m_Rotate_Count_CW; }
+	_uint				Get_OBJ_RotateCountCCW() { return m_Rotate_Count_CCW; }
+	void				Set_OBJ_RotateCountCW_Zero() { m_Rotate_Count_CW = 0; }
+	void				Set_OBJ_RotateCountCCW_Zero() { m_Rotate_Count_CCW = 0; }
+
 private:
 
 	vector<IDirect3DCubeTexture9*>		m_pCubeTextureObj; //환경 OBJ 중 큐브
@@ -137,7 +138,10 @@ private:
 	OBJ_TYPE							m_eOBJType				= OBJ_TYPE::OBJ_TYPE_END;
 
 	vector<OBJData*>					vectorOBJPlaneTemp;
-	//vector<OBJData*>					vectorOBJCubeTemp;
+	vector<OBJData*>					vectorOBJCubeTemp;
+
+	_uint								m_Rotate_Count_CW;  //시계방향
+	_uint								m_Rotate_Count_CCW; //반시계방향
 
 	///////////////////// 승용 UI툴 /////////////////////////////////
 public:

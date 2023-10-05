@@ -78,8 +78,6 @@ void CManagement::LateUpdate_Scene()
 
 void CManagement::Render_Scene(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	Engine::Render_GameObject(pGraphicDev);
-
 	NULL_CHECK(m_pScene);
 	m_pScene->Render_Scene();
 
@@ -87,8 +85,6 @@ void CManagement::Render_Scene(LPDIRECT3DDEVICE9 pGraphicDev)
 		Octree()->Render_Octree(pGraphicDev);
 	
 	Renderer()->Render_GameObject(pGraphicDev);
-
-
 }
 
 void CManagement::Free()
