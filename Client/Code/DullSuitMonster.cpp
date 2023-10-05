@@ -1,0 +1,183 @@
+#include "stdafx.h"
+#include "DullSuitMonster.h"
+
+#include "DullSuitMonster_IDLE.h"
+#include "DullSuitMonster_Chase.h"
+#include "DullSuitMonster_Dead.h"
+#include "DullSuitMonster_Attack.h"
+#include "Export_System.h"
+#include "Export_Utility.h"
+
+#include "MonsterState.h"
+
+// TODO - 승용 추가 : 몬스터 HP UI.
+#include "UIMgr.h"
+
+CDullSuitMonster::CDullSuitMonster(LPDIRECT3DDEVICE9 pGraphicDev)
+    :CMonster(pGraphicDev)
+{
+}
+
+CDullSuitMonster::CDullSuitMonster(CMonster& rhs)
+    : CMonster(rhs)
+{
+}
+
+CDullSuitMonster::~CDullSuitMonster()
+{
+}
+
+HRESULT CDullSuitMonster::Ready_GameObject()
+{
+    __super::Ready_GameObject();
+
+    INFO.iMobType = MonsterType::BRIFSMALL;
+    FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+
+    ReadyState();
+
+    INFO.MonsterState = m_pStateArray[IDLE];
+    INFO.MonsterState->Initialize(this);
+    INFO.fHP = 80.f;
+    INFO.vPos = { 40.f,4.f,20.f };
+
+    m_fDectedRange = 150.f;
+    m_fAttackRange = 70.f;
+    
+    m_pTransformCom->Set_Scale(_vec3{3.f,4.5f,3.f });
+    m_pTransformCom->Set_Pos(INFO.vPos);
+
+    m_pBufferCom->SetCount(4,4);
+    m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/Monster/dull_suit4_hit.png", 1);
+
+    m_pCollider->Set_Host(this);
+    m_pCollider->Set_Transform(m_pTransformCom);
+    m_pRigidBody->Set_Host(this);
+    m_pRigidBody->Set_Transform(m_pTransformCom);
+    m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
+
+    m_pMonsterBullet = nullptr;
+
+
+    return S_OK;
+}
+
+_int CDullSuitMonster::Update_GameObject(const _float& fTimeDelta)
+{
+    __super::Update_GameObject(fTimeDelta);
+
+    return OBJ_NOEVENT;
+}
+
+void CDullSuitMonster::LateUpdate_GameObject()
+{
+    __super::LateUpdate_GameObject();
+   
+
+     if (INFO.bDead) 
+     {
+         INFO.MonsterState = m_pStateArray[DEAD];
+         INFO.MonsterState->Initialize(this);
+         INFO.bDead = false;
+     }   // 사망판정
+
+    _vec3	vPos;
+    m_pTransformCom->Get_Info(INFO_POS, &vPos);
+    __super::Compute_ViewZ(&vPos);
+}
+
+void CDullSuitMonster::Render_GameObject()
+{
+ 
+    m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
+    m_pCollider->Render_Collider();
+    
+    INFO.MonsterState->Render(this);
+}
+
+void CDullSuitMonster::ReadyState()
+{
+    m_pStateArray[IDLE] = new CDullSuitMonster_Idle;
+    m_pStateArray[CHASE] = new CDullSuitMonster_Chase;
+    m_pStateArray[DEAD] = new CDullSuitMonster_Dead;
+    m_pStateArray[ATTACK] = new CDullSuitMonster_Attack;
+}
+
+void CDullSuitMonster::OnCollisionEnter(CCollider* _pOther)
+{
+    __super::OnCollisionEnter(_pOther);
+
+    // 충돌 밀어내기 후 이벤트 여기다가 구현 ㄱㄱ ! .
+
+    if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYER)
+    {
+        cout << "워리어 공격" << endl;
+    }
+
+
+}
+
+void CDullSuitMonster::OnCollisionStay(CCollider* _pOther)
+{
+    __super::OnCollisionStay(_pOther);
+}
+
+void CDullSuitMonster::OnCollisionExit(CCollider* _pOther)
+{
+}
+
+HRESULT CDullSuitMonster::Add_Component()
+{
+    CComponent* pComponent = nullptr;
+
+    pComponent = m_pBufferCom = dynamic_cast<CSYTex*>(Engine::Clone_Proto(L"Proto_SYTex"));
+    NULL_CHECK_RETURN(pComponent, E_FAIL);
+    m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::BUFFER, pComponent);
+
+    pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_Transform"));
+    NULL_CHECK_RETURN(pComponent, E_FAIL);
+    m_mapComponent[ID_DYNAMIC].emplace(COMPONENTTAG::TRANSFORM, pComponent);
+
+    pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_suit_2"));
+    NULL_CHECK_RETURN(pComponent, E_FAIL);
+    m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
+
+    pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(Engine::Clone_Proto(L"Proto_Calculator"));
+    NULL_CHECK_RETURN(pComponent, E_FAIL);
+    m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::CALCULATOR, pComponent);
+
+    pComponent = m_pCollider = dynamic_cast<CCollider*>(Engine::ProtoMgr()->Clone_Proto(L"Proto_Collider"));
+    NULL_CHECK_RETURN(pComponent, E_FAIL);
+    m_mapComponent[ID_DYNAMIC].emplace(COMPONENTTAG::COLLIDER, pComponent);
+
+    pComponent = m_pRigidBody = dynamic_cast<CRigidBody*>(Engine::ProtoMgr()->Clone_Proto(L"Proto_RigidBody"));
+    NULL_CHECK_RETURN(pComponent, E_FAIL);
+    m_mapComponent[ID_DYNAMIC].emplace(COMPONENTTAG::RIGIDBODY, pComponent);
+
+	for (_uint i = 0; i < ID_END; ++i)
+		for (auto& iter : m_mapComponent[i])
+			iter.second->Init_Property(this);
+    return S_OK;
+}
+
+CDullSuitMonster* CDullSuitMonster::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+    CDullSuitMonster* pInstance = new CDullSuitMonster(pGraphicDev);
+
+    if (FAILED(pInstance->Ready_GameObject()))
+    {
+        Safe_Release(pInstance);
+        MSG_BOX("DullSuitMonster Create Failed");
+
+        return nullptr;
+    }
+    return pInstance;
+}
+
+void CDullSuitMonster::Free()
+{
+    Safe_Release(m_pUI_HPFrame);
+    Safe_Release(m_pUI_HPValue);
+
+    __super::Free();
+}

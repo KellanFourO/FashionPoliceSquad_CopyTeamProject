@@ -1,0 +1,15 @@
+Terrain 등 기타 0 부터
+
+
+ImguiManager
+
+int cubeTextureStartIndex = 1000;
+int crossTextureStartIndex = 1200;
+int planeTextureStartIndex = 1400;
+
+
+
+MapTool
+
+_uint	m_iOBJIndex  = 5000;   //오브젝트용
+_uint	m_iCubeIndex = 10000;  //맵 큐브용 (맵을 제일 큰 단위로 놓을 것.)
