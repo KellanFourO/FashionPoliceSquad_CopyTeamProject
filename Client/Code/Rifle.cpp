@@ -212,7 +212,7 @@ void CRifle::Gun_Fire()
 		if (Engine::Get_DIMouseState(DIM_LB) && m_fBulletTime >= 0.15f && m_bIsBullet)
 		{
 			if (BulletList.empty()) {
-				for (int i = 0; i < 5; ++i) {
+				for (int i = 0; i < 50; ++i) {
 					CGameObject* Bullet = CRifle_Bullet::Create(m_pGraphicDev,
 						m_vFirePos, 0); // »ö±ò¹Þ±â
 					CManagement* pManagement;

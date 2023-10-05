@@ -191,9 +191,6 @@ void CollisionMgr::CheckCollisionStatic(OBJECTTAG _eObjectLeft)
 		if (nullptr == iterL->Get_Collider())
 			continue;
 
-		if (iterL->Get_ObjectTag() == OBJECTTAG::DEAD_OBJ) {
-			continue;	//재연 추가, DEAD_OBJ이면 검사안함
-		}
 
 		_vec3 vHostPos = dynamic_cast<CTransform*>(iterL->Get_Component(ID_DYNAMIC, COMPONENTTAG::TRANSFORM))->m_vInfo[INFO_POS];
 		COctreeNode* pParentNode = Octree()->GetParentNodeByPos(vHostPos, Engine::Octree()->GetOctreeRoot());
@@ -253,16 +250,19 @@ void CollisionMgr::CheckCollisionStatic(OBJECTTAG _eObjectLeft)
 						iter->second = false;
 					}
 				}
+
+				//return;
 			}
-			else
-			{		// 현재 충돌 x면
-				if (iter->second)
-				{	//이전에는 충돌하고 있었다.
-					pLeftCol->OnCollisionExit(pRightCol);
-					pRightCol->OnCollisionExit(pLeftCol);
-					iter->second = false;
-				}
-			}
+// 			else
+// 			{		// 현재 충돌 x면
+// 				if (iter->second)
+// 				{	//이전에는 충돌하고 있었다.
+// 					pLeftCol->OnCollisionExit(pRightCol);
+// 					pRightCol->OnCollisionExit(pLeftCol);
+// 					iter->second = false;
+// 					return;
+// 				}
+// 			}
 		}
 	}
 }

@@ -32,7 +32,7 @@
 
 // TODO - 공동? 준호형? 승용?
 #include "Effect.h"
-
+#include "Engine_Define.h"
 
 // TODO - 승용
 #include "MyUI.h"

@@ -23,7 +23,8 @@ CPaintBall::~CPaintBall()
 
 HRESULT CPaintBall::Ready_GameObject(_vec3 _StartPos, _int iColorIndex)
 {
-	
+	Set_ObjectTag(OBJECTTAG::PLAYERBULLET);
+
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	
 	m_fBulletSpeed = 10.f;
@@ -32,7 +33,6 @@ HRESULT CPaintBall::Ready_GameObject(_vec3 _StartPos, _int iColorIndex)
 
 	m_pCollider->Set_Host(this);
 	m_pCollider->Set_Transform(m_pTransformCom);
-	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
 
 	return S_OK;
 }
@@ -43,7 +43,7 @@ Engine::_int CPaintBall::Update_GameObject(const _float& fTimeDelta)
 		Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 		__super::Update_GameObject(fTimeDelta);
 
-		Set_ObjectTag(OBJECTTAG::PLAYERBULLET);
+		m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
 
 
 		CTransform* pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
@@ -84,7 +84,7 @@ void CPaintBall::LateUpdate_GameObject()
 {
 	_vec3	vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-
+	
 	__super::Compute_ViewZ(&vPos);
 }
 
