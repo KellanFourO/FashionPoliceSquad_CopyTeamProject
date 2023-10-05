@@ -55,7 +55,6 @@ HRESULT CImGuiManager::SetUp_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 
 	LoadTexturesFromDirectory(L"../Bin/Resource/Texture/Cube", m_MainCubeTexture);
 	LoadTexturesFromDirectory(L"../Bin/Resource/Texture/Obj/CubeType", m_pCubeTextureObj);
-	LoadTexturesFromDirectory(L"../Bin/Resource/Texture/Obj/CrossType", m_pCrossTexture0);
 	LoadTexturesFromDirectory(L"../Bin/Resource/Texture/Obj/PlaneType", m_pPlaneTexture0);
 
     return S_OK;
@@ -267,7 +266,6 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 						ImGui::Checkbox(u8"Cube", &m_bCubeType);
 						if (true == m_bCubeType)
 						{
-							m_bCrossType = false;
 							m_bPlaneType = false;
 							Set_OBJType(OBJ_TYPE::CUBE_OBJ);
 
@@ -295,40 +293,6 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 								ImGui::NewLine();
 							}
 						}
-// 						ImGui::Separator(); // 가로 줄 추가
-// 						ImGui::Text(u8"OBJ - Cross Texture");
-// 
-// 						ImGui::Checkbox(u8"Cross", &m_bCrossType);
-// 						if (true == m_bCrossType)
-// 						{
-// 							m_bCubeType = false;
-// 							m_bPlaneType = false;
-// 							Set_OBJType(OBJ_TYPE::CROSS_OBJ);
-// 
-// 							for (int i = 0; i < 1; i++) //가로줄(행) 갯수
-// 							{
-// 								for (int j = 0; j < 10; j++) //세로줄(열) 갯수
-// 								{
-// 									_int iIndex = (10 * i + j) + crossTextureStartIndex;
-// 
-// 									if (iIndex >= crossTextureStartIndex && iIndex < crossTextureStartIndex + m_pCrossTexture0.size())
-// 									{
-// 										ImGui::PushID(iIndex);
-// 
-// 										if (ImGui::ImageButton("", m_pCrossTexture0[iIndex - crossTextureStartIndex], size1))
-// 										{
-// 											selected_texture1 = m_pCrossTexture0[iIndex - crossTextureStartIndex];
-// 											selected_texture_index1 = iIndex;
-// 											m_iOBJTextureNum = iIndex;
-// 										}
-// 
-// 										ImGui::PopID();
-// 										ImGui::SameLine();
-// 									}
-// 								}
-// 								ImGui::NewLine();
-// 							}
-// 						}
 
 						ImGui::Separator(); // 가로 줄 추가
 						ImGui::Text(u8"OBJ - Plane Texture");
@@ -337,7 +301,6 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 						if (true == m_bPlaneType)
 						{
 							m_bCubeType = false;
-							m_bCrossType = false;
 							Set_OBJType(OBJ_TYPE::PLANE_OBJ);
 
 							for (int i = 0; i < 1; i++) //가로줄(행) 갯수

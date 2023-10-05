@@ -270,12 +270,6 @@ HRESULT CMapTool::Build_OBJ()
 				m_VecTempCube = CImGuiManager::GetInstance()->Get_CubeTextureObjVector();
 				OBJTemp->pCubeTexture = m_VecTempCube[m_iTextureNum - cubeTextureStartIndex];
 			}
-			else if (eTypeTemp == OBJ_TYPE::CROSS_OBJ)
-			{
-				m_VecTempCube.clear();
-				m_VecTempCross = CImGuiManager::GetInstance()->Get_CrossTextureObjVector();
-				OBJTemp->pBaseTexture = m_VecTempCross[m_iTextureNum - crossTextureStartIndex];
-			}
 			else if (eTypeTemp == OBJ_TYPE::PLANE_OBJ)
 			{
 				m_VecTempCube.clear();

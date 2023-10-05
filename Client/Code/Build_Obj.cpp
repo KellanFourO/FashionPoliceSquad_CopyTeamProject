@@ -34,12 +34,6 @@ HRESULT CBuild_Obj::Add_Component()
 		m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::BUFFER, pComponent);
 		break;
 
-	case OBJ_TYPE::CROSS_OBJ:
-		pComponent = m_pBufferCrossCom = dynamic_cast<CCrossTex*>(Engine::Clone_Proto(L"Proto_CrossTex"));
-		NULL_CHECK_RETURN(pComponent, E_FAIL);
-		m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::BUFFER, pComponent);
-		break;
-
 	case OBJ_TYPE::PLANE_OBJ:
 		pComponent = m_pBufferRcCom = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"Proto_PlaneTex"));
 		NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -109,12 +103,6 @@ void CBuild_Obj::Render_GameObject()
 		m_pBufferCubeCom->Render_Buffer();  
 		m_pTextureCom->Render_OBJTextrue(m_VecTempCube[m_TextureNumber - cubeTextureStartIndex]);
 	}
-	else if (m_eOBJ_Type == OBJ_TYPE::CROSS_OBJ)
-	{
-		m_VecTempCross = dynamic_cast<CMapTool*>(Engine::Management()->Get_One_Scene(SCENETAG::MAPTOOL))->Get_VecTempCross();
-		m_pBufferCrossCom->Render_Buffer();
-		m_pTextureCom->Render_OBJTextrue(m_VecTempCross[m_TextureNumber - crossTextureStartIndex]);
-	}
 	else if (m_eOBJ_Type == OBJ_TYPE::PLANE_OBJ)
 	{
 		m_VecTempPlane = dynamic_cast<CMapTool*>(Engine::Management()->Get_One_Scene(SCENETAG::MAPTOOL))->Get_VecTempPlane();
@@ -137,7 +125,7 @@ CBuild_Obj* CBuild_Obj::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 pMouse_Pos, 
 	{
 		Safe_Release(pInstance);
 
-		MSG_BOX("Build_Cube Create Failed");
+		MSG_BOX("Build_OBJ Create Failed");
 		return nullptr;
 	}
 

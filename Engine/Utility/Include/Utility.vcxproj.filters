@@ -94,9 +94,6 @@
     <Filter Include="04.Component\10. CameraCom">
       <UniqueIdentifier>{703926b0-a852-4dfa-93a4-d11a2e95521e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04.Component\00.VIBuffer\11. CrossTex">
-      <UniqueIdentifier>{8db903a1-14a3-4fde-a087-524a934d2878}</UniqueIdentifier>
-    </Filter>
     <Filter Include="03.GameObject\Camera\00.Quat_Camera">
       <UniqueIdentifier>{05f7c260-f590-4564-af53-4b7c2fbec1a3}</UniqueIdentifier>
     </Filter>
@@ -108,7 +105,7 @@
     </Filter>
     <Filter Include="12.ParticleSystem">
       <UniqueIdentifier>{f901772b-ee72-4250-8419-2e06e78febce}</UniqueIdentifier>
-	</Filter>
+    </Filter>
     <Filter Include="04.Component\00.VIBuffer\20. SYTex">
       <UniqueIdentifier>{4368c2a8-b0d5-478c-8ac2-6cd38a551cf5}</UniqueIdentifier>
     </Filter>
@@ -202,9 +199,6 @@
     <ClCompile Include="..\Code\CameraCom.cpp">
       <Filter>04.Component\10. CameraCom</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CrossTex.cpp">
-      <Filter>04.Component\00.VIBuffer\11. CrossTex</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Quat_Camera.cpp">
       <Filter>03.GameObject\Camera\00.Quat_Camera</Filter>
     </ClCompile>
@@ -216,7 +210,7 @@
     </ClCompile>
     <ClCompile Include="..\Code\PSystem.cpp">
       <Filter>12.ParticleSystem</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="..\Code\SYTex.cpp">
       <Filter>04.Component\00.VIBuffer\20. SYTex</Filter>
     </ClCompile>
@@ -313,9 +307,6 @@
     <ClInclude Include="..\..\Header\CameraCom.h">
       <Filter>04.Component\10. CameraCom</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Header\CrossTex.h">
-      <Filter>04.Component\00.VIBuffer\11. CrossTex</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Header\Quat_Camera.h">
       <Filter>03.GameObject\Camera\00.Quat_Camera</Filter>
     </ClInclude>
@@ -328,7 +319,7 @@
     </ClInclude>
     <ClInclude Include="..\..\Header\PSystem.h">
       <Filter>12.ParticleSystem</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="..\..\Header\SYTex.h">
       <Filter>04.Component\00.VIBuffer\20. SYTex</Filter>
     </ClInclude>

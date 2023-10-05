@@ -113,13 +113,11 @@ public:
 	_uint				Get_OBJTexNum() { return m_iOBJTextureNum; }
 
 	vector<IDirect3DCubeTexture9*>&		Get_CubeTextureObjVector() { return m_pCubeTextureObj; }
-	vector<IDirect3DBaseTexture9*>&		Get_CrossTextureObjVector() { return m_pCrossTexture0; }
 	vector<IDirect3DBaseTexture9*>&		Get_PlaneTextureObjVector() { return m_pPlaneTexture0; }
 
 private:
 
 	vector<IDirect3DCubeTexture9*>		m_pCubeTextureObj; //환경 OBJ 중 큐브
-	vector<IDirect3DBaseTexture9*>		m_pCrossTexture0;  //환경 OBJ 중 Cross
 	vector<IDirect3DBaseTexture9*>		m_pPlaneTexture0;  //환경 OBJ 중 Plane
 
 	ImTextureID							selected_texture1       = nullptr;
@@ -127,7 +125,6 @@ private:
 	_uint								m_iOBJTextureNum		= 1;
 
 	const int							cubeTextureStartIndex   = 1000;
-	const int							crossTextureStartIndex  = 2000;
 	const int							planeTextureStartIndex  = 3000;
 
 	bool								m_bMainAngleRot			= false;
@@ -136,13 +133,11 @@ private:
 	bool								m_bOBJ_Mode_Check		= false;
 
 	bool								m_bCubeType				= false;
-	bool								m_bCrossType			= false;
 	bool								m_bPlaneType			= false;
 	OBJ_TYPE							m_eOBJType				= OBJ_TYPE::OBJ_TYPE_END;
 
 	vector<OBJData*>					vectorOBJPlaneTemp;
 	//vector<OBJData*>					vectorOBJCubeTemp;
-	//vector<OBJData*>					vectorOBJCrossTemp;
 
 	///////////////////// 승용 UI툴 /////////////////////////////////
 public:
