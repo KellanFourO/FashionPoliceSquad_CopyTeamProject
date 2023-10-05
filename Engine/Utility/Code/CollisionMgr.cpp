@@ -15,7 +15,7 @@ CollisionMgr::CollisionMgr()
 	CheckGroup(OBJECTTAG::PLAYER, OBJECTTAG::BOSSBULLET);
 	CheckGroup(OBJECTTAG::MONSTER, OBJECTTAG::PLAYERBULLET);
 	//CheckGroup(OBJECTTAG::MONSTER, OBJECTTAG::OBJECT);
-	CheckGroup(OBJECTTAG::BOSS, OBJECTTAG::OBJECT);
+	//CheckGroup(OBJECTTAG::BOSS, OBJECTTAG::OBJECT);
 	CheckGroup(OBJECTTAG::BOSS, OBJECTTAG::PLAYERBULLET);
 }
 
@@ -29,7 +29,7 @@ void CollisionMgr::LateUpdate_Collision()
 	CheckCollisionStatic(OBJECTTAG::PLAYER);
 	CheckCollisionStatic(OBJECTTAG::MONSTER);
 	CheckCollisionStatic(OBJECTTAG::BOSS);
-	//CheckCollisionStatic(OBJECTTAG::MONSTERBULLET);
+	CheckCollisionStatic(OBJECTTAG::MONSTERBULLET);
 	CheckCollisionStatic(OBJECTTAG::PLAYERBULLET);
 	//CheckCollisionStatic(OBJECTTAG::ITEM);
 	CheckCollisionStatic(OBJECTTAG::RAY);

@@ -612,9 +612,6 @@
     <ClInclude Include="..\Header\KickBoardState.h">
       <Filter>02. GameObject\02. Monster\02.KickBoard\99.KickBoard_State</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\BrifMob2State.h">
-      <Filter>02. GameObject\02. Monster\01. BrifMonster2\02. BrifMob2_State</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\KickBoard_IDLE.h">
       <Filter>02. GameObject\02. Monster\02.KickBoard\99.KickBoard_State\01. KickBoard_IDLE</Filter>
     </ClInclude>
@@ -746,6 +743,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\DullSuitMonster_Chase.h">
       <Filter>02. GameObject\02. Monster\01. DullSuitMonster\99. DullSuitMonster_State\04.DullSuitMonster_Chase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerBullet.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -992,12 +992,6 @@
     <ClCompile Include="..\Code\MyCardTexture.cpp">
       <Filter>02. GameObject\20.UI\01. MyDialog\00. Portrait</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\BrifMonsterBigState_IDLE.cpp">
-      <Filter>02. GameObject\02. Monster\00.BrifMonsterBig\99.BrifMobBig_State\01. BrifMonsterBig_IDLE</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\BrifMonsterBigState_DEAD.cpp">
-      <Filter>02. GameObject\02. Monster\00.BrifMonsterBig\99.BrifMobBig_State\10. BrifMonsterBig_DEAD</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\KickBoard_DEAD.cpp">
       <Filter>02. GameObject\02. Monster\02.KickBoard\99.KickBoard_State\10. KickBoard_DEAD</Filter>
     </ClCompile>
@@ -1105,6 +1099,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\DullSuitMonster_Chase.cpp">
       <Filter>02. GameObject\02. Monster\01. DullSuitMonster\99. DullSuitMonster_State\04.DullSuitMonster_Chase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerBullet.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

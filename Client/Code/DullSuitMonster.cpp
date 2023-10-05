@@ -111,6 +111,7 @@ void CDullSuitMonster::OnCollisionEnter(CCollider* _pOther)
 
     if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYER)
     {
+
         cout << "워리어 공격" << endl;
     }
 

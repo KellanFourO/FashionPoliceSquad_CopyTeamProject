@@ -105,9 +105,7 @@ void CBrifCase::Render_GameObject()
 
 void CBrifCase::OnCollisionEnter(CCollider* _pOther)
 {
-	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::NOTHING) {
-		int a = 1 + 1;
-	}
+
 	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYER) {
 		dynamic_cast<CPlayer*>(_pOther->Get_Host())->Attacked(10);
 		m_pTransformCom->Set_Pos(_vec3(0.f, 0.f, 0.f));
@@ -116,6 +114,7 @@ void CBrifCase::OnCollisionEnter(CCollider* _pOther)
 	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE) {
 		m_pTransformCom->Set_Pos(_vec3(0.f, 0.f, 0.f));
 		m_bShooting = false;
+
 	}
 }
 void CBrifCase::OnCollisionStay(CCollider* _pOther)

@@ -24,7 +24,6 @@ CFlyingCamera::~CFlyingCamera()
 
 HRESULT CFlyingCamera::Ready_GameObject(void)
 {
-	m_eObjectTag = OBJECTTAG::FLYCAMERA;
 	m_eCameraMode = CAMERA_MODE::THIRD_PERSON;
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);

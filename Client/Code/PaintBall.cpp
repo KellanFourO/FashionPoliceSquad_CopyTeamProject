@@ -32,6 +32,7 @@ HRESULT CPaintBall::Ready_GameObject(_vec3 _StartPos, _int iColorIndex)
 
 	m_pCollider->Set_Host(this);
 	m_pCollider->Set_Transform(m_pTransformCom);
+	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
 
 	return S_OK;
 }
@@ -44,7 +45,6 @@ Engine::_int CPaintBall::Update_GameObject(const _float& fTimeDelta)
 
 		Set_ObjectTag(OBJECTTAG::PLAYERBULLET);
 
-		m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
 
 		CTransform* pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
 		NULL_CHECK_RETURN(pPlayerTransCom, -1); // 플레이어 가져오기
