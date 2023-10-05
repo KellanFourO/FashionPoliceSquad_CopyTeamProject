@@ -42,7 +42,7 @@ private:
 
 public:
 	CRcTex*			m_pBufferCom		= nullptr; // 텍스처를 그리기위한 버퍼 컴포넌트
-	CTransform*		m_pTransformCom		= nullptr; // 이동 컴포넌트
+	//CTransform*		m_pTransformCom		= nullptr; // 이동 컴포넌트
 	CTexture*		m_pTextureCom		= nullptr; // 텍스쳐 컴포넌트
 
 	_int			m_iBulletColor		= 0;

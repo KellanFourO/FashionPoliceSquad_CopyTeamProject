@@ -85,10 +85,10 @@ void CStage::LateUpdate_Scene()
 
 void CStage::Render_Scene()
 {
-	if (m_bReadyCube)
-	{
-		Octree()->Render_Octree(m_pGraphicDev);
-	}
+	//if (m_bReadyCube)
+	//{
+	//	Octree()->Render_Octree(m_pGraphicDev);
+	//}
 	//Debug
 
 }

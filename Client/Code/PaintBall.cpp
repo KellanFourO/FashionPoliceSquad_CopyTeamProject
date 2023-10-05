@@ -121,9 +121,9 @@ void CPaintBall::OnCollisionEnter(CCollider* _pOther)
 	{
 		m_bShooting = false;
 		Set_ObjectTag(OBJECTTAG::DEAD_OBJ);
-
+	
 	}
-	int a = 1 + 1;
+
 }
 
 void CPaintBall::OnCollisionStay(CCollider* _pOther)
