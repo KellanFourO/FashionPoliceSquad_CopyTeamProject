@@ -10,8 +10,6 @@
 
 #include "MonsterState.h"
 
-// TODO - 승용 추가 : 몬스터 HP UI.
-#include "UIMgr.h"
 
 CDullSuitMonster::CDullSuitMonster(LPDIRECT3DDEVICE9 pGraphicDev)
     :CMonster(pGraphicDev)
@@ -39,13 +37,14 @@ HRESULT CDullSuitMonster::Ready_GameObject()
     INFO.MonsterState = m_pStateArray[IDLE];
     INFO.MonsterState->Initialize(this);
     INFO.fHP = 80.f;
+    INFO.fMaxHP = 80.f;
     INFO.vPos = { 40.f,4.f,20.f };
 
     m_fDectedRange = 150.f;
     m_fAttackRange = 70.f;
 
-    m_pTransformCom->Set_Scale(_vec3{3.f,4.5f,3.f });
     m_pTransformCom->Set_Pos(INFO.vPos);
+    m_pTransformCom->Set_Scale(_vec3{3.f,4.5f,3.f });
 
     m_pBufferCom->SetCount(4,4);
     m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/Monster/dull_suit4_hit.png", 1);
@@ -56,6 +55,7 @@ HRESULT CDullSuitMonster::Ready_GameObject()
     m_pRigidBody->Set_Transform(m_pTransformCom);
     m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
 
+    m_eHitType = BULLETTYPE::SHOTGUN_BULLET;
     m_pMonsterBullet = nullptr;
 
 
@@ -90,7 +90,6 @@ void CDullSuitMonster::Render_GameObject()
 {
 
     m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
-    m_pCollider->Render_Collider();
 
     INFO.MonsterState->Render(this);
 }
@@ -176,8 +175,5 @@ CDullSuitMonster* CDullSuitMonster::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CDullSuitMonster::Free()
 {
-    Safe_Release(m_pUI_HPFrame);
-    Safe_Release(m_pUI_HPValue);
-
     __super::Free();
 }

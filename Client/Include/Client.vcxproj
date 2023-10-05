@@ -188,6 +188,7 @@
     <ClInclude Include="..\Header\BrifCase.h" />
     <ClInclude Include="..\Header\BrifCase_2.h" />
     <ClInclude Include="..\Header\BigDaddyMonster.h" />
+    <ClInclude Include="..\Header\Bullet.h" />
     <ClInclude Include="..\Header\DullSuitMonsterState.h" />
     <ClInclude Include="..\Header\DullSuitMonster_Attack.h" />
     <ClInclude Include="..\Header\DullSuitMonster.h" />
@@ -242,13 +243,17 @@
     <ClInclude Include="..\Header\NewFPSCamera.h" />
     <ClInclude Include="..\Header\ObjectPoolMgr.h" />
     <ClInclude Include="..\Header\PaintBall.h" />
+    <ClInclude Include="..\Header\PaintShotGun.h" />
     <ClInclude Include="..\Header\Player.h" />
+    <ClInclude Include="..\Header\PlayerGun.h" />
+    <ClInclude Include="..\Header\PlayerGunState.h" />
     <ClInclude Include="..\Header\PlayerState.h" />
     <ClInclude Include="..\Header\Player_Heal.h" />
     <ClInclude Include="..\Header\Player_Hit.h" />
-    <ClInclude Include="..\Header\Player_IDLE.h" />
+    <ClInclude Include="..\Header\Player_Idle.h" />
+    <ClInclude Include="..\Header\Player_Jump.h" />
     <ClInclude Include="..\Header\Player_Left.h" />
-    <ClInclude Include="..\Header\Player_Lv_Up.h" />
+    <ClInclude Include="..\Header\Player_LevelUp.h" />
     <ClInclude Include="..\Header\Player_Right.h" />
     <ClInclude Include="..\Header\Portrait.h" />
     <ClInclude Include="..\Header\MuzzlefFlash_Rifle.h" />
@@ -283,6 +288,7 @@
     <ClInclude Include="..\Header\Stage1Boss_MonsterSpawn.h" />
     <ClInclude Include="..\Header\Stage1Boss_ThrowGoldMulti.h" />
     <ClInclude Include="..\Header\Stage1Boss_ThrowGoldSingle.h" />
+    <ClInclude Include="..\Header\TailorAssertRifle.h" />
     <ClInclude Include="..\Header\Terrain.h" />
     <ClInclude Include="..\Header\Title.h" />
     <ClInclude Include="..\Header\UIMgr.h" />
@@ -316,6 +322,7 @@
     <ClCompile Include="..\Code\BrifCase.cpp" />
     <ClCompile Include="..\Code\BrifCase_2.cpp" />
     <ClCompile Include="..\Code\BigDaddyMonster.cpp" />
+    <ClCompile Include="..\Code\Bullet.cpp" />
     <ClCompile Include="..\Code\DullSuitMonster_Attack.cpp" />
     <ClCompile Include="..\Code\DullSuitMonster.cpp" />
     <ClCompile Include="..\Code\DullSuitMonster_Chase.cpp" />
@@ -337,6 +344,8 @@
     <ClCompile Include="..\Code\Lazer.cpp" />
     <ClCompile Include="..\Code\ObjectPoolMgr.cpp" />
     <ClCompile Include="..\Code\MissionObjective.cpp" />
+    <ClCompile Include="..\Code\PaintShotGun.cpp" />
+    <ClCompile Include="..\Code\PlayerGun.cpp" />
     <ClCompile Include="..\Code\Player_Armor.cpp" />
     <ClCompile Include="..\Code\CrossHair.cpp" />
     <ClCompile Include="..\Code\CameraManager.cpp" />
@@ -368,9 +377,10 @@
     <ClCompile Include="..\Code\Player.cpp" />
     <ClCompile Include="..\Code\Player_Heal.cpp" />
     <ClCompile Include="..\Code\Player_Hit.cpp" />
-    <ClCompile Include="..\Code\Player_IDLE.cpp" />
+    <ClCompile Include="..\Code\Player_Idle.cpp" />
+    <ClCompile Include="..\Code\Player_Jump.cpp" />
     <ClCompile Include="..\Code\Player_Left.cpp" />
-    <ClCompile Include="..\Code\Player_Lv_Up.cpp" />
+    <ClCompile Include="..\Code\Player_LevelUp.cpp" />
     <ClCompile Include="..\Code\Player_Right.cpp" />
     <ClCompile Include="..\Code\Portrait.cpp" />
     <ClCompile Include="..\Code\MuzzlefFlash_Rifle.cpp" />
@@ -402,6 +412,7 @@
     <ClCompile Include="..\Code\Stage1Boss_MonsterSpawn.cpp" />
     <ClCompile Include="..\Code\Stage1Boss_ThrowGoldMulti.cpp" />
     <ClCompile Include="..\Code\Stage1Boss_ThrowGoldSingle.cpp" />
+    <ClCompile Include="..\Code\TailorAssertRifle.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="..\Code\Title.cpp" />
     <ClCompile Include="..\Code\UIMgr.cpp" />

@@ -185,30 +185,30 @@ void CMyUI::Sprite_Function(const _float& fTimeDelta)
 		m_pPlayerInfo = pPlayer->Get_INFO();
 	}
 	//m_tPlayerInfo.PlayerState
-	if (m_pPlayerInfo->PlayerState->StateID == PlayerStateID::Player_Left)
-	{
-		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_left.png")->Get_Info()->pTexture, 0);
-	}
-	else if (m_pPlayerInfo->PlayerState->StateID == PlayerStateID::Player_Right)
-	{
-		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_right.png")->Get_Info()->pTexture, 0);
-	}
-	else if (m_pPlayerInfo->PlayerState->StateID == PlayerStateID::Player_Hit)
-	{
-		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_front_hurt.png")->Get_Info()->pTexture, 0);
-	}
-	else if (m_pPlayerInfo->PlayerState->StateID == PlayerStateID::Player_Heal)
-	{
-		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_smile.png")->Get_Info()->pTexture, 0);
-	}
-	else if (m_pPlayerInfo->PlayerState->StateID == PlayerStateID::Player_Heal)
-	{
-		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_smirk_low.png")->Get_Info()->pTexture, 0);
-	}
-	else
-	{
-		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"SPRITE_hud_front.png")->Get_Info()->pTexture, 0);
-	}
+	//if (m_pPlayerInfo->PlayerState->StateID == PlayerStateID::Player_Left)
+	//{
+	//	m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_left.png")->Get_Info()->pTexture, 0);
+	//}
+	//else if (m_pPlayerInfo->PlayerState->StateID == PlayerStateID::Player_Right)
+	//{
+	//	m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_right.png")->Get_Info()->pTexture, 0);
+	//}
+	//else if (m_pPlayerInfo->PlayerState->StateID == PlayerStateID::Player_Hit)
+	//{
+	//	m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_front_hurt.png")->Get_Info()->pTexture, 0);
+	//}
+	//else if (m_pPlayerInfo->PlayerState->StateID == PlayerStateID::Player_Heal)
+	//{
+	//	m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_smile.png")->Get_Info()->pTexture, 0);
+	//}
+	//else if (m_pPlayerInfo->PlayerState->StateID == PlayerStateID::Player_Heal)
+	//{
+	//	m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_smirk_low.png")->Get_Info()->pTexture, 0);
+	//}
+	//else
+	//{
+	//	m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"SPRITE_hud_front.png")->Get_Info()->pTexture, 0);
+	//}
 
 
 

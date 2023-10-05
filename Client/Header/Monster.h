@@ -54,6 +54,8 @@ public:
 	Mob_INFO			Get_Info() { return INFO; }
 	CGameObject*		Get_MonsterBullet() { return m_pMonsterBullet;}
 	_float				Get_Speed() { return m_fSpeed; }
+	_float				Get_Length() { return D3DXVec3Length(&(m_pPlayerTransform->m_vInfo[INFO_POS] - m_pTransformCom->m_vInfo[INFO_POS]));}
+
 
 
 	void				Set_Info(Mob_INFO _INFO);
@@ -102,7 +104,6 @@ protected:
 	_float					m_fAnimateTime = 0;
 	_float					m_fHitTime = 0;
 	_float					m_fAttackTime = 0;
-
 
 
 	vector<CGameObject*>	m_AttackVector;

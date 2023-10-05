@@ -42,6 +42,8 @@
 #include "Portrait.h"
 #include "CrossHair.h"
 #include "MissionObjective.h"
+#include "PaintShotGun.h"
+#include "TailorAssertRifle.h"
 
 
 class CStage : public Engine::CScene

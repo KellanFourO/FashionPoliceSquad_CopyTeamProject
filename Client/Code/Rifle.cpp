@@ -60,67 +60,67 @@ HRESULT CRifle::Ready_GameObject()
 
 Engine::_int CRifle::Update_GameObject(const _float& fTimeDelta)
 {
-	if (m_bGun_Select) { // 선택되어야 업데이트/렌더 돌림
-		Engine::Add_RenderGroup(RENDER_ALPHA, this);
-		dynamic_cast<CPlayer*>(m_pPlayer)->Set_Bullet(m_fBulletCount, m_fMaxBullet);
-
-		CGunState* State = GunState->Update(this, fTimeDelta);
-		if (State != nullptr) {
-			GunState->Release(this);
-			Safe_Delete(GunState);
-			GunState = State;
-			GunState->Initialize(this);
-		} // 상태 패턴
-
-
-
-
-		CTransform* pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
-
-		NULL_CHECK_RETURN(pPlayerTransCom, -1);
-
-		_vec3	vPlayerPos, vPlayerLook, vPlayerUp;
-
-		pPlayerTransCom->Get_Info(INFO_UP, &vPlayerUp);
-		pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
-		pPlayerTransCom->Get_Info(INFO_LOOK, &vPlayerLook);
-		D3DXVec3Normalize(&vPlayerLook, &vPlayerLook);
-
-		_vec3 vRifleMove;
-
-		D3DXVec3Cross(&vRifleMove, &vPlayerUp, &vPlayerLook);
-		D3DXVec3Normalize(&vPlayerUp, &vPlayerUp);
-		D3DXVec3Normalize(&vRifleMove, &vRifleMove);
-
-		_vec3 vRifleMoveRight = vRifleMove / 20;
-		_vec3 vRifleMoveDown = -vPlayerUp / 20;
-
-		m_pTransformCom->Set_Scale(m_vGunScale);
-		m_pTransformCom->Set_Pos(vPlayerPos + vPlayerLook * 2.5f + vRifleMoveRight * m_fGunMoveRight * 8.0f + vRifleMoveDown * m_fGunMoveDown * 14.5f);
-
-		m_fBulletTime += fTimeDelta;
-
-		if (m_bFire == true) {
-			m_fFireTime += fTimeDelta;
-			if (m_fFireTime >= 0.1f) {
-				m_bFire = false;
-				m_fFireTime = 0.f;
-			}
-		}
-		
-	}
-	Key_Input();
-	if (false == m_bFix)
-	{
-		Mouse_Input();
-	}
-	__super::Update_GameObject(fTimeDelta);
-	return OBJ_NOEVENT;
+// 	if (m_bGun_Select) { // 선택되어야 업데이트/렌더 돌림
+// 		Engine::Add_RenderGroup(RENDER_ALPHA, this);
+// 		dynamic_cast<CPlayer*>(m_pPlayer)->Set_Bullet(m_fBulletCount, m_fMaxBullet);
+//
+// 		CGunState* State = GunState->Update(this, fTimeDelta);
+// 		if (State != nullptr) {
+// 			GunState->Release(this);
+// 			Safe_Delete(GunState);
+// 			GunState = State;
+// 			GunState->Initialize(this);
+// 		} // 상태 패턴
+//
+//
+//
+//
+// 		CTransform* pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
+//
+// 		NULL_CHECK_RETURN(pPlayerTransCom, -1);
+//
+// 		_vec3	vPlayerPos, vPlayerLook, vPlayerUp;
+//
+// 		pPlayerTransCom->Get_Info(INFO_UP, &vPlayerUp);
+// 		pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
+// 		pPlayerTransCom->Get_Info(INFO_LOOK, &vPlayerLook);
+// 		D3DXVec3Normalize(&vPlayerLook, &vPlayerLook);
+//
+// 		_vec3 vRifleMove;
+//
+// 		D3DXVec3Cross(&vRifleMove, &vPlayerUp, &vPlayerLook);
+// 		D3DXVec3Normalize(&vPlayerUp, &vPlayerUp);
+// 		D3DXVec3Normalize(&vRifleMove, &vRifleMove);
+//
+// 		_vec3 vRifleMoveRight = vRifleMove / 20;
+// 		_vec3 vRifleMoveDown = -vPlayerUp / 20;
+//
+// 		m_pTransformCom->Set_Scale(m_vGunScale);
+// 		m_pTransformCom->Set_Pos(vPlayerPos + vPlayerLook * 2.5f + vRifleMoveRight * m_fGunMoveRight * 8.0f + vRifleMoveDown * m_fGunMoveDown * 14.5f);
+//
+// 		m_fBulletTime += fTimeDelta;
+//
+// 		if (m_bFire == true) {
+// 			m_fFireTime += fTimeDelta;
+// 			if (m_fFireTime >= 0.1f) {
+// 				m_bFire = false;
+// 				m_fFireTime = 0.f;
+// 			}
+// 		}
+//
+// 	}
+// 	Key_Input();
+// 	if (false == m_bFix)
+// 	{
+// 		Mouse_Input();
+// 	}
+// 	__super::Update_GameObject(fTimeDelta);
+ 	return OBJ_NOEVENT;
 }
 
 void CRifle::LateUpdate_GameObject()
 {
-	
+
 }
 
 void CRifle::Render_GameObject()
@@ -168,7 +168,7 @@ void CRifle::Mouse_Input()
 	{
 		m_pTransformCom->Rotation(ROT_X, D3DXToRadian(dwMouseMove / 10.f));
 	}
-	
+
 }
 
 void CRifle::Key_Input()
@@ -202,58 +202,58 @@ void CRifle::Key_Input()
 
 void CRifle::Gun_Fire()
 {
-	_vec3 myvPos, m_vFirePos, vDir2;
-	m_pTransformCom->Get_Info(INFO_POS, &myvPos);
-	dynamic_cast<CPlayer*>(m_pPlayer)->Get_Transform()->Get_Info(INFO_POS, &m_vFirePos);
-	vDir2 = dynamic_cast<CPlayer*>(m_pPlayer)->m_vMoveDir;
-	m_vFirePos = (m_vFirePos + myvPos) / 2 + vDir2;
-
-	if (m_bGun_Select) { // 선택되어야 업데이트/렌더 돌림
-		if (Engine::Get_DIMouseState(DIM_LB) && m_fBulletTime >= 0.15f && m_bIsBullet)
-		{
-			if (BulletList.empty()) {
-				for (int i = 0; i < 5; ++i) {
-					CGameObject* Bullet = CRifle_Bullet::Create(m_pGraphicDev,
-						m_vFirePos, 0); // 색깔받기
-					CManagement* pManagement;
-					CLayer* pStageLayer = pManagement->GetInstance()->Get_Layer(LAYERTAG::GAMELOGIC);
-					pStageLayer->Add_GameObject(OBJECTTAG::PLAYERBULLET, Bullet);
-					BulletList.push_back(Bullet);
-				}
-				auto iter = BulletList.begin();
-				for (int i = 0; i < iBulletNum; i++) {
-					++iter;
-				}
-				dynamic_cast<CRifle_Bullet*>(*iter)->
-					Shoot(m_vFirePos, 0);
-			}
-			else {
-				auto iter = BulletList.begin();
-				for (int i = 0; i < iBulletNum; i++) {
-					++iter;
-				}
-				dynamic_cast<CRifle_Bullet*>(*iter)->
-					Shoot(m_vFirePos, 0);
-			}
-			//총알 발사 코드 넣기
-			m_fBulletTime = 0.f;
-			--m_fBulletCount;
-			++iBulletNum;
-			dynamic_cast<CPlayer*>(m_pPlayer)->Set_Bullet(m_fBulletCount, m_fMaxBullet);
-			if (m_fBulletCount < 1) {
-				m_bIsBullet = false;
-			} // 총알 발사
-			if (iBulletNum >= 5) {
-				iBulletNum = 0;
-			}
-			m_bFire = true;
-			// 총염 (섬광)
-			GunState->Release(this);
-			Safe_Delete(GunState);
-			GunState = new CRifle_SHOT; // 상태를 총 쏜 상태로 바꿈
-			GunState->Initialize(this);   //Initialize 실행
-		}
-	}
+// 	_vec3 myvPos, m_vFirePos, vDir2;
+// 	m_pTransformCom->Get_Info(INFO_POS, &myvPos);
+// 	dynamic_cast<CPlayer*>(m_pPlayer)->Get_Transform()->Get_Info(INFO_POS, &m_vFirePos);
+// 	vDir2 = dynamic_cast<CPlayer*>(m_pPlayer)->m_vMoveDir;
+// 	m_vFirePos = (m_vFirePos + myvPos) / 2 + vDir2;
+//
+// 	if (m_bGun_Select) { // 선택되어야 업데이트/렌더 돌림
+// 		if (Engine::Get_DIMouseState(DIM_LB) && m_fBulletTime >= 0.15f && m_bIsBullet)
+// 		{
+// 			if (BulletList.empty()) {
+// 				for (int i = 0; i < 5; ++i) {
+// 					CGameObject* Bullet = CRifle_Bullet::Create(m_pGraphicDev,
+// 						m_vFirePos, 0); // 색깔받기
+// 					CManagement* pManagement;
+// 					CLayer* pStageLayer = pManagement->GetInstance()->Get_Layer(LAYERTAG::GAMELOGIC);
+// 					pStageLayer->Add_GameObject(OBJECTTAG::PLAYERBULLET, Bullet);
+// 					BulletList.push_back(Bullet);
+// 				}
+// 				auto iter = BulletList.begin();
+// 				for (int i = 0; i < iBulletNum; i++) {
+// 					++iter;
+// 				}
+// 				dynamic_cast<CRifle_Bullet*>(*iter)->
+// 					Shoot(m_vFirePos, 0);
+// 			}
+// 			else {
+// 				auto iter = BulletList.begin();
+// 				for (int i = 0; i < iBulletNum; i++) {
+// 					++iter;
+// 				}
+// 				dynamic_cast<CRifle_Bullet*>(*iter)->
+// 					Shoot(m_vFirePos, 0);
+// 			}
+// 			//총알 발사 코드 넣기
+// 			m_fBulletTime = 0.f;
+// 			--m_fBulletCount;
+// 			++iBulletNum;
+// 			dynamic_cast<CPlayer*>(m_pPlayer)->Set_Bullet(m_fBulletCount, m_fMaxBullet);
+// 			if (m_fBulletCount < 1) {
+// 				m_bIsBullet = false;
+// 			} // 총알 발사
+// 			if (iBulletNum >= 5) {
+// 				iBulletNum = 0;
+// 			}
+// 			m_bFire = true;
+// 			// 총염 (섬광)
+// 			GunState->Release(this);
+// 			Safe_Delete(GunState);
+// 			GunState = new CRifle_SHOT; // 상태를 총 쏜 상태로 바꿈
+// 			GunState->Initialize(this);   //Initialize 실행
+// 		}
+// 	}
 }
 
 

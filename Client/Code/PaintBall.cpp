@@ -23,9 +23,9 @@ CPaintBall::~CPaintBall()
 
 HRESULT CPaintBall::Ready_GameObject(_vec3 _StartPos, _int iColorIndex)
 {
-	
+
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	
+
 	m_fBulletSpeed = 10.f;
 	m_fLiveTime = 0.f;
 	Shoot(_StartPos, iColorIndex);
@@ -75,8 +75,8 @@ Engine::_int CPaintBall::Update_GameObject(const _float& fTimeDelta)
 
 
 	}
-	
-	
+
+
 	return OBJ_NOEVENT;
 }
 
@@ -123,7 +123,9 @@ void CPaintBall::OnCollisionEnter(CCollider* _pOther)
 		Set_ObjectTag(OBJECTTAG::DEAD_OBJ);
 
 	}
-	int a = 1 + 1;
+	int a = 1 + 1 ;
+
+
 }
 
 void CPaintBall::OnCollisionStay(CCollider* _pOther)
@@ -165,7 +167,7 @@ void CPaintBall::Shoot(_vec3 _StartPos, int iColorIndex)
 {
 	m_iColorIndex = iColorIndex;
 	Color_Select();
-	
+
 	_vec3			vBulletDirMove;
 	CTransform* pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
 	NULL_CHECK(pPlayerTransCom); // 플레이어 가져오기
@@ -191,7 +193,7 @@ void CPaintBall::Shoot(_vec3 _StartPos, int iColorIndex)
 	m_vDir += _vec3(0.f, 0.06f, 0.f) - vBulletDirMove / 40;
 	m_pTransformCom->Set_Pos(_StartPos);
 	m_vPos = _StartPos;
-	
+
 	m_bShooting = true;
 	m_fLiveTime = 0.f;
 }

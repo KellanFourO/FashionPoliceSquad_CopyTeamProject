@@ -59,6 +59,7 @@ HRESULT CBigDaddyMonster::Ready_GameObject()
 	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
 
 
+	m_eHitType = BULLETTYPE::ASSERTRIFLE_BULLET;
 	m_pMonsterBullet = nullptr;
 
 
@@ -98,7 +99,6 @@ void CBigDaddyMonster::Render_GameObject()
 {
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
-	m_pCollider->Render_Collider();
 
 	INFO.MonsterState->Render(this);
 
@@ -184,8 +184,7 @@ CBigDaddyMonster* CBigDaddyMonster::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CBigDaddyMonster::Free()
 {
-	Safe_Release(m_pUI_HPFrame);
-	Safe_Release(m_pUI_HPValue);
+
 
 	for(auto iter : m_pStateArray)
 		Safe_Delete(iter);

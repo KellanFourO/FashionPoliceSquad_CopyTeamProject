@@ -192,7 +192,7 @@ namespace Engine
 
 
 		CPlayerState*	PlayerState;	//플레이어 상태
-		GunID			GunSelect;	//들고 있는 총 (추가됨!)
+		PLAYER_GUNTYPE	Player_GunType; // 들고있는 총
 
 		_bool			bGameOver;	//플레이어 체력이 0이 됐을때 (추가됨!)
 
@@ -212,7 +212,7 @@ namespace Engine
 	//particle
 	struct	Particle
 	{
-		D3DXVECTOR3 _Position; // 위치 
+		D3DXVECTOR3 _Position; // 위치
 		D3DCOLOR	_Color;    // 색
 	};
 	static const DWORD FVF = D3DFVF_XYZ | D3DFVF_DIFFUSE ;
@@ -230,7 +230,7 @@ namespace Engine
 		D3DXVECTOR3 velocity;	//파티클의 속도 , 보통 초당 이동단위
 		D3DXVECTOR3 acceleration;	//파티클의 가속, 보통은 초당 이동단위
 		_float		lifeTime;	//파티클 소멸 전까지 유지 시간  ex) 레이저 빔 파티클은 특정한 시간 동안만 유지된다 등.
-		_float		age;	//파티클의 현재 나이 
+		_float		age;	//파티클의 현재 나이
 		D3DXCOLOR	color;	//파티클 색
 		D3DXCOLOR   colorFade;	//파티클의 컬러가 시간에 따라 바뀌는 방법
 		bool		isAlive;	//파티클이 생존한 경우 True , 소멸한 경우 False

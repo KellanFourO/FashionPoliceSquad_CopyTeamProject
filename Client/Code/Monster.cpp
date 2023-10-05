@@ -42,7 +42,7 @@ HRESULT CMonster::Ready_GameObject()
 
 _int CMonster::Update_GameObject(const _float& fTimeDelta)
 {
-	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
+
 	if (INFO.bHit == true) {
 		m_fHitTime += fTimeDelta;
 	}
@@ -66,6 +66,7 @@ _int CMonster::Update_GameObject(const _float& fTimeDelta)
 	m_pUI_HPValue->Update_GameObject(fTimeDelta);
 	m_pRigidBody->Update_RigidBody(fTimeDelta);
 
+	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 	__super::Update_GameObject(fTimeDelta);
 
 	return OBJ_NOEVENT;
@@ -285,7 +286,6 @@ HRESULT CMonster::Set_HP()
 	m_pUI_HPValue = CUIMgr::GetInstance()->Get_UI_Clone(L"VALUE_Monster.png");
 
 	//m_pUI_Recognition = CRecognitionRange::Create(m_pGraphicDev, this);
-
 
 	m_pUI_HPFrame->Set_Target(this);
 	m_pUI_HPValue->Set_Target(this);

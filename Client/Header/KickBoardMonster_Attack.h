@@ -19,4 +19,5 @@ public:
 private:
 	_float		m_fTick = 0.f;
 	ATTACKSTATE m_eAttack = READY;
+	_bool		m_bJump = true;
 };

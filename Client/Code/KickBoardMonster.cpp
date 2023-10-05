@@ -1,21 +1,16 @@
 #include "stdafx.h"
 #include "KickBoardMonster.h"
-#include "Player.h"
 
 #include "KickBoardMonster_Idle.h"
 #include "KickBoardMonster_Chase.h"
 #include "KickBoardMonster_Attack.h"
 #include "KickBoardMonster_Patrol.h"
 #include "KickBoardMonster_Dead.h"
-
 #include "Export_System.h"
 #include "Export_Utility.h"
 
 #include "MonsterState.h"
 
-
-// TODO - 승용 추가 : 몬스터 HP UI.
-#include "UIMgr.h"
 
 CKickBoardMonster::CKickBoardMonster(LPDIRECT3DDEVICE9 pGraphicDev)
     :CMonster(pGraphicDev)
@@ -43,6 +38,7 @@ HRESULT CKickBoardMonster::Ready_GameObject()
     INFO.MonsterState = m_pStateArray[IDLE];
     INFO.MonsterState->Initialize(this);
     INFO.fHP = 100.f;
+    INFO.fMaxHP = 100.f;
     INFO.vPos = { 200.f,4.f,30.f }; // 470이엇음
 
     m_fDectedRange = 70.f;
@@ -52,12 +48,9 @@ HRESULT CKickBoardMonster::Ready_GameObject()
     m_pTransformCom->Set_Pos(INFO.vPos);
     m_pTransformCom->Set_Scale({ 5.0f,5.0f, 5.0f });
 
-    m_pTransformCom->Translate(_vec3(0.f, 3.f, 0.f));
+    m_pBufferCom->SetCount(5, 4);
+    m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/Monster/neonshirt-v1_Resize_Hit.png", 1);
 
-    m_pBufferCom->SetCount(4, 4);
-    m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/Monster/neonshirt-v1_Hit.png", 1);
-    m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/Monster/neonshirt-v1_Jump.png", 2);
-    m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/Monster/neonshirt-v1_Jump_Hit.png", 3);
 
 	m_pCollider->Set_Host(this);
 	m_pCollider->Set_Transform(m_pTransformCom);
@@ -65,15 +58,13 @@ HRESULT CKickBoardMonster::Ready_GameObject()
 	m_pRigidBody->Set_Transform(m_pTransformCom);
 	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
 
-
+    m_eHitType = BULLETTYPE::SHOTGUN_RAZER;
     return S_OK;
 }
 
 _int CKickBoardMonster::Update_GameObject(const _float& fTimeDelta)
 {
     __super::Update_GameObject(fTimeDelta);
-
-    m_pRigidBody->Update_RigidBody(fTimeDelta);
 
     return OBJ_NOEVENT;
 }
@@ -98,7 +89,6 @@ void CKickBoardMonster::LateUpdate_GameObject()
 void CKickBoardMonster::Render_GameObject()
 {
     m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
-    m_pCollider->Render_Collider();
 
     INFO.MonsterState->Render(this);
 }
@@ -183,7 +173,7 @@ void CKickBoardMonster::Ride_On(_vec3 _vDir, _float _fSpeed, _float _fTimeDelta)
         int a = 1 + 1;
     }
 
-    Set_Frame(4, 4, m_fCurFrame + m_fAdditional_frame);
+    Set_Frame(4, 5, m_fCurFrame + m_fAdditional_frame);
     m_fAnimateTime += _fTimeDelta;
     if (m_fAnimateTime >= 0.05f)
     {
