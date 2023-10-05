@@ -229,7 +229,7 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
 
-		pGameObject = CKickBoard::Create(m_pGraphicDev);
+		pGameObject = CKickBoardMonster::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
 

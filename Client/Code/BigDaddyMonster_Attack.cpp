@@ -30,7 +30,7 @@ void CBigDaddyMonster_Attack::Initialize(CMonster* _Monster)
 
 CMonsterState* CBigDaddyMonster_Attack::Update(CMonster* Monster, const float& fDetltaTime)
 {
-	
+
 	switch (m_eAttack)
 	{
 	case CBigDaddyMonster_Attack::READY1:
@@ -45,7 +45,7 @@ CMonsterState* CBigDaddyMonster_Attack::Update(CMonster* Monster, const float& f
 			}
 			break;
 		}
-		
+
 	case CBigDaddyMonster_Attack::READY2:
 		{
 			m_fTick += fDetltaTime;
@@ -82,7 +82,7 @@ CMonsterState* CBigDaddyMonster_Attack::Update(CMonster* Monster, const float& f
 			}
 			break;
 		}
-		
+
 	case CBigDaddyMonster_Attack::THROWEND:
 		{
 			m_fTick += fDetltaTime;
@@ -95,7 +95,7 @@ CMonsterState* CBigDaddyMonster_Attack::Update(CMonster* Monster, const float& f
 				else
 				{
 					m_eAttack = READY1;
-					
+
 				}
 				++m_fCurFrame;
 				m_fTick = 0.f;
@@ -103,8 +103,8 @@ CMonsterState* CBigDaddyMonster_Attack::Update(CMonster* Monster, const float& f
 			break;
 		}
 	}
-		
-	if (m_fCurFrame >= m_fMaxFrame)
+
+	if (m_fCurFrame > m_fMaxFrame)
 	{
 		m_fCurFrame = m_fMinFrame;
 	}

@@ -33,7 +33,7 @@ void CBigDaddyMonster_Chase::Initialize(CMonster* _Monster)
 CMonsterState* CBigDaddyMonster_Chase::Update(CMonster* Monster, const float& fDetltaTime)
 {
 
-	
+
 		m_fTick += fDetltaTime;
 
 		if (m_fTick >= 0.3f)
@@ -42,13 +42,13 @@ CMonsterState* CBigDaddyMonster_Chase::Update(CMonster* Monster, const float& fD
 			m_fTick = 0.f;
 		}
 
-		if (m_fCurFrame >= m_fMaxFrame)
+		if (m_fCurFrame > m_fMaxFrame)
 		{
 			m_fCurFrame = m_fMinFrame;
 		}
 
 		//TODO 추격중 플레이어가 공격범위 안에 들어오면
-		if (m_pHost->ChaseCatch()) 
+		if (m_pHost->ChaseCatch())
 		{
 			return dynamic_cast<CBigDaddyMonster*>(m_pHost)->Get_State(2);
 		}

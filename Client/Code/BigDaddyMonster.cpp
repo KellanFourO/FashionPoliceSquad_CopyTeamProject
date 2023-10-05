@@ -35,7 +35,6 @@ HRESULT CBigDaddyMonster::Ready_GameObject()
 
 	INFO.iMobType = MonsterType::BRIFBIG;
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	
 
 	ReadyState();
 
@@ -46,22 +45,22 @@ HRESULT CBigDaddyMonster::Ready_GameObject()
 
 	m_fDectedRange = 150.f; //! 탐색 범위
 	m_fAttackRange = 100.f; //! 공격 범위
-	
+
 	m_pTransformCom->Set_Scale({ 5.0f,5.0f,5.0f });
 	Set_Pos((_vec3{ 25.f,4.f,28.f }));
 
 	m_pBufferCom->SetCount(4, 4);
 	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/Monster/loose-suit-spritesheet_hit.png", 1);
 
-	m_pCollider->Set_Host(this);					
-	m_pCollider->Set_Transform(m_pTransformCom);	
-	m_pRigidBody->Set_Host(this);					
-	m_pRigidBody->Set_Transform(m_pTransformCom);	
+	m_pCollider->Set_Host(this);
+	m_pCollider->Set_Transform(m_pTransformCom);
+	m_pRigidBody->Set_Host(this);
+	m_pRigidBody->Set_Transform(m_pTransformCom);
 	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
 
-	
+
 	m_pMonsterBullet = nullptr;
-	
+
 
 	return S_OK;
 }

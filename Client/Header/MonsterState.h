@@ -3,6 +3,7 @@
 #include "Monster.h"
 #include "BigDaddyMonster.h"
 #include "DullSuitMonster.h"
+#include "KickBoardMonster.h"
 
 class CMonsterState {
 public:

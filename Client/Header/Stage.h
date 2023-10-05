@@ -16,7 +16,7 @@
 #include "Monster.h"
 #include "BigDaddyMonster.h"
 #include "DullSuitMonster.h"
-#include "KickBoard.h"
+#include "KickBoardMonster.h"
 #include "Dyehard.h"
 #include "Rifle.h"
 #include "Belt.h"

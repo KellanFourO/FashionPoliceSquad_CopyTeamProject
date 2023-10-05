@@ -43,7 +43,7 @@ HRESULT CDullSuitMonster::Ready_GameObject()
 
     m_fDectedRange = 150.f;
     m_fAttackRange = 70.f;
-    
+
     m_pTransformCom->Set_Scale(_vec3{3.f,4.5f,3.f });
     m_pTransformCom->Set_Pos(INFO.vPos);
 
@@ -72,9 +72,9 @@ _int CDullSuitMonster::Update_GameObject(const _float& fTimeDelta)
 void CDullSuitMonster::LateUpdate_GameObject()
 {
     __super::LateUpdate_GameObject();
-   
 
-     if (INFO.bDead) 
+
+     if (INFO.bDead)
      {
          INFO.MonsterState = m_pStateArray[DEAD];
          INFO.MonsterState->Initialize(this);
@@ -88,10 +88,10 @@ void CDullSuitMonster::LateUpdate_GameObject()
 
 void CDullSuitMonster::Render_GameObject()
 {
- 
+
     m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
     m_pCollider->Render_Collider();
-    
+
     INFO.MonsterState->Render(this);
 }
 

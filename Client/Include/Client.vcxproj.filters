@@ -202,9 +202,6 @@
     <Filter Include="02. GameObject\01. Player\99. PlayerState\07. Player_Armor">
       <UniqueIdentifier>{3c96815e-e064-47be-8da3-3601ef171dd7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\02. Monster\02.KickBoard">
-      <UniqueIdentifier>{4c754359-9b09-4612-8c5b-426c565d27e7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\20.UI\03. MyCard">
       <UniqueIdentifier>{e66a0f91-33d9-40f9-a8af-74159bceb49e}</UniqueIdentifier>
     </Filter>
@@ -216,15 +213,6 @@
     </Filter>
     <Filter Include="02. GameObject\01. Player\98.FootRay">
       <UniqueIdentifier>{f6c6d1c2-9488-4da1-a582-353ce5a14cbb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\02. Monster\02.KickBoard\99.KickBoard_State">
-      <UniqueIdentifier>{7bc8945e-1075-427e-9a0a-22915907fe52}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\02. Monster\02.KickBoard\99.KickBoard_State\01. KickBoard_IDLE">
-      <UniqueIdentifier>{66aac510-1d5a-424d-a645-cc48f8903833}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\02. Monster\02.KickBoard\99.KickBoard_State\10. KickBoard_DEAD">
-      <UniqueIdentifier>{2742face-4cde-472e-8bff-a0491ef0b4ac}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\07.Bullet\01.MonsterBullet\01. BrifCase_2">
       <UniqueIdentifier>{dd69410f-21a8-4949-b0c3-1a1e0357abef}</UniqueIdentifier>
@@ -313,24 +301,6 @@
     <Filter Include="02. GameObject\06. Effect\00.Particle\02.JumpSmoke">
       <UniqueIdentifier>{20ed10b5-ed4c-41aa-9d8b-31b84071e0ff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\02. Monster\00.BigDaddyMonster">
-      <UniqueIdentifier>{6421f6fc-cb7c-49d8-9aa7-49470a418d85}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\02. Monster\00.BigDaddyMonster\99.BigDaddyMonster_State">
-      <UniqueIdentifier>{88b7cad6-9881-4f25-bdba-84a15172806a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\02. Monster\00.BigDaddyMonster\99.BigDaddyMonster_State\01. BigDaddyMonster_Idle">
-      <UniqueIdentifier>{85785f8a-dd85-40ab-9e44-d8c4ae75401e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\02. Monster\00.BigDaddyMonster\99.BigDaddyMonster_State\02. BigDaddyMonster_Chase">
-      <UniqueIdentifier>{d805c08a-1879-4335-abdc-334e7f793267}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\02. Monster\00.BigDaddyMonster\99.BigDaddyMonster_State\10. BigDaddyMonster_Dead">
-      <UniqueIdentifier>{848b0baf-b6eb-40ad-b14f-7ade467d39e6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\02. Monster\00.BigDaddyMonster\99.BigDaddyMonster_State\03. BigDaddyMonster_Attack">
-      <UniqueIdentifier>{c0d3c754-bc16-471d-8b11-8768de6ace4e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\02. Monster\01. DullSuitMonster">
       <UniqueIdentifier>{9681e598-cfc7-4b20-9efa-6f2bbbbede41}</UniqueIdentifier>
     </Filter>
@@ -348,6 +318,45 @@
     </Filter>
     <Filter Include="02. GameObject\02. Monster\01. DullSuitMonster\99. DullSuitMonster_State\04.DullSuitMonster_Chase">
       <UniqueIdentifier>{983d7c0d-e17e-45f2-8e66-018baaa74830}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\00. BigDaddyMonster">
+      <UniqueIdentifier>{6421f6fc-cb7c-49d8-9aa7-49470a418d85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State">
+      <UniqueIdentifier>{88b7cad6-9881-4f25-bdba-84a15172806a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State\01. BigDaddyMonster_Idle">
+      <UniqueIdentifier>{85785f8a-dd85-40ab-9e44-d8c4ae75401e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State\02. BigDaddyMonster_Chase">
+      <UniqueIdentifier>{d805c08a-1879-4335-abdc-334e7f793267}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State\10. BigDaddyMonster_Dead">
+      <UniqueIdentifier>{848b0baf-b6eb-40ad-b14f-7ade467d39e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State\03. BigDaddyMonster_Attack">
+      <UniqueIdentifier>{c0d3c754-bc16-471d-8b11-8768de6ace4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\02. KickBoardMonster">
+      <UniqueIdentifier>{4c754359-9b09-4612-8c5b-426c565d27e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State">
+      <UniqueIdentifier>{7bc8945e-1075-427e-9a0a-22915907fe52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\10. KickBoardMonster_Dead">
+      <UniqueIdentifier>{2742face-4cde-472e-8bff-a0491ef0b4ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\01. KickBoardMonster_Idle">
+      <UniqueIdentifier>{66aac510-1d5a-424d-a645-cc48f8903833}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\02. KickBoardMonster_Chase">
+      <UniqueIdentifier>{dfdb1e6a-25b6-4785-9fe4-19e8b0d10a61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\03. KickBoardMonster_Attack">
+      <UniqueIdentifier>{7419e999-225c-4168-baca-d51ac2c401b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\04. KickBoardMonster_Patrol">
+      <UniqueIdentifier>{e03d141e-8add-41bd-8b80-8fafc56089ca}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -589,10 +598,10 @@
       <Filter>02. GameObject\01. Player\99. PlayerState\07. Player_Armor</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BigDaddyMonster.h">
-      <Filter>02. GameObject\02. Monster\00.BigDaddyMonster</Filter>
+      <Filter>02. GameObject\02. Monster\00. BigDaddyMonster</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BigDaddyMonsterState.h">
-      <Filter>02. GameObject\02. Monster\00.BigDaddyMonster\99.BigDaddyMonster_State</Filter>
+      <Filter>02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\LoadingStage.h">
       <Filter>헤더 파일</Filter>
@@ -606,17 +615,14 @@
     <ClInclude Include="..\Header\DullSuitMonster.h">
       <Filter>02. GameObject\02. Monster\01. DullSuitMonster</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\KickBoard.h">
-      <Filter>02. GameObject\02. Monster\02.KickBoard</Filter>
+    <ClInclude Include="..\Header\KickBoardMonster.h">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\KickBoardState.h">
-      <Filter>02. GameObject\02. Monster\02.KickBoard\99.KickBoard_State</Filter>
+    <ClInclude Include="..\Header\KickBoardMonsterState.h">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\BrifMob2State.h">
-      <Filter>02. GameObject\02. Monster\01. BrifMonster2\02. BrifMob2_State</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\KickBoard_IDLE.h">
-      <Filter>02. GameObject\02. Monster\02.KickBoard\99.KickBoard_State\01. KickBoard_IDLE</Filter>
+    <ClInclude Include="..\Header\KickBoardMonster_Idle.h">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\01. KickBoardMonster_Idle</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\DullSuitMonster_Idle.h">
       <Filter>02. GameObject\02. Monster\01. DullSuitMonster\99. DullSuitMonster_State\01.DullSuitMonster_Idle</Filter>
@@ -631,16 +637,16 @@
       <Filter>02. GameObject\20.UI\01. MyDialog\00. Portrait</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BigDaddyMonster_Idle.h">
-      <Filter>02. GameObject\02. Monster\00.BigDaddyMonster\99.BigDaddyMonster_State\01. BigDaddyMonster_Idle</Filter>
+      <Filter>02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State\01. BigDaddyMonster_Idle</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BigDaddyMonster_Chase.h">
-      <Filter>02. GameObject\02. Monster\00.BigDaddyMonster\99.BigDaddyMonster_State\02. BigDaddyMonster_Chase</Filter>
+      <Filter>02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State\02. BigDaddyMonster_Chase</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BigDaddyMonster_Dead.h">
-      <Filter>02. GameObject\02. Monster\00.BigDaddyMonster\99.BigDaddyMonster_State\10. BigDaddyMonster_Dead</Filter>
+      <Filter>02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State\10. BigDaddyMonster_Dead</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\KickBoard_DEAD.h">
-      <Filter>02. GameObject\02. Monster\02.KickBoard\99.KickBoard_State\10. KickBoard_DEAD</Filter>
+    <ClInclude Include="..\Header\KickBoardMonster_Dead.h">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\10. KickBoardMonster_Dead</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\DullSuitMonster_Attack.h">
       <Filter>02. GameObject\02. Monster\01. DullSuitMonster\99. DullSuitMonster_State\02.DullSuitMonster_Attack</Filter>
@@ -742,10 +748,19 @@
       <Filter>02. GameObject\06. Effect\00.Particle\02.JumpSmoke</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BigDaddyMonster_Attack.h">
-      <Filter>02. GameObject\02. Monster\00.BigDaddyMonster\99.BigDaddyMonster_State\03. BigDaddyMonster_Attack</Filter>
+      <Filter>02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State\03. BigDaddyMonster_Attack</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\DullSuitMonster_Chase.h">
       <Filter>02. GameObject\02. Monster\01. DullSuitMonster\99. DullSuitMonster_State\04.DullSuitMonster_Chase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\KickBoardMonster_Chase.h">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\02. KickBoardMonster_Chase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\KickBoardMonster_Attack.h">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\03. KickBoardMonster_Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\KickBoardMonster_Patrol.h">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\04. KickBoardMonster_Patrol</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -957,13 +972,7 @@
       <Filter>02. GameObject\01. Player\99. PlayerState\07. Player_Armor</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BigDaddyMonster.cpp">
-      <Filter>02. GameObject\02. Monster\00.BigDaddyMonster</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\BigDaddyMonster_Dead.cpp">
-      <Filter>02. GameObject\02. Monster\00.BigDaddyMonster\99.BigDaddyMonster_State</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\BigDaddyMonster_Idle.cpp">
-      <Filter>02. GameObject\02. Monster\00.BigDaddyMonster\99.BigDaddyMonster_State</Filter>
+      <Filter>02. GameObject\02. Monster\00. BigDaddyMonster</Filter>
     </ClCompile>
     <ClCompile Include="LoadingStage.cpp">
       <Filter>소스 파일</Filter>
@@ -974,11 +983,11 @@
     <ClCompile Include="..\Code\DullSuitMonster.cpp">
       <Filter>02. GameObject\02. Monster\01. DullSuitMonster</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\KickBoard.cpp">
-      <Filter>02. GameObject\02. Monster\02.KickBoard</Filter>
+    <ClCompile Include="..\Code\KickBoardMonster.cpp">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\KickBoard_IDLE.cpp">
-      <Filter>02. GameObject\02. Monster\02.KickBoard\99.KickBoard_State\01. KickBoard_IDLE</Filter>
+    <ClCompile Include="..\Code\KickBoardMonster_Idle.cpp">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\01. KickBoardMonster_Idle</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\DullSuitMonster_Idle.cpp">
       <Filter>02. GameObject\02. Monster\01. DullSuitMonster\99. DullSuitMonster_State\01.DullSuitMonster_Idle</Filter>
@@ -992,14 +1001,8 @@
     <ClCompile Include="..\Code\MyCardTexture.cpp">
       <Filter>02. GameObject\20.UI\01. MyDialog\00. Portrait</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\BrifMonsterBigState_IDLE.cpp">
-      <Filter>02. GameObject\02. Monster\00.BrifMonsterBig\99.BrifMobBig_State\01. BrifMonsterBig_IDLE</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\BrifMonsterBigState_DEAD.cpp">
-      <Filter>02. GameObject\02. Monster\00.BrifMonsterBig\99.BrifMobBig_State\10. BrifMonsterBig_DEAD</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\KickBoard_DEAD.cpp">
-      <Filter>02. GameObject\02. Monster\02.KickBoard\99.KickBoard_State\10. KickBoard_DEAD</Filter>
+    <ClCompile Include="..\Code\KickBoardMonster_Dead.cpp">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\10. KickBoardMonster_Dead</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\DullSuitMonster_Attack.cpp">
       <Filter>02. GameObject\02. Monster\01. DullSuitMonster\99. DullSuitMonster_State\02.DullSuitMonster_Attack</Filter>
@@ -1098,13 +1101,28 @@
       <Filter>02. GameObject\06. Effect\00.Particle\02.JumpSmoke</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BigDaddyMonster_Chase.cpp">
-      <Filter>02. GameObject\02. Monster\00.BigDaddyMonster\99.BigDaddyMonster_State\02. BigDaddyMonster_Chase</Filter>
+      <Filter>02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State\02. BigDaddyMonster_Chase</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BigDaddyMonster_Attack.cpp">
-      <Filter>02. GameObject\02. Monster\00.BigDaddyMonster\99.BigDaddyMonster_State\03. BigDaddyMonster_Attack</Filter>
+      <Filter>02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State\03. BigDaddyMonster_Attack</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\DullSuitMonster_Chase.cpp">
       <Filter>02. GameObject\02. Monster\01. DullSuitMonster\99. DullSuitMonster_State\04.DullSuitMonster_Chase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\KickBoardMonster_Chase.cpp">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\02. KickBoardMonster_Chase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\KickBoardMonster_Attack.cpp">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\03. KickBoardMonster_Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\KickBoardMonster_Patrol.cpp">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\04. KickBoardMonster_Patrol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BigDaddyMonster_Idle.cpp">
+      <Filter>02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State\01. BigDaddyMonster_Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BigDaddyMonster_Dead.cpp">
+      <Filter>02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State\10. BigDaddyMonster_Dead</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

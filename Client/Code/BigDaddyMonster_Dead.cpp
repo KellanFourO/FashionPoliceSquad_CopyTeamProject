@@ -33,7 +33,7 @@ CMonsterState* CBigDaddyMonster_Dead::Update(CMonster* Monster, const float& fDe
 		m_fTick = 0;
 	}
 
-	if (m_fCurFrame >= m_fMaxFrame)
+	if (m_fCurFrame > m_fMaxFrame)
 		m_fCurFrame = m_fMinFrame;
 
 		return nullptr;
