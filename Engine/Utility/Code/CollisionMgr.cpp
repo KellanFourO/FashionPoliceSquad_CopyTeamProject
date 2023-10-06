@@ -253,16 +253,16 @@ void CollisionMgr::CheckCollisionStatic(OBJECTTAG _eObjectLeft)
 
 				//return;
 			}
-// 			else
-// 			{		// 현재 충돌 x면
-// 				if (iter->second)
-// 				{	//이전에는 충돌하고 있었다.
-// 					pLeftCol->OnCollisionExit(pRightCol);
-// 					pRightCol->OnCollisionExit(pLeftCol);
-// 					iter->second = false;
-// 					return;
-// 				}
-// 			}
+			else
+			{		// 현재 충돌 x면
+				if (iter->second)
+				{	//이전에는 충돌하고 있었다.
+					pLeftCol->OnCollisionExit(pRightCol);
+					pRightCol->OnCollisionExit(pLeftCol);
+					iter->second = false;
+					return;
+				}
+			}
 		}
 	}
 }
