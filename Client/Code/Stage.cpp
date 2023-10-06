@@ -420,7 +420,7 @@ HRESULT CStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 		//벡터 내용물만큼 실제 큐브 생성해 레이어에 담기
 		for (auto& iter : m_VecOBJData)
 		{
-			pGameObject = CBuild_Obj::Create(m_pGraphicDev, iter->vPos, iter->uITextureNum, iter->vSize, m_iOBJIndex, OBJ_TYPE::PLANE_OBJ);
+			pGameObject = CBuild_Obj::Create(m_pGraphicDev, iter->vPos, iter->uITextureNum, iter->vSize, iter->iRotateCount, m_iOBJIndex, OBJ_TYPE::PLANE_OBJ);
 
 			NULL_CHECK_RETURN(pGameObject, E_FAIL);
 			FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);

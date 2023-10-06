@@ -11,18 +11,19 @@ class CRcTex;
 class CTexture;
 class CTransform;
 class CCalculator;
+class CCollider;
 
 END
 
 class CBuild_Obj : public CGameObject
 {
-public:
+private:
 	explicit CBuild_Obj(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CBuild_Obj(const CBuild_Obj& rhs);
 	virtual ~CBuild_Obj();
 
 public:
-	virtual HRESULT Ready_GameObject(_vec3 pMouse_Pos, _vec3 Size);
+	virtual HRESULT Ready_GameObject(_uint pRotate, _vec3 pMouse_Pos, _vec3 Size);
 	virtual _int	Update_GameObject(const _float& fTimeDelta) override;
 	virtual void	LateUpdate_GameObject() override;
 	virtual void	Render_GameObject() override;
@@ -39,11 +40,9 @@ protected:
 private:
 
 	vector<IDirect3DCubeTexture9*> m_VecTempCube;
-	vector<IDirect3DBaseTexture9*> m_VecTempCross;
 	vector<IDirect3DBaseTexture9*> m_VecTempPlane;
 	
 	CCubeTex*		m_pBufferCubeCom = nullptr;
-	CCrossTex*		m_pBufferCrossCom = nullptr;
 	CRcTex*			m_pBufferRcCom = nullptr;
 
 	CTransform*		m_pTransformCom = nullptr;
@@ -51,7 +50,6 @@ private:
 	CCalculator*	m_pCalculatorCom = nullptr;
 
 	const int		cubeTextureStartIndex = 1000;
-	const int		crossTextureStartIndex = 2000;
 	const int		planeTextureStartIndex = 3000;
 
 	_vec3			m_Cursor_Pos = {};
@@ -61,7 +59,9 @@ private:
 	CUBESIZE		m_fCubeSize;
 
 public:
-	static  CBuild_Obj* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 pMouse_Pos, _uint TextureNum, _vec3 Size, _uint Index, OBJ_TYPE eType);
+	static  CBuild_Obj* Create(LPDIRECT3DDEVICE9 pGraphicDev, 
+		_vec3 pMouse_Pos, _uint TextureNum, _vec3 Size, 
+		_uint pRotate, _uint Index, OBJ_TYPE eType);
 
 private:
 	virtual void Free();

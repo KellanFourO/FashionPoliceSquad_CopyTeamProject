@@ -55,7 +55,6 @@ HRESULT CImGuiManager::SetUp_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 
 	LoadTexturesFromDirectory(L"../Bin/Resource/Texture/Cube", m_MainCubeTexture);
 	LoadTexturesFromDirectory(L"../Bin/Resource/Texture/Obj/CubeType", m_pCubeTextureObj);
-	LoadTexturesFromDirectory(L"../Bin/Resource/Texture/Obj/CrossType", m_pCrossTexture0);
 	LoadTexturesFromDirectory(L"../Bin/Resource/Texture/Obj/PlaneType", m_pPlaneTexture0);
 
     return S_OK;
@@ -157,8 +156,6 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 
 							ImGui::NewLine();
 
-							float min = 1.0f;  // 최솟값 설정
-							float max = 64.0f; // 최댓값 설정
 							float step = 2.0f; // 단위 설정
 
 							ImGui::Checkbox("unnormalized Cube", &m_bNotNormal_Check);
@@ -166,18 +163,20 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 							{
 								m_fCubesize = { 1.f, 1.f, 1.f };
 							}
-							else {
+							else if (m_bNotNormal_Check == true) {
 								ImGui::SetNextItemWidth(70.0f);
-								if (ImGui::SliderFloat("sizeX", &m_fCubesize.m_fX, min, max))
-									m_fCubesize.m_fX = (roundf(m_fCubesize.m_fX / step) * step) + 1.f;
+								if (ImGui::InputFloat("sizeX", &m_fCubesize.m_fX))
+									m_fCubesize.m_fX = (roundf(m_fCubesize.m_fX / step) * step) - 1.f;
 								ImGui::SameLine();
+
 								ImGui::SetNextItemWidth(70.0f);
-								if (ImGui::SliderFloat("SizeY", &m_fCubesize.m_fY, min, max))
-									m_fCubesize.m_fY = (roundf(m_fCubesize.m_fY / step) * step) + 1.f;
+								if (ImGui::InputFloat("SizeY", &m_fCubesize.m_fY))
+									m_fCubesize.m_fY = (roundf(m_fCubesize.m_fY / step) * step) - 1.f;
 								ImGui::SameLine();
+
 								ImGui::SetNextItemWidth(70.0f);
-								if (ImGui::SliderFloat("SizeZ", &m_fCubesize.m_fZ, min, max))
-									m_fCubesize.m_fZ = (roundf(m_fCubesize.m_fZ / step) * step) + 1.f;
+								if (ImGui::InputFloat("SizeZ", &m_fCubesize.m_fZ))
+									m_fCubesize.m_fZ = (roundf(m_fCubesize.m_fZ / step) * step) - 1.f;
 							}
 
 							ImGui::NewLine();
@@ -223,9 +222,7 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 					{
 						m_bBuild_Mode_Check = false;
 
-						float min = 0.0f;  // 최솟값 설정
-						float max = 15.0f; // 최댓값 설정
-						float step = 0.5f; // 단위 설정
+						float step = 2.f; // 단위 설정
 
 						ImGui::Image(selected_texture1, ImVec2(96.0f, 96.0f), uv2, uv3, tint_col1, ImVec4(0.0f, 1.0f, 0.0f, 1.0f));
 						ImGui::NewLine();
@@ -238,26 +235,29 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 
 						ImGui::SameLine();
 						char TextNow[MAX_PATH];
-						sprintf_s(TextNow, u8"큐브 높이: %.f", m_fCubeHeightLevel);
+						sprintf_s(TextNow, u8"높이: %.f", m_fCubeHeightLevel);
 						ImGui::Text(TextNow);
 
-						ImGui::SameLine();
+						ImGui::Checkbox("Delete Mode", &m_bDelete_Mode_Check);
+
 						ImGui::Checkbox("unnormalized", &m_bNotNormal_Check);
 						if (m_bNotNormal_Check == false)
 						{
 							m_fCubesize = { 1.f, 1.f, 1.f };
 						}
-						else {
+						else if (m_bNotNormal_Check == true) {
 							ImGui::SetNextItemWidth(70.0f);
-							if (ImGui::SliderFloat("sizeX", &m_fCubesize.m_fX, min, max))
+							if (ImGui::InputFloat("sizeX", &m_fCubesize.m_fX))
 								m_fCubesize.m_fX = (roundf(m_fCubesize.m_fX / step) * step) + 1.f;
 							ImGui::SameLine();
+
 							ImGui::SetNextItemWidth(70.0f);
-							if (ImGui::SliderFloat("SizeY", &m_fCubesize.m_fY, min, max))
+							if (ImGui::InputFloat("SizeY", &m_fCubesize.m_fY))
 								m_fCubesize.m_fY = (roundf(m_fCubesize.m_fY / step) * step) + 1.f;
 							ImGui::SameLine();
+
 							ImGui::SetNextItemWidth(70.0f);
-							if (ImGui::SliderFloat("SizeZ", &m_fCubesize.m_fZ, min, max))
+							if (ImGui::InputFloat("SizeZ", &m_fCubesize.m_fZ))
 								m_fCubesize.m_fZ = (roundf(m_fCubesize.m_fZ / step) * step) + 1.f;
 						}
 
@@ -267,7 +267,6 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 						ImGui::Checkbox(u8"Cube", &m_bCubeType);
 						if (true == m_bCubeType)
 						{
-							m_bCrossType = false;
 							m_bPlaneType = false;
 							Set_OBJType(OBJ_TYPE::CUBE_OBJ);
 
@@ -295,40 +294,6 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 								ImGui::NewLine();
 							}
 						}
-// 						ImGui::Separator(); // 가로 줄 추가
-// 						ImGui::Text(u8"OBJ - Cross Texture");
-// 
-// 						ImGui::Checkbox(u8"Cross", &m_bCrossType);
-// 						if (true == m_bCrossType)
-// 						{
-// 							m_bCubeType = false;
-// 							m_bPlaneType = false;
-// 							Set_OBJType(OBJ_TYPE::CROSS_OBJ);
-// 
-// 							for (int i = 0; i < 1; i++) //가로줄(행) 갯수
-// 							{
-// 								for (int j = 0; j < 10; j++) //세로줄(열) 갯수
-// 								{
-// 									_int iIndex = (10 * i + j) + crossTextureStartIndex;
-// 
-// 									if (iIndex >= crossTextureStartIndex && iIndex < crossTextureStartIndex + m_pCrossTexture0.size())
-// 									{
-// 										ImGui::PushID(iIndex);
-// 
-// 										if (ImGui::ImageButton("", m_pCrossTexture0[iIndex - crossTextureStartIndex], size1))
-// 										{
-// 											selected_texture1 = m_pCrossTexture0[iIndex - crossTextureStartIndex];
-// 											selected_texture_index1 = iIndex;
-// 											m_iOBJTextureNum = iIndex;
-// 										}
-// 
-// 										ImGui::PopID();
-// 										ImGui::SameLine();
-// 									}
-// 								}
-// 								ImGui::NewLine();
-// 							}
-// 						}
 
 						ImGui::Separator(); // 가로 줄 추가
 						ImGui::Text(u8"OBJ - Plane Texture");
@@ -337,14 +302,31 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 						if (true == m_bPlaneType)
 						{
 							m_bCubeType = false;
-							m_bCrossType = false;
 							Set_OBJType(OBJ_TYPE::PLANE_OBJ);
+
+
+							if(ImGui::Button(u8"시계방향 회전")) //90도 단위로 회전
+							{
+								m_Rotate_Count_CW++;
+							}
+							
+							ImGui::SameLine();
+							if (ImGui::Button(u8"반시계방향 회전"))
+							{
+								m_Rotate_Count_CCW++;
+							}
+
+							ImGui::SameLine();
+							ImGui::Text(u8"회전 횟수 : %d", (m_Rotate_Count_CW - m_Rotate_Count_CCW));
+
+							ImGui::SameLine();
+							ImGui::Button(u8"회전 카운트 Reset");
 
 							for (int i = 0; i < 1; i++) //가로줄(행) 갯수
 							{
-								for (int j = 0; j < 20; j++) //세로줄(열) 갯수
+								for (int j = 0; j < 30; j++) //세로줄(열) 갯수
 								{
-									_int iIndex = (10 * i + j) + planeTextureStartIndex;
+									_int iIndex = (30 * i + j) + planeTextureStartIndex;
 
 									if (iIndex >= planeTextureStartIndex && iIndex < planeTextureStartIndex + m_pPlaneTexture0.size())
 									{
@@ -520,8 +502,6 @@ if (ImGui::TreeNode(u8"UI 툴"))
             ImGui::TreePop();
         }
 #pragma endregion
-
-
 
         ImGui::End();
     }
@@ -902,7 +882,7 @@ void CImGuiManager::LoadTexturesFromDirectory(const wchar_t* folderPath, vector<
 
 			wstring filePath = (wstring)folderPath + L"\\" + findData.cFileName;
 
-			// 파일인 경우, dds 또는 png 파일인지 확인하고 로드
+			// 파일인 경우, dds 파일인지 확인하고 로드
 			if (wcsstr(findData.cFileName, L".dds"))
 			{
 				IDirect3DCubeTexture9* pTexture = nullptr;
@@ -945,12 +925,15 @@ void CImGuiManager::LoadTexturesFromDirectory(const wchar_t* folderPath, vector<
 		m_FileName.push_back(iter->stFileName);
 		textureVector.push_back(iter->tTexture);
 	}
+
+	int i = 0;
 }
 
 void CImGuiManager::LoadTexturesFromDirectory(const wchar_t* folderPath, vector<IDirect3DBaseTexture9*>& textureVector)
 {
 	WIN32_FIND_DATA findData;
 	wstring wfolderPath = (wstring)folderPath + L"\\*";
+	string	m_NameTemp;
 
 	HANDLE hFind = FindFirstFileW(wfolderPath.c_str(), &findData);
 
@@ -964,14 +947,36 @@ void CImGuiManager::LoadTexturesFromDirectory(const wchar_t* folderPath, vector<
 
 			wstring filePath = (wstring)folderPath + L"\\" + findData.cFileName;
 
-			// 파일인 경우, dds 또는 png 파일인지 확인하고 로드
-			if (wcsstr(findData.cFileName, L".dds") || wcsstr(findData.cFileName, L".png"))
+			// 파일인 경우, png 파일인지 확인하고 로드
+			if (wcsstr(findData.cFileName, L".png"))
 			{
 				IDirect3DCubeTexture9* pTexture = nullptr;
 				if (SUCCEEDED(D3DXCreateTextureFromFile(Engine::Get_GraphicDev(), filePath.c_str(), (LPDIRECT3DTEXTURE9*)&pTexture)))
 				{
-					m_FileName.push_back(buffer);
-					textureVector.push_back(pTexture);
+
+					m_defSortTex = new SORTTEX;
+
+					m_NameTemp = buffer;
+					string	stFileTemp = ".dds";
+
+					m_NameTemp = m_NameTemp.substr(10);
+					size_t  found = m_NameTemp.find(stFileTemp);
+
+					m_defSortTex->iIndex = m_iIndex;
+					m_defSortTex->stFileName = buffer;
+					m_defSortTex->tTexture = pTexture;
+
+					if (found != std::string::npos) //Find가 안 된게 아니라면
+					{
+						m_NameTemp.erase(found, stFileTemp.length());
+					}
+
+					m_defSortTex->iNameNumber = stoi(m_NameTemp);
+
+					m_pTexForSort.push_back(m_defSortTex);
+
+					m_iIndex++;
+
 				}
 			}
 
@@ -979,6 +984,18 @@ void CImGuiManager::LoadTexturesFromDirectory(const wchar_t* folderPath, vector<
 
 		FindClose(hFind);
 	}
+
+	sort(m_pTexForSort.begin(), m_pTexForSort.end(),
+		[](const SORTTEX* pTex1, const SORTTEX* pTex2)
+		{	return pTex1->iNameNumber < pTex2->iNameNumber;	});
+
+	for (auto& iter : m_pTexForSort)
+	{
+		m_FileName.push_back(iter->stFileName);
+		textureVector.push_back(iter->tTexture);
+	}
+
+	int i = 0;
 }
 
 void CImGuiManager::Save_ObjData()

@@ -58,9 +58,6 @@ public:
 	bool		Get_Load_Check() { return m_bLoad_Check; }
 	void	 	Set_Load_Check() { m_bLoad_Check = !m_bLoad_Check; }
 
-	bool		Get_ALLDelete_Check() { return m_bALLDelete_Check; }
-	void		Set_ALLDelete_Check() { m_bALLDelete_Check = !m_bALLDelete_Check; }
-
 	bool		Get_DeleteMode_Check() { return m_bDelete_Mode_Check; }
 	bool		Get_NotNormal_Check() { return m_bNotNormal_Check; }
 	bool		Get_BuildModeCheck() { return m_bBuild_Mode_Check; }
@@ -89,7 +86,6 @@ private:
 	float								m_fCubeHeightLevel		 = 0.f;
 	bool								m_bLoad_Check			 = false;
 
-	bool								m_bALLDelete_Check		 = false;
 	bool								m_bDelete_Mode_Check	 = false;
 	bool								m_bNotNormal_Check		 = false;
 	bool								m_bRotate_Check			 = false;
@@ -99,6 +95,13 @@ private:
 
 	///////////////////// 유진 OBJ툴 ////////////////////////////////
 public:
+	typedef struct	SortTexture {  //평면 텍스쳐 정렬 목적 구조체
+		_uint					iIndex;			//인덱스
+		char* stFileName;
+		_uint					iNameNumber;	//파일명 끝의 숫자
+		IDirect3DBaseTexture9* tTexture;
+	}SORTTEX;
+
 	void				LoadTexturesFromDirectory
 						(const wchar_t* folderPath, vector<IDirect3DCubeTexture9*>& textureVector);
 	void				LoadTexturesFromDirectory
@@ -113,13 +116,19 @@ public:
 	_uint				Get_OBJTexNum() { return m_iOBJTextureNum; }
 
 	vector<IDirect3DCubeTexture9*>&		Get_CubeTextureObjVector() { return m_pCubeTextureObj; }
-	vector<IDirect3DBaseTexture9*>&		Get_CrossTextureObjVector() { return m_pCrossTexture0; }
 	vector<IDirect3DBaseTexture9*>&		Get_PlaneTextureObjVector() { return m_pPlaneTexture0; }
+
+	_uint				Get_OBJ_RotateCountCW() { return m_Rotate_Count_CW; }
+	_uint				Get_OBJ_RotateCountCCW() { return m_Rotate_Count_CCW; }
+	void				Set_OBJ_RotateCountCW_Zero() { m_Rotate_Count_CW = 0; }
+	void				Set_OBJ_RotateCountCCW_Zero() { m_Rotate_Count_CCW = 0; }
 
 private:
 
+	SORTTEX*							m_defSortTex = nullptr;
+	vector<SORTTEX*>					m_pTexForSort; //텍스쳐 정렬용
+
 	vector<IDirect3DCubeTexture9*>		m_pCubeTextureObj; //환경 OBJ 중 큐브
-	vector<IDirect3DBaseTexture9*>		m_pCrossTexture0;  //환경 OBJ 중 Cross
 	vector<IDirect3DBaseTexture9*>		m_pPlaneTexture0;  //환경 OBJ 중 Plane
 
 	ImTextureID							selected_texture1       = nullptr;
@@ -127,7 +136,6 @@ private:
 	_uint								m_iOBJTextureNum		= 1;
 
 	const int							cubeTextureStartIndex   = 1000;
-	const int							crossTextureStartIndex  = 2000;
 	const int							planeTextureStartIndex  = 3000;
 
 	bool								m_bMainAngleRot			= false;
@@ -136,13 +144,14 @@ private:
 	bool								m_bOBJ_Mode_Check		= false;
 
 	bool								m_bCubeType				= false;
-	bool								m_bCrossType			= false;
 	bool								m_bPlaneType			= false;
 	OBJ_TYPE							m_eOBJType				= OBJ_TYPE::OBJ_TYPE_END;
 
 	vector<OBJData*>					vectorOBJPlaneTemp;
-	//vector<OBJData*>					vectorOBJCubeTemp;
-	//vector<OBJData*>					vectorOBJCrossTemp;
+	vector<OBJData*>					vectorOBJCubeTemp;
+
+	_uint								m_Rotate_Count_CW;  //시계방향
+	_uint								m_Rotate_Count_CCW; //반시계방향
 
 	///////////////////// 승용 UI툴 /////////////////////////////////
 public:
