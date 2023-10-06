@@ -959,7 +959,7 @@ void CImGuiManager::LoadTexturesFromDirectory(const wchar_t* folderPath, vector<
 					m_NameTemp = buffer;
 					string	stFileTemp = ".dds";
 
-					m_NameTemp = m_NameTemp.substr(8);
+					m_NameTemp = m_NameTemp.substr(10);
 					size_t  found = m_NameTemp.find(stFileTemp);
 
 					m_defSortTex->iIndex = m_iIndex;
