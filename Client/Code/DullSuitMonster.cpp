@@ -39,7 +39,7 @@ HRESULT CDullSuitMonster::Ready_GameObject()
     INFO.MonsterState = m_pStateArray[IDLE];
     INFO.MonsterState->Initialize(this);
     INFO.fHP = 80.f;
-    INFO.vPos = { 40.f,4.f,20.f };
+    INFO.vPos = { 220.f,4.f,35.f };
 
     m_fDectedRange = 150.f;
     m_fAttackRange = 70.f;
