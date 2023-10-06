@@ -160,6 +160,7 @@ void CollisionMgr::CheckCollisionByType(OBJECTTAG _eObjectLeft, OBJECTTAG _eObje
 						iter->second = false;
 					}
 				}
+				//return;
 			}
 			else
 			{		// 현재 충돌 x면
@@ -168,6 +169,7 @@ void CollisionMgr::CheckCollisionByType(OBJECTTAG _eObjectLeft, OBJECTTAG _eObje
 					pLeftCol->OnCollisionExit(pRightCol);
 					pRightCol->OnCollisionExit(pLeftCol);
 					iter->second = false;
+					return;
 				}
 			}
 		}
