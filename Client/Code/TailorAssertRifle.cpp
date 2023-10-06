@@ -1,5 +1,14 @@
 #include "stdafx.h"
 #include "TailorAssertRifle.h"
+#include "TailorAssertRifle_Idle.h"
+#include "TailorAssertRifle_Ready.h"
+#include "TailorAssertRifle_Reload.h"
+#include "TailorAssertRifle_Shot.h"
+#include "TailorAssertRifle_Walk.h"
+
+//#include "TailorAssertRifle_Jump.h"
+//#include "TailorAssertRifle_Bomb.h"
+
 #include "Player.h"
 
 #include "Export_System.h"
@@ -30,6 +39,9 @@ HRESULT CTailorAssertRifle::Ready_GameObject()
 	m_pTransformCom->Rotation(ROT_X, D3DXToRadian(3.f));
 	m_eBulletType = BULLETTYPE::ASSERTRIFLE_BULLET;
 
+	m_pGunState = m_pStateArray[IDLE];
+	m_pGunState->Initialize(this);
+
 	m_fGunMoveRight = 3;
 	m_fGunMoveDown = 1.f;
 	m_vScale = { 1.3f,1.3f,1.3f };
@@ -41,10 +53,10 @@ HRESULT CTailorAssertRifle::Ready_GameObject()
 
 Engine::_int CTailorAssertRifle::Update_GameObject(const _float& fTimeDelta)
 {
+	HostMove(fTimeDelta);
+
 	if (dynamic_cast<CPlayer*>(m_pHost)->Get_INFO()->Player_GunType == PLAYER_GUNTYPE::ASSERTRIFLE)
 	{
-		HostMove(fTimeDelta);
-
 		__super::Update_GameObject(fTimeDelta);
 	}
 
@@ -69,6 +81,14 @@ void CTailorAssertRifle::Render_GameObject()
 
 void CTailorAssertRifle::ReadyState()
 {
+	m_pStateArray[IDLE] = new CTailorAssertRifle_Idle;
+	m_pStateArray[WALK] = new CTailorAssertRifle_Walk;
+	//m_pStateArray[JUMP] = new CTailorAssertRifle_Jump;
+	m_pStateArray[READY] = new CTailorAssertRifle_Ready;
+	m_pStateArray[SHOT] = new CTailorAssertRifle_Shot;
+	m_pStateArray[RELOAD] = new CTailorAssertRifle_Reload;
+	//m_pStateArray[BOMB] = new CTailorAssertRifle_Bomb;
+	//m_pStateArray[ENTER] = new CTailorAssertRifle_Enter;
 }
 
 HRESULT CTailorAssertRifle::Add_Component()

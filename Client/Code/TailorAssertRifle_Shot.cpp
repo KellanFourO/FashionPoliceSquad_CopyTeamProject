@@ -1,9 +1,5 @@
 #include "stdafx.h"
 #include "TailorAssertRifle_Shot.h"
-
-#include "Rifle_IDLE.h"
-#include "Rifle_READY.h"
-
 #include "Export_System.h"
 #include "Export_Utility.h"
 
@@ -24,7 +20,8 @@ void CTailorAssertRifle_Shot::Initialize(CPlayerGun* Rifle)
 {
     m_bAttack = false;
 
-    m_vBaseScale = Rifle->m_vGunScale;
+    m_vBaseScale = m_pHost->Get_Scale();
+    //m_vBaseScale = Rifle->m_vGunScale;
 
     m_fMoveRightSum = -0.07f;
     m_fMoveDownSum = 0.04f;
@@ -34,31 +31,37 @@ void CTailorAssertRifle_Shot::Initialize(CPlayerGun* Rifle)
     m_fScaleMax = 1.1f;
     m_fScaleReduce = 0.99f;
 
-    Rifle->m_vGunScale *= m_fScaleMax;
+    //Rifle->m_vGunScale *= m_fScaleMax;
+    m_pHost->Mul_GunScale(m_fScaleMax);
 
-    Rifle->m_fGunMoveRight += m_fMoveRightMax;
-    Rifle->m_fGunMoveDown -= m_fMoveUpMax;
+    m_pHost->Add_GunMoveRight(m_fMoveRightMax);
+    m_pHost->Reduce_GunMoveDown(m_fMoveUpMax);
+    //Rifle->m_fGunMoveRight += m_fMoveRightMax;
+    //Rifle->m_fGunMoveDown -= m_fMoveUpMax;
 
 
 }
 
-CRifleState* CTailorAssertRifle_Shot::Update(CPlayerGun* Rifle, const float& fTimeDelta)
+CPlayerGunState* CTailorAssertRifle_Shot::Update(CPlayerGun* Rifle, const float& fTimeDelta)
 {
     m_fBehaviorTime += fTimeDelta;
 
     if (m_fBehaviorTime >= 0.02f) {
-        Rifle->m_fGunMoveRight += m_fMoveRightSum;
-        Rifle->m_fGunMoveDown += m_fMoveDownSum;
-        Rifle->m_vGunScale *= m_fScaleReduce;
+        m_pHost->Add_GunMoveRight(m_fMoveRightSum);
+        m_pHost->Add_GunMoveDown(m_fMoveDownSum);
+        m_pHost->Mul_GunScale(m_fScaleReduce);
+        //Rifle->m_fGunMoveRight += m_fMoveRightSum;
+        //Rifle->m_fGunMoveDown += m_fMoveDownSum;
+        //Rifle->m_vGunScale *= m_fScaleReduce;
     }
 
-    if (Rifle->m_fGunMoveRight <= 3.f)
-    {
-        return new CRifle_IDLE;
-    }
-    if (Rifle->m_bReady) {
-        return new CRifle_READY;
-    }
+    //if (m_pHost->Get_GunMoveRight() <= 3.f)
+    //{
+    //    return new CRifle_IDLE;
+    //}
+    //if (Rifle->m_bReady) {
+    //    return new CRifle_READY;
+    //}
     return nullptr;
 }
 

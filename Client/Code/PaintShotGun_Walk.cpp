@@ -22,7 +22,7 @@ void CPaintShotGun_Walk::Initialize(CPlayerGun* ShotGun)
     m_pHost = dynamic_cast<CPaintShotGun*>(ShotGun);
 
     _vec3   vPlayerPos;
-    m_pHost->Get_Transform()->Get_Info(INFO_POS,&vPlayerPos);
+    m_pHost->Get_HostTransform()->Get_Info(INFO_POS,&vPlayerPos);
 
     m_vPrePos = vPlayerPos;
 
@@ -60,13 +60,14 @@ CPlayerGunState* CPaintShotGun_Walk::Update(CPlayerGun* ShotGun, const float& fT
 
 
 
-	//_vec3   vPlayerPos;
-	//m_pHost->m_pTransformCom->Get_Info(INFO_POS, &vPlayerPos);
-	//
-	//if (m_vPrePos == vPlayerPos){
-	//    return m_pHost->Get_State(0); // Idle
-	//}
-	//m_vPrePos = vPlayerPos;
+	_vec3   vPlayerPos;
+	m_pHost->Get_HostTransform()->Get_Info(INFO_POS, &vPlayerPos);
+
+	if (m_vPrePos == vPlayerPos) {
+		return dynamic_cast<CPaintShotGun*>(m_pHost)->Get_State(0); // Idle
+	}
+
+    m_vPrePos = vPlayerPos;
 	//if (ShotGun->m_bReload == true) {
 	//    return m_pHost->Get_State(5); // Reload
 	//}

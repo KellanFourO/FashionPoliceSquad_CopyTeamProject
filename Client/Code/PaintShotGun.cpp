@@ -1,6 +1,17 @@
 #include "stdafx.h"
 #include "PaintShotGun.h"
 #include "Player.h"
+
+#include "PaintShotGun_Enter.h"
+#include "PaintShotGun_Idle.h"
+#include "PaintShotGun_Jump.h"
+#include "PaintShotGun_Lazer.h"
+#include "PaintShotGun_Ready.h"
+#include "PaintShotGun_Reload.h"
+#include "PaintShotGun_Shot.h"
+#include "PaintShotGun_Walk.h"
+
+
 #include "Export_System.h"
 #include "Export_Utility.h"
 
@@ -29,6 +40,9 @@ HRESULT CPaintShotGun::Ready_GameObject()
 	m_pTransformCom->Rotation(ROT_X, D3DXToRadian(3.f));
 	m_eBulletType = BULLETTYPE::SHOTGUN_BULLET;
 
+	m_pGunState = m_pStateArray[IDLE];
+	m_pGunState->Initialize(this);
+
 	m_fGunMoveRight = 3;
 	m_fGunMoveDown = 1.f;
 	m_vScale = { 1.3f,1.3f,1.3f };
@@ -54,10 +68,10 @@ HRESULT CPaintShotGun::Ready_GameObject()
 
 Engine::_int CPaintShotGun::Update_GameObject(const _float& fTimeDelta)
 {
+	HostMove(fTimeDelta);
+
 	if (dynamic_cast<CPlayer*>(m_pHost)->Get_INFO()->Player_GunType == PLAYER_GUNTYPE::SHOTGUN)
 	{
-		HostMove(fTimeDelta);
-
 		__super::Update_GameObject(fTimeDelta);
 	}
 	return OBJ_NOEVENT;
@@ -103,14 +117,14 @@ HRESULT CPaintShotGun::Add_Component()
 
 void CPaintShotGun::ReadyState()
 {
-	//m_pStateArray[IDLE]		= new CShotGun_IDLE;
-	//m_pStateArray[WALK]		= new CShotGun_WALK;
-	//m_pStateArray[JUMP]		= new CShotGun_JUMP;
-	//m_pStateArray[READY]	= new CShotGun_READY;
-	//m_pStateArray[SHOT]		= new CShotGun_SHOT;
-	//m_pStateArray[RELOAD]	= new CShotGun_RELOAD;
-	//m_pStateArray[LAZER]	= new CShotGun_Lazer;
-	//m_pStateArray[ENTER]	= new CShotGun_ENTER;
+	m_pStateArray[IDLE]		= new CPaintShotGun_Idle;
+	m_pStateArray[WALK]		= new CPaintShotGun_Walk;
+	m_pStateArray[JUMP]		= new CPaintShotGun_Jump;
+	m_pStateArray[READY]	= new CPaintShotGun_Ready;
+	m_pStateArray[SHOT]		= new CPaintShotGun_Shot;
+	m_pStateArray[RELOAD]	= new CPaintShotGun_Reload;
+	m_pStateArray[LAZER]	= new CPaintShotGun_Lazer;
+	m_pStateArray[ENTER]	= new CPaintShotGun_Enter;
 }
 
 CPaintShotGun* CPaintShotGun::Create(LPDIRECT3DDEVICE9 pGraphicDev, CPlayer* pPlayer)

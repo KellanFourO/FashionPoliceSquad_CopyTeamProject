@@ -412,6 +412,9 @@
     <Filter Include="02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\05. TailorAssertRifle_Bomb">
       <UniqueIdentifier>{a68edbc2-9a61-42b5-8706-2f4e2359f84c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\07. PaintShotGun_Jump">
+      <UniqueIdentifier>{10f7750f-d3e3-45af-b1a8-b487ab211cbd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -876,6 +879,9 @@
     <ClInclude Include="..\Header\TailorAssertRifle_Walk.h">
       <Filter>02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\04. TailorAssertRifle_Walk</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\PaintShotGun_Jump.h">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\07. PaintShotGun_Jump</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1294,6 +1300,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\TailorAssertRifle_Walk.cpp">
       <Filter>02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\04. TailorAssertRifle_Walk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PaintShotGun_Jump.cpp">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\07. PaintShotGun_Jump</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

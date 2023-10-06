@@ -21,7 +21,7 @@ private:
 	explicit		CPaintShotGun(const CPaintShotGun& rhs);
 	virtual			~CPaintShotGun();
 
-	enum SHOTGUNSTATE { IDLE, WALK, JUMP, READY, SHOT, RELOAD, LAZER, SHOTGUNSTATE_END};
+	enum SHOTGUNSTATE { IDLE, WALK, JUMP, READY, SHOT, RELOAD, LAZER, ENTER, SHOTGUNSTATE_END};
 
 public:
 	virtual	HRESULT		Ready_GameObject() override;

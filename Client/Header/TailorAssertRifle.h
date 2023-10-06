@@ -30,12 +30,14 @@ public:
 	virtual void	Render_GameObject() override;
 	virtual void	ReadyState();
 
+public:
+	CPlayerGunState* Get_State(_int _index) { return m_pStateArray[_index]; }
+
 private:
 	HRESULT			Add_Component();
 
 private:
 	CRcTex*					m_pBufferCom = nullptr;
-	CTransform*				m_pTransformCom = nullptr;
 	CTexture*				m_pTextureCom = nullptr;
 
 	CPlayerGunState*		m_pStateArray[ASSERTRIFLESTATE_END];

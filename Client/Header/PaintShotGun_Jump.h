@@ -1,16 +1,17 @@
 #pragma once
-#include "ShotGunState.h"
-class CShotGun_JUMP : public CShotGunState
+#include "PlayerGunState.h"
+class CPaintShotGun_Jump : public CPlayerGunState
 {
 public:
-	CShotGun_JUMP();
-	virtual ~CShotGun_JUMP();
+	CPaintShotGun_Jump();
+	virtual ~CPaintShotGun_Jump();
 
 public:
-	virtual void Initialize(CGun* _ShotGun) override;
-	virtual CShotGunState* Update(CGun* ShotGun, const float& fDetltaTime) override;
-	virtual void Release(CGun* _ShotGun) override;
+	virtual void Initialize(CPlayerGun* _ShotGun) override;
+	virtual CPlayerGunState* Update(CPlayerGun* ShotGun, const float& fDetltaTime) override;
+	virtual void Release(CPlayerGun* _ShotGun) override;
 
+private:
 	_bool m_bAttack = false;
 
 	_float m_fMoveRightSum = -0.025f;

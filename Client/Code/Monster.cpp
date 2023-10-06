@@ -271,7 +271,7 @@ _bool CMonster::ChaseCatch()
 	return false;
 }
 
-void CMonster::StateMachine(_float fTimeDelta)
+void CMonster::StateMachine(const _float& fTimeDelta)
 {
 	CMonsterState* State = INFO.MonsterState->Update(this, fTimeDelta);
 	if (State != nullptr) {
@@ -346,7 +346,7 @@ void CMonster::Set_TransPos()
 	m_pTransformCom->Set_Pos(INFO.vPos);
 }
 
-void CMonster::Chase_Target(_float fTimeDelta)
+void CMonster::Chase_Target(const _float& fTimeDelta)
 {
 
 

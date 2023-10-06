@@ -16,22 +16,27 @@ CTailorAssertRifle_Idle::~CTailorAssertRifle_Idle()
 }
 void CTailorAssertRifle_Idle::Initialize(CPlayerGun* Rifle)
 {
-	m_pHost = dynamic_cast<CPaintShotGun*>(Rifle);
+	m_pHost = Rifle;
 
+	_vec3   vPlayerPos;
+	m_pHost->Get_HostTransform()->Get_Info(INFO_POS, &vPlayerPos);
 
-    _vec3   vPlayerPos;
-	m_pHost->Get_Transform()->Get_Info(INFO_POS, &vPlayerPos);
-    m_vPrePos = vPlayerPos;
+	m_vPrePos = vPlayerPos;
 
-    m_bAttack = false;
+	m_bAttack = false;
 }
 
 CPlayerGunState* CTailorAssertRifle_Idle::Update(CPlayerGun* Rifle, const float& fTimeDelta)
 {
-    m_fBehaviorTime += fTimeDelta;
-	_vec3   vPlayerPos;
-	m_pHost->Get_Transform()->Get_Info(INFO_POS, &vPlayerPos);
+	m_fBehaviorTime += fTimeDelta;
 
+	_vec3   vPlayerPos;
+	m_pHost->Get_HostTransform()->Get_Info(INFO_POS, &vPlayerPos);
+
+	if (m_vPrePos != vPlayerPos) {
+	    return dynamic_cast<CTailorAssertRifle*>(m_pHost)->Get_State(1); // Walk
+	}
+	m_vPrePos = vPlayerPos;
 	//if (m_vPrePos != vPlayerPos) {
 	//    return new CRifle_WALK;
 	//}

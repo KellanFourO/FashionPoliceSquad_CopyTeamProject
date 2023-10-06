@@ -31,6 +31,7 @@ public:
 public:
 	CRcTex*			Get_Buffer() { return m_pBufferCom; }
 	CTransform*		Get_Transform() { return m_pTransformCom; }
+	CTransform*		Get_HostTransform() { return m_pHostTransformCom; }
 	CTexture*		Get_Texture() { return m_pTextureCom; }
 	_float			Get_GunMoveDown() { return m_fGunMoveDown; }
 	_float			Get_GunMoveRight() { return m_fGunMoveRight; }
@@ -54,7 +55,7 @@ protected:
 	void			Fire();
 	void			Reload(_int _ColorIndex, _int _iRandomIndex); //! ColorIndex 매개변수는 샷건전용, RandomIndex는 라이플 전용
 	void			Rebound();
-	void			StateMachine();
+	void			StateMachine(const _float& fTimeDelta);
 	void			HostMove(const _float& fTimeDelta);
 	void			MouseInput();
 
@@ -78,10 +79,12 @@ protected:
 	_vec3				m_vShotPos;	 // 총구 위치
 	_vec3				m_vShotDir;  // 발사할 방향
 
-	vector<CBullet*>	m_vecBullet;
+	CPlayerGunState*	m_pGunState = nullptr; // 총 상태
+	vector<CBullet*>	m_vecBullet; // 총알 관리하는 벡터
 
 	CGameObject*		m_pHost	= nullptr;
 	BULLETTYPE			m_eBulletType = BULLETTYPE::BULLETTYPE_END;
+
 
 protected:
 	CRcTex*			m_pBufferCom = nullptr;

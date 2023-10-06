@@ -6,6 +6,7 @@
 
 #include "ShotGun_Bullet.h"
 #include "Rifle_Bullet1.h"
+#include "PlayerGunState.h"
 
 CPlayerGun::CPlayerGun(LPDIRECT3DDEVICE9 pGraphicDev):CGameObject(pGraphicDev)
 {
@@ -30,6 +31,8 @@ HRESULT CPlayerGun::Ready_GameObject()
 _int CPlayerGun::Update_GameObject(const _float& fTimeDelta)
 {
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
+
+	StateMachine(fTimeDelta);
 
 	__super::Update_GameObject(fTimeDelta);
 	return OBJ_NOEVENT;
@@ -136,8 +139,13 @@ void CPlayerGun::Rebound()
 {
 }
 
-void CPlayerGun::StateMachine()
+void CPlayerGun::StateMachine(const _float& fTimeDelta)
 {
+	CPlayerGunState* State = m_pGunState->Update(this, fTimeDelta);
+	if (State != nullptr) {
+		m_pGunState = State;
+		m_pGunState->Initialize(this);
+	}
 }
 
 void CPlayerGun::HostMove(const _float& fTimeDelta)
@@ -185,6 +193,7 @@ void CPlayerGun::MouseInput()
 		m_pTransformCom->Rotation(ROT_X, D3DXToRadian(dwMouseMove / 10.f));
 	}
 }
+
 
 void CPlayerGun::Ready_State()
 {

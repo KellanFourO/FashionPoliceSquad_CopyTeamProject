@@ -75,8 +75,8 @@ public:
 	void				BillBoard();
 	_bool				Detect();
 	_bool				ChaseCatch();
-	void				Chase_Target(_float fTimeDelta); // 몬스터 이동 코드
-	void				StateMachine(_float fTimeDelta);
+	void				Chase_Target(const _float& fTimeDelta); // 몬스터 이동 코드
+	void				StateMachine(const _float& fTimeDelta);
 
 
 	void				Change_State_IDLE();

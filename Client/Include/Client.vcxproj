@@ -246,6 +246,7 @@
     <ClInclude Include="..\Header\PaintShotGun.h" />
     <ClInclude Include="..\Header\PaintShotGun_Enter.h" />
     <ClInclude Include="..\Header\PaintShotGun_Idle.h" />
+    <ClInclude Include="..\Header\PaintShotGun_Jump.h" />
     <ClInclude Include="..\Header\PaintShotGun_Lazer.h" />
     <ClInclude Include="..\Header\PaintShotGun_Ready.h" />
     <ClInclude Include="..\Header\PaintShotGun_Reload.h" />
@@ -361,6 +362,7 @@
     <ClCompile Include="..\Code\PaintShotGun.cpp" />
     <ClCompile Include="..\Code\PaintShotGun_Enter.cpp" />
     <ClCompile Include="..\Code\PaintShotGun_Idle.cpp" />
+    <ClCompile Include="..\Code\PaintShotGun_Jump.cpp" />
     <ClCompile Include="..\Code\PaintShotGun_Lazer.cpp" />
     <ClCompile Include="..\Code\PaintShotGun_Ready.cpp" />
     <ClCompile Include="..\Code\PaintShotGun_Reload.cpp" />
