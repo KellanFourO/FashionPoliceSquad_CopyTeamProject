@@ -33,7 +33,7 @@
 #include "PSystem.h"
 
 BEGIN(Engine)
-
+class CScene;
 // Management
 inline CManagement* Management();
 inline CComponent* Get_Component(COMPONENTID eID, LAYERTAG eLayerTag, OBJECTTAG eObjTag, COMPONENTTAG eComponentTag);

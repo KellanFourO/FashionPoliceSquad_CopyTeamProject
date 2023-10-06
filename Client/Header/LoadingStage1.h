@@ -7,6 +7,8 @@
 #include "ProgressFrame.h"
 #include "ProgressValue.h"
 
+#include "Engine_Define.h"
+
 #include "Loading.h"
 
 
@@ -29,11 +31,11 @@ private:
 	HRESULT				Ready_Layer_UI(LAYERTAG eLayerTag) { return S_OK; }
 
 private:
-	CLoading* m_pLoading;
+	CLoading*					m_pLoading;
 	CLoading::LOADINGID			m_pLoadingID;
-
+	CScene*						m_pScene;
 	_int						m_CheckPoint;
-	CProgressValue* m_pProgressBar = nullptr;
+	CProgressValue*				m_pProgressBar = nullptr;
 
 
 

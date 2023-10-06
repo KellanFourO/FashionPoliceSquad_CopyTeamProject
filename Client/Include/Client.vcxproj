@@ -220,7 +220,6 @@
     <ClInclude Include="..\Header\KickBoard_IDLE.h" />
     <ClInclude Include="..\Header\Lazer.h" />
     <ClInclude Include="..\Header\Loading.h" />
-    <ClInclude Include="..\Header\LoadingStage.h" />
     <ClInclude Include="..\Header\LoadingStage1.h" />
     <ClInclude Include="..\Header\Logo.h" />
     <ClInclude Include="..\Header\MainApp.h" />
@@ -404,7 +403,6 @@
     <ClCompile Include="..\Code\Title.cpp" />
     <ClCompile Include="..\Code\UIMgr.cpp" />
     <ClCompile Include="Client.cpp" />
-    <ClCompile Include="LoadingStage.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
