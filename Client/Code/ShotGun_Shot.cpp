@@ -32,12 +32,12 @@ void CShotGun_SHOT::Initialize(CGun* ShotGun)
     m_fMoveRightMax = 0.9f;
     m_fMoveUpMax = 0.2f;
 
-    m_fScaleMax = 1.45f;
-    m_fScaleReduce = 0.99f;
+    //m_fScaleMax = 1.4f;
+    //m_fScaleReduce = 0.99f;
 
-    ShotGun->m_vGunScale *= m_fScaleMax;
+   // ShotGun->m_vGunScale *= m_fScaleMax;
 
-    ShotGun->m_fGunMoveRight += m_fMoveRightMax;
+	ShotGun->m_fGunMoveRight += m_fMoveRightMax;
     ShotGun->m_fGunMoveDown -= m_fMoveUpMax;
 
 
@@ -50,7 +50,7 @@ CShotGunState* CShotGun_SHOT::Update(CGun* ShotGun, const float& fDeltaTime)
     if (m_fBehaviorTime >= 0.02f) {
         ShotGun->m_fGunMoveRight += m_fMoveRightSum;
         ShotGun->m_fGunMoveDown += m_fMoveDownSum;
-        ShotGun->m_vGunScale*= m_fScaleReduce;
+        //ShotGun->m_vGunScale*= m_fScaleReduce;
     }
 
     if (ShotGun->m_fGunMoveRight <= 3.f)

@@ -240,6 +240,7 @@
     <ClInclude Include="..\Header\ObjectPoolMgr.h" />
     <ClInclude Include="..\Header\PaintBall.h" />
     <ClInclude Include="..\Header\Player.h" />
+    <ClInclude Include="..\Header\PlayerBullet.h" />
     <ClInclude Include="..\Header\PlayerState.h" />
     <ClInclude Include="..\Header\Player_Heal.h" />
     <ClInclude Include="..\Header\Player_Hit.h" />
@@ -331,6 +332,7 @@
     <ClCompile Include="..\Code\Lazer.cpp" />
     <ClCompile Include="..\Code\ObjectPoolMgr.cpp" />
     <ClCompile Include="..\Code\MissionObjective.cpp" />
+    <ClCompile Include="..\Code\PlayerBullet.cpp" />
     <ClCompile Include="..\Code\Player_Armor.cpp" />
     <ClCompile Include="..\Code\CrossHair.cpp" />
     <ClCompile Include="..\Code\CameraManager.cpp" />

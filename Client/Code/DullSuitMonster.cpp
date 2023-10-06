@@ -66,6 +66,7 @@ _int CDullSuitMonster::Update_GameObject(const _float& fTimeDelta)
 {
     __super::Update_GameObject(fTimeDelta);
 
+	m_pRigidBody->Update_RigidBody(fTimeDelta);
     return OBJ_NOEVENT;
 }
 
@@ -81,9 +82,9 @@ void CDullSuitMonster::LateUpdate_GameObject()
          INFO.bDead = false;
      }   // 사망판정
 
-    _vec3	vPos;
-    m_pTransformCom->Get_Info(INFO_POS, &vPos);
-    __super::Compute_ViewZ(&vPos);
+	//_vec3	vPos;
+	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	//__super::Compute_ViewZ(&vPos);
 }
 
 void CDullSuitMonster::Render_GameObject()
@@ -105,12 +106,13 @@ void CDullSuitMonster::ReadyState()
 
 void CDullSuitMonster::OnCollisionEnter(CCollider* _pOther)
 {
-    __super::OnCollisionEnter(_pOther);
+	__super::OnCollisionEnter(_pOther);
 
     // 충돌 밀어내기 후 이벤트 여기다가 구현 ㄱㄱ ! .
 
     if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYER)
     {
+
         cout << "워리어 공격" << endl;
     }
 

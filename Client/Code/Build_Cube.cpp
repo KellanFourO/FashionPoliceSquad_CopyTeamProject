@@ -61,13 +61,13 @@ HRESULT CBuild_Cube::Ready_GameObject(_vec3 pMouse_Pos, _vec3 Size)
 	m_pTransformCom->Set_Pos(pMouse_Pos);
 	m_pTransformCom->Set_Scale(Size);
 
-	if (pMouse_Pos.y >= 40.f) {
-		Set_ObjectTag(OBJECTTAG::DEAD_OBJ);
-	}
-	else {
-		Set_ObjectTag(OBJECTTAG::BUILD_CUBE);
-
-	}
+// 	if (pMouse_Pos.y >= 40.f) {
+// 		Set_ObjectTag(OBJECTTAG::DEAD_OBJ);
+// 	}
+// 	else {
+// 		Set_ObjectTag(OBJECTTAG::BUILD_CUBE);
+// 
+// 	}
 
 
 	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], m_pTransformCom->m_vScale);

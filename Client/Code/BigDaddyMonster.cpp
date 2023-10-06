@@ -71,7 +71,7 @@ _int CBigDaddyMonster::Update_GameObject(const _float& fTimeDelta)
 	__super::Update_GameObject(fTimeDelta);
 
 	//m_pUI_Recognition->Update_GameObject(fTimeDelta);
-
+	m_pRigidBody->Update_RigidBody(fTimeDelta);
 	return OBJ_NOEVENT;
 }
 
