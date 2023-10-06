@@ -12,7 +12,7 @@
 
 CBelt_IDLE::CBelt_IDLE()
 {
- 
+
 
 }
 
@@ -25,14 +25,14 @@ void CBelt_IDLE::Initialize(CBelt* Belt)
     m_bAttack = false;
 }
 
-CBeltState* CBelt_IDLE::Update(CBelt* Belt, const float& fDeltaTime)
+CBeltState* CBelt_IDLE::Update(CBelt* Belt, const float& fTimeDelta)
 {
-    m_fBehaviorTime += fDeltaTime;
-  
+    m_fBehaviorTime += fTimeDelta;
+
     if (Engine::Get_DIKeyState(DIK_LSHIFT) & 0x80) {
         return new CBelt_NORMAL;
     }
-    
+
 
     return nullptr;
 }

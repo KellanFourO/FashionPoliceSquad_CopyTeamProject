@@ -29,9 +29,9 @@ void CRifle_READY::Initialize(CGun* Rifle)
     Rifle->m_fGunMoveDown += m_fMoveDownMax;
 }
 
-CRifleState* CRifle_READY::Update(CGun* Rifle, const float& fDeltaTime)
+CRifleState* CRifle_READY::Update(CGun* Rifle, const float& fTimeDelta)
 {
-    m_fBehaviorTime += fDeltaTime;
+    m_fBehaviorTime += fTimeDelta;
 
     if (m_fBehaviorTime >= 0.02f) {
         Rifle->m_fGunMoveRight += m_fMoveRightSum;
@@ -41,7 +41,7 @@ CRifleState* CRifle_READY::Update(CGun* Rifle, const float& fDeltaTime)
         Rifle->m_bReady = false;
         return new CRifle_IDLE;
     }
-    //__super::Update(Rifle, fDeltaTime);
+    //__super::Update(Rifle, fTimeDelta);
     return nullptr;
 }
 

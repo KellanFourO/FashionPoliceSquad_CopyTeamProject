@@ -1,31 +1,24 @@
 #include "stdafx.h"
-#include "..\Header\ShotGun_WALK.h"
-
+#include "..\Header\ShotGun_JUMP.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
 
 //#include "BrifCase.h"
-//#include "..\Header\ShotGun_WALK_Walk.h"
-//#include "..\Header\ShotGun_WALK_Attack.h"
+//#include "..\Header\ShotGun_JUMP_JUMP.h"
+//#include "..\Header\ShotGun_JUMP_Attack.h"
 
-CShotGun_WALK::CShotGun_WALK()
+CShotGun_JUMP::CShotGun_JUMP()
 {
 
 
 }
 
-CShotGun_WALK::~CShotGun_WALK()
+CShotGun_JUMP::~CShotGun_JUMP()
 {
 }
-void CShotGun_WALK::Initialize(CGun* ShotGun)
+void CShotGun_JUMP::Initialize(CGun* ShotGun)
 {
     m_pHost = dynamic_cast<CDyehard*>(ShotGun);
-
-    _vec3   vPlayerPos;
-    m_pHost->m_pPlayerTransformCom->Get_Info(INFO_POS,&vPlayerPos);
-
-    m_vPrePos = vPlayerPos;
-
     m_bAttack = false;
 
     m_fMoveRightSum = -0.021f;
@@ -33,9 +26,9 @@ void CShotGun_WALK::Initialize(CGun* ShotGun)
 
 }
 
-CShotGunState* CShotGun_WALK::Update(CGun* ShotGun, const float& fTimeDelta)
+CShotGunState* CShotGun_JUMP::Update(CGun* ShotGun, const float& fDeltaTime)
 {
-    m_fBehaviorTime += fTimeDelta;
+    m_fBehaviorTime += fDeltaTime;
 
     if (m_fBehaviorTime >= 0.02f) {
         ShotGun->m_fGunMoveRight += m_fMoveRightSum;
@@ -53,26 +46,24 @@ CShotGunState* CShotGun_WALK::Update(CGun* ShotGun, const float& fTimeDelta)
         m_fBehaviorTime = 0.f;
     }
 
-
-
     _vec3   vPlayerPos;
-    m_pHost->m_pTransformCom->Get_Info(INFO_POS, &vPlayerPos);
+    m_pHost->m_pPlayerTransformCom->Get_Info(INFO_POS, &vPlayerPos);
 
-    if (m_vPrePos == vPlayerPos){
+    if (m_vPrePos == vPlayerPos) {
         return m_pHost->Get_State(0); // Idle
     }
     m_vPrePos = vPlayerPos;
     if (ShotGun->m_bReload == true) {
         return m_pHost->Get_State(5); // Reload
     }
-    dynamic_cast<CDyehard*>(ShotGun)->Gun_Fire();
     if (ShotGun->m_bReady) {
         return m_pHost->Get_State(3); // Ready
     }
+
     return nullptr;
 }
 
-void CShotGun_WALK::Release(CGun* ShotGun)
+void CShotGun_JUMP::Release(CGun* ShotGun)
 {
     ShotGun->m_fGunMoveRight = 3.f;
     ShotGun->m_fGunMoveDown = 1.f;

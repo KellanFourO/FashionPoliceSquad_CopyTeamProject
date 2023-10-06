@@ -32,12 +32,27 @@ public:
 	CRcTex*			Get_Buffer() { return m_pBufferCom; }
 	CTransform*		Get_Transform() { return m_pTransformCom; }
 	CTexture*		Get_Texture() { return m_pTextureCom; }
+	_float			Get_GunMoveDown() { return m_fGunMoveDown; }
+	_float			Get_GunMoveRight() { return m_fGunMoveRight; }
+	_vec3			Get_Scale()	{ return m_vScale; }
 
+	void			Set_Scale(_vec3 _vScale) { m_vScale = _vScale;}
 	void			Set_Host(CGameObject* _pHost) { m_pHost = _pHost;}
+	void			Reset_GunMoveDown() { m_fGunMoveDown = 1.f;}
+	void			Reset_GunMoveRight() { m_fGunMoveRight = 3.f; }
+
+	void			Set_GunMoveDown(_float _fMoveDown) { m_fGunMoveDown = _fMoveDown;}
+	void			Set_GunMoveRight(_float _fMoveRight) { m_fGunMoveRight = _fMoveRight;}
+	void			Add_GunMoveDown(_float _fMoveDown) { m_fGunMoveDown += _fMoveDown; }
+	void			Add_GunMoveRight(_float _fMoveRight) { m_fGunMoveRight += _fMoveRight; }
+	void			Reduce_GunMoveDown(_float _fMoveDown) { m_fGunMoveDown -= _fMoveDown; }
+	void			Reduce_GunMoveRight(_float _fMoveRight) { m_fGunMoveRight -= _fMoveRight; }
+
+	void			Mul_GunScale(_float _fMulScale) { m_vScale *= _fMulScale; }
 
 protected:
 	void			Fire();
-	void			Reload();
+	void			Reload(_int _ColorIndex, _int _iRandomIndex); //! ColorIndex 매개변수는 샷건전용, RandomIndex는 라이플 전용
 	void			Rebound();
 	void			StateMachine();
 	void			HostMove(const _float& fTimeDelta);
@@ -58,7 +73,6 @@ protected:
 	_int				m_iCurrentBullet = 0.f;	 // 현재 총알
 	_int				m_iMaxBullet = 0.f;		 // 최대 총알
 	_int				m_iReloadBullet = 0.f;   // 장전 총알
-
 
 	_vec3				m_vScale;	 // 사이즈
 	_vec3				m_vShotPos;	 // 총구 위치

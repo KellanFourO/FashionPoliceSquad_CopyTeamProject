@@ -1,27 +1,27 @@
 #include "stdafx.h"
-#include "Rifle_Bullet.h"
+#include "Rifle_Bullet1.h"
 
 #include "Monster.h"
 
 #include "Export_System.h"
 #include "Export_Utility.h"
 
-CRifle_Bullet::CRifle_Bullet(LPDIRECT3DDEVICE9 pGraphicDev)
-	:Engine::CGameObject(pGraphicDev)
+CRifle_Bullet1::CRifle_Bullet1(LPDIRECT3DDEVICE9 pGraphicDev)
+	:CBullet(pGraphicDev)
 {
 }
 
-CRifle_Bullet::CRifle_Bullet(const CRifle_Bullet& rhs)
-	: Engine::CGameObject(rhs)
+CRifle_Bullet1::CRifle_Bullet1(const CRifle_Bullet1& rhs)
+	: CBullet(rhs)
 {
 }
 
-CRifle_Bullet::~CRifle_Bullet()
+CRifle_Bullet1::~CRifle_Bullet1()
 {
 	Free();
 }
 
-HRESULT CRifle_Bullet::Ready_GameObject(_vec3 _StartPos, _int iColorIndex)
+HRESULT CRifle_Bullet1::Ready_GameObject(_vec3 _StartPos, _int iColorIndex)
 {
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
@@ -36,7 +36,7 @@ HRESULT CRifle_Bullet::Ready_GameObject(_vec3 _StartPos, _int iColorIndex)
 	return S_OK;
 }
 
-Engine::_int CRifle_Bullet::Update_GameObject(const _float& fTimeDelta)
+Engine::_int CRifle_Bullet1::Update_GameObject(const _float& fTimeDelta)
 {
 	if (m_bShooting) {
 		Engine::Add_RenderGroup(RENDER_NONALPHA, this);
@@ -73,7 +73,7 @@ Engine::_int CRifle_Bullet::Update_GameObject(const _float& fTimeDelta)
 	return OBJ_NOEVENT;
 }
 
-void CRifle_Bullet::LateUpdate_GameObject()
+void CRifle_Bullet1::LateUpdate_GameObject()
 {
 	_vec3	vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
@@ -81,7 +81,7 @@ void CRifle_Bullet::LateUpdate_GameObject()
 	__super::Compute_ViewZ(&vPos);
 }
 
-void CRifle_Bullet::Render_GameObject()
+void CRifle_Bullet1::Render_GameObject()
 {
 	if (m_bShooting) {
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
@@ -94,7 +94,7 @@ void CRifle_Bullet::Render_GameObject()
 	}
 }
 
-void CRifle_Bullet::OnCollisionEnter(CCollider* _pOther)
+void CRifle_Bullet1::OnCollisionEnter(CCollider* _pOther)
 {
 	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::MONSTER)
 	{
@@ -117,15 +117,15 @@ void CRifle_Bullet::OnCollisionEnter(CCollider* _pOther)
 	int a = 1 + 1;
 }
 
-void CRifle_Bullet::OnCollisionStay(CCollider* _pOther)
+void CRifle_Bullet1::OnCollisionStay(CCollider* _pOther)
 {
 }
 
-void CRifle_Bullet::OnCollisionExit(CCollider* _pOther)
+void CRifle_Bullet1::OnCollisionExit(CCollider* _pOther)
 {
 }
 
-HRESULT CRifle_Bullet::Add_Component()
+HRESULT CRifle_Bullet1::Add_Component()
 {
 	CComponent* pComponent = nullptr;
 
@@ -148,11 +148,11 @@ HRESULT CRifle_Bullet::Add_Component()
 	return S_OK;
 }
 
-void CRifle_Bullet::Color_Select()
+void CRifle_Bullet1::Color_Select()
 {
 }
 
-void CRifle_Bullet::Shoot(_vec3 _StartPos, int iColorIndex)
+void CRifle_Bullet1::Shoot(_vec3 _StartPos, int iColorIndex)
 {
 	m_iColorIndex = iColorIndex;
 	Color_Select();
@@ -170,21 +170,21 @@ void CRifle_Bullet::Shoot(_vec3 _StartPos, int iColorIndex)
 	m_fLiveTime = 0.f;
 }
 
-CRifle_Bullet* CRifle_Bullet::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _StartPos, _int iColorIndex)
+CRifle_Bullet1* CRifle_Bullet1::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _StartPos, _int iRandomIndex)
 {
-	CRifle_Bullet* pInstance = new CRifle_Bullet(pGraphicDev);
+	CRifle_Bullet1* pInstance = new CRifle_Bullet1(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_GameObject(_StartPos, iColorIndex)))
+	if (FAILED(pInstance->Ready_GameObject(_StartPos, iRandomIndex)))
 	{
 		Safe_Release(pInstance);
-		MSG_BOX("Player Create Failed");
+		MSG_BOX("Rifle_Bullet Create Failed");
 
 		return nullptr;
 	}
 	return pInstance;
 }
 
-void CRifle_Bullet::Free()
+void CRifle_Bullet1::Free()
 {
 	__super::Free();
 }

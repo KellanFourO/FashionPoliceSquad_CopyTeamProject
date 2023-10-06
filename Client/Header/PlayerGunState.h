@@ -1,6 +1,8 @@
 #pragma once
 #include "Engine_Typedef.h"
 #include "PlayerGun.h"
+#include "PaintShotGun.h"
+#include "TailorAssertRifle.h"
 
 class CPlayerGunState{
 
@@ -13,6 +15,7 @@ public:
 	virtual CPlayerGunState* Update(CPlayerGun* _PlayerGun, const float& fTimeDelta) = 0;
 	virtual void Release(CPlayerGun* _PlayerGun) = 0;
 
+	CPlayerGun*		m_pHost;
 	_float			m_fBehaviorTime = 0.f; // 행동 줄 시간
 
 	_float			m_fCurFrame = 0.f;

@@ -28,9 +28,9 @@ void CShotGun_Lazer::Initialize(CGun* ShotGun)
     ShotGun->m_fGunMoveDown += m_fMoveDownMax;
 }
 
-CShotGunState* CShotGun_Lazer::Update(CGun* ShotGun, const float& fDeltaTime)
+CShotGunState* CShotGun_Lazer::Update(CGun* ShotGun, const float& fTimeDelta)
 {
-    m_fBehaviorTime += fDeltaTime;
+    m_fBehaviorTime += fTimeDelta;
 
 
 

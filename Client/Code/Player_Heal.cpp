@@ -18,11 +18,11 @@ void CPlayer_Heal::Initialize(CPlayer* Player)
     m_pHost = Player;
 }
 
-CPlayerState* CPlayer_Heal::Update(CPlayer* Player, const float& fDeltaTime)
+CPlayerState* CPlayer_Heal::Update(CPlayer* Player, const float& fTimeDelta)
 {
-//     m_fBehaviorTime += fDeltaTime;
+//     m_fBehaviorTime += fTimeDelta;
 //
-//     Player->Key_Input(fDeltaTime);
+//     Player->Key_Input(fTimeDelta);
 //
 //     if (m_fBehaviorTime > 0.6f) {
 //         return new CPlayer_IDLE;

@@ -16,7 +16,7 @@ void CPlayer_Jump::Initialize(CPlayer* Player)
 
 }
 
-CPlayerState* CPlayer_Jump::Update(CPlayer* Player, const float& fDeltaTime)
+CPlayerState* CPlayer_Jump::Update(CPlayer* Player, const float& fTimeDelta)
 {
 
 

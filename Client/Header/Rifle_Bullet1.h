@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Base.h"
-#include "GameObject.h"
+#include "Bullet.h"
 
 BEGIN(Engine)
 
@@ -12,12 +12,12 @@ class CRigidBody;
 
 END
 
-class CRifle_Bullet : public Engine::CGameObject
+class CRifle_Bullet1 : public CBullet
 {
 private:
-	explicit CRifle_Bullet(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CRifle_Bullet(const CRifle_Bullet& rhs);
-	virtual ~CRifle_Bullet();
+	explicit CRifle_Bullet1(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit CRifle_Bullet1(const CRifle_Bullet1& rhs);
+	virtual ~CRifle_Bullet1();
 
 public:
 	virtual	HRESULT	Ready_GameObject(_vec3 _StartPos, _int iColorIndex);
@@ -57,7 +57,7 @@ private:
 
 
 public:
-	static CRifle_Bullet* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _StartPos, _int iColorIndex);
+	static CRifle_Bullet1* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _StartPos, _int iColorIndex);
 
 private:
 	virtual void Free()	override;

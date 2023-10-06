@@ -43,9 +43,9 @@ void CShotGun_SHOT::Initialize(CGun* ShotGun)
 
 }
 
-CShotGunState* CShotGun_SHOT::Update(CGun* ShotGun, const float& fDeltaTime)
+CShotGunState* CShotGun_SHOT::Update(CGun* ShotGun, const float& fTimeDelta)
 {
-    m_fBehaviorTime += fDeltaTime;
+    m_fBehaviorTime += fTimeDelta;
 
     if (m_fBehaviorTime >= 0.02f) {
         ShotGun->m_fGunMoveRight += m_fMoveRightSum;

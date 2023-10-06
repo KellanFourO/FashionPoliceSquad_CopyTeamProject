@@ -92,8 +92,9 @@ void CPlayerGun::Fire()
 
 }
 
-void CPlayerGun::Reload()
+void CPlayerGun::Reload(_int _ColorIndex,_int iRandomIndex)
 {
+
 
 	switch (m_eBulletType)
 	{
@@ -102,7 +103,8 @@ void CPlayerGun::Reload()
 
 			for (int i = 0; i < m_iReloadBullet; ++i)
 			{
-				CBullet* pBullet = CShotGunBullet::Create(m_pGraphicDev, _vec3(0,0,0));
+				CBullet* pBullet = CShotGunBullet::Create(m_pGraphicDev, _vec3(0,0,0),_ColorIndex);
+				m_vecBullet.push_back(pBullet);
 			}
 			break;
 		}
@@ -111,7 +113,8 @@ void CPlayerGun::Reload()
 		{
 			for (int i = 0; i < m_iReloadBullet; ++i)
 			{
-
+				CBullet* pBullet = CRifle_Bullet1::Create(m_pGraphicDev, _vec3(0, 0, 0),iRandomIndex);
+				m_vecBullet.push_back(pBullet);
 			}
 			break;
 		}

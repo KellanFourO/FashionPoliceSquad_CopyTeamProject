@@ -18,9 +18,9 @@ void CPlayer_Hit::Initialize(CPlayer* Player)
     m_pHost = Player;
 }
 
-CPlayerState* CPlayer_Hit::Update(CPlayer* Player, const float& fDeltaTime)
+CPlayerState* CPlayer_Hit::Update(CPlayer* Player, const float& fTimeDelta)
 {
-//     m_fBehaviorTime += fDeltaTime;
+//     m_fBehaviorTime += fTimeDelta;
 //
 //     if (m_fBehaviorTime > 0.6f) {
 //         return new CPlayer_IDLE;
