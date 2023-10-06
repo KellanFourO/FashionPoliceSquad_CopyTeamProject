@@ -1193,6 +1193,7 @@ void CImGuiManager::Free()
 	// m_mapLoadUI1.clear();
 
 	Safe_Delete(m_defSortCube);
+	Safe_Delete(m_defSortTex);
 
 	 ImGui_ImplDX9_Shutdown();
 	 ImGui_ImplWin32_Shutdown();

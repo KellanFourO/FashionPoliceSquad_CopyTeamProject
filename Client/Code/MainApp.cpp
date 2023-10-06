@@ -50,7 +50,7 @@ int CMainApp::Update_MainApp(const _float& fTimeDelta)
 		//CImGuiManager::GetInstance()->Set_Switch(false);//
 	}
 
-	CImGuiManager::GetInstance()->Update_ImGui(fTimeDelta);//
+	//CImGuiManager::GetInstance()->Update_ImGui(fTimeDelta);//
 
 
 
