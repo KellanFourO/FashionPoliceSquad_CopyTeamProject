@@ -95,6 +95,13 @@ private:
 
 	///////////////////// 유진 OBJ툴 ////////////////////////////////
 public:
+	typedef struct	SortTexture {  //평면 텍스쳐 정렬 목적 구조체
+		_uint					iIndex;			//인덱스
+		char* stFileName;
+		_uint					iNameNumber;	//파일명 끝의 숫자
+		IDirect3DBaseTexture9* tTexture;
+	}SORTTEX;
+
 	void				LoadTexturesFromDirectory
 						(const wchar_t* folderPath, vector<IDirect3DCubeTexture9*>& textureVector);
 	void				LoadTexturesFromDirectory
@@ -117,6 +124,9 @@ public:
 	void				Set_OBJ_RotateCountCCW_Zero() { m_Rotate_Count_CCW = 0; }
 
 private:
+
+	SORTTEX*							m_defSortTex = nullptr;
+	vector<SORTTEX*>					m_pTexForSort; //텍스쳐 정렬용
 
 	vector<IDirect3DCubeTexture9*>		m_pCubeTextureObj; //환경 OBJ 중 큐브
 	vector<IDirect3DBaseTexture9*>		m_pPlaneTexture0;  //환경 OBJ 중 Plane

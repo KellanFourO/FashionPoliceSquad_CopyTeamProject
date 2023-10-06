@@ -305,7 +305,7 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 							Set_OBJType(OBJ_TYPE::PLANE_OBJ);
 
 
-							if(ImGui::Button(u8"시계방향 회전"))
+							if(ImGui::Button(u8"시계방향 회전")) //90도 단위로 회전
 							{
 								m_Rotate_Count_CW++;
 							}
@@ -502,8 +502,6 @@ if (ImGui::TreeNode(u8"UI 툴"))
             ImGui::TreePop();
         }
 #pragma endregion
-
-
 
         ImGui::End();
     }
@@ -927,12 +925,15 @@ void CImGuiManager::LoadTexturesFromDirectory(const wchar_t* folderPath, vector<
 		m_FileName.push_back(iter->stFileName);
 		textureVector.push_back(iter->tTexture);
 	}
+
+	int i = 0;
 }
 
 void CImGuiManager::LoadTexturesFromDirectory(const wchar_t* folderPath, vector<IDirect3DBaseTexture9*>& textureVector)
 {
 	WIN32_FIND_DATA findData;
 	wstring wfolderPath = (wstring)folderPath + L"\\*";
+	string	m_NameTemp;
 
 	HANDLE hFind = FindFirstFileW(wfolderPath.c_str(), &findData);
 
@@ -952,8 +953,30 @@ void CImGuiManager::LoadTexturesFromDirectory(const wchar_t* folderPath, vector<
 				IDirect3DCubeTexture9* pTexture = nullptr;
 				if (SUCCEEDED(D3DXCreateTextureFromFile(Engine::Get_GraphicDev(), filePath.c_str(), (LPDIRECT3DTEXTURE9*)&pTexture)))
 				{
-					m_FileName.push_back(buffer);
-					textureVector.push_back(pTexture);
+
+					m_defSortTex = new SORTTEX;
+
+					m_NameTemp = buffer;
+					string	stFileTemp = ".dds";
+
+					m_NameTemp = m_NameTemp.substr(8);
+					size_t  found = m_NameTemp.find(stFileTemp);
+
+					m_defSortTex->iIndex = m_iIndex;
+					m_defSortTex->stFileName = buffer;
+					m_defSortTex->tTexture = pTexture;
+
+					if (found != std::string::npos) //Find가 안 된게 아니라면
+					{
+						m_NameTemp.erase(found, stFileTemp.length());
+					}
+
+					m_defSortTex->iNameNumber = stoi(m_NameTemp);
+
+					m_pTexForSort.push_back(m_defSortTex);
+
+					m_iIndex++;
+
 				}
 			}
 
@@ -961,6 +984,18 @@ void CImGuiManager::LoadTexturesFromDirectory(const wchar_t* folderPath, vector<
 
 		FindClose(hFind);
 	}
+
+	sort(m_pTexForSort.begin(), m_pTexForSort.end(),
+		[](const SORTTEX* pTex1, const SORTTEX* pTex2)
+		{	return pTex1->iNameNumber < pTex2->iNameNumber;	});
+
+	for (auto& iter : m_pTexForSort)
+	{
+		m_FileName.push_back(iter->stFileName);
+		textureVector.push_back(iter->tTexture);
+	}
+
+	int i = 0;
 }
 
 void CImGuiManager::Save_ObjData()

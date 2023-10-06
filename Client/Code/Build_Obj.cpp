@@ -81,8 +81,11 @@ HRESULT CBuild_Obj::Ready_GameObject(_uint pRotate, _vec3 pMouse_Pos, _vec3 Size
 	}
 	m_pTransformCom->Set_Pos(pMouse_Pos);
 
+	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], m_pTransformCom->m_vScale);
+
 	return S_OK;
 }
+
 
 _int CBuild_Obj::Update_GameObject(const _float& fTimeDelta)
 {

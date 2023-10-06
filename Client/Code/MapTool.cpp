@@ -329,7 +329,9 @@ HRESULT CMapTool::Delete_Map()
 					IndexTemp = (*iter)->iCubeIndex;
 
 					delete* iter;
-					*iter = nullptr;
+					//*iter = nullptr;
+					iter = m_VecCubeData.erase(iter);
+
 
 					if (IndexTemp != -1) {
 						auto& VectorTemp = Engine::Management()->GetInstance()->Get_Scene()->Get_ObjectList(LAYERTAG::ENVIRONMENT, OBJECTTAG::BUILD_CUBE);
@@ -344,7 +346,7 @@ HRESULT CMapTool::Delete_Map()
 						}
 					}
 
-					iter = m_VecCubeData.erase(iter);
+					//iter = m_VecCubeData.erase(iter);
 				}
 				else
 				{
@@ -364,7 +366,8 @@ HRESULT CMapTool::Delete_Map()
 					IndexTemp = (*iter)->iIndex;
 
 					delete* iter;
-					*iter = nullptr;
+					//*iter = nullptr;
+					iter = m_VecOBJData.erase(iter);
 
 					if (IndexTemp != -1) {
 						auto& ObjVectorTemp = Engine::Management()->GetInstance()->Get_Scene()->Get_ObjectList(LAYERTAG::ENVIRONMENT, OBJECTTAG::BUILD_OBJ);
@@ -379,7 +382,7 @@ HRESULT CMapTool::Delete_Map()
 						}
 					}
 
-					iter = m_VecOBJData.erase(iter);
+					//iter = m_VecOBJData.erase(iter);
 				}
 				else
 				{
