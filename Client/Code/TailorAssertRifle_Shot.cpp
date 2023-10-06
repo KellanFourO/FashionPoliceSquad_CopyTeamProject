@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "..\Header\Rifle_SHOT.h"
+#include "TailorAssertRifle_Shot.h"
 
 #include "Rifle_IDLE.h"
 #include "Rifle_READY.h"
@@ -11,16 +11,16 @@
 //#include "..\Header\Rifle_SHOT_SHOT.h"
 //#include "..\Header\Rifle_SHOT_Attack.h"
 
-CRifle_SHOT::CRifle_SHOT()
+CTailorAssertRifle_Shot::CTailorAssertRifle_Shot()
 {
 
 
 }
 
-CRifle_SHOT::~CRifle_SHOT()
+CTailorAssertRifle_Shot::~CTailorAssertRifle_Shot()
 {
 }
-void CRifle_SHOT::Initialize(CGun* Rifle)
+void CTailorAssertRifle_Shot::Initialize(CPlayerGun* Rifle)
 {
     m_bAttack = false;
 
@@ -42,7 +42,7 @@ void CRifle_SHOT::Initialize(CGun* Rifle)
 
 }
 
-CRifleState* CRifle_SHOT::Update(CGun* Rifle, const float& fTimeDelta)
+CRifleState* CTailorAssertRifle_Shot::Update(CPlayerGun* Rifle, const float& fTimeDelta)
 {
     m_fBehaviorTime += fTimeDelta;
 
@@ -62,9 +62,12 @@ CRifleState* CRifle_SHOT::Update(CGun* Rifle, const float& fTimeDelta)
     return nullptr;
 }
 
-void CRifle_SHOT::Release(CGun* Rifle)
+void CTailorAssertRifle_Shot::Release(CPlayerGun* Rifle)
 {
-    Rifle->m_fGunMoveRight = 3.f;
-    Rifle->m_fGunMoveDown = 1.f;
-    Rifle->m_vGunScale = m_vBaseScale;
+    m_pHost->Reset_GunMoveDown();
+    m_pHost->Reset_GunMoveRight();
+    m_pHost->Set_Scale(m_vBaseScale);
+    //Rifle->m_fGunMoveRight = 3.f;
+    //Rifle->m_fGunMoveDown = 1.f;
+    //Rifle->m_vGunScale = m_vBaseScale;
 }

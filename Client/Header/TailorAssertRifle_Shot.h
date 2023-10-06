@@ -1,26 +1,27 @@
 #pragma once
-#include "RifleState.h"
-class CRifle_SHOT : public CRifleState
+#include "PlayerGunState.h"
+class CTailorAssertRifle_Shot : public CPlayerGunState
 {
 public:
-	CRifle_SHOT();
-	virtual ~CRifle_SHOT();
+	CTailorAssertRifle_Shot();
+	virtual ~CTailorAssertRifle_Shot();
 
 public:
-	virtual void Initialize(CGun* _Rifle) override;
-	virtual CRifleState* Update(CGun* Rifle, const float& fDetltaTime) override;
-	virtual void Release(CGun* _Rifle) override;
+	virtual void Initialize(CPlayerGun* _Rifle) override;
+	virtual CPlayerGunState* Update(CPlayerGun* Rifle, const float& fDetltaTime) override;
+	virtual void Release(CPlayerGun* _Rifle) override;
 
-	_bool m_bAttack = false;
+private:
+	_bool			m_bAttack = false;
 
-	_float m_fMoveRightMax;
-	_float m_fMoveUpMax;
+	_float			 m_fMoveRightMax;
+	_float			 m_fMoveUpMax;
 
-	_float m_fMoveRightSum;
-	_float m_fMoveDownSum;
+	_float			 m_fMoveRightSum;
+	_float			 m_fMoveDownSum;
 
-	_float m_fScaleMax;
-	_float m_fScaleReduce;
+	_float			 m_fScaleMax;
+	_float			 m_fScaleReduce;
 
 	_vec3			m_vPrePos;
 	_vec3			m_vBaseScale;
