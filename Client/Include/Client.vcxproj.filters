@@ -349,6 +349,9 @@
     <Filter Include="02. GameObject\02. Monster\01. DullSuitMonster\99. DullSuitMonster_State\04.DullSuitMonster_Chase">
       <UniqueIdentifier>{983d7c0d-e17e-45f2-8e66-018baaa74830}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Scene\09.LoadingStage1">
+      <UniqueIdentifier>{6b41b8b4-203f-4df9-8757-c6b6fc0ce869}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -747,6 +750,9 @@
     <ClInclude Include="..\Header\PlayerBullet.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\LoadingStage1.h">
+      <Filter>01.Scene\09.LoadingStage1</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1102,6 +1108,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\PlayerBullet.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LoadingStage1.cpp">
+      <Filter>01.Scene\09.LoadingStage1</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -221,6 +221,7 @@
     <ClInclude Include="..\Header\Lazer.h" />
     <ClInclude Include="..\Header\Loading.h" />
     <ClInclude Include="..\Header\LoadingStage.h" />
+    <ClInclude Include="..\Header\LoadingStage1.h" />
     <ClInclude Include="..\Header\Logo.h" />
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\MapCursor.h" />
@@ -330,6 +331,7 @@
     <ClCompile Include="..\Code\KickBoard_DEAD.cpp" />
     <ClCompile Include="..\Code\KickBoard_IDLE.cpp" />
     <ClCompile Include="..\Code\Lazer.cpp" />
+    <ClCompile Include="..\Code\LoadingStage1.cpp" />
     <ClCompile Include="..\Code\ObjectPoolMgr.cpp" />
     <ClCompile Include="..\Code\MissionObjective.cpp" />
     <ClCompile Include="..\Code\PlayerBullet.cpp" />
