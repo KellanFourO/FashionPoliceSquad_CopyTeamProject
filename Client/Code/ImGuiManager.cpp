@@ -211,11 +211,11 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 			{
 				if (ImGui::BeginTabItem(u8"입체 오브젝트"))
 				{
-					ImVec2 size1 = ImVec2(32.0f, 32.0f);                         // Size of the image we want to make visible
-					ImVec2 uv2 = ImVec2(0.0f, 0.0f);                            // UV coordinates for lower-left
+					ImVec2 size1 = ImVec2(32.0f, 32.0f);                      // Size of the image we want to make visible
+					ImVec2 uv2 = ImVec2(0.0f, 0.0f);                          // UV coordinates for lower-left
 					ImVec2 uv3 = ImVec2(1.0f, 1.0f);                          // UV coordinates for (32,32) in our texture
-					ImVec4 bg_col1 = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);             // Black background
-					ImVec4 tint_col1 = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);           // No tint
+					ImVec4 bg_col1 = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);          // Black background
+					ImVec4 tint_col1 = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);        // No tint
 
 					ImGui::Checkbox(u8"환경OBJ 모드", &m_bOBJ_Mode_Check);
 					if (m_bOBJ_Mode_Check)
@@ -309,21 +309,14 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 							{
 								m_Rotate_Count_CW++;
 							}
-							
-							ImGui::SameLine();
-							if (ImGui::Button(u8"반시계방향 회전"))
-							{
-								m_Rotate_Count_CCW++;
-							}
 
 							ImGui::SameLine();
-							ImGui::Text(u8"회전 횟수 : %d", (m_Rotate_Count_CW - m_Rotate_Count_CCW));
+							ImGui::Text(u8"회전 횟수 : %d", (m_Rotate_Count_CW));
 
 							ImGui::SameLine();
 							if (ImGui::Button(u8"회전 카운트 Reset") )
 							{
 								Set_OBJ_RotateCountCW_Zero();
-								Set_OBJ_RotateCountCCW_Zero();
 							};
 
 							for (int i = 0; i < 1; i++) //가로줄(행) 갯수

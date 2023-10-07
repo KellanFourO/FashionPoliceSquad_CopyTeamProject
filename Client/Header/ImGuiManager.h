@@ -119,17 +119,15 @@ public:
 	vector<IDirect3DBaseTexture9*>&		Get_PlaneTextureObjVector() { return m_pPlaneTextureObj; }
 
 	_uint				Get_OBJ_RotateCountCW() { return m_Rotate_Count_CW; }
-	_uint				Get_OBJ_RotateCountCCW() { return m_Rotate_Count_CCW; }
 	void				Set_OBJ_RotateCountCW_Zero() { m_Rotate_Count_CW = 0; }
-	void				Set_OBJ_RotateCountCCW_Zero() { m_Rotate_Count_CCW = 0; }
 
 private:
 
-	SORTTEX*							m_defSortTex = nullptr;
-	vector<SORTTEX*>					m_pTexForSort; //텍스쳐 정렬용
+	SORTTEX*							m_defSortTex = nullptr; //텍스쳐 정렬용
+	vector<SORTTEX*>					m_pTexForSort;			//텍스쳐 정렬용
 
-	vector<IDirect3DCubeTexture9*>		m_pCubeTextureObj; //환경 OBJ 중 큐브
-	vector<IDirect3DBaseTexture9*>		m_pPlaneTextureObj;  //환경 OBJ 중 Plane
+	vector<IDirect3DCubeTexture9*>		m_pCubeTextureObj;		//환경 OBJ 중 큐브
+	vector<IDirect3DBaseTexture9*>		m_pPlaneTextureObj;		//환경 OBJ 중 Plane
 
 	ImTextureID							selected_texture1       = nullptr;
 	_uint								selected_texture_index1 = 0;
@@ -138,8 +136,7 @@ private:
 	const int							cubeTextureStartIndex   = 1000;
 	const int							planeTextureStartIndex  = 3000;
 
-	bool								m_bMainAngleRot			= false;
-	bool								m_bRightAngleRot		= false;
+	_uint								m_Rotate_Count_CW;		//시계방향
 	
 	bool								m_bOBJ_Mode_Check		= false;
 
@@ -150,8 +147,6 @@ private:
 	vector<OBJData*>					vectorOBJPlaneTemp;
 	vector<OBJData*>					vectorOBJCubeTemp;
 
-	_uint								m_Rotate_Count_CW;  //시계방향
-	_uint								m_Rotate_Count_CCW; //반시계방향
 
 	///////////////////// 승용 UI툴 /////////////////////////////////
 public:

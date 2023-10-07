@@ -160,7 +160,7 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
 			}
 
 
-				/////////////공통 부분/////////////////////
+				//////////////////공통 부분/////////////////////
 				Cursor_Update();
 				_vec3 CursorTemp = { m_vCursor_Pos->x, m_vCursor_Height, m_vCursor_Pos->z };
 
@@ -206,7 +206,7 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
 				else if (CImGuiManager::GetInstance()->Get_OBJModeCheck() == true) { 
 					m_iTextureNum2 = CImGuiManager::GetInstance()->Get_OBJTexNum();
 					OBJ_TYPE eTypeTemp = CImGuiManager::GetInstance()->Get_OBJType(); //오브젝트 태그랑 다른거임
-					_uint RotateCount = (CImGuiManager::GetInstance()->Get_OBJ_RotateCountCW()) - (CImGuiManager::GetInstance()->Get_OBJ_RotateCountCCW());
+					_uint RotateCount = CImGuiManager::GetInstance()->Get_OBJ_RotateCountCW();
 
 					pGameObject = CBuild_Obj::Create(m_pGraphicDev, CursorTemp, m_iTextureNum2, ObjSize, RotateCount, m_iOBJIndex, eTypeTemp);
 

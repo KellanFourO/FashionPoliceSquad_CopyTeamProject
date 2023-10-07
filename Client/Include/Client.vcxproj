@@ -214,10 +214,6 @@
     <ClInclude Include="..\Header\FPSCamera.h" />
     <ClInclude Include="..\Header\Item.h" />
     <ClInclude Include="..\Header\JumpSmoke.h" />
-    <ClInclude Include="..\Header\KickBoard.h" />
-    <ClInclude Include="..\Header\KickBoardState.h" />
-    <ClInclude Include="..\Header\KickBoard_DEAD.h" />
-    <ClInclude Include="..\Header\KickBoard_IDLE.h" />
     <ClInclude Include="..\Header\Lazer.h" />
     <ClInclude Include="..\Header\Loading.h" />
     <ClInclude Include="..\Header\LoadingStage1.h" />
@@ -246,7 +242,6 @@
     <ClInclude Include="..\Header\Player_Hit.h" />
     <ClInclude Include="..\Header\Player_IDLE.h" />
     <ClInclude Include="..\Header\Player_Left.h" />
-    <ClInclude Include="..\Header\Player_Lv_Up.h" />
     <ClInclude Include="..\Header\Player_Right.h" />
     <ClInclude Include="..\Header\Portrait.h" />
     <ClInclude Include="..\Header\MuzzlefFlash_Rifle.h" />
@@ -326,9 +321,6 @@
     <ClCompile Include="..\Code\FootRay.cpp" />
     <ClCompile Include="..\Code\EventMgr.cpp" />
     <ClCompile Include="..\Code\JumpSmoke.cpp" />
-    <ClCompile Include="..\Code\KickBoard.cpp" />
-    <ClCompile Include="..\Code\KickBoard_DEAD.cpp" />
-    <ClCompile Include="..\Code\KickBoard_IDLE.cpp" />
     <ClCompile Include="..\Code\Lazer.cpp" />
     <ClCompile Include="..\Code\LoadingStage1.cpp" />
     <ClCompile Include="..\Code\ObjectPoolMgr.cpp" />
@@ -367,7 +359,6 @@
     <ClCompile Include="..\Code\Player_Hit.cpp" />
     <ClCompile Include="..\Code\Player_IDLE.cpp" />
     <ClCompile Include="..\Code\Player_Left.cpp" />
-    <ClCompile Include="..\Code\Player_Lv_Up.cpp" />
     <ClCompile Include="..\Code\Player_Right.cpp" />
     <ClCompile Include="..\Code\Portrait.cpp" />
     <ClCompile Include="..\Code\MuzzlefFlash_Rifle.cpp" />
