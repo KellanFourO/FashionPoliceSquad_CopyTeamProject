@@ -85,17 +85,11 @@
     <Filter Include="02. GameObject\06. Effect">
       <UniqueIdentifier>{efd01413-82f8-4dcc-990c-23e23788dc7a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Player\01. Dyehard\31. MuzzleFlash">
-      <UniqueIdentifier>{a8464c9c-cfe6-4336-89c3-2d00cc64a061}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\20.UI">
       <UniqueIdentifier>{2f59545b-6fd1-44f4-95cc-f93a08f7d3d5}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\02. Monster\99.MonsterState">
       <UniqueIdentifier>{8ed9268c-5100-48f5-8620-805323db800d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. Player\01. Dyehard\99.shotgunState">
-      <UniqueIdentifier>{3c5a560f-743b-4470-a788-dc358be1ed4d}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\00. BackGround\00.Title">
       <UniqueIdentifier>{682b4052-8c2b-41eb-812e-d0db50c135fe}</UniqueIdentifier>
@@ -243,9 +237,6 @@
     </Filter>
     <Filter Include="02. GameObject\02. Monster\03. Smoker">
       <UniqueIdentifier>{39dcff9d-080e-46cd-a4d5-0dfe77ae68ce}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. Player\01. Dyehard\99.shotgunState\07. ShotGun_Lazer">
-      <UniqueIdentifier>{21ab3976-114d-491c-a7ad-a1f0de726d08}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\06. Effect\00.Particle\02.JumpSmoke">
       <UniqueIdentifier>{20ed10b5-ed4c-41aa-9d8b-31b84071e0ff}</UniqueIdentifier>
@@ -415,6 +406,9 @@
     <Filter Include="02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\07. PaintShotGun_Jump">
       <UniqueIdentifier>{10f7750f-d3e3-45af-b1a8-b487ab211cbd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. Player\05. PlayerGun\31. MuzzleFlash">
+      <UniqueIdentifier>{a8464c9c-cfe6-4336-89c3-2d00cc64a061}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -511,7 +505,7 @@
       <Filter>02. GameObject\06. Effect</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\MuzzleFlash.h">
-      <Filter>02. GameObject\01. Player\01. Dyehard\31. MuzzleFlash</Filter>
+      <Filter>02. GameObject\01. Player\05. PlayerGun\31. MuzzleFlash</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\PaintBall.h">
       <Filter>02. GameObject\07. Bullet\00.PlayerBullet\00. ShotGunBullet</Filter>
@@ -543,23 +537,8 @@
     <ClInclude Include="..\Header\MonsterState.h">
       <Filter>02. GameObject\02. Monster\99.MonsterState</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\ShotGun_IDLE.h">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ShotGun_Shot.h">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ShotGun_WALK.h">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ShotGunState.h">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Title.h">
       <Filter>02. GameObject\00. BackGround\00.Title</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ShotGun_RELOAD.h">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\MyUI.h">
       <Filter>02. GameObject\20.UI\00. MyUI</Filter>
@@ -569,9 +548,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\Portrait.h">
       <Filter>02. GameObject\20.UI\01. MyDialog\00. Portrait</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ShotGun_JUMP.h">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Rifle.h">
       <Filter>02. GameObject\01. Player\03. Rifle</Filter>
@@ -641,12 +617,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\GunState.h">
       <Filter>02. GameObject\01. Player\04. Gun\99. GunState</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ShotGun_ENTER.h">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ShotGun_READY.h">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Player_Heal.h">
       <Filter>02. GameObject\01. Player\99. PlayerState\06. Player_Heal</Filter>
@@ -794,9 +764,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\Rifle_Bullet.h">
       <Filter>02. GameObject\07. Bullet\00.PlayerBullet\01. RifleBullet</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ShotGun_Lazer.h">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState\07. ShotGun_Lazer</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\JumpSmoke.h">
       <Filter>02. GameObject\06. Effect\00.Particle\02.JumpSmoke</Filter>
@@ -966,7 +933,7 @@
       <Filter>02. GameObject\06. Effect</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\MuzzleFlash.cpp">
-      <Filter>02. GameObject\01. Player\01. Dyehard\31. MuzzleFlash</Filter>
+      <Filter>02. GameObject\01. Player\05. PlayerGun\31. MuzzleFlash</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PaintBall.cpp">
       <Filter>02. GameObject\07. Bullet\00.PlayerBullet\00. ShotGunBullet</Filter>
@@ -992,20 +959,8 @@
     <ClCompile Include="..\Code\Belt.cpp">
       <Filter>02. GameObject\01. Player\02. Belt</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\ShotGun_IDLE.cpp">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ShotGun_Shot.cpp">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ShotGun_WALK.cpp">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Title.cpp">
       <Filter>02. GameObject\00. BackGround\00.Title</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ShotGun_RELOAD.cpp">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\MyUI.cpp">
       <Filter>02. GameObject\20.UI\00. MyUI</Filter>
@@ -1015,9 +970,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\Portrait.cpp">
       <Filter>02. GameObject\20.UI\01. MyDialog\00. Portrait</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ShotGun_JUMP.cpp">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Rifle.cpp">
       <Filter>02. GameObject\01. Player\03. Rifle</Filter>
@@ -1078,12 +1030,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\Gun.cpp">
       <Filter>02. GameObject\01. Player\04. Gun</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ShotGun_ENTER.cpp">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ShotGun_READY.cpp">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Player_Heal.cpp">
       <Filter>02. GameObject\01. Player\99. PlayerState\06. Player_Heal</Filter>
@@ -1210,9 +1156,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\Rifle_Bullet.cpp">
       <Filter>02. GameObject\07. Bullet\00.PlayerBullet\01. RifleBullet</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ShotGun_Lazer.cpp">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState\07. ShotGun_Lazer</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\JumpSmoke.cpp">
       <Filter>02. GameObject\06. Effect\00.Particle\02.JumpSmoke</Filter>

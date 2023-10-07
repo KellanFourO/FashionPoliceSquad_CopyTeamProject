@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "PaintShotGun_Shot.h"
+#include "MuzzleFlash.h"
 
 #include "Export_System.h"
 #include "Export_Utility.h"
@@ -58,6 +59,9 @@ CPlayerGunState* CPaintShotGun_Shot::Update(CPlayerGun* ShotGun, const float& fT
     if (m_bAttack)
     {
 		m_pHost->Fire();
+        dynamic_cast<CPaintShotGun*>(m_pHost)->Get_Flash()->Set_Fire(true);
+        dynamic_cast<CPaintShotGun*>(m_pHost)->Set_Index(1);
+
         m_bAttack = false;
 
     }
@@ -80,6 +84,7 @@ void CPaintShotGun_Shot::Release(CPlayerGun* ShotGun)
     m_pHost->Reset_GunMoveDown();
     m_pHost->Reset_GunMoveRight();
     m_pHost->Set_Scale(m_vBaseScale);
+    m_fBehaviorTime = 0.f;
     //ShotGun->m_fGunMoveRight = 3.f;
     //ShotGun->m_fGunMoveDown = 1.f;
 }

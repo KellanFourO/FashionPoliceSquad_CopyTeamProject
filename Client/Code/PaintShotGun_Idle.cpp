@@ -51,4 +51,5 @@ CPlayerGunState* CPaintShotGun_Idle::Update(CPlayerGun* ShotGun, const float& fT
 
 void CPaintShotGun_Idle::Release(CPlayerGun* ShotGun)
 {
+    m_fBehaviorTime = 0.f;
 }

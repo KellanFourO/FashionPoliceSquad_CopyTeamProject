@@ -3,6 +3,7 @@
 #include "Base.h"
 
 #include "PlayerGun.h"
+#include "MuzzleFlash.h"
 
 class CPlayerGunState;
 
@@ -32,6 +33,19 @@ public:
 
 public:
 	CPlayerGunState*	Get_State(_int _index) { return m_pStateArray[_index]; }
+	_int				Get_BulletColr() { return m_iBulletColor;}
+	_int				Get_TextureIndex() { return m_iTextureIndex;}
+	CMuzzleFlash*		Get_Flash() { return m_pFlash;}
+
+	void				Set_Flash(CMuzzleFlash* _pFlash) { m_pFlash = _pFlash;}
+	void				Set_Index(_int _iIndex) { m_iTextureIndex = _iIndex; }
+
+	void				Add_BulletColor()
+	{
+	++m_iBulletColor;
+	if(m_iBulletColor > 8)
+		m_iBulletColor = 0;
+	}
 
 private:
 	HRESULT				Add_Component();
@@ -42,7 +56,9 @@ private:
 
 	_bool				m_bLazer = false;
 	_int				m_iBulletColor		= 0;
+	_int				m_iTextureIndex = 0;
 
+	CMuzzleFlash*		m_pFlash = nullptr; // √— ¿Ã∆Â∆Æ
 	CPlayerGunState*	m_pStateArray[SHOTGUNSTATE_END];
 
 public:

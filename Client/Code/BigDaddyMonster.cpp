@@ -56,9 +56,9 @@ HRESULT CBigDaddyMonster::Ready_GameObject()
 	m_pCollider->Set_Transform(m_pTransformCom);
 	m_pRigidBody->Set_Host(this);
 	m_pRigidBody->Set_Transform(m_pTransformCom);
+
+
 	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
-
-
 	m_eHitType = BULLETTYPE::ASSERTRIFLE_BULLET;
 	m_pMonsterBullet = nullptr;
 

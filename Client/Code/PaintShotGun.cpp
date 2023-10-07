@@ -44,7 +44,7 @@ HRESULT CPaintShotGun::Ready_GameObject()
 	m_tGunInfo.m_szGunName = L"2DYE-4 Elite";
 	m_tGunInfo.m_fFireSpeed = 1.f;
 	m_tGunInfo.m_fReloadSpeed = 1.f;
-	m_tGunInfo.m_iCurrentBullet = 7;
+	m_tGunInfo.m_iCurrentBullet = 8;
 	m_tGunInfo.m_iReloadBullet = m_tGunInfo.m_iCurrentBullet * 1;
 	m_tGunInfo.m_iMaxBullet = m_tGunInfo.m_iReloadBullet * 15;
 
@@ -78,10 +78,11 @@ Engine::_int CPaintShotGun::Update_GameObject(const _float& fTimeDelta)
 	{
 		for (int i = 0; i < m_tGunInfo.m_iCurrentBullet; ++i)
 		{
-			CBullet* pBullet = CShotGunBullet::Create(m_pGraphicDev, _vec3(0, 0, 0), i);
+			CBullet* pBullet = CShotGunBullet::Create(m_pGraphicDev, _vec3(0, 0, 0), m_iBulletColor);
 			Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::PLAYERBULLET, pBullet);
 			m_vecBullet.push_back(pBullet);
 		}
+		Add_BulletColor();
 		m_bLateInit = false;
 	}
 
@@ -103,7 +104,7 @@ void CPaintShotGun::Render_GameObject()
 		m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 
-		m_pTextureCom->Render_Textrue(0);
+		m_pTextureCom->Render_Textrue(m_iTextureIndex);
 		m_pBufferCom->Render_Buffer();
 
 		m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);

@@ -181,18 +181,14 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::RAY, pGameObject), E_FAIL);
 		dynamic_cast<CFootRay*>(pGameObject)->Set_Host(pPlayer);
 
+		pGameObject = CMuzzleFlash::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::EFFECT, pGameObject), E_FAIL);	//º¶∞«º∂±§
 
+		pGameObject = CMuzzleFlash_Rifle::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::EFFECT, pGameObject), E_FAIL);	//∂Û¿Ã«√ º∂±§
 
-		//CGameObject* pGun = pGameObject = CDyehard::Create(m_pGraphicDev);
-		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::DYEHARD, pGameObject), E_FAIL);	//º¶∞«
-		//dynamic_cast<CDyehard*>(pGameObject)->Set_Player(pPlayer);
-		//
-		//
-		//pGameObject = CMuzzleFlash::Create(m_pGraphicDev);
-		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::EFFECT, pGameObject), E_FAIL);	//º¶∞«º∂±§
-		//dynamic_cast<CMuzzleFlash*>(pGameObject)->Set_Gun(pGun);
 		//
 		//pGameObject = CLazer::Create(m_pGraphicDev);
 		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -205,16 +201,6 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::OBJECT, pGameObject), E_FAIL);	//∫ß∆Æ
 		// ∫ß∆Æ¿”
 
-		//pGun = pGameObject = CRifle::Create(m_pGraphicDev);
-		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::DYEHARD, pGameObject), E_FAIL);	//∂Û¿Ã«√
-		//dynamic_cast<CRifle*>(pGameObject)->Set_Player(pPlayer);
-
-		//pGameObject = CMuzzleFlash_Rifle::Create(m_pGraphicDev);
-		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::EFFECT, pGameObject), E_FAIL);	//∂Û¿Ã«√ º∂±§
-		//dynamic_cast<CMuzzleFlash_Rifle*>(pGameObject)->Set_Gun(pGun);
-		//
 		//pGameObject = CInventory::Create(m_pGraphicDev);
 		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::ITEM, pGameObject), E_FAIL);

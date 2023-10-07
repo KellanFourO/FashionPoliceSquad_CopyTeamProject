@@ -33,28 +33,24 @@ CPlayerGunState* CTailorAssertRifle_Idle::Update(CPlayerGun* Rifle, const float&
 	_vec3   vPlayerPos;
 	m_pHost->Get_HostTransform()->Get_Info(INFO_POS, &vPlayerPos);
 
+
 	if (m_vPrePos != vPlayerPos) {
-	    return dynamic_cast<CTailorAssertRifle*>(m_pHost)->Get_State(1); // Walk
+		return dynamic_cast<CTailorAssertRifle*>(m_pHost)->Get_State(1); // Walk
 	}
-	m_vPrePos = vPlayerPos;
-	//if (m_vPrePos != vPlayerPos) {
-	//    return new CRifle_WALK;
-	//}
-	//m_vPrePos = vPlayerPos; // 이전 좌표랑 비교해서 숫자가 다르면 WALK로 넘김
-	//
-	//if (Rifle->m_bReload == true) {
-	//    return new CRifle_RELOAD;
-	//}
-	//
-	//dynamic_cast<CRifle*>(Rifle)->Gun_Fire();
-	//
-	//if (Rifle->m_bReady) {
-	//    return new CRifle_READY;
-	//}
+	m_vPrePos = vPlayerPos; // 이전 좌표랑 비교해서 숫자가 다르면 WALK로 넘김
+
+	if (m_pHost->Get_Fire() && m_pHost->Get_GunInfo()->m_iCurrentBullet > 0)
+		return dynamic_cast<CTailorAssertRifle*>(m_pHost)->Get_State(4);
+
+	else if (m_pHost->Get_GunInfo()->m_iCurrentBullet <= 0)
+	{
+		return dynamic_cast<CTailorAssertRifle*>(m_pHost)->Get_State(5);
+	}
 
     return nullptr;
 }
 
 void CTailorAssertRifle_Idle::Release(CPlayerGun* Rifle)
 {
+	m_fBehaviorTime = 0.f;
 }

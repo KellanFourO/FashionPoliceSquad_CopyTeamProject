@@ -2,6 +2,7 @@
 
 #include "Base.h"
 #include "GameObject.h"
+#include "PlayerGun.h"
 
 BEGIN(Engine)
 
@@ -26,23 +27,24 @@ public:
 
 private:
 	CRcTex* m_pBufferCom = nullptr; // 텍스처를 그리기위한 버퍼 컴포넌트
-	CTransform* m_pTransformCom = nullptr; // 이동 컴포넌트
 	CTexture* m_pTextureCom = nullptr; // 텍스쳐 컴포넌트
 
 public:
 	HRESULT Add_Component();
-	void	Set_Gun(CGameObject* _pGun) { m_pGun = _pGun; };
+	void	Set_Fire(_bool _bFire) { m_bFire = true; }
+	void	Mouse_Input();
 
 private:
-	CGameObject* m_pGun; // 발사 확인을 위한 타겟
+	CPlayerGun* m_pPlayerGun = nullptr;
 
-	_float m_fGunMoveRight, m_fGunMoveDown;
-	_float m_fBulletTime;
-	_float m_fBulletColor;
+	_bool	m_bFire = false;
+	_bool	m_bLateInit = true;
+	_float	m_fGunMoveRight, m_fGunMoveDown;
 
-	_int m_RandAngle;
+	_float	m_fRenderingTick = 0.f;
+	_int	m_RandAngle;
 
-	_int i = 0; // 디버깅코드
+	CTransform* m_pPlayerTransform = nullptr;
 
 public:
 	static CMuzzleFlash_Rifle* Create(LPDIRECT3DDEVICE9 pGraphicDev);

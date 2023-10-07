@@ -90,6 +90,7 @@ void CPaintShotGun_Walk::Release(CPlayerGun* ShotGun)
 {
 	m_pHost->Reset_GunMoveDown();
 	m_pHost->Reset_GunMoveRight();
+    m_fBehaviorTime = 0.f;
 	//ShotGun->m_fGunMoveRight = 3.f;
 	//ShotGun->m_fGunMoveDown = 1.f;
 }

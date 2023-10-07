@@ -5,7 +5,7 @@
 
 BEGIN(Engine)
 
-class CRcTex;
+class CSYTex;
 class CTexture;
 class CTransform;
 class CRigidBody;
@@ -25,13 +25,13 @@ public:
 	virtual void		LateUpdate_GameObject() override;
 	virtual void		Render_GameObject() override;
 
+	void			Set_Color(_int iColor) { m_iColorIndex = iColor;}
 
 public:
 	HRESULT			Add_Component();
-	void			Color_Select();
-	void			Shoot(_vec3 _StartPos, int iColorIndex);
+
 private:
-	CRcTex*			m_pBufferCom = nullptr; // 텍스처를 그리기위한 버퍼 컴포넌트
+	CSYTex*			m_pBufferCom = nullptr; // 텍스처를 그리기위한 버퍼 컴포넌트
 	CTexture*		m_pTextureCom = nullptr; // 텍스쳐 컴포넌트
 
 private:

@@ -36,6 +36,8 @@ public:
 	_float			Get_GunMoveDown() { return m_fGunMoveDown; }
 	_float			Get_GunMoveRight() { return m_fGunMoveRight; }
 	_vec3			Get_Scale()	{ return m_vScale; }
+	_vec3			Get_ShotPos() { return m_vShotPos; }
+
 	_bool			Get_Ready() { return m_bReady; }
 	_bool			Get_Fire() { return m_bFire;}
 	Gun_INFO*		Get_GunInfo() { return &m_tGunInfo; }
@@ -64,6 +66,13 @@ public:
 	void			HostMove(const _float& fTimeDelta);
 	void			MouseInput();
 
+	void				Add_BulletColor()
+	{
+		++m_iColorIndex;
+		if (m_iColorIndex > 8)
+			m_iColorIndex = 1;
+	}
+
 protected:
 	_bool				m_bCharged			= false; // 충전 확인
 	_bool				m_bReady			= true; // 연사속도제어
@@ -78,6 +87,8 @@ protected:
 	_vec3				m_vScale;	 // 사이즈
 	_vec3				m_vShotPos;	 // 총구 위치
 	_vec3				m_vShotDir;  // 발사할 방향
+
+	_int				m_iColorIndex = 1;
 
 	CPlayerGunState*	m_pGunState = nullptr; // 총 상태
 	vector<CBullet*>	m_vecBullet; // 총알 관리하는 벡터

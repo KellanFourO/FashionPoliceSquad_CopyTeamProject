@@ -95,7 +95,7 @@ _uint CLoading::Loading_For_Stage()
 
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_PaintBall", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Guns/paintballs.png")), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Lazer", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Guns/laserbeam_R.png")), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_R_Bullet", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Guns/Rifle_Bullet.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_RifleBullet", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Guns/Rifle_Bullet.png")), E_FAIL);
 		Set_Value(3);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Item", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Item/item-pickups.png")), E_FAIL);
 		Set_Value(3);

@@ -16,22 +16,22 @@ CPlayer_Heal::~CPlayer_Heal()
 void CPlayer_Heal::Initialize(CPlayer* Player)
 {
     m_pHost = Player;
+    StateID = PlayerStateID::Player_Heal;
 }
 
 CPlayerState* CPlayer_Heal::Update(CPlayer* Player, const float& fTimeDelta)
 {
-//     m_fBehaviorTime += fTimeDelta;
-//
-//     Player->Key_Input(fTimeDelta);
-//
-//     if (m_fBehaviorTime > 0.6f) {
-//         return new CPlayer_IDLE;
-//     }
+     m_fBehaviorTime += fTimeDelta;
+
+
+     if (m_fBehaviorTime > 0.6f) {
+         return m_pHost->Get_State(0);
+     }
 
     return nullptr;
 }
 
 void CPlayer_Heal::Release(CPlayer* Player)
 {
-
+    m_fBehaviorTime = 0.f;
 }

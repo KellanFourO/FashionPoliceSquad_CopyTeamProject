@@ -24,7 +24,7 @@ void CPaintShotGun_Ready::Initialize(CPlayerGun* ShotGun)
     m_fMoveRightSum = -0.021f;
     m_fMoveDownSum = -0.1f;
     m_fMoveDownMax = 1.0f;
-   // m_pHost->Add_GunMoveDown(m_fMoveDownMax);
+    m_pHost->Add_GunMoveDown(m_fMoveDownMax);
 }
 
 CPlayerGunState* CPaintShotGun_Ready::Update(CPlayerGun* ShotGun, const float& fTimeDelta)
@@ -45,6 +45,7 @@ void CPaintShotGun_Ready::Release(CPlayerGun* ShotGun)
 {
 	m_pHost->Reset_GunMoveDown();
 	m_pHost->Reset_GunMoveRight();
+    m_fBehaviorTime = 0.f;
     //ShotGun->m_fGunMoveRight = 3.f;
     //ShotGun->m_fGunMoveDown = 1.f;
 }

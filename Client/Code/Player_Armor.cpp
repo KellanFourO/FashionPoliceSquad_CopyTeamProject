@@ -16,24 +16,23 @@ CPlayer_Armor::~CPlayer_Armor()
 void CPlayer_Armor::Initialize(CPlayer* Player)
 {
     m_pHost = Player;
+    StateID = PlayerStateID::Player_Armor;
 }
 
 CPlayerState* CPlayer_Armor::Update(CPlayer* Player, const float& fTimeDelta)
 {
-//     m_fBehaviorTime += fTimeDelta;
-//
-//     Player->Key_Input(fTimeDelta);
-//
-//     if (m_fBehaviorTime > 0.6f) {
-//         return new CPlayer_IDLE;
-//     }
+     m_fBehaviorTime += fTimeDelta;
+
+
+     if (m_fBehaviorTime > 0.6f) {
+         return m_pHost->Get_State(0);
+     }
 
     return nullptr;
 }
 
 void CPlayer_Armor::Release(CPlayer* Player)
 {
-
+    m_fBehaviorTime = 0.f;
 }
-#include "stdafx.h"
-#include "Player_Armor.h"
+
