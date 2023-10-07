@@ -17,7 +17,7 @@ CPaintShotGun_Shot::~CPaintShotGun_Shot()
 void CPaintShotGun_Shot::Initialize(CPlayerGun* ShotGun)
 {
     m_pHost = dynamic_cast<CPaintShotGun*>(ShotGun);
-    m_bAttack = false;
+
 
     m_vBaseScale = m_pHost->Get_Scale();
     //m_vBaseScale = ShotGun->m_vGunScale;
@@ -55,13 +55,23 @@ CPlayerGunState* CPaintShotGun_Shot::Update(CPlayerGun* ShotGun, const float& fT
         //ShotGun->m_vGunScale*= m_fScaleReduce;
     }
 
-    //if (ShotGun->m_fGunMoveRight <= 3.f)
-    //{
-    //    return m_pHost->Get_State(0); // Idle
-    //}
-    //if (ShotGun->m_bReady) {
-    //    return m_pHost->Get_State(3); // Ready
-    //}
+    if (m_bAttack)
+    {
+		m_pHost->Fire();
+        m_bAttack = false;
+
+    }
+
+    if (m_pHost->Get_GunMoveRight() <= 3.f)
+    {
+        m_pHost->Set_Fire(false);
+        m_pHost->Set_Ready(false);
+        m_bAttack = true;
+        return dynamic_cast<CPaintShotGun*>(m_pHost)->Get_State(3); // Ready
+    }
+
+
+
     return nullptr;
 }
 

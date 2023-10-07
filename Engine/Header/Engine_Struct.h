@@ -198,6 +198,15 @@ namespace Engine
 
 	}Player_INFO;
 
+	typedef struct      PlayerGun_Info
+	{
+		_float			m_fFireSpeed;
+		_float			m_fReloadSpeed;
+		_int			m_iCurrentBullet;
+		_int			m_iMaxBullet;
+		_int			m_iReloadBullet;
+	}Gun_INFO;
+
 	typedef struct		Item_Info {
 		ItemID		Item_ID;
 		_vec3		vPos;

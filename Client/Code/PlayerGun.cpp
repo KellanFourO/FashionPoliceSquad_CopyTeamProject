@@ -25,6 +25,7 @@ CPlayerGun::~CPlayerGun()
 HRESULT CPlayerGun::Ready_GameObject()
 {
 	m_pHostTransformCom = m_pHost->m_pTransformCom;
+	ZeroMemory(&m_tGunInfo, sizeof(Gun_INFO));
 	return S_OK;
 }
 
@@ -33,6 +34,12 @@ _int CPlayerGun::Update_GameObject(const _float& fTimeDelta)
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 
 	StateMachine(fTimeDelta);
+
+	for (int i = 0; i < m_vecBullet.size(); ++i)
+	{
+		if(!m_vecBullet[i])
+			m_vecBullet.pop_back();
+	}
 
 	__super::Update_GameObject(fTimeDelta);
 	return OBJ_NOEVENT;
@@ -52,11 +59,8 @@ void CPlayerGun::Fire()
 		{
 			if (!m_vecBullet.empty())
 			{
-				for (auto iter : m_vecBullet)
-				{
-					iter->Fire(m_vShotPos,m_vShotDir);
-				}
-
+				m_vecBullet.back()->Fire(m_vShotPos, m_vShotDir);
+				--m_tGunInfo.m_iCurrentBullet;
 			}
 
 			break;
@@ -70,17 +74,11 @@ void CPlayerGun::Fire()
 
 		case BULLETTYPE::ASSERTRIFLE_BULLET:
 		{
-			if (!m_vecBullet.empty() && m_vecBullet.size())
-			{
 				if (!m_vecBullet.empty())
 				{
-					for (auto iter : m_vecBullet)
-					{
-						iter->Fire(m_vShotPos, m_vShotDir);
-					}
-
+					m_vecBullet.back()->Fire(m_vShotPos, m_vShotDir);
+					--m_tGunInfo.m_iCurrentBullet;
 				}
-			}
 			break;
 		}
 
@@ -98,25 +96,30 @@ void CPlayerGun::Fire()
 void CPlayerGun::Reload(_int _ColorIndex,_int iRandomIndex)
 {
 
+	if(m_tGunInfo.m_iMaxBullet < 0 && m_tGunInfo.m_iCurrentBullet == m_tGunInfo.m_iReloadBullet)
+		return;
 
 	switch (m_eBulletType)
 	{
 	case Engine::BULLETTYPE::SHOTGUN_BULLET:
 		{
 
-			for (int i = 0; i < m_iReloadBullet; ++i)
+			for (int i = 0; i < m_tGunInfo.m_iReloadBullet; ++i)
 			{
 				CBullet* pBullet = CShotGunBullet::Create(m_pGraphicDev, _vec3(0,0,0),_ColorIndex);
+				Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::PLAYERBULLET,pBullet);
 				m_vecBullet.push_back(pBullet);
+
 			}
 			break;
 		}
 
 	case Engine::BULLETTYPE::ASSERTRIFLE_BULLET:
 		{
-			for (int i = 0; i < m_iReloadBullet; ++i)
+			for (int i = 0; i < m_tGunInfo.m_iReloadBullet; ++i)
 			{
 				CBullet* pBullet = CRifle_Bullet1::Create(m_pGraphicDev, _vec3(0, 0, 0),iRandomIndex);
+				Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::PLAYERBULLET, pBullet);
 				m_vecBullet.push_back(pBullet);
 			}
 			break;
@@ -124,7 +127,7 @@ void CPlayerGun::Reload(_int _ColorIndex,_int iRandomIndex)
 
 	case Engine::BULLETTYPE::ASSERTRIFLE_BOMB:
 		{
-			for (int i = 0; i < m_iReloadBullet; ++i)
+			for (int i = 0; i < m_tGunInfo.m_iReloadBullet; ++i)
 			{
 
 			}
@@ -133,6 +136,8 @@ void CPlayerGun::Reload(_int _ColorIndex,_int iRandomIndex)
 
 	}
 
+	m_tGunInfo.m_iCurrentBullet = m_tGunInfo.m_iReloadBullet;
+	m_tGunInfo.m_iMaxBullet -= m_tGunInfo.m_iReloadBullet;
 }
 
 void CPlayerGun::Rebound()
@@ -143,6 +148,7 @@ void CPlayerGun::StateMachine(const _float& fTimeDelta)
 {
 	CPlayerGunState* State = m_pGunState->Update(this, fTimeDelta);
 	if (State != nullptr) {
+		m_pGunState->Release(this);
 		m_pGunState = State;
 		m_pGunState->Initialize(this);
 	}

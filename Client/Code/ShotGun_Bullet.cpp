@@ -42,10 +42,23 @@ HRESULT CShotGunBullet::Ready_GameObject(_vec3 _StartPos, _int iColorIndex)
 
 Engine::_int CShotGunBullet::Update_GameObject(const _float& fTimeDelta)
 {
-	if (m_bShooting) {
+
 		Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 		__super::Update_GameObject(fTimeDelta);
 
+		if (m_bShot)
+		{
+			_vec3 vPlayerPos, vMyPos, vLook;
+
+			m_pPlayerTransformCom->Get_Info(INFO_POS, &vPlayerPos);
+			m_pTransformCom->Get_Info(INFO_POS, &m_vPos);
+			vLook = vPlayerPos - m_vPos;
+			D3DXVec3Normalize(&vLook, &vLook);
+
+			_float fAngle = atan2f(vLook.x, vLook.z);
+			m_pTransformCom->Set_Rotate(ROT_Y, fAngle + D3DX_PI);
+			m_pTransformCom->Set_Pos(m_vPos += (m_vShotDir * m_fSpeed));
+		}
 
 
 		//_vec3 vPlayerPos, vMyPos, vPlayerPos_Rel;
@@ -69,7 +82,6 @@ Engine::_int CShotGunBullet::Update_GameObject(const _float& fTimeDelta)
 
 
 
-	}
 
 
 	return OBJ_NOEVENT;
@@ -85,9 +97,6 @@ void CShotGunBullet::LateUpdate_GameObject()
 
 void CShotGunBullet::Render_GameObject()
 {
-	if (m_bShooting) {
-
-
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 		m_pCollider->Render_Collider();
 
@@ -95,7 +104,6 @@ void CShotGunBullet::Render_GameObject()
 		m_pBufferCom->Get_Frame(8, 1, m_iColorIndex);
 		m_pBufferCom->Render_Buffer();
 		m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-	}
 }
 
 HRESULT CShotGunBullet::Add_Component()

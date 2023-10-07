@@ -68,6 +68,14 @@ CPlayerGunState* CPaintShotGun_Walk::Update(CPlayerGun* ShotGun, const float& fT
 	}
 
     m_vPrePos = vPlayerPos;
+
+	if (m_pHost->Get_Fire() && m_pHost->Get_Ready() && m_pHost->Get_GunInfo()->m_iCurrentBullet > 0)
+		return dynamic_cast<CPaintShotGun*>(m_pHost)->Get_State(4);
+
+	else if (m_pHost->Get_GunInfo()->m_iCurrentBullet <= 0)
+	{
+		return dynamic_cast<CPaintShotGun*>(m_pHost)->Get_State(5);
+	}
 	//if (ShotGun->m_bReload == true) {
 	//    return m_pHost->Get_State(5); // Reload
 	//}

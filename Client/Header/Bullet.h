@@ -41,12 +41,14 @@ public:
 
 protected:
 	_bool			m_bLateInit = true;
+	_bool			m_bShot	= false;
 
 	_float			m_fDmg			= 0.f; //! 총알 데미지
 	_float			m_fAge			= 0.f;
 	_float			m_fLifeTime		= 5.f;
 	_float			m_fTimeDelta	= 0.f;
 	_float			m_fSpeed		= 0.f;
+	_vec3			m_vShotDir;
 
 	BULLETTYPE	    m_eBulletType = BULLETTYPE::BULLETTYPE_END;
 	OBJECTTAG		m_eTargetTag = OBJECTTAG::OBJECT_END;

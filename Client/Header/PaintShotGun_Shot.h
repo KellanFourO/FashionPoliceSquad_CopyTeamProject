@@ -12,7 +12,7 @@ public:
 	virtual void Release(CPlayerGun* _ShotGun) override;
 
 private:
-	_bool	m_bAttack = false;
+	_bool	m_bAttack = true;
 
 	_float	m_fMoveRightMax;
 	_float	m_fMoveUpMax;

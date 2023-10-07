@@ -49,6 +49,7 @@ public:
 	Player_Info*	Get_INFO() { return &INFO; }
 	CPlayerState*	Get_State(_int _index) { return m_pStateArray[_index]; }
 	_vec3			Get_Dir() { return m_vDir; }
+	CPlayerGun*		Get_Gun() { return m_pGun; }
 
 private:
 	HRESULT			Add_Component();
@@ -80,6 +81,7 @@ private:
 	_bool			m_bFix;
 	_bool			m_bCheck;
 	_bool			m_bLateInit = true;
+	_bool			m_bFire = true; // 총쏘는 시간 제어용
 
 	_float			m_fHP_Reduction = 5.f; // HP 감소 속도
 	_float			m_fJumpTick;		//

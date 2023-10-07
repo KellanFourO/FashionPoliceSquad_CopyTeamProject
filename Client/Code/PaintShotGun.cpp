@@ -11,6 +11,7 @@
 #include "PaintShotGun_Shot.h"
 #include "PaintShotGun_Walk.h"
 
+#include "ShotGun_Bullet.h"
 
 #include "Export_System.h"
 #include "Export_Utility.h"
@@ -40,6 +41,13 @@ HRESULT CPaintShotGun::Ready_GameObject()
 	m_pTransformCom->Rotation(ROT_X, D3DXToRadian(3.f));
 	m_eBulletType = BULLETTYPE::SHOTGUN_BULLET;
 
+	m_tGunInfo.m_strGunName = L"2DYE-4 Elite";
+	m_tGunInfo.m_fFireSpeed = 1.f;
+	m_tGunInfo.m_fReloadSpeed = 1.f;
+	m_tGunInfo.m_iCurrentBullet = 7;
+	m_tGunInfo.m_iReloadBullet = m_tGunInfo.m_iCurrentBullet * 1;
+	m_tGunInfo.m_iMaxBullet = m_tGunInfo.m_iReloadBullet * 15;
+
 	m_pGunState = m_pStateArray[IDLE];
 	m_pGunState->Initialize(this);
 
@@ -47,28 +55,35 @@ HRESULT CPaintShotGun::Ready_GameObject()
 	m_fGunMoveDown = 1.f;
 	m_vScale = { 1.3f,1.3f,1.3f };
 
-	m_fFireSpeed = 1.f;
-	m_fReloadSpeed = 1.f;
-
 	m_iBulletColor = 0;
-	m_iCurrentBullet = 7;
-	m_iReloadBullet = m_iCurrentBullet * 1;
-	m_iMaxBullet = m_iReloadBullet * 15;
+
 
 	m_bLazer = false;
-	m_bFire = false;
 	m_bCharged = false;
 
 	m_pTransformCom->Set_Scale(m_vScale);
 
 	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/Guns/wpn-dyehard-muzlflash2.png", 1);
 	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/Guns/wpn-dyehard-charged2.png", 2);
+
+
 	return S_OK;
 }
 
 Engine::_int CPaintShotGun::Update_GameObject(const _float& fTimeDelta)
 {
 	HostMove(fTimeDelta);
+
+	if (m_bLateInit)
+	{
+		for (int i = 0; i < m_tGunInfo.m_iCurrentBullet; ++i)
+		{
+			CBullet* pBullet = CShotGunBullet::Create(m_pGraphicDev, _vec3(0, 0, 0), i);
+			Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::PLAYERBULLET, pBullet);
+			m_vecBullet.push_back(pBullet);
+		}
+		m_bLateInit = false;
+	}
 
 	if (dynamic_cast<CPlayer*>(m_pHost)->Get_INFO()->Player_GunType == PLAYER_GUNTYPE::SHOTGUN)
 	{

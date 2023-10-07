@@ -24,23 +24,19 @@ void CPaintShotGun_Ready::Initialize(CPlayerGun* ShotGun)
     m_fMoveRightSum = -0.021f;
     m_fMoveDownSum = -0.1f;
     m_fMoveDownMax = 1.0f;
-    m_pHost->Add_GunMoveDown(m_fMoveDownMax);
+   // m_pHost->Add_GunMoveDown(m_fMoveDownMax);
 }
 
 CPlayerGunState* CPaintShotGun_Ready::Update(CPlayerGun* ShotGun, const float& fTimeDelta)
 {
     m_fBehaviorTime += fTimeDelta;
 
-    if (m_fBehaviorTime >= 0.02f) {
-        m_pHost->Add_GunMoveRight(m_fMoveRightSum);
-        m_pHost->Add_GunMoveDown(m_fMoveDownSum);
-		//ShotGun->m_fGunMoveRight += m_fMoveRightSum;
-		//ShotGun->m_fGunMoveDown += m_fMoveDownSum;
-    }
-	//if (m_fBehaviorTime >= 0.2f) {
-	//    ShotGun->m_bReady = false;
-	//    return m_pHost->Get_State(0); // Idle
-	//}
+
+
+	if (m_fBehaviorTime >= 0.2f) {
+	    m_pHost->Set_Ready(true);
+	    return dynamic_cast<CPaintShotGun*>(m_pHost)->Get_State(0); // Idle
+	}
 
     return nullptr;
 }

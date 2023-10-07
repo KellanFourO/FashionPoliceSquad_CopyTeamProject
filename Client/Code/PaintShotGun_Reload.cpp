@@ -40,6 +40,18 @@ CPlayerGunState* CPaintShotGun_Reload::Update(CPlayerGun* ShotGun, const float& 
         //ShotGun->m_fGunMoveDown += m_fMoveDownSum;
     }
 
+    if (m_fBehaviorTime >= 0.1f && m_pHost->Get_GunInfo()->m_iMaxBullet != 0)
+    {
+        m_pHost->Reload(0,0);
+        return dynamic_cast<CPaintShotGun*>(m_pHost)->Get_State(3);
+    }
+
+    else if(m_pHost->Get_GunInfo()->m_iMaxBullet == 0)
+    {
+        return dynamic_cast<CPaintShotGun*>(m_pHost)->Get_State(0);
+    }
+
+
 //     if (m_fBehaviorTime >= 0.1f) {
 //         // 재장전 시
 //         if (ShotGun->m_fMaxBullet > 0 && ShotGun->m_fBulletCount < 6) {

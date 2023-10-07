@@ -261,6 +261,12 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 	}
 
+	if (Engine::Get_DIKeyState(DIK_R) & 0x80)
+	{
+		//m_pGun->Set_Reload();
+	}
+
+
 	if ((Engine::Get_DIKeyState(DIK_L) & 0x80) && m_fTime_Level_Test >= 0.3f)
 	{
 		EXP_Up(5);
@@ -286,6 +292,13 @@ void CPlayer::Mouse_Input(const _float& fTimeDelta)
 	{
 		m_pTransformCom->Rotation(ROT_X, D3DXToRadian(dwMouseMove / 10.f));
 	}
+
+	if (dwMouseMove = Engine::Get_DIMouseState(DIM_LB) && m_pGun->Get_Ready())
+	{
+		m_pGun->Set_Fire(true);
+	}
+
+
 
 }
 

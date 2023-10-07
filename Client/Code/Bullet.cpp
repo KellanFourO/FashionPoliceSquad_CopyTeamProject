@@ -30,15 +30,6 @@ _int CBullet::Update_GameObject(const _float& fTimeDelta)
 		m_bLateInit = false;
 	}
 
-
-
-	m_fTimeDelta = fTimeDelta;
-
-	m_fAge += fTimeDelta;
-
-	if (m_fAge < m_fLifeTime)
-		Destroy();
-
 	__super::Update_GameObject(fTimeDelta);
 	return OBJ_NOEVENT;
 }
@@ -79,7 +70,9 @@ void CBullet::OnCollisionExit(CCollider* _pOther)
 
 void CBullet::Fire(_vec3 vShotPos, _vec3 vShotDir)
 {
-	m_pTransformCom->Move_Pos(&vShotDir,m_fTimeDelta, m_fSpeed);
+	m_pTransformCom->Set_Pos(vShotPos);
+	m_vShotDir = vShotDir;
+	m_bShot = true;
 }
 
 
