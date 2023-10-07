@@ -177,7 +177,7 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
 				_vec3 CubeSize, ObjSize;
 				CubeSize = ObjSize = { m_fCubesize.m_fX, m_fCubesize.m_fY, m_fCubesize.m_fZ };
 				
-				if (CImGuiManager::GetInstance()->Get_BuildModeCheck() == true) {
+				if (CImGuiManager::GetInstance()->Get_BuildModeCheck() == true) {  //이 녀석이 Build_Cube에 해당될 경우
 					m_iTextureNum = CImGuiManager::GetInstance()->Get_CubeTexNum();
 					pGameObject = CBuild_Cube::Create(m_pGraphicDev, CursorTemp, m_iTextureNum, CubeSize, m_iCubeIndex);
 
@@ -195,7 +195,7 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
 					m_VecCubeData.push_back(CubeTemp2);
 					m_iCubeIndex++;
 				}
-				else if (CImGuiManager::GetInstance()->Get_OBJModeCheck() == true) {
+				else if (CImGuiManager::GetInstance()->Get_OBJModeCheck() == true) { //이 녀석이 Build_OBJ에 해당될 경우
 					m_iTextureNum = CImGuiManager::GetInstance()->Get_OBJTexNum();
 					OBJ_TYPE eTypeTemp = CImGuiManager::GetInstance()->Get_OBJType(); //오브젝트 태그랑 다른거임
 					_uint RotateCount = (CImGuiManager::GetInstance()->Get_OBJ_RotateCountCW()) - (CImGuiManager::GetInstance()->Get_OBJ_RotateCountCCW());
@@ -218,13 +218,13 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
 					{
 						m_VecTempCube.clear();
 						m_VecTempCube = CImGuiManager::GetInstance()->Get_CubeTextureObjVector();
-						OBJTemp->pCubeTexture = m_VecTempCube[m_iTextureNum - cubeTextureStartIndex];
+						OBJTemp->pCubeTexture = m_VecTempCube[m_iTextureNum - cubeObjTextureStartIndex];
 					}
 					else if (eTypeTemp == OBJ_TYPE::PLANE_OBJ)
 					{
 						m_VecTempPlane.clear();
 						m_VecTempPlane = CImGuiManager::GetInstance()->Get_PlaneTextureObjVector();
-						OBJTemp->pBaseTexture = m_VecTempPlane[m_iTextureNum - planeTextureStartIndex];
+						OBJTemp->pBaseTexture = m_VecTempPlane[m_iTextureNum - planeObjTextureStartIndex];
 					}
 					m_VecOBJData.push_back(OBJTemp);
 					m_iOBJIndex++;

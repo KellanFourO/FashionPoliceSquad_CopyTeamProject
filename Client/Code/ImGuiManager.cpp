@@ -55,7 +55,7 @@ HRESULT CImGuiManager::SetUp_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 
 	LoadTexturesFromDirectory(L"../Bin/Resource/Texture/Cube", m_MainCubeTexture);
 	LoadTexturesFromDirectory(L"../Bin/Resource/Texture/Obj/CubeType", m_pCubeTextureObj);
-	LoadTexturesFromDirectory(L"../Bin/Resource/Texture/Obj/PlaneType", m_pPlaneTexture0);
+	LoadTexturesFromDirectory(L"../Bin/Resource/Texture/Obj/PlaneType", m_pPlaneTextureObj);
 
     return S_OK;
 }
@@ -328,13 +328,13 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 								{
 									_int iIndex = (30 * i + j) + planeTextureStartIndex;
 
-									if (iIndex >= planeTextureStartIndex && iIndex < planeTextureStartIndex + m_pPlaneTexture0.size())
+									if (iIndex >= planeTextureStartIndex && iIndex < planeTextureStartIndex + m_pPlaneTextureObj.size())
 									{
 										ImGui::PushID(iIndex);
 
-										if (ImGui::ImageButton("", m_pPlaneTexture0[iIndex - planeTextureStartIndex], size1))
+										if (ImGui::ImageButton("", m_pPlaneTextureObj[iIndex - planeTextureStartIndex], size1))
 										{
-											selected_texture1 = m_pPlaneTexture0[iIndex - planeTextureStartIndex];
+											selected_texture1 = m_pPlaneTextureObj[iIndex - planeTextureStartIndex];
 											selected_texture_index1 = iIndex;
 											m_iOBJTextureNum = iIndex;
 										}
@@ -922,7 +922,6 @@ void CImGuiManager::LoadTexturesFromDirectory(const wchar_t* folderPath, vector<
 
 	for (auto& iter : m_pCubeForSort)
 	{
-		m_FileName.push_back(iter->stFileName);
 		textureVector.push_back(iter->tTexture);
 	}
 
@@ -991,7 +990,6 @@ void CImGuiManager::LoadTexturesFromDirectory(const wchar_t* folderPath, vector<
 
 	for (auto& iter : m_pTexForSort)
 	{
-		m_FileName.push_back(iter->stFileName);
 		textureVector.push_back(iter->tTexture);
 	}
 
