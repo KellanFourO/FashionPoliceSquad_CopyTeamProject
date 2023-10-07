@@ -47,7 +47,7 @@ HRESULT CBigDaddyMonster::Ready_GameObject()
 	m_fAttackRange = 100.f; //! 공격 범위
 
 	m_pTransformCom->Set_Scale({ 5.0f,5.0f,5.0f });
-	Set_Pos((_vec3{ 25.f,4.f,28.f }));
+	Set_Pos((_vec3{ 120.f,4.f,28.f }));
 
 	m_pBufferCom->SetCount(4, 4);
 	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/Monster/loose-suit-spritesheet_hit.png", 1);

@@ -389,60 +389,60 @@ HRESULT CStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 		pTag = nullptr;
 	}
 
-	if (eTag == OBJECTTAG::BUILD_OBJ) {
-		//파일 개방해서 받아오기
-		string  m_strText = "OBJData";
-		HANDLE		hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
-
-		if (INVALID_HANDLE_VALUE == hFile)
-			return E_FAIL;
-
-		DWORD   dwByte = 0;
-		DWORD   dwStrByte = 0;
-		OBJData* pOBJ = nullptr;
-
-		ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
-		CHAR* pTag = new CHAR[dwStrByte];
-
-		ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
-		m_strText = pTag;
-
-		basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
-		const _tchar* aa = converted.c_str();
-
-		//저장된 데이터대로 큐브 동적할당해서 벡터에 담기
-		while (true)
-		{
-			pOBJ = new OBJData;
-			ReadFile(hFile, pOBJ, sizeof(OBJData), &dwByte, nullptr);
-
-			if (0 == dwByte)
-			{
-				Safe_Delete(pOBJ);
-				break;
-			}
-
-			m_VecOBJData.push_back(pOBJ);
-		}
-		CloseHandle(hFile);
-
-		Engine::CGameObject* pGameObject = nullptr;
-
-		//벡터 내용물만큼 실제 큐브 생성해 레이어에 담기
-		for (auto& iter : m_VecOBJData)
-		{
-			pGameObject = CBuild_Obj::Create(m_pGraphicDev, iter->vPos, iter->uITextureNum, iter->vSize, iter->iRotateCount, m_iOBJIndex, OBJ_TYPE::PLANE_OBJ);
-
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
-			m_iOBJIndex++;
-
-		}
-		m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
-
-		delete[] pTag;
-		pTag = nullptr;
-	}
+// 	if (eTag == OBJECTTAG::BUILD_OBJ) {
+// 		//파일 개방해서 받아오기
+// 		string  m_strText = "OBJData";
+// 		HANDLE		hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+// 
+// 		if (INVALID_HANDLE_VALUE == hFile)
+// 			return E_FAIL;
+// 
+// 		DWORD   dwByte = 0;
+// 		DWORD   dwStrByte = 0;
+// 		OBJData* pOBJ = nullptr;
+// 
+// 		ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
+// 		CHAR* pTag = new CHAR[dwStrByte];
+// 
+// 		ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
+// 		m_strText = pTag;
+// 
+// 		basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
+// 		const _tchar* aa = converted.c_str();
+// 
+// 		//저장된 데이터대로 큐브 동적할당해서 벡터에 담기
+// 		while (true)
+// 		{
+// 			pOBJ = new OBJData;
+// 			ReadFile(hFile, pOBJ, sizeof(OBJData), &dwByte, nullptr);
+// 
+// 			if (0 == dwByte)
+// 			{
+// 				Safe_Delete(pOBJ);
+// 				break;
+// 			}
+// 
+// 			m_VecOBJData.push_back(pOBJ);
+// 		}
+// 		CloseHandle(hFile);
+// 
+// 		Engine::CGameObject* pGameObject = nullptr;
+// 
+// 		//벡터 내용물만큼 실제 큐브 생성해 레이어에 담기
+// 		for (auto& iter : m_VecOBJData)
+// 		{
+// 			pGameObject = CBuild_Obj::Create(m_pGraphicDev, iter->vPos, iter->uITextureNum, iter->vSize, iter->iRotateCount, m_iOBJIndex, OBJ_TYPE::PLANE_OBJ);
+// 
+// 			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+// 			FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
+// 			m_iOBJIndex++;
+// 
+// 		}
+// 		m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
+// 
+// 		delete[] pTag;
+// 		pTag = nullptr;
+// 	}
 
 	return S_OK;
 }

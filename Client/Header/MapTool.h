@@ -54,7 +54,8 @@ private:
 
 	CLayer*				m_pLayer				= nullptr;
 	CMapCursor*			m_pMapCursor			= nullptr;
-	_uint				m_iTextureNum			= 0;
+	_uint				m_iTextureNum			= 0;  //몇 번째 텍스쳐냐
+	_uint				m_iTextureNum2			= 0;  //몇 번째 텍스쳐냐
 		
 	_vec3*				m_vCursor_Pos;
 	_vec3				m_vCursor_Size;
@@ -64,13 +65,13 @@ private:
 	bool				m_Build_time_Check		= false;
 	_int				m_Build_time			= 0;
 
-	//객체 인덱스
+	//객체 인덱스 : 한 개 한 개 마다의 번호(중복 없게)
 	_uint				m_iOBJIndex				= 5000;   //오브젝트용
 	_uint				m_iCubeIndex			= 10000;  //맵 큐브용 
 														  //(맵을 제일 큰 단위로 놓을 것.)
-	//텍스쳐 인덱스
-	const int			cubeTextureStartIndex	= 1000;
-	const int			planeTextureStartIndex	= 3000;
+	//텍스쳐 인덱스 : 한 텍스쳐 마다의 번호(같은 텍스쳐라면 같을 수도 있음)
+	const int			cubeObjTextureStartIndex	= 1000;
+	const int			planeObjTextureStartIndex	= 3000;
 
 	bool				m_BUILD_NOP_MODE		= false;
 	CHAR*				pTag					= nullptr; //Load 때 쓰는 녀석.

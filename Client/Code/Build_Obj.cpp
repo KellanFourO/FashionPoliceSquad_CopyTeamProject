@@ -116,17 +116,17 @@ void CBuild_Obj::Render_GameObject()
 	m_pCollider->Render_Collider(); //
 
 
-	if (m_eOBJ_Type == OBJ_TYPE::CUBE_OBJ)
+	if (m_eOBJ_Type == OBJ_TYPE::CUBE_OBJ)  //텍스쳐가 버퍼보다 먼저 ... ... ㅎ... ...
 	{	
 		m_VecTempCube = dynamic_cast<CMapTool*>(Engine::Management()->Get_One_Scene(SCENETAG::MAPTOOL))->Get_VecTempCube();
-		m_pBufferCubeCom->Render_Buffer();  
 		m_pTextureCom->Render_OBJTextrue(m_VecTempCube[m_TextureNumber - cubeTextureStartIndex]);
+		m_pBufferCubeCom->Render_Buffer();  
 	}
 	else if (m_eOBJ_Type == OBJ_TYPE::PLANE_OBJ)
 	{
 		m_VecTempPlane = dynamic_cast<CMapTool*>(Engine::Management()->Get_One_Scene(SCENETAG::MAPTOOL))->Get_VecTempPlane();
-		m_pBufferRcCom->Render_Buffer();
 		m_pTextureCom->Render_OBJTextrue(m_VecTempPlane[m_TextureNumber - planeTextureStartIndex]);
+		m_pBufferRcCom->Render_Buffer();
 	}
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);

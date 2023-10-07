@@ -27,7 +27,6 @@ private:
 
 	// 유진 - OBJ 텍스쳐 인덱스
 	const int			cubeTextureStartIndex = 1000;
-	const int			crossTextureStartIndex = 2000;
 	const int			planeTextureStartIndex = 3000;
 
 public:
