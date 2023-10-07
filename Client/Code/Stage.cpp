@@ -165,15 +165,15 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER, pGameObject), E_FAIL);	//플레이어
 
-		pGameObject = CPaintShotGun::Create(m_pGraphicDev,dynamic_cast<CPlayer*>(pPlayer));
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_GUN, pGameObject), E_FAIL);
-		dynamic_cast<CPaintShotGun*>(pGameObject)->Set_Host(pPlayer);
-
-		pGameObject = CTailorAssertRifle::Create(m_pGraphicDev, dynamic_cast<CPlayer*>(pPlayer));
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_GUN, pGameObject), E_FAIL);
-		dynamic_cast<CTailorAssertRifle*>(pGameObject)->Set_Host(pPlayer);
+		//pGameObject = CPaintShotGun::Create(m_pGraphicDev,dynamic_cast<CPlayer*>(pPlayer));
+		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_GUN, pGameObject), E_FAIL);
+		//dynamic_cast<CPaintShotGun*>(pGameObject)->Set_Host(pPlayer);
+		//
+		//pGameObject = CTailorAssertRifle::Create(m_pGraphicDev, dynamic_cast<CPlayer*>(pPlayer));
+		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_GUN, pGameObject), E_FAIL);
+		//dynamic_cast<CTailorAssertRifle*>(pGameObject)->Set_Host(pPlayer);
 
 		//FootRay
 		pGameObject = CFootRay::Create(m_pGraphicDev);
@@ -223,41 +223,42 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 
 
 	}
-	//{
-	//	for (int i = 0; i < 6; i++) {
-	//		pGameObject = CItem::Create(m_pGraphicDev);
-	//		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//		Item_Info Item_Info;
-	//		Item_Info.Item_ID = (ItemID)i;
-	//		Item_Info.vPos = _vec3(20 + 6 * i, 2.f, 35);
-	//		dynamic_cast<CItem*>(pGameObject)->Set_INFO(Item_Info);
-	//		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::ITEM, pGameObject), E_FAIL);	//아이템 배치
-	//	}
-	//}
-	//// 아이템
-	//
-	//{
+	{
+		for (int i = 0; i < 6; i++) {
+			pGameObject = CItem::Create(m_pGraphicDev);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			Item_Info Item_Info;
+			Item_Info.Item_ID = (ItemID)i;
+			Item_Info.vPos = _vec3(20 + 6 * i, 2.f, 35);
+			dynamic_cast<CItem*>(pGameObject)->Set_INFO(Item_Info);
+			FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::ITEM, pGameObject), E_FAIL);	//아이템 배치
+		}
+	}
+	// 아이템
+
+
+	//몬스터
+
+	{
+		pGameObject = CStage1Boss::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::BOSS, pGameObject), E_FAIL);
+	}
+
+	{
 	pGameObject = CBigDaddyMonster::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
-	//
-	//	pGameObject = CKickBoardMonster::Create(m_pGraphicDev);
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
-	//
-	//	pGameObject = CDullSuitMonster::Create(m_pGraphicDev);
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
-	//}
-	////몬스터
-	//
-	//{
-	//	pGameObject = CStage1Boss::Create(m_pGraphicDev);
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::BOSS, pGameObject), E_FAIL);
-	//}
-	//보스
+	
+	pGameObject = CKickBoardMonster::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
 
+	pGameObject = CDullSuitMonster::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+	}
+//몬스터
 	m_mapLayer.insert({ eLayerTag, pLayer });
 
 	return S_OK;
