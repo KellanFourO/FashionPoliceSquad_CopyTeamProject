@@ -208,9 +208,18 @@ void CPlayerGun::HostMove(const _float& fTimeDelta)
 	_vec3 vGunMoveRight = vGunMove / 20;
 	_vec3 vGunMoveDown = -vPlayerUp / 20;
 
-	_vec3 vPos = { vPlayerPos + vPlayerLook * 2.5f + vGunMoveRight * m_fGunMoveRight * 9.4f + vGunMoveDown * m_fGunMoveDown * 10.f };
+	if (m_eBulletType == BULLETTYPE::SHOTGUN_BULLET)
+	{
+		_vec3 vPos = { vPlayerPos + vPlayerLook * 2.5f + vGunMoveRight * m_fGunMoveRight * 9.4f + vGunMoveDown * m_fGunMoveDown * 10.f };
 
-	m_pTransformCom->Set_Pos(vPos);
+		m_pTransformCom->Set_Pos(vPos);
+	}
+	else if(m_eBulletType == BULLETTYPE::ASSERTRIFLE_BULLET)
+	{
+		m_pTransformCom->Set_Pos(vPlayerPos + vPlayerLook * 2.5f + vGunMoveRight * m_fGunMoveRight * 8.0f + vGunMoveDown * m_fGunMoveDown * 14.5f);
+	}
+
+
 
 	//TODO 발사 위치 구하기
 

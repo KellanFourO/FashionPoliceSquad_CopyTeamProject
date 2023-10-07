@@ -18,7 +18,6 @@
 #include "DullSuitMonster.h"
 #include "KickBoardMonster.h"
 #include "Dyehard.h"
-#include "Rifle.h"
 #include "Belt.h"
 #include "MuzzleFlash.h"
 #include "MuzzlefFlash_Rifle.h"
@@ -44,6 +43,7 @@
 #include "MissionObjective.h"
 #include "PaintShotGun.h"
 #include "TailorAssertRifle.h"
+#include "TailorAssertRifleHand.h"
 
 
 class CStage : public Engine::CScene

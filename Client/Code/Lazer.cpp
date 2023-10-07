@@ -30,7 +30,7 @@
 //	m_fFrame = 0.f;
 //	m_fLiveTime = 0.f;
 //
-//	m_pTransformCom4->Set_Scale(_vec3(10.f, 3.5f, 10.f));
+////	m_pTransformCom4->Set_Scale(_vec3(10.f, 3.5f, 10.f));
 //
 //	//m_pTransformCom->Rotation(ROT_X, -D3DXToRadian(50));
 //	//m_pTransformCom->Rotation(ROT_Y, -D3DXToRadian(50));
@@ -39,8 +39,8 @@
 //	//D3DXMatrixRotationY(&m_Mat_Axis, -D3DXToRadian(50));
 //	//D3DXMatrixRotationZ(&m_Mat_Axis, -D3DXToRadian(50));
 //
-//	m_pCollider->Set_Host(this);
-//	m_pCollider->Set_Transform(m_pTransformCom4);
+//	//m_pCollider->Set_Host(this);
+//	//m_pCollider->Set_Transform(m_pTransformCom4);
 //
 //
 //	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/Guns/Green_Spin.png", 1);

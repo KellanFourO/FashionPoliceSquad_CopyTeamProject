@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "Player.h"
 
-#include "Rifle.h"
 #include "Dyehard.h"
 #include "CrossHair.h"
 

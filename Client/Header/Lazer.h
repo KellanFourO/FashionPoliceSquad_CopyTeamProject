@@ -36,17 +36,15 @@ public:
 	void			Set_Gun(CGameObject* _pGun) { m_pGun = _pGun; };
 	void			Shoot(_vec3 _StartPos, int iColorIndex);
 private:
-	CRcTex* m_pBufferCom = nullptr; // 텍스처를 그리기위한 버퍼 컴포넌트
-	CTexture* m_pTextureCom2 = nullptr;
+	CRcTex*		m_pBufferCom = nullptr; // 텍스처를 그리기위한 버퍼 컴포넌트
+	CTexture*	m_pTextureCom = nullptr;
 	CTransform* m_pTransformCom = nullptr; // 이동 컴포넌트
-	CTransform* m_pTransformCom2 = nullptr; // 이동 컴포넌트2
-	CTransform* m_pTransformCom3 = nullptr; // 이동 컴포넌트3
-	CTransform* m_pTransformCom4 = nullptr; // 이동 컴포넌트3
 
-	CTexture* m_pTextureCom = nullptr; // 텍스쳐 컴포넌트
+
+	//CTexture* m_pTextureCom = nullptr; // 텍스쳐 컴포넌트
 
 public:
-	
+
 
 private:
 	_vec3			m_vDir, m_vPos;
