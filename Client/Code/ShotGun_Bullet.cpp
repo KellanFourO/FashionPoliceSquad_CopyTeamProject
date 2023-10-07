@@ -46,8 +46,7 @@ Engine::_int CShotGunBullet::Update_GameObject(const _float& fTimeDelta)
 		Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 		__super::Update_GameObject(fTimeDelta);
 
-		if (m_bShot)
-		{
+
 			_vec3 vPlayerPos, vMyPos, vLook;
 
 			m_pPlayerTransformCom->Get_Info(INFO_POS, &vPlayerPos);
@@ -55,10 +54,13 @@ Engine::_int CShotGunBullet::Update_GameObject(const _float& fTimeDelta)
 			vLook = vPlayerPos - m_vPos;
 			D3DXVec3Normalize(&vLook, &vLook);
 
+
+
 			_float fAngle = atan2f(vLook.x, vLook.z);
 			m_pTransformCom->Set_Rotate(ROT_Y, fAngle + D3DX_PI);
-			m_pTransformCom->Set_Pos(m_vPos += (m_vShotDir * m_fSpeed));
-		}
+			//m_pTransformCom->Set_Pos(m_vPos += (m_vShotDir * m_fSpeed));
+			m_pTransformCom->Move_Pos(&m_vShotDir, fTimeDelta, m_fSpeed);
+
 
 
 		//_vec3 vPlayerPos, vMyPos, vPlayerPos_Rel;

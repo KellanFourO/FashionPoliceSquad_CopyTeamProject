@@ -201,7 +201,7 @@ namespace Engine
 
 	typedef struct      PlayerGun_Info
 	{
-		const	_tchar* m_szGunName;
+		const _tchar*	m_szGunName;
 		_float			m_fFireSpeed;
 		_float			m_fReloadSpeed;
 		_int			m_iCurrentBullet;

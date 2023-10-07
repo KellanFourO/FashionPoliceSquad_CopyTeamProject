@@ -290,7 +290,7 @@ void CMyUI::Bullet_Function()
 
 	if (m_eType == UI_TYPE::BULLET && m_pPlayerGun)
 	{
-		Engine::Render_Font(L"UI_WEAPON_NAME", m_pPlayerGun->Get_GunInfo()->m_szGunName.c_str(), &_vec2(640, 520), D3DXCOLOR(D3DCOLOR_ARGB(255, 255, 255, 255)));
+		Engine::Render_Font(L"UI_WEAPON_NAME", m_pPlayerGun->Get_GunInfo()->m_szGunName, &_vec2(640, 520), D3DXCOLOR(D3DCOLOR_ARGB(255, 255, 255, 255)));
 		Engine::Render_Font(L"UI_FONT", to_wstring(m_pPlayerGun->Get_GunInfo()->m_iCurrentBullet).c_str(), &_vec2(670, 550), D3DXCOLOR(D3DCOLOR_ARGB(255, 130, 245, 209)));
 		Engine::Render_Font(L"UI_FONT", to_wstring(m_pPlayerGun->Get_GunInfo()->m_iMaxBullet).c_str(), &_vec2(730, 550), D3DXCOLOR(D3DCOLOR_ARGB(255, 130, 245, 209)));
 	}
