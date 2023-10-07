@@ -41,7 +41,7 @@ private:
 	vector<IDirect3DCubeTexture9*> m_VecTempCube;
 	vector<IDirect3DBaseTexture9*> m_VecTempCross;
 	vector<IDirect3DBaseTexture9*> m_VecTempPlane;
-	
+
 	CCubeTex*		m_pBufferCubeCom = nullptr;
 	CCrossTex*		m_pBufferCrossCom = nullptr;
 	CRcTex*			m_pBufferRcCom = nullptr;

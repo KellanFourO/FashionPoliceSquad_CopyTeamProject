@@ -23,7 +23,7 @@ HRESULT CMainApp::Ready_MainApp()
 	FAILED_CHECK_RETURN(Ready_Scene(m_pGraphicDev, &m_pManagementClass), E_FAIL);
 
 	//CImGuiManager::GetInstance()->SetUp_ImGui(m_pGraphicDev);//
-	
+
 	m_pGraphicDev->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTEXF_LINEAR);
 	m_pGraphicDev->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTEXF_POINT);
 

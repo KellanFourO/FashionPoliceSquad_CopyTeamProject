@@ -41,7 +41,7 @@ HRESULT CPaintShotGun::Ready_GameObject()
 	m_pTransformCom->Rotation(ROT_X, D3DXToRadian(3.f));
 	m_eBulletType = BULLETTYPE::SHOTGUN_BULLET;
 
-	m_tGunInfo.m_strGunName = L"2DYE-4 Elite";
+	m_tGunInfo.m_szGunName = L"2DYE-4 Elite";
 	m_tGunInfo.m_fFireSpeed = 1.f;
 	m_tGunInfo.m_fReloadSpeed = 1.f;
 	m_tGunInfo.m_iCurrentBullet = 7;

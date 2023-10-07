@@ -178,10 +178,12 @@ void CPlayerGun::HostMove(const _float& fTimeDelta)
 	m_pTransformCom->Set_Pos(vPos);
 
 	//TODO 발사 위치 구하기
-	_vec3 vMyPos, vDir;
+
+	_vec3 vMyPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vMyPos);
-	vDir = dynamic_cast<CPlayer*>(m_pHost)->Get_Dir();
-	m_vShotPos = (vPlayerPos + vMyPos) / 2 + vDir + _vec3(0.f, -0.7f, 0.f);
+	m_vShotDir = dynamic_cast<CPlayer*>(m_pHost)->Get_Dir();
+	m_vShotPos = (vPlayerPos + vMyPos) / 2 + m_vShotDir + _vec3(0.f, -0.7f, 0.f);
+
 
 	MouseInput();
 

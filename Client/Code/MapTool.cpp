@@ -7,10 +7,10 @@
 #include "Export_System.h"
 #include "Export_Utility.h"
 
-CMapTool::CMapTool(LPDIRECT3DDEVICE9 pGraphicDev) 
+CMapTool::CMapTool(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev), m_vCursor_Pos(&_vec3())
 {
-}  
+}
 
 CMapTool::~CMapTool()
 {
@@ -50,14 +50,14 @@ HRESULT CMapTool::Ready_LightInfo()
 _int CMapTool::Update_Scene(const _float& fTimeDelta)
 {
 	_int	iExit = __super::Update_Scene(fTimeDelta);
-	
+
 	BUILD_NOP_MODE();
 
 	if (CImGuiManager::GetInstance()->Get_OBJModeCheck() == false)
 		{	Build_Cube();	}   //OBJ모드가 아니라면 단순 빌드 큐브
 
 	else if (CImGuiManager::GetInstance()->Get_OBJModeCheck() == true)
-		{	Build_OBJ();	}   //OBJ모드라면 빌드 OBJ	
+		{	Build_OBJ();	}   //OBJ모드라면 빌드 OBJ
 
 	if (CImGuiManager::GetInstance()->Get_Load_Check() == true)
 	{
@@ -81,7 +81,7 @@ void CMapTool::LateUpdate_Scene()
 
 void CMapTool::Render_Scene()
 {
-	// -DEBUG 등 
+	// -DEBUG 등
 }
 
 
@@ -120,13 +120,13 @@ HRESULT CMapTool::Ready_Layer_Environment(LAYERTAG eLayerTag)
 	pGameObject = m_pMapCursor = CMapCursor::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MAPCURSOR, pGameObject), E_FAIL);
-	
+
 //	pTemp = pGameObject;
 //
 // 	pGameObject = CTerrain::Create(m_pGraphicDev);
 // 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 // 	FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::TERRAIN, pGameObject), E_FAIL);
-// 
+//
  	m_mapLayer.insert({ eLayerTag, pLayer });
 
 	return S_OK;
@@ -134,7 +134,7 @@ HRESULT CMapTool::Ready_Layer_Environment(LAYERTAG eLayerTag)
 
 void CMapTool::BUILD_NOP_MODE()
 {
-	if (Engine::Get_DIKeyState(DIK_F7)) 
+	if (Engine::Get_DIKeyState(DIK_F7))
 	{
 		if (true == m_BUILD_NOP_MODE)
 			m_BUILD_NOP_MODE = false;
@@ -175,7 +175,7 @@ HRESULT CMapTool::Build_Cube()
 			_vec3 CursorTemp = { m_vCursor_Pos->x, m_vCursor_Height, m_vCursor_Pos->z };
 
 
-			if ((!CheckDuplicateCube(CursorTemp, m_vCursor_Size))  
+			if ((!CheckDuplicateCube(CursorTemp, m_vCursor_Size))
 				&& (CursorTemp.x > -1)
 				&& (CursorTemp.y > -1)
 				&& (CursorTemp.z > -1)
@@ -184,16 +184,16 @@ HRESULT CMapTool::Build_Cube()
 				m_Build_time_Check = true;
 
 				m_iTextureNum = CImGuiManager::GetInstance()->Get_CubeTexNum();
-				
+
 				if (CImGuiManager::GetInstance()->Get_NotNormal_Check() == false)
 				{	m_fCubesize = { VTXITV, VTXITV, VTXITV };	}
-				
+
 				else if (CImGuiManager::GetInstance()->Get_NotNormal_Check() == true)
 				{	CubeSize_Update();	}
 
 
 				_vec3 CubeSize = { m_fCubesize.m_fX, m_fCubesize.m_fY, m_fCubesize.m_fZ };
-				pGameObject = CBuild_Cube::Create(m_pGraphicDev, CursorTemp, m_iTextureNum, CubeSize, m_iCubeIndex);		
+				pGameObject = CBuild_Cube::Create(m_pGraphicDev, CursorTemp, m_iTextureNum, CubeSize, m_iCubeIndex);
 
 				NULL_CHECK_RETURN(pGameObject, E_FAIL);
 				FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_CUBE, pGameObject), E_FAIL);
@@ -213,15 +213,15 @@ HRESULT CMapTool::Build_Cube()
 			if (m_Build_time_Check == true)
 			{
 				m_Build_time++;
-				
-				if (m_Build_time == 10) 
+
+				if (m_Build_time == 10)
 				{
 					m_Build_time = 0;
 					m_Build_time_Check = false;
 				}
 			}
 		}
-	}	
+	}
 	return S_OK;
 }
 
@@ -231,7 +231,7 @@ HRESULT CMapTool::Build_OBJ()
 
 		Engine::CGameObject* pGameObject = nullptr;
 		OBJTemp = new OBJData;
-		
+
 		Cursor_Update();
 		_vec3 CursorTemp = { m_vCursor_Pos->x, m_vCursor_Height, m_vCursor_Pos->z };
 
@@ -242,7 +242,7 @@ HRESULT CMapTool::Build_OBJ()
 		{
 
 			m_iTextureNum = CImGuiManager::GetInstance()->Get_OBJTexNum();
-			
+
 			if (CImGuiManager::GetInstance()->Get_NotNormal_Check() == false)
 			{	m_fCubesize = { VTXITV, VTXITV, VTXITV };	}
 
@@ -380,7 +380,7 @@ HRESULT CMapTool::Delete_Cube()
 
 				if (IndexTemp != -1) {
 					auto& ObjVectorTemp = Engine::Management()->GetInstance()->Get_Scene()->Get_ObjectList(LAYERTAG::ENVIRONMENT, OBJECTTAG::BUILD_CUBE);
-			
+
 					for (int i = 0; i < ObjVectorTemp.size(); ++i)
 					{
 						if (IndexTemp == ObjVectorTemp[i]->Get_iIndex())
@@ -390,7 +390,7 @@ HRESULT CMapTool::Delete_Cube()
 						}
 					}
 				}
-				
+
 				iter = m_VecCubeData.erase(iter);
 			}
 			else
@@ -398,7 +398,7 @@ HRESULT CMapTool::Delete_Cube()
 				++iter;
 			}
 		}
-		
+
 	}
 	return S_OK;
 }
@@ -438,7 +438,7 @@ bool CMapTool::CheckDuplicateCube(const _vec3& pPos, const _vec3& pSize)
 {
 	if (m_VecCubeData.empty())
 		return false;
-		
+
 	bool bCheckPoint = true; //한 번 도는동안 계속 true라면(한번도 안 걸리면) 그게 곧 중복
 
 	for (const auto& iter : m_VecCubeData)
@@ -482,7 +482,7 @@ bool CMapTool::CheckDuplicateCube(const _vec3& pPos, const _vec3& pSize)
 		}
 
 		if (bCheckPoint == true) //트루로 시작해서 쭉 그대로 왔다는건 하나도 안 걸린 것
-			{ return true; }  // 즉 중복이 발생한 거임 그럼 바로 return한다		
+			{ return true; }  // 즉 중복이 발생한 거임 그럼 바로 return한다
 	}
 
 	return false; // 안 겹쳤어 끝까지! = 설치 가능/ 중복 아님
