@@ -20,7 +20,7 @@ private:
 	virtual ~CRifle_Bullet();
 
 public:
-	virtual	HRESULT	Ready_GameObject(_vec3 _StartPos, _int iColorIndex);
+	virtual	HRESULT	Ready_GameObject(_vec3 _StartPos, _int iRandomIndex);
 	virtual _int	Update_GameObject(const _float& fTimeDelta) override;
 	virtual void	LateUpdate_GameObject() override;
 	virtual void	Render_GameObject() override;
@@ -57,7 +57,7 @@ private:
 
 
 public:
-	static CRifle_Bullet* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _StartPos, _int iColorIndex);
+	static CRifle_Bullet* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 _StartPos, _int iRandomIndex);
 
 private:
 	virtual void Free()	override;

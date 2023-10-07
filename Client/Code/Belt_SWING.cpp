@@ -24,9 +24,9 @@ void CBelt_SWING::Initialize(CBelt* Belt)
     m_bAttack = false;
 }
 
-CBeltState* CBelt_SWING::Update(CBelt* Belt, const float& fDeltaTime)
+CBeltState* CBelt_SWING::Update(CBelt* Belt, const float& fTimeDelta)
 {
-    m_fBehaviorTime += fDeltaTime;
+    m_fBehaviorTime += fTimeDelta;
     CTransform* pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
     NULL_CHECK(pPlayerTransCom);
     _vec3   vPlayerPos;

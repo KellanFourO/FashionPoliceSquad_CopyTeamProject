@@ -91,32 +91,8 @@
     <Filter Include="02. GameObject\20.UI">
       <UniqueIdentifier>{2f59545b-6fd1-44f4-95cc-f93a08f7d3d5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\07.Bullet">
-      <UniqueIdentifier>{d07e6e76-d497-42e0-b3c7-738d2811173e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\07.Bullet\00.PlayerBullet">
-      <UniqueIdentifier>{27410ade-f834-49ed-95b2-ba04b5a3e629}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\07.Bullet\01.MonsterBullet">
-      <UniqueIdentifier>{6eb94606-5f5c-4c02-8f40-bab3c8a51d5c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\07.Bullet\02.BossBullet">
-      <UniqueIdentifier>{11958419-bf2d-40af-a86e-b426e62bc734}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\07.Bullet\00.PlayerBullet\00.shotgun">
-      <UniqueIdentifier>{f4d4aab4-a64e-4717-8ac5-5372cb4929eb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\07.Bullet\01.MonsterBullet\00.BrifCase">
-      <UniqueIdentifier>{f5f58731-1767-41fe-a690-1a2b71e18d30}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. Player\02.Belt">
-      <UniqueIdentifier>{fab1780c-f74d-499e-8bd2-13abcc428598}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\02. Monster\99.MonsterState">
       <UniqueIdentifier>{8ed9268c-5100-48f5-8620-805323db800d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. Player\02.Belt\99.BeltState">
-      <UniqueIdentifier>{d4133688-6c74-4c8e-9deb-7127cfbec4e3}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\01. Player\01. Dyehard\99.shotgunState">
       <UniqueIdentifier>{3c5a560f-743b-4470-a788-dc358be1ed4d}</UniqueIdentifier>
@@ -175,21 +151,6 @@
     <Filter Include="02. GameObject\01. Player\99. PlayerState">
       <UniqueIdentifier>{769d6b03-6a70-4eda-808a-40bae15d90e1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Player\99. PlayerState\01. Player_IDLE">
-      <UniqueIdentifier>{ffd5d3de-eb8c-4482-b2f4-77152418f358}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. Player\99. PlayerState\02. Player_RIGHT">
-      <UniqueIdentifier>{a0b5dc57-a0f2-44eb-b9f2-fa813d9ef408}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. Player\99. PlayerState\03. Player_LEFT">
-      <UniqueIdentifier>{3ac994b0-87c2-4445-8294-9b16f8e11eef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. Player\99. PlayerState\04. Player_HIT">
-      <UniqueIdentifier>{1f612948-9f1b-47e3-8f37-948d9ffc88b9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. Player\99. PlayerState\05. Player_LV_UP">
-      <UniqueIdentifier>{8f52cb87-6295-44d8-ac70-4f89a7f2821c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\01. Player\04. Gun">
       <UniqueIdentifier>{408c8447-f908-4184-9269-a7a6243d6ec1}</UniqueIdentifier>
     </Filter>
@@ -202,9 +163,6 @@
     <Filter Include="02. GameObject\01. Player\99. PlayerState\07. Player_Armor">
       <UniqueIdentifier>{3c96815e-e064-47be-8da3-3601ef171dd7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\02. Monster\02.KickBoard">
-      <UniqueIdentifier>{4c754359-9b09-4612-8c5b-426c565d27e7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\20.UI\03. MyCard">
       <UniqueIdentifier>{e66a0f91-33d9-40f9-a8af-74159bceb49e}</UniqueIdentifier>
     </Filter>
@@ -216,18 +174,6 @@
     </Filter>
     <Filter Include="02. GameObject\01. Player\98.FootRay">
       <UniqueIdentifier>{f6c6d1c2-9488-4da1-a582-353ce5a14cbb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\02. Monster\02.KickBoard\99.KickBoard_State">
-      <UniqueIdentifier>{7bc8945e-1075-427e-9a0a-22915907fe52}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\02. Monster\02.KickBoard\99.KickBoard_State\01. KickBoard_IDLE">
-      <UniqueIdentifier>{66aac510-1d5a-424d-a645-cc48f8903833}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\02. Monster\02.KickBoard\99.KickBoard_State\10. KickBoard_DEAD">
-      <UniqueIdentifier>{2742face-4cde-472e-8bff-a0491ef0b4ac}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\07.Bullet\01.MonsterBullet\01. BrifCase_2">
-      <UniqueIdentifier>{dd69410f-21a8-4949-b0c3-1a1e0357abef}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\30. Inventory">
       <UniqueIdentifier>{27d39a13-a4e1-48e4-8548-e14526301a52}</UniqueIdentifier>
@@ -295,41 +241,14 @@
     <Filter Include="02. GameObject\02. Monster\03. Stage1Boss\99. Stage1Boss_State\05. Stage1Boss_BrifBigShield">
       <UniqueIdentifier>{4d4a2ef5-65e0-4cd4-8223-2c73d760d3e8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\07.Bullet\02.BossBullet\00.GoldBar">
-      <UniqueIdentifier>{5e336aff-d751-40c5-92fa-66ffbfea2f9e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\07.Bullet\00.PlayerBullet\01. RifleBullet">
-      <UniqueIdentifier>{18236847-33ed-4c22-b499-5ba0d125e8b3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\02. Monster\03. Smoker">
       <UniqueIdentifier>{39dcff9d-080e-46cd-a4d5-0dfe77ae68ce}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\07.Bullet\00.PlayerBullet\02. Lazer">
-      <UniqueIdentifier>{fc4c52ed-53a4-46ce-a805-993d720598a3}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\01. Player\01. Dyehard\99.shotgunState\07. ShotGun_Lazer">
       <UniqueIdentifier>{21ab3976-114d-491c-a7ad-a1f0de726d08}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\06. Effect\00.Particle\02.JumpSmoke">
       <UniqueIdentifier>{20ed10b5-ed4c-41aa-9d8b-31b84071e0ff}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\02. Monster\00.BigDaddyMonster">
-      <UniqueIdentifier>{6421f6fc-cb7c-49d8-9aa7-49470a418d85}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\02. Monster\00.BigDaddyMonster\99.BigDaddyMonster_State">
-      <UniqueIdentifier>{88b7cad6-9881-4f25-bdba-84a15172806a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\02. Monster\00.BigDaddyMonster\99.BigDaddyMonster_State\01. BigDaddyMonster_Idle">
-      <UniqueIdentifier>{85785f8a-dd85-40ab-9e44-d8c4ae75401e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\02. Monster\00.BigDaddyMonster\99.BigDaddyMonster_State\02. BigDaddyMonster_Chase">
-      <UniqueIdentifier>{d805c08a-1879-4335-abdc-334e7f793267}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\02. Monster\00.BigDaddyMonster\99.BigDaddyMonster_State\10. BigDaddyMonster_Dead">
-      <UniqueIdentifier>{848b0baf-b6eb-40ad-b14f-7ade467d39e6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\02. Monster\00.BigDaddyMonster\99.BigDaddyMonster_State\03. BigDaddyMonster_Attack">
-      <UniqueIdentifier>{c0d3c754-bc16-471d-8b11-8768de6ace4e}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\02. Monster\01. DullSuitMonster">
       <UniqueIdentifier>{9681e598-cfc7-4b20-9efa-6f2bbbbede41}</UniqueIdentifier>
@@ -348,6 +267,156 @@
     </Filter>
     <Filter Include="02. GameObject\02. Monster\01. DullSuitMonster\99. DullSuitMonster_State\04.DullSuitMonster_Chase">
       <UniqueIdentifier>{983d7c0d-e17e-45f2-8e66-018baaa74830}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Scene\09.LoadingStage1">
+      <UniqueIdentifier>{6b41b8b4-203f-4df9-8757-c6b6fc0ce869}</UniqueIdentifier>
+	</Filter>
+    <Filter Include="02. GameObject\02. Monster\00. BigDaddyMonster">
+      <UniqueIdentifier>{6421f6fc-cb7c-49d8-9aa7-49470a418d85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State">
+      <UniqueIdentifier>{88b7cad6-9881-4f25-bdba-84a15172806a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State\01. BigDaddyMonster_Idle">
+      <UniqueIdentifier>{85785f8a-dd85-40ab-9e44-d8c4ae75401e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State\02. BigDaddyMonster_Chase">
+      <UniqueIdentifier>{d805c08a-1879-4335-abdc-334e7f793267}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State\10. BigDaddyMonster_Dead">
+      <UniqueIdentifier>{848b0baf-b6eb-40ad-b14f-7ade467d39e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State\03. BigDaddyMonster_Attack">
+      <UniqueIdentifier>{c0d3c754-bc16-471d-8b11-8768de6ace4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\02. KickBoardMonster">
+      <UniqueIdentifier>{4c754359-9b09-4612-8c5b-426c565d27e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State">
+      <UniqueIdentifier>{7bc8945e-1075-427e-9a0a-22915907fe52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\10. KickBoardMonster_Dead">
+      <UniqueIdentifier>{2742face-4cde-472e-8bff-a0491ef0b4ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\01. KickBoardMonster_Idle">
+      <UniqueIdentifier>{66aac510-1d5a-424d-a645-cc48f8903833}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\02. KickBoardMonster_Chase">
+      <UniqueIdentifier>{dfdb1e6a-25b6-4785-9fe4-19e8b0d10a61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\03. KickBoardMonster_Attack">
+      <UniqueIdentifier>{7419e999-225c-4168-baca-d51ac2c401b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\04. KickBoardMonster_Patrol">
+      <UniqueIdentifier>{e03d141e-8add-41bd-8b80-8fafc56089ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\99. PlayerState\08. Player_Jump">
+      <UniqueIdentifier>{99f027b3-4d63-4efb-a25e-74742a0276a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\99. PlayerState\01. Player_Idle">
+      <UniqueIdentifier>{ffd5d3de-eb8c-4482-b2f4-77152418f358}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\99. PlayerState\02. Player_Right">
+      <UniqueIdentifier>{a0b5dc57-a0f2-44eb-b9f2-fa813d9ef408}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\99. PlayerState\03. Player_Left">
+      <UniqueIdentifier>{3ac994b0-87c2-4445-8294-9b16f8e11eef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\99. PlayerState\04. Player_Hit">
+      <UniqueIdentifier>{1f612948-9f1b-47e3-8f37-948d9ffc88b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\99. PlayerState\05. Player_LevelUp">
+      <UniqueIdentifier>{8f52cb87-6295-44d8-ac70-4f89a7f2821c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\02. Belt">
+      <UniqueIdentifier>{fab1780c-f74d-499e-8bd2-13abcc428598}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\02. Belt\99.BeltState">
+      <UniqueIdentifier>{d4133688-6c74-4c8e-9deb-7127cfbec4e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. Bullet">
+      <UniqueIdentifier>{d07e6e76-d497-42e0-b3c7-738d2811173e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. Bullet\00.PlayerBullet">
+      <UniqueIdentifier>{27410ade-f834-49ed-95b2-ba04b5a3e629}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. Bullet\00.PlayerBullet\01. RifleBullet">
+      <UniqueIdentifier>{18236847-33ed-4c22-b499-5ba0d125e8b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. Bullet\01.MonsterBullet">
+      <UniqueIdentifier>{6eb94606-5f5c-4c02-8f40-bab3c8a51d5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. Bullet\01.MonsterBullet\00.BrifCase">
+      <UniqueIdentifier>{f5f58731-1767-41fe-a690-1a2b71e18d30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. Bullet\01.MonsterBullet\01. BrifCase_2">
+      <UniqueIdentifier>{dd69410f-21a8-4949-b0c3-1a1e0357abef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. Bullet\02.BossBullet">
+      <UniqueIdentifier>{11958419-bf2d-40af-a86e-b426e62bc734}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. Bullet\02.BossBullet\00.GoldBar">
+      <UniqueIdentifier>{5e336aff-d751-40c5-92fa-66ffbfea2f9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\05. PlayerGun">
+      <UniqueIdentifier>{023ebd3f-72de-4081-a017-e09bff518ee1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun">
+      <UniqueIdentifier>{b6a3d63c-2e1e-4177-add1-2309d4a27fc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle">
+      <UniqueIdentifier>{04f53494-a256-40ec-b8c2-afa52309f737}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState">
+      <UniqueIdentifier>{89e6d3df-579c-411b-ab53-fe53bd448e27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState">
+      <UniqueIdentifier>{1f48b4ac-7236-4121-812b-fe3aa189a4ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\07. Bullet\00.PlayerBullet\00. ShotGunBullet">
+      <UniqueIdentifier>{f4d4aab4-a64e-4717-8ac5-5372cb4929eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\00. PaintShotGun_Idle">
+      <UniqueIdentifier>{918b88a7-b2c7-4aa2-955c-069312df83af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\01. PaintShotGun_Ready">
+      <UniqueIdentifier>{a4591c9f-c218-476e-a85a-02e684f05788}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\02. PaintShotGun_Reload">
+      <UniqueIdentifier>{0c2b78a8-44fc-4c85-8afb-4b5cd99a3999}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\03. PaintShotGun_Shot">
+      <UniqueIdentifier>{7a009221-9a70-4fa7-9b2f-15a63fbb7e68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\04. PaintShotGun_Walk">
+      <UniqueIdentifier>{6b9a6419-221a-4768-8860-709eb7c16ba2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\05. PaintShotGun_Lazer">
+      <UniqueIdentifier>{a4727e42-d7bd-47d7-ac79-73ce2478addb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\06. PainShotGun_Enter">
+      <UniqueIdentifier>{c3f2392e-527f-4284-8b4d-f2f286757ed3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\00. TailorAssertRifle_Idle">
+      <UniqueIdentifier>{b3c19570-32f8-4d13-a809-b958c00eb87d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\01. TailorAssertRifle_Ready">
+      <UniqueIdentifier>{4905c3e2-0919-4cd6-a5f7-71b2601c842e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\02. TailorAssertRifle_Reload">
+      <UniqueIdentifier>{560201d8-230a-453b-b458-2ccf6bc493a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\03. TailorAssertRifle_Shot">
+      <UniqueIdentifier>{1f190f13-c62f-44d5-a41c-580f49d5fea9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\04. TailorAssertRifle_Walk">
+      <UniqueIdentifier>{375e376e-1fcc-4749-acb9-8b94367b916f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\05. TailorAssertRifle_Bomb">
+      <UniqueIdentifier>{a68edbc2-9a61-42b5-8706-2f4e2359f84c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\07. PaintShotGun_Jump">
+      <UniqueIdentifier>{10f7750f-d3e3-45af-b1a8-b487ab211cbd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -448,31 +517,31 @@
       <Filter>02. GameObject\01. Player\01. Dyehard\31. MuzzleFlash</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\PaintBall.h">
-      <Filter>02. GameObject\07.Bullet\00.PlayerBullet\00.shotgun</Filter>
+      <Filter>02. GameObject\07. Bullet\00.PlayerBullet\00. ShotGunBullet</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BrifCase.h">
-      <Filter>02. GameObject\07.Bullet\01.MonsterBullet\00.BrifCase</Filter>
+      <Filter>02. GameObject\07. Bullet\01.MonsterBullet\00.BrifCase</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Belt_ATTACK.h">
-      <Filter>02. GameObject\01. Player\02.Belt\99.BeltState</Filter>
+      <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Belt_CHARGE.h">
-      <Filter>02. GameObject\01. Player\02.Belt\99.BeltState</Filter>
+      <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Belt_IDLE.h">
-      <Filter>02. GameObject\01. Player\02.Belt\99.BeltState</Filter>
+      <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Belt_NORMAL.h">
-      <Filter>02. GameObject\01. Player\02.Belt\99.BeltState</Filter>
+      <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Belt_SWING.h">
-      <Filter>02. GameObject\01. Player\02.Belt\99.BeltState</Filter>
+      <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClInclude>
     <ClInclude Include="BeltState.h">
-      <Filter>02. GameObject\01. Player\02.Belt\99.BeltState</Filter>
+      <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Belt.h">
-      <Filter>02. GameObject\01. Player\02.Belt</Filter>
+      <Filter>02. GameObject\01. Player\02. Belt</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\MonsterState.h">
       <Filter>02. GameObject\02. Monster\99.MonsterState</Filter>
@@ -553,22 +622,22 @@
       <Filter>02. GameObject\02. Monster</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Player_Hit.h">
-      <Filter>02. GameObject\01. Player\99. PlayerState\04. Player_HIT</Filter>
+      <Filter>02. GameObject\01. Player\99. PlayerState\04. Player_Hit</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\PlayerState.h">
       <Filter>02. GameObject\01. Player\99. PlayerState</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Player_IDLE.h">
-      <Filter>02. GameObject\01. Player\99. PlayerState\01. Player_IDLE</Filter>
+    <ClInclude Include="..\Header\Player_Idle.h">
+      <Filter>02. GameObject\01. Player\99. PlayerState\01. Player_Idle</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Player_Left.h">
-      <Filter>02. GameObject\01. Player\99. PlayerState\03. Player_LEFT</Filter>
+      <Filter>02. GameObject\01. Player\99. PlayerState\03. Player_Left</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Player_Lv_Up.h">
-      <Filter>02. GameObject\01. Player\99. PlayerState\05. Player_LV_UP</Filter>
+    <ClInclude Include="..\Header\Player_LevelUp.h">
+      <Filter>02. GameObject\01. Player\99. PlayerState\05. Player_LevelUp</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Player_Right.h">
-      <Filter>02. GameObject\01. Player\99. PlayerState\02. Player_RIGHT</Filter>
+      <Filter>02. GameObject\01. Player\99. PlayerState\02. Player_Right</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Gun.h">
       <Filter>02. GameObject\01. Player\04. Gun</Filter>
@@ -589,10 +658,10 @@
       <Filter>02. GameObject\01. Player\99. PlayerState\07. Player_Armor</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BigDaddyMonster.h">
-      <Filter>02. GameObject\02. Monster\00.BigDaddyMonster</Filter>
+      <Filter>02. GameObject\02. Monster\00. BigDaddyMonster</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BigDaddyMonsterState.h">
-      <Filter>02. GameObject\02. Monster\00.BigDaddyMonster\99.BigDaddyMonster_State</Filter>
+      <Filter>02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\LoadingStage.h">
       <Filter>헤더 파일</Filter>
@@ -606,14 +675,17 @@
     <ClInclude Include="..\Header\DullSuitMonster.h">
       <Filter>02. GameObject\02. Monster\01. DullSuitMonster</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\KickBoard.h">
-      <Filter>02. GameObject\02. Monster\02.KickBoard</Filter>
+    <ClInclude Include="..\Header\KickBoardMonster.h">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\KickBoardState.h">
-      <Filter>02. GameObject\02. Monster\02.KickBoard\99.KickBoard_State</Filter>
+    <ClInclude Include="..\Header\KickBoardMonsterState.h">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\KickBoard_IDLE.h">
       <Filter>02. GameObject\02. Monster\02.KickBoard\99.KickBoard_State\01. KickBoard_IDLE</Filter>
+	</ClInclude>
+    <ClInclude Include="..\Header\KickBoardMonster_Idle.h">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\01. KickBoardMonster_Idle</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\DullSuitMonster_Idle.h">
       <Filter>02. GameObject\02. Monster\01. DullSuitMonster\99. DullSuitMonster_State\01.DullSuitMonster_Idle</Filter>
@@ -628,22 +700,22 @@
       <Filter>02. GameObject\20.UI\01. MyDialog\00. Portrait</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BigDaddyMonster_Idle.h">
-      <Filter>02. GameObject\02. Monster\00.BigDaddyMonster\99.BigDaddyMonster_State\01. BigDaddyMonster_Idle</Filter>
+      <Filter>02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State\01. BigDaddyMonster_Idle</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BigDaddyMonster_Chase.h">
-      <Filter>02. GameObject\02. Monster\00.BigDaddyMonster\99.BigDaddyMonster_State\02. BigDaddyMonster_Chase</Filter>
+      <Filter>02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State\02. BigDaddyMonster_Chase</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BigDaddyMonster_Dead.h">
-      <Filter>02. GameObject\02. Monster\00.BigDaddyMonster\99.BigDaddyMonster_State\10. BigDaddyMonster_Dead</Filter>
+      <Filter>02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State\10. BigDaddyMonster_Dead</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\KickBoard_DEAD.h">
-      <Filter>02. GameObject\02. Monster\02.KickBoard\99.KickBoard_State\10. KickBoard_DEAD</Filter>
+    <ClInclude Include="..\Header\KickBoardMonster_Dead.h">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\10. KickBoardMonster_Dead</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\DullSuitMonster_Attack.h">
       <Filter>02. GameObject\02. Monster\01. DullSuitMonster\99. DullSuitMonster_State\02.DullSuitMonster_Attack</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BrifCase_2.h">
-      <Filter>02. GameObject\07.Bullet\01.MonsterBullet\01. BrifCase_2</Filter>
+      <Filter>02. GameObject\07. Bullet\01.MonsterBullet\01. BrifCase_2</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\DullSuitMonster_Dead.h">
       <Filter>02. GameObject\02. Monster\01. DullSuitMonster\99. DullSuitMonster_State\03.DullSuitMonster_Dead</Filter>
@@ -724,13 +796,10 @@
       <Filter>02. GameObject\02. Monster\03. Stage1Boss\99. Stage1Boss_State</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Bullet_GoldBar.h">
-      <Filter>02. GameObject\07.Bullet\02.BossBullet\00.GoldBar</Filter>
+      <Filter>02. GameObject\07. Bullet\02.BossBullet\00.GoldBar</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Rifle_Bullet.h">
-      <Filter>02. GameObject\07.Bullet\00.PlayerBullet\01. RifleBullet</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Lazer.h">
-      <Filter>02. GameObject\07.Bullet\00.PlayerBullet\02. Lazer</Filter>
+      <Filter>02. GameObject\07. Bullet\00.PlayerBullet\01. RifleBullet</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\ShotGun_Lazer.h">
       <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState\07. ShotGun_Lazer</Filter>
@@ -739,13 +808,91 @@
       <Filter>02. GameObject\06. Effect\00.Particle\02.JumpSmoke</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BigDaddyMonster_Attack.h">
-      <Filter>02. GameObject\02. Monster\00.BigDaddyMonster\99.BigDaddyMonster_State\03. BigDaddyMonster_Attack</Filter>
+      <Filter>02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State\03. BigDaddyMonster_Attack</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\DullSuitMonster_Chase.h">
       <Filter>02. GameObject\02. Monster\01. DullSuitMonster\99. DullSuitMonster_State\04.DullSuitMonster_Chase</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\PlayerBullet.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LoadingStage1.h">
+      <Filter>01.Scene\09.LoadingStage1</Filter>
+	</ClInclude>
+    <ClInclude Include="..\Header\KickBoardMonster_Chase.h">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\02. KickBoardMonster_Chase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\KickBoardMonster_Attack.h">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\03. KickBoardMonster_Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\KickBoardMonster_Patrol.h">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\04. KickBoardMonster_Patrol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Player_Jump.h">
+      <Filter>02. GameObject\01. Player\99. PlayerState\08. Player_Jump</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerGun.h">
+      <Filter>02. GameObject\01. Player\05. PlayerGun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerGunState.h">
+      <Filter>02. GameObject\01. Player\05. PlayerGun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PaintShotGun.h">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TailorAssertRifle.h">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Bullet.h">
+      <Filter>02. GameObject\07. Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Lazer.h">
+      <Filter>02. GameObject\07. Bullet\00.PlayerBullet\00. ShotGunBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ShotGun_Bullet.h">
+      <Filter>02. GameObject\07. Bullet\00.PlayerBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Rifle_Bullet1.h">
+      <Filter>02. GameObject\07. Bullet\00.PlayerBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PaintShotGun_Idle.h">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\00. PaintShotGun_Idle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PaintShotGun_Ready.h">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\01. PaintShotGun_Ready</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PaintShotGun_Reload.h">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\02. PaintShotGun_Reload</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PaintShotGun_Shot.h">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\03. PaintShotGun_Shot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PaintShotGun_Walk.h">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\04. PaintShotGun_Walk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PaintShotGun_Lazer.h">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\05. PaintShotGun_Lazer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PaintShotGun_Enter.h">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\06. PainShotGun_Enter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TailorAssertRifle_Idle.h">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\00. TailorAssertRifle_Idle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TailorAssertRifle_Ready.h">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\01. TailorAssertRifle_Ready</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TailorAssertRifle_Reload.h">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\02. TailorAssertRifle_Reload</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TailorAssertRifle_Shot.h">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\03. TailorAssertRifle_Shot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TailorAssertRifle_Walk.h">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\04. TailorAssertRifle_Walk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PaintShotGun_Jump.h">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\07. PaintShotGun_Jump</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -834,28 +981,28 @@
       <Filter>02. GameObject\01. Player\01. Dyehard\31. MuzzleFlash</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PaintBall.cpp">
-      <Filter>02. GameObject\07.Bullet\00.PlayerBullet\00.shotgun</Filter>
+      <Filter>02. GameObject\07. Bullet\00.PlayerBullet\00. ShotGunBullet</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BrifCase.cpp">
-      <Filter>02. GameObject\07.Bullet\01.MonsterBullet\00.BrifCase</Filter>
+      <Filter>02. GameObject\07. Bullet\01.MonsterBullet\00.BrifCase</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Belt_ATTACK.cpp">
-      <Filter>02. GameObject\01. Player\02.Belt\99.BeltState</Filter>
+      <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Belt_CHARGE.cpp">
-      <Filter>02. GameObject\01. Player\02.Belt\99.BeltState</Filter>
+      <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Belt_IDLE.cpp">
-      <Filter>02. GameObject\01. Player\02.Belt\99.BeltState</Filter>
+      <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Belt_NORMAL.cpp">
-      <Filter>02. GameObject\01. Player\02.Belt\99.BeltState</Filter>
+      <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Belt_SWING.cpp">
-      <Filter>02. GameObject\01. Player\02.Belt\99.BeltState</Filter>
+      <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Belt.cpp">
-      <Filter>02. GameObject\01. Player\02.Belt</Filter>
+      <Filter>02. GameObject\01. Player\02. Belt</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ShotGun_IDLE.cpp">
       <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState</Filter>
@@ -927,19 +1074,19 @@
       <Filter>02. GameObject\02. Monster</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Player_Hit.cpp">
-      <Filter>02. GameObject\01. Player\99. PlayerState\04. Player_HIT</Filter>
+      <Filter>02. GameObject\01. Player\99. PlayerState\04. Player_Hit</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Player_IDLE.cpp">
-      <Filter>02. GameObject\01. Player\99. PlayerState\01. Player_IDLE</Filter>
+    <ClCompile Include="..\Code\Player_Idle.cpp">
+      <Filter>02. GameObject\01. Player\99. PlayerState\01. Player_Idle</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Player_Left.cpp">
-      <Filter>02. GameObject\01. Player\99. PlayerState\03. Player_LEFT</Filter>
+      <Filter>02. GameObject\01. Player\99. PlayerState\03. Player_Left</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Player_Lv_Up.cpp">
-      <Filter>02. GameObject\01. Player\99. PlayerState\05. Player_LV_UP</Filter>
+    <ClCompile Include="..\Code\Player_LevelUp.cpp">
+      <Filter>02. GameObject\01. Player\99. PlayerState\05. Player_LevelUp</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Player_Right.cpp">
-      <Filter>02. GameObject\01. Player\99. PlayerState\02. Player_RIGHT</Filter>
+      <Filter>02. GameObject\01. Player\99. PlayerState\02. Player_Right</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Gun.cpp">
       <Filter>02. GameObject\01. Player\04. Gun</Filter>
@@ -957,13 +1104,7 @@
       <Filter>02. GameObject\01. Player\99. PlayerState\07. Player_Armor</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BigDaddyMonster.cpp">
-      <Filter>02. GameObject\02. Monster\00.BigDaddyMonster</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\BigDaddyMonster_Dead.cpp">
-      <Filter>02. GameObject\02. Monster\00.BigDaddyMonster\99.BigDaddyMonster_State</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\BigDaddyMonster_Idle.cpp">
-      <Filter>02. GameObject\02. Monster\00.BigDaddyMonster\99.BigDaddyMonster_State</Filter>
+      <Filter>02. GameObject\02. Monster\00. BigDaddyMonster</Filter>
     </ClCompile>
     <ClCompile Include="LoadingStage.cpp">
       <Filter>소스 파일</Filter>
@@ -974,11 +1115,11 @@
     <ClCompile Include="..\Code\DullSuitMonster.cpp">
       <Filter>02. GameObject\02. Monster\01. DullSuitMonster</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\KickBoard.cpp">
-      <Filter>02. GameObject\02. Monster\02.KickBoard</Filter>
+    <ClCompile Include="..\Code\KickBoardMonster.cpp">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\KickBoard_IDLE.cpp">
-      <Filter>02. GameObject\02. Monster\02.KickBoard\99.KickBoard_State\01. KickBoard_IDLE</Filter>
+    <ClCompile Include="..\Code\KickBoardMonster_Idle.cpp">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\01. KickBoardMonster_Idle</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\DullSuitMonster_Idle.cpp">
       <Filter>02. GameObject\02. Monster\01. DullSuitMonster\99. DullSuitMonster_State\01.DullSuitMonster_Idle</Filter>
@@ -995,11 +1136,14 @@
     <ClCompile Include="..\Code\KickBoard_DEAD.cpp">
       <Filter>02. GameObject\02. Monster\02.KickBoard\99.KickBoard_State\10. KickBoard_DEAD</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\KickBoardMonster_Dead.cpp">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\10. KickBoardMonster_Dead</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\DullSuitMonster_Attack.cpp">
       <Filter>02. GameObject\02. Monster\01. DullSuitMonster\99. DullSuitMonster_State\02.DullSuitMonster_Attack</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BrifCase_2.cpp">
-      <Filter>02. GameObject\07.Bullet\01.MonsterBullet\01. BrifCase_2</Filter>
+      <Filter>02. GameObject\07. Bullet\01.MonsterBullet\01. BrifCase_2</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\DullSuitMonster_Dead.cpp">
       <Filter>02. GameObject\02. Monster\01. DullSuitMonster\99. DullSuitMonster_State\03.DullSuitMonster_Dead</Filter>
@@ -1077,13 +1221,10 @@
       <Filter>02. GameObject\02. Monster\03. Stage1Boss\99. Stage1Boss_State\06. Stage1Boss_MonsterSpawn</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Bullet_GoldBar.cpp">
-      <Filter>02. GameObject\07.Bullet\02.BossBullet\00.GoldBar</Filter>
+      <Filter>02. GameObject\07. Bullet\02.BossBullet\00.GoldBar</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Rifle_Bullet.cpp">
-      <Filter>02. GameObject\07.Bullet\00.PlayerBullet\01. RifleBullet</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Lazer.cpp">
-      <Filter>02. GameObject\07.Bullet\00.PlayerBullet\02. Lazer</Filter>
+      <Filter>02. GameObject\07. Bullet\00.PlayerBullet\01. RifleBullet</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ShotGun_Lazer.cpp">
       <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState\07. ShotGun_Lazer</Filter>
@@ -1092,16 +1233,97 @@
       <Filter>02. GameObject\06. Effect\00.Particle\02.JumpSmoke</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BigDaddyMonster_Chase.cpp">
-      <Filter>02. GameObject\02. Monster\00.BigDaddyMonster\99.BigDaddyMonster_State\02. BigDaddyMonster_Chase</Filter>
+      <Filter>02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State\02. BigDaddyMonster_Chase</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BigDaddyMonster_Attack.cpp">
-      <Filter>02. GameObject\02. Monster\00.BigDaddyMonster\99.BigDaddyMonster_State\03. BigDaddyMonster_Attack</Filter>
+      <Filter>02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State\03. BigDaddyMonster_Attack</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\DullSuitMonster_Chase.cpp">
       <Filter>02. GameObject\02. Monster\01. DullSuitMonster\99. DullSuitMonster_State\04.DullSuitMonster_Chase</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PlayerBullet.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LoadingStage1.cpp">
+      <Filter>01.Scene\09.LoadingStage1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\KickBoardMonster_Chase.cpp">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\02. KickBoardMonster_Chase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\KickBoardMonster_Attack.cpp">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\03. KickBoardMonster_Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\KickBoardMonster_Patrol.cpp">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\04. KickBoardMonster_Patrol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BigDaddyMonster_Idle.cpp">
+      <Filter>02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State\01. BigDaddyMonster_Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BigDaddyMonster_Dead.cpp">
+      <Filter>02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State\10. BigDaddyMonster_Dead</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Player_Jump.cpp">
+      <Filter>02. GameObject\01. Player\99. PlayerState\08. Player_Jump</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerGun.cpp">
+      <Filter>02. GameObject\01. Player\05. PlayerGun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TailorAssertRifle.cpp">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PaintShotGun.cpp">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Bullet.cpp">
+      <Filter>02. GameObject\07. Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Lazer.cpp">
+      <Filter>02. GameObject\07. Bullet\00.PlayerBullet\00. ShotGunBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ShotGun_Bullet.cpp">
+      <Filter>02. GameObject\07. Bullet\00.PlayerBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Rifle_Bullet1.cpp">
+      <Filter>02. GameObject\07. Bullet\00.PlayerBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PaintShotGun_Idle.cpp">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\00. PaintShotGun_Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PaintShotGun_Ready.cpp">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\01. PaintShotGun_Ready</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PaintShotGun_Reload.cpp">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\02. PaintShotGun_Reload</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PaintShotGun_Shot.cpp">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\03. PaintShotGun_Shot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PaintShotGun_Walk.cpp">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\04. PaintShotGun_Walk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PaintShotGun_Lazer.cpp">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\05. PaintShotGun_Lazer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PaintShotGun_Enter.cpp">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\06. PainShotGun_Enter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TailorAssertRifle_Idle.cpp">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\00. TailorAssertRifle_Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TailorAssertRifle_Ready.cpp">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\01. TailorAssertRifle_Ready</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TailorAssertRifle_Reload.cpp">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\02. TailorAssertRifle_Reload</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TailorAssertRifle_Shot.cpp">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\03. TailorAssertRifle_Shot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TailorAssertRifle_Walk.cpp">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\04. TailorAssertRifle_Walk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PaintShotGun_Jump.cpp">
+      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\07. PaintShotGun_Jump</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -69,7 +69,7 @@ _uint CLoading::Loading_For_Stage()
 		Set_Value(3);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_suit_2", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/dull_suit4.png")), E_FAIL);
 		Set_Value(3);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_KickBoard", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/neonshirt-v1_Walk.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_KickBoardMonster", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/neonshirt-v1_Resize.png")), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Stage1Boss", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/boss 1 - hugo bauss sprite1.png")), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Stage1Bullet", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/gold-bar-projectile_0.png")), E_FAIL);
 		Set_Value(3);
@@ -138,7 +138,7 @@ _uint CLoading::Loading_For_MapTool()
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CubeTexture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Bin/Resource/Texture/Obj/CubeType/Box_Full%d.dds", 3)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_PlaneTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Obj/PlaneType/PlaneType_%d.png", 20)), E_FAIL);
-	
+
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_PlaneTex", CRcTex::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CursorTexture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Bin/Resource/Texture/Cursor/MapCursor%d.dds", 1)), E_FAIL);
 

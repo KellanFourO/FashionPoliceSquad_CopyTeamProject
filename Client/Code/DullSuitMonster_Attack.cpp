@@ -103,7 +103,7 @@ CMonsterState* CDullSuitMonster_Attack::Update(CMonster* Monster, const float& f
 	}
 	}
 
-	if (m_fCurFrame >= m_fMaxFrame)
+	if (m_fCurFrame > m_fMaxFrame)
 	{
 		m_fCurFrame = m_fMinFrame;
 	}

@@ -29,7 +29,7 @@ HRESULT CManagement::Set_Scene(CScene* pScene)
 {
 	Safe_Release(m_pScene);
 
-	Engine::Clear_RenderGroup();	
+	Engine::Clear_RenderGroup();
 
 	m_pScene = pScene;
 
@@ -78,13 +78,12 @@ void CManagement::LateUpdate_Scene()
 
 void CManagement::Render_Scene(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-
 	NULL_CHECK(m_pScene);
 	m_pScene->Render_Scene();
 
 	if (SCENETAG::STAGE == m_pScene->Get_SceneTag())
 		Octree()->Render_Octree(pGraphicDev);
-	
+
 	Renderer()->Render_GameObject(pGraphicDev);
 
 }

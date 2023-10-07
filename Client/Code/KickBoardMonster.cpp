@@ -1,133 +1,108 @@
 #include "stdafx.h"
-#include "KickBoard.h"
-#include "BrifCase.h"
-#include "Player.h"
+#include "KickBoardMonster.h"
 
-#include "KickBoard_IDLE.h"
-#include "KickBoard_DEAD.h"
-
+#include "KickBoardMonster_Idle.h"
+#include "KickBoardMonster_Chase.h"
+#include "KickBoardMonster_Attack.h"
+#include "KickBoardMonster_Patrol.h"
+#include "KickBoardMonster_Dead.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
 
 #include "MonsterState.h"
 
 
-// TODO - 승용 추가 : 몬스터 HP UI.
-#include "UIMgr.h"
-
-CKickBoard::CKickBoard(LPDIRECT3DDEVICE9 pGraphicDev)
+CKickBoardMonster::CKickBoardMonster(LPDIRECT3DDEVICE9 pGraphicDev)
     :CMonster(pGraphicDev)
 {
 }
 
-CKickBoard::CKickBoard(CMonster& rhs)
+CKickBoardMonster::CKickBoardMonster(CMonster& rhs)
     : CMonster(rhs)
 {
 }
 
-CKickBoard::~CKickBoard()
+CKickBoardMonster::~CKickBoardMonster()
 {
 }
 
-HRESULT CKickBoard::Ready_GameObject()
+HRESULT CKickBoardMonster::Ready_GameObject()
 {
-    Set_ObjectTag(OBJECTTAG::MONSTER);
+    __super::Ready_GameObject();
+
     INFO.iMobType = MonsterType::KCIKBOARD;
     FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+
+    ReadyState();
+
+    INFO.MonsterState = m_pStateArray[IDLE];
+    INFO.MonsterState->Initialize(this);
+    INFO.fHP = 100.f;
+    INFO.fMaxHP = 100.f;
+    INFO.vPos = { 200.f,4.f,30.f }; // 470이엇음
+
+    m_fDectedRange = 70.f;
+    m_fAttackRange = 10.f;
+    m_fSpeed = 25.f;
+
+    m_pTransformCom->Set_Pos(INFO.vPos);
     m_pTransformCom->Set_Scale({ 5.0f,5.0f, 5.0f });
 
+    m_pBufferCom->SetCount(5, 4);
+    m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/Monster/neonshirt-v1_Resize_Hit.png", 1);
 
-    m_pCollider->Set_Host(this);
-    m_pCollider->Set_Transform(m_pTransformCom);
-    m_pRigidBody->Set_Host(this);
-    m_pRigidBody->Set_Transform(m_pTransformCom);
+
+	m_pCollider->Set_Host(this);
+	m_pCollider->Set_Transform(m_pTransformCom);
+	m_pRigidBody->Set_Host(this);
+	m_pRigidBody->Set_Transform(m_pTransformCom);
 	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
 
-    INFO.bHit = false;
-
-    INFO.MonsterState = new CKickBoard_IDLE();
-    INFO.MonsterState->Initialize(this);
-
-    INFO.vPos = { 470.f,4.f,30.f };
-    Set_TransPos();
-    m_pTransformCom->Translate(_vec3(0.f, 3.f, 0.f));
-
-    // TODO - 승용 추가
-    if (Set_HP() == E_FAIL)
-    {
-        MSG_BOX("승용 몬스터 HP 에러");
-    }
-    // TODO - 승용 추가 종료
-
-   
-    MonsterBullet = nullptr;
-
-    m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/Monster/neonshirt-v1_Hit.png", 1);
-
-    INFO.fHP = 100.f;
-
+    m_eHitType = BULLETTYPE::SHOTGUN_RAZER;
     return S_OK;
 }
 
-_int CKickBoard::Update_GameObject(const _float& fTimeDelta)
+_int CKickBoardMonster::Update_GameObject(const _float& fTimeDelta)
 {
-    Engine::Add_RenderGroup(RENDER_NONALPHA, this);
     __super::Update_GameObject(fTimeDelta);
 
-
-    CTransform* pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
-    NULL_CHECK_RETURN(pPlayerTransCom, -1);
-    _vec3 vPlayerPos, vPlayerPos_Rel;
-    pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
-    vPlayerPos.y = 0.f;
-    m_pTransformCom->Get_Info(INFO_POS, &INFO.vPos);
-    vPlayerPos_Rel = vPlayerPos - INFO.vPos;
-    D3DXVec3Normalize(&vPlayerPos_Rel, &vPlayerPos_Rel);
-    _float fAngle = atan2f(vPlayerPos_Rel.x, vPlayerPos_Rel.z);
-    m_pTransformCom->Set_Rotate(ROT_Y, fAngle + D3DX_PI);
-    //방향전환 코드 (플레이어 방향)
-
-    CMonsterState* State = INFO.MonsterState->Update(this, fTimeDelta);
-    if (State != nullptr) {
-        INFO.MonsterState->Release(this);
-        Safe_Delete(INFO.MonsterState);
-        INFO.MonsterState = State;
-        INFO.MonsterState->Initialize(this);
-    } // 상태 패턴
-
-    m_pRigidBody->Update_RigidBody(fTimeDelta);
-   
     return OBJ_NOEVENT;
 }
 
-void CKickBoard::LateUpdate_GameObject()
+void CKickBoardMonster::LateUpdate_GameObject()
 {
     __super::LateUpdate_GameObject();
 
 
     if (INFO.bDead) {
-        INFO.MonsterState->Release(this);
-        Safe_Delete(INFO.MonsterState);
-        INFO.MonsterState = new CKickBoard_DEAD;
+        INFO.MonsterState = m_pStateArray[DEAD ];
         INFO.MonsterState->Initialize(this);
         INFO.bDead = false;
     }   // 사망판정
-    
-    
+
+
     _vec3	vPos;
     m_pTransformCom->Get_Info(INFO_POS, &vPos);
     __super::Compute_ViewZ(&vPos);
 }
 
-void CKickBoard::Render_GameObject()
+void CKickBoardMonster::Render_GameObject()
 {
     m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
-    m_pCollider->Render_Collider();
 
     INFO.MonsterState->Render(this);
 }
 
-void CKickBoard::OnCollisionEnter(CCollider* _pOther)
+void CKickBoardMonster::ReadyState()
+{
+	m_pStateArray[IDLE] = new CKickBoardMonster_Idle;
+	m_pStateArray[CHASE] = new CKickBoardMonster_Chase;
+	m_pStateArray[ATTACK] = new CKickBoardMonster_Attack;
+    m_pStateArray[PATROL] = new CKickBoardMonster_Patrol;
+	m_pStateArray[DEAD] = new CKickBoardMonster_Dead;
+}
+
+void CKickBoardMonster::OnCollisionEnter(CCollider* _pOther)
 {
     if (_pOther->Get_Host()->Get_ObjectTag() != OBJECTTAG::PLAYER &&
         _pOther->Get_Host()->Get_ObjectTag() != OBJECTTAG::ITEM &&
@@ -142,7 +117,7 @@ void CKickBoard::OnCollisionEnter(CCollider* _pOther)
     }
 }
 
-void CKickBoard::OnCollisionStay(CCollider* _pOther)
+void CKickBoardMonster::OnCollisionStay(CCollider* _pOther)
 {
 	if (_pOther->Get_Host()->Get_ObjectTag() != OBJECTTAG::PLAYER &&
 		_pOther->Get_Host()->Get_ObjectTag() != OBJECTTAG::ITEM &&
@@ -157,26 +132,28 @@ void CKickBoard::OnCollisionStay(CCollider* _pOther)
 	}
 }
 
-void CKickBoard::OnCollisionExit(CCollider* _pOther)
+void CKickBoardMonster::OnCollisionExit(CCollider* _pOther)
 {
 }
 
-void CKickBoard::Ride_On(_vec3 _vDir, _float _fSpeed, _float _fTimeDelta)
+void CKickBoardMonster::Ride_On(_vec3 _vDir, _float _fSpeed, _float _fTimeDelta)
 {
     _vec3 vDir = _vDir;
     D3DXVec3Normalize(&vDir, &vDir);
     _float fMobAngle = atan2f(vDir.x, vDir.z);
     Set_Pos(INFO.vPos + vDir * _fSpeed * _fTimeDelta);
-    CTransform* pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
-    _vec3	vPlayerPos, vRel, vPlayerPos_Rel;   
-    pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
+
+    _vec3	vPlayerPos, vRel, vPlayerPos_Rel;
+    m_pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);
+
     vRel = vPlayerPos - Get_Info().vPos; //플레이어와 몬스터의 각도 구함
     vPlayerPos_Rel = vRel - vDir;
     D3DXVec3Normalize(&vPlayerPos_Rel, &vPlayerPos_Rel);
+
     _float fPlayerAngle = atan2f(vPlayerPos_Rel.x, vPlayerPos_Rel.z);
 
     fPlayerAngle = D3DXToDegree(fPlayerAngle - fMobAngle);
-    
+
     fPlayerAngle = ((_int)fPlayerAngle+360) % 360;
 
     if ((fPlayerAngle >= 0 && fPlayerAngle <= 45) || (fPlayerAngle > 315 && fPlayerAngle <= 360)) {
@@ -196,7 +173,7 @@ void CKickBoard::Ride_On(_vec3 _vDir, _float _fSpeed, _float _fTimeDelta)
         int a = 1 + 1;
     }
 
-    Set_Frame(4, 4, m_fCurFrame + m_fAdditional_frame);
+    Set_Frame(4, 5, m_fCurFrame + m_fAdditional_frame);
     m_fAnimateTime += _fTimeDelta;
     if (m_fAnimateTime >= 0.05f)
     {
@@ -212,7 +189,7 @@ void CKickBoard::Ride_On(_vec3 _vDir, _float _fSpeed, _float _fTimeDelta)
 
 }
 
-HRESULT CKickBoard::Add_Component()
+HRESULT CKickBoardMonster::Add_Component()
 {
     CComponent* pComponent = nullptr;
 
@@ -224,7 +201,7 @@ HRESULT CKickBoard::Add_Component()
     NULL_CHECK_RETURN(pComponent, E_FAIL);
     m_mapComponent[ID_DYNAMIC].emplace(COMPONENTTAG::TRANSFORM, pComponent);
 
-    pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_KickBoard"));
+    pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_KickBoardMonster"));
     NULL_CHECK_RETURN(pComponent, E_FAIL);
     m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
 
@@ -246,25 +223,22 @@ HRESULT CKickBoard::Add_Component()
     return S_OK;
 }
 
-CKickBoard* CKickBoard::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CKickBoardMonster* CKickBoardMonster::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-    CKickBoard* pInstance = new CKickBoard(pGraphicDev);
+    CKickBoardMonster* pInstance = new CKickBoardMonster(pGraphicDev);
 
     if (FAILED(pInstance->Ready_GameObject()))
     {
         Safe_Release(pInstance);
-        MSG_BOX("KickBoard Create Failed");
+        MSG_BOX("KickBoardMonster Create Failed");
 
         return nullptr;
     }
     return pInstance;
 }
 
-void CKickBoard::Free()
+void CKickBoardMonster::Free()
 {
-    Safe_Release(m_pUI_HPFrame);
-    Safe_Release(m_pUI_HPValue);
 
-    Safe_Delete(INFO.MonsterState);
     __super::Free();
 }

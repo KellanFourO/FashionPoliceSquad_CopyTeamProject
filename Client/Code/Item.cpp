@@ -29,7 +29,7 @@ HRESULT CItem::Ready_GameObject()
 	INFO.Item_ID = ItemID::COCKTAIL;
 	INFO.vPos = _vec3(10.f, 0.5f, 10.f);
 	m_bDead = false;
-	
+
 	return S_OK;
 }
 
@@ -71,7 +71,7 @@ void CItem::LateUpdate_GameObject()
 void CItem::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
-	
+
 	m_pBufferCom->Get_Frame(8, 1, (_float)INFO.Item_ID);
 	m_pTextureCom->Render_Textrue(0);
 	m_pBufferCom->Render_Buffer();
@@ -123,7 +123,7 @@ void CItem::Item_Enter()
 		break;
 
 	}
-	
+
 }
 
 CItem* CItem::Create(LPDIRECT3DDEVICE9 pGraphicDev)

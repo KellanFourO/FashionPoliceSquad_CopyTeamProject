@@ -1,16 +1,18 @@
 #pragma once
 #include "MonsterState.h"
-#include "KickBoard.h"
-class CKickBoardState : public CMonsterState
+#include "KickBoardMonster.h"
+class CKickBoardMonsterState : public CMonsterState
 {
 public:
-	CKickBoardState() {};
-	virtual ~CKickBoardState() {};
+	CKickBoardMonsterState() {};
+	virtual ~CKickBoardMonsterState() {};
 
 public:
 	virtual void Initialize(CMonster* _Monster) {};
 	virtual CMonsterState* Update(CMonster* Monster, const float& fDetltaTime) { return nullptr; };
+	virtual void LateUpdate(CMonster* _Monster) {};
 	virtual void Release(CMonster* _Monster) {};
+	virtual void Render(CMonster* _Monster) {};
 
 	_vec3		m_vDir = { 0.f,0.f,1.f };
 

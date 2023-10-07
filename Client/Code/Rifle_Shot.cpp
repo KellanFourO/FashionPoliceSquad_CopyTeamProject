@@ -42,9 +42,9 @@ void CRifle_SHOT::Initialize(CGun* Rifle)
 
 }
 
-CRifleState* CRifle_SHOT::Update(CGun* Rifle, const float& fDeltaTime)
+CRifleState* CRifle_SHOT::Update(CGun* Rifle, const float& fTimeDelta)
 {
-    m_fBehaviorTime += fDeltaTime;
+    m_fBehaviorTime += fTimeDelta;
 
     if (m_fBehaviorTime >= 0.02f) {
         Rifle->m_fGunMoveRight += m_fMoveRightSum;

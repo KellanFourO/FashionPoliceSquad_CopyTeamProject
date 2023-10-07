@@ -24,7 +24,7 @@ void CBelt_CHARGE::Initialize(CBelt* Belt)
     Belt->m_bCharged = true;
 }
 
-CBeltState* CBelt_CHARGE::Update(CBelt* Belt, const float& fDeltaTime)
+CBeltState* CBelt_CHARGE::Update(CBelt* Belt, const float& fTimeDelta)
 {
 
     if (!(Engine::Get_DIKeyState(DIK_LSHIFT) & 0x80)) {
