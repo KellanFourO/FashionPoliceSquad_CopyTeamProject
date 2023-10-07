@@ -60,6 +60,16 @@ Engine::_int Engine::CMyUI::Update_GameObject(const _float& fTimeDelta)
 
 	Engine::Add_RenderGroup(RENDER_UI, this);
 
+	if (m_bLateInit)
+	{
+		m_pPlayer = dynamic_cast<CPlayer*>(Engine::Management()->GetInstance()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER).back());
+
+		if (m_pPlayer->Get_Gun())
+		{
+			m_pPlayerGun = m_pPlayer->Get_Gun();
+			m_bLateInit = false;
+		}
+	}
 
 	//if (CImGuiManager::GetInstance()->Get_vecUI().size() != 0)
 	//{
@@ -155,18 +165,9 @@ HRESULT Engine::CMyUI::Add_Component()
 void CMyUI::HP_Function(const _float& fTimeDelta)
 {
 	// 플레이어의 체력 정보를 가지고 왔다고 가정.
-	auto& ObjectTEMP = Engine::Management()->GetInstance()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER);
-	CPlayer* pPlayer = nullptr;
 
-	if (ObjectTEMP.size() != 0)
-	{
-		pPlayer = dynamic_cast<CPlayer*>(Engine::Management()->GetInstance()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER).back());
-		m_pPlayerInfo = pPlayer->Get_INFO();
-	}
-
-
-	float fMaxHp = pPlayer->Get_INFO()->fMaxHP;
-	float fCurrentHp = pPlayer->Get_INFO()->fHP;
+	float fMaxHp = m_pPlayer->Get_INFO()->fMaxHP;
+	float fCurrentHp = m_pPlayer->Get_INFO()->fHP;
 
 	float fHpRatio = fCurrentHp / fMaxHp;
 
@@ -176,39 +177,32 @@ void CMyUI::HP_Function(const _float& fTimeDelta)
 
 void CMyUI::Sprite_Function(const _float& fTimeDelta)
 {
-	auto& ObjectTEMP = Engine::Management()->GetInstance()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER);
-	CPlayer* pPlayer = nullptr;
 
-	if (ObjectTEMP.size() != 0)
-	{
-		pPlayer = dynamic_cast<CPlayer*>(Engine::Management()->GetInstance()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER).back());
-		m_pPlayerInfo = pPlayer->Get_INFO();
-	}
 	//m_tPlayerInfo.PlayerState
-	if (m_pPlayerInfo->PlayerState->StateID == PlayerStateID::Player_Left)
-	{
-		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_left.png")->Get_Info()->pTexture, 0);
-	}
-	else if (m_pPlayerInfo->PlayerState->StateID == PlayerStateID::Player_Right)
-	{
-		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_right.png")->Get_Info()->pTexture, 0);
-	}
-	else if (m_pPlayerInfo->PlayerState->StateID == PlayerStateID::Player_Hit)
-	{
-		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_front_hurt.png")->Get_Info()->pTexture, 0);
-	}
-	else if (m_pPlayerInfo->PlayerState->StateID == PlayerStateID::Player_Heal)
-	{
-		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_smile.png")->Get_Info()->pTexture, 0);
-	}
-	else if (m_pPlayerInfo->PlayerState->StateID == PlayerStateID::Player_Heal)
-	{
-		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_smirk_low.png")->Get_Info()->pTexture, 0);
-	}
-	else
-	{
-		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"SPRITE_hud_front.png")->Get_Info()->pTexture, 0);
-	}
+	//if (m_pPlayerInfo->PlayerState->StateID == PlayerStateID::Player_Left)
+	//{
+	//	m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_left.png")->Get_Info()->pTexture, 0);
+	//}
+	//else if (m_pPlayerInfo->PlayerState->StateID == PlayerStateID::Player_Right)
+	//{
+	//	m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_right.png")->Get_Info()->pTexture, 0);
+	//}
+	//else if (m_pPlayerInfo->PlayerState->StateID == PlayerStateID::Player_Hit)
+	//{
+	//	m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_front_hurt.png")->Get_Info()->pTexture, 0);
+	//}
+	//else if (m_pPlayerInfo->PlayerState->StateID == PlayerStateID::Player_Heal)
+	//{
+	//	m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_smile.png")->Get_Info()->pTexture, 0);
+	//}
+	//else if (m_pPlayerInfo->PlayerState->StateID == PlayerStateID::Player_Heal)
+	//{
+	//	m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_smirk_low.png")->Get_Info()->pTexture, 0);
+	//}
+	//else
+	//{
+	//	m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"SPRITE_hud_front.png")->Get_Info()->pTexture, 0);
+	//}
 
 
 
@@ -294,21 +288,11 @@ void CMyUI::Font_Function(const _float& fTimeDelta)
 void CMyUI::Bullet_Function()
 {
 
-	auto& ObjectTEMP = Engine::Management()->GetInstance()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER);
-	CPlayer* pPlayer = nullptr;
-
-	if (ObjectTEMP.size() != 0)
+	if (m_eType == UI_TYPE::BULLET && m_pPlayerGun)
 	{
-		pPlayer = dynamic_cast<CPlayer*>(Engine::Management()->GetInstance()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER).back());
-		m_pPlayerInfo = pPlayer->Get_INFO();
-	}
-
-	if (m_eType == UI_TYPE::BULLET)
-	{
-		wstring strTemp = L"2DYE-4 Elite";
-		Engine::Render_Font(L"UI_WEAPON_NAME", strTemp.c_str(), &_vec2(640, 520), D3DXCOLOR(D3DCOLOR_ARGB(255, 255, 255, 255)));
-		Engine::Render_Font(L"UI_FONT", to_wstring((int)m_pPlayerInfo->fCurBullet).c_str(), &_vec2(670, 550), D3DXCOLOR(D3DCOLOR_ARGB(255, 130, 245, 209)));
-		Engine::Render_Font(L"UI_FONT", to_wstring((int)m_pPlayerInfo->fMaxBullet).c_str(), &_vec2(730, 550), D3DXCOLOR(D3DCOLOR_ARGB(255, 130, 245, 209)));
+		Engine::Render_Font(L"UI_WEAPON_NAME", m_pPlayerGun->Get_GunInfo()->m_strGunName.c_str(), &_vec2(640, 520), D3DXCOLOR(D3DCOLOR_ARGB(255, 255, 255, 255)));
+		Engine::Render_Font(L"UI_FONT", to_wstring(m_pPlayerGun->Get_GunInfo()->m_iCurrentBullet).c_str(), &_vec2(670, 550), D3DXCOLOR(D3DCOLOR_ARGB(255, 130, 245, 209)));
+		Engine::Render_Font(L"UI_FONT", to_wstring(m_pPlayerGun->Get_GunInfo()->m_iMaxBullet).c_str(), &_vec2(730, 550), D3DXCOLOR(D3DCOLOR_ARGB(255, 130, 245, 209)));
 	}
 }
 

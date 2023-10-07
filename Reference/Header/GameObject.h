@@ -24,6 +24,8 @@ public:
 	CCollider*							Get_Collider() { return m_pCollider; }
 	_bool								Get_Pause() { return m_bPause; }
 	CTransform*							Get_Transform() { return m_pTransformCom; }
+	BULLETTYPE							Get_HitType() { return m_eHitType; }
+
 	// Set
 	void								Set_ObjectTag(OBJECTTAG _eTag) { m_eObjectTag = _eTag; }
 	void								Set_Dead(_bool _IsDead) { m_IsDead = _IsDead; }
@@ -51,6 +53,9 @@ protected:
 	_float								m_fViewZ;
 	_bool								m_IsDead = false;
 	OBJECTTAG							m_eObjectTag;
+	BULLETTYPE							m_eHitType;
+
+
 	_bool								m_bPause = false;
 
 	_vec3								m_vCamPos = {0.f,0.f,0.f};

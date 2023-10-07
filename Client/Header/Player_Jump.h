@@ -1,10 +1,10 @@
 #pragma once
 #include "PlayerState.h"
-class CPlayer_Lv_Up : public CPlayerState
+class CPlayer_Jump : public CPlayerState
 {
 public:
-	CPlayer_Lv_Up();
-	virtual ~CPlayer_Lv_Up();
+	CPlayer_Jump();
+	virtual ~CPlayer_Jump();
 
 public:
 	virtual void Initialize(CPlayer* _Player) override;

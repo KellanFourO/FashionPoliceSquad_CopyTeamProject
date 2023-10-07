@@ -53,7 +53,10 @@ public:
 	CTransform*			Get_PlayerTransform() { return m_pPlayerTransform;}
 	Mob_INFO			Get_Info() { return INFO; }
 	CGameObject*		Get_MonsterBullet() { return m_pMonsterBullet;}
-	
+	_float				Get_Speed() { return m_fSpeed; }
+	_float				Get_Length() { return D3DXVec3Length(&(m_pPlayerTransform->m_vInfo[INFO_POS] - m_pTransformCom->m_vInfo[INFO_POS]));}
+
+
 
 	void				Set_Info(Mob_INFO _INFO);
 	HRESULT				Set_HP();
@@ -62,6 +65,7 @@ public:
 	void				Set_MonsterPos(_vec3 vPos) {}
 	void				Set_Frame(_float _fVerDevide, _float _fHorDevide, _float _fCurFrame);
 	void				Set_Bullet(CGameObject* _pBullet) { m_pMonsterBullet = _pBullet;};
+	void				Set_BillBoard(_bool _Billboard) { m_bBillBoard = _Billboard;}
 
 	void				Attacked(_float _fDamage);
 	void				Attacked_Fail();
@@ -71,9 +75,9 @@ public:
 	void				BillBoard();
 	_bool				Detect();
 	_bool				ChaseCatch();
-	void				Chase_Target(_float fTimeDelta); // 몬스터 이동 코드
-	void				StateMachine(_float fTimeDelta);
-	
+	void				Chase_Target(const _float& fTimeDelta); // 몬스터 이동 코드
+	void				StateMachine(const _float& fTimeDelta);
+
 
 	void				Change_State_IDLE();
 
@@ -101,12 +105,12 @@ protected:
 	_float					m_fHitTime = 0;
 	_float					m_fAttackTime = 0;
 
-	
 
 	vector<CGameObject*>	m_AttackVector;
 
 	//TODO - 승용 추가
 	_bool					m_bLateInit = true;
+	_bool					m_bBillBoard = true;
 	CMyUI*					m_pUI_HPFrame = nullptr;
 	CMyUI*					m_pUI_HPValue = nullptr;
 	CRecognitionRange*		m_pUI_Recognition = nullptr;
@@ -116,7 +120,7 @@ protected:
 	_float					m_fDectedRange = 15.f; // 탐색범위
 	_float					m_fAttackRange = 1.f; // 공격범위
 	_float					m_fSpeed = 8.f;
-	
+
 
 protected:
 	virtual void Free();

@@ -2,7 +2,6 @@
 #include "Base.h"
 #include "GameObject.h"
 #include "Monster.h"
-//#include "..\Header\MonsterState.h"
 
 //TODO - 승용추가
 #include "MyUI.h"
@@ -12,7 +11,7 @@ class CMonsterState;
 
 BEGIN(Engine)
 
-class CRcTex;
+class CSYTex;
 class CTransform;
 class CCalculator;
 class CTexture;
@@ -24,19 +23,21 @@ END
 
 
 
-class CKickBoard : public CMonster
+class CKickBoardMonster : public CMonster
 {
+	enum KICKBOARDSTATE { IDLE, CHASE, ATTACK, PATROL, DEAD, KICKBOARDSTATE_END};
 
 private:
-	explicit			CKickBoard(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit			CKickBoard(CMonster& rhs);
-	virtual				~CKickBoard();
+	explicit			CKickBoardMonster(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit			CKickBoardMonster(CMonster& rhs);
+	virtual				~CKickBoardMonster();
 
 public:
 	virtual HRESULT		Ready_GameObject() override;
 	virtual _int		Update_GameObject(const _float& fTimeDelta) override;
 	virtual void		LateUpdate_GameObject() override;
 	virtual void		Render_GameObject() override;
+	virtual void		ReadyState() override;
 
 
 public:
@@ -45,22 +46,19 @@ public:
 	virtual void		OnCollisionExit(CCollider* _pOther);
 
 public:
+	CMonsterState*		Get_State(_int _index) { return m_pStateArray[_index]; }
+
+public:
 	void				Ride_On(_vec3 _vDir, _float _fSpeed, _float _fTimeDelta);
 
 public:
 	LPDIRECT3DDEVICE9	Get_GraphicDev() { return m_pGraphicDev; }
 
-	// TODO - 승용 추가
-	//HRESULT				Set_HP();
-	//void				Set_HPValue();
-
 private:
 	HRESULT				Add_Component();
 
 private:
-	//TODO - 승용 추가
-	CMyUI* m_pUI_HPFrame = nullptr;
-	CMyUI* m_pUI_HPValue = nullptr;
+	CMonsterState* m_pStateArray[KICKBOARDSTATE_END];
 
 private:
 	_float			m_fBehaviorTime = 0.f; // 행동 줄 시간
@@ -74,9 +72,7 @@ private:
 	_float			m_fAttackTime = 0;
 
 public:
-	CGameObject* MonsterBullet = nullptr;
-public:
-	static CKickBoard* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CKickBoardMonster* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void Free();

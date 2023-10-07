@@ -42,7 +42,7 @@ HRESULT CMonster::Ready_GameObject()
 
 _int CMonster::Update_GameObject(const _float& fTimeDelta)
 {
-	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
+
 	if (INFO.bHit == true) {
 		m_fHitTime += fTimeDelta;
 	}
@@ -55,7 +55,7 @@ _int CMonster::Update_GameObject(const _float& fTimeDelta)
 	//TODO Ready 단계에서 얻어올 수 없어서 불변수 통제로 단 한번만 수행하는 함수
 	Init_PlayerTransform();
 
-	if (m_pPlayerTransform)
+	if (m_pPlayerTransform && m_bBillBoard)
 	{
 		BillBoard();
 	}
@@ -66,6 +66,7 @@ _int CMonster::Update_GameObject(const _float& fTimeDelta)
 	m_pUI_HPValue->Update_GameObject(fTimeDelta);
 	m_pRigidBody->Update_RigidBody(fTimeDelta);
 
+	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 	__super::Update_GameObject(fTimeDelta);
 
 	return OBJ_NOEVENT;
@@ -241,9 +242,9 @@ _bool CMonster::Detect()
 	_vec3 vPlayerPos, vMonsterPos;
 
 	m_pPlayerTransform->Get_Info(INFO_POS,&vPlayerPos);
-	m_pTransformCom->Get_Info(INFO_POS,&vMonsterPos);
+	//m_pTransformCom->Get_Info(INFO_POS,&vMonsterPos);
 
-	_float fDistance = D3DXVec3Length(&(vPlayerPos - vMonsterPos));
+	_float fDistance = D3DXVec3Length(&(vPlayerPos - m_pTransformCom->m_vInfo[INFO_POS]));
 
 	if (fDistance < m_fDectedRange)
 	{
@@ -258,19 +259,19 @@ _bool CMonster::ChaseCatch()
 	_vec3 vPlayerPos, vMonsterPos;
 
 	m_pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);
-	m_pTransformCom->Get_Info(INFO_POS, &vMonsterPos);
+	//m_pTransformCom->Get_Info(INFO_POS, &vMonsterPos);
 
-	_float fDistance = D3DXVec3Length(&(vPlayerPos - vMonsterPos));
+	_float fDistance = D3DXVec3Length(&(vPlayerPos - m_pTransformCom->m_vInfo[INFO_POS]));
 
 	if (fDistance < m_fAttackRange)
 	{
 		return true;
 	}
-	
+
 	return false;
 }
 
-void CMonster::StateMachine(_float fTimeDelta)
+void CMonster::StateMachine(const _float& fTimeDelta)
 {
 	CMonsterState* State = INFO.MonsterState->Update(this, fTimeDelta);
 	if (State != nullptr) {
@@ -285,7 +286,6 @@ HRESULT CMonster::Set_HP()
 	m_pUI_HPValue = CUIMgr::GetInstance()->Get_UI_Clone(L"VALUE_Monster.png");
 
 	//m_pUI_Recognition = CRecognitionRange::Create(m_pGraphicDev, this);
-
 
 	m_pUI_HPFrame->Set_Target(this);
 	m_pUI_HPValue->Set_Target(this);
@@ -346,12 +346,12 @@ void CMonster::Set_TransPos()
 	m_pTransformCom->Set_Pos(INFO.vPos);
 }
 
-void CMonster::Chase_Target(_float fTimeDelta)
+void CMonster::Chase_Target(const _float& fTimeDelta)
 {
-	
+
 
 	_vec3 vPlayerPos, vMyPos, vPlayerPos_Rel;
-	
+
 	m_pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);
 	m_pTransformCom->Get_Info(INFO_POS, &vMyPos);
 	D3DXVec3Normalize(&_vec3(vPlayerPos - vMyPos), &vPlayerPos_Rel);

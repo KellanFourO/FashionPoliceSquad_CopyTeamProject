@@ -32,9 +32,9 @@ void CRifle_IDLE::Initialize(CGun* Rifle)
     m_bAttack = false;
 }
 
-CRifleState* CRifle_IDLE::Update(CGun* Rifle, const float& fDeltaTime)
+CRifleState* CRifle_IDLE::Update(CGun* Rifle, const float& fTimeDelta)
 {
-    m_fBehaviorTime += fDeltaTime;
+    m_fBehaviorTime += fTimeDelta;
     CTransform* pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
     NULL_CHECK(pPlayerTransCom);
     _vec3   vPlayerPos;

@@ -32,9 +32,9 @@ void CBelt_NORMAL::Initialize(CBelt* Belt)
     Belt->m_pTransformCom->Rotation(ROT_Z, m_fRotationMax);
 }
 
-CBeltState* CBelt_NORMAL::Update(CBelt* Belt, const float& fDeltaTime)
+CBeltState* CBelt_NORMAL::Update(CBelt* Belt, const float& fTimeDelta)
 {
-    m_fBehaviorTime += fDeltaTime;
+    m_fBehaviorTime += fTimeDelta;
     if (m_fBehaviorTime >= 0.02f) {
         //Belt->m_fBeltMoveRight += m_fMoveRightSum;
         if (Belt->m_fBeltMoveDown > 1.5f) {

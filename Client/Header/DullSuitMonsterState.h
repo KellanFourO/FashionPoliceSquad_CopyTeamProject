@@ -19,5 +19,5 @@ public:
 	_vec3 vPrePos;
 
 	// CMonsterState을(를) 통해 상속됨
-	
+
 };

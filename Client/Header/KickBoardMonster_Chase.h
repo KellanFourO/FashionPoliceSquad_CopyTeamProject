@@ -1,10 +1,11 @@
 #pragma once
-#include "KickBoardState.h"
-class CKickBoard_IDLE : public CKickBoardState
+#include "MonsterState.h"
+class CKickBoardMonster_Chase : public CMonsterState
 {
+
 public:
-	CKickBoard_IDLE();
-	virtual ~CKickBoard_IDLE();
+			 CKickBoardMonster_Chase();
+	virtual ~CKickBoardMonster_Chase();
 
 public:
 	virtual void Initialize(CMonster* _Monster) override;
@@ -13,7 +14,8 @@ public:
 	virtual void Release(CMonster* _Monster)override;
 	virtual void Render(CMonster* _Monster) override;
 
-	
 
-	_float m_fSpeed;
+private:
+	_float		m_fTick = 0.f;
+
 };

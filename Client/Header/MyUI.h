@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "MyUI.h"
+#include "PlayerGun.h"
 
 BEGIN(Engine)
 
@@ -81,6 +82,7 @@ private:
 	_float				m_fX, m_fY, m_fSizeX, m_fSizeY;
 	_matrix				m_matProj, m_matView, m_matCamView, m_matCamProj;
 	_bool				m_bClone = false;
+	_bool				m_bLateInit = true;
 
 	UI_TYPE				m_eType;
 	UIDATA*				m_pInfo;
@@ -92,6 +94,8 @@ private:
 
 	//TODO - ½Â¿ë Player
 	Player_Info* 		m_pPlayerInfo;
+	CPlayerGun*			m_pPlayerGun;
+	CPlayer*			m_pPlayer;
 
 
 public:

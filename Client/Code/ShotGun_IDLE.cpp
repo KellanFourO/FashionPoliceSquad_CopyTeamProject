@@ -29,9 +29,9 @@ void CShotGun_IDLE::Initialize(CGun* ShotGun)
     m_bAttack = false;
 }
 
-CShotGunState* CShotGun_IDLE::Update(CGun* ShotGun, const float& fDeltaTime)
+CShotGunState* CShotGun_IDLE::Update(CGun* ShotGun, const float& fTimeDelta)
 {
-    m_fBehaviorTime += fDeltaTime;
+    m_fBehaviorTime += fTimeDelta;
 
     _vec3   vPlayerPos;
     m_pHost->m_pPlayerTransformCom->Get_Info(INFO_POS,&vPlayerPos);

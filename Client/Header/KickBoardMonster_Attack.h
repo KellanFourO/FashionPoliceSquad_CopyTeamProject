@@ -1,10 +1,12 @@
 #pragma once
 #include "MonsterState.h"
-class CKickBoard_DEAD : public CMonsterState
+class CKickBoardMonster_Attack : public CMonsterState
 {
+	enum ATTACKSTATE { READY, JUMP, JUMPEND };
+
 public:
-	CKickBoard_DEAD();
-	virtual ~CKickBoard_DEAD();
+			 CKickBoardMonster_Attack();
+	virtual ~CKickBoardMonster_Attack();
 
 public:
 	virtual void Initialize(CMonster* _Monster) override;
@@ -13,5 +15,9 @@ public:
 	virtual void Release(CMonster* _Monster)override;
 	virtual void Render(CMonster* _Monster) override;
 
-	_float m_fBehaviorTime;
+
+private:
+	_float		m_fTick = 0.f;
+	ATTACKSTATE m_eAttack = READY;
+	_bool		m_bJump = true;
 };

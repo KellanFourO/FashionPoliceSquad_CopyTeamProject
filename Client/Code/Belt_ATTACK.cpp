@@ -45,9 +45,9 @@ void CBelt_ATTACK::Initialize(CBelt* Belt)
     Belt->m_pTransformCom->RotateAxis(Belt->m_vPlayerLook, D3DXToRadian(m_fRotateMax));
 }
 
-CBeltState* CBelt_ATTACK::Update(CBelt* Belt, const float& fDeltaTime)
+CBeltState* CBelt_ATTACK::Update(CBelt* Belt, const float& fTimeDelta)
 {
-    m_fBehaviorTime += fDeltaTime;
+    m_fBehaviorTime += fTimeDelta;
    // Belt->m_vBeltScale = { 0.21f,0.11f,0.11f };
     if (m_fBehaviorTime >= 0.3f) {
        
@@ -57,7 +57,7 @@ CBeltState* CBelt_ATTACK::Update(CBelt* Belt, const float& fDeltaTime)
         Belt->m_fBeltMoveRight -= m_fMoveRightSum;
         Belt->m_fBeltMoveDown += m_fMoveDownSum;
         Belt->m_bHit = false;
-        Belt->m_pTransformCom->RotateAxis(Belt->m_vPlayerLook, D3DXToRadian(m_fRotateMax += m_fRotate * fDeltaTime));
+        Belt->m_pTransformCom->RotateAxis(Belt->m_vPlayerLook, D3DXToRadian(m_fRotateMax += m_fRotate * fTimeDelta));
         if (m_fBehaviorTime >= 0.8){
             return new CBelt_IDLE;
         }

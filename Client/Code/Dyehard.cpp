@@ -75,77 +75,77 @@ HRESULT CDyehard::Ready_GameObject()
 
 Engine::_int CDyehard::Update_GameObject(const _float& fTimeDelta)
 {
-	if (m_bGun_Select)// ¼±ÅÃµÇ¾î¾ß ¾÷µ¥ÀÌÆ®/·»´õ µ¹¸²
-		{
-		Engine::Add_RenderGroup(RENDER_NONALPHA, this);
-
-		if (m_bLateInit)
-		{
-			m_pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
-			GunState->Initialize(this);
-			m_bLateInit = false;
-		}
-
-		dynamic_cast<CPlayer*>(m_pPlayer)->Set_Bullet(m_fBulletCount, m_fMaxBullet); // ÃÑ¾Ë °»½Å
-
-		CGunState* State = GunState->Update(this, fTimeDelta);
-		if (State != nullptr)
-		{
-			GunState = State;
-			GunState->Initialize(this);
-		} // »óÅÂ ÆÐÅÏ
-
-
-
-		if (m_pPlayerTransformCom)
-		{
-			_vec3	vPlayerPos, vPlayerLook, vPlayerUp;
-
-			m_pPlayerTransformCom->Get_Info(INFO_UP, &vPlayerUp);
-			m_pPlayerTransformCom->Get_Info(INFO_POS, &vPlayerPos);
-			m_pPlayerTransformCom->Get_Info(INFO_LOOK, &vPlayerLook);
-			D3DXVec3Normalize(&vPlayerLook, &vPlayerLook);
-
-			_vec3 vGunMove;
-
-			D3DXVec3Cross(&vGunMove, &vPlayerUp, &vPlayerLook);
-			D3DXVec3Normalize(&vPlayerUp, &vPlayerUp);
-			D3DXVec3Normalize(&vGunMove, &vGunMove);
-
-
-			_vec3 vGunMoveRight = vGunMove / 20;
-			_vec3 vGunMoveDown = -vPlayerUp / 20;
-
-			m_pTransformCom->Set_Scale(m_vGunScale);
-			_vec3 vPos = { vPlayerPos + vPlayerLook * 2.5f + vGunMoveRight * m_fGunMoveRight * 9.4f + vGunMoveDown * m_fGunMoveDown * 10.f };
-			//m_pTransformCom->Set_Pos(vPlayerPos + vPlayerLook*2.5f + vGunMoveRight * m_fGunMoveRight*9.4f + vGunMoveDown * m_fGunMoveDown*10.f);
-			m_pTransformCom->Set_Pos(vPos);
-
-			m_pTransformCom->Get_Info(INFO_POS, &vGunMove);
-
-			m_fBulletTime += fTimeDelta;
-
-			if (m_bFire == true)
-			{
-				m_fFireTime += fTimeDelta;
-				if (m_fFireTime >= 0.035f)
-				{
-					m_bFire = false;
-					m_fFireTime = 0.f;
-				}
-			}
-		}
-
-			Key_Input();
-
-			if (false == m_bFix)
-			{
-				Mouse_Input();
-			}
-		}
-
-
-	__super::Update_GameObject(fTimeDelta);
+// 	if (m_bGun_Select)// ¼±ÅÃµÇ¾î¾ß ¾÷µ¥ÀÌÆ®/·»´õ µ¹¸²
+// 		{
+// 		Engine::Add_RenderGroup(RENDER_NONALPHA, this);
+//
+// 		if (m_bLateInit)
+// 		{
+// 			m_pPlayerTransformCom = dynamic_cast<CTransform*>(Engine::Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
+// 			GunState->Initialize(this);
+// 			m_bLateInit = false;
+// 		}
+//
+// 		dynamic_cast<CPlayer*>(m_pPlayer)->Set_Bullet(m_fBulletCount, m_fMaxBullet); // ÃÑ¾Ë °»½Å
+//
+// 		CGunState* State = GunState->Update(this, fTimeDelta);
+// 		if (State != nullptr)
+// 		{
+// 			GunState = State;
+// 			GunState->Initialize(this);
+// 		} // »óÅÂ ÆÐÅÏ
+//
+//
+//
+// 		if (m_pPlayerTransformCom)
+// 		{
+// 			_vec3	vPlayerPos, vPlayerLook, vPlayerUp;
+//
+// 			m_pPlayerTransformCom->Get_Info(INFO_UP, &vPlayerUp);
+// 			m_pPlayerTransformCom->Get_Info(INFO_POS, &vPlayerPos);
+// 			m_pPlayerTransformCom->Get_Info(INFO_LOOK, &vPlayerLook);
+// 			D3DXVec3Normalize(&vPlayerLook, &vPlayerLook);
+//
+// 			_vec3 vGunMove;
+//
+// 			D3DXVec3Cross(&vGunMove, &vPlayerUp, &vPlayerLook);
+// 			D3DXVec3Normalize(&vPlayerUp, &vPlayerUp);
+// 			D3DXVec3Normalize(&vGunMove, &vGunMove);
+//
+//
+// 			_vec3 vGunMoveRight = vGunMove / 20;
+// 			_vec3 vGunMoveDown = -vPlayerUp / 20;
+//
+// 			m_pTransformCom->Set_Scale(m_vGunScale);
+// 			_vec3 vPos = { vPlayerPos + vPlayerLook * 2.5f + vGunMoveRight * m_fGunMoveRight * 9.4f + vGunMoveDown * m_fGunMoveDown * 10.f };
+// 			//m_pTransformCom->Set_Pos(vPlayerPos + vPlayerLook*2.5f + vGunMoveRight * m_fGunMoveRight*9.4f + vGunMoveDown * m_fGunMoveDown*10.f);
+// 			m_pTransformCom->Set_Pos(vPos);
+//
+// 			m_pTransformCom->Get_Info(INFO_POS, &vGunMove);
+//
+// 			m_fBulletTime += fTimeDelta;
+//
+// 			if (m_bFire == true)
+// 			{m_fHP_Reduction
+// 				m_fFireTime += fTimeDelta;
+// 				if (m_fFireTime >= 0.035f)
+// 				{
+// 					m_bFire = false;
+// 					m_fFireTime = 0.f;
+// 				}
+// 			}
+// 		}
+//
+// 			Key_Input();
+//
+// 			if (false == m_bFix)
+// 			{
+// 				Mouse_Input();
+// 			}
+// 		}
+//
+//
+// 	__super::Update_GameObject(fTimeDelta);
 	return OBJ_NOEVENT;
 }
 
@@ -260,44 +260,44 @@ void CDyehard::ReadyState()
 
 void CDyehard::Gun_Fire()
 {
-	_vec3 myvPos,m_vFirePos,vDir2;
-	m_pTransformCom->Get_Info(INFO_POS, &myvPos);
-	m_pPlayerTransformCom->Get_Info(INFO_POS, &m_vFirePos);
-
-	vDir2 = dynamic_cast<CPlayer*>(m_pPlayer)->m_vMoveDir;
-	m_vFirePos = (m_vFirePos + myvPos) / 2 + vDir2 +_vec3(0.f,-0.7f,0.f);
-	//m_vFirePos = (m_vFirePos + myvPos) / 2;
-	//m_vFirePos = (dynamic_cast<CPlayer*>(m_pPlayer)->Get_INFO()->vPos + m_vFirePos) / 2;
-	if (m_bGun_Select) { // ¼±ÅÃµÇ¾î¾ß ¾÷µ¥ÀÌÆ®/·»´õ µ¹¸²
-		if (Engine::Get_DIMouseState(DIM_LB) && m_fBulletTime >= 0.6f && m_bIsBullet)
-		{
-			for (auto iter : BulletList) {
-				dynamic_cast<CPaintBall*>(iter)->
-					Shoot(m_vFirePos, m_iBulletColor);
-			}
-
-			m_fBulletTime = 0.f;
-			++m_iBulletColor;
-			--m_fBulletCount;
-			dynamic_cast<CPlayer*>(m_pPlayer)->Set_Bullet(m_fBulletCount, m_fMaxBullet);
-			if (m_fBulletCount < 1) {
-				m_bIsBullet = false;
-			} // ÃÑ¾Ë ¹ß»ç
-			if (m_iBulletColor >= 8) {
-				m_iBulletColor = 0; // ÃÑ¾Ë »ö±ò ÃÊ±âÈ­
-			}
-			m_bFire = true;
-			// ÃÑ¿°(¼¶±¤)
-			GunState = m_pStateArray[SHOT]; // »óÅÂ¸¦ ÃÑ ½ð »óÅÂ·Î ¹Ù²Þ
-			GunState->Initialize(this);   //Initialize ½ÇÇà
-		}
-		else if (Engine::Get_DIMouseState(DIM_RB))
-		{
-			m_bLazer = true;
-			GunState = m_pStateArray[LAZER]; // »óÅÂ¸¦ ÃÑ ½ð »óÅÂ·Î ¹Ù²Þ
-			GunState->Initialize(this);   //Initialize ½ÇÇà
-		}
-	}
+// 	_vec3 myvPos,m_vFirePos,vDir2;
+// 	m_pTransformCom->Get_Info(INFO_POS, &myvPos);
+// 	m_pPlayerTransformCom->Get_Info(INFO_POS, &m_vFirePos);
+//
+// 	vDir2 = dynamic_cast<CPlayer*>(m_pPlayer)->m_vMoveDir;
+// 	m_vFirePos = (m_vFirePos + myvPos) / 2 + vDir2 +_vec3(0.f,-0.7f,0.f);
+// 	//m_vFirePos = (m_vFirePos + myvPos) / 2;
+// 	//m_vFirePos = (dynamic_cast<CPlayer*>(m_pPlayer)->Get_INFO()->vPos + m_vFirePos) / 2;
+// 	if (m_bGun_Select) { // ¼±ÅÃµÇ¾î¾ß ¾÷µ¥ÀÌÆ®/·»´õ µ¹¸²
+// 		if (Engine::Get_DIMouseState(DIM_LB) && m_fBulletTime >= 0.6f && m_bIsBullet)
+// 		{
+// 			for (auto iter : BulletList) {
+// 				dynamic_cast<CPaintBall*>(iter)->
+// 					Shoot(m_vFirePos, m_iBulletColor);
+// 			}
+//
+// 			m_fBulletTime = 0.f;
+// 			++m_iBulletColor;
+// 			--m_fBulletCount;
+// 			dynamic_cast<CPlayer*>(m_pPlayer)->Set_Bullet(m_fBulletCount, m_fMaxBullet);
+// 			if (m_fBulletCount < 1) {
+// 				m_bIsBullet = false;
+// 			} // ÃÑ¾Ë ¹ß»ç
+// 			if (m_iBulletColor >= 8) {
+// 				m_iBulletColor = 0; // ÃÑ¾Ë »ö±ò ÃÊ±âÈ­
+// 			}
+// 			m_bFire = true;
+// 			// ÃÑ¿°(¼¶±¤)
+// 			GunState = m_pStateArray[SHOT]; // »óÅÂ¸¦ ÃÑ ½ð »óÅÂ·Î ¹Ù²Þ
+// 			GunState->Initialize(this);   //Initialize ½ÇÇà
+// 		}
+// 		else if (Engine::Get_DIMouseState(DIM_RB))
+// 		{
+// 			m_bLazer = true;
+// 			GunState = m_pStateArray[LAZER]; // »óÅÂ¸¦ ÃÑ ½ð »óÅÂ·Î ¹Ù²Þ
+// 			GunState->Initialize(this);   //Initialize ½ÇÇà
+// 		}
+// 	}
 }
 
 CDyehard* CDyehard::Create(LPDIRECT3DDEVICE9 pGraphicDev)
