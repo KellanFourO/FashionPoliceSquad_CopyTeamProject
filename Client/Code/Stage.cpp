@@ -224,15 +224,15 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 
 	}
 	{
-		for (int i = 0; i < 6; i++) {
-			pGameObject = CItem::Create(m_pGraphicDev);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			Item_Info Item_Info;
-			Item_Info.Item_ID = (ItemID)i;
-			Item_Info.vPos = _vec3(20 + 6 * i, 2.f, 35);
-			dynamic_cast<CItem*>(pGameObject)->Set_INFO(Item_Info);
-			FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::ITEM, pGameObject), E_FAIL);	//아이템 배치
-		}
+		//for (int i = 0; i < 6; i++) {
+		//	pGameObject = CItem::Create(m_pGraphicDev);
+		//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		//	Item_Info Item_Info;
+		//	Item_Info.Item_ID = (ItemID)i;
+		//	Item_Info.vPos = _vec3(20 + 6 * i, 2.f, 35);
+		//	dynamic_cast<CItem*>(pGameObject)->Set_INFO(Item_Info);
+		//	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::ITEM, pGameObject), E_FAIL);	//아이템 배치
+		//}
 	}
 	// 아이템
 
