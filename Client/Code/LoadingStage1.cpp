@@ -53,7 +53,24 @@ _int CLoadingStage1::Update_Scene(const _float& fTimeDelta)
 		map<SCENETAG, CScene*>		m_MapSceneTemp;
 		if (Get_DIKeyState(DIK_RETURN) & 0x80)
 		{
-			if (m_pScene->Get_SceneTag() == SCENETAG::BOSS_STAGE)
+			switch (m_pScene->Get_SceneTag())
+			{
+			case SCENETAG::LOBBY:
+			{
+// 				CScene* pScene = CBossStage::Create(m_pGraphicDev);
+// 				NULL_CHECK_RETURN(pScene, E_FAIL);
+// 				pScene->Set_MainPlayer(m_pPlayer);
+// 				FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
+// 				FAILED_CHECK_RETURN(Engine::COctree::GetInstance()->Ready_Octree(), E_FAIL);
+// 
+// 
+// 				m_MapSceneTemp = Management()->Get_MapScene();
+// 				pScene->Set_SceneTag(SCENETAG::LOBBY);
+// 				m_MapSceneTemp.emplace(SCENETAG::LOBBY, pScene);
+// 				Management()->Set_MapScene(m_MapSceneTemp);
+// 				break;
+			}
+			case SCENETAG::BOSS_STAGE:
 			{
 				CScene* pScene = CBossStage::Create(m_pGraphicDev);
 				NULL_CHECK_RETURN(pScene, E_FAIL);
@@ -66,46 +83,105 @@ _int CLoadingStage1::Update_Scene(const _float& fTimeDelta)
 				pScene->Set_SceneTag(SCENETAG::BOSS_STAGE);
 				m_MapSceneTemp.emplace(SCENETAG::BOSS_STAGE, pScene);
 				Management()->Set_MapScene(m_MapSceneTemp);
+				break;
 			}
-			else if (m_pScene->Get_SceneTag() == SCENETAG::LOBBY)
+			case SCENETAG::STAGE2:
 			{
-
+// 				CScene* pScene = CStage2::Create(m_pGraphicDev);
+// 				NULL_CHECK_RETURN(pScene, E_FAIL);
+// 				pScene->Set_MainPlayer(m_pPlayer);
+// 				FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
+// 				FAILED_CHECK_RETURN(Engine::COctree::GetInstance()->Ready_Octree(), E_FAIL);
+// 
+// 
+// 				m_MapSceneTemp = Management()->Get_MapScene();
+// 				pScene->Set_SceneTag(SCENETAG::STAGE2);
+// 				m_MapSceneTemp.emplace(SCENETAG::STAGE2, pScene);
+// 				Management()->Set_MapScene(m_MapSceneTemp);
+// 				break;
 			}
-			else if (m_pScene->Get_SceneTag() == SCENETAG::STAGE2)
-			{
 
+			
 			}
 		
 		}
 	}
 
 
-	return;
+	return iExit;
 }
 
 void CLoadingStage1::LateUpdate_Scene()
 {
+	__super::LateUpdate_Scene();
 }
 
 void CLoadingStage1::Render_Scene()
 {
+	//렌더는 렌더러에서 관리하기 때문에 굳이 여기에 넣을 필요 없음.
 }
 
 HRESULT CLoadingStage1::Ready_Prototype()
 {
-	return E_NOTIMPL;
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Transform", CTransform::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_RcTex", CRcTex::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_UITex", CUITex::Create(m_pGraphicDev)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_LogoCharacterTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Main menu characters1.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_LogoTitleTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/logo.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ProgressBarFrameTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/ProgressBar/ProgressBarEmpty.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ProgressBarValueTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/ProgressBar/ProgressBarFull.png")), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CameraCom", CCameraCom::Create(m_pGraphicDev)), E_FAIL); // 유진 추가
+
+	return S_OK;
 }
 
 HRESULT CLoadingStage1::Ready_Layer_Environment(LAYERTAG eLayerTag)
 {
-	return E_NOTIMPL;
+	Engine::CLayer* pLayer = Engine::CLayer::Create(eLayerTag);
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	Engine::CGameObject* pGameObject = nullptr;
+
+	// Background
+	pGameObject = CBackGround::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::BACKGOUND, pGameObject), E_FAIL);
+
+	// Title
+	pGameObject = CTitle::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::BACKGOUND, pGameObject), E_FAIL);
+
+	pGameObject = CProgressValue::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PROGRESSVALUE, pGameObject), E_FAIL);
+
+	pGameObject = CProgressFrame::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PROGRESSFRAME, pGameObject), E_FAIL);
+
+	m_mapLayer.insert({ eLayerTag, pLayer });
+
+	return S_OK;
 }
 
 CLoadingStage1* CLoadingStage1::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	return nullptr;
+	CLoadingStage1* pInstance = new CLoadingStage1(pGraphicDev);
+
+	if (FAILED(pInstance->Ready_Scene()))
+	{
+		Safe_Release(pInstance);
+		MSG_BOX("LoadingStage Create Failed");
+		return nullptr;
+	}
+
+	return pInstance;
 }
 
 void CLoadingStage1::Free()
 {
+	Safe_Release(m_pLoading);
+
+	__super::Free();
 }
