@@ -55,6 +55,7 @@ private:
 	CLayer*				m_pLayer				= nullptr;
 	CMapCursor*			m_pMapCursor			= nullptr;
 	_uint				m_iTextureNum			= 0;  //몇 번째 텍스쳐냐
+	_uint				m_iTextureNum2			= 0;  //몇 번째 텍스쳐냐
 		
 	_vec3*				m_vCursor_Pos;
 	_vec3				m_vCursor_Size;

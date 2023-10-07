@@ -44,7 +44,10 @@ namespace Engine
 
 
 	//유진) 설치물OBJ 구분용
-	enum class	OBJ_TYPE { BUILDING, CUBE_OBJ, PLANE_OBJ, OBJ_TYPE_END };
+	enum class OBJ_TYPE { BUILDING, CUBE_OBJ, PLANE_OBJ, OBJ_TYPE_END };
+						//빌딩용  , 큐브OBJ,  평면OBJ
+	enum class OBJ_ATTRIBUTE { DES_OBJ, INTERACTION_OBJ, NONE_OBJ, ATTRIBUTE_END };
+							//파괴OBJ  , 상호작용OBJ,  그냥 장식 OBJ
 	enum class CAMERA_TYPE { NOTMOVE_CAMERA, MOVE_CAMERA, CAMERA_END };
 	enum class LIGHT_TYPE { LIGHT_DIRECTIONAL, LIGHT_POINT, LIGHT_SPOT, LIGHT_END };
 

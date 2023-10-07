@@ -60,8 +60,8 @@ private:
 
 public:
 	static  CBuild_Obj* Create(LPDIRECT3DDEVICE9 pGraphicDev, 
-		_vec3 pMouse_Pos, _uint TextureNum, _vec3 Size, 
-		_uint pRotate, _uint Index, OBJ_TYPE eType);
+			_vec3 pMouse_Pos, _uint TextureNum, _vec3 Size, 
+			_uint pRotate, _uint Index, OBJ_TYPE eType);
 
 private:
 	virtual void Free();

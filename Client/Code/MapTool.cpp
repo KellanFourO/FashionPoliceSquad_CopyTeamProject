@@ -159,8 +159,10 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
 				OBJTemp = new OBJData;
 			}
 
-			Cursor_Update();
-			_vec3 CursorTemp = { m_vCursor_Pos->x, m_vCursor_Height, m_vCursor_Pos->z };
+
+				/////////////공통 부분/////////////////////
+				Cursor_Update();
+				_vec3 CursorTemp = { m_vCursor_Pos->x, m_vCursor_Height, m_vCursor_Pos->z };
 
 			if ((!CheckDuplicateCube(CursorTemp, m_vCursor_Size))  
 				&& (CursorTemp.x > -1)	&& (CursorTemp.y > -1)
@@ -176,8 +178,12 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
 
 				_vec3 CubeSize, ObjSize;
 				CubeSize = ObjSize = { m_fCubesize.m_fX, m_fCubesize.m_fY, m_fCubesize.m_fZ };
-				
-				if (CImGuiManager::GetInstance()->Get_BuildModeCheck() == true) {  //이 녀석이 Build_Cube에 해당될 경우
+				///////////////////////////////////////////////
+
+
+
+				//이 녀석이 Build_Cube에 해당될 경우
+				if (CImGuiManager::GetInstance()->Get_BuildModeCheck() == true) {  
 					m_iTextureNum = CImGuiManager::GetInstance()->Get_CubeTexNum();
 					pGameObject = CBuild_Cube::Create(m_pGraphicDev, CursorTemp, m_iTextureNum, CubeSize, m_iCubeIndex);
 
@@ -195,12 +201,14 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
 					m_VecCubeData.push_back(CubeTemp2);
 					m_iCubeIndex++;
 				}
-				else if (CImGuiManager::GetInstance()->Get_OBJModeCheck() == true) { //이 녀석이 Build_OBJ에 해당될 경우
-					m_iTextureNum = CImGuiManager::GetInstance()->Get_OBJTexNum();
+
+				//이 녀석이 Build_OBJ에 해당될 경우
+				else if (CImGuiManager::GetInstance()->Get_OBJModeCheck() == true) { 
+					m_iTextureNum2 = CImGuiManager::GetInstance()->Get_OBJTexNum();
 					OBJ_TYPE eTypeTemp = CImGuiManager::GetInstance()->Get_OBJType(); //오브젝트 태그랑 다른거임
 					_uint RotateCount = (CImGuiManager::GetInstance()->Get_OBJ_RotateCountCW()) - (CImGuiManager::GetInstance()->Get_OBJ_RotateCountCCW());
 
-					pGameObject = CBuild_Obj::Create(m_pGraphicDev, CursorTemp, m_iTextureNum, ObjSize, RotateCount, m_iOBJIndex, eTypeTemp);
+					pGameObject = CBuild_Obj::Create(m_pGraphicDev, CursorTemp, m_iTextureNum2, ObjSize, RotateCount, m_iOBJIndex, eTypeTemp);
 
 					NULL_CHECK_RETURN(pGameObject, E_FAIL);
 					FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
@@ -209,7 +217,7 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
 
 					OBJTemp->vSize = ObjSize;
 					OBJTemp->m_OBJ_TYPE = CImGuiManager::GetInstance()->Get_OBJType();
-					OBJTemp->uITextureNum = m_iTextureNum;
+					OBJTemp->uITextureNum = m_iTextureNum2;
 					OBJTemp->vPos = CursorTemp;
 					OBJTemp->iIndex = m_iOBJIndex;
 					OBJTemp->iRotateCount = RotateCount;
@@ -218,13 +226,13 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
 					{
 						m_VecTempCube.clear();
 						m_VecTempCube = CImGuiManager::GetInstance()->Get_CubeTextureObjVector();
-						OBJTemp->pCubeTexture = m_VecTempCube[m_iTextureNum - cubeObjTextureStartIndex];
+						OBJTemp->pCubeTexture = m_VecTempCube[m_iTextureNum2 - cubeObjTextureStartIndex];
 					}
 					else if (eTypeTemp == OBJ_TYPE::PLANE_OBJ)
 					{
 						m_VecTempPlane.clear();
 						m_VecTempPlane = CImGuiManager::GetInstance()->Get_PlaneTextureObjVector();
-						OBJTemp->pBaseTexture = m_VecTempPlane[m_iTextureNum - planeObjTextureStartIndex];
+						OBJTemp->pBaseTexture = m_VecTempPlane[m_iTextureNum2 - planeObjTextureStartIndex];
 					}
 					m_VecOBJData.push_back(OBJTemp);
 					m_iOBJIndex++;
@@ -235,7 +243,7 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
 			{
 				m_Build_time++;
 				
-				if (m_Build_time >= 10) 
+				if (m_Build_time >= 5) 
 				{
 					m_Build_time = 0;
 					m_Build_time_Check = false;
@@ -312,6 +320,10 @@ HRESULT CMapTool::Load_Cube(const TCHAR* pFilePath)
 
 HRESULT CMapTool::Delete_Map()
 {
+	// 2개 벡터에서 지운다.
+	// 1. 맵툴이 가지고 있는 SAVE-LOAD용 벡터
+	// 2. Create 시 생성되어 Layer가 갖게 되는 GameObject 벡터
+
 	if (Engine::Get_DIMouseState(DIM_RB))
 	{
 		Cursor_Update();
@@ -328,7 +340,7 @@ HRESULT CMapTool::Delete_Map()
 				{
 					IndexTemp = (*iter)->iCubeIndex;
 
-					delete* iter;
+					delete *iter;
 					//*iter = nullptr;
 					iter = m_VecCubeData.erase(iter);
 
@@ -365,7 +377,7 @@ HRESULT CMapTool::Delete_Map()
 				{
 					IndexTemp = (*iter)->iIndex;
 
-					delete* iter;
+					delete *iter;
 					//*iter = nullptr;
 					iter = m_VecOBJData.erase(iter);
 

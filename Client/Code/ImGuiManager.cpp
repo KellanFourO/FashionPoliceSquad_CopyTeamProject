@@ -320,7 +320,11 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 							ImGui::Text(u8"회전 횟수 : %d", (m_Rotate_Count_CW - m_Rotate_Count_CCW));
 
 							ImGui::SameLine();
-							ImGui::Button(u8"회전 카운트 Reset");
+							if (ImGui::Button(u8"회전 카운트 Reset") )
+							{
+								Set_OBJ_RotateCountCW_Zero();
+								Set_OBJ_RotateCountCCW_Zero();
+							};
 
 							for (int i = 0; i < 1; i++) //가로줄(행) 갯수
 							{
