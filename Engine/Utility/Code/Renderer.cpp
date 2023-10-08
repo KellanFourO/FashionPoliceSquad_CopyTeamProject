@@ -100,27 +100,27 @@ void CRenderer::Render_Block(LPDIRECT3DDEVICE9& pGraphicDev)
 {
 	if (Management()->Get_Scene()->Get_SceneTag() == SCENETAG::STAGE)
 	{
-		if (!Management()->Get_Layer(LAYERTAG::CAMERA)->Get_ObjectList(OBJECTTAG::FPSCAMERA).size()) return;
-		CNewFPSCamera* pNEWFPSCamera = dynamic_cast<CNewFPSCamera*>(Engine::Management()->Get_Layer(LAYERTAG::CAMERA)->Get_ObjectList(OBJECTTAG::FPSCAMERA).back());
-
-		//TODO - 승용추가
-
-		_matrix matView = pNEWFPSCamera->Get_View();
-		_matrix matProj = pNEWFPSCamera->Get_Proj();
-
-		_matrix matViewProj = matView * matProj;
-		CFrustum* m_pFrustum = new CFrustum(); // 기존코드
-
-		m_pFrustum->MakeFrustum(&matViewProj);
-
-		for (auto& iter : m_RenderGroup[RENDER_BLOCK])
-		{
-			if (m_pFrustum->IsIn(iter->Get_Transform()->m_vInfo[INFO_POS]))
-			{
-				iter->Render_GameObject();
-			}
-		}
-		Safe_Release(m_pFrustum);
+// 		if (!Management()->Get_Layer(LAYERTAG::CAMERA)->Get_ObjectList(OBJECTTAG::FPSCAMERA).size()) return;
+// 		CNewFPSCamera* pNEWFPSCamera = dynamic_cast<CNewFPSCamera*>(Engine::Management()->Get_Layer(LAYERTAG::CAMERA)->Get_ObjectList(OBJECTTAG::FPSCAMERA).back());
+// 
+// 		//TODO - 승용추가
+// 
+// 		_matrix matView = pNEWFPSCamera->Get_View();
+// 		_matrix matProj = pNEWFPSCamera->Get_Proj();
+// 
+// 		_matrix matViewProj = matView * matProj;
+// 		CFrustum* m_pFrustum = new CFrustum(); // 기존코드
+// 
+// 		m_pFrustum->MakeFrustum(&matViewProj);
+// 
+// 		for (auto& iter : m_RenderGroup[RENDER_BLOCK])
+// 		{
+// 			if (m_pFrustum->IsIn(iter->Get_Transform()->m_vInfo[INFO_POS]))
+// 			{
+// 				iter->Render_GameObject();
+// 			}
+// 		}
+// 		Safe_Release(m_pFrustum);
 		//TODO - 승용추가 종료
 		//pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 	}

@@ -213,16 +213,9 @@
     <ClInclude Include="..\Header\FPSCamera.h" />
     <ClInclude Include="..\Header\Item.h" />
     <ClInclude Include="..\Header\JumpSmoke.h" />
-    <ClInclude Include="..\Header\KickBoardMonster.h" />
-    <ClInclude Include="..\Header\KickBoardMonsterState.h" />
-    <ClInclude Include="..\Header\KickBoardMonster_Attack.h" />
-    <ClInclude Include="..\Header\KickBoardMonster_Chase.h" />
-    <ClInclude Include="..\Header\KickBoardMonster_Dead.h" />
-    <ClInclude Include="..\Header\KickBoardMonster_Idle.h" />
-    <ClInclude Include="..\Header\KickBoardMonster_Patrol.h" />
     <ClInclude Include="..\Header\Lazer.h" />
     <ClInclude Include="..\Header\Loading.h" />
-    <ClInclude Include="..\Header\LoadingStage.h" />
+    <ClInclude Include="..\Header\LoadingStage1.h" />
     <ClInclude Include="..\Header\Logo.h" />
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\MapCursor.h" />
@@ -252,12 +245,12 @@
     <ClInclude Include="..\Header\PaintShotGun_Shot.h" />
     <ClInclude Include="..\Header\PaintShotGun_Walk.h" />
     <ClInclude Include="..\Header\Player.h" />
+    <ClInclude Include="..\Header\PlayerBullet.h" />
     <ClInclude Include="..\Header\PlayerGun.h" />
-    <ClInclude Include="..\Header\PlayerGunState.h" />
     <ClInclude Include="..\Header\PlayerState.h" />
     <ClInclude Include="..\Header\Player_Heal.h" />
     <ClInclude Include="..\Header\Player_Hit.h" />
-    <ClInclude Include="..\Header\Player_Idle.h" />
+    <ClInclude Include="..\Header\Player_IDLE.h" />
     <ClInclude Include="..\Header\Player_Jump.h" />
     <ClInclude Include="..\Header\Player_Left.h" />
     <ClInclude Include="..\Header\Player_LevelUp.h" />
@@ -334,14 +327,9 @@
     <ClCompile Include="..\Code\FootRay.cpp" />
     <ClCompile Include="..\Code\EventMgr.cpp" />
     <ClCompile Include="..\Code\JumpSmoke.cpp" />
-    <ClCompile Include="..\Code\KickBoardMonster.cpp" />
-    <ClCompile Include="..\Code\KickBoardMonster_Attack.cpp" />
-    <ClCompile Include="..\Code\KickBoardMonster_Chase.cpp" />
-    <ClCompile Include="..\Code\KickBoardMonster_Dead.cpp" />
-    <ClCompile Include="..\Code\KickBoardMonster_Idle.cpp" />
-    <ClCompile Include="..\Code\KickBoardMonster_Patrol.cpp" />
     <ClCompile Include="..\Code\Lazer.cpp" />
     <ClCompile Include="..\Code\MuzzlefFlash_Rifle.cpp" />
+    <ClCompile Include="..\Code\LoadingStage1.cpp" />
     <ClCompile Include="..\Code\ObjectPoolMgr.cpp" />
     <ClCompile Include="..\Code\MissionObjective.cpp" />
     <ClCompile Include="..\Code\PaintShotGun.cpp" />
@@ -353,6 +341,7 @@
     <ClCompile Include="..\Code\PaintShotGun_Reload.cpp" />
     <ClCompile Include="..\Code\PaintShotGun_Shot.cpp" />
     <ClCompile Include="..\Code\PaintShotGun_Walk.cpp" />
+    <ClCompile Include="..\Code\PlayerBullet.cpp" />
     <ClCompile Include="..\Code\PlayerGun.cpp" />
     <ClCompile Include="..\Code\Player_Armor.cpp" />
     <ClCompile Include="..\Code\CrossHair.cpp" />
@@ -384,7 +373,7 @@
     <ClCompile Include="..\Code\Player.cpp" />
     <ClCompile Include="..\Code\Player_Heal.cpp" />
     <ClCompile Include="..\Code\Player_Hit.cpp" />
-    <ClCompile Include="..\Code\Player_Idle.cpp" />
+    <ClCompile Include="..\Code\Player_IDLE.cpp" />
     <ClCompile Include="..\Code\Player_Jump.cpp" />
     <ClCompile Include="..\Code\Player_Left.cpp" />
     <ClCompile Include="..\Code\Player_LevelUp.cpp" />
@@ -418,7 +407,6 @@
     <ClCompile Include="..\Code\Title.cpp" />
     <ClCompile Include="..\Code\UIMgr.cpp" />
     <ClCompile Include="Client.cpp" />
-    <ClCompile Include="LoadingStage.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

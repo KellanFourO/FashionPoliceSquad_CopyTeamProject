@@ -176,6 +176,9 @@ void CTransform::Set_Rotate(ROTATION eType, const _float& fAngle)
 	m_vAngle.y;
 }
 
+
+
+
 _matrix& CTransform::Rotate(_vec3& _vEulers)
 {
 	_matrix matRotate;

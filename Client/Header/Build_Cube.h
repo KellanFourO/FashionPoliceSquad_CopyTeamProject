@@ -41,11 +41,11 @@ private:
 	HRESULT				Add_Component();
 
 private:
-	CCubeTex* m_pBufferCom = nullptr;
-	CTexture* m_pTextureCom = nullptr;
-	CCalculator* m_pCalculatorCom = nullptr;
-	_vec3         m_Cursor_Pos = {};
-	_uint         m_TextureNumber = 0;
+	CCubeTex*		m_pBufferCom = nullptr;
+	CTexture*		m_pTextureCom = nullptr;
+	CCalculator*	m_pCalculatorCom = nullptr;
+	_vec3			m_Cursor_Pos = {};
+	_uint			m_TextureNumber = 0;
 
 	CUBESIZE		m_fCubeSize = { VTXITV, VTXITV, VTXITV };
 

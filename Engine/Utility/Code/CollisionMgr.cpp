@@ -15,7 +15,7 @@ CollisionMgr::CollisionMgr()
 	CheckGroup(OBJECTTAG::PLAYER, OBJECTTAG::BOSSBULLET);
 	CheckGroup(OBJECTTAG::MONSTER, OBJECTTAG::PLAYERBULLET);
 	//CheckGroup(OBJECTTAG::MONSTER, OBJECTTAG::OBJECT);
-	CheckGroup(OBJECTTAG::BOSS, OBJECTTAG::OBJECT);
+	//CheckGroup(OBJECTTAG::BOSS, OBJECTTAG::OBJECT);
 	CheckGroup(OBJECTTAG::BOSS, OBJECTTAG::PLAYERBULLET);
 }
 
@@ -29,7 +29,7 @@ void CollisionMgr::LateUpdate_Collision()
 	CheckCollisionStatic(OBJECTTAG::PLAYER);
 	CheckCollisionStatic(OBJECTTAG::MONSTER);
 	CheckCollisionStatic(OBJECTTAG::BOSS);
-	//CheckCollisionStatic(OBJECTTAG::MONSTERBULLET);
+	CheckCollisionStatic(OBJECTTAG::MONSTERBULLET);
 	CheckCollisionStatic(OBJECTTAG::PLAYERBULLET);
 	//CheckCollisionStatic(OBJECTTAG::ITEM);
 	CheckCollisionStatic(OBJECTTAG::RAY);
@@ -160,6 +160,7 @@ void CollisionMgr::CheckCollisionByType(OBJECTTAG _eObjectLeft, OBJECTTAG _eObje
 						iter->second = false;
 					}
 				}
+				//return;
 			}
 			else
 			{		// 현재 충돌 x면
@@ -168,6 +169,7 @@ void CollisionMgr::CheckCollisionByType(OBJECTTAG _eObjectLeft, OBJECTTAG _eObje
 					pLeftCol->OnCollisionExit(pRightCol);
 					pRightCol->OnCollisionExit(pLeftCol);
 					iter->second = false;
+					return;
 				}
 			}
 		}
@@ -191,9 +193,6 @@ void CollisionMgr::CheckCollisionStatic(OBJECTTAG _eObjectLeft)
 		if (nullptr == iterL->Get_Collider())
 			continue;
 
-		if (iterL->Get_ObjectTag() == OBJECTTAG::DEAD_OBJ) {
-			continue;	//재연 추가, DEAD_OBJ이면 검사안함
-		}
 
 		_vec3 vHostPos = dynamic_cast<CTransform*>(iterL->Get_Component(ID_DYNAMIC, COMPONENTTAG::TRANSFORM))->m_vInfo[INFO_POS];
 		COctreeNode* pParentNode = Octree()->GetParentNodeByPos(vHostPos, Engine::Octree()->GetOctreeRoot());
@@ -253,6 +252,8 @@ void CollisionMgr::CheckCollisionStatic(OBJECTTAG _eObjectLeft)
 						iter->second = false;
 					}
 				}
+
+				//return;
 			}
 			else
 			{		// 현재 충돌 x면
@@ -261,6 +262,7 @@ void CollisionMgr::CheckCollisionStatic(OBJECTTAG _eObjectLeft)
 					pLeftCol->OnCollisionExit(pRightCol);
 					pRightCol->OnCollisionExit(pLeftCol);
 					iter->second = false;
+					return;
 				}
 			}
 		}

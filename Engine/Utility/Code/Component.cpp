@@ -27,7 +27,7 @@ void CComponent::Init_Property(CGameObject* _pHost)
 	m_pHost = _pHost;
 	m_eObjectTag = m_pHost->Get_ObjectTag();
 
-	if (m_eObjectTag == OBJECTTAG::OBJECT ||m_eObjectTag == OBJECTTAG::BUILD_CUBE||m_eObjectTag==OBJECTTAG::TERRAIN)
+	if (m_eObjectTag == OBJECTTAG::OBJECT ||m_eObjectTag == OBJECTTAG::BUILD_CUBE)
 		m_pTransformCom = static_cast<CTransform*>(m_pHost->Get_Component(ID_STATIC,COMPONENTTAG::TRANSFORM ));
 	else
 		m_pTransformCom = static_cast<CTransform*>(m_pHost->Get_Component(ID_DYNAMIC,COMPONENTTAG::TRANSFORM ));

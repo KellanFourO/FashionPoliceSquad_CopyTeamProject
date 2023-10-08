@@ -109,7 +109,7 @@ namespace Engine
 		_vec3					vSize;			//x, y, z 길이
 		_vec3					vPos;			//x, y, z 중점
 		_uint					iCubeIndex;		//몇 번째로 만들어지는 큐브?
-		OBJ_TYPE				m_OBJ_TYPE;		//OBJ 타입 enum class
+		OBJ_TYPE				eOBJ_TYPE;		//OBJ 타입 enum class
 
 	}CUBE;
 
@@ -117,27 +117,49 @@ namespace Engine
 	{
 		IDirect3DBaseTexture9*	pBaseTexture;
 		IDirect3DCubeTexture9*	pCubeTexture;
-		_uint					uITextureNum;	//텍스쳐 넘버
+		_uint					uiTextureNum;	//텍스쳐 넘버
 		_vec3					vSize;			//x, y, z 길이
 		_vec3					vPos;			//x, y, z 중점
+		_uint					iRotateCount;	//90도 단위로 회전 몇 번 시킬건데(Y축)
 		_uint					iIndex;			//몇 번째로 만들어지는 녀석이냐
-		OBJ_TYPE				m_OBJ_TYPE;		//OBJ 타입 enum class
+		OBJ_TYPE				eOBJ_TYPE;		//OBJ 타입 enum class (건물/OBJ큐브/OBJ평면)
+		OBJ_ATTRIBUTE			eOBJ_Attribute;	//OBJ 속성(파괴/상호작용/장식)
+
+		//OBJ속성이 '파괴'일 경우
+		_uint					uiOBJ_HP;		//체력이 다 깎이면 파괴됨
+
+		//OBJ속성이 '상호작용'일 경우 : 로프액션 Pole 등
+		OBJ_INTERACTION			eOBJ_Interaction;
 
 	}OBJData;
 
+	typedef struct	SortCube {  //큐브 텍스쳐 정렬 목적 구조체
+		char*					stFileName;		//파일 이름(정렬 용)
+		_uint					iNameNumber;	//파일명 끝의 숫자
+		IDirect3DCubeTexture9*	tTexture;
+	}SORTCUBE;
+
+	typedef struct	SortTexture {  //평면 텍스쳐 정렬 목적 구조체
+		char*					stFileName;		//파일 이름(정렬 용)
+		_uint					iNameNumber;	//파일명 끝의 숫자
+		IDirect3DBaseTexture9*  tTexture;
+	}SORTTEX;
+
+
+
 	typedef struct tagCubeSize
 	{
-		_float					m_fX = VTXITV;
-		_float					m_fY = VTXITV;
-		_float					m_fZ = VTXITV;
+		_float					fX = VTXITV;
+		_float					fY = VTXITV;
+		_float					fZ = VTXITV;
 
 	}CUBESIZE;
 
 	typedef struct tagCubeRot
 	{
-		_float					m_fX;
-		_float					m_fY;
-		_float					m_fZ;
+		_float					fX;
+		_float					fY;
+		_float					fZ;
 	}CUBEROT;
 
 	typedef struct	Monster_Info {

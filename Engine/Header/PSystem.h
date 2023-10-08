@@ -60,7 +60,7 @@ public:
 		out->y = GetRandomFloat(min->y, max->y);
 		out->z = GetRandomFloat(min->z, max->z);
 	}
-
+	
 protected:
 	//IDirect3DDevice9*			m_pGraphicDev;
 	_vec3						m_vOrigin;		// 시스템의 원천. 파티클이 시작하는곳.

@@ -34,7 +34,7 @@ HRESULT CStage::Ready_Scene()
 
 	FAILED_CHECK_RETURN(Ready_Layer_UI(LAYERTAG::UI), E_FAIL);
 
-
+	
 
 	srand(GetTickCount64());
 
@@ -85,10 +85,10 @@ void CStage::LateUpdate_Scene()
 
 void CStage::Render_Scene()
 {
-	if (m_bReadyCube)
-	{
-		Octree()->Render_Octree(m_pGraphicDev);
-	}
+	//if (m_bReadyCube)
+	//{
+	//	Octree()->Render_Octree(m_pGraphicDev);
+	//}
 	//Debug
 
 }
@@ -96,7 +96,7 @@ void CStage::Render_Scene()
 HRESULT CStage::Ready_LightInfo()
 {
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
-	//mainApp 말고 여기에서 켜기
+	//mainApp 말고 stage-Maptool 단에서 켜기
 	m_pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, TRUE);
 
 	D3DLIGHT9 tLightInfo;
@@ -142,12 +142,9 @@ HRESULT CStage::Ready_Layer_Environment(LAYERTAG eLayerTag)
 	FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::PARTICLE, pGameObject), E_FAIL);
 
 	Load_Data(L"../Bin/Data/Map/Stage1/MapData", OBJECTTAG::BUILD_CUBE);
-	//Load_Data(L"../Bin/Data/OBJ/OBJData", OBJECTTAG::BUILD_OBJ);
-
+	Load_Data(L"../Bin/Data/OBJ/OBJData", OBJECTTAG::BUILD_OBJ);
 
 	m_mapLayer.insert({ eLayerTag, m_pLayer });
-
-
 
 	return S_OK;
 }
@@ -379,8 +376,9 @@ HRESULT CStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 
 	if (eTag == OBJECTTAG::BUILD_OBJ) {
 		//파일 개방해서 받아오기
-		string  m_strText = "OBJData";
-		HANDLE		hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+		string m_strText = "MapData";
+
+		HANDLE      hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
 
 		if (INVALID_HANDLE_VALUE == hFile)
 			return E_FAIL;
@@ -396,12 +394,12 @@ HRESULT CStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 		m_strText = pTag;
 
 		basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
-		const _tchar* aa = converted.c_str();
 
-		//저장된 데이터대로 큐브 동적할당해서 벡터에 담기
+		//저장된 데이터대로 OBJ 동적할당해서 벡터에 담기
 		while (true)
 		{
 			pOBJ = new OBJData;
+
 			ReadFile(hFile, pOBJ, sizeof(OBJData), &dwByte, nullptr);
 
 			if (0 == dwByte)
@@ -416,15 +414,13 @@ HRESULT CStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 
 		Engine::CGameObject* pGameObject = nullptr;
 
-		//벡터 내용물만큼 실제 큐브 생성해 레이어에 담기
+		//벡터 내용물만큼 실제 OBJ 생성해 레이어에 담기
 		for (auto& iter : m_VecOBJData)
 		{
-			pGameObject = CBuild_Obj::Create(m_pGraphicDev, iter->vPos, iter->uITextureNum, iter->vSize, m_iOBJIndex, OBJ_TYPE::PLANE_OBJ);
-
+			pGameObject = CBuild_Obj::Create(m_pGraphicDev, iter->vPos, iter->uiTextureNum, iter->vSize, iter->iRotateCount, m_iOBJIndex, iter->eOBJ_TYPE, iter->eOBJ_Attribute);
 			NULL_CHECK_RETURN(pGameObject, E_FAIL);
 			FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
 			m_iOBJIndex++;
-
 		}
 		m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
 
@@ -434,6 +430,7 @@ HRESULT CStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 
 	return S_OK;
 }
+
 
 HRESULT CStage::Load_UI()
 {
@@ -542,22 +539,27 @@ CStage* CStage::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CStage::Free()
 {
-// 	while (!m_VecCubeData.empty())
+ 
+// 	for (int i = 0; i < m_VecTempCube.size(); ++i)
 // 	{
-// 		delete m_VecCubeData.back();
-// 		m_VecCubeData.back() = nullptr;
-//
-// 		m_VecCubeData.pop_back();
+// 		Safe_Delete(m_VecTempCube[i]);
 // 	}
-// 	m_VecCubeData.clear();
+// 	m_VecTempCube.clear();
+// 
+// 
+// 	for (int i = 0; i < m_VecTempPlane.size(); ++i)
+// 	{
+// 		Safe_Delete(m_VecTempPlane[i]);
+// 	}
+// 	m_VecTempPlane.clear();
+
+
 	for (int i = 0; i < m_VecCubeData.size(); ++i)
 	{
 		Safe_Delete(m_VecCubeData[i]);
 	}
 	m_VecCubeData.clear();
 
-	//for_each(m_VecCubeData.begin(), m_VecCubeData.end(), CDeleteObj2());
-	//m_VecCubeData.clear();
 	__super::Free();
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);

@@ -9,7 +9,6 @@
 #include "CubeTex.h"
 #include "WireTex.h"
 #include "UITex.h"
-#include "CrossTex.h"
 #include "SYTex.h"
 
 #include "Texture.h"
@@ -34,7 +33,7 @@
 #include "PSystem.h"
 
 BEGIN(Engine)
-
+class CScene;
 // Management
 inline CManagement* Management();
 inline CComponent* Get_Component(COMPONENTID eID, LAYERTAG eLayerTag, OBJECTTAG eObjTag, COMPONENTTAG eComponentTag);

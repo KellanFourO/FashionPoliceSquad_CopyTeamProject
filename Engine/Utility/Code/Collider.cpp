@@ -41,9 +41,6 @@ void CCollider::LateUpdate_Component()
 	CTransform* pTransform = m_pHost->m_pTransformCom;
 	m_vCenterPos = m_pTransformCom->m_vInfo[INFO_POS];
 
-//	m_fAxisLen = m_pTransformCom->m_vScale;
-// 	for (UINT i = 0; i < 3; ++i)
-// 		::CopyMemory(&m_vAxisDir[i], &pTransform->m_vInfo[i], sizeof(_vec3));
 }
 
 void CCollider::Render_Collider()
@@ -115,59 +112,6 @@ HRESULT CCollider::InitOBB(_vec3& _vCenter, _vec3* _vAxisDir, _float* _fAxisLen)
 
 	m_pVB->Lock(0, 0, (void**)&pVertex, 0);
 
-
-	//// 전면
-	//pVertex[0].vPosition = { m_vCenterPos.x - m_fAxisLen[0]*0.8f, m_vCenterPos.y + m_fAxisLen[1] * 0.6f, m_vCenterPos.z - m_fAxisLen[2] * 0.8f };
-	//pVertex[0].dwColor = D3DXCOLOR(1.f, 1.f, 0.f, 1.f);
-
-	//pVertex[1].vPosition = { m_vCenterPos.x + m_fAxisLen[0] * 0.8f, m_vCenterPos.y + m_fAxisLen[1] * 0.6f, m_vCenterPos.z - m_fAxisLen[2] * 0.8f };
-	//pVertex[1].dwColor = D3DXCOLOR(1.f, 1.f, 0.f, 1.f);
-
-	//pVertex[2].vPosition = { m_vCenterPos.x + m_fAxisLen[0] * 0.8f, m_vCenterPos.y - m_fAxisLen[1], m_vCenterPos.z - m_fAxisLen[2] * 0.8f };
-	//pVertex[2].dwColor = D3DXCOLOR(1.f, 1.f, 0.f, 1.f);
-
-	//pVertex[3].vPosition = { m_vCenterPos.x - m_fAxisLen[0] * 0.8f, m_vCenterPos.y - m_fAxisLen[1], m_vCenterPos.z - m_fAxisLen[2] * 0.8f };
-	//pVertex[3].dwColor = D3DXCOLOR(1.f, 1.f, 0.f, 1.f);
-
-	//// 후면
-	//pVertex[4].vPosition = { m_vCenterPos.x - m_fAxisLen[0] * 0.8f, m_vCenterPos.y + m_fAxisLen[1] * 0.6f, m_vCenterPos.z + m_fAxisLen[2] * 0.8f };
-	//pVertex[4].dwColor = D3DXCOLOR(1.f, 1.f, 0.f, 1.f);
-
-	//pVertex[5].vPosition = { m_vCenterPos.x + m_fAxisLen[0] * 0.8f, m_vCenterPos.y + m_fAxisLen[1] * 0.6f, m_vCenterPos.z + m_fAxisLen[2] * 0.8f };
-	//pVertex[5].dwColor = D3DXCOLOR(1.f, 1.f, 0.f, 1.f);
-
-	//pVertex[6].vPosition = { m_vCenterPos.x + m_fAxisLen[0] * 0.8f, m_vCenterPos.y - m_fAxisLen[1], m_vCenterPos.z + m_fAxisLen[2] * 0.8f };
-	//pVertex[6].dwColor = D3DXCOLOR(1.f, 1.f, 0.f, 1.f);
-
-	//pVertex[7].vPosition = { m_vCenterPos.x - m_fAxisLen[0] * 0.8f, m_vCenterPos.y - m_fAxisLen[1], m_vCenterPos.z + m_fAxisLen[2] * 0.8f };
-	//pVertex[7].dwColor = D3DXCOLOR(1.f, 1.f, 0.f, 1.f);
-
-
-	// 승용 변경
-	//pVertex[0].vPosition = { m_vCenterPos.x - m_fAxisLen[0], m_vCenterPos.y + m_fAxisLen[1], m_vCenterPos.z - m_fAxisLen[2] };
-	//pVertex[0].dwColor = D3DXCOLOR(1.f, 1.f, 0.f, 1.f);
-	//
-	//pVertex[1].vPosition = { m_vCenterPos.x + m_fAxisLen[0], m_vCenterPos.y + m_fAxisLen[1], m_vCenterPos.z - m_fAxisLen[2] };
-	//pVertex[1].dwColor = D3DXCOLOR(1.f, 1.f, 0.f, 1.f);
-	//
-	//pVertex[2].vPosition = { m_vCenterPos.x + m_fAxisLen[0], m_vCenterPos.y - m_fAxisLen[1], m_vCenterPos.z - m_fAxisLen[2] };
-	//pVertex[2].dwColor = D3DXCOLOR(1.f, 1.f, 0.f, 1.f);
-	//
-	//pVertex[3].vPosition = { m_vCenterPos.x - m_fAxisLen[0], m_vCenterPos.y - m_fAxisLen[1], m_vCenterPos.z - m_fAxisLen[2] };
-	//pVertex[3].dwColor = D3DXCOLOR(1.f, 1.f, 0.f, 1.f);
-	//
-	//// 후면
-	//pVertex[4].vPosition = { m_vCenterPos.x - m_fAxisLen[0], m_vCenterPos.y + m_fAxisLen[1], m_vCenterPos.z + m_fAxisLen[2] };
-	//pVertex[4].dwColor = D3DXCOLOR(1.f, 1.f, 0.f, 1.f);
-	//
-	//pVertex[5].vPosition = { m_vCenterPos.x + m_fAxisLen[0], m_vCenterPos.y + m_fAxisLen[1], m_vCenterPos.z + m_fAxisLen[2] };
-	//pVertex[5].dwColor = D3DXCOLOR(1.f, 1.f, 0.f, 1.f);
-	//
-	//pVertex[6].vPosition = { m_vCenterPos.x + m_fAxisLen[0], m_vCenterPos.y - m_fAxisLen[1], m_vCenterPos.z + m_fAxisLen[2] };
-	//pVertex[6].dwColor = D3DXCOLOR(1.f, 1.f, 0.f, 1.f);
-	//
-	//pVertex[7].vPosition = { m_vCenterPos.x - m_fAxisLen[0], m_vCenterPos.y - m_fAxisLen[1], m_vCenterPos.z + m_fAxisLen[2] };
-	//pVertex[7].dwColor = D3DXCOLOR(1.f, 1.f, 0.f, 1.f);
 
 	
 	//유진 변경 - 최종!

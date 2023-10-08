@@ -525,11 +525,7 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 
 void CPlayer::OnCollisionStay(CCollider* _pOther)
 {
-	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYER)
-	{
-		int i = 0;
-	}
-
+	
 	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE)
 	{
 		_vec3	vOtherPos = _pOther->GetCenterPos();
