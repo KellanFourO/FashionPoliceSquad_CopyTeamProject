@@ -66,8 +66,10 @@ private:
 	HRESULT				Ready_Layer_Camera(LAYERTAG eLayerTag);
 	HRESULT				Ready_Layer_UI(LAYERTAG eLayerTag);
 
+private:
+	CLayer*				m_pLayer = nullptr;
 
-	// TODO - 유진 함수
+	//////////////////////유진 함수, 변수////////////////////////
 public:
 	vector<CUBE*>&		Get_VecCubeData() { return m_VecCubeData; }
 	void				Set_VecCubeData(vector<CUBE*> pVecCubeData) { m_VecCubeData = pVecCubeData; }
@@ -77,24 +79,33 @@ public:
 
 	virtual HRESULT		Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag);
 
+	vector<IDirect3DCubeTexture9*>& Get_VecTempCube() { return m_VecTempCube; }
+	vector<IDirect3DBaseTexture9*>& Get_VecTempPlane() { return m_VecTempPlane; }
+
+private:
+	//BuildOBJ내에서 텍스쳐넘버 구분용으로 씀
+	vector<IDirect3DCubeTexture9*>	m_VecTempCube;
+	vector<IDirect3DBaseTexture9*>	m_VecTempPlane;
+
+	vector<OBJData*>				m_VecOBJData;
+	_uint							m_iOBJIndex = 0;
+
+	vector<CUBE*>					m_VecCubeData;
+	_uint							m_iCubeIndex = 0;
+
+	SORTCUBE*						m_defSortCube = nullptr;//큐브 정렬용
+	vector<SORTCUBE*>				m_pCubeForSort;			//큐브 정렬용
+	SORTTEX*						m_defSortTex = nullptr; //텍스쳐 정렬용
+	vector<SORTTEX*>				m_pTexForSort;			//텍스쳐 정렬용
 
 
-	// TODO - 승용 함수
+	/////////////////////승용 함수, 변수/////////////////////////////////
 public:
 	HRESULT				Load_UI();
 	void				Admin_KeyInput();
 
 
-private:
-	CLayer*				m_pLayer = nullptr;
-
-	// TODO - 유진 변수
-	vector<OBJData*>	m_VecOBJData;
-	_uint				m_iOBJIndex = 0;
-	vector<CUBE*>		m_VecCubeData;
-	_uint				m_iCubeIndex = 0;
-
-	//준호
+	////////////////////////준호 함수, 변수//////////////////////////////
 	_bool				m_bSceneChange;
 	_bool				m_bAdminSwitch = true; // 어드민키인풋 레벨업 통제용
 	_float				m_fAdminTick = 0.f;	   // 어드민키인풋 레벨업 통제용

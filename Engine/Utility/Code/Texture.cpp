@@ -20,6 +20,26 @@ CTexture::CTexture(const CTexture& rhs)
 
 	for (_uint i = 0; i < iSize; ++i)
 		m_vecTexture[i]->AddRef();
+
+
+	_uint	iSize2 = rhs.m_vecCubeTexture.size();
+	m_vecCubeTexture.reserve(iSize2);
+
+	m_vecCubeTexture = rhs.m_vecCubeTexture;
+
+	for (_uint i = 0; i < iSize2; ++i)
+		m_vecCubeTexture[i]->AddRef();
+
+
+	_uint	iSize3 = rhs.m_vecPlaneTexture.size();
+	m_vecPlaneTexture.reserve(iSize3);
+
+	m_vecPlaneTexture = rhs.m_vecPlaneTexture;
+
+	for (_uint i = 0; i < iSize3; ++i)
+		m_vecPlaneTexture[i]->AddRef();
+
+
 }
 
 CTexture::~CTexture()
@@ -56,6 +76,62 @@ HRESULT CTexture::Ready_Texture(TEXTUREID eType,
 	return S_OK;
 }
 
+HRESULT CTexture::Ready_Texture(TEXTUREID eType,
+	const _tchar* pPath, const _uint& iCnt, OBJ_TYPE eOBJType)
+{
+	if (eOBJType == OBJ_TYPE::CUBE_OBJ)
+	{
+		m_vecCubeTexture.reserve(iCnt);
+		IDirect3DCubeTexture9* pTexture = nullptr;
+
+		for (_uint i = 0; i < iCnt; ++i)
+		{
+			TCHAR	szFileName[256] = L"";
+			wsprintf(szFileName, pPath, i);
+
+			switch (eType)
+			{
+			case TEX_NORMAL:
+				FAILED_CHECK_RETURN(D3DXCreateTextureFromFile(m_pGraphicDev, szFileName, (LPDIRECT3DTEXTURE9*)&pTexture), E_FAIL);
+				break;
+
+			case TEX_CUBE:
+
+				FAILED_CHECK_RETURN(D3DXCreateCubeTextureFromFile(m_pGraphicDev, szFileName, (LPDIRECT3DCUBETEXTURE9*)&pTexture), E_FAIL);
+				break;
+			}
+			m_vecCubeTexture.push_back(pTexture);
+		}
+	}
+	else if (eOBJType == OBJ_TYPE::PLANE_OBJ)
+	{
+		m_vecPlaneTexture.reserve(iCnt);
+		IDirect3DBaseTexture9* pTexture = nullptr;
+
+		for (_uint i = 0; i < iCnt; ++i)
+		{
+			TCHAR	szFileName[256] = L"";
+			wsprintf(szFileName, pPath, i);
+
+			switch (eType)
+			{
+			case TEX_NORMAL:
+				FAILED_CHECK_RETURN(D3DXCreateTextureFromFile(m_pGraphicDev, szFileName, (LPDIRECT3DTEXTURE9*)&pTexture), E_FAIL);
+				break;
+
+			case TEX_CUBE:
+
+				FAILED_CHECK_RETURN(D3DXCreateCubeTextureFromFile(m_pGraphicDev, szFileName, (LPDIRECT3DCUBETEXTURE9*)&pTexture), E_FAIL);
+				break;
+			}
+			m_vecPlaneTexture.push_back(pTexture);
+		}
+
+	}
+	return S_OK;
+}
+
+
 void CTexture::Render_Textrue(const _uint& iIndex)
 {
 	if (m_vecTexture.size() <= iIndex)
@@ -63,6 +139,8 @@ void CTexture::Render_Textrue(const _uint& iIndex)
 
 	m_pGraphicDev->SetTexture(0, m_vecTexture[iIndex]);
 }
+
+
 void CTexture::Render_OBJTextrue(IDirect3DCubeTexture9* pTexture)
 {
 	if (pTexture == nullptr) { return; }
@@ -74,11 +152,42 @@ void CTexture::Render_OBJTextrue(IDirect3DBaseTexture9* pTexture)
 	m_pGraphicDev->SetTexture(0, pTexture);
 }
 
+
+void CTexture::Render_ObjCubeTex(const _uint& iIndex)
+{
+	if (m_vecCubeTexture.size() <= iIndex - cubeTextureStartIndex)
+		return;
+
+	m_pGraphicDev->SetTexture(0, m_vecCubeTexture[iIndex - cubeTextureStartIndex]);
+}
+void CTexture::Render_ObjPlaneTex(const _uint& iIndex)
+{
+	if (m_vecPlaneTexture.size() <= iIndex - planeTextureStartIndex)
+		return;
+
+	m_pGraphicDev->SetTexture(0, m_vecPlaneTexture[iIndex - planeTextureStartIndex]);
+}
+
+
 CTexture* CTexture::Create(LPDIRECT3DDEVICE9 pGraphicDev, TEXTUREID eType, _tchar* pPath, const _uint& iCnt)
 {
 	CTexture* pInstance = new CTexture(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Texture(eType, pPath, iCnt)))
+	{
+		Safe_Release(pInstance);
+		MSG_BOX("Texture Create Failed");
+		return nullptr;
+	}
+
+	return pInstance;
+}
+
+CTexture* CTexture::Create(LPDIRECT3DDEVICE9 pGraphicDev, TEXTUREID eType, _tchar* pPath, OBJ_TYPE eOBJType, const _uint& iCnt)
+{
+	CTexture* pInstance = new CTexture(pGraphicDev);
+
+	if (FAILED(pInstance->Ready_Texture(eType, pPath, iCnt, eOBJType)))
 	{
 		Safe_Release(pInstance);
 		MSG_BOX("Texture Create Failed");

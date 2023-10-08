@@ -51,8 +51,7 @@ HRESULT CImGuiManager::SetUp_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
     //Engine::Ready_Proto(L"Proto_EffectTexture", CTexture::Create(Engine::Get_GraphicDev(), TEX_NORMAL, L"../Bin/Resource/Texture/UI/Explosion%d.png", 90));
     ReadImgPath(L"..\\Bin\\Resource\\Texture\\UI", pGraphicDev);
 
-#pragma region 맵툴(환경)에서 사용할 파일 읽어오기 - 유진
-
+	//맵툴(환경)에서 사용할 파일 읽어오기 - 유진
 	LoadTexturesFromDirectory(L"../Bin/Resource/Texture/Cube", m_MainCubeTexture);
 	LoadTexturesFromDirectory(L"../Bin/Resource/Texture/Obj/CubeType", m_pCubeTextureObj);
 	LoadTexturesFromDirectory(L"../Bin/Resource/Texture/Obj/PlaneType", m_pPlaneTextureObj);
@@ -63,9 +62,9 @@ HRESULT CImGuiManager::SetUp_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 
 _int CImGuiManager::Update_ImGui(const _float& fTimeDelta)
 {
-    Key_Input(fTimeDelta);
 
-    return 0;
+	
+	return 0;
 }
 
 void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -165,18 +164,18 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 							}
 							else if (m_bNotNormal_Check == true) {
 								ImGui::SetNextItemWidth(70.0f);
-								if (ImGui::InputFloat("sizeX", &m_fCubesize.m_fX))
-									m_fCubesize.m_fX = (roundf(m_fCubesize.m_fX / step) * step) - 1.f;
+								if (ImGui::InputFloat("sizeX", &m_fCubesize.fX))
+									m_fCubesize.fX = (roundf(m_fCubesize.fX / step) * step) - 1.f;
 								ImGui::SameLine();
 
 								ImGui::SetNextItemWidth(70.0f);
-								if (ImGui::InputFloat("SizeY", &m_fCubesize.m_fY))
-									m_fCubesize.m_fY = (roundf(m_fCubesize.m_fY / step) * step) - 1.f;
+								if (ImGui::InputFloat("SizeY", &m_fCubesize.fY))
+									m_fCubesize.fY = (roundf(m_fCubesize.fY / step) * step) - 1.f;
 								ImGui::SameLine();
 
 								ImGui::SetNextItemWidth(70.0f);
-								if (ImGui::InputFloat("SizeZ", &m_fCubesize.m_fZ))
-									m_fCubesize.m_fZ = (roundf(m_fCubesize.m_fZ / step) * step) - 1.f;
+								if (ImGui::InputFloat("SizeZ", &m_fCubesize.fZ))
+									m_fCubesize.fZ = (roundf(m_fCubesize.fZ / step) * step) - 1.f;
 							}
 
 							ImGui::NewLine();
@@ -189,7 +188,6 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 
 							if (ImGui::Button("Map Load"))
 							{
-								//Load_MapData();
 								m_bLoad_Check = true;
 							}
 
@@ -203,6 +201,11 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
                 ImGui::Separator();
                 ImGui::TreePop();
             }
+
+#pragma endregion
+
+
+#pragma region OBJ툴
 
 		if (ImGui::TreeNode(u8"환경"))
 		{
@@ -227,6 +230,19 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 						ImGui::Image(selected_texture1, ImVec2(96.0f, 96.0f), uv2, uv3, tint_col1, ImVec4(0.0f, 1.0f, 0.0f, 1.0f));
 						ImGui::NewLine();
 
+
+						if (ImGui::Button("OBJ Save"))
+						{
+							Save_ObjData();
+						}
+						ImGui::SameLine();
+
+						if (ImGui::Button("OBJ Load"))
+						{
+							m_bOBJLoad_Check = true;
+						}
+
+
 						if (ImGui::Button(" + "))
 							m_fCubeHeightLevel += VTXITV;
 						ImGui::SameLine();
@@ -235,10 +251,41 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 
 						ImGui::SameLine();
 						char TextNow[MAX_PATH];
-						sprintf_s(TextNow, u8"높이: %.f", m_fCubeHeightLevel);
+						sprintf_s(TextNow, u8"높이: %.f   ", m_fCubeHeightLevel);
 						ImGui::Text(TextNow);
 
+						ImGui::SameLine();	
 						ImGui::Checkbox("Delete Mode", &m_bDelete_Mode_Check);
+
+
+						ImGui::RadioButton(u8"파괴OBJ", &m_forObjAttribute, 0);
+						ImGui::SameLine();
+						ImGui::RadioButton(u8"상호작용OBJ", &m_forObjAttribute, 1);
+						ImGui::SameLine();
+						ImGui::RadioButton(u8"조명OBJ", &m_forObjAttribute, 2);
+						ImGui::SameLine();
+						ImGui::RadioButton(u8"단순 장식OBJ", &m_forObjAttribute, 3);
+
+						switch (m_forObjAttribute)
+						{
+						case 0:
+							m_eOBJ_Attribute = OBJ_ATTRIBUTE::DES_OBJ;
+							break;
+						case 1:
+							m_eOBJ_Attribute = OBJ_ATTRIBUTE::INTER_OBJ;
+							break;
+						case 2:
+							m_eOBJ_Attribute = OBJ_ATTRIBUTE::LIGHT_OBJ;
+							break;
+						case 3:
+							m_eOBJ_Attribute = OBJ_ATTRIBUTE::NONE_OBJ;
+							break;
+
+						default:
+							m_eOBJ_Attribute = OBJ_ATTRIBUTE::NONE_OBJ;
+							break;
+						}
+
 
 						ImGui::Checkbox("unnormalized", &m_bNotNormal_Check);
 						if (m_bNotNormal_Check == false)
@@ -247,19 +294,20 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 						}
 						else if (m_bNotNormal_Check == true) {
 							ImGui::SetNextItemWidth(70.0f);
-							if (ImGui::InputFloat("sizeX", &m_fCubesize.m_fX))
-								m_fCubesize.m_fX = (roundf(m_fCubesize.m_fX / step) * step) + 1.f;
+							if (ImGui::InputFloat("sizeX", &m_fCubesize.fX))
+								m_fCubesize.fX = (roundf(m_fCubesize.fX / step) * step) + 1.f;
 							ImGui::SameLine();
 
 							ImGui::SetNextItemWidth(70.0f);
-							if (ImGui::InputFloat("SizeY", &m_fCubesize.m_fY))
-								m_fCubesize.m_fY = (roundf(m_fCubesize.m_fY / step) * step) + 1.f;
+							if (ImGui::InputFloat("SizeY", &m_fCubesize.fY))
+								m_fCubesize.fY = (roundf(m_fCubesize.fY / step) * step) + 1.f;
 							ImGui::SameLine();
 
 							ImGui::SetNextItemWidth(70.0f);
-							if (ImGui::InputFloat("SizeZ", &m_fCubesize.m_fZ))
-								m_fCubesize.m_fZ = (roundf(m_fCubesize.m_fZ / step) * step) + 1.f;
+							if (ImGui::InputFloat("SizeZ", &m_fCubesize.fZ))
+								m_fCubesize.fZ = (roundf(m_fCubesize.fZ / step) * step) + 1.f;
 						}
+
 
 						ImGui::Separator(); // 가로 줄 추가
 						ImGui::Text(u8"OBJ - Cube Texture");
@@ -343,19 +391,6 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 								}
 
 							}
-
-							if (ImGui::Button("OBJ Save"))
-							{
-								Save_ObjData();
-							}
-							ImGui::SameLine();
-
-							if (ImGui::Button("OBJ Load"))
-							{
-								Load_ObjData();
-								//m_bLoad_Check = true;
-							}
-
 						}
 
 					}
@@ -521,6 +556,9 @@ void CImGuiManager::Render_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
     }
 }
 
+
+#pragma region 승용 오빠 파일 Save/Load 관련 함수
+
 HRESULT CImGuiManager::ReadImgPath(const _tchar* folderPath, LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	//파일 및 디렉토리 정보를 저장하기 위한 구조체
@@ -683,183 +721,13 @@ CMyUI* CImGuiManager::FindUI(const _tchar* szKey)
 	return iter->second;
 }
 
+#pragma endregion
 
 
-void CImGuiManager::Key_Input(const _float& fTimeDelta)
-{
-}
+#pragma region 유진 파일 Save/Load 관련 함수
 
 
-
-
-void CImGuiManager::Save_MapData()
-{
-    string m_strText = "MapData";
-    vector<CUBE*> m_BuildCube = {};
-    OPENFILENAME    open;
-    TCHAR   lpstrFile[MAX_PATH] = L"";
-    static TCHAR filter[] = L"*.dat";
-
-
-    ZeroMemory(&open, sizeof(OPENFILENAME));
-    open.lStructSize = sizeof(OPENFILENAME);
-    open.lpstrFilter = filter;
-    open.lpstrFile = lpstrFile;
-    open.nMaxFile = 100;
-    open.lpstrInitialDir = L"";
-
-    GetModuleFileName(NULL, lpstrFile, MAX_PATH);
-    //C:\Users\wnqj4\Desktop\SR_Project\Client\Bin\Client.exe
-
-    PathRemoveFileSpec(lpstrFile);
-    //C:\Users\wnqj4\Desktop\SR_Project\Client\Bin
-
-    lstrcat(lpstrFile, L"\\Data\\Map");
-    //C:\Users\wnqj4\Desktop\SR_Project\Client\Bin\Data\Map
-
-    basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
-    const _tchar* aa = converted.c_str();
-
-    wcscat_s(lpstrFile, L"\\");
-    wcscat_s(lpstrFile, aa);
-
-
-    if (GetSaveFileName(&open) != 0) {
-
-        HANDLE hFile = CreateFile(lpstrFile, GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
-
-        if (INVALID_HANDLE_VALUE == hFile)
-            return;
-
-        DWORD   dwByte = 0;
-        DWORD   dwStrByte = 0;
-
-        dwStrByte = sizeof(CHAR) * (m_strText.length() + 1);
-
-        WriteFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
-        //문자열 데이터의 크기 dwStrByte를 파일에 쓰고, 데이터의 크기를 알려주는 역할
-        WriteFile(hFile, m_strText.c_str(), dwStrByte, &dwByte, nullptr);
-        //문자열 m_strText를 파일에 쓰는데, 직전 단계에서 계산한 크기만큼 쓰여짐
-
-//
-//         vectorCubeTemp = dynamic_cast<CMapTool*>(Engine::Management()->Get_One_Scene(SCENETAG::MAPTOOL))->Get_VecCubeData();
-//
-//         for (auto& iter : vectorCubeTemp) {
-// 			WriteFile(hFile, iter, sizeof(CUBE), &dwByte, nullptr);
-// 		}
-//
-        vector<CUBE*> vectorCubeTemp = dynamic_cast<CMapTool*>(Engine::Management()->Get_One_Scene(SCENETAG::MAPTOOL))->Get_VecCubeData();
-		for (auto& iter : vectorCubeTemp) {  WriteFile(hFile, iter, sizeof(CUBE), &dwByte, nullptr);   }
-
-
-        CloseHandle(hFile);
-        MSG_BOX("Save Complete.");
-    }
-
-}
-
-void CImGuiManager::Load_MapData()
-{
-	string m_strText = "MapData";
-	OPENFILENAME    open;
-	TCHAR   lpstrFile[MAX_PATH] = L"";
-	static TCHAR filter[] = L"*.dat";
-	auto& MapSceneTemp = Engine::Management()->Get_MapScene();
-
-	ZeroMemory(&open, sizeof(OPENFILENAME));
-	open.lStructSize = sizeof(OPENFILENAME);
-	open.lpstrFilter = filter;
-	open.lpstrFile = lpstrFile;
-	open.nMaxFile = 100;
-	open.lpstrInitialDir = L"";
-	open.Flags = OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST;
-
-	GetModuleFileName(NULL, lpstrFile, MAX_PATH);
-	//C:\Users\wnqj4\Desktop\SR_Project\Client\Bin\Client.exe
-
-	PathRemoveFileSpec(lpstrFile);
-	//C:\Users\wnqj4\Desktop\SR_Project\Client\Bin
-
-	lstrcat(lpstrFile, L"\\Data\\Map");
-	//C:\Users\wnqj4\Desktop\SR_Project\Client\Bin\Data\Map
-
-	if (GetOpenFileName(&open) != 0) {
-
-		for (auto& iter : MapSceneTemp)
-		{
-			if (iter.first == SCENETAG::MAPTOOL)
-			{
-				vectorCubeTemp = dynamic_cast<CMapTool*>(Engine::Management()->Get_One_Scene(SCENETAG::MAPTOOL))->Get_VecCubeData();
-
-				for_each(vectorCubeTemp.begin(), vectorCubeTemp.end(), CDeleteObj2());
-				vectorCubeTemp.clear();
-			}
-
-			else if (iter.first == SCENETAG::STAGE)
-			{
-				vectorCubeTemp = dynamic_cast<CStage*>(Engine::Management()->Get_One_Scene(SCENETAG::STAGE))->Get_VecCubeData();
-
-				for_each(vectorCubeTemp.begin(), vectorCubeTemp.end(), CDeleteObj2());
-				vectorCubeTemp.clear();
-			}
-		}
-
-
-		HANDLE hFile = CreateFile(lpstrFile, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
-
-
-		if (INVALID_HANDLE_VALUE == hFile)
-			return;
-
-
-		DWORD   dwByte = 0;
-		DWORD   dwStrByte = 0;
-		CUBE* pCube = nullptr;
-
-		ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
-		CHAR* pTag = new CHAR[dwStrByte];
-
-		ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
-		m_strText = pTag;
-
-		basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
-		const _tchar* aa = converted.c_str();
-
-
-		while (true)
-		{
-			pCube = new CUBE;
-
-			ReadFile(hFile, pCube, sizeof(CUBE), &dwByte, nullptr);
-
-			if (0 == dwByte)
-			{
-				Safe_Delete(pCube);
-				break;
-			}
-
-			vectorCubeTemp.push_back(pCube);
-		}
-
-		CloseHandle(hFile);
-
-
-
-		for (auto& iter : MapSceneTemp)
-		{
-			if (iter.first == SCENETAG::MAPTOOL)
-				dynamic_cast<CMapTool*>(Engine::Management()->Get_One_Scene(SCENETAG::MAPTOOL))->Set_VecCubeData(&vectorCubeTemp);
-
-			else if (iter.first == SCENETAG::STAGE)
-				dynamic_cast<CStage*>(Engine::Management()->Get_One_Scene(SCENETAG::STAGE))->Set_VecCubeData(vectorCubeTemp);
-		}
-
-
-		m_bLoad_Check = true;
-		MSG_BOX("Load Complete.");
-	}
-}
-
+//////////////////////////Data 초반 Load//////////////////////////////
 
 void CImGuiManager::LoadTexturesFromDirectory(const wchar_t* folderPath, vector<IDirect3DCubeTexture9*>& textureVector)
 {
@@ -887,19 +755,20 @@ void CImGuiManager::LoadTexturesFromDirectory(const wchar_t* folderPath, vector<
 				{
 					m_defSortCube = new SORTCUBE;
 
-					m_NameTemp			= buffer;
-					string	stFileTemp	= ".dds";
-					
-					m_NameTemp = m_NameTemp.substr(8);
-					size_t  found		= m_NameTemp.find(stFileTemp);
+					m_NameTemp = buffer;
+					string	stFileTemp = ".dds";
 
-					m_defSortCube->iIndex = m_iIndex;
+					m_NameTemp = m_NameTemp.substr(8);
+					size_t  found = m_NameTemp.find(stFileTemp);
+
 					m_defSortCube->stFileName = buffer;
 					m_defSortCube->tTexture = pTexture;
-										
+
 					if (found != std::string::npos) //Find가 안 된게 아니라면
-					{ m_NameTemp.erase(found, stFileTemp.length());	}
-					
+					{
+						m_NameTemp.erase(found, stFileTemp.length());
+					}
+
 					m_defSortCube->iNameNumber = stoi(m_NameTemp);
 
 					m_pCubeForSort.push_back(m_defSortCube);
@@ -913,7 +782,7 @@ void CImGuiManager::LoadTexturesFromDirectory(const wchar_t* folderPath, vector<
 		FindClose(hFind);
 	}
 
-	sort(m_pCubeForSort.begin(), m_pCubeForSort.end(), 
+	sort(m_pCubeForSort.begin(), m_pCubeForSort.end(),
 		[](const SORTCUBE* pCube1, const SORTCUBE* pCube2)
 		{	return pCube1->iNameNumber < pCube2->iNameNumber;	});
 
@@ -958,7 +827,6 @@ void CImGuiManager::LoadTexturesFromDirectory(const wchar_t* folderPath, vector<
 					m_NameTemp = m_NameTemp.substr(10);
 					size_t  found = m_NameTemp.find(stFileTemp);
 
-					m_defSortTex->iIndex = m_iIndex;
 					m_defSortTex->stFileName = buffer;
 					m_defSortTex->tTexture = pTexture;
 
@@ -993,6 +861,154 @@ void CImGuiManager::LoadTexturesFromDirectory(const wchar_t* folderPath, vector<
 	int i = 0;
 }
 
+
+
+
+//////////////////////////MapData//////////////////////////////
+
+void CImGuiManager::Save_MapData()
+{
+    string m_strText = "MapData";
+    vector<CUBE*> m_BuildCube = {};
+    OPENFILENAME    open;
+    TCHAR   lpstrFile[MAX_PATH] = L"";
+    static TCHAR filter[] = L"*.dat";
+
+
+    ZeroMemory(&open, sizeof(OPENFILENAME));
+    open.lStructSize = sizeof(OPENFILENAME);
+    open.lpstrFilter = filter;
+    open.lpstrFile = lpstrFile;
+    open.nMaxFile = 256;
+    open.lpstrInitialDir = L"";
+
+    GetModuleFileName(NULL, lpstrFile, MAX_PATH);
+    //C:\Users\wnqj4\Desktop\SR_Project\Client\Bin\Client.exe
+
+    PathRemoveFileSpec(lpstrFile);
+    //C:\Users\wnqj4\Desktop\SR_Project\Client\Bin
+
+    lstrcat(lpstrFile, L"\\Data\\Map");
+    //C:\Users\wnqj4\Desktop\SR_Project\Client\Bin\Data\Map
+
+    basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
+    const _tchar* aa = converted.c_str();
+
+    wcscat_s(lpstrFile, L"\\");
+    wcscat_s(lpstrFile, aa);
+
+
+    if (GetSaveFileName(&open) != 0) {
+
+        HANDLE hFile = CreateFile(lpstrFile, GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
+
+        if (INVALID_HANDLE_VALUE == hFile)
+            return;
+
+        DWORD   dwByte = 0;
+        DWORD   dwStrByte = 0;
+
+        dwStrByte = sizeof(CHAR) * (m_strText.length() + 1);
+
+        WriteFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
+        //문자열 데이터의 크기 dwStrByte를 파일에 쓰고, 데이터의 크기를 알려주는 역할
+        WriteFile(hFile, m_strText.c_str(), dwStrByte, &dwByte, nullptr);
+        //문자열 m_strText를 파일에 쓰는데, 직전 단계에서 계산한 크기만큼 쓰여짐
+
+        vector<CUBE*> vectorCubeTemp = dynamic_cast<CMapTool*>(Engine::Management()->Get_One_Scene(SCENETAG::MAPTOOL))->Get_VecCubeData();
+		for (auto& iter : vectorCubeTemp) {  WriteFile(hFile, iter, sizeof(CUBE), &dwByte, nullptr);   }
+
+        CloseHandle(hFile);
+        MSG_BOX("Save Complete.");
+    }
+
+}
+
+void CImGuiManager::Load_MapData()
+{
+	string m_strText = "MapData";
+	OPENFILENAME    open;
+	TCHAR   lpstrFile[MAX_PATH] = L"";
+	static TCHAR filter[] = L"*.dat";
+	auto& MapSceneTemp = Engine::Management()->Get_MapScene();
+
+	ZeroMemory(&open, sizeof(OPENFILENAME));
+	open.lStructSize = sizeof(OPENFILENAME);
+	open.lpstrFilter = filter;
+	open.lpstrFile = lpstrFile;
+	open.nMaxFile = 256;
+	open.lpstrInitialDir = L"";
+	open.Flags = OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST;
+
+	GetModuleFileName(NULL, lpstrFile, MAX_PATH);
+	//C:\Users\wnqj4\Desktop\SR_Project\Client\Bin\Client.exe
+	PathRemoveFileSpec(lpstrFile);
+	//C:\Users\wnqj4\Desktop\SR_Project\Client\Bin
+	lstrcat(lpstrFile, L"\\Data\\Map");
+	//C:\Users\wnqj4\Desktop\SR_Project\Client\Bin\Data\Map
+
+	if (GetOpenFileName(&open) != 0) {
+
+		for (auto& iter : MapSceneTemp)
+		{
+			if (iter.first == SCENETAG::MAPTOOL)
+			{
+				vectorCubeTemp = dynamic_cast<CMapTool*>(Engine::Management()->Get_One_Scene(SCENETAG::MAPTOOL))->Get_VecCubeData();
+
+				for_each(vectorCubeTemp.begin(), vectorCubeTemp.end(), CDeleteObj2());
+				vectorCubeTemp.clear();
+			}
+			//Stage 들은 직접 그 내부에서 Load 함수 만들어서 쓸 것.
+		}
+		HANDLE hFile = CreateFile(lpstrFile, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+
+		if (INVALID_HANDLE_VALUE == hFile)
+			return;
+
+		DWORD   dwByte = 0;
+		DWORD   dwStrByte = 0;
+		CUBE* pCube = nullptr;
+
+		ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
+		CHAR* pTag = new CHAR[dwStrByte];
+
+		ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
+		m_strText = pTag;
+
+		basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
+		const _tchar* aa = converted.c_str();
+
+		while (true)
+		{
+			pCube = new CUBE;
+			ReadFile(hFile, pCube, sizeof(CUBE), &dwByte, nullptr);
+
+			if (0 == dwByte)
+			{
+				Safe_Delete(pCube);
+				break;
+			}
+			vectorCubeTemp.push_back(pCube);
+		}
+		CloseHandle(hFile);
+
+		for (auto& iter : MapSceneTemp)
+		{
+			if (iter.first == SCENETAG::MAPTOOL)
+				dynamic_cast<CMapTool*>(Engine::Management()->Get_One_Scene(SCENETAG::MAPTOOL))->Set_VecCubeData(&vectorCubeTemp);
+
+			//Stage 들은 직접 그 내부에서 Load 함수 만들어서 쓸 것.
+		}
+
+		m_bLoad_Check = true;
+		MSG_BOX("Load Complete.");
+	}
+}
+
+
+
+///////////////////////////OBJ데이터//////////////////////////////
+
 void CImGuiManager::Save_ObjData()
 {
 	string m_strText = "OBJData";
@@ -1006,7 +1022,7 @@ void CImGuiManager::Save_ObjData()
 	open.lStructSize = sizeof(OPENFILENAME);
 	open.lpstrFilter = filter;
 	open.lpstrFile = lpstrFile;
-	open.nMaxFile = 100;
+	open.nMaxFile = 256;
 	open.lpstrInitialDir = L"";
 
 	GetModuleFileName(NULL, lpstrFile, MAX_PATH);
@@ -1027,131 +1043,33 @@ void CImGuiManager::Save_ObjData()
 
 	if (GetSaveFileName(&open) != 0) {
 
-		HANDLE hFile = CreateFile(lpstrFile, GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
+		{HANDLE hFile = CreateFile(lpstrFile, GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
 
-		if (INVALID_HANDLE_VALUE == hFile)
-			return;
+			if (INVALID_HANDLE_VALUE == hFile)
+				return;
 
-		DWORD   dwByte = 0;
-		DWORD   dwStrByte = 0;
+			DWORD   dwByte = 0;
+			DWORD   dwStrByte = 0;
 
-		dwStrByte = sizeof(CHAR) * (m_strText.length() + 1);
+			dwStrByte = sizeof(CHAR) * (m_strText.length() + 1);
 
-		WriteFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
-		//문자열 데이터의 크기 dwStrByte를 파일에 쓰고, 데이터의 크기를 알려주는 역할
-		WriteFile(hFile, m_strText.c_str(), dwStrByte, &dwByte, nullptr);
-		//문자열 m_strText를 파일에 쓰는데, 직전 단계에서 계산한 크기만큼 쓰여짐
+			WriteFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
+			//문자열 데이터의 크기 dwStrByte를 파일에 쓰고, 데이터의 크기를 알려주는 역할
+			WriteFile(hFile, m_strText.c_str(), dwStrByte, &dwByte, nullptr);
+			//문자열 m_strText를 파일에 쓰는데, 직전 단계에서 계산한 크기만큼 쓰여짐
 
-		vector<OBJData*> vectorOBJPlaneTemp = dynamic_cast<CMapTool*>(Engine::Management()->Get_One_Scene(SCENETAG::MAPTOOL))->Get_VecOBJData();
-		for (auto& iter : vectorOBJPlaneTemp) { WriteFile(hFile, iter, sizeof(OBJData), &dwByte, nullptr); }
+			vector<OBJData*> vectorOBJTemp = dynamic_cast<CMapTool*>(Engine::Management()->Get_One_Scene(SCENETAG::MAPTOOL))->Get_VecOBJData();
+			for (auto& iter : vectorOBJTemp) { WriteFile(hFile, iter, sizeof(OBJData), &dwByte, nullptr); }
 
-		CloseHandle(hFile);
+		CloseHandle(hFile); }
+
 		MSG_BOX("Save Complete.");
 	}
 }
 
-void CImGuiManager::Load_ObjData()
-{
-	string m_strText = "OBJData";
-	OPENFILENAME    open;
-	TCHAR   lpstrFile[MAX_PATH] = L"";
-	static TCHAR filter[] = L"*.dat";
-	auto& MapSceneTemp = Engine::Management()->Get_MapScene();
+///////////////////////////////////////////////////////////////////////
 
-	ZeroMemory(&open, sizeof(OPENFILENAME));
-	open.lStructSize = sizeof(OPENFILENAME);
-	open.lpstrFilter = filter;
-	open.lpstrFile = lpstrFile;
-	open.nMaxFile = 100;
-	open.lpstrInitialDir = L"";
-	open.Flags = OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST;
-
-	GetModuleFileName(NULL, lpstrFile, MAX_PATH);
-	//C:\Users\wnqj4\Desktop\SR_Project\Client\Bin\Client.exe
-
-	PathRemoveFileSpec(lpstrFile);
-	//C:\Users\wnqj4\Desktop\SR_Project\Client\Bin
-
-	lstrcat(lpstrFile, L"\\Data\\OBJ");
-	//C:\Users\wnqj4\Desktop\SR_Project\Client\Bin\Data\OBJ
-
-	if (GetOpenFileName(&open) != 0) {
-
-		for (auto& iter : MapSceneTemp)
-		{
-			if (iter.first == SCENETAG::MAPTOOL)
-			{
-				vectorOBJPlaneTemp = dynamic_cast<CMapTool*>(Engine::Management()->Get_One_Scene(SCENETAG::MAPTOOL))->Get_VecOBJData();
-
-				for_each(vectorOBJPlaneTemp.begin(), vectorOBJPlaneTemp.end(), CDeleteObj2());
-				vectorOBJPlaneTemp.clear();
-			}
-
-			else if (iter.first == SCENETAG::STAGE)
-			{
-				vectorOBJPlaneTemp = dynamic_cast<CStage*>(Engine::Management()->Get_One_Scene(SCENETAG::STAGE))->Get_VecOBJData();
-
-				for_each(vectorOBJPlaneTemp.begin(), vectorOBJPlaneTemp.end(), CDeleteObj2());
-				vectorOBJPlaneTemp.clear();
-			}
-		}
-
-
-		HANDLE hFile = CreateFile(lpstrFile, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
-
-
-		if (INVALID_HANDLE_VALUE == hFile)
-			return;
-
-
-		DWORD   dwByte = 0;
-		DWORD   dwStrByte = 0;
-		OBJData* pCube = nullptr;
-
-		ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
-		CHAR* pTag = new CHAR[dwStrByte];
-
-		ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
-		m_strText = pTag;
-
-		basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
-		const _tchar* aa = converted.c_str();
-
-
-		while (true)
-		{
-			pCube = new OBJData;
-
-			ReadFile(hFile, pCube, sizeof(OBJData), &dwByte, nullptr);
-
-			if (0 == dwByte)
-			{
-				Safe_Delete(pCube);
-				break;
-			}
-
-			vectorOBJPlaneTemp.push_back(pCube);
-		}
-
-		CloseHandle(hFile);
-
-
-
-		for (auto& iter : MapSceneTemp)
-		{
-			if (iter.first == SCENETAG::MAPTOOL)
-				dynamic_cast<CMapTool*>(Engine::Management()->Get_One_Scene(SCENETAG::MAPTOOL))->Set_VecOBJData(&vectorOBJPlaneTemp);
-
-			else if (iter.first == SCENETAG::STAGE)
-				dynamic_cast<CStage*>(Engine::Management()->Get_One_Scene(SCENETAG::STAGE))->Set_VecOBJData(vectorOBJPlaneTemp);
-		}
-
-
-		m_bLoad_Check = true;
-		MSG_BOX("Load Complete.");
-	}
-
-}
+#pragma endregion
 
 
 

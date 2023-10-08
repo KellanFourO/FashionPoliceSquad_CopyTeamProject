@@ -65,9 +65,9 @@ _int CMapCursor::Update_GameObject(const _float& fTimedelta)
 
 	if (true == CImGuiManager::GetInstance()->Get_NotNormal_Check())
 	{	
-		m_fCubesize.m_fX = CImGuiManager::GetInstance()->Get_CubeSize().m_fX;
-		m_fCubesize.m_fY = CImGuiManager::GetInstance()->Get_CubeSize().m_fY;
-		m_fCubesize.m_fZ = CImGuiManager::GetInstance()->Get_CubeSize().m_fZ;
+		m_fCubesize.fX = CImGuiManager::GetInstance()->Get_CubeSize().fX;
+		m_fCubesize.fY = CImGuiManager::GetInstance()->Get_CubeSize().fY;
+		m_fCubesize.fZ = CImGuiManager::GetInstance()->Get_CubeSize().fZ;
 	}
 	if (false == CImGuiManager::GetInstance()->Get_NotNormal_Check())
 	{
@@ -79,7 +79,7 @@ _int CMapCursor::Update_GameObject(const _float& fTimedelta)
 
 void CMapCursor::LateUpdate_GameObject()
 {
-	m_pTransformCom->m_vScale = { m_fCubesize.m_fX, m_fCubesize.m_fY, m_fCubesize.m_fZ };
+	m_pTransformCom->m_vScale = { m_fCubesize.fX, m_fCubesize.fY, m_fCubesize.fZ };
 
 	__super::LateUpdate_GameObject();
 }

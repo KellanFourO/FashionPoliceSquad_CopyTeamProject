@@ -28,7 +28,7 @@ HRESULT CMapTool::Ready_Scene()
 HRESULT CMapTool::Ready_LightInfo()
 {
     m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
-    //mainApp 말고 여기에서 켜기
+    //mainApp 말고 stage-Mapttol ek여기에서 켜기
     m_pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, TRUE);
 
     D3DLIGHT9 tLightInfo;
@@ -59,6 +59,13 @@ _int CMapTool::Update_Scene(const _float& fTimeDelta)
         Load_Cube(L"../Bin/Data/Map/MapData");
         CImGuiManager::GetInstance()->Set_Load_Check();
     }
+	if (CImGuiManager::GetInstance()->Get_OBJLoad_Check() == true)
+	{
+		Load_Obj(L"../Bin/Data/OBJ/OBJData");
+		CImGuiManager::GetInstance()->Set_OBJLoad_Check();
+	}
+
+
     return iExit;
 }
 
@@ -131,17 +138,17 @@ void CMapTool::BUILD_NOP_MODE()
 void CMapTool::Cursor_Update()
 {
     m_vCursor_Pos = m_pMapCursor->Get_MapCursor_Pos();
-    m_vCursor_Size = { m_pMapCursor->Get_MapCursorSize().m_fX,
-                   m_pMapCursor->Get_MapCursorSize().m_fY,
-                   m_pMapCursor->Get_MapCursorSize().m_fZ };
+    m_vCursor_Size = { m_pMapCursor->Get_MapCursorSize().fX,
+                       m_pMapCursor->Get_MapCursorSize().fY,
+                       m_pMapCursor->Get_MapCursorSize().fZ };
     m_vCursor_Height = CImGuiManager::GetInstance()->Get_CubeHeightLevel();
 }
 
 void CMapTool::CubeSize_Update()
 {
-    m_fCubesize.m_fX = CImGuiManager::GetInstance()->Get_CubeSize().m_fX;
-    m_fCubesize.m_fY = CImGuiManager::GetInstance()->Get_CubeSize().m_fY;
-    m_fCubesize.m_fZ = CImGuiManager::GetInstance()->Get_CubeSize().m_fZ;
+    m_fCubesize.fX = CImGuiManager::GetInstance()->Get_CubeSize().fX;
+    m_fCubesize.fY = CImGuiManager::GetInstance()->Get_CubeSize().fY;
+    m_fCubesize.fZ = CImGuiManager::GetInstance()->Get_CubeSize().fZ;
 }
 
 
@@ -183,7 +190,7 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
                 }
 
                 _vec3 CubeSize, ObjSize;
-                CubeSize = ObjSize = { m_fCubesize.m_fX, m_fCubesize.m_fY, m_fCubesize.m_fZ };
+                CubeSize = ObjSize = { m_fCubesize.fX, m_fCubesize.fY, m_fCubesize.fZ };
                 ///////////////////////////////////////////////
 
 
@@ -199,7 +206,7 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
                     m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
 
                     CubeTemp2->vSize = CubeSize;
-                    CubeTemp2->m_OBJ_TYPE = OBJ_TYPE::BUILDING;
+                    CubeTemp2->eOBJ_TYPE = OBJ_TYPE::BUILDING;
                     CubeTemp2->uITextureNum = m_iTextureNum;
                     CubeTemp2->vPos = CursorTemp;
                     CubeTemp2->iCubeIndex = m_iCubeIndex;
@@ -209,24 +216,32 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
                 }
 
                 //이 녀석이 Build_OBJ에 해당될 경우
-                else if (CImGuiManager::GetInstance()->Get_OBJModeCheck() == true) {
+                // + 큐브OBJ 또는 PlaneOBJ 라는 타입을 선택한 상황인 경우
+           else if ((CImGuiManager::GetInstance()->Get_OBJModeCheck() == true) &&
+                   ((CImGuiManager::GetInstance()->Get_CubeType() == true) ||
+                    (CImGuiManager::GetInstance()->Get_PlaneType() == true) ))
+                {
                     m_iTextureNum2 = CImGuiManager::GetInstance()->Get_OBJTexNum();
-                    OBJ_TYPE eTypeTemp = CImGuiManager::GetInstance()->Get_OBJType(); //오브젝트 태그랑 다른거임
+                    OBJ_TYPE eTypeTemp = CImGuiManager::GetInstance()->Get_OBJType(); //어떤 타입의 OBJ?
+                    OBJ_ATTRIBUTE eAttribute = CImGuiManager::GetInstance()->Get_OBJATTRIBUTE(); //어떤 속성의 OBJ?
                     _uint RotateCount = CImGuiManager::GetInstance()->Get_OBJ_RotateCountCW();
 
-                    pGameObject = CBuild_Obj::Create(m_pGraphicDev, CursorTemp, m_iTextureNum2, ObjSize, RotateCount, m_iOBJIndex, eTypeTemp);
+					pGameObject = CBuild_Obj::Create(m_pGraphicDev, CursorTemp, m_iTextureNum2, ObjSize, RotateCount, m_iOBJIndex, eTypeTemp, eAttribute);
 
-                    NULL_CHECK_RETURN(pGameObject, E_FAIL);
-                    FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
+					NULL_CHECK_RETURN(pGameObject, E_FAIL);
+					FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
 
-                    m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
+					m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
 
                     OBJTemp->vSize = ObjSize;
-                    OBJTemp->m_OBJ_TYPE = CImGuiManager::GetInstance()->Get_OBJType();
-                    OBJTemp->uITextureNum = m_iTextureNum2;
+                    OBJTemp->eOBJ_TYPE = eTypeTemp;
+                    OBJTemp->eOBJ_Attribute = eAttribute;
+                    OBJTemp->uiTextureNum = m_iTextureNum2;
                     OBJTemp->vPos = CursorTemp;
                     OBJTemp->iIndex = m_iOBJIndex;
                     OBJTemp->iRotateCount = RotateCount;
+                    OBJTemp->uiOBJ_HP = dynamic_cast<CBuild_Obj*>(pGameObject)->Get_OBJ_HP();
+                    OBJTemp->eOBJ_Interaction = dynamic_cast<CBuild_Obj*>(pGameObject)->Get_OBJ_Interaction();
 
                     if (eTypeTemp == OBJ_TYPE::CUBE_OBJ)
                     {
@@ -324,11 +339,79 @@ HRESULT CMapTool::Load_Cube(const TCHAR* pFilePath)
     return S_OK;
 }
 
+
+HRESULT CMapTool::Load_Obj(const TCHAR* pFilePath)
+{
+	//파일 개방해서 받아오기
+	string m_strText = "MapData";
+
+	HANDLE      hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+		return E_FAIL;
+
+	DWORD   dwByte = 0;
+	DWORD   dwStrByte = 0;
+	OBJData* pOBJ = nullptr;
+
+	ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
+	pTag = new CHAR[dwStrByte];
+
+	ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
+	m_strText = pTag;
+
+	basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
+
+	//저장된 데이터대로 큐브 동적할당해서 벡터에 담기
+	while (true)
+	{
+        pOBJ = new OBJData;
+
+		ReadFile(hFile, pOBJ, sizeof(OBJData), &dwByte, nullptr);
+
+		if (0 == dwByte)
+		{
+			Safe_Delete(pOBJ);
+			break;
+		}
+
+        m_VecOBJData.push_back(pOBJ);
+	}
+	CloseHandle(hFile);
+
+	Engine::CGameObject* pGameObject = nullptr;
+
+	//벡터 내용물만큼 실제 큐브 생성해 레이어에 담기
+	for (auto& iter : m_VecOBJData)
+	{
+		pGameObject = CBuild_Obj::Create(m_pGraphicDev, iter->vPos, iter->uiTextureNum, iter->vSize, iter->iRotateCount, m_iOBJIndex, iter->eOBJ_TYPE, iter->eOBJ_Attribute);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
+        m_iOBJIndex++;
+	}
+	m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
+
+	delete[] pTag;
+	pTag = nullptr;
+
+    if (m_VecTempCube.empty())
+		m_VecTempCube = CImGuiManager::GetInstance()->Get_CubeTextureObjVector();
+
+    if (m_VecTempPlane.empty())
+		m_VecTempPlane = CImGuiManager::GetInstance()->Get_PlaneTextureObjVector();
+
+	MSG_BOX("Load Complete.");
+	return S_OK;
+}
+
+
+
+
 HRESULT CMapTool::Delete_Map()
 {
     // 2개 벡터에서 지운다.
-    // 1. 맵툴이 가지고 있는 SAVE-LOAD용 벡터
-    // 2. Create 시 생성되어 Layer가 갖게 되는 GameObject 벡터
+    // 1. 맵툴이 가지고 있는 create-delete & save-load 용 벡터
+    // 2. Create 시 생성되어 Layer 가 갖게 되는 GameObject 벡터
 
     if (Engine::Get_DIMouseState(DIM_RB))
     {
