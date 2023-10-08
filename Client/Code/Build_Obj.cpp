@@ -54,9 +54,18 @@ HRESULT CBuild_Obj::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].emplace(COMPONENTTAG::TRANSFORM, pComponent);
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Build_Cube_Texture"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
+	if (m_eOBJ_Type == OBJ_TYPE::CUBE_OBJ)
+	{
+		pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_CubeTexture"));
+		NULL_CHECK_RETURN(pComponent, E_FAIL);
+		m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
+	}
+	if (m_eOBJ_Type == OBJ_TYPE::PLANE_OBJ)
+	{
+		pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_PlaneTexture"));
+		NULL_CHECK_RETURN(pComponent, E_FAIL);
+		m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
+	}
 
 	pComponent = m_pCollider = dynamic_cast<CCollider*>(Engine::ProtoMgr()->Clone_Proto(L"Proto_Collider"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -70,8 +79,9 @@ HRESULT CBuild_Obj::Add_Component()
 
 HRESULT CBuild_Obj::Ready_GameObject(_uint pRotate, _vec3 pMouse_Pos, _vec3 Size)
 {
-	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	Set_ObjectTag(OBJECTTAG::BUILD_OBJ);
+
+	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	m_pCollider->Set_Host(this);
 	m_pCollider->Set_Transform(m_pTransformCom);
@@ -171,14 +181,12 @@ void CBuild_Obj::Render_Texture()
 	{
 		if (m_eOBJ_Type == OBJ_TYPE::CUBE_OBJ)  //텍스쳐가 버퍼보다 먼저 ... ... ㅎ... ...
 		{
- 			m_VecTempCube = dynamic_cast<CMapTool*>(Engine::Management()->Get_One_Scene(SCENETAG::MAPTOOL))->Get_VecTempCube();
- 			m_pTextureCom->Render_OBJTextrue(m_VecTempCube[m_TextureNumber - cubeTextureStartIndex]);
+			m_pTextureCom->Render_ObjCubeTex(m_TextureNumber);
 			m_pBufferCubeCom->Render_Buffer();
 		}
 		else if (m_eOBJ_Type == OBJ_TYPE::PLANE_OBJ)
 		{
-			m_VecTempPlane = dynamic_cast<CMapTool*>(Engine::Management()->Get_One_Scene(SCENETAG::MAPTOOL))->Get_VecTempPlane();
- 			m_pTextureCom->Render_OBJTextrue(m_VecTempPlane[m_TextureNumber - planeTextureStartIndex]);
+			m_pTextureCom->Render_ObjPlaneTex(m_TextureNumber);
 			m_pBufferRcCom->Render_Buffer();
 		}
 	}
@@ -187,15 +195,11 @@ void CBuild_Obj::Render_Texture()
 	{
 		if (m_eOBJ_Type == OBJ_TYPE::CUBE_OBJ)
 		{
-// 			m_VecTempCube = dynamic_cast<CStage*>(Engine::Management()->Get_One_Scene(SCENETAG::STAGE))->Get_VecTempCube();
-// 			m_pTextureCom->Render_OBJTextrue(m_VecTempCube[m_TextureNumber - cubeTextureStartIndex]);
 			m_pTextureCom->Render_ObjCubeTex(m_TextureNumber);
 			m_pBufferCubeCom->Render_Buffer();
 		}
 		else if (m_eOBJ_Type == OBJ_TYPE::PLANE_OBJ)
 		{
-// 			m_VecTempPlane = dynamic_cast<CStage*>(Engine::Management()->Get_One_Scene(SCENETAG::STAGE))->Get_VecTempPlane();
-// 			m_pTextureCom->Render_OBJTextrue(m_VecTempPlane[m_TextureNumber - planeTextureStartIndex]);
 			m_pTextureCom->Render_ObjPlaneTex(m_TextureNumber);
 			m_pBufferRcCom->Render_Buffer();
 		}

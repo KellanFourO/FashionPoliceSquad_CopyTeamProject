@@ -13,6 +13,8 @@ CTexture::CTexture(LPDIRECT3DDEVICE9 pGraphicDev)
 CTexture::CTexture(const CTexture& rhs)
 	: CComponent(rhs)
 {
+
+	// 텍스쳐 메인 vector 복사하기
 	_uint	iSize = rhs.m_vecTexture.size();
 	m_vecTexture.reserve(iSize);
 
@@ -22,6 +24,7 @@ CTexture::CTexture(const CTexture& rhs)
 		m_vecTexture[i]->AddRef();
 
 
+	// 유진 OBJ 텍스쳐 vector 복사하기
 	_uint	iSize2 = rhs.m_vecCubeTexture.size();
 	m_vecCubeTexture.reserve(iSize2);
 
@@ -47,9 +50,10 @@ CTexture::~CTexture()
 	Free();
 }
 
-HRESULT CTexture::Ready_Texture(TEXTUREID eType,
-	const _tchar* pPath,
-	const _uint& iCnt)
+////////////////////// Main 텍스쳐 함수 ////////////////////////////////
+
+
+HRESULT CTexture::Ready_Texture(TEXTUREID eType, const _tchar* pPath, const _uint& iCnt)
 {
 	m_vecTexture.reserve(iCnt);
 
@@ -75,6 +79,33 @@ HRESULT CTexture::Ready_Texture(TEXTUREID eType,
 	}
 	return S_OK;
 }
+
+void CTexture::Render_Textrue(const _uint& iIndex)
+{
+	if (m_vecTexture.size() <= iIndex)
+		return;
+
+	m_pGraphicDev->SetTexture(0, m_vecTexture[iIndex]);
+}
+
+CTexture* CTexture::Create(LPDIRECT3DDEVICE9 pGraphicDev, TEXTUREID eType, _tchar* pPath, const _uint& iCnt)
+{
+	CTexture* pInstance = new CTexture(pGraphicDev);
+
+	if (FAILED(pInstance->Ready_Texture(eType, pPath, iCnt)))
+	{
+		Safe_Release(pInstance);
+		MSG_BOX("Texture Create Failed");
+		return nullptr;
+	}
+
+	return pInstance;
+}
+
+
+
+////////////////////////// 유진 OBJ 텍스쳐 함수 ///////////////////////////////////
+
 
 HRESULT CTexture::Ready_Texture(TEXTUREID eType,
 	const _tchar* pPath, const _uint& iCnt, OBJ_TYPE eOBJType)
@@ -132,27 +163,6 @@ HRESULT CTexture::Ready_Texture(TEXTUREID eType,
 }
 
 
-void CTexture::Render_Textrue(const _uint& iIndex)
-{
-	if (m_vecTexture.size() <= iIndex)
-		return;
-
-	m_pGraphicDev->SetTexture(0, m_vecTexture[iIndex]);
-}
-
-
-void CTexture::Render_OBJTextrue(IDirect3DCubeTexture9* pTexture)
-{
-	if (pTexture == nullptr) { return; }
-	m_pGraphicDev->SetTexture(0, pTexture);
-}
-void CTexture::Render_OBJTextrue(IDirect3DBaseTexture9* pTexture)
-{
-	if (pTexture == nullptr) { return; }
-	m_pGraphicDev->SetTexture(0, pTexture);
-}
-
-
 void CTexture::Render_ObjCubeTex(const _uint& iIndex)
 {
 	if (m_vecCubeTexture.size() <= iIndex - cubeTextureStartIndex)
@@ -169,19 +179,6 @@ void CTexture::Render_ObjPlaneTex(const _uint& iIndex)
 }
 
 
-CTexture* CTexture::Create(LPDIRECT3DDEVICE9 pGraphicDev, TEXTUREID eType, _tchar* pPath, const _uint& iCnt)
-{
-	CTexture* pInstance = new CTexture(pGraphicDev);
-
-	if (FAILED(pInstance->Ready_Texture(eType, pPath, iCnt)))
-	{
-		Safe_Release(pInstance);
-		MSG_BOX("Texture Create Failed");
-		return nullptr;
-	}
-
-	return pInstance;
-}
 
 CTexture* CTexture::Create(LPDIRECT3DDEVICE9 pGraphicDev, TEXTUREID eType, _tchar* pPath, OBJ_TYPE eOBJType, const _uint& iCnt)
 {
@@ -197,6 +194,10 @@ CTexture* CTexture::Create(LPDIRECT3DDEVICE9 pGraphicDev, TEXTUREID eType, _tcha
 	return pInstance;
 }
 
+////////////////////////////////////////////////////////////////////////////
+
+
+
 CComponent* CTexture::Clone()
 {
 	return new CTexture(*this);
@@ -207,12 +208,4 @@ void CTexture::Free()
 
 	__super::Free();
 
-// 	while (!m_vecTexture.empty())
-// 	{
-// 		delete m_vecTexture.back();
-// 		m_vecTexture.back() = nullptr;
-//
-// 		m_vecTexture.pop_back();
-// 	}
-// 	m_vecTexture.clear();
 }

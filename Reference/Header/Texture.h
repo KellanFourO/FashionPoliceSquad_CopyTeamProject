@@ -26,9 +26,6 @@ public:
 	HRESULT					Ready_Texture(TEXTUREID eType, const _tchar* pPath, 
 										  const _uint& iCnt, OBJ_TYPE eOBJType);
 
-	void					Render_OBJTextrue(IDirect3DCubeTexture9* pTexture);
-	void					Render_OBJTextrue(IDirect3DBaseTexture9* pTexture);
-
 	void					Render_ObjCubeTex(const _uint& iIndex = 0);
 	void					Render_ObjPlaneTex(const _uint& iIndex = 0);
 	
