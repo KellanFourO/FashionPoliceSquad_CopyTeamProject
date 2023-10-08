@@ -19,12 +19,12 @@ HRESULT CDustGrey::Ready_GameObject(_vec3 vOriginPos, _int numParticles)
 	//m_pTransformCom->Translate(_vec3(0.f, 10.f, 0.f));
 
 	srand(_ulong(time(NULL)));
-	m_pBoungingBox.m_vMin = _vec3(-100.0f,-100.0f,-100.0f);
-	m_pBoungingBox.m_vMax = _vec3(100.0f, 100.0f, 100.0f);
+	m_pBoungingBox.m_vMin = _vec3(-5.0f,-5.0f,-5.0f);
+	m_pBoungingBox.m_vMax = _vec3(5.0f, 5.0f, 5.0f);
 
 	m_vOrigin = vOriginPos;			// 시스템 내에서 파티클이 시작되는 곳.
-	m_fSize = 5.f;					// 시스템 내 모든 파티클의 크기
-	m_dVbSize = 2048;					// 버텍스 버퍼가 보관할 수 있는 파티클의 수- 실제 파티클 시스템 내의 파티클 수와는 독립적.
+	m_fSize = 1.f;					// 시스템 내 모든 파티클의 크기
+	m_dVbSize = 4096;					// 버텍스 버퍼가 보관할 수 있는 파티클의 수- 실제 파티클 시스템 내의 파티클 수와는 독립적.
 	m_dVbOffset = 0;					// 버텍스 버퍼에서 복사를 시작할 파티클 내 다음 단계로의 오프셋(바이트가 아닌 파티클 단위)
 	m_dVbBatchSize = 512;
 
@@ -41,32 +41,28 @@ HRESULT CDustGrey::Ready_GameObject(_vec3 vOriginPos, _int numParticles)
 _int CDustGrey::Update_GameObject(const _float& fTimeDelta)
 {
 	m_fTime += 1.f * fTimeDelta;
-
-	for (auto& iter : m_ParticlesList)
-	{
-		if (iter.isAlive)
-		{
-			iter.position += iter.velocity * fTimeDelta;
-
-			iter.age += fTimeDelta;
-
-			if (iter.age > iter.lifeTime)
-				iter.isAlive = false;
-
-			if (m_pBoungingBox.m_vMax.x < iter.position.x || m_pBoungingBox.m_vMin.x > iter.position.x ||
-				m_pBoungingBox.m_vMax.y < iter.position.y || m_pBoungingBox.m_vMin.y > iter.position.y ||
-				m_pBoungingBox.m_vMax.z < iter.position.z || m_pBoungingBox.m_vMin.z > iter.position.z)
-			{
-				// 재활용
-				ResetParticle(&iter);
-			}
-			if (Engine::Get_DIKeyState(DIK_X) & 0x80)
-			{
-				m_fDieTime = 100.f;
-				ResetParticle(&iter);
-			}
-		}
-	}
+	CPSystem::Update_GameObject(fTimeDelta);
+// 	for (auto& iter : m_ParticlesList)
+// 	{
+// 		if (iter.isAlive)
+// 		{
+// 			iter.position += iter.velocity * fTimeDelta;
+// 
+// 			iter.age += fTimeDelta;
+// 
+// 			if (iter.age > iter.lifeTime)
+// 				iter.isAlive = false;
+// 
+// 			if (m_pBoungingBox.m_vMax.x+ m_vOrigin.x < iter.position.x || m_pBoungingBox.m_vMin.x + m_vOrigin.x> iter.position.x ||
+// 				m_pBoungingBox.m_vMax.y+ m_vOrigin.y < iter.position.y || m_pBoungingBox.m_vMin.y + m_vOrigin.y> iter.position.y ||
+// 				m_pBoungingBox.m_vMax.z+ m_vOrigin.z < iter.position.z || m_pBoungingBox.m_vMin.z + m_vOrigin.z> iter.position.z)
+// 			{
+// 				// 재활용
+// 				ResetParticle(&iter);
+// 			}
+// 			
+// 		}
+// 	}
 
 	billboard();
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
@@ -114,7 +110,7 @@ void CDustGrey::ResetParticle(Attribute* attribute)
 	//구체를 만들기 위한 정규화
 	D3DXVec3Normalize(&attribute->velocity, &attribute->velocity);
 
-	attribute->velocity *= 10.f;
+	attribute->velocity *= 2.f;
 
 	attribute->color = D3DXCOLOR(158.f, 158.f, 158.f, 1.f);
 	//attribute->color = D3DXCOLOR(GetRandomFloat(0.f, 1.f), GetRandomFloat(0.f, 1.f), GetRandomFloat(0.f, 1.f), 1.f);

@@ -34,6 +34,7 @@ HRESULT CFootRay::Ready_GameObject()
 
 _int CFootRay::Update_GameObject(const _float& fTimeDelta)
 {
+
 	_int iExit = __super::Update_GameObject(fTimeDelta);
 	//m_pHost->Set_Host(m_pPlayer);
 	m_pTransformCom->m_vInfo[INFO_POS] = m_pHost->m_pTransformCom->m_vInfo[INFO_POS] + _vec3(0.f, -1.5f, 0.f);

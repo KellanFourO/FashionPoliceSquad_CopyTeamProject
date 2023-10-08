@@ -44,10 +44,11 @@ HRESULT CPlayer::Ready_GameObject()
 	m_pTransformCom->Set_Host(this);
 	m_pCollider->Set_Host(this);
 	m_pCollider->Set_Transform(m_pTransformCom);
+	
 	m_pRigidBody->Set_Host(this);
 	m_pRigidBody->Set_Transform(m_pTransformCom);
-	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
 
+	//m_pTransformCom->Translate(_vec3(0.f, 1.f, 0.f));
 
 	m_fJumpTick = 10.f;
 	m_fJumpCount = 0.f;
@@ -55,7 +56,7 @@ HRESULT CPlayer::Ready_GameObject()
 	m_bJump = false;
 
 	m_pTransformCom->Set_Scale({ 1.5f,5.5f,1.5f });
-	m_pTransformCom->Set_Pos(10.f,10.f,10.f);
+	m_pTransformCom->Set_Pos(20.f,10.f,20.f);
 
 	m_fTall = 1.f;
 
@@ -76,9 +77,10 @@ HRESULT CPlayer::Ready_GameObject()
 	INFO.PlayerState = m_pStateArray[IDLE];
 	INFO.bGameOver = false;
 
-	INFO.vPos = { 20.f,5.f,20.f };
+	//INFO.vPos = { 20.f,5.f,20.f };
 	INFO.fStartDir = 0.f;//생각처럼 잘 안댐...
 
+	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
 
 	//m_pTransformCom->Rotation(ROT_Y,D3DXToRadian(INFO.fStartDir));
 
@@ -253,12 +255,22 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 	if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80 && !m_bJump && m_fJumpTick >= 1.5f)
 	{
-
+		m_bJump = true;
+		m_fJumpTick = 0.f;
+		m_pRigidBody->Set_Force(_vec3{ 0.f,50.f,0.f });
+		if (m_Speed_Cheat_ON) {
+			m_fJumpTick = 10.f;
+			m_bJump = false;
+		}
 	}
 
 	if (Engine::Get_DIKeyState(DIK_LCONTROL) & 0x80)
 	{
-
+		m_fTall = 0.5f;
+	}
+	if (!(Engine::Get_DIKeyState(DIK_LCONTROL) & 0x80))
+	{
+		m_fTall = 1.0f;
 	}
 
 	if (Engine::Get_DIKeyState(DIK_R) & 0x80)

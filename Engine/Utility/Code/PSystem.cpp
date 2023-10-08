@@ -29,7 +29,7 @@ HRESULT CPSystem::Ready_GameObject(const _tchar* texFileName)
 	FAILED_CHECK_RETURN(m_pGraphicDev->CreateVertexBuffer(
 		m_dVbSize * sizeof(Particle), // 생성할 버퍼의 크기
 		D3DUSAGE_DYNAMIC | D3DUSAGE_POINTS | D3DUSAGE_WRITEONLY, // 생성하고자 하는 버텍스 버퍼의 종류(0인 경우 정적 버퍼, D3DUSAGE_DYNAMIC)
-		FVF,// 버텍스 속성 옵션
+		VTXTEX::FVF_TEX,// 버텍스 속성 옵션
 		D3DPOOL_DEFAULT,// 메모리 풀 방식 - 동적 생성 (정적 버퍼인 경우 MANAGED)
 		&m_pVB,// 결과 컴 객체
 		0),
@@ -55,13 +55,14 @@ _int CPSystem::Update_GameObject(const _float& fTimeDelta)
 				iter.isAlive = false;
 
 			// 경계 범위를 벗어났는지 여부 확인
-			if (m_pBoungingBox.m_vMax.x < iter.position.x || m_pBoungingBox.m_vMin.x > iter.position.x ||
-				m_pBoungingBox.m_vMax.y < iter.position.y || m_pBoungingBox.m_vMin.y > iter.position.y ||
-				m_pBoungingBox.m_vMax.z < iter.position.z || m_pBoungingBox.m_vMin.z > iter.position.z)
+			if (m_pBoungingBox.m_vMax.x + m_vOrigin.x < iter.position.x || m_pBoungingBox.m_vMin.x + m_vOrigin.x> iter.position.x ||
+				m_pBoungingBox.m_vMax.y + m_vOrigin.y < iter.position.y || m_pBoungingBox.m_vMin.y + m_vOrigin.y> iter.position.y ||
+				m_pBoungingBox.m_vMax.z + m_vOrigin.z < iter.position.z || m_pBoungingBox.m_vMin.z + m_vOrigin.z> iter.position.z)
 			{
 				// 재활용
 				ResetParticle(&iter);
 			}
+
 		}
 	}
 
@@ -79,7 +80,7 @@ void CPSystem::Render_GameObject()
 		preRender_Particle();
 
 		m_pGraphicDev->SetTexture(0, m_tex);
-		m_pGraphicDev->SetFVF(FVF);
+		m_pGraphicDev->SetFVF(VTXTEX::FVF_TEX);
 		m_pGraphicDev->SetStreamSource(0, m_pVB, 0, sizeof(Particle));
 
 		if (m_dVbOffset >= m_dVbSize)

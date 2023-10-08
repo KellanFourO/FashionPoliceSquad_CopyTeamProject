@@ -25,6 +25,7 @@
     <ClInclude Include="..\..\Header\Collider.h" />
     <ClInclude Include="..\..\Header\CollisionMgr.h" />
     <ClInclude Include="..\..\Header\Component.h" />
+    <ClInclude Include="..\..\Header\EffectTex.h" />
     <ClInclude Include="..\..\Header\Export_Utility.h" />
     <ClInclude Include="..\..\Header\Frustum.h" />
     <ClInclude Include="..\..\Header\GameObject.h" />
@@ -63,6 +64,7 @@
     <ClCompile Include="..\Code\Collider.cpp" />
     <ClCompile Include="..\Code\CollisionMgr.cpp" />
     <ClCompile Include="..\Code\Component.cpp" />
+    <ClCompile Include="..\Code\EffectTex.cpp" />
     <ClCompile Include="..\Code\Frustum.cpp" />
     <ClCompile Include="..\Code\GameObject.cpp" />
     <ClCompile Include="..\Code\Layer.cpp" />

@@ -10,7 +10,7 @@
 #include "WireTex.h"
 #include "UITex.h"
 #include "SYTex.h"
-
+#include "EffectTex.h"
 #include "Texture.h"
 #include "Transform.h"
 #include "Calculator.h"

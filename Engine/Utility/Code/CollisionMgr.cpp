@@ -253,7 +253,7 @@ void CollisionMgr::CheckCollisionStatic(OBJECTTAG _eObjectLeft)
 					}
 				}
 
-				//return;
+				return;
 			}
 			else
 			{		// 현재 충돌 x면

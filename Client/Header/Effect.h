@@ -5,7 +5,7 @@
 BEGIN(Engine)
 
 
-class CRcTex;
+class CEffectTex;
 class CTexture;
 class CTransform;
 class CCalculator;
@@ -27,7 +27,7 @@ private:
 	HRESULT					Add_Component();
 
 private:
-	CRcTex* m_pBufferCom = nullptr;
+	CEffectTex* m_pEffectBufferCom = nullptr;
 	//CTransform* m_pTransformCom = nullptr;
 	CTexture* m_pTextureCom = nullptr;
 	CCalculator* m_pCalculatorCom = nullptr;
