@@ -82,7 +82,7 @@ void CMonster::LateUpdate_GameObject()
 
 void CMonster::Render_GameObject()
 {
-
+	m_pCollider->Render_Collider();
 }
 
 void CMonster::ReadyState()

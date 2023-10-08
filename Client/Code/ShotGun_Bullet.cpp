@@ -11,7 +11,7 @@ CShotGunBullet::CShotGunBullet(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 }
 
-CShotGunBullet::CShotGunBullet(const CShotGunBullet& rhs)
+CShotGunBullet::CShotGunBullet(CShotGunBullet& rhs)
 	: CBullet(rhs)
 {
 }
@@ -24,13 +24,13 @@ CShotGunBullet::~CShotGunBullet()
 HRESULT CShotGunBullet::Ready_GameObject(_vec3 _StartPos, _int iColorIndex)
 {
 
+	Set_ObjectTag(OBJECTTAG::PLAYERBULLET);
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_fSpeed = 100.f;
+	m_fSpeed = 3.f;
 	m_fLiveTime = 0.f;
 	m_fDmg = 10.f;
 
-	Set_ObjectTag(OBJECTTAG::PLAYERBULLET);
 
 	m_pBufferCom->SetCount(8,1);
 
@@ -38,10 +38,10 @@ HRESULT CShotGunBullet::Ready_GameObject(_vec3 _StartPos, _int iColorIndex)
 	m_pCollider->Set_Host(this);
 	m_pCollider->Set_Transform(m_pTransformCom);
 
-	_vec3	vBulletScale = { 0.3f,0.3f,0.3f };
-	m_pTransformCom->Set_Scale(vBulletScale);
 
-	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
+
+	_vec3	vBulletScale = { 1.f,1.f,1.f };
+	m_pTransformCom->Set_Scale(vBulletScale);
 	return S_OK;
 }
 
@@ -58,6 +58,8 @@ Engine::_int CShotGunBullet::Update_GameObject(const _float& fTimeDelta)
 			m_pTransformCom->Get_Info(INFO_POS, &m_vPos);
 			vLook = vPlayerPos - m_vPos;
 			D3DXVec3Normalize(&vLook, &vLook);
+
+			m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
 
 
 
@@ -78,12 +80,27 @@ void CShotGunBullet::LateUpdate_GameObject()
 
 void CShotGunBullet::Render_GameObject()
 {
-		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 		m_pCollider->Render_Collider();
-
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 		m_pTextureCom->Render_Textrue(0);
 		m_pBufferCom->Render_Buffer(m_iColorIndex,1);
 		m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+}
+
+void CShotGunBullet::OnCollisionEnter(CCollider* _pOther)
+{
+	__super::OnCollisionEnter(_pOther);
+
+}
+
+void CShotGunBullet::OnCollisionStay(CCollider* _pOther)
+{
+	__super::OnCollisionStay(_pOther);
+}
+
+void CShotGunBullet::OnCollisionExit(CCollider* _pOther)
+{
+	__super::OnCollisionExit(_pOther);
 }
 
 HRESULT CShotGunBullet::Add_Component()
@@ -106,6 +123,9 @@ HRESULT CShotGunBullet::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].emplace(COMPONENTTAG::COLLIDER, pComponent);
 
+	for (_uint i = 0; i < ID_END; ++i)
+		for (auto& iter : m_mapComponent[i])
+			iter.second->Init_Property(this);
 	return S_OK;
 }
 

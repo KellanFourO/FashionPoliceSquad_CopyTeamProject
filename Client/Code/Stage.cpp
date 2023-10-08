@@ -34,7 +34,7 @@ HRESULT CStage::Ready_Scene()
 
 	FAILED_CHECK_RETURN(Ready_Layer_UI(LAYERTAG::UI), E_FAIL);
 
-	
+
 
 	srand(GetTickCount64());
 
@@ -221,27 +221,27 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 	//	}
 	//}
 	//// 아이템
-	//
-	//{
-	pGameObject = CBigDaddyMonster::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
-	//
-	//	pGameObject = CKickBoardMonster::Create(m_pGraphicDev);
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
-	//
-	//	pGameObject = CDullSuitMonster::Create(m_pGraphicDev);
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
-	//}
+
+	{
+		pGameObject = CBigDaddyMonster::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+		//
+		pGameObject = CKickBoardMonster::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+
+		pGameObject = CDullSuitMonster::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+	}
 	////몬스터
-	//
-	//{
-	//	pGameObject = CStage1Boss::Create(m_pGraphicDev);
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::BOSS, pGameObject), E_FAIL);
-	//}
+
+	{
+		pGameObject = CStage1Boss::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::BOSS, pGameObject), E_FAIL);
+	}
 	//보스
 
 	m_mapLayer.insert({ eLayerTag, pLayer });
@@ -539,14 +539,14 @@ CStage* CStage::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CStage::Free()
 {
- 
+
 // 	for (int i = 0; i < m_VecTempCube.size(); ++i)
 // 	{
 // 		Safe_Delete(m_VecTempCube[i]);
 // 	}
 // 	m_VecTempCube.clear();
-// 
-// 
+//
+//
 // 	for (int i = 0; i < m_VecTempPlane.size(); ++i)
 // 	{
 // 		Safe_Delete(m_VecTempPlane[i]);

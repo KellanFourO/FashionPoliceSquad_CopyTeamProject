@@ -7,13 +7,14 @@ IMPLEMENT_SINGLETON(CollisionMgr)
 CollisionMgr::CollisionMgr()
 {
 	Reset();
-	//CheckGroup(OBJECTTAG::PLAYER, OBJECTTAG::MONSTER);
+	CheckGroup(OBJECTTAG::PLAYER, OBJECTTAG::MONSTER);
 	CheckGroup(OBJECTTAG::PLAYER, OBJECTTAG::BOSS);
 	//CheckGroup(OBJECTTAG::PLAYER, OBJECTTAG::ITEM);
 	CheckGroup(OBJECTTAG::PLAYER, OBJECTTAG::MONSTERBULLET);
 	//CheckGroup(OBJECTTAG::PLAYER, OBJECTTAG::OBJECT);
 	CheckGroup(OBJECTTAG::PLAYER, OBJECTTAG::BOSSBULLET);
 	CheckGroup(OBJECTTAG::MONSTER, OBJECTTAG::PLAYERBULLET);
+	//CheckGroup(OBJECTTAG::PLAYERBULLET, OBJECTTAG::MONSTER);
 	//CheckGroup(OBJECTTAG::MONSTER, OBJECTTAG::OBJECT);
 	//CheckGroup(OBJECTTAG::BOSS, OBJECTTAG::OBJECT);
 	CheckGroup(OBJECTTAG::BOSS, OBJECTTAG::PLAYERBULLET);
@@ -44,6 +45,8 @@ void CollisionMgr::LateUpdate_Collision()
 
 void CollisionMgr::CheckGroup(OBJECTTAG _eLeft, OBJECTTAG _eRight)
 {
+
+
 	_uint iRow = (_uint)_eLeft;
 	_uint iCol = (_uint)_eRight;
 
@@ -71,6 +74,8 @@ void CollisionMgr::Reset()
 
 bool CollisionMgr::IsCollision(CCollider* _pLeft, CCollider* _pRight)
 {
+
+
 	_vec3  vLeftPos = _pLeft->GetCenterPos();
 	float* vLeftScale = _pLeft->GetAxisLen();
 
@@ -99,6 +104,9 @@ void CollisionMgr::CheckCollisionByType(OBJECTTAG _eObjectLeft, OBJECTTAG _eObje
 	//for (auto& iterL = vecLeft.begin(); iterL != vecLeft.end(); ++iterL)
 	for (auto& iterL : vecLeft)
 	{
+		if (iterL->Get_ObjectTag() == OBJECTTAG::PLAYERBULLET)
+			int i = 0;
+
 		if (nullptr == iterL->Get_Collider())
 			continue;
 
@@ -109,8 +117,13 @@ void CollisionMgr::CheckCollisionByType(OBJECTTAG _eObjectLeft, OBJECTTAG _eObje
 		//for (auto& iterR = vecRight.begin(); iterR != vecRight.end(); ++iterR)
 		for (auto& iterR : vecRight)
 		{
-			if (nullptr == iterR->Get_Collider() || iterL == iterR)
-				continue;
+
+		if(iterR->Get_ObjectTag() == OBJECTTAG::MONSTER)
+			int i = 0;
+
+			//if (nullptr == iterR->Get_Collider() || iterL == iterR)
+			//	continue;
+
 
 			CCollider* pLeftCol = iterL->Get_Collider();
 			static_cast<CCollider*>(iterL->Get_Component(ID_DYNAMIC,COMPONENTTAG::COLLIDER));
@@ -119,6 +132,8 @@ void CollisionMgr::CheckCollisionByType(OBJECTTAG _eObjectLeft, OBJECTTAG _eObje
 
 			COLLIDER_ID ID;
 			ID.Left_id = pLeftCol->GetID();
+
+
 			ID.Right_id = pRightCol->GetID();
 
 			iter = m_mapColInfo.find(ID.ID);
@@ -131,10 +146,13 @@ void CollisionMgr::CheckCollisionByType(OBJECTTAG _eObjectLeft, OBJECTTAG _eObje
 
 			if (IsCollision(pLeftCol, pRightCol))
 			{	// 현재 충돌 중
+				if (pRightCol->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYERBULLET || pLeftCol->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYERBULLET)
+					int i = 0;
 				if (iter->second)
 				{	// 이전에도 충돌
 					if (iterL->IsDead() || iterR->IsDead())
 					{	// 둘 중 하나 삭제 예정이면 충돌 해제
+
 						pLeftCol->OnCollisionExit(pRightCol);
 						pRightCol->OnCollisionExit(pLeftCol);
 						iter->second = false;
@@ -147,8 +165,11 @@ void CollisionMgr::CheckCollisionByType(OBJECTTAG _eObjectLeft, OBJECTTAG _eObje
 				}
 				else
 				{	// 이전에는 충돌 x	// 근데 둘 중 하나 삭제 예정이면 충돌하지 않은 것으로 취급
+					if (pRightCol->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYERBULLET || pLeftCol->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYERBULLET)
+						int i = 0;
 					if (!iterL->IsDead() && !iterR->IsDead())
 					{
+
 						pLeftCol->OnCollisionEnter(pRightCol);
 						pRightCol->OnCollisionEnter(pLeftCol);
 						iter->second = true;
@@ -163,9 +184,13 @@ void CollisionMgr::CheckCollisionByType(OBJECTTAG _eObjectLeft, OBJECTTAG _eObje
 				//return;
 			}
 			else
-			{		// 현재 충돌 x면
+			{
+			// 현재 충돌 x면
+				if (pRightCol->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYERBULLET || pLeftCol->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYERBULLET)
+					int i = 0;
 				if (iter->second)
 				{	//이전에는 충돌하고 있었다.
+
 					pLeftCol->OnCollisionExit(pRightCol);
 					pRightCol->OnCollisionExit(pLeftCol);
 					iter->second = false;

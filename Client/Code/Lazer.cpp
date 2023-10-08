@@ -9,7 +9,7 @@ CLazer::CLazer(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 }
 
-CLazer::CLazer(const CLazer& rhs)
+CLazer::CLazer(CLazer& rhs)
 	: CBullet(rhs)
 {
 }

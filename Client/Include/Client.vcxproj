@@ -213,6 +213,12 @@
     <ClInclude Include="..\Header\FPSCamera.h" />
     <ClInclude Include="..\Header\Item.h" />
     <ClInclude Include="..\Header\JumpSmoke.h" />
+    <ClInclude Include="..\Header\KickBoardMonster.h" />
+    <ClInclude Include="..\Header\KickBoardMonster_Attack.h" />
+    <ClInclude Include="..\Header\KickBoardMonster_Chase.h" />
+    <ClInclude Include="..\Header\KickBoardMonster_Dead.h" />
+    <ClInclude Include="..\Header\KickBoardMonster_Idle.h" />
+    <ClInclude Include="..\Header\KickBoardMonster_Patrol.h" />
     <ClInclude Include="..\Header\Lazer.h" />
     <ClInclude Include="..\Header\Loading.h" />
     <ClInclude Include="..\Header\LoadingStage1.h" />
@@ -234,7 +240,6 @@
     <ClInclude Include="..\Header\MyUI.h" />
     <ClInclude Include="..\Header\NewFPSCamera.h" />
     <ClInclude Include="..\Header\ObjectPoolMgr.h" />
-    <ClInclude Include="..\Header\PaintBall.h" />
     <ClInclude Include="..\Header\PaintShotGun.h" />
     <ClInclude Include="..\Header\PaintShotGun_Enter.h" />
     <ClInclude Include="..\Header\PaintShotGun_Idle.h" />
@@ -259,9 +264,7 @@
     <ClInclude Include="..\Header\ProgressFrame.h" />
     <ClInclude Include="..\Header\ProgressValue.h" />
     <ClInclude Include="..\Header\RecognitionRange.h" />
-    <ClInclude Include="..\Header\Rifle_Bullet.h" />
     <ClInclude Include="..\Header\Rifle_Bullet1.h" />
-    <ClInclude Include="..\Header\Rifle_READY.h" />
     <ClInclude Include="..\Header\ShotGun_Bullet.h" />
     <ClInclude Include="..\Header\SkyBox.h" />
     <ClInclude Include="..\Header\Stage.h" />
@@ -327,6 +330,12 @@
     <ClCompile Include="..\Code\FootRay.cpp" />
     <ClCompile Include="..\Code\EventMgr.cpp" />
     <ClCompile Include="..\Code\JumpSmoke.cpp" />
+    <ClCompile Include="..\Code\KickBoardMonster.cpp" />
+    <ClCompile Include="..\Code\KickBoardMonster_Attack.cpp" />
+    <ClCompile Include="..\Code\KickBoardMonster_Chase.cpp" />
+    <ClCompile Include="..\Code\KickBoardMonster_Dead.cpp" />
+    <ClCompile Include="..\Code\KickBoardMonster_Idle.cpp" />
+    <ClCompile Include="..\Code\KickBoardMonster_Patrol.cpp" />
     <ClCompile Include="..\Code\Lazer.cpp" />
     <ClCompile Include="..\Code\MuzzlefFlash_Rifle.cpp" />
     <ClCompile Include="..\Code\LoadingStage1.cpp" />
@@ -369,7 +378,6 @@
     <ClCompile Include="..\Code\MyDialog.cpp" />
     <ClCompile Include="..\Code\MyUI.cpp" />
     <ClCompile Include="..\Code\NewFPSCamera.cpp" />
-    <ClCompile Include="..\Code\PaintBall.cpp" />
     <ClCompile Include="..\Code\Player.cpp" />
     <ClCompile Include="..\Code\Player_Heal.cpp" />
     <ClCompile Include="..\Code\Player_Hit.cpp" />
@@ -382,9 +390,7 @@
     <ClCompile Include="..\Code\ProgressFrame.cpp" />
     <ClCompile Include="..\Code\ProgressValue.cpp" />
     <ClCompile Include="..\Code\RecognitionRange.cpp" />
-    <ClCompile Include="..\Code\Rifle_Bullet.cpp" />
     <ClCompile Include="..\Code\Rifle_Bullet1.cpp" />
-    <ClCompile Include="..\Code\Rifle_READY.cpp" />
     <ClCompile Include="..\Code\ShotGun_Bullet.cpp" />
     <ClCompile Include="..\Code\SkyBox.cpp" />
     <ClCompile Include="..\Code\Stage.cpp" />

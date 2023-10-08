@@ -16,7 +16,7 @@ class CRifle_Bullet1 : public CBullet
 {
 private:
 	explicit CRifle_Bullet1(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CRifle_Bullet1(const CRifle_Bullet1& rhs);
+	explicit CRifle_Bullet1(CRifle_Bullet1& rhs);
 	virtual ~CRifle_Bullet1();
 
 public:
@@ -25,8 +25,12 @@ public:
 	virtual void		LateUpdate_GameObject() override;
 	virtual void		Render_GameObject() override;
 
-
 public:
+	virtual void		OnCollisionEnter(CCollider* _pOther);
+	virtual void		OnCollisionStay(CCollider* _pOther);
+	virtual void		OnCollisionExit(CCollider* _pOther);
+
+private:
 	HRESULT				Add_Component();
 
 private:
