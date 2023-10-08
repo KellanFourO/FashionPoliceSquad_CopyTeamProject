@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "Player.h"
 
-#include "Rifle.h"
 #include "Dyehard.h"
 #include "CrossHair.h"
 
@@ -48,7 +47,7 @@ HRESULT CPlayer::Ready_GameObject()
 	m_pRigidBody->Set_Host(this);
 	m_pRigidBody->Set_Transform(m_pTransformCom);
 
-	//m_pTransformCom->Translate(_vec3(0.f, 1.f, 0.f));
+
 
 	m_fJumpTick = 10.f;
 	m_fJumpCount = 0.f;
@@ -56,12 +55,13 @@ HRESULT CPlayer::Ready_GameObject()
 	m_bJump = false;
 
 	m_pTransformCom->Set_Scale({ 1.5f,5.5f,1.5f });
-	m_pTransformCom->Set_Pos(20.f,10.f,20.f);
+	m_pTransformCom->Set_Pos(20.f,5.f,20.f);
+	m_pTransformCom->Translate(_vec3(0.f, 1.f, 0.f));
 
 	m_fTall = 1.f;
 
 	INFO.fJumpHight = 0.75f;
-	INFO.fMoveSpeed = 15.f; // 이동
+	INFO.fMoveSpeed = 40.f; // 이동
 
 	INFO.iLevel = 1;
 	INFO.iEXP = 0;
@@ -75,13 +75,13 @@ HRESULT CPlayer::Ready_GameObject()
 
 	INFO.Player_GunType = PLAYER_GUNTYPE::SHOTGUN;
 	INFO.PlayerState = m_pStateArray[IDLE];
+	INFO.PlayerState->Initialize(this);
 	INFO.bGameOver = false;
 
 	//INFO.vPos = { 20.f,5.f,20.f };
 	INFO.fStartDir = 0.f;//생각처럼 잘 안댐...
 
 	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
-
 	//m_pTransformCom->Rotation(ROT_Y,D3DXToRadian(INFO.fStartDir));
 
 	return S_OK;
@@ -96,6 +96,7 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	if (m_bLateInit)
 	{
 		SetGun();
+		m_bLateInit = false;
 	}
 
 
@@ -106,12 +107,17 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 		Mouse_Input(fTimeDelta);
 	}
 
-	m_pRigidBody->Update_RigidBody(fTimeDelta);
+	m_fTime_HP_Release += fTimeDelta;
+	HP_Release();
+	m_fTime_HP_Test += fTimeDelta;
 
-	//m_pGun->Update_GameObject(fTimeDelta);
 	Key_Input(fTimeDelta);
 
 
+	//m_pGun->Update_GameObject(fTimeDelta);
+
+
+	m_pRigidBody->Update_RigidBody(fTimeDelta);
 	__super::Update_GameObject(fTimeDelta);
 	return OBJ_NOEVENT;
 }
@@ -199,10 +205,12 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 	m_pTransformCom->Get_Info(INFO_LOOK, &vDir);
 
-	D3DXVec3Normalize(&m_vDir,&m_vDir);
+	_vec3 Test;
+
+	m_vMoveDir = { 0.f,0.f,0.f };
 	_vec3 vUp = { 0.f,1.f,0.f };
 
-	_float fMoveSpeed = INFO.fMoveSpeed;
+	_float fMoveSpeed = 0;
 	_bool bMove = false;
 
 	vDir.y = 0.f; //y값만 0이 되어야 하기 때문에 재연이가 해놓은거임 점프 때문에
@@ -214,22 +222,26 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 	if (Engine::Get_DIKeyState(DIK_W) & 0x80)
 	{
-		m_vDir += vDir;
+		m_vMoveDir += vDir;
+		fMoveSpeed = INFO.fMoveSpeed;
 		bMove = true;
 	}
 	if (Engine::Get_DIKeyState(DIK_S) & 0x80)
 	{
-		m_vDir -= vDir;
+		m_vMoveDir -= vDir;
+		fMoveSpeed = INFO.fMoveSpeed;
 		bMove = true;
 	}
 	if (Engine::Get_DIKeyState(DIK_A) & 0x80)
 	{
-		m_vDir += vRight;
+		m_vMoveDir += vRight;
+		fMoveSpeed = INFO.fMoveSpeed;
 		bMove = true;
 	}
 	if (Engine::Get_DIKeyState(DIK_D) & 0x80)
 	{
-		m_vDir -= vRight;
+		m_vMoveDir -= vRight;
+		fMoveSpeed = INFO.fMoveSpeed;
 		bMove = true;
 	}
 	if (bMove)
@@ -237,8 +249,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 		if (m_Speed_Cheat_ON) {
 			fMoveSpeed *= 4.f;			//속도업
 		}
-
-		m_pTransformCom->Move_Pos(&m_vDir, fTimeDelta, fMoveSpeed);
+		m_pTransformCom->Move_Pos(&m_vMoveDir, fTimeDelta, fMoveSpeed);
 		bMove = false;
 	}
 
@@ -246,19 +257,32 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	{
 		m_pGun = m_vecPlayerGun[0];
 		INFO.Player_GunType = PLAYER_GUNTYPE::SHOTGUN;
+		if (!Management()->Get_ObjectList(LAYERTAG::UI, OBJECTTAG::CROSSHAIR).empty())
+		{
+			dynamic_cast<CCrossHair*>(Management()->Get_ObjectList(LAYERTAG::UI, OBJECTTAG::CROSSHAIR).back())->Set_CrossHair(0);
+		}
 	}
 	else if (Engine::Get_DIKeyState(DIK_2) & 0x80)
 	{
 		m_pGun = m_vecPlayerGun[1];
 		INFO.Player_GunType = PLAYER_GUNTYPE::ASSERTRIFLE;
+		if (!Management()->Get_ObjectList(LAYERTAG::UI, OBJECTTAG::CROSSHAIR).empty())
+		{
+			dynamic_cast<CCrossHair*>(Management()->Get_ObjectList(LAYERTAG::UI, OBJECTTAG::CROSSHAIR).back())->Set_CrossHair(1);
+		}
 	}
+	m_fJumpTick += fTimeDelta;
 
-	if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80 && !m_bJump && m_fJumpTick >= 1.5f)
+	if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80 && m_bJump == false && m_fJumpTick >= 1.5f)
 	{
 		m_bJump = true;
+		//		m_fSpeed_Vertical = INFO.fJumpHight;
 		m_fJumpTick = 0.f;
 		m_pRigidBody->Set_Force(_vec3{ 0.f,50.f,0.f });
-		if (m_Speed_Cheat_ON) {
+
+
+		if (m_Speed_Cheat_ON)
+		{
 			m_fJumpTick = 10.f;
 			m_bJump = false;
 		}
@@ -268,28 +292,53 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	{
 		m_fTall = 0.5f;
 	}
-	if (!(Engine::Get_DIKeyState(DIK_LCONTROL) & 0x80))
-	{
+	if (!(Engine::Get_DIKeyState(DIK_LCONTROL) & 0x80)) {
 		m_fTall = 1.0f;
 	}
 
-	if (Engine::Get_DIKeyState(DIK_R) & 0x80)
+	if (Engine::Get_DIKeyState(DIK_I) & 0x80)
 	{
-		//m_pGun->Set_Reload();
+		Armor_Get(10);
 	}
-
-
+	if (Engine::Get_DIKeyState(DIK_O) & 0x80)
+	{
+		Healed(40);
+	}
+	if ((Engine::Get_DIKeyState(DIK_P) & 0x80))
+	{
+		Attacked(30);
+	}
 	if ((Engine::Get_DIKeyState(DIK_L) & 0x80) && m_fTime_Level_Test >= 0.3f)
 	{
 		EXP_Up(5);
 		m_fTime_Level_Test = 0.f;
 	}
 
+
 	if ((Engine::Get_DIKeyState(DIK_0) & 0x80) && m_fTime_DEAD_Test >= 0.3f)
 	{
 		m_Speed_Cheat_ON = !m_Speed_Cheat_ON;
 		m_fTime_DEAD_Test = 0.f;
 	}
+
+
+	if (Engine::Get_DIKeyState(DIK_TAB) & 0x80)
+	{
+		if (m_bCheck)
+			return;
+
+		m_bCheck = true;
+
+		if (m_bFix)
+			m_bFix = false;
+		else
+			m_bFix = true;
+	}
+	else
+		m_bCheck = false;
+
+	if (false == m_bFix)
+		return;
 
 }
 
@@ -299,6 +348,7 @@ void CPlayer::Mouse_Input(const _float& fTimeDelta)
 	if (dwMouseMove = Engine::Get_DIMouseMove(DIMS_X))
 	{
 		m_pTransformCom->Rotation(ROT_Y, D3DXToRadian(dwMouseMove / 10.f));
+		m_fXmove = dwMouseMove;
 	}
 	if (dwMouseMove = Engine::Get_DIMouseMove(DIMS_Y))
 	{
@@ -310,33 +360,16 @@ void CPlayer::Mouse_Input(const _float& fTimeDelta)
 		m_pGun->Set_Fire(true);
 	}
 
-
-
+	if (dwMouseMove = Engine::Get_DIMouseState(DIM_RB) && m_pGun->Get_Ready())
+	{
+		m_pGun->Set_RBFire(true);
+	}
+	else if (!(Engine::Get_DIMouseState(DIM_RB)))
+	{
+		m_pGun->Set_RBFire(false);
+	}
 }
 
-void CPlayer::Gun_Select(_int Gun_Number)
-{
-	Engine::GunID SelectGun = GunID::GUN_ID_END;
-	switch (Gun_Number)
-	{
-	case 1:
-		SelectGun = GunID::DYEHARD;
-
-		break;
-	case 2:
-		SelectGun = GunID::RIFLE;
-		break;
-	default:
-		break;
-	}
-
-	if (!Management()->Get_ObjectList(LAYERTAG::UI, OBJECTTAG::CROSSHAIR).empty())
-	{
-		dynamic_cast<CCrossHair*>(Management()->Get_ObjectList(LAYERTAG::UI, OBJECTTAG::CROSSHAIR).back())->Set_CrossHair(Gun_Number - 1);
-
-	}
-
-}
 
 void CPlayer::Attacked(_float _fDamage)
 {
@@ -364,12 +397,12 @@ void CPlayer::Attacked(_float _fDamage)
 	INFO.PlayerState->Initialize(this);
 
 
-	m_pTransformCom->Get_Info(INFO_LOOK, &m_vDir);
-	m_vDir.y = 0.f;
-	D3DXVec3Normalize(&m_vDir, &m_vDir);
+	m_pTransformCom->Get_Info(INFO_LOOK, &m_vMoveDir);
+	m_vMoveDir.y = 0.f;
+	D3DXVec3Normalize(&m_vMoveDir, &m_vMoveDir);
 
 	m_pRigidBody->Set_Force(_vec3(0.f, 10.f, 0.f));
-	m_pRigidBody->Add_Force(-m_vDir * _fDamage);
+	m_pRigidBody->Add_Force(-m_vMoveDir * _fDamage);
 
 }
 
@@ -428,6 +461,7 @@ void CPlayer::StateMachine(_float _fTimeDelta)
 {
 	CPlayerState* State = INFO.PlayerState->Update(this, _fTimeDelta);
 	if (State != nullptr) {
+		INFO.PlayerState->Release(this);
 		INFO.PlayerState = State;
 		INFO.PlayerState->Initialize(this);
 	} // 상태 패턴
@@ -435,7 +469,6 @@ void CPlayer::StateMachine(_float _fTimeDelta)
 
 void CPlayer::OnCollisionEnter(CCollider* _pOther)
 {
-
 	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE)
 	{
 		_vec3	vOtherPos = _pOther->GetCenterPos();

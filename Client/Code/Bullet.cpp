@@ -30,6 +30,14 @@ _int CBullet::Update_GameObject(const _float& fTimeDelta)
 		m_bLateInit = false;
 	}
 
+	if (m_bShot)
+
+	{
+		m_pTransformCom->Move_Pos(&m_vShotDir,fTimeDelta,m_fSpeed);
+	}
+
+
+
 	__super::Update_GameObject(fTimeDelta);
 	return OBJ_NOEVENT;
 }
@@ -70,9 +78,11 @@ void CBullet::OnCollisionExit(CCollider* _pOther)
 
 void CBullet::Fire(_vec3 vShotPos, _vec3 vShotDir)
 {
-	m_pTransformCom->Set_Pos(vShotPos);
 	m_vShotDir = vShotDir;
+	m_vShotPos = vShotPos;
+	m_pTransformCom->Set_Pos(m_vShotPos);
 	m_bShot = true;
+
 }
 
 

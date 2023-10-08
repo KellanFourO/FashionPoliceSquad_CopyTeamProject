@@ -1,10 +1,10 @@
 #pragma once
 
 #include "Base.h"
-#include "GameObject.h"
 #include "PlayerGun.h"
+#include "MuzzlefFlash_Rifle.h"
 
-class CGunState;
+class CPlayerGunState;
 
 BEGIN(Engine)
 
@@ -31,15 +31,20 @@ public:
 	virtual void	ReadyState();
 
 public:
-	CPlayerGunState* Get_State(_int _index) { return m_pStateArray[_index]; }
+	CPlayerGunState*	Get_State(_int _index) { return m_pStateArray[_index]; }
+	CMuzzleFlash_Rifle* Get_Flash() { return m_pFlash; }
 
+	void				Set_Flash(CMuzzleFlash_Rifle* _pFlash) { m_pFlash = _pFlash; }
+	void				Set_Index(_int _iIndex) { m_iTextureIndex = _iIndex; }
 private:
 	HRESULT			Add_Component();
 
 private:
 	CRcTex*					m_pBufferCom = nullptr;
 	CTexture*				m_pTextureCom = nullptr;
+	_int					m_iTextureIndex = 0;
 
+	CMuzzleFlash_Rifle*		m_pFlash = nullptr; // √— ¿Ã∆Â∆Æ
 	CPlayerGunState*		m_pStateArray[ASSERTRIFLESTATE_END];
 
 public:

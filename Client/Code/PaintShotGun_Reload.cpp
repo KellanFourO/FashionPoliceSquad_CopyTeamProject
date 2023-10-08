@@ -19,7 +19,7 @@ CPaintShotGun_Reload::~CPaintShotGun_Reload()
 }
 void CPaintShotGun_Reload::Initialize(CPlayerGun* ShotGun)
 {
-    m_pHost = dynamic_cast<CPaintShotGun*>(ShotGun);
+    m_pHost = ShotGun;
 
     m_bAttack = false;
 
@@ -42,7 +42,8 @@ CPlayerGunState* CPaintShotGun_Reload::Update(CPlayerGun* ShotGun, const float& 
 
     if (m_fBehaviorTime >= 0.1f && m_pHost->Get_GunInfo()->m_iMaxBullet != 0)
     {
-        m_pHost->Reload(0,0);
+        m_pHost->Reload(dynamic_cast<CPaintShotGun*>(m_pHost)->Get_BulletColr(),0);
+        dynamic_cast<CPaintShotGun*>(m_pHost)->Add_BulletColor();
         return dynamic_cast<CPaintShotGun*>(m_pHost)->Get_State(3);
     }
 
@@ -80,6 +81,7 @@ void CPaintShotGun_Reload::Release(CPlayerGun* ShotGun)
 {
 	m_pHost->Reset_GunMoveDown();
 	m_pHost->Reset_GunMoveRight();
+    m_fBehaviorTime = 0.f;
 	//ShotGun->m_fGunMoveRight = 3.f;
 	//ShotGun->m_fGunMoveDown = 1.f;
 }

@@ -85,17 +85,11 @@
     <Filter Include="02. GameObject\06. Effect">
       <UniqueIdentifier>{efd01413-82f8-4dcc-990c-23e23788dc7a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Player\01. Dyehard\31. MuzzleFlash">
-      <UniqueIdentifier>{a8464c9c-cfe6-4336-89c3-2d00cc64a061}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\20.UI">
       <UniqueIdentifier>{2f59545b-6fd1-44f4-95cc-f93a08f7d3d5}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\02. Monster\99.MonsterState">
       <UniqueIdentifier>{8ed9268c-5100-48f5-8620-805323db800d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. Player\01. Dyehard\99.shotgunState">
-      <UniqueIdentifier>{3c5a560f-743b-4470-a788-dc358be1ed4d}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\00. BackGround\00.Title">
       <UniqueIdentifier>{682b4052-8c2b-41eb-812e-d0db50c135fe}</UniqueIdentifier>
@@ -108,27 +102,6 @@
     </Filter>
     <Filter Include="02. GameObject\20.UI\01. MyDialog\00. Portrait">
       <UniqueIdentifier>{98f289d3-0605-4daa-8ccf-8713c8faf5bd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. Player\03. Rifle">
-      <UniqueIdentifier>{1790f50d-a440-48cf-9bc6-db7356cae407}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. Player\03. Rifle\99. RifleState">
-      <UniqueIdentifier>{329e3e13-3ffd-486c-a962-fca2b5cb9bf0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. Player\03. Rifle\99. RifleState\01.Rifle_IDLE">
-      <UniqueIdentifier>{6ab2bd90-f2f6-46eb-8def-06a4b581cd95}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. Player\03. Rifle\99. RifleState\02. Rifle_WALK">
-      <UniqueIdentifier>{b9c41b9d-05e5-4271-ae0e-9ba829fa2fd1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. Player\03. Rifle\99. RifleState\03. Rifle_Shot">
-      <UniqueIdentifier>{fe792f50-4c15-49e8-80ae-7822d64fde73}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. Player\03. Rifle\99. RifleState\04. Rifle_Reload">
-      <UniqueIdentifier>{0ab3f472-16b8-4210-acee-e0d1a3e86c21}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. Player\03. Rifle\00. MuzzlfFlash2">
-      <UniqueIdentifier>{e746be9e-9cbc-465c-9488-1b11edd1f78a}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\04. Camera\12. FlyingCamera">
       <UniqueIdentifier>{8fa80610-4dde-42f1-aa32-d8a734b21aff}</UniqueIdentifier>
@@ -150,12 +123,6 @@
     </Filter>
     <Filter Include="02. GameObject\01. Player\99. PlayerState">
       <UniqueIdentifier>{769d6b03-6a70-4eda-808a-40bae15d90e1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. Player\04. Gun">
-      <UniqueIdentifier>{408c8447-f908-4184-9269-a7a6243d6ec1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. Player\04. Gun\99. GunState">
-      <UniqueIdentifier>{322f3b58-ba60-4799-9f5b-51b3455d8d09}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\01. Player\99. PlayerState\06. Player_Heal">
       <UniqueIdentifier>{c7868c81-5b90-4c86-899e-543f9e7a403a}</UniqueIdentifier>
@@ -243,9 +210,6 @@
     </Filter>
     <Filter Include="02. GameObject\02. Monster\03. Smoker">
       <UniqueIdentifier>{39dcff9d-080e-46cd-a4d5-0dfe77ae68ce}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. Player\01. Dyehard\99.shotgunState\07. ShotGun_Lazer">
-      <UniqueIdentifier>{21ab3976-114d-491c-a7ad-a1f0de726d08}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\06. Effect\00.Particle\02.JumpSmoke">
       <UniqueIdentifier>{20ed10b5-ed4c-41aa-9d8b-31b84071e0ff}</UniqueIdentifier>
@@ -358,65 +322,74 @@
     <Filter Include="02. GameObject\07. Bullet\02.BossBullet\00.GoldBar">
       <UniqueIdentifier>{5e336aff-d751-40c5-92fa-66ffbfea2f9e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Player\05. PlayerGun">
-      <UniqueIdentifier>{023ebd3f-72de-4081-a017-e09bff518ee1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun">
-      <UniqueIdentifier>{b6a3d63c-2e1e-4177-add1-2309d4a27fc6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle">
-      <UniqueIdentifier>{04f53494-a256-40ec-b8c2-afa52309f737}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState">
-      <UniqueIdentifier>{89e6d3df-579c-411b-ab53-fe53bd448e27}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState">
-      <UniqueIdentifier>{1f48b4ac-7236-4121-812b-fe3aa189a4ff}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\07. Bullet\00.PlayerBullet\00. ShotGunBullet">
       <UniqueIdentifier>{f4d4aab4-a64e-4717-8ac5-5372cb4929eb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\00. PaintShotGun_Idle">
+    <Filter Include="02. GameObject\01. Player\03. PlayerGun">
+      <UniqueIdentifier>{023ebd3f-72de-4081-a017-e09bff518ee1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun">
+      <UniqueIdentifier>{b6a3d63c-2e1e-4177-add1-2309d4a27fc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState">
+      <UniqueIdentifier>{89e6d3df-579c-411b-ab53-fe53bd448e27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\00. PaintShotGun_Idle">
       <UniqueIdentifier>{918b88a7-b2c7-4aa2-955c-069312df83af}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\01. PaintShotGun_Ready">
+    <Filter Include="02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\01. PaintShotGun_Ready">
       <UniqueIdentifier>{a4591c9f-c218-476e-a85a-02e684f05788}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\02. PaintShotGun_Reload">
+    <Filter Include="02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\02. PaintShotGun_Reload">
       <UniqueIdentifier>{0c2b78a8-44fc-4c85-8afb-4b5cd99a3999}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\03. PaintShotGun_Shot">
+    <Filter Include="02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\03. PaintShotGun_Shot">
       <UniqueIdentifier>{7a009221-9a70-4fa7-9b2f-15a63fbb7e68}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\04. PaintShotGun_Walk">
+    <Filter Include="02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\04. PaintShotGun_Walk">
       <UniqueIdentifier>{6b9a6419-221a-4768-8860-709eb7c16ba2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\05. PaintShotGun_Lazer">
+    <Filter Include="02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\05. PaintShotGun_Lazer">
       <UniqueIdentifier>{a4727e42-d7bd-47d7-ac79-73ce2478addb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\06. PainShotGun_Enter">
+    <Filter Include="02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\06. PainShotGun_Enter">
       <UniqueIdentifier>{c3f2392e-527f-4284-8b4d-f2f286757ed3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\00. TailorAssertRifle_Idle">
+    <Filter Include="02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\07. PaintShotGun_Jump">
+      <UniqueIdentifier>{10f7750f-d3e3-45af-b1a8-b487ab211cbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\00. MuzzleFlash">
+      <UniqueIdentifier>{a8464c9c-cfe6-4336-89c3-2d00cc64a061}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle">
+      <UniqueIdentifier>{04f53494-a256-40ec-b8c2-afa52309f737}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState">
+      <UniqueIdentifier>{1f48b4ac-7236-4121-812b-fe3aa189a4ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\00. TailorAssertRifle_Idle">
       <UniqueIdentifier>{b3c19570-32f8-4d13-a809-b958c00eb87d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\01. TailorAssertRifle_Ready">
+    <Filter Include="02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\01. TailorAssertRifle_Ready">
       <UniqueIdentifier>{4905c3e2-0919-4cd6-a5f7-71b2601c842e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\02. TailorAssertRifle_Reload">
+    <Filter Include="02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\02. TailorAssertRifle_Reload">
       <UniqueIdentifier>{560201d8-230a-453b-b458-2ccf6bc493a2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\03. TailorAssertRifle_Shot">
+    <Filter Include="02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\03. TailorAssertRifle_Shot">
       <UniqueIdentifier>{1f190f13-c62f-44d5-a41c-580f49d5fea9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\04. TailorAssertRifle_Walk">
+    <Filter Include="02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\04. TailorAssertRifle_Walk">
       <UniqueIdentifier>{375e376e-1fcc-4749-acb9-8b94367b916f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\05. TailorAssertRifle_Bomb">
+    <Filter Include="02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\05. TailorAssertRifle_Bomb">
       <UniqueIdentifier>{a68edbc2-9a61-42b5-8706-2f4e2359f84c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\07. PaintShotGun_Jump">
-      <UniqueIdentifier>{10f7750f-d3e3-45af-b1a8-b487ab211cbd}</UniqueIdentifier>
+    <Filter Include="02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\00. MuzzleFlashRifle">
+      <UniqueIdentifier>{20f41241-a086-4465-b175-13e31cc0ea7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\01. Hand">
+      <UniqueIdentifier>{3c3358ad-32a8-4e64-9909-89626582c5e0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -514,7 +487,7 @@
       <Filter>02. GameObject\06. Effect</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\MuzzleFlash.h">
-      <Filter>02. GameObject\01. Player\01. Dyehard\31. MuzzleFlash</Filter>
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\00. MuzzleFlash</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\PaintBall.h">
       <Filter>02. GameObject\07. Bullet\00.PlayerBullet\00. ShotGunBullet</Filter>
@@ -546,23 +519,8 @@
     <ClInclude Include="..\Header\MonsterState.h">
       <Filter>02. GameObject\02. Monster\99.MonsterState</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\ShotGun_IDLE.h">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ShotGun_Shot.h">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ShotGun_WALK.h">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ShotGunState.h">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Title.h">
       <Filter>02. GameObject\00. BackGround\00.Title</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ShotGun_RELOAD.h">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\MyUI.h">
       <Filter>02. GameObject\20.UI\00. MyUI</Filter>
@@ -572,30 +530,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\Portrait.h">
       <Filter>02. GameObject\20.UI\01. MyDialog\00. Portrait</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ShotGun_JUMP.h">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Rifle.h">
-      <Filter>02. GameObject\01. Player\03. Rifle</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\RifleState.h">
-      <Filter>02. GameObject\01. Player\03. Rifle\99. RifleState</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Rifle_IDLE.h">
-      <Filter>02. GameObject\01. Player\03. Rifle\99. RifleState\01.Rifle_IDLE</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Rifle_WALK.h">
-      <Filter>02. GameObject\01. Player\03. Rifle\99. RifleState\02. Rifle_WALK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Rifle_Shot.h">
-      <Filter>02. GameObject\01. Player\03. Rifle\99. RifleState\03. Rifle_Shot</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Rifle_RELOAD.h">
-      <Filter>02. GameObject\01. Player\03. Rifle\99. RifleState\04. Rifle_Reload</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\MuzzlefFlash_Rifle.h">
-      <Filter>02. GameObject\01. Player\03. Rifle\00. MuzzlfFlash2</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\FlyingCamera.h">
       <Filter>02. GameObject\04. Camera\12. FlyingCamera</Filter>
@@ -635,18 +569,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\Player_Right.h">
       <Filter>02. GameObject\01. Player\99. PlayerState\02. Player_Right</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Gun.h">
-      <Filter>02. GameObject\01. Player\04. Gun</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\GunState.h">
-      <Filter>02. GameObject\01. Player\04. Gun\99. GunState</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ShotGun_ENTER.h">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ShotGun_READY.h">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Player_Heal.h">
       <Filter>02. GameObject\01. Player\99. PlayerState\06. Player_Heal</Filter>
@@ -777,9 +699,6 @@
     <ClInclude Include="..\Header\Rifle_Bullet.h">
       <Filter>02. GameObject\07. Bullet\00.PlayerBullet\01. RifleBullet</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\ShotGun_Lazer.h">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState\07. ShotGun_Lazer</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\JumpSmoke.h">
       <Filter>02. GameObject\06. Effect\00.Particle\02.JumpSmoke</Filter>
     </ClInclude>
@@ -792,8 +711,32 @@
     <ClInclude Include="..\Header\PlayerBullet.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\KickBoardMonster_Attack.h">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\03. KickBoardMonster_Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\KickBoardMonster_Patrol.h">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\04. KickBoardMonster_Patrol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Player_Jump.h">
+      <Filter>02. GameObject\01. Player\99. PlayerState\08. Player_Jump</Filter>
+    </ClInclude>
+	  <ClInclude Include="..\Header\PlayerGun.h">
+		  <Filter>02. GameObject\01. Player\03. PlayerGun</Filter>
+	  </ClInclude>
     <ClInclude Include="..\Header\LoadingStage1.h">
       <Filter>01.Scene\09.LoadingStage1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerGunState.h">
+      <Filter>02. GameObject\01. Player\03. PlayerGun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PaintShotGun.h">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TailorAssertRifle.h">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Bullet.h">
+      <Filter>02. GameObject\07. Bullet</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Lazer.h">
       <Filter>02. GameObject\07. Bullet\00.PlayerBullet\00. ShotGunBullet</Filter>
@@ -826,7 +769,7 @@
       <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\07. PaintShotGun_Jump</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\PaintShotGun_Idle.h">
-      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\00. PaintShotGun_Idle</Filter>
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\00. PaintShotGun_Idle</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\PaintShotGun.h">
       <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun</Filter>
@@ -835,37 +778,43 @@
       <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\05. PaintShotGun_Lazer</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\PaintShotGun_Ready.h">
-      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\01. PaintShotGun_Ready</Filter>
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\01. PaintShotGun_Ready</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\PaintShotGun_Reload.h">
-      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\02. PaintShotGun_Reload</Filter>
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\02. PaintShotGun_Reload</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\PaintShotGun_Shot.h">
-      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\03. PaintShotGun_Shot</Filter>
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\03. PaintShotGun_Shot</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\PaintShotGun_Walk.h">
-      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\04. PaintShotGun_Walk</Filter>
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\04. PaintShotGun_Walk</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\TailorAssertRifle.h">
       <Filter>02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle</Filter>
+	</ClInclude>
+	<ClInclude Include="..\Header\PaintShotGun_Lazer.h">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\05. PaintShotGun_Lazer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PaintShotGun_Enter.h">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\06. PainShotGun_Enter</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\PaintShotGun_Jump.h">
       <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\07. PaintShotGun_Jump</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\TailorAssertRifle_Idle.h">
-      <Filter>02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\00. TailorAssertRifle_Idle</Filter>
+      <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\00. TailorAssertRifle_Idle</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\TailorAssertRifle_Ready.h">
-      <Filter>02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\02. TailorAssertRifle_Reload</Filter>
+      <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\01. TailorAssertRifle_Ready</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\TailorAssertRifle_Reload.h">
-      <Filter>02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\02. TailorAssertRifle_Reload</Filter>
+      <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\02. TailorAssertRifle_Reload</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\TailorAssertRifle_Shot.h">
-      <Filter>02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\03. TailorAssertRifle_Shot</Filter>
+      <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\03. TailorAssertRifle_Shot</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\TailorAssertRifle_Walk.h">
-      <Filter>02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\04. TailorAssertRifle_Walk</Filter>
+      <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\04. TailorAssertRifle_Walk</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Player_LevelUp.h">
       <Filter>02. GameObject\01. Player\99. PlayerState\05. Player_LevelUp</Filter>
@@ -881,27 +830,15 @@
     </ClInclude>
     <ClInclude Include="..\Header\Player_Jump.h">
       <Filter>02. GameObject\01. Player\99. PlayerState\08. Player_Jump</Filter>
+	</ClInclude>
+	<ClInclude Include="..\Header\PaintShotGun_Jump.h">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\07. PaintShotGun_Jump</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Player_LevelUp.h">
-      <Filter>02. GameObject\01. Player\99. PlayerState\05. Player_LevelUp</Filter>
+    <ClInclude Include="..\Header\MuzzlefFlash_Rifle.h">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\00. MuzzleFlashRifle</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\PaintShotGun.h">
-      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\TailorAssertRifle.h">
-      <Filter>02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\PlayerGun.h">
-      <Filter>02. GameObject\01. Player\05. PlayerGun</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Rifle_Bullet1.h">
-      <Filter>02. GameObject\07. Bullet\00.PlayerBullet\01. RifleBullet</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\ShotGun_Bullet.h">
-      <Filter>02. GameObject\07. Bullet\00.PlayerBullet\00. ShotGunBullet</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\Bullet.h">
-      <Filter>02. GameObject\07. Bullet</Filter>
+    <ClInclude Include="..\Header\TailorAssertRifleHand.h">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\01. Hand</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -987,7 +924,7 @@
       <Filter>02. GameObject\06. Effect</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\MuzzleFlash.cpp">
-      <Filter>02. GameObject\01. Player\01. Dyehard\31. MuzzleFlash</Filter>
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\00. MuzzleFlash</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PaintBall.cpp">
       <Filter>02. GameObject\07. Bullet\00.PlayerBullet\00. ShotGunBullet</Filter>
@@ -1013,20 +950,8 @@
     <ClCompile Include="..\Code\Belt.cpp">
       <Filter>02. GameObject\01. Player\02. Belt</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\ShotGun_IDLE.cpp">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ShotGun_Shot.cpp">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ShotGun_WALK.cpp">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Title.cpp">
       <Filter>02. GameObject\00. BackGround\00.Title</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ShotGun_RELOAD.cpp">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\MyUI.cpp">
       <Filter>02. GameObject\20.UI\00. MyUI</Filter>
@@ -1036,27 +961,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\Portrait.cpp">
       <Filter>02. GameObject\20.UI\01. MyDialog\00. Portrait</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ShotGun_JUMP.cpp">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Rifle.cpp">
-      <Filter>02. GameObject\01. Player\03. Rifle</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Rifle_IDLE.cpp">
-      <Filter>02. GameObject\01. Player\03. Rifle\99. RifleState\01.Rifle_IDLE</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Rifle_WALK.cpp">
-      <Filter>02. GameObject\01. Player\03. Rifle\99. RifleState\02. Rifle_WALK</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Rifle_Shot.cpp">
-      <Filter>02. GameObject\01. Player\03. Rifle\99. RifleState\03. Rifle_Shot</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Rifle_RELOAD.cpp">
-      <Filter>02. GameObject\01. Player\03. Rifle\99. RifleState\04. Rifle_Reload</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\MuzzlefFlash_Rifle.cpp">
-      <Filter>02. GameObject\01. Player\03. Rifle\00. MuzzlfFlash2</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\FlyingCamera.cpp">
       <Filter>02. GameObject\04. Camera\12. FlyingCamera</Filter>
@@ -1093,15 +997,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\Player_Right.cpp">
       <Filter>02. GameObject\01. Player\99. PlayerState\02. Player_Right</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Gun.cpp">
-      <Filter>02. GameObject\01. Player\04. Gun</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ShotGun_ENTER.cpp">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\ShotGun_READY.cpp">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Player_Heal.cpp">
       <Filter>02. GameObject\01. Player\99. PlayerState\06. Player_Heal</Filter>
@@ -1214,9 +1109,6 @@
     <ClCompile Include="..\Code\Rifle_Bullet.cpp">
       <Filter>02. GameObject\07. Bullet\00.PlayerBullet\01. RifleBullet</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\ShotGun_Lazer.cpp">
-      <Filter>02. GameObject\01. Player\01. Dyehard\99.shotgunState\07. ShotGun_Lazer</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\JumpSmoke.cpp">
       <Filter>02. GameObject\06. Effect\00.Particle\02.JumpSmoke</Filter>
     </ClCompile>
@@ -1240,6 +1132,21 @@
     </ClCompile>
     <ClCompile Include="..\Code\BigDaddyMonster_Dead.cpp">
       <Filter>02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State\10. BigDaddyMonster_Dead</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Player_Jump.cpp">
+      <Filter>02. GameObject\01. Player\99. PlayerState\08. Player_Jump</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerGun.cpp">
+      <Filter>02. GameObject\01. Player\03. PlayerGun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TailorAssertRifle.cpp">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PaintShotGun.cpp">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Bullet.cpp">
+      <Filter>02. GameObject\07. Bullet</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Lazer.cpp">
       <Filter>02. GameObject\07. Bullet\00.PlayerBullet\00. ShotGunBullet</Filter>
@@ -1278,40 +1185,46 @@
       <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\05. PaintShotGun_Lazer</Filter>
 	</ClCompile>
     <ClCompile Include="..\Code\PaintShotGun_Idle.cpp">
-      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\00. PaintShotGun_Idle</Filter>
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\00. PaintShotGun_Idle</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PaintShotGun_Ready.cpp">
-      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\01. PaintShotGun_Ready</Filter>
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\01. PaintShotGun_Ready</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PaintShotGun_Reload.cpp">
-      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\02. PaintShotGun_Reload</Filter>
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\02. PaintShotGun_Reload</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PaintShotGun_Shot.cpp">
-      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\03. PaintShotGun_Shot</Filter>
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\03. PaintShotGun_Shot</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PaintShotGun_Walk.cpp">
-      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\04. PaintShotGun_Walk</Filter>
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\04. PaintShotGun_Walk</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\TailorAssertRifle.cpp">
       <Filter>02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle</Filter>
+	</ClCompile>
+	<ClCompile Include="..\Code\PaintShotGun_Lazer.cpp">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\05. PaintShotGun_Lazer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PaintShotGun_Enter.cpp">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\06. PainShotGun_Enter</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PaintShotGun_Jump.cpp">
       <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\07. PaintShotGun_Jump</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\TailorAssertRifle_Idle.cpp">
-      <Filter>02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\00. TailorAssertRifle_Idle</Filter>
+      <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\00. TailorAssertRifle_Idle</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\TailorAssertRifle_Ready.cpp">
-      <Filter>02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\01. TailorAssertRifle_Ready</Filter>
+      <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\01. TailorAssertRifle_Ready</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\TailorAssertRifle_Reload.cpp">
-      <Filter>02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\02. TailorAssertRifle_Reload</Filter>
+      <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\02. TailorAssertRifle_Reload</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\TailorAssertRifle_Shot.cpp">
-      <Filter>02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\03. TailorAssertRifle_Shot</Filter>
+      <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\03. TailorAssertRifle_Shot</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\TailorAssertRifle_Walk.cpp">
-      <Filter>02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\04. TailorAssertRifle_Walk</Filter>
+      <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\04. TailorAssertRifle_Walk</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Player_LevelUp.cpp">
       <Filter>02. GameObject\01. Player\99. PlayerState\05. Player_LevelUp</Filter>
@@ -1321,9 +1234,12 @@
 	</ClCompile>
 	<ClCompile Include="..\Code\Player_Jump.cpp">
       <Filter>02. GameObject\01. Player\99. PlayerState\08. Player_Jump</Filter>
+	</ClCompile>
+	<ClCompile Include="..\Code\PaintShotGun_Jump.cpp">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\07. PaintShotGun_Jump</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Player_LevelUp.cpp">
-      <Filter>02. GameObject\01. Player\99. PlayerState\05. Player_LevelUp</Filter>
+    <ClCompile Include="..\Code\MuzzlefFlash_Rifle.cpp">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\00. MuzzleFlashRifle</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PaintShotGun.cpp">
       <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun</Filter>
@@ -1348,6 +1264,9 @@
 	</ClCompile>
 	<ClCompile Include="..\Code\Bullet.cpp">
       <Filter>02. GameObject\07. Bullet</Filter>
+	</ClCompile>
+	<ClCompile Include="..\Code\TailorAssertRifleHand.cpp">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\01. Hand</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

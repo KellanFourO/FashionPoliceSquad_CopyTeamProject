@@ -124,6 +124,7 @@ CMainApp* CMainApp::Create()
 {
 	CMainApp* pInstance = new CMainApp;
 
+
 	if (FAILED(pInstance->Ready_MainApp()))
 	{
 		MSG_BOX("MainApp Create Failed");

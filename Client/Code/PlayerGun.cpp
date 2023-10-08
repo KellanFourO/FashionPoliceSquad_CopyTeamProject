@@ -57,10 +57,44 @@ void CPlayerGun::Fire()
 	{
 		case BULLETTYPE::SHOTGUN_BULLET:
 		{
+
+			float fRandomRange = ((float)rand() / RAND_MAX) * D3DXToRadian(0.5f);
+			int iRandom = rand() % 2;
+
 			if (!m_vecBullet.empty())
 			{
-				m_vecBullet.back()->Fire(m_vShotPos, m_vShotDir);
-				--m_tGunInfo.m_iCurrentBullet;
+				for(int i = 0; i < m_vecBullet.size(); ++i)
+				dynamic_cast<CShotGunBullet*>(m_vecBullet[i])->Set_Color(m_iColorIndex);
+
+				for (int i = 0; i < m_vecBullet.size(); ++i)
+				{
+
+					if (iRandom)
+					{
+						m_vShotDir.x += rand() % 5 * fRandomRange;
+
+						m_vShotDir.y += rand() % 5 * fRandomRange;
+
+						m_vShotDir.z += rand() % 5 * fRandomRange;
+					}
+					else
+					{
+						m_vShotDir.x -= rand() % 5 * fRandomRange;
+
+						m_vShotDir.y -= rand() % 5 * fRandomRange;
+
+						m_vShotDir.z -= rand() % 5 * fRandomRange;
+					}
+
+
+
+					m_vecBullet[i]->Fire(m_vShotPos, m_vShotDir);
+				}
+
+
+					--m_tGunInfo.m_iCurrentBullet;
+					Add_BulletColor();
+
 			}
 
 			break;
@@ -103,19 +137,20 @@ void CPlayerGun::Reload(_int _ColorIndex,_int iRandomIndex)
 	{
 	case Engine::BULLETTYPE::SHOTGUN_BULLET:
 		{
-
+			m_vecBullet.clear();
 			for (int i = 0; i < m_tGunInfo.m_iReloadBullet; ++i)
 			{
-				CBullet* pBullet = CShotGunBullet::Create(m_pGraphicDev, _vec3(0,0,0),_ColorIndex);
+				CBullet* pBullet = CShotGunBullet::Create(m_pGraphicDev, _vec3(0,0,0), _ColorIndex);
 				Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::PLAYERBULLET,pBullet);
 				m_vecBullet.push_back(pBullet);
-
 			}
+
 			break;
 		}
 
 	case Engine::BULLETTYPE::ASSERTRIFLE_BULLET:
 		{
+			m_vecBullet.clear();
 			for (int i = 0; i < m_tGunInfo.m_iReloadBullet; ++i)
 			{
 				CBullet* pBullet = CRifle_Bullet1::Create(m_pGraphicDev, _vec3(0, 0, 0),iRandomIndex);
@@ -173,17 +208,26 @@ void CPlayerGun::HostMove(const _float& fTimeDelta)
 	_vec3 vGunMoveRight = vGunMove / 20;
 	_vec3 vGunMoveDown = -vPlayerUp / 20;
 
-	_vec3 vPos = { vPlayerPos + vPlayerLook * 2.5f + vGunMoveRight * m_fGunMoveRight * 9.4f + vGunMoveDown * m_fGunMoveDown * 10.f };
+	if (m_eBulletType == BULLETTYPE::SHOTGUN_BULLET)
+	{
+		_vec3 vPos = { vPlayerPos + vPlayerLook * 2.5f + vGunMoveRight * m_fGunMoveRight * 9.4f + vGunMoveDown * m_fGunMoveDown * 10.f };
 
-	m_pTransformCom->Set_Pos(vPos);
+		m_pTransformCom->Set_Pos(vPos);
+	}
+	else if(m_eBulletType == BULLETTYPE::ASSERTRIFLE_BULLET)
+	{
+		m_pTransformCom->Set_Pos(vPlayerPos + vPlayerLook * 2.5f + vGunMoveRight * m_fGunMoveRight * 8.0f + vGunMoveDown * m_fGunMoveDown * 14.5f);
+	}
+
+
 
 	//TODO 발사 위치 구하기
 
-	_vec3 vMyPos;
+	_vec3 vMyPos , vFirePos;
+	m_pHostTransformCom->Get_Info(INFO_POS, &vFirePos);
 	m_pTransformCom->Get_Info(INFO_POS, &vMyPos);
-	m_vShotDir = dynamic_cast<CPlayer*>(m_pHost)->Get_Dir();
-	m_vShotPos = (vPlayerPos + vMyPos) / 2 + m_vShotDir + _vec3(0.f, -0.7f, 0.f);
-
+	m_pHostTransformCom->Get_Info(INFO_LOOK, &m_vShotDir);
+	m_vShotPos = (vFirePos + vMyPos) / 2 + m_vShotDir + _vec3(0.f, -0.7f, 0.f);
 
 	MouseInput();
 

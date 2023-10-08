@@ -1,7 +1,8 @@
 #pragma once
 
 #include "Base.h"
-#include "GameObject.h"
+#include "Bullet.h"
+class CPaintShotGun;
 
 BEGIN(Engine)
 
@@ -12,7 +13,8 @@ class CRigidBody;
 
 END
 
-class CLazer : public Engine::CGameObject
+
+class CLazer : public CBullet
 {
 private:
 	explicit CLazer(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -33,23 +35,30 @@ public:
 public:
 	HRESULT			Add_Component();
 	void			Color_Select();
-	void			Set_Gun(CGameObject* _pGun) { m_pGun = _pGun; };
-	void			Shoot(_vec3 _StartPos, int iColorIndex);
-private:
-	CRcTex* m_pBufferCom = nullptr; // 텍스처를 그리기위한 버퍼 컴포넌트
-	CTexture* m_pTextureCom2 = nullptr;
-	//CTransform* m_pTransformCom = nullptr; // 이동 컴포넌트
-	//CTransform* m_pTransformCom2 = nullptr; // 이동 컴포넌트2
-	//CTransform* m_pTransformCom3 = nullptr; // 이동 컴포넌트3
-	//CTransform* m_pTransformCom4 = nullptr; // 이동 컴포넌트3
+	void			Set_Fire(_bool _bFire) { m_bFire = _bFire;}
 
-	CTexture* m_pTextureCom = nullptr; // 텍스쳐 컴포넌트
+	void			StartPosition();
+	void			FirePosition(const _float& fTimeDelta);
 
-public:
-	
 
 private:
+	void			Mouse_Input();
+
+private:
+	CRcTex*		m_pBufferCom = nullptr; // 텍스처를 그리기위한 버퍼 컴포넌트
+	CTexture*	m_pTextureCom = nullptr;
+	CTransform*	m_pPlayerTransform = nullptr;
+
+
+private:
+	_bool			m_bFire = false;
+	_bool			m_bLateInit = true;
 	_vec3			m_vDir, m_vPos;
+
+	_float			m_fGunMoveDown;
+	_float			m_fGunMoveRight;
+	_float			m_fRange;
+	_vec3			m_vScale;
 
 	_float			m_fLiveTime;
 	_bool			m_bShooting = false;
@@ -68,7 +77,7 @@ private:
 	_matrix			m_Mat_Axis;
 
 private:
-	CGameObject* m_pGun; // 발사 확인을 위한 타겟
+	CPaintShotGun*	m_pShotGun = nullptr;
 
 public:
 	static CLazer* Create(LPDIRECT3DDEVICE9 pGraphicDev);

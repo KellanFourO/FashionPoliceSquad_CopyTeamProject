@@ -20,9 +20,6 @@ private:
 	virtual		~CImGuiManager();
 
 public:
-	void		Key_Input(const _float& fTimeDelta);
-
-public:
 	_bool		Get_Switch() { return m_bToolSwitch; };
 	void		Set_Switch(_bool bSwitch) { m_bToolSwitch = bSwitch; }
 
@@ -34,20 +31,13 @@ public:
 
 ///////////////////// 유진 맵툴 ////////////////////////////
 public:
-	typedef struct	SortCube {  //큐브 텍스쳐 정렬 목적 구조체
-		_uint					iIndex;			//인덱스
-		char*					stFileName;		//파일 이름(정렬 용)
-		_uint					iNameNumber;	//파일명 끝의 숫자
-		IDirect3DCubeTexture9*  tTexture;
-	}SORTCUBE;
-
 	void		Set_CubeData(vector<CUBE*> vecCubeData)
 				{	vectorCubeTemp = vecCubeData;	}
  	void		Set_CubeSize(_float& Width, _float& Height, _float& Depth)
  				{
-					m_fCubesize.m_fX = Width;
-					m_fCubesize.m_fY = Height;
-					m_fCubesize.m_fZ = Depth;
+					m_fCubesize.fX = Width;
+					m_fCubesize.fY = Height;
+					m_fCubesize.fZ = Depth;
  				}
 	void		Save_MapData();
 	void		Load_MapData();
@@ -95,31 +85,32 @@ private:
 
 	///////////////////// 유진 OBJ툴 ////////////////////////////////
 public:
-	typedef struct	SortTexture {  //평면 텍스쳐 정렬 목적 구조체
-		_uint					iIndex;			//인덱스
-		char*					stFileName;		//파일 이름(정렬 용)
-		_uint					iNameNumber;	//파일명 끝의 숫자
-		IDirect3DBaseTexture9*  tTexture;
-	}SORTTEX;
-
 	void				LoadTexturesFromDirectory
 						(const wchar_t* folderPath, vector<IDirect3DCubeTexture9*>& textureVector);
 	void				LoadTexturesFromDirectory
 						(const wchar_t* folderPath, vector<IDirect3DBaseTexture9*>& textureVector);
 	bool				Get_OBJModeCheck() { return m_bOBJ_Mode_Check; }
 	
+	bool				Get_CubeType() { return m_bCubeType; }
+	bool				Get_PlaneType() { return m_bPlaneType; }
+
 	void				Save_ObjData();
-	void				Load_ObjData();
+
+	bool				Get_OBJLoad_Check() { return m_bOBJLoad_Check; }
+	void	 			Set_OBJLoad_Check() { m_bOBJLoad_Check = !m_bOBJLoad_Check; }
 
 	OBJ_TYPE			Get_OBJType() { return m_eOBJType; }
 	void				Set_OBJType(OBJ_TYPE eType) { m_eOBJType = eType; }
 	_uint				Get_OBJTexNum() { return m_iOBJTextureNum; }
-
-	vector<IDirect3DCubeTexture9*>&		Get_CubeTextureObjVector() { return m_pCubeTextureObj; }
-	vector<IDirect3DBaseTexture9*>&		Get_PlaneTextureObjVector() { return m_pPlaneTextureObj; }
+	
+	OBJ_ATTRIBUTE		Get_OBJATTRIBUTE() { return m_eOBJ_Attribute; }
+	void				Set_OBJATTRIBUTE(OBJ_ATTRIBUTE eAttri) { m_eOBJ_Attribute = eAttri; }
 
 	_uint				Get_OBJ_RotateCountCW() { return m_Rotate_Count_CW; }
 	void				Set_OBJ_RotateCountCW_Zero() { m_Rotate_Count_CW = 0; }
+
+	vector<IDirect3DCubeTexture9*>&		Get_CubeTextureObjVector() { return m_pCubeTextureObj; }
+	vector<IDirect3DBaseTexture9*>&		Get_PlaneTextureObjVector() { return m_pPlaneTextureObj; }
 
 private:
 
@@ -139,13 +130,15 @@ private:
 	_uint								m_Rotate_Count_CW;		//시계방향
 	
 	bool								m_bOBJ_Mode_Check		= false;
+	bool								m_bOBJLoad_Check		= false;
 
 	bool								m_bCubeType				= false;
 	bool								m_bPlaneType			= false;
 	OBJ_TYPE							m_eOBJType				= OBJ_TYPE::OBJ_TYPE_END;
+	int									m_forObjAttribute		= 3; //0,1,2,3만 선택할거라서
+	OBJ_ATTRIBUTE						m_eOBJ_Attribute		= OBJ_ATTRIBUTE::ATTRIBUTE_END;
 
-	vector<OBJData*>					vectorOBJPlaneTemp;
-	vector<OBJData*>					vectorOBJCubeTemp;
+	vector<OBJData*>					vectorOBJTemp;
 
 
 	///////////////////// 승용 UI툴 /////////////////////////////////

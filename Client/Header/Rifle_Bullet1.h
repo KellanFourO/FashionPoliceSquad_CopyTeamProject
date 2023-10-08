@@ -20,34 +20,23 @@ private:
 	virtual ~CRifle_Bullet1();
 
 public:
-	virtual	HRESULT	Ready_GameObject(_vec3 _StartPos, _int iColorIndex);
-	virtual _int	Update_GameObject(const _float& fTimeDelta) override;
-	virtual void	LateUpdate_GameObject() override;
-	virtual void	Render_GameObject() override;
+	virtual	HRESULT		Ready_GameObject(_vec3 _StartPos, _int iColorIndex);
+	virtual _int		Update_GameObject(const _float& fTimeDelta) override;
+	virtual void		LateUpdate_GameObject() override;
+	virtual void		Render_GameObject() override;
+
 
 public:
-	virtual void		OnCollisionEnter(CCollider* _pOther);
-	virtual void		OnCollisionStay(CCollider* _pOther);
-	virtual void		OnCollisionExit(CCollider* _pOther);
+	HRESULT				Add_Component();
 
-public:
-	HRESULT			Add_Component();
-	void			Color_Select();
-	void			Shoot(_vec3 _StartPos, int iColorIndex);
 private:
-	CRcTex* m_pBufferCom = nullptr; // 텍스처를 그리기위한 버퍼 컴포넌트
-	CTransform* m_pTransformCom = nullptr; // 이동 컴포넌트
-	CTexture* m_pTextureCom = nullptr; // 텍스쳐 컴포넌트
+	CRcTex*				m_pBufferCom = nullptr; // 텍스처를 그리기위한 버퍼 컴포넌트
+	CTexture*			m_pTextureCom = nullptr; // 텍스쳐 컴포넌트
 
 private:
 	_vec3			m_vDir, m_vPos;
 
 	_float			m_fLiveTime;
-	_bool			m_bShooting = false;
-
-	_tchar* m_pColorTag;
-	_int			m_iColorIndex;
-
 	_vec3			m_vStartPos;
 
 	D3DXCOLOR		m_FilterColor; // 필터 색상

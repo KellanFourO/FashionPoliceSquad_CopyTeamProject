@@ -43,6 +43,8 @@ _uint CLoading::Loading_For_Stage()
 	Set_Value(3);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_PlaneTex", CRcTex::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_EffectTex", CEffectTex::Create(m_pGraphicDev)), E_FAIL)
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CubeTexture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Bin/Resource/Texture/Obj/CubeType/Box_Full%d.dds", OBJ_TYPE::CUBE_OBJ, 3)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_PlaneTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Obj/PlaneType/PlaneType_%d.png", OBJ_TYPE::PLANE_OBJ, 22)), E_FAIL);
 	Set_Value(3);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_SYTex", CSYTex::Create(m_pGraphicDev)), E_FAIL);
 	Set_Value(3);
@@ -81,6 +83,7 @@ _uint CLoading::Loading_For_Stage()
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Dyehard", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Guns/wpn-dyehard2.png")), E_FAIL);
 		Set_Value(3);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Rifle", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Guns/wpn-tailormade-body2.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_RifleHand", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Guns/tailormade-hand1.png")), E_FAIL);
 		Set_Value(3);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Belt", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player/Belt.png")), E_FAIL);
 		Set_Value(3);
@@ -95,7 +98,7 @@ _uint CLoading::Loading_For_Stage()
 
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_PaintBall", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Guns/paintballs.png")), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Lazer", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Guns/laserbeam_R.png")), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_R_Bullet", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Guns/Rifle_Bullet.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_RifleBullet", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Guns/Rifle_Bullet.png")), E_FAIL);
 		Set_Value(3);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Item", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Item/item-pickups.png")), E_FAIL);
 		Set_Value(3);
@@ -137,8 +140,8 @@ _uint CLoading::Loading_For_MapTool()
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CubeTex", CCubeTex::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Collider", CCollider::Create(m_pGraphicDev)), E_FAIL);
 
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CubeTexture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Bin/Resource/Texture/Obj/CubeType/Box_Full%d.dds", 3)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_PlaneTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Obj/PlaneType/PlaneType_%d.png", 20)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CubeTexture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Bin/Resource/Texture/Obj/CubeType/Box_Full%d.dds", OBJ_TYPE::CUBE_OBJ, 3)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_PlaneTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Obj/PlaneType/PlaneType_%d.png", OBJ_TYPE::PLANE_OBJ, 22)), E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_PlaneTex", CRcTex::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CursorTexture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Bin/Resource/Texture/Cursor/MapCursor%d.dds", 1)), E_FAIL);

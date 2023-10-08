@@ -39,16 +39,23 @@ CPlayerGunState* CPaintShotGun_Idle::Update(CPlayerGun* ShotGun, const float& fT
     m_vPrePos = vPlayerPos; // 이전 좌표랑 비교해서 숫자가 다르면 WALK로 넘김
 
     if(m_pHost->Get_Fire() && m_pHost->Get_Ready() && m_pHost->Get_GunInfo()->m_iCurrentBullet > 0)
-        return dynamic_cast<CPaintShotGun*>(m_pHost)->Get_State(4);
+        return dynamic_cast<CPaintShotGun*>(m_pHost)->Get_State(4); // Shot
+
+    else if (m_pHost->Get_RBFire())
+    {
+        return dynamic_cast<CPaintShotGun*>(m_pHost)->Get_State(6); // Lazer
+    }
 
     else if(m_pHost->Get_GunInfo()->m_iCurrentBullet <= 0)
     {
         return dynamic_cast<CPaintShotGun*>(m_pHost)->Get_State(5);
     }
 
+
     return nullptr;
 }
 
 void CPaintShotGun_Idle::Release(CPlayerGun* ShotGun)
 {
+    m_fBehaviorTime = 0.f;
 }

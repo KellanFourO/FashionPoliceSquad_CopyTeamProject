@@ -5,7 +5,6 @@
 
 #include "Export_Utility.h"
 #include "Export_System.h"
-#include "Engine_Enum.h"
 
 #include "Player.h"
 #include "Monster.h"
@@ -63,12 +62,7 @@ Engine::_int Engine::CMyUI::Update_GameObject(const _float& fTimeDelta)
 	if (m_bLateInit)
 	{
 		m_pPlayer = dynamic_cast<CPlayer*>(Engine::Management()->GetInstance()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER).back());
-
-		if (m_pPlayer->Get_Gun())
-		{
-			m_pPlayerGun = m_pPlayer->Get_Gun();
-			m_bLateInit = false;
-		}
+		m_bLateInit = false;
 	}
 
 	//if (CImGuiManager::GetInstance()->Get_vecUI().size() != 0)
@@ -178,106 +172,34 @@ void CMyUI::HP_Function(const _float& fTimeDelta)
 void CMyUI::Sprite_Function(const _float& fTimeDelta)
 {
 
-	//m_tPlayerInfo.PlayerState
-	//if (m_pPlayerInfo->PlayerState->StateID == PlayerStateID::Player_Left)
-	//{
-	//	m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_left.png")->Get_Info()->pTexture, 0);
-	//}
-	//else if (m_pPlayerInfo->PlayerState->StateID == PlayerStateID::Player_Right)
-	//{
-	//	m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_right.png")->Get_Info()->pTexture, 0);
-	//}
-	//else if (m_pPlayerInfo->PlayerState->StateID == PlayerStateID::Player_Hit)
-	//{
-	//	m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_front_hurt.png")->Get_Info()->pTexture, 0);
-	//}
-	//else if (m_pPlayerInfo->PlayerState->StateID == PlayerStateID::Player_Heal)
-	//{
-	//	m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_smile.png")->Get_Info()->pTexture, 0);
-	//}
-	//else if (m_pPlayerInfo->PlayerState->StateID == PlayerStateID::Player_Heal)
-	//{
-	//	m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_smirk_low.png")->Get_Info()->pTexture, 0);
-	//}
-	//else
-	//{
-	//	m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"SPRITE_hud_front.png")->Get_Info()->pTexture, 0);
-	//}
-
-
-
-
-
-	/*if (iCount < 10)
+	if (m_pPlayer->Get_INFO()->PlayerState->StateID == PlayerStateID::Player_Left)
 	{
-		++iCount;
+		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_left.png")->Get_Info()->pTexture, 0);
+	}
+	else if (m_pPlayer->Get_INFO()->PlayerState->StateID == PlayerStateID::Player_Right)
+	{
+		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_right.png")->Get_Info()->pTexture, 0);
+	}
+	else if (m_pPlayer->Get_INFO()->PlayerState->StateID == PlayerStateID::Player_Hit)
+	{
+		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_front_hurt.png")->Get_Info()->pTexture, 0);
+	}
+	else if (m_pPlayer->Get_INFO()->PlayerState->StateID == PlayerStateID::Player_Heal)
+	{
+		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_smile.png")->Get_Info()->pTexture, 0);
+	}
+	else if (m_pPlayer->Get_INFO()->PlayerState->StateID == PlayerStateID::Player_Armor)
+	{
+		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_smirk_low.png")->Get_Info()->pTexture, 0);
+	}
+	else if (m_pPlayer->Get_INFO()->PlayerState->StateID == PlayerStateID::Player_Lv_Up)
+	{
+		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_smile.png")->Get_Info()->pTexture, 0);
 	}
 	else
 	{
-		++iTempState;
-		iCount = 0;
-	}
-
-	if (iTempState > 12)
-		iTempState = 0;
-
-
-
-	switch (iTempState)
-	{
-	case 0:
 		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"SPRITE_hud_front.png")->Get_Info()->pTexture, 0);
-		break;
-
-	case 1:
-		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_front_hurt.png")->Get_Info()->pTexture, 0);
-		break;
-
-	case 2:
-		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_grimace_low.png")->Get_Info()->pTexture, 0);
-		break;
-
-	case 3:
-		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_left.png")->Get_Info()->pTexture, 0);
-		break;
-
-	case 4:
-		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_right.png")->Get_Info()->pTexture, 0);
-		break;
-
-	case 5:
-		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_smile.png")->Get_Info()->pTexture, 0);
-		break;
-
-	case 6:
-		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_smirk.png")->Get_Info()->pTexture, 0);
-		break;
-
-	case 7:
-		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_sad_dirt.png")->Get_Info()->pTexture, 0);
-		break;
-
-	case 8:
-		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_lef_hurt.png")->Get_Info()->pTexture, 0);
-		break;
-
-	case 9:
-		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_grimace.png")->Get_Info()->pTexture, 0);
-		break;
-
-	case 10:
-		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_left_hurt.png")->Get_Info()->pTexture, 0);
-		break;
-
-	case 11:
-		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_smirk_low.png")->Get_Info()->pTexture, 0);
-		break;
-
-	case 12:
-		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"des-hud_smile_low.png")->Get_Info()->pTexture, 0);
-		break;
-
-	}*/
+	}
 
 }
 
@@ -287,6 +209,7 @@ void CMyUI::Font_Function(const _float& fTimeDelta)
 
 void CMyUI::Bullet_Function()
 {
+	m_pPlayerGun = m_pPlayer->Get_Gun();
 
 	if (m_eType == UI_TYPE::BULLET && m_pPlayerGun)
 	{

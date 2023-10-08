@@ -1,7 +1,6 @@
 #include "stdafx.h"
-#include "..\Header\MuzzlefFlash_Rifle.h"
-#include "PaintBall.h"
-#include "Rifle.h"
+#include "MuzzlefFlash_Rifle.h"
+#include "TailorAssertRifle.h"
 
 #include "Export_System.h"
 #include "Export_Utility.h"
@@ -25,6 +24,10 @@ HRESULT CMuzzleFlash_Rifle::Ready_GameObject()
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
+	_vec3 vGunScale = { 0.08f,0.08f,0.08f };
+	m_pTransformCom->Set_Scale(vGunScale);
+
+
 	return S_OK;
 }
 
@@ -33,15 +36,23 @@ Engine::_int CMuzzleFlash_Rifle::Update_GameObject(const _float& fTimeDelta)
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
-	CTransform* pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
+	if (m_bLateInit)
+	{
+		m_pPlayerTransform = dynamic_cast<CTransform*>(Engine::Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
+		m_pPlayerGun = dynamic_cast<CTailorAssertRifle*>(Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER_GUN).back());
+		dynamic_cast<CTailorAssertRifle*>(m_pPlayerGun)->Set_Flash(this);
 
-	NULL_CHECK_RETURN(pPlayerTransCom, -1); // 플레이어 가져오기
+
+		m_bLateInit = false;
+	}
+
+
 
 	_vec3	vPlayerPos, vPlayerLook, vPlayerUp;
 
-	pPlayerTransCom->Get_Info(INFO_UP, &vPlayerUp);
-	pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
-	pPlayerTransCom->Get_Info(INFO_LOOK, &vPlayerLook);
+	m_pPlayerTransform->Get_Info(INFO_UP, &vPlayerUp);
+	m_pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);
+	m_pPlayerTransform->Get_Info(INFO_LOOK, &vPlayerLook);
 	D3DXVec3Normalize(&vPlayerLook, &vPlayerLook);
 
 	_vec3 vGunMove;
@@ -51,7 +62,6 @@ Engine::_int CMuzzleFlash_Rifle::Update_GameObject(const _float& fTimeDelta)
 	D3DXVec3Normalize(&vGunMove, &vGunMove);
 
 
-	_vec3 vGunScale = { 0.08f,0.08f,0.08f };
 
 	_vec3 vGunMoveRight = vGunMove / 20;
 	_vec3 vGunMoveDown = -vPlayerUp / 20;
@@ -59,26 +69,30 @@ Engine::_int CMuzzleFlash_Rifle::Update_GameObject(const _float& fTimeDelta)
 	m_fGunMoveRight = 1.36;
 	m_fGunMoveDown = 0.68;
 
-	m_pTransformCom->Set_Scale(vGunScale);
 	m_pTransformCom->Set_Pos(vPlayerPos + vPlayerLook / 4 + vGunMoveRight * m_fGunMoveRight + vGunMoveDown * m_fGunMoveDown);
 
 
-	_long	dwMouseMove = 0;
-	if (dwMouseMove = Engine::Get_DIMouseMove(DIMS_X))
+	if (m_bFire)
 	{
-		m_pTransformCom->Rotation(ROT_Y, D3DXToRadian(dwMouseMove / 10.f));
+		m_fRenderingTick += fTimeDelta;
+
+		if (m_fRenderingTick > 0.1f)
+		{
+			m_RandAngle -= rand() % 20;
+			m_bFire = false;
+			dynamic_cast<CTailorAssertRifle*>(m_pPlayerGun)->Set_Index(0);
+			m_fRenderingTick = 0.f;
+		}
+
 	}
-	if (dwMouseMove = Engine::Get_DIMouseMove(DIMS_Y))
+	else
 	{
-		m_pTransformCom->Rotation(ROT_X, D3DXToRadian(dwMouseMove / 10.f));
-	}
-	
-	if (!dynamic_cast<CRifle*>(m_pGun)->m_bFire) {
-		m_RandAngle -= rand() % 20;
-	}
-	else {
 		m_pTransformCom->RotateAxis(vPlayerLook, m_RandAngle);
 	}
+
+	Mouse_Input();
+
+
 
 	__super::Update_GameObject(fTimeDelta);
 
@@ -87,13 +101,13 @@ Engine::_int CMuzzleFlash_Rifle::Update_GameObject(const _float& fTimeDelta)
 
 void CMuzzleFlash_Rifle::LateUpdate_GameObject()
 {
-	
+
 }
 
 void CMuzzleFlash_Rifle::Render_GameObject()
 {
-
-	if (dynamic_cast<CRifle*>(m_pGun)->m_bFire) {
+	if (m_bFire)
+	{
 		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 		m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
@@ -101,7 +115,6 @@ void CMuzzleFlash_Rifle::Render_GameObject()
 		m_pBufferCom->Render_Buffer();
 		m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
 		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-		i++;
 	}
 }
 
@@ -124,6 +137,20 @@ HRESULT CMuzzleFlash_Rifle::Add_Component()
 	return S_OK;
 }
 
+void CMuzzleFlash_Rifle::Mouse_Input()
+{
+	_long	dwMouseMove = 0;
+	if (dwMouseMove = Engine::Get_DIMouseMove(DIMS_X))
+
+	{
+		m_pTransformCom->Rotation(ROT_Y, D3DXToRadian(dwMouseMove / 10.f));
+	}
+	if (dwMouseMove = Engine::Get_DIMouseMove(DIMS_Y))
+	{
+		m_pTransformCom->Rotation(ROT_X, D3DXToRadian(dwMouseMove / 10.f));
+	}
+}
+
 CMuzzleFlash_Rifle* CMuzzleFlash_Rifle::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CMuzzleFlash_Rifle* pInstance = new CMuzzleFlash_Rifle(pGraphicDev);
@@ -131,7 +158,7 @@ CMuzzleFlash_Rifle* CMuzzleFlash_Rifle::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
 		Safe_Release(pInstance);
-		MSG_BOX("Player Create Failed");
+		MSG_BOX("MuzzleFlash_Rifle Create Failed");
 
 		return nullptr;
 	}

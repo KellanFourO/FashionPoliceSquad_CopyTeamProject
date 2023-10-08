@@ -48,19 +48,20 @@ public:
 	CRcTex*			Get_Buffer()	{ return m_pBufferCom; }
 	Player_Info*	Get_INFO() { return &INFO; }
 	CPlayerState*	Get_State(_int _index) { return m_pStateArray[_index]; }
-	_vec3			Get_Dir() { return m_vDir; }
+	_vec3			Get_Dir() { return m_vMoveDir; }
 	CPlayerGun*		Get_Gun() { return m_pGun; }
+	_float			Get_XMove() { return m_fXmove;}
+
 
 private:
 	HRESULT			Add_Component();
 	void			SetGun();
 	void			Mouse_Input(const _float& fTimeDelta);
-	void			Key_Input(const _float& fTimeDelta);
+
 	void			StateMachine(_float _fTimeDelta);
 
 public:
-
-	void			Gun_Select(_int Gun_Number);
+	void			Key_Input(const _float& fTimeDelta);
 	void			Healed(_float _fHP);		// 회복됐을때
 	void			Armor_Get(_float _iArmor);	// 아머 획득
 	void			Attacked(_float _fDamage);	// 아머/체력에 받은 데미지 계산
@@ -77,19 +78,22 @@ private:
 
 	Player_INFO		INFO;
 
-	_bool			m_bJump;
+	_bool			m_bJump = false;
 	_bool			m_bFix;
 	_bool			m_bCheck;
 	_bool			m_bLateInit = true;
 	_bool			m_bFire = true; // 총쏘는 시간 제어용
 
+	_float			m_fTime_HP_Release;
 	_float			m_fHP_Reduction = 5.f; // HP 감소 속도
 	_float			m_fJumpTick;		//
 	_float			m_fJumpCount;		//
 	_float			m_fSpeed_Vertical;	//점프 관련
 	_float			m_fTall;			//키
+	_float			m_fXmove; // 플레이어 바라보는 방향
 
-	_vec3			m_vDir;
+	_vec3			m_vMoveDir;
+
 
 	CPlayerGun*		m_pGun = nullptr; // 장비중인 총
 

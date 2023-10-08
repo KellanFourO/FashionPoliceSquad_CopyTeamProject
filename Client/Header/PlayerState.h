@@ -24,5 +24,5 @@ public:
 
 	_float			m_fAttackTime = 0;
 
-	//PlayerStateID	StateID = PlayerStateID::Player_IDLE;
+	PlayerStateID	StateID = PlayerStateID::Player_IDLE;
 };

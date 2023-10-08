@@ -49,6 +49,8 @@ protected:
 	_float			m_fTimeDelta	= 0.f;
 	_float			m_fSpeed		= 0.f;
 	_vec3			m_vShotDir;
+	_vec3			m_vShotPos;
+
 
 	BULLETTYPE	    m_eBulletType = BULLETTYPE::BULLETTYPE_END;
 	OBJECTTAG		m_eTargetTag = OBJECTTAG::OBJECT_END;
