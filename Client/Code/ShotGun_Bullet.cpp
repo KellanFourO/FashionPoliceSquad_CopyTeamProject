@@ -24,10 +24,10 @@ CShotGunBullet::~CShotGunBullet()
 HRESULT CShotGunBullet::Ready_GameObject(_vec3 _StartPos, _int iColorIndex)
 {
 
-	Set_ObjectTag(OBJECTTAG::PLAYERBULLET);
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+	Set_ObjectTag(OBJECTTAG::PLAYERBULLET);
 
-	m_fSpeed = 3.f;
+	m_fSpeed = 100.f;
 	m_fLiveTime = 0.f;
 	m_fDmg = 10.f;
 
@@ -40,8 +40,10 @@ HRESULT CShotGunBullet::Ready_GameObject(_vec3 _StartPos, _int iColorIndex)
 
 
 
-	_vec3	vBulletScale = { 1.f,1.f,1.f };
+	_vec3	vBulletScale = { 0.3f,0.3f,0.3f };
 	m_pTransformCom->Set_Scale(vBulletScale);
+	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
+
 	return S_OK;
 }
 
@@ -59,7 +61,7 @@ Engine::_int CShotGunBullet::Update_GameObject(const _float& fTimeDelta)
 			vLook = vPlayerPos - m_vPos;
 			D3DXVec3Normalize(&vLook, &vLook);
 
-			m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
+			
 
 
 

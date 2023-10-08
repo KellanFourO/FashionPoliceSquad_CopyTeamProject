@@ -24,8 +24,8 @@ CRifle_Bullet1::~CRifle_Bullet1()
 HRESULT CRifle_Bullet1::Ready_GameObject(_vec3 _StartPos, _int iColorIndex)
 {
 
-	Set_ObjectTag(OBJECTTAG::PLAYERBULLET);
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+	Set_ObjectTag(OBJECTTAG::PLAYERBULLET);
 
 	m_fSpeed = 110.f;
 	m_fDmg = 10.f;

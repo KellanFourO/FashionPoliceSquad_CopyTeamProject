@@ -6,12 +6,12 @@
 #include "Export_Utility.h"
 
 CBrifCase_2::CBrifCase_2(LPDIRECT3DDEVICE9 pGraphicDev)
-	:Engine::CGameObject(pGraphicDev)
+	:CBullet(pGraphicDev)
 {
 }
 
-CBrifCase_2::CBrifCase_2(const CBrifCase_2& rhs)
-	: Engine::CGameObject(rhs)
+CBrifCase_2::CBrifCase_2(CBrifCase_2& rhs)
+	: CBullet(rhs)
 {
 }
 
@@ -21,18 +21,20 @@ CBrifCase_2::~CBrifCase_2()
 
 HRESULT CBrifCase_2::Ready_GameObject()
 {
-	Set_ObjectTag(OBJECTTAG::MONSTERBULLET);
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+	Set_ObjectTag(OBJECTTAG::MONSTERBULLET);
 
 	m_vPos = m_pHostTransform->m_vInfo[INFO_POS];
+
+	m_pTransformCom->Set_Host(this);
 	m_pTransformCom->Set_Pos(m_vPos);
+	m_pTransformCom->Set_Scale(_vec3{ 2.f,2.f,2.f });
 	
 	m_pCollider->Set_Host(this);
 	m_pCollider->Set_Transform(m_pTransformCom);
 	m_pBufferCom->SetCount(4,1);
 
 	D3DXVec3Normalize(&m_vDir, &m_vDir);
-	m_pTransformCom->Set_Scale(_vec3{ 2.f,2.f,2.f });
 
 	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
 
@@ -130,13 +132,16 @@ HRESULT CBrifCase_2::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].emplace(COMPONENTTAG::COLLIDER, pComponent);
 
+	for (int i = 0; i < ID_END; ++i)
+		for (auto& iter : m_mapComponent[i])
+			iter.second->Init_Property(this);
 	return S_OK;
 }
 
 void CBrifCase_2::Shot(_vec3 _StartPos)
 {
 	_vec3 vPlayerPos;
-	m_pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);
+	m_pPlayerTransformCom->Get_Info(INFO_POS, &vPlayerPos);
 
 	_vec3 vDirection = vPlayerPos - _StartPos;
 
@@ -158,7 +163,7 @@ CBrifCase_2* CBrifCase_2::Create(LPDIRECT3DDEVICE9 pGraphicDev, CTransform* pHos
 	CBrifCase_2* pInstance = new CBrifCase_2(pGraphicDev);
 	
 	pInstance->m_pHostTransform = pHostTransform;
-	pInstance->m_pPlayerTransform = pPlayerTransform;
+	pInstance->m_pPlayerTransformCom = pPlayerTransform;
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{

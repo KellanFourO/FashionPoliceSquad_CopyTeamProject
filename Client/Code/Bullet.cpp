@@ -19,11 +19,6 @@ CBullet::~CBullet()
 
 HRESULT CBullet::Ready_GameObject()
 {
-
-	//m_pCollider->Set_Transform(m_pTransformCom);
-	//m_pCollider->Set_Host(this);
-	//m_pTransformCom->Set_Host(this);
-
 	return S_OK;
 }
 
@@ -41,7 +36,7 @@ _int CBullet::Update_GameObject(const _float& fTimeDelta)
 	}
 
 
-
+	m_pCollider->SetCenterPos(m_pTransformCom->m_vInfo[INFO_POS]);
 	__super::Update_GameObject(fTimeDelta);
 	return OBJ_NOEVENT;
 }

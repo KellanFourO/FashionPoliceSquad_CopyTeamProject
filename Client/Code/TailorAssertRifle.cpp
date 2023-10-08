@@ -45,7 +45,7 @@ HRESULT CTailorAssertRifle::Ready_GameObject()
 	m_tGunInfo.m_szGunName = L"Tailormade";
 	m_tGunInfo.m_fFireSpeed = 0.1f;
 	m_tGunInfo.m_fReloadSpeed = 1.f;
-	m_tGunInfo.m_iCurrentBullet = 1;
+	m_tGunInfo.m_iCurrentBullet = 30;
 	m_tGunInfo.m_iReloadBullet = m_tGunInfo.m_iCurrentBullet;
 	m_tGunInfo.m_iMaxBullet = m_tGunInfo.m_iReloadBullet * 10;
 

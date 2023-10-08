@@ -30,11 +30,12 @@ HRESULT CKickBoardMonster::Ready_GameObject()
 {
     __super::Ready_GameObject();
 
+    Set_ObjectTag(OBJECTTAG::MONSTER);
     INFO.iMobType = MonsterType::KCIKBOARD;
     FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
     ReadyState();
-
+    
     INFO.MonsterState = m_pStateArray[IDLE];
     INFO.MonsterState->Initialize(this);
     INFO.fHP = 100.f;
@@ -42,11 +43,12 @@ HRESULT CKickBoardMonster::Ready_GameObject()
     INFO.vPos = { 200.f,4.f,30.f }; // 470이엇음
 
     m_fDectedRange = 70.f;
-    m_fAttackRange = 10.f;
+    m_fAttackRange = 20.f;
     m_fSpeed = 25.f;
+    
 
-    m_pTransformCom->Set_Pos(INFO.vPos);
     m_pTransformCom->Set_Scale({ 5.0f,5.0f, 5.0f });
+    m_pTransformCom->Set_Pos(INFO.vPos);
 
     m_pBufferCom->SetCount(5, 4);
     m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/Monster/neonshirt-v1_Resize_Hit.png", 1);
@@ -56,16 +58,18 @@ HRESULT CKickBoardMonster::Ready_GameObject()
 	m_pCollider->Set_Transform(m_pTransformCom);
 	m_pRigidBody->Set_Host(this);
 	m_pRigidBody->Set_Transform(m_pTransformCom);
-	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
 
+
+	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
     m_eHitType = BULLETTYPE::SHOTGUN_RAZER;
+    m_pMonsterBullet = nullptr;
     return S_OK;
 }
 
 _int CKickBoardMonster::Update_GameObject(const _float& fTimeDelta)
 {
     __super::Update_GameObject(fTimeDelta);
-
+    m_pRigidBody->Update_RigidBody(fTimeDelta);
     return OBJ_NOEVENT;
 }
 
@@ -75,19 +79,20 @@ void CKickBoardMonster::LateUpdate_GameObject()
 
 
     if (INFO.bDead) {
-        INFO.MonsterState = m_pStateArray[DEAD ];
+        INFO.MonsterState = m_pStateArray[DEAD];
         INFO.MonsterState->Initialize(this);
         INFO.bDead = false;
     }   // 사망판정
 
 
-    _vec3	vPos;
-    m_pTransformCom->Get_Info(INFO_POS, &vPos);
-    __super::Compute_ViewZ(&vPos);
+    //_vec3	vPos;
+    //m_pTransformCom->Get_Info(INFO_POS, &vPos);
+    //__super::Compute_ViewZ(&vPos);
 }
 
 void CKickBoardMonster::Render_GameObject()
 {
+    m_pCollider->Render_Collider();
     m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 
     INFO.MonsterState->Render(this);
@@ -104,32 +109,23 @@ void CKickBoardMonster::ReadyState()
 
 void CKickBoardMonster::OnCollisionEnter(CCollider* _pOther)
 {
-    if (_pOther->Get_Host()->Get_ObjectTag() != OBJECTTAG::PLAYER &&
-        _pOther->Get_Host()->Get_ObjectTag() != OBJECTTAG::ITEM &&
-        _pOther->Get_Host()->Get_ObjectTag() != OBJECTTAG::PLAYERBULLET)
-        __super::OnCollisionEnter(_pOther);
+    __super::OnCollisionEnter(_pOther);
 
     // 충돌 밀어내기 후 이벤트 여기다가 구현 ㄱㄱ ! .
 
     if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYER)
     {
+
         cout << "워리어 공격" << endl;
     }
 }
 
 void CKickBoardMonster::OnCollisionStay(CCollider* _pOther)
 {
-	if (_pOther->Get_Host()->Get_ObjectTag() != OBJECTTAG::PLAYER &&
-		_pOther->Get_Host()->Get_ObjectTag() != OBJECTTAG::ITEM &&
-		_pOther->Get_Host()->Get_ObjectTag() != OBJECTTAG::PLAYERBULLET)
-		__super::OnCollisionStay(_pOther);
+	
+    __super::OnCollisionStay(_pOther);
 
 	// 충돌 밀어내기 후 이벤트 여기다가 구현 ㄱㄱ ! .
-
-	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYER)
-	{
-		cout << "워리어 공격" << endl;
-	}
 }
 
 void CKickBoardMonster::OnCollisionExit(CCollider* _pOther)

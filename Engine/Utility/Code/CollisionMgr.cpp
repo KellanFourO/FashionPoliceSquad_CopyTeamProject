@@ -104,15 +104,15 @@ void CollisionMgr::CheckCollisionByType(OBJECTTAG _eObjectLeft, OBJECTTAG _eObje
 	//for (auto& iterL = vecLeft.begin(); iterL != vecLeft.end(); ++iterL)
 	for (auto& iterL : vecLeft)
 	{
-		if (iterL->Get_ObjectTag() == OBJECTTAG::PLAYERBULLET)
-			int i = 0;
-
-		if (nullptr == iterL->Get_Collider())
-			continue;
-
-		if (iterL->Get_ObjectTag() == OBJECTTAG::DEAD_MONSTER) {
-			continue;	//재연 추가, DEAD_MONSTER이면 검사안함
-		}
+		//if (iterL->Get_ObjectTag() == OBJECTTAG::PLAYERBULLET)
+		//	int i = 0;
+		//
+		//if (nullptr == iterL->Get_Collider())
+		//	continue;
+		//
+		//if (iterL->Get_ObjectTag() == OBJECTTAG::DEAD_MONSTER) {
+		//	continue;	//재연 추가, DEAD_MONSTER이면 검사안함
+		//}
 
 		//for (auto& iterR = vecRight.begin(); iterR != vecRight.end(); ++iterR)
 		for (auto& iterR : vecRight)

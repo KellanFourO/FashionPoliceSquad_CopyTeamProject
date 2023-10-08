@@ -80,7 +80,9 @@ HRESULT CPlayer::Ready_GameObject()
 	INFO.vPos = { 20.f,5.f,20.f };
 	INFO.fStartDir = 0.f;//생각처럼 잘 안댐...
 
+	
 	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
+	
 	//m_pTransformCom->Rotation(ROT_Y,D3DXToRadian(INFO.fStartDir));
 
 	return S_OK;
@@ -115,7 +117,7 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 
 	//m_pGun->Update_GameObject(fTimeDelta);
 
-
+	m_pCollider->SetCenterPos(m_pTransformCom->m_vInfo[INFO_POS]);
 	m_pRigidBody->Update_RigidBody(fTimeDelta);
 	__super::Update_GameObject(fTimeDelta);
 	return OBJ_NOEVENT;

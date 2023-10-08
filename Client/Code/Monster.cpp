@@ -64,6 +64,7 @@ _int CMonster::Update_GameObject(const _float& fTimeDelta)
 
 	m_pUI_HPFrame->Update_GameObject(fTimeDelta);
 	m_pUI_HPValue->Update_GameObject(fTimeDelta);
+	m_pCollider->SetCenterPos(m_pTransformCom->m_vInfo[INFO_POS]);
 	m_pRigidBody->Update_RigidBody(fTimeDelta);
 
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
@@ -149,8 +150,6 @@ void CMonster::OnCollisionEnter(CCollider* _pOther)
 
 		if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYER)
 		{
-
-
 			cout << "워리어 공격" << endl;
 		}
 	}

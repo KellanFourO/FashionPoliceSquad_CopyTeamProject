@@ -45,7 +45,7 @@ HRESULT CPaintShotGun::Ready_GameObject()
 	m_tGunInfo.m_szGunName = L"2DYE-4 Elite";
 	m_tGunInfo.m_fFireSpeed = 1.f;
 	m_tGunInfo.m_fReloadSpeed = 1.f;
-	m_tGunInfo.m_iCurrentBullet = 1;
+	m_tGunInfo.m_iCurrentBullet = 8;
 	m_tGunInfo.m_iReloadBullet = m_tGunInfo.m_iCurrentBullet * 1;
 	m_tGunInfo.m_iMaxBullet = m_tGunInfo.m_iReloadBullet * 15;
 
