@@ -31,6 +31,7 @@ _int CBullet::Update_GameObject(const _float& fTimeDelta)
 	}
 
 	if (m_bShot)
+
 	{
 		m_pTransformCom->Move_Pos(&m_vShotDir,fTimeDelta,m_fSpeed);
 	}

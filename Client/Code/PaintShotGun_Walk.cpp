@@ -71,7 +71,10 @@ CPlayerGunState* CPaintShotGun_Walk::Update(CPlayerGun* ShotGun, const float& fT
 
 	if (m_pHost->Get_Fire() && m_pHost->Get_Ready() && m_pHost->Get_GunInfo()->m_iCurrentBullet > 0)
 		return dynamic_cast<CPaintShotGun*>(m_pHost)->Get_State(4);
-
+	else if (m_pHost->Get_RBFire())
+	{
+		return dynamic_cast<CPaintShotGun*>(m_pHost)->Get_State(6); // Lazer
+	}
 	else if (m_pHost->Get_GunInfo()->m_iCurrentBullet <= 0)
 	{
 		return dynamic_cast<CPaintShotGun*>(m_pHost)->Get_State(5);

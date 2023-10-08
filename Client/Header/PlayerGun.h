@@ -40,10 +40,12 @@ public:
 
 	_bool			Get_Ready() { return m_bReady; }
 	_bool			Get_Fire() { return m_bFire;}
+	_bool			Get_RBFire() { return m_bRBFire;}
 	Gun_INFO*		Get_GunInfo() { return &m_tGunInfo; }
 
 	void			Set_Ready(_bool _bReady) { m_bReady = _bReady; }
 	void			Set_Fire (_bool _bFire) { m_bFire = _bFire; }
+	void			Set_RBFire(_bool _RBFire) { m_bRBFire = _RBFire;}
 	void			Set_Scale(_vec3 _vScale) { m_vScale = _vScale;}
 	void			Set_Host(CGameObject* _pHost) { m_pHost = _pHost;}
 	void			Reset_GunMoveDown() { m_fGunMoveDown = 1.f;}
@@ -77,6 +79,7 @@ protected:
 	_bool				m_bCharged			= false; // 충전 확인
 	_bool				m_bReady			= true; // 연사속도제어
 	_bool				m_bFire				= false; // 발사 여부
+	_bool				m_bRBFire			= false; // 우클릭 발사
 	_bool				m_bLateInit			= true;
 
 

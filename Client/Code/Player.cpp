@@ -359,6 +359,14 @@ void CPlayer::Mouse_Input(const _float& fTimeDelta)
 		m_pGun->Set_Fire(true);
 	}
 
+	if (dwMouseMove = Engine::Get_DIMouseState(DIM_RB) && m_pGun->Get_Ready())
+	{
+		m_pGun->Set_RBFire(true);
+	}
+	else if (!(Engine::Get_DIMouseState(DIM_RB)))
+	{
+		m_pGun->Set_RBFire(false);
+	}
 }
 
 

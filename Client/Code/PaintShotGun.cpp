@@ -13,6 +13,7 @@
 
 #include "ShotGun_Bullet.h"
 
+
 #include "Export_System.h"
 #include "Export_Utility.h"
 
@@ -76,6 +77,8 @@ Engine::_int CPaintShotGun::Update_GameObject(const _float& fTimeDelta)
 
 	if (m_bLateInit)
 	{
+		m_pLazer = dynamic_cast<CLazer*>(Management()->Get_ObjectList(LAYERTAG::GAMELOGIC,OBJECTTAG::PLAYER_LAZER).back());
+
 		for (int i = 0; i < m_tGunInfo.m_iCurrentBullet; ++i)
 		{
 			CBullet* pBullet = CShotGunBullet::Create(m_pGraphicDev, _vec3(0, 0, 0), m_iBulletColor);

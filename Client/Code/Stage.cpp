@@ -193,11 +193,10 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::EFFECT, pGameObject), E_FAIL);	//¶óÀÌÇÃ ¼¶±¤
 
-		//
-		//pGameObject = CLazer::Create(m_pGraphicDev);
-		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYERBULLET, pGameObject), E_FAIL);
-		//dynamic_cast<CLazer*>(pGameObject)->Set_Gun(pGun);
+		pGameObject = CLazer::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_LAZER, pGameObject), E_FAIL);
+
 
 
 		pGameObject = CBelt::Create(m_pGraphicDev);
