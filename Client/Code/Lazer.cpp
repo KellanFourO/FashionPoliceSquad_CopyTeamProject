@@ -59,13 +59,13 @@ Engine::_int CLazer::Update_GameObject(const _float& fTimeDelta)
 	{
 		++m_fFrame;
 		m_fTestTime += 0.004f;
-		m_pTransformCom->Set_Scale(_vec3(0.1f, m_fTestTime, 0.05f));
+		m_pTransformCom->Set_Scale(_vec3(15.f, m_fTestTime, 0.05f));
 		m_fAnimateTime = 0;
 		if (m_fFrame > 10)
 		{
 			m_fFrame = 0;
-			m_fTestTime = 0.06f;
-			m_pTransformCom->Set_Scale(_vec3(0.1f, m_fTestTime, 0.05f));
+			m_fTestTime = 0.1f;
+			m_pTransformCom->Set_Scale(_vec3(15.f, m_fTestTime, 0.05f));
 		}
 	}
 
@@ -94,6 +94,7 @@ void CLazer::Render_GameObject()
 {
 	if (m_bFire)
 	{
+		m_pCollider->Render_Collider();
 		m_pGraphicDev->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
 
 		D3DCOLORVALUE Difuse = { 1.f, 0.f, 0.f, 1.f };
@@ -180,7 +181,7 @@ void CLazer::StartPosition()
 
 
 	m_pTransformCom->Set_Pos(vPlayerPos + vPlayerLook / 4 + vGunMoveRight * m_fGunMoveRight + vGunMoveDown * m_fGunMoveDown);
-	m_pTransformCom->RotateAxis(vPlayerLook, D3DXToRadian(150));
+	m_pTransformCom->RotateAxis(vPlayerUp, D3DXToRadian(90));
 
 }
 

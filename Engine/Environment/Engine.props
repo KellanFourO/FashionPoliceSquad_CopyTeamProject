@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <IncludePath>$(DXSDK_DIR)Include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)Lib\$(PlatformTarget)\;$(LibraryPath)</LibraryPath>
+    <OutDir>..\Bin\Export\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <IntDir>..\Bin\Intermediate\$(Configuration)\$(PlatformTarget)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\;..\Header\;..\..\Header\;$(SolutionDIr)Base\;$(SolutionDir)Reference\Header\FMod\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)Reference\Library\Engine\$(Configuration)\$(PlatformTarget)\;$(SolutionDir)Reference\Library\FMod\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;dinput8.lib;fmodex_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>attrib -r "$(SolutionDir)Reference\Header\*.*" /s /d
+xcopy "$(SolutionDir)Engine\Header\*.*" "$(SolutionDir)Reference\Header\" /y /e
+xcopy "..\Header\*.*" "$(SolutionDir)Reference\Header\" /y
+attrib +r "$(SolutionDir)Reference\Header\*.*" /s /d
+xcopy "$(OutDir)$(TargetName).lib" "$(SolutionDir)Reference\Library\Engine\$(Configuration)\$(PlatformTarget)\" /y
+xcopy "$(OutDir)$(TargetName).dll" "$(SolutionDir)Client\Bin\Export\$(Configuration)\$(PlatformTarget)\" /y
+xcopy "$(OutDir)$(TargetName).dll" "$(SolutionDir)Tool\Bin\Export\$(Configuration)\$(PlatformTarget)\" /y</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>헤더가 읽기모드로 복사되었습니다. 바이너리 파일이 복사되었습니다.</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>

@@ -24,7 +24,7 @@ HRESULT CBullet_GoldBar::Ready_GameObject()
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	_vec3 vScale = { 5.f, 5.f, 5.f };
+	_vec3 vScale = { 1.5f, 1.5f, 1.5f };
 	_vec3 vPos = Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::BOSS).back()->m_pTransformCom->m_vInfo[INFO_POS];
 	m_fDmg = 10.f;
 
