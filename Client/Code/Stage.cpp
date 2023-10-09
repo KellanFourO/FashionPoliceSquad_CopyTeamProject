@@ -16,6 +16,7 @@
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
 {
+	Engine::CGameObject* pGameObject = nullptr;
 }
 
 CStage::~CStage()
@@ -77,7 +78,7 @@ void CStage::LateUpdate_Scene()
 
 
 
-	Engine::CGameObject* pGameObject = nullptr;
+	
 
 
 
