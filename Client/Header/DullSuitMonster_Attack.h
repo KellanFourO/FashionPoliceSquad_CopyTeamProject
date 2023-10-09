@@ -1,5 +1,7 @@
 #pragma once
 #include "MonsterState.h"
+#include "BrifCase_2.h"
+
 class CDullSuitMonster_Attack : public CMonsterState
 {
 	enum ATTACKSTATE { READY1, READY2, THROW, THROWEND };
@@ -15,6 +17,8 @@ public:
 	virtual void Release(CMonster* _Monster)override;
 	virtual void Render(CMonster* _Monster) override;
 
+private:
+	CBullet*				LoadBullet();
 
 private:
 	_float		m_fTick = 0.f;

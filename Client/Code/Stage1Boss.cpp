@@ -43,7 +43,7 @@ HRESULT CStage1Boss::Ready_GameObject()
 
 	ReadyState();
 
-	
+
 	INFO.MonsterState = m_pStateArray[IDLE];
 	INFO.MonsterState->Initialize(this);
 	INFO.fHP = 1000.f;
@@ -98,8 +98,6 @@ void CStage1Boss::LateUpdate_GameObject()
 
 void CStage1Boss::Render_GameObject()
 {
-	m_pCollider->Render_Collider();
-
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 
 	INFO.MonsterState->Render(this);

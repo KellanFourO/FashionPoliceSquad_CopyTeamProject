@@ -6,7 +6,7 @@ class CPaintShotGun;
 
 BEGIN(Engine)
 
-class CRcTex;
+class CSYTex;
 class CTexture;
 class CTransform;
 class CRigidBody;
@@ -39,13 +39,14 @@ public:
 
 	void			StartPosition();
 	void			FirePosition(const _float& fTimeDelta);
+	void			SearchRangeTarget();
 
 
 private:
 	void			Mouse_Input();
 
 private:
-	CRcTex*		m_pBufferCom = nullptr; // 텍스처를 그리기위한 버퍼 컴포넌트
+	CSYTex*		m_pBufferCom = nullptr; // 텍스처를 그리기위한 버퍼 컴포넌트
 	CTexture*	m_pTextureCom = nullptr;
 	CTransform*	m_pPlayerTransform = nullptr;
 
@@ -54,6 +55,8 @@ private:
 	_bool			m_bFire = false;
 	_bool			m_bLateInit = true;
 	_vec3			m_vDir, m_vPos;
+	_vec3			m_vEndPos;
+	_vec3			m_vRayPos, m_vRayDir;
 
 	_float			m_fGunMoveDown;
 	_float			m_fGunMoveRight;

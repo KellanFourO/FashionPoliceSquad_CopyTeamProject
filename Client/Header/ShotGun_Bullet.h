@@ -16,7 +16,7 @@ class CShotGunBullet : public CBullet
 {
 private:
 	explicit CShotGunBullet(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CShotGunBullet(CShotGunBullet& rhs);
+	explicit CShotGunBullet(const CShotGunBullet& rhs);
 	virtual ~CShotGunBullet();
 
 public:

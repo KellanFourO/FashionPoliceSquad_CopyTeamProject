@@ -699,17 +699,8 @@
     <ClInclude Include="..\Header\Player_Jump.h">
       <Filter>02. GameObject\01. Player\99. PlayerState\08. Player_Jump</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\PlayerGun.h">
-      <Filter>02. GameObject\01. Player\03. PlayerGun</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\LoadingStage1.h">
       <Filter>01.Scene\09.LoadingStage1</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\PaintShotGun.h">
-      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\TailorAssertRifle.h">
-      <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Bullet.h">
       <Filter>02. GameObject\07. Bullet</Filter>
@@ -842,6 +833,15 @@
     </ClInclude>
     <ClInclude Include="..\Header\PaintShotGun_Lazer.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PaintShotGun.h">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TailorAssertRifle.h">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerGun.h">
+      <Filter>02. GameObject\01. Player\03. PlayerGun</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1127,15 +1127,6 @@
     <ClCompile Include="..\Code\Player_Jump.cpp">
       <Filter>02. GameObject\01. Player\99. PlayerState\08. Player_Jump</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\PlayerGun.cpp">
-      <Filter>02. GameObject\01. Player\03. PlayerGun</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\TailorAssertRifle.cpp">
-      <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\PaintShotGun.cpp">
-      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Bullet.cpp">
       <Filter>02. GameObject\07. Bullet</Filter>
     </ClCompile>
@@ -1285,6 +1276,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\Rifle_Bullet1.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PaintShotGun.cpp">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TailorAssertRifle.cpp">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerGun.cpp">
+      <Filter>02. GameObject\01. Player\03. PlayerGun</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

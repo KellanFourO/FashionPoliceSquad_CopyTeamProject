@@ -25,6 +25,7 @@ public:
 	_bool								Get_Pause() { return m_bPause; }
 	CTransform*							Get_Transform() { return m_pTransformCom; }
 	BULLETTYPE							Get_HitType() { return m_eHitType; }
+	_bool								Get_Dead() { return m_IsDead;}
 
 	// Set
 	void								Set_ObjectTag(OBJECTTAG _eTag) { m_eObjectTag = _eTag; }

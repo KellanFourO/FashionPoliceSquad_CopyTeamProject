@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "BrifCase.h"
-#include "Player.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
 
@@ -9,7 +8,7 @@ CBrifCase::CBrifCase(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 }
 
-CBrifCase::CBrifCase(CBrifCase& rhs)
+CBrifCase::CBrifCase(const CBrifCase& rhs)
 	: CBullet(rhs)
 {
 }
@@ -20,7 +19,7 @@ CBrifCase::~CBrifCase()
 
 HRESULT CBrifCase::Ready_GameObject()
 {
-	
+
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	Set_ObjectTag(OBJECTTAG::MONSTERBULLET);
 
@@ -34,15 +33,15 @@ HRESULT CBrifCase::Ready_GameObject()
 	m_pCollider->Set_Transform(m_pTransformCom);
 	m_pRigidBody->Set_Host(this);
 	m_pRigidBody->Set_Transform(m_pTransformCom);
-	
+
 
 	D3DXVec3Normalize(&m_vDir, &m_vDir);
-	
+
 	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
 
 
 	m_fBulletSpeed = 0.5f;
-	
+
 	m_fAnimateTime = 0.f;
 	m_fFrame = 1.f;
 	m_fSpeed_Vertical = 0.1f;
@@ -55,9 +54,8 @@ Engine::_int CBrifCase::Update_GameObject(const _float& fTimeDelta)
 
 		Engine::Add_RenderGroup(RENDER_ALPHA, this);
 		m_pRigidBody->Update_RigidBody(fTimeDelta);
-		__super::Update_GameObject(fTimeDelta);
-		
-		
+		_int iExit = __super::Update_GameObject(fTimeDelta);
+
 
 		m_pTransformCom->Get_Info(INFO_POS, &m_vPos);
 
@@ -74,9 +72,9 @@ Engine::_int CBrifCase::Update_GameObject(const _float& fTimeDelta)
 			}
 			m_fAnimateTime = 0.f;
 		}//프레임 코드
-		
 
-	return OBJ_NOEVENT;
+
+	return iExit;
 
 }
 
@@ -91,7 +89,7 @@ void CBrifCase::LateUpdate_GameObject()
 
 void CBrifCase::Render_GameObject()
 {
-	
+
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
@@ -106,24 +104,16 @@ void CBrifCase::Render_GameObject()
 
 void CBrifCase::OnCollisionEnter(CCollider* _pOther)
 {
-
-	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYER) {
-		dynamic_cast<CPlayer*>(_pOther->Get_Host())->Attacked(10);
-		m_pTransformCom->Set_Pos(_vec3(0.f, 0.f, 0.f));
-		m_bShooting = false;
-	}
-	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE) {
-		m_pTransformCom->Set_Pos(_vec3(0.f, 0.f, 0.f));
-		m_bShooting = false;
-
-	}
+	__super::OnCollisionEnter(_pOther);
 }
 void CBrifCase::OnCollisionStay(CCollider* _pOther)
 {
+	__super::OnCollisionStay(_pOther);
 }
 
 void CBrifCase::OnCollisionExit(CCollider* _pOther)
 {
+	__super::OnCollisionExit(_pOther);
 }
 
 HRESULT CBrifCase::Add_Component()
@@ -158,10 +148,10 @@ HRESULT CBrifCase::Add_Component()
 
 void CBrifCase::Shot(_vec3 _StartPos)
 {
-	
+
 	m_pHostTransform->Get_Info(INFO_POS, &m_vPos);
 
-	
+
 	_vec3 vPlayerPos, vPlayerPos_Rel;
 	m_pPlayerTransformCom->Get_Info(INFO_POS, &vPlayerPos);
 	m_vDir = vPlayerPos - m_vPos;
@@ -194,7 +184,7 @@ void CBrifCase::Shot(_vec3 _StartPos)
 
 CBrifCase* CBrifCase::Create(LPDIRECT3DDEVICE9 pGraphicDev, CTransform* pHostTransform, CTransform* pPlayerTransform)
 {
-	
+
 	CBrifCase* pInstance = new CBrifCase(pGraphicDev);
 
 	pInstance->m_pHostTransform = pHostTransform;

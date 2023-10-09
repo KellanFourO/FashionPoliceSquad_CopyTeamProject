@@ -1,3 +1,5 @@
+
+
 #include "stdafx.h"
 #include "Monster.h"
 #include "BrifCase.h"
@@ -35,6 +37,7 @@ HRESULT CMonster::Ready_GameObject()
 		MSG_BOX("승용 몬스터 HP 에러");
 	}
 	// TODO - 승용 추가 종료
+
 
 
 	return S_OK;
@@ -83,7 +86,6 @@ void CMonster::LateUpdate_GameObject()
 
 void CMonster::Render_GameObject()
 {
-	m_pCollider->Render_Collider();
 }
 
 void CMonster::ReadyState()

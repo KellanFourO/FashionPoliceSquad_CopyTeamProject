@@ -11,14 +11,13 @@ CShotGunBullet::CShotGunBullet(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 }
 
-CShotGunBullet::CShotGunBullet(CShotGunBullet& rhs)
+CShotGunBullet::CShotGunBullet(const CShotGunBullet& rhs)
 	: CBullet(rhs)
 {
 }
 
 CShotGunBullet::~CShotGunBullet()
 {
-	Free();
 }
 
 HRESULT CShotGunBullet::Ready_GameObject(_vec3 _StartPos, _int iColorIndex)
@@ -26,7 +25,7 @@ HRESULT CShotGunBullet::Ready_GameObject(_vec3 _StartPos, _int iColorIndex)
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	Set_ObjectTag(OBJECTTAG::PLAYERBULLET);
-
+	m_eBulletType = BULLETTYPE::SHOTGUN_BULLET;
 	m_fSpeed = 100.f;
 	m_fLiveTime = 0.f;
 	m_fDmg = 10.f;
@@ -61,7 +60,7 @@ Engine::_int CShotGunBullet::Update_GameObject(const _float& fTimeDelta)
 			vLook = vPlayerPos - m_vPos;
 			D3DXVec3Normalize(&vLook, &vLook);
 
-			
+
 
 
 
@@ -82,7 +81,6 @@ void CShotGunBullet::LateUpdate_GameObject()
 
 void CShotGunBullet::Render_GameObject()
 {
-		m_pCollider->Render_Collider();
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 		m_pTextureCom->Render_Textrue(0);
 		m_pBufferCom->Render_Buffer(m_iColorIndex,1);

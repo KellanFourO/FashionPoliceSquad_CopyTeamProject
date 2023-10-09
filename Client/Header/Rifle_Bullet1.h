@@ -16,7 +16,7 @@ class CRifle_Bullet1 : public CBullet
 {
 private:
 	explicit CRifle_Bullet1(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CRifle_Bullet1(CRifle_Bullet1& rhs);
+	explicit CRifle_Bullet1(const CRifle_Bullet1& rhs);
 	virtual ~CRifle_Bullet1();
 
 public:

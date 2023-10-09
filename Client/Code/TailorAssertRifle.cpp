@@ -66,16 +66,16 @@ Engine::_int CTailorAssertRifle::Update_GameObject(const _float& fTimeDelta)
 {
 	HostMove(fTimeDelta);
 
-	if (m_bLateInit)
-	{
-		for (int i = 0; i < m_tGunInfo.m_iCurrentBullet; ++i)
-		{
-			CBullet* pBullet = CRifle_Bullet1::Create(m_pGraphicDev, _vec3(0, 0, 0), i);
-			Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::PLAYERBULLET, pBullet);
-			m_vecBullet.push_back(pBullet);
-		}
-		m_bLateInit = false;
-	}
+// 	if (m_bLateInit)
+// 	{
+// 		for (int i = 0; i < m_tGunInfo.m_iCurrentBullet; ++i)
+// 		{
+// 			CBullet* pBullet = CRifle_Bullet1::Create(m_pGraphicDev, _vec3(0, 0, 0), i);
+// 			Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::PLAYERBULLET, pBullet);
+// 			m_vecBullet.push_back(pBullet);
+// 		}
+// 		m_bLateInit = false;
+// 	}
 
 
 
