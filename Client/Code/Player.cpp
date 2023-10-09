@@ -43,6 +43,7 @@ HRESULT CPlayer::Ready_GameObject()
 	m_pTransformCom->Set_Host(this);
 	m_pCollider->Set_Host(this);
 	m_pCollider->Set_Transform(m_pTransformCom);
+	
 	m_pRigidBody->Set_Host(this);
 	m_pRigidBody->Set_Transform(m_pTransformCom);
 
@@ -77,7 +78,7 @@ HRESULT CPlayer::Ready_GameObject()
 	INFO.PlayerState->Initialize(this);
 	INFO.bGameOver = false;
 
-	INFO.vPos = { 20.f,5.f,20.f };
+	//INFO.vPos = { 20.f,5.f,20.f };
 	INFO.fStartDir = 0.f;//생각처럼 잘 안댐...
 
 

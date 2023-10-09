@@ -23,27 +23,12 @@ HRESULT COctree::Ready_Octree()
 		return E_FAIL;
 
 	vector<CGameObject*>& vecStaticObject = Management()->Get_ObjectList(LAYERTAG::ENVIRONMENT, OBJECTTAG::BUILD_CUBE);
-	 	//CBuild_Cube* pBuildMap = static_cast<CBuild_Cube*>(vecStaticObject.front());
-	 	//list<CBuild_Cube*> m_BuildCubeList = &pBuildMap->
 	for (auto& iter : vecStaticObject)
 		FindCurrentPosNode(iter->Get_Transform(), m_pOctreeRoot);
 
-// 	vector<CGameObject*>& vecStaticTerrain = Management()->Get_ObjectList(LAYERTAG::ENVIRONMENT, OBJECTTAG::TERRAIN);
-// 	for (auto& iter : vecStaticTerrain)
-// 	{
-// 		FindCurrentPosNode(iter->m_pTransformCom, m_pOctreeRoot);
-// 	}
 
 	//TODO - 승용추가 옥트리 어떻게 돌아가는진 모르겠으나 밑에서 절두체 MakeFrustum 으로 값셋팅됏으니 어케 잘 쓰면 가능할지도.
 	m_pFrustum = new CFrustum;
-
-	//CNewFPSCamera* pNewFPSCamera = dynamic_cast<CNewFPSCamera*>(Engine::Management()->Get_ObjectList(LAYERTAG::CAMERA, OBJECTTAG::FPSCAMERA).front());
-	//vector<CGameObject*>& vecCamera = Management()->Get_ObjectList(LAYERTAG::CAMERA, OBJECTTAG::FPSCAMERA);
-
-	//_matrix matView = dynamic_cast<CNewFPSCamera*>(vecCamera[0])->Get_View();
-
-	//m_pFrustum->MakeFrustum(&matView);
-	//TODO - 승용추가 종료
 
 	return S_OK;
 }

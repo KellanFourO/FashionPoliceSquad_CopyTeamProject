@@ -109,6 +109,9 @@
     <Filter Include="04.Component\00.VIBuffer\20. SYTex">
       <UniqueIdentifier>{4368c2a8-b0d5-478c-8ac2-6cd38a551cf5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04.Component\00.VIBuffer\05.EffectTex">
+      <UniqueIdentifier>{50f73d8e-33d5-4f1d-9003-d51257980c7d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\GameObject.cpp">
@@ -213,6 +216,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\SYTex.cpp">
       <Filter>04.Component\00.VIBuffer\20. SYTex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\EffectTex.cpp">
+      <Filter>04.Component\00.VIBuffer\05.EffectTex</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -322,6 +328,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Header\SYTex.h">
       <Filter>04.Component\00.VIBuffer\20. SYTex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Header\EffectTex.h">
+      <Filter>04.Component\00.VIBuffer\05.EffectTex</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

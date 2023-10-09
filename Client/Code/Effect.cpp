@@ -2,7 +2,7 @@
 #include "..\Header\Effect.h"
 
 #include "Export_Utility.h"
-
+#include "EffectTex.h"
 
 CEffect::CEffect(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
@@ -24,16 +24,17 @@ HRESULT Engine::CEffect::Ready_GameObject()
 	m_eObjectTag = OBJECTTAG::EFFECT;
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	//m_pTransformCom->Set_Pos(_vec3(_float(rand() % 20), 0.f, _float(rand() % 20)));
-
+	m_pTransformCom->Set_Scale(_vec3{ 6.f, 6.f, 6.f });
+	//m_pTransformCom->Set_Pos(_vec3(_float(rand() % 20), 10.f, _float(rand() % 20)));
+	m_pTransformCom->Set_Pos(_vec3{ 40.f,5.f,20.f });
 	return S_OK;
 }
 
 Engine::_int Engine::CEffect::Update_GameObject(const _float& fTimeDelta)
 {
-	m_fFrame += 90.f * fTimeDelta;
+	m_fFrame += 87.f * fTimeDelta;
 
-	if (90.f < m_fFrame)
+	if (87.f < m_fFrame)
 		m_fFrame = 0.f;
 
 	_int iExit = __super::Update_GameObject(fTimeDelta);
@@ -95,7 +96,7 @@ void CEffect::Render_GameObject()
 	//m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
 
 	m_pTextureCom->Render_Textrue(_ulong(m_fFrame));
-	m_pBufferCom->Render_Buffer();
+	m_pEffectBufferCom->Render_Buffer();
 
 	//m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
@@ -111,7 +112,7 @@ HRESULT Engine::CEffect::Add_Component()
 {
 	CComponent* pComponent = nullptr;
 
-	pComponent = m_pBufferCom = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"Proto_RcTex"));
+	pComponent = m_pEffectBufferCom = dynamic_cast<CEffectTex*>(Engine::Clone_Proto(L"Proto_EffectTex"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::BUFFER, pComponent);
 

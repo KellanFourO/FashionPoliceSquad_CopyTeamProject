@@ -214,6 +214,7 @@
     <ClInclude Include="..\Header\Item.h" />
     <ClInclude Include="..\Header\JumpSmoke.h" />
     <ClInclude Include="..\Header\KickBoardMonster.h" />
+    <ClInclude Include="..\Header\KickBoardMonsterState.h" />
     <ClInclude Include="..\Header\KickBoardMonster_Attack.h" />
     <ClInclude Include="..\Header\KickBoardMonster_Chase.h" />
     <ClInclude Include="..\Header\KickBoardMonster_Dead.h" />
