@@ -229,11 +229,7 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::BOSS, pGameObject), E_FAIL);
 	}
-<<<<<<< HEAD
 	for(int i = 0; i<5; ++i)
-=======
-	for(int i = 0; i<3; ++i)
->>>>>>> ?¹ìš©
 	{
 	pGameObject = CBigDaddyMonster::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
