@@ -1,3 +1,5 @@
+
+
 #include "stdafx.h"
 #include "Monster.h"
 #include "BrifCase.h"

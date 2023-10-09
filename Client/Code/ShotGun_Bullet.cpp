@@ -18,7 +18,6 @@ CShotGunBullet::CShotGunBullet(const CShotGunBullet& rhs)
 
 CShotGunBullet::~CShotGunBullet()
 {
-	Free();
 }
 
 HRESULT CShotGunBullet::Ready_GameObject(_vec3 _StartPos, _int iColorIndex)
@@ -51,7 +50,7 @@ Engine::_int CShotGunBullet::Update_GameObject(const _float& fTimeDelta)
 {
 
 		Engine::Add_RenderGroup(RENDER_NONALPHA, this);
-		_int iExit = __super::Update_GameObject(fTimeDelta);
+		__super::Update_GameObject(fTimeDelta);
 
 
 			_vec3 vPlayerPos, vMyPos, vLook;
@@ -69,7 +68,7 @@ Engine::_int CShotGunBullet::Update_GameObject(const _float& fTimeDelta)
 			m_pTransformCom->Set_Rotate(ROT_Y, fAngle + D3DX_PI);
 			m_pTransformCom->Move_Pos(&m_vShotDir, fTimeDelta, m_fSpeed);
 
-	return iExit;
+	return OBJ_NOEVENT;
 }
 
 void CShotGunBullet::LateUpdate_GameObject()

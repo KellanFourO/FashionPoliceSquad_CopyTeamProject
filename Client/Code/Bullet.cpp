@@ -25,7 +25,7 @@ HRESULT CBullet::Ready_GameObject()
 _int CBullet::Update_GameObject(const _float& fTimeDelta)
 {
 
-	//if(m_eObjectTag != OBJECTTAG::PLAYERBULLET)
+	if(m_eObjectTag != OBJECTTAG::PLAYER_LAZER)
 	Destroy(fTimeDelta);
 
 	if(m_bDead)

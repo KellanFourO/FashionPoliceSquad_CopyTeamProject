@@ -112,6 +112,9 @@
     <Filter Include="04.Component\00.VIBuffer\05.EffectTex">
       <UniqueIdentifier>{50f73d8e-33d5-4f1d-9003-d51257980c7d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04.Component\00.VIBuffer\06. UITex">
+      <UniqueIdentifier>{a1a17bbc-b1a8-4fc0-b867-ae212e2b271d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Code\GameObject.cpp">
@@ -192,7 +195,6 @@
     <ClCompile Include="..\Code\RigidBody.cpp">
       <Filter>04.Component\05.RigidBody</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\UITex.cpp" />
     <ClCompile Include="..\Code\Quat_Camera.cpp">
       <Filter>03.GameObject\Camera\11.QuatCamera</Filter>
     </ClCompile>
@@ -219,6 +221,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\EffectTex.cpp">
       <Filter>04.Component\00.VIBuffer\05.EffectTex</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UITex.cpp">
+      <Filter>04.Component\00.VIBuffer\06. UITex</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -303,7 +308,6 @@
     <ClInclude Include="..\..\Header\RigidBody.h">
       <Filter>04.Component\05.RigidBody</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Header\UITex.h" />
     <ClInclude Include="..\..\Header\Quat_Camera.h">
       <Filter>03.GameObject\Camera\11.QuatCamera</Filter>
     </ClInclude>
@@ -331,6 +335,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Header\EffectTex.h">
       <Filter>04.Component\00.VIBuffer\05.EffectTex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Header\UITex.h">
+      <Filter>04.Component\00.VIBuffer\06. UITex</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
