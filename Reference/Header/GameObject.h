@@ -50,10 +50,10 @@ protected:
 	map<COMPONENTTAG, CComponent*>		m_mapComponent[ID_END];
 	LPDIRECT3DDEVICE9					m_pGraphicDev;
 	CCollider*							m_pCollider = nullptr;
-	_float								m_fViewZ;
+	_float								m_fViewZ=0.f;
 	_bool								m_IsDead = false;
-	OBJECTTAG							m_eObjectTag;
-	BULLETTYPE							m_eHitType;
+	OBJECTTAG							m_eObjectTag=OBJECTTAG::OBJECT_END;
+	BULLETTYPE							m_eHitType = BULLETTYPE::BULLETTYPE_END;
 
 
 	_bool								m_bPause = false;
