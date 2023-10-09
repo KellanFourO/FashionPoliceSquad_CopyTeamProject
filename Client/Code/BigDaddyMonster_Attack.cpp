@@ -48,26 +48,18 @@ CMonsterState* CBigDaddyMonster_Attack::Update(CMonster* Monster, const float& f
 
 	case CBigDaddyMonster_Attack::READY2:
 		{
-			m_fTick += fDetltaTime;
+		m_fTick += fDetltaTime;
 
-			if (m_fTick >= 1.f)
-			{
-				if (m_pHost->Get_MonsterBullet() == nullptr) {
-					m_pHost->Set_Bullet(CBrifCase::Create(m_pHost->Get_GraphicDev(),m_pHost->m_pTransformCom, m_pHost->Get_PlayerTransform()));
-					CManagement* pManagement;
-					CLayer* pStageLayer = pManagement->GetInstance()->Get_Layer(LAYERTAG::GAMELOGIC);
-					pStageLayer->Add_GameObject(OBJECTTAG::MONSTERBULLET, m_pHost->Get_MonsterBullet());
-					dynamic_cast<CBrifCase*>(m_pHost->Get_MonsterBullet())->Shot(m_pHost->Get_Info().vPos);
-				}
-				else {
-					dynamic_cast<CBrifCase*>(m_pHost->Get_MonsterBullet())->Shot(m_pHost->Get_Info().vPos);
-				}
+		if (m_fTick >= 1.f)
+		{
+			m_pHost->Set_Bullet(LoadBullet());
+			dynamic_cast<CBrifCase*>(m_pHost->Get_MonsterBullet())->Shot(m_pHost->Get_Info().vPos);
 
-				++m_fCurFrame;
-				m_eAttack = THROW;
-				m_fTick = 0.f;
-			}
-			break;
+			++m_fCurFrame;
+			m_eAttack = THROW;
+			m_fTick = 0.f;
+		}
+		break;
 		}
 
 	case CBigDaddyMonster_Attack::THROW:
@@ -134,5 +126,15 @@ void CBigDaddyMonster_Attack::Render(CMonster* _Monster)
 	}
 
 	m_pHost->Get_BufferCom()->Render_Buffer(m_fCurFrame, 2);
+}
+
+CBullet* CBigDaddyMonster_Attack::LoadBullet()
+{
+		CBullet* pBullet = CBrifCase::Create(m_pHost->Get_GraphicDev(), m_pHost->Get_Transform(), m_pHost->Get_PlayerTransform());
+		Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::MONSTERBULLET, pBullet);
+
+		return pBullet;
+
+
 }
 

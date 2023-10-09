@@ -10,7 +10,7 @@ CBrifCase_2::CBrifCase_2(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 }
 
-CBrifCase_2::CBrifCase_2(CBrifCase_2& rhs)
+CBrifCase_2::CBrifCase_2(const CBrifCase_2& rhs)
 	: CBullet(rhs)
 {
 }
@@ -29,7 +29,7 @@ HRESULT CBrifCase_2::Ready_GameObject()
 	m_pTransformCom->Set_Host(this);
 	m_pTransformCom->Set_Pos(m_vPos);
 	m_pTransformCom->Set_Scale(_vec3{ 2.f,2.f,2.f });
-	
+
 	m_pCollider->Set_Host(this);
 	m_pCollider->Set_Transform(m_pTransformCom);
 	m_pBufferCom->SetCount(4,1);
@@ -51,8 +51,8 @@ Engine::_int CBrifCase_2::Update_GameObject(const _float& fTimeDelta)
 
 		Engine::Add_RenderGroup(RENDER_ALPHA, this);
 		//m_pRigidBody->Update_RigidBody(fTimeDelta);
-		__super::Update_GameObject(fTimeDelta);
-		
+		_int iExit = __super::Update_GameObject(fTimeDelta);
+
 		m_pTransformCom->Get_Info(INFO_POS, &m_vPos);
 		m_pTransformCom->Set_Pos(m_vPos += (m_vDir * m_fBulletSpeed)); //이동
 
@@ -67,8 +67,8 @@ Engine::_int CBrifCase_2::Update_GameObject(const _float& fTimeDelta)
 			}
 			m_fAnimateTime = 0.f;
 		}//프레임 코드
-	
-	return OBJ_NOEVENT;
+
+	return iExit;
 }
 
 void CBrifCase_2::LateUpdate_GameObject()
@@ -95,21 +95,17 @@ void CBrifCase_2::Render_GameObject()
 
 void CBrifCase_2::OnCollisionEnter(CCollider* _pOther)
 {
-	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYER) {
-		dynamic_cast<CPlayer*>(_pOther->Get_Host())->Attacked(10);
-		m_pTransformCom->Set_Pos(_vec3(0.f, 0.f, 0.f));
-	}
-	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE) {
-		m_pTransformCom->Set_Pos(_vec3(0.f, 0.f, 0.f));
-	}
+	__super::OnCollisionEnter(_pOther);
 }
 
 void CBrifCase_2::OnCollisionStay(CCollider* _pOther)
 {
+	__super::OnCollisionStay(_pOther);
 }
 
 void CBrifCase_2::OnCollisionExit(CCollider* _pOther)
 {
+	__super::OnCollisionExit(_pOther);
 }
 
 HRESULT CBrifCase_2::Add_Component()
@@ -161,7 +157,7 @@ void CBrifCase_2::Shot(_vec3 _StartPos)
 CBrifCase_2* CBrifCase_2::Create(LPDIRECT3DDEVICE9 pGraphicDev, CTransform* pHostTransform, CTransform* pPlayerTransform)
 {
 	CBrifCase_2* pInstance = new CBrifCase_2(pGraphicDev);
-	
+
 	pInstance->m_pHostTransform = pHostTransform;
 	pInstance->m_pPlayerTransformCom = pPlayerTransform;
 

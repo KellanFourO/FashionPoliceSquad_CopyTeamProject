@@ -37,6 +37,7 @@ HRESULT CMonster::Ready_GameObject()
 	// TODO - 승용 추가 종료
 
 
+
 	return S_OK;
 }
 
@@ -83,7 +84,6 @@ void CMonster::LateUpdate_GameObject()
 
 void CMonster::Render_GameObject()
 {
-	m_pCollider->Render_Collider();
 }
 
 void CMonster::ReadyState()

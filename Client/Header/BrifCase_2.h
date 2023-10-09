@@ -15,7 +15,7 @@ class CBrifCase_2 : public CBullet
 {
 private:
 	explicit CBrifCase_2(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CBrifCase_2(CBrifCase_2& rhs);
+	explicit CBrifCase_2(const CBrifCase_2& rhs);
 	virtual ~CBrifCase_2();
 
 public:
@@ -45,7 +45,7 @@ private:
 	_float		m_fBulletMoveRight, m_fBulletMoveDown, m_fBulletSpeed; // 랜덤으로 생성좌표를 이동시키기 위한 변수
 	_float      m_fSpeed_Vertical = 0.f;
 
-	
+
 	CTransform* m_pHostTransform = nullptr;
 public:
 	static CBrifCase_2* Create(LPDIRECT3DDEVICE9 pGraphicDev, CTransform* pHostTransform, CTransform* pPlayerTransform);

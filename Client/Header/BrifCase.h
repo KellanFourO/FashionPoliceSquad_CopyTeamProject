@@ -16,7 +16,7 @@ class CBrifCase : public CBullet
 {
 protected:
 	explicit CBrifCase(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CBrifCase(CBrifCase& rhs);
+	explicit CBrifCase(const CBrifCase& rhs);
 	virtual ~CBrifCase();
 
 public:

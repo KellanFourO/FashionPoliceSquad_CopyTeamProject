@@ -11,7 +11,7 @@ CRifle_Bullet1::CRifle_Bullet1(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 }
 
-CRifle_Bullet1::CRifle_Bullet1(CRifle_Bullet1& rhs)
+CRifle_Bullet1::CRifle_Bullet1(const CRifle_Bullet1& rhs)
 	: CBullet(rhs)
 {
 }
@@ -24,8 +24,9 @@ CRifle_Bullet1::~CRifle_Bullet1()
 HRESULT CRifle_Bullet1::Ready_GameObject(_vec3 _StartPos, _int iColorIndex)
 {
 
-	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	Set_ObjectTag(OBJECTTAG::PLAYERBULLET);
+	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+	m_eBulletType = BULLETTYPE::ASSERTRIFLE_BULLET;
 
 	m_fSpeed = 110.f;
 	m_fDmg = 10.f;
@@ -49,7 +50,8 @@ Engine::_int CRifle_Bullet1::Update_GameObject(const _float& fTimeDelta)
 {
 
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
-	__super::Update_GameObject(fTimeDelta);
+
+	_int iExit = __super::Update_GameObject(fTimeDelta);
 
 
 	_vec3 vPlayerPos, vMyPos, vLook;
@@ -65,7 +67,7 @@ Engine::_int CRifle_Bullet1::Update_GameObject(const _float& fTimeDelta)
 	m_pTransformCom->Set_Rotate(ROT_Y, fAngle + D3DX_PI);
 	m_pTransformCom->Move_Pos(&m_vShotDir, fTimeDelta, m_fSpeed);
 
-	return OBJ_NOEVENT;
+	return iExit;
 }
 
 void CRifle_Bullet1::LateUpdate_GameObject()
@@ -80,7 +82,6 @@ void CRifle_Bullet1::Render_GameObject()
 {
 
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
-		m_pCollider->Render_Collider();
 		m_pTextureCom->Render_Textrue(0);
 		m_pBufferCom->Render_Buffer();
 }

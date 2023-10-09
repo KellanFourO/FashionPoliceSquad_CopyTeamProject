@@ -6,12 +6,12 @@
 
 
 CBullet_GoldBar::CBullet_GoldBar(LPDIRECT3DDEVICE9 pGraphicDev)
-	:Engine::CGameObject(pGraphicDev)
+	:CBullet(pGraphicDev)
 {
 }
 
 CBullet_GoldBar::CBullet_GoldBar(const CBullet_GoldBar& rhs)
-	: Engine::CGameObject(rhs)
+	:CBullet(rhs)
 {
 }
 
@@ -23,12 +23,12 @@ HRESULT CBullet_GoldBar::Ready_GameObject()
 {
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	
 
 	_vec3 vScale = { 5.f, 5.f, 5.f };
 	_vec3 vPos = Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::BOSS).back()->m_pTransformCom->m_vInfo[INFO_POS];
+	m_fDmg = 10.f;
 
-	Set_ObjectTag(OBJECTTAG::BOSSBULLET);
+	Set_ObjectTag(OBJECTTAG::MONSTERBULLET);
 // 	CTransform* pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
 //
 // 	_vec3 vPlayerPos, vPlayerPos_Rel;
@@ -57,19 +57,13 @@ Engine::_int CBullet_GoldBar::Update_GameObject(const _float& fTimeDelta)
 		Engine::Add_RenderGroup(RENDER_ALPHA, this);
 		__super::Update_GameObject(fTimeDelta);
 
-		m_fAge += fTimeDelta;
-
-		if (m_fAge > m_fLifeTime)
-		{
-			return OBJ_DEAD;
-		}
+		if(m_bDead)
+		return OBJ_DEAD;
 		//m_pTransformCom->Set_Rotate(ROT_Y, fTimeDelta + D3DX_PI);
 		m_pTransformCom->Move_Pos(&m_vTargetDir, fTimeDelta, 50.f);
 
-		CTransform* pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
-
 		_vec3 vPlayerPos, vPlayerPos_Rel;
-		pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
+		m_pPlayerTransformCom->Get_Info(INFO_POS, &vPlayerPos);
 		vPlayerPos.y = 0.f;
 		// 이동 코드
 
@@ -121,7 +115,6 @@ void CBullet_GoldBar::LateUpdate_GameObject()
 
 void CBullet_GoldBar::Render_GameObject()
 {
-	m_pCollider->Render_Collider();
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);

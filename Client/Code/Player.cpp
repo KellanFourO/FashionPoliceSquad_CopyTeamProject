@@ -34,8 +34,8 @@ CPlayer::~CPlayer()
 
 HRESULT CPlayer::Ready_GameObject()
 {
-	Set_ObjectTag(OBJECTTAG::PLAYER);
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+	Set_ObjectTag(OBJECTTAG::PLAYER);
 
 
 	ReadyState();
@@ -80,9 +80,9 @@ HRESULT CPlayer::Ready_GameObject()
 	INFO.vPos = { 20.f,5.f,20.f };
 	INFO.fStartDir = 0.f;//생각처럼 잘 안댐...
 
-	
+
 	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
-	
+
 	//m_pTransformCom->Rotation(ROT_Y,D3DXToRadian(INFO.fStartDir));
 
 	return S_OK;
@@ -527,7 +527,7 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 
 void CPlayer::OnCollisionStay(CCollider* _pOther)
 {
-	
+
 	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE)
 	{
 		_vec3	vOtherPos = _pOther->GetCenterPos();

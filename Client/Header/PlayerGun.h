@@ -94,7 +94,8 @@ protected:
 	_int				m_iColorIndex = 1;
 
 	CPlayerGunState*	m_pGunState = nullptr; // ÃÑ »óÅÂ
-	vector<CBullet*>	m_vecBullet; // ÃÑ¾Ë °ü¸®ÇÏ´Â º¤ÅÍ
+	vector<CBullet*>	m_vecShotGunBullet; // ÃÑ¾Ë °ü¸®ÇÏ´Â º¤ÅÍ
+	vector<CBullet*>    m_vecRifleBullet;
 
 	CGameObject*		m_pHost	= nullptr;
 	BULLETTYPE			m_eBulletType = BULLETTYPE::BULLETTYPE_END;
