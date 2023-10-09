@@ -11,7 +11,7 @@ CRifle_Bullet1::CRifle_Bullet1(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 }
 
-CRifle_Bullet1::CRifle_Bullet1(const CRifle_Bullet1& rhs)
+CRifle_Bullet1::CRifle_Bullet1(CRifle_Bullet1& rhs)
 	: CBullet(rhs)
 {
 }
@@ -25,17 +25,18 @@ HRESULT CRifle_Bullet1::Ready_GameObject(_vec3 _StartPos, _int iColorIndex)
 {
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+	Set_ObjectTag(OBJECTTAG::PLAYERBULLET);
 
 	m_fSpeed = 110.f;
 	m_fDmg = 10.f;
 
-	Set_ObjectTag(OBJECTTAG::PLAYERBULLET);
+
 
 	_vec3 vScale = { 0.7f, 0.7f, 0.7f};
 
 	m_pTransformCom->Set_Scale(vScale);
-
 	m_pTransformCom->Set_Host(this);
+
 	m_pCollider->Set_Host(this);
 	m_pCollider->Set_Transform(m_pTransformCom);
 	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
@@ -84,6 +85,21 @@ void CRifle_Bullet1::Render_GameObject()
 		m_pBufferCom->Render_Buffer();
 }
 
+void CRifle_Bullet1::OnCollisionEnter(CCollider* _pOther)
+{
+	__super::OnCollisionEnter(_pOther);
+}
+
+void CRifle_Bullet1::OnCollisionStay(CCollider* _pOther)
+{
+	__super::OnCollisionStay(_pOther);
+}
+
+void CRifle_Bullet1::OnCollisionExit(CCollider* _pOther)
+{
+	__super::OnCollisionExit(_pOther);
+}
+
 HRESULT CRifle_Bullet1::Add_Component()
 {
 	CComponent* pComponent = nullptr;
@@ -104,6 +120,9 @@ HRESULT CRifle_Bullet1::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].emplace(COMPONENTTAG::COLLIDER, pComponent);
 
+	for (_uint i = 0; i < ID_END; ++i)
+		for (auto& iter : m_mapComponent[i])
+			iter.second->Init_Property(this);
 	return S_OK;
 }
 

@@ -55,6 +55,7 @@ HRESULT CBuild_Cube::Ready_GameObject(_vec3 pMouse_Pos, _vec3 Size)
 	Set_ObjectTag(OBJECTTAG::BUILD_CUBE);
 
 
+	m_pTransformCom->Set_Host(this);
 	m_pCollider->Set_Host(this);
 	m_pCollider->Set_Transform(m_pTransformCom);
 
@@ -66,7 +67,7 @@ HRESULT CBuild_Cube::Ready_GameObject(_vec3 pMouse_Pos, _vec3 Size)
 // 	}
 // 	else {
 // 		Set_ObjectTag(OBJECTTAG::BUILD_CUBE);
-// 
+//
 // 	}
 
 
@@ -100,7 +101,7 @@ void CBuild_Cube::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 
-	m_pCollider->Render_Collider(); //
+	//m_pCollider->Render_Collider(); //
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 

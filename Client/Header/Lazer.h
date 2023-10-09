@@ -18,7 +18,7 @@ class CLazer : public CBullet
 {
 private:
 	explicit CLazer(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit CLazer(const CLazer& rhs);
+	explicit CLazer(CLazer& rhs);
 	virtual ~CLazer();
 
 public:

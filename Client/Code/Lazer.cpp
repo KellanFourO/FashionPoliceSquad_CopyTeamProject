@@ -9,7 +9,7 @@ CLazer::CLazer(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 }
 
-CLazer::CLazer(const CLazer& rhs)
+CLazer::CLazer(CLazer& rhs)
 	: CBullet(rhs)
 {
 }
@@ -23,18 +23,20 @@ HRESULT CLazer::Ready_GameObject()
 {
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-
+	Set_ObjectTag(OBJECTTAG::PLAYER_LAZER);
 
 	m_fRange = 30.f;
 
 
 	m_fFrame = 0.f;
 	m_fLiveTime = 0.f;
+	m_pTransformCom->Set_Scale(m_vScale);
+	m_pTransformCom->Set_Pos(m_vPos);
 
 	m_pTransformCom->Set_Host(this);
 	m_pCollider->Set_Host(this);
 	m_pCollider->Set_Transform(m_pTransformCom);
-
+	
 
 	/*m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/Guns/Green_Spin.png", 1);
 	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/Guns/Green_Spin2.png", 2);

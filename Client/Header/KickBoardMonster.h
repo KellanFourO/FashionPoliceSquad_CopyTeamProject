@@ -16,9 +16,7 @@ class CTransform;
 class CCalculator;
 class CTexture;
 class CRigidBody;
-
 class CCollider;
-
 END
 
 

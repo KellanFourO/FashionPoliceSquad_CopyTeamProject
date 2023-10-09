@@ -5,12 +5,12 @@
 #include "Export_Utility.h"
 
 CBrifCase::CBrifCase(LPDIRECT3DDEVICE9 pGraphicDev)
-	:Engine::CGameObject(pGraphicDev)
+	:CBullet(pGraphicDev)
 {
 }
 
-CBrifCase::CBrifCase(const CBrifCase& rhs)
-	: Engine::CGameObject(rhs)
+CBrifCase::CBrifCase(CBrifCase& rhs)
+	: CBullet(rhs)
 {
 }
 
@@ -24,18 +24,19 @@ HRESULT CBrifCase::Ready_GameObject()
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	Set_ObjectTag(OBJECTTAG::MONSTERBULLET);
 
+	m_pBufferCom->SetCount(4, 1);
+
+	m_pTransformCom->Set_Host(this);
 	m_pTransformCom->Set_Pos(m_pHostTransform->m_vInfo[INFO_POS] += m_vDir * 0.016);
+	m_pTransformCom->Set_Scale(_vec3{ 2.f,2.f,2.f });
 
 	m_pCollider->Set_Host(this);
 	m_pCollider->Set_Transform(m_pTransformCom);
-
 	m_pRigidBody->Set_Host(this);
 	m_pRigidBody->Set_Transform(m_pTransformCom);
 	
-	m_pBufferCom->SetCount(4, 1);
 
 	D3DXVec3Normalize(&m_vDir, &m_vDir);
-	m_pTransformCom->Set_Scale(_vec3{ 2.f,2.f,2.f });
 	
 	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
 
@@ -162,7 +163,7 @@ void CBrifCase::Shot(_vec3 _StartPos)
 
 	
 	_vec3 vPlayerPos, vPlayerPos_Rel;
-	m_pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);
+	m_pPlayerTransformCom->Get_Info(INFO_POS, &vPlayerPos);
 	m_vDir = vPlayerPos - m_vPos;
 
 	D3DXVec3Normalize(&m_vDir, &m_vDir);
@@ -197,7 +198,7 @@ CBrifCase* CBrifCase::Create(LPDIRECT3DDEVICE9 pGraphicDev, CTransform* pHostTra
 	CBrifCase* pInstance = new CBrifCase(pGraphicDev);
 
 	pInstance->m_pHostTransform = pHostTransform;
-	pInstance->m_pPlayerTransform = pPlayerTransform;
+	pInstance->m_pPlayerTransformCom = pPlayerTransform;
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
