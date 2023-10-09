@@ -139,7 +139,7 @@ HRESULT CStage::Ready_Layer_Environment(LAYERTAG eLayerTag)
 
 	
 
-	Load_Data(L"../Bin/Data/Map/Stage1/MapData", OBJECTTAG::BUILD_CUBE);
+	Load_Data(L"../Bin/Data/Map/MapData", OBJECTTAG::BUILD_CUBE);
 	Load_Data(L"../Bin/Data/OBJ/OBJData", OBJECTTAG::BUILD_OBJ);
 
 	m_mapLayer.insert({ eLayerTag, m_pLayer });

@@ -268,7 +268,6 @@
     <ClInclude Include="..\Header\RecognitionRange.h" />
     <ClInclude Include="..\Header\Rifle_Bullet.h" />
     <ClInclude Include="..\Header\Rifle_Bullet1.h" />
-    <ClInclude Include="..\Header\Rifle_READY.h" />
     <ClInclude Include="..\Header\ShotGun_Bullet.h" />
     <ClInclude Include="..\Header\SkyBox.h" />
     <ClInclude Include="..\Header\Stage.h" />
@@ -397,7 +396,6 @@
     <ClCompile Include="..\Code\RecognitionRange.cpp" />
     <ClCompile Include="..\Code\Rifle_Bullet.cpp" />
     <ClCompile Include="..\Code\Rifle_Bullet1.cpp" />
-    <ClCompile Include="..\Code\Rifle_READY.cpp" />
     <ClCompile Include="..\Code\ShotGun_Bullet.cpp" />
     <ClCompile Include="..\Code\SkyBox.cpp" />
     <ClCompile Include="..\Code\Stage.cpp" />

@@ -89,10 +89,10 @@ HRESULT CBuild_Obj::Ready_GameObject(_uint pRotate, _vec3 pMouse_Pos, _vec3 Size
 	m_pTransformCom->Set_Scale(Size);
 	if (pRotate != 0)
 	{
-		m_pTransformCom->Set_Rotate(ROT_Y, D3DXToRadian(pRotate * 90.f));
+		m_pTransformCom->Set_Rotate(ROT_Y, D3DXToRadian(pRotate * 45.f));
 	}
 	m_pTransformCom->Set_Pos(pMouse_Pos);
-
+	m_myObjPos = pMouse_Pos;
 	
 	if (m_eAttribute == OBJ_ATTRIBUTE::DES_OBJ) //속성-파괴일 경우
 	{
@@ -112,6 +112,8 @@ HRESULT CBuild_Obj::Ready_GameObject(_uint pRotate, _vec3 pMouse_Pos, _vec3 Size
 	}
 
 	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], m_pTransformCom->m_vScale);
+	
+	m_pPlayerTransform = dynamic_cast<CTransform*>(Management()->Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
 
 	return S_OK;
 }
@@ -126,7 +128,27 @@ _int CBuild_Obj::Update_GameObject(const _float& fTimeDelta)
 	else if (m_eOBJ_Type == OBJ_TYPE::PLANE_OBJ)
 	{
 		Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
+
+		if (m_eAttribute == OBJ_ATTRIBUTE::BILL_OBJ)
+		{
+			Init_PlayerTransform();
+			if (m_pPlayerTransform && m_bBillBoard)
+			{
+				BillBoard();
+			}
+		}
+		if (m_eAttribute == OBJ_ATTRIBUTE::INTER_OBJ)
+		{
+			Init_PlayerTransform();
+			if (m_pPlayerTransform && m_bBillBoard)
+			{
+				BillBoard_X();
+			}
+		}
 	}
+
+	m_pCollider->Set_Host(this);
+	m_pCollider->Set_Transform(m_pTransformCom);
 
 	__super::Update_GameObject(fTimeDelta);
 
@@ -140,23 +162,6 @@ void CBuild_Obj::LateUpdate_GameObject()
 
 	__super::LateUpdate_GameObject();
 }
-
-HRESULT CBuild_Obj::SetUp_Meterial()
-{
-	D3DMATERIAL9 tMtrl;
-	ZeroMemory(&tMtrl, sizeof(D3DMATERIAL9));
-
-	tMtrl.Diffuse = { 1.f, 1.f, 1.f, 1.f };
-	tMtrl.Specular = { 1.f, 1.f, 1.f, 1.f };
-	tMtrl.Ambient = { 1.f, 1.f, 1.f, 1.0f };  //마지막 값 -> 알파채널(투명도)
-	tMtrl.Emissive = { 0.1f, 0.1f, 0.1f, 0.1f };
-	tMtrl.Power = 0.f;
-
-	m_pGraphicDev->SetMaterial(&tMtrl);
-
-	return S_OK;
-}
-
 
 void CBuild_Obj::Render_GameObject()
 {
@@ -206,6 +211,66 @@ void CBuild_Obj::Render_Texture()
 	}
 
 	//스테이지 변경에 따른 반영사항 추가 필요
+}
+
+HRESULT CBuild_Obj::SetUp_Meterial()
+{
+	D3DMATERIAL9 tMtrl;
+	ZeroMemory(&tMtrl, sizeof(D3DMATERIAL9));
+
+	tMtrl.Diffuse = { 1.f, 1.f, 1.f, 1.f };
+	tMtrl.Specular = { 1.f, 1.f, 1.f, 1.f };
+	tMtrl.Ambient = { 1.f, 1.f, 1.f, 1.0f };  //마지막 값 -> 알파채널(투명도)
+	tMtrl.Emissive = { 0.1f, 0.1f, 0.1f, 0.1f };
+	tMtrl.Power = 0.f;
+
+	m_pGraphicDev->SetMaterial(&tMtrl);
+
+	return S_OK;
+}
+
+
+void CBuild_Obj::BillBoard()
+{
+	_vec3 vPlayerPos, vPlayerPos_Rel;
+	m_pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);
+	vPlayerPos.y = 0.f;
+	// 이동 코드
+
+	m_pTransformCom->Get_Info(INFO_POS, &m_myObjPos);
+	vPlayerPos_Rel = vPlayerPos - m_myObjPos;
+
+	D3DXVec3Normalize(&vPlayerPos_Rel, &vPlayerPos_Rel);
+
+	_float fAngle = atan2f(vPlayerPos_Rel.x, vPlayerPos_Rel.z);
+	m_pTransformCom->Set_Rotate(ROT_Y, fAngle + D3DX_PI);
+	//방향전환 코드 (플레이어 방향)
+}
+
+void CBuild_Obj::BillBoard_X()
+{
+// 	_vec3 vPlayerPos, vPlayerPos_Rel;
+// 	m_pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);
+// 	vPlayerPos.x = 0.f;
+// 	// 이동 코드
+// 
+// 	m_pTransformCom->Get_Info(INFO_POS, &m_myObjPos);
+// 	vPlayerPos_Rel = vPlayerPos - m_myObjPos;
+// 
+// 	D3DXVec3Normalize(&vPlayerPos_Rel, &vPlayerPos_Rel);
+// 
+// 	_float fAngle = atan2f(vPlayerPos_Rel.y, vPlayerPos_Rel.z);
+// 	m_pTransformCom->Set_Rotate(ROT_X, fAngle + D3DX_PI);
+// 	//방향전환 코드 (플레이어 방향)
+}
+
+void CBuild_Obj::Init_PlayerTransform()
+{
+	if (m_bLateInit)
+	{
+		m_pPlayerTransform = dynamic_cast<CTransform*>(Management()->Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
+		m_bLateInit = false;
+	}
 }
 
 CBuild_Obj* CBuild_Obj::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 pMouse_Pos, 
