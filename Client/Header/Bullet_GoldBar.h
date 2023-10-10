@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Base.h"
-#include "GameObject.h"
+#include "Bullet.h"
 
 BEGIN(Engine)
 
@@ -11,7 +11,7 @@ class CTransform;
 
 END
 
-class CBullet_GoldBar : public Engine::CGameObject
+class CBullet_GoldBar : public CBullet
 {
 	enum BULLET_TEXTURE { VER, HOR };
 
@@ -34,7 +34,6 @@ public:
 
 private:
 	CRcTex*			m_pBufferCom = nullptr; // 텍스처를 그리기위한 버퍼 컴포넌트
-	CTransform*		m_pTransformCom = nullptr; // 이동 컴포넌트
 	CTexture*		m_pTextureCom = nullptr; // 텍스쳐 컴포넌트
 
 	_vec3			m_vTargetDir;

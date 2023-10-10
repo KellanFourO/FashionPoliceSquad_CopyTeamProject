@@ -28,6 +28,11 @@ public:
 	void			Set_Color(_int iColor) { m_iColorIndex = iColor;}
 
 public:
+	virtual void		OnCollisionEnter(CCollider* _pOther);
+	virtual void		OnCollisionStay(CCollider* _pOther);
+	virtual void		OnCollisionExit(CCollider* _pOther);
+
+private:
 	HRESULT			Add_Component();
 
 private:

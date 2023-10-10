@@ -304,9 +304,6 @@
     <Filter Include="02. GameObject\07. Bullet\00.PlayerBullet">
       <UniqueIdentifier>{27410ade-f834-49ed-95b2-ba04b5a3e629}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\07. Bullet\00.PlayerBullet\01. RifleBullet">
-      <UniqueIdentifier>{18236847-33ed-4c22-b499-5ba0d125e8b3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\07. Bullet\01.MonsterBullet">
       <UniqueIdentifier>{6eb94606-5f5c-4c02-8f40-bab3c8a51d5c}</UniqueIdentifier>
     </Filter>
@@ -435,30 +432,6 @@
     <ClInclude Include="..\Header\SkyBox.h">
       <Filter>02. GameObject\05. SkyBox</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\ImGui\imconfig.h">
-      <Filter>03. ImGuI\Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ImGui\imgui.h">
-      <Filter>03. ImGuI\Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ImGui\imgui_impl_dx9.h">
-      <Filter>03. ImGuI\Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ImGui\imgui_impl_win32.h">
-      <Filter>03. ImGuI\Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ImGui\imgui_internal.h">
-      <Filter>03. ImGuI\Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ImGui\imstb_rectpack.h">
-      <Filter>03. ImGuI\Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ImGui\imstb_textedit.h">
-      <Filter>03. ImGuI\Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ImGui\imstb_truetype.h">
-      <Filter>03. ImGuI\Include</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Dyehard.h">
       <Filter>02. GameObject\01. Player\01. Dyehard</Filter>
     </ClInclude>
@@ -488,9 +461,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\MuzzleFlash.h">
       <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\00. MuzzleFlash</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\PaintBall.h">
-      <Filter>02. GameObject\07. Bullet\00.PlayerBullet\00. ShotGunBullet</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BrifCase.h">
       <Filter>02. GameObject\07. Bullet\01.MonsterBullet\00.BrifCase</Filter>
@@ -621,9 +591,6 @@
     <ClInclude Include="..\Header\Item.h">
       <Filter>02. GameObject\30. Inventory\01. Item</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Rifle_READY.h">
-      <Filter>02. GameObject\01. Player\03. Rifle\99. RifleState</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\MyCard.h">
       <Filter>02. GameObject\20.UI\03. MyCard</Filter>
     </ClInclude>
@@ -693,9 +660,6 @@
     <ClInclude Include="..\Header\Bullet_GoldBar.h">
       <Filter>02. GameObject\07. Bullet\02.BossBullet\00.GoldBar</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Rifle_Bullet.h">
-      <Filter>02. GameObject\07. Bullet\00.PlayerBullet\01. RifleBullet</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\JumpSmoke.h">
       <Filter>02. GameObject\06. Effect\00.Particle\02.JumpSmoke</Filter>
     </ClInclude>
@@ -707,12 +671,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\PlayerBullet.h">
       <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\KickBoardMonster_Attack.h">
-      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\03. KickBoardMonster_Attack</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\KickBoardMonster_Patrol.h">
-      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\04. KickBoardMonster_Patrol</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Player_Jump.h">
       <Filter>02. GameObject\01. Player\99. PlayerState\08. Player_Jump</Filter>
@@ -728,6 +686,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\TailorAssertRifle.h">
       <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LoadingStage1.h">
+      <Filter>01.Scene\09.LoadingStage1</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Bullet.h">
       <Filter>02. GameObject\07. Bullet</Filter>
@@ -783,9 +744,6 @@
     <ClInclude Include="..\Header\PaintShotGun_Enter.h">
       <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\06. PainShotGun_Enter</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\PaintShotGun_Jump.h">
-      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\07. PaintShotGun_Jump</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\TailorAssertRifle_Idle.h">
       <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\00. TailorAssertRifle_Idle</Filter>
     </ClInclude>
@@ -807,9 +765,6 @@
     <ClInclude Include="..\Header\Player_Jump.h">
       <Filter>02. GameObject\01. Player\99. PlayerState\08. Player_Jump</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\PlayerGun.h">
-      <Filter>02. GameObject\01. Player\05. PlayerGun</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Bullet.h">
       <Filter>02. GameObject\07. Bullet</Filter>
     </ClInclude>
@@ -825,6 +780,36 @@
     <ClInclude Include="..\Header\TailorAssertRifleHand.h">
       <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\01. Hand</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\PaintShotGun_Jump.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ShotGun_Bullet.h">
+      <Filter>02. GameObject\07. Bullet\00.PlayerBullet\00. ShotGunBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Rifle_Bullet1.h">
+      <Filter>02. GameObject\07. Bullet\00.PlayerBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Player_LevelUp.h">
+      <Filter>02. GameObject\01. Player\99. PlayerState\05. Player_LevelUp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\KickBoardMonster.h">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\KickBoardMonster_Idle.h">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\01. KickBoardMonster_Idle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\KickBoardMonster_Chase.h">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\02. KickBoardMonster_Chase</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\KickBoardMonster_Attack.h">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\03. KickBoardMonster_Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\KickBoardMonster_Patrol.h">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\04. KickBoardMonster_Patrol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\KickBoardMonster_Dead.h">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\10. KickBoardMonster_Dead</Filter>
+    </ClInclude>
     <ClInclude Include="..\Header\PaintShotGun_Enter.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -839,6 +824,48 @@
     </ClInclude>
     <ClInclude Include="..\Header\ShotGun_Bullet.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PaintShotGun.h">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TailorAssertRifle.h">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerGun.h">
+      <Filter>02. GameObject\01. Player\03. PlayerGun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PaintShotGun.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerGun.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TailorAssertRifle.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Reference\Header\ImGui\imconfig.h">
+      <Filter>03. ImGuI\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Reference\Header\ImGui\imgui.h">
+      <Filter>03. ImGuI\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Reference\Header\ImGui\imgui_impl_dx9.h">
+      <Filter>03. ImGuI\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Reference\Header\ImGui\imgui_impl_win32.h">
+      <Filter>03. ImGuI\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Reference\Header\ImGui\imgui_internal.h">
+      <Filter>03. ImGuI\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Reference\Header\ImGui\imstb_rectpack.h">
+      <Filter>03. ImGuI\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Reference\Header\ImGui\imstb_textedit.h">
+      <Filter>03. ImGuI\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Reference\Header\ImGui\imstb_truetype.h">
+      <Filter>03. ImGuI\Include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -875,27 +902,6 @@
     <ClCompile Include="..\Code\SkyBox.cpp">
       <Filter>02. GameObject\05. SkyBox</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\ImGui\imgui.cpp">
-      <Filter>03. ImGuI\Include</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ImGui\imgui_demo.cpp">
-      <Filter>03. ImGuI\Include</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ImGui\imgui_draw.cpp">
-      <Filter>03. ImGuI\Include</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ImGui\imgui_impl_dx9.cpp">
-      <Filter>03. ImGuI\Include</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ImGui\imgui_impl_win32.cpp">
-      <Filter>03. ImGuI\Include</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ImGui\imgui_tables.cpp">
-      <Filter>03. ImGuI\Include</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ImGui\imgui_widgets.cpp">
-      <Filter>03. ImGuI\Include</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Dyehard.cpp">
       <Filter>02. GameObject\01. Player\01. Dyehard</Filter>
     </ClCompile>
@@ -925,9 +931,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\MuzzleFlash.cpp">
       <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\00. MuzzleFlash</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\PaintBall.cpp">
-      <Filter>02. GameObject\07. Bullet\00.PlayerBullet\00. ShotGunBullet</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BrifCase.cpp">
       <Filter>02. GameObject\07. Bullet\01.MonsterBullet\00.BrifCase</Filter>
@@ -1034,9 +1037,6 @@
     <ClCompile Include="..\Code\Item.cpp">
       <Filter>02. GameObject\30. Inventory\01. Item</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Rifle_READY.cpp">
-      <Filter>02. GameObject\01. Player\03. Rifle\99. RifleState</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\MyCard.cpp">
       <Filter>02. GameObject\20.UI\03. MyCard</Filter>
     </ClCompile>
@@ -1103,9 +1103,6 @@
     <ClCompile Include="..\Code\Bullet_GoldBar.cpp">
       <Filter>02. GameObject\07. Bullet\02.BossBullet\00.GoldBar</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Rifle_Bullet.cpp">
-      <Filter>02. GameObject\07. Bullet\00.PlayerBullet\01. RifleBullet</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\JumpSmoke.cpp">
       <Filter>02. GameObject\06. Effect\00.Particle\02.JumpSmoke</Filter>
     </ClCompile>
@@ -1132,15 +1129,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\Player_Jump.cpp">
       <Filter>02. GameObject\01. Player\99. PlayerState\08. Player_Jump</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\PlayerGun.cpp">
-      <Filter>02. GameObject\01. Player\03. PlayerGun</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\TailorAssertRifle.cpp">
-      <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\PaintShotGun.cpp">
-      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Bullet.cpp">
       <Filter>02. GameObject\07. Bullet</Filter>
@@ -1193,9 +1181,6 @@
     <ClCompile Include="..\Code\PaintShotGun_Enter.cpp">
       <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\06. PainShotGun_Enter</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\PaintShotGun_Jump.cpp">
-      <Filter>02. GameObject\01. Player\05. PlayerGun\00. PaintShotGun\99. PaintShotGunState\07. PaintShotGun_Jump</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\TailorAssertRifle_Idle.cpp">
       <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\00. TailorAssertRifle_Idle</Filter>
     </ClCompile>
@@ -1232,14 +1217,22 @@
     <ClCompile Include="..\Code\TailorAssertRifle.cpp">
       <Filter>02. GameObject\01. Player\05. PlayerGun\01. TailorAssertRifle</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\PlayerGun.cpp">
-      <Filter>02. GameObject\01. Player\05. PlayerGun</Filter>
+    <ClCompile Include="..\Code\Bullet.cpp">
+      <Filter>02. GameObject\07. Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ShotGun_Bullet.cpp">
+      <Filter>02. GameObject\07. Bullet\00.PlayerBullet\00. ShotGunBullet</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Bullet.cpp">
       <Filter>02. GameObject\07. Bullet</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Rifle_Bullet1.cpp">
       <Filter>02. GameObject\07. Bullet\00.PlayerBullet\01. RifleBullet</Filter>
+    <ClCompile Include="..\Code\TailorAssertRifleHand.cpp">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\01. Hand</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PaintShotGun_Jump.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\ShotGun_Bullet.cpp">
       <Filter>02. GameObject\07. Bullet\00.PlayerBullet\00. ShotGunBullet</Filter>
@@ -1252,6 +1245,86 @@
     </ClCompile>
     <ClCompile Include="..\Code\TailorAssertRifleHand.cpp">
       <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\01. Hand</Filter>
+    </ClCompile>
+      <Filter>02. GameObject\07. Bullet\00.PlayerBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Player_LevelUp.cpp">
+      <Filter>02. GameObject\01. Player\99. PlayerState\05. Player_LevelUp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\KickBoardMonster.cpp">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\KickBoardMonster_Idle.cpp">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\01. KickBoardMonster_Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\KickBoardMonster_Chase.cpp">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\02. KickBoardMonster_Chase</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\KickBoardMonster_Attack.cpp">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\03. KickBoardMonster_Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\KickBoardMonster_Patrol.cpp">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\04. KickBoardMonster_Patrol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\KickBoardMonster_Dead.cpp">
+      <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\10. KickBoardMonster_Dead</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PaintShotGun_Enter.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PaintShotGun_Idle.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PaintShotGun_Jump.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PaintShotGun_Lazer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Rifle_Bullet1.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PaintShotGun.cpp">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TailorAssertRifle.cpp">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerGun.cpp">
+      <Filter>02. GameObject\01. Player\03. PlayerGun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PaintShotGun.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerGun.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Rifle_Bullet1.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TailorAssertRifle.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Reference\Header\ImGui\imgui.cpp">
+      <Filter>03. ImGuI\Include</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Reference\Header\ImGui\imgui_demo.cpp">
+      <Filter>03. ImGuI\Include</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Reference\Header\ImGui\imgui_draw.cpp">
+      <Filter>03. ImGuI\Include</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Reference\Header\ImGui\imgui_impl_dx9.cpp">
+      <Filter>03. ImGuI\Include</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Reference\Header\ImGui\imgui_impl_win32.cpp">
+      <Filter>03. ImGuI\Include</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Reference\Header\ImGui\imgui_tables.cpp">
+      <Filter>03. ImGuI\Include</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Reference\Header\ImGui\imgui_widgets.cpp">
+      <Filter>03. ImGuI\Include</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PaintShotGun_Enter.cpp">
       <Filter>소스 파일</Filter>

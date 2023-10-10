@@ -6,12 +6,12 @@
 
 
 CBullet_GoldBar::CBullet_GoldBar(LPDIRECT3DDEVICE9 pGraphicDev)
-	:Engine::CGameObject(pGraphicDev)
+	:CBullet(pGraphicDev)
 {
 }
 
 CBullet_GoldBar::CBullet_GoldBar(const CBullet_GoldBar& rhs)
-	: Engine::CGameObject(rhs)
+	:CBullet(rhs)
 {
 }
 
@@ -24,10 +24,11 @@ HRESULT CBullet_GoldBar::Ready_GameObject()
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-
-	_vec3 vScale = { 5.f, 5.f, 5.f };
+	_vec3 vScale = { 1.5f, 1.5f, 1.5f };
 	_vec3 vPos = Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::BOSS).back()->m_pTransformCom->m_vInfo[INFO_POS];
+	m_fDmg = 10.f;
 
+	Set_ObjectTag(OBJECTTAG::MONSTERBULLET);
 // 	CTransform* pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
 //
 // 	_vec3 vPlayerPos, vPlayerPos_Rel;
@@ -40,6 +41,10 @@ HRESULT CBullet_GoldBar::Ready_GameObject()
 	m_pTransformCom->Set_Scale(vScale);
 
 
+	m_pCollider->Set_Host(this);
+	m_pTransformCom->Set_Host(this);
+	m_pCollider->Set_Transform(m_pTransformCom);
+	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
 
 
 	m_pTextureCom->Ready_Texture(TEX_NORMAL, L"../Bin/Resource/Texture/Monster/gold-bar-projectile_1.png", 1);
@@ -52,19 +57,13 @@ Engine::_int CBullet_GoldBar::Update_GameObject(const _float& fTimeDelta)
 		Engine::Add_RenderGroup(RENDER_ALPHA, this);
 		__super::Update_GameObject(fTimeDelta);
 
-		m_fAge += fTimeDelta;
-
-		if (m_fAge > m_fLifeTime)
-		{
-			return OBJ_DEAD;
-		}
+		if(m_bDead)
+		return OBJ_DEAD;
 		//m_pTransformCom->Set_Rotate(ROT_Y, fTimeDelta + D3DX_PI);
 		m_pTransformCom->Move_Pos(&m_vTargetDir, fTimeDelta, 50.f);
 
-		CTransform* pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
-
 		_vec3 vPlayerPos, vPlayerPos_Rel;
-		pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
+		m_pPlayerTransformCom->Get_Info(INFO_POS, &vPlayerPos);
 		vPlayerPos.y = 0.f;
 		// 이동 코드
 
@@ -116,7 +115,6 @@ void CBullet_GoldBar::LateUpdate_GameObject()
 
 void CBullet_GoldBar::Render_GameObject()
 {
-
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
@@ -143,6 +141,14 @@ HRESULT CBullet_GoldBar::Add_Component()
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Stage1Bullet"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
+
+	pComponent = m_pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Proto_Collider"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].emplace(COMPONENTTAG::COLLIDER, pComponent);
+
+	for (_uint i = 0; i < ID_END; ++i)
+		for (auto& iter : m_mapComponent[i])
+			iter.second->Init_Property(this);
 
 	return S_OK;
 }

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Base.h"
-#include "GameObject.h"
+#include "Bullet.h"
 
 BEGIN(Engine)
 
@@ -12,7 +12,7 @@ class CRigidBody;
 
 END
 
-class CBrifCase : public Engine::CGameObject
+class CBrifCase : public CBullet
 {
 protected:
 	explicit CBrifCase(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -46,7 +46,7 @@ protected:
 	_float		m_fBulletMoveRight, m_fBulletMoveDown, m_fBulletSpeed; // 랜덤으로 생성좌표를 이동시키기 위한 변수
 	_float      m_fSpeed_Vertical = 0.f;
 
-	CTransform*	m_pPlayerTransform = nullptr;
+	//CTransform*	m_pPlayerTransform = nullptr;
 	CTransform*	m_pHostTransform = nullptr;
 public:
 	static CBrifCase* Create(LPDIRECT3DDEVICE9 pGraphicDev, CTransform* pHostTransform, CTransform* pPlayerTransform);

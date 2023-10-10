@@ -44,12 +44,12 @@ public:
 
 
 private:
-	CScene* m_pPreScene;
-	CScene* m_pScene;
-	CScene* m_pNextScene;
+	CScene* m_pPreScene = nullptr;
+	CScene* m_pScene = nullptr;
+	CScene* m_pNextScene = nullptr;
 
-	_bool           m_bGameStop;
-	_bool           m_bSceneChange;
+	_bool           m_bGameStop=false;
+	_bool           m_bSceneChange =false;
 
 	bool           m_bStageVisit[(_uint)SCENETAG::SCENETAG_END];
 public:

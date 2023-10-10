@@ -51,16 +51,9 @@ CMonsterState* CDullSuitMonster_Attack::Update(CMonster* Monster, const float& f
 
 		if (m_fTick >= 1.f)
 		{
-			if (m_pHost->Get_MonsterBullet() == nullptr) {
-				m_pHost->Set_Bullet(CBrifCase_2::Create(m_pHost->Get_GraphicDev(), m_pHost->m_pTransformCom, m_pHost->Get_PlayerTransform()));
-				CManagement* pManagement;
-				CLayer* pStageLayer = pManagement->GetInstance()->Get_Layer(LAYERTAG::GAMELOGIC);
-				pStageLayer->Add_GameObject(OBJECTTAG::MONSTERBULLET, m_pHost->Get_MonsterBullet());
-				dynamic_cast<CBrifCase_2*>(m_pHost->Get_MonsterBullet())->Shot(m_pHost->Get_Info().vPos);
-			}
-			else {
-				dynamic_cast<CBrifCase_2*>(m_pHost->Get_MonsterBullet())->Shot(m_pHost->Get_Info().vPos);
-			}
+			m_pHost->Set_Bullet(LoadBullet());
+			dynamic_cast<CBrifCase_2*>(m_pHost->Get_MonsterBullet())->Shot(m_pHost->Get_Info().vPos);
+
 
 			++m_fCurFrame;
 			m_eAttack = THROW;
@@ -132,4 +125,12 @@ void CDullSuitMonster_Attack::Render(CMonster* _Monster)
 	}
 
 	m_pHost->Get_BufferCom()->Render_Buffer(m_fCurFrame, 1);
+}
+
+CBullet* CDullSuitMonster_Attack::LoadBullet()
+{
+	CBullet* pBullet = CBrifCase_2::Create(m_pHost->Get_GraphicDev(),m_pHost->Get_Transform(),m_pHost->Get_PlayerTransform());
+	Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::MONSTERBULLET, pBullet);
+
+	return pBullet;
 }

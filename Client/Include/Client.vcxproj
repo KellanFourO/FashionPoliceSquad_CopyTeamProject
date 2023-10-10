@@ -35,7 +35,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
+    <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>false</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
@@ -74,26 +74,31 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
-    <OutDir>../Bin\</OutDir>
-    <LibraryPath>$(DXSDK_DIR)lib\x86;$(LibraryPath)</LibraryPath>
-    <IntDir>$(Configuration)\</IntDir>
+    <OutDir>..\Bin\Export\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <IntDir>..\Bin\Intermediate\$(Configuration)\$(PlatformTarget)\</IntDir>
+    <IncludePath>$(DXSDK_DIR)Include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)Lib\$(PlatformTarget)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
-    <OutDir>../Bin\</OutDir>
-    <LibraryPath>$(DXSDK_DIR)lib\x86;$(LibraryPath)</LibraryPath>
+    <OutDir>..\Bin\Export\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <IntDir>..\Bin\Intermediate\$(Configuration)\$(PlatformTarget)\</IntDir>
+    <IncludePath>$(DXSDK_DIR)Include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)Lib\$(PlatformTarget)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>../Bin\</OutDir>
-    <IntDir>$(Configuration)\</IntDir>
-    <IncludePath>$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)Include;$(IncludePath)</LibraryPath>
+    <OutDir>..\Bin\Export\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <IntDir>..\Bin\Intermediate\$(Configuration)\$(PlatformTarget)\</IntDir>
+    <IncludePath>$(DXSDK_DIR)Include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)Lib\$(PlatformTarget)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\Bin\Export\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <IntDir>..\Bin\Intermediate\$(Configuration)\$(PlatformTarget)\</IntDir>
+    <IncludePath>$(DXSDK_DIR)Include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)Lib\$(PlatformTarget)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -101,7 +106,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>../Header;../../Base;../../Reference/Header;../../ImGui;../Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;..\Header\;$(SolutionDir)Base\;$(SolutionDir)Reference\Header\;$(SolutionDir)Reference\Header\FMod\;$(SolutionDir)Reference\Header\ImGui\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -110,8 +115,12 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;System.lib;Utility.lib;shlwapi.lib;fmodex_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../Reference/Library</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Reference\Library\Engine\$(Configuration)\$(PlatformTarget)\;$(SolutionDir)\Reference\Library\FMod\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)Reference\Library\FMod\fmodex.dll" "$(OutDir)" /y
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -119,12 +128,13 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>../Header;../../Base;../../Reference/Header;../../ImGui;../Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;..\Header\;$(SolutionDir)Base\;$(SolutionDir)Reference\Header\;$(SolutionDir)Reference\Header\FMod\;$(SolutionDir)Reference\Header\ImGui\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <Optimization>MaxSpeed</Optimization>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -132,8 +142,13 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;System.lib;Utility.lib;shlwapi.lib;fmodex_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../Reference/Library</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Reference\Library\Engine\$(Configuration)\$(PlatformTarget)\;$(SolutionDir)\Reference\Library\FMod\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)Reference\Library\FMod\fmodex.dll" "$(OutDir)" /y
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -141,15 +156,19 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>../Header;../../Base;../../Reference/Header;../../ImGui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;..\Header\;$(SolutionDir)Base\;$(SolutionDir)Reference\Header\;$(SolutionDir)Reference\Header\FMod\;$(SolutionDir)Reference\Header\ImGui\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../../Reference/Library</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Reference\Library\Engine\$(Configuration)\$(PlatformTarget)\;$(SolutionDir)\Reference\Library\FMod\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;System.lib;Utility.lib;shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)Reference\Library\FMod\fmodex.dll" "$(OutDir)" /y
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -159,23 +178,29 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>.\;..\Header\;$(SolutionDir)Base\;$(SolutionDir)Reference\Header\;$(SolutionDir)Reference\Header\FMod\;$(SolutionDir)Reference\Header\ImGui\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Reference\Library\Engine\$(Configuration)\$(PlatformTarget)\;$(SolutionDir)\Reference\Library\FMod\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)Reference\Library\FMod\fmodex.dll" "$(OutDir)" /y
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\ImGui\imconfig.h" />
-    <ClInclude Include="..\..\ImGui\imgui.h" />
-    <ClInclude Include="..\..\ImGui\imgui_impl_dx9.h" />
-    <ClInclude Include="..\..\ImGui\imgui_impl_win32.h" />
-    <ClInclude Include="..\..\ImGui\imgui_internal.h" />
-    <ClInclude Include="..\..\ImGui\imstb_rectpack.h" />
-    <ClInclude Include="..\..\ImGui\imstb_textedit.h" />
-    <ClInclude Include="..\..\ImGui\imstb_truetype.h" />
+    <ClInclude Include="..\..\Reference\Header\ImGui\imconfig.h" />
+    <ClInclude Include="..\..\Reference\Header\ImGui\imgui.h" />
+    <ClInclude Include="..\..\Reference\Header\ImGui\imgui_impl_dx9.h" />
+    <ClInclude Include="..\..\Reference\Header\ImGui\imgui_impl_win32.h" />
+    <ClInclude Include="..\..\Reference\Header\ImGui\imgui_internal.h" />
+    <ClInclude Include="..\..\Reference\Header\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="..\..\Reference\Header\ImGui\imstb_textedit.h" />
+    <ClInclude Include="..\..\Reference\Header\ImGui\imstb_truetype.h" />
     <ClInclude Include="..\Header\BackGround.h" />
     <ClInclude Include="..\Header\Belt.h" />
     <ClInclude Include="..\Header\Belt_ATTACK.h" />
@@ -241,7 +266,6 @@
     <ClInclude Include="..\Header\MyUI.h" />
     <ClInclude Include="..\Header\NewFPSCamera.h" />
     <ClInclude Include="..\Header\ObjectPoolMgr.h" />
-    <ClInclude Include="..\Header\PaintBall.h" />
     <ClInclude Include="..\Header\PaintShotGun.h" />
     <ClInclude Include="..\Header\PaintShotGun_Enter.h" />
     <ClInclude Include="..\Header\PaintShotGun_Idle.h" />
@@ -266,7 +290,6 @@
     <ClInclude Include="..\Header\ProgressFrame.h" />
     <ClInclude Include="..\Header\ProgressValue.h" />
     <ClInclude Include="..\Header\RecognitionRange.h" />
-    <ClInclude Include="..\Header\Rifle_Bullet.h" />
     <ClInclude Include="..\Header\Rifle_Bullet1.h" />
     <ClInclude Include="..\Header\ShotGun_Bullet.h" />
     <ClInclude Include="..\Header\SkyBox.h" />
@@ -301,13 +324,13 @@
     <ClInclude Include="BeltState.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\ImGui\imgui.cpp" />
-    <ClCompile Include="..\..\ImGui\imgui_demo.cpp" />
-    <ClCompile Include="..\..\ImGui\imgui_draw.cpp" />
-    <ClCompile Include="..\..\ImGui\imgui_impl_dx9.cpp" />
-    <ClCompile Include="..\..\ImGui\imgui_impl_win32.cpp" />
-    <ClCompile Include="..\..\ImGui\imgui_tables.cpp" />
-    <ClCompile Include="..\..\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="..\..\Reference\Header\ImGui\imgui.cpp" />
+    <ClCompile Include="..\..\Reference\Header\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="..\..\Reference\Header\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="..\..\Reference\Header\ImGui\imgui_impl_dx9.cpp" />
+    <ClCompile Include="..\..\Reference\Header\ImGui\imgui_impl_win32.cpp" />
+    <ClCompile Include="..\..\Reference\Header\ImGui\imgui_tables.cpp" />
+    <ClCompile Include="..\..\Reference\Header\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="..\Code\BackGround.cpp" />
     <ClCompile Include="..\Code\Belt.cpp" />
     <ClCompile Include="..\Code\Belt_ATTACK.cpp" />
@@ -381,7 +404,6 @@
     <ClCompile Include="..\Code\MyDialog.cpp" />
     <ClCompile Include="..\Code\MyUI.cpp" />
     <ClCompile Include="..\Code\NewFPSCamera.cpp" />
-    <ClCompile Include="..\Code\PaintBall.cpp" />
     <ClCompile Include="..\Code\Player.cpp" />
     <ClCompile Include="..\Code\Player_Heal.cpp" />
     <ClCompile Include="..\Code\Player_Hit.cpp" />
@@ -394,7 +416,6 @@
     <ClCompile Include="..\Code\ProgressFrame.cpp" />
     <ClCompile Include="..\Code\ProgressValue.cpp" />
     <ClCompile Include="..\Code\RecognitionRange.cpp" />
-    <ClCompile Include="..\Code\Rifle_Bullet.cpp" />
     <ClCompile Include="..\Code\Rifle_Bullet1.cpp" />
     <ClCompile Include="..\Code\ShotGun_Bullet.cpp" />
     <ClCompile Include="..\Code\SkyBox.cpp" />
