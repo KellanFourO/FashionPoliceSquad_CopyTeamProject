@@ -57,6 +57,7 @@ Engine::_int CShotGunBullet::Update_GameObject(const _float& fTimeDelta)
 		{
 			CPaintBulletTrace* pTrace = CPaintBulletTrace::Create(m_pGraphicDev, m_pColorTag);
 			pTrace->Set_ObjectTag(OBJECTTAG::EFFECT);
+			Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::EFFECT,pTrace);
 
 
 			return OBJ_DEAD;

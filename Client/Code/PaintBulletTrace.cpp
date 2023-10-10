@@ -34,6 +34,9 @@ HRESULT Engine::CPaintBulletTrace::Ready_GameObject()
 
 Engine::_int Engine::CPaintBulletTrace::Update_GameObject(const _float& fTimeDelta)
 {
+
+	m_PaintBulletTraceDeadTime += fTimeDelta;
+
 // 	m_fFrame += 87.f * fTimeDelta;
 // 
 // 	if (87.f < m_fFrame)
@@ -63,8 +66,8 @@ Engine::_int Engine::CPaintBulletTrace::Update_GameObject(const _float& fTimeDel
 	
 
 
-	++m_PaintBulletTraceDeadTime;		//Update에서 탄흔 죽여버릴거임 프레임 단위로 컷트놓을 예정
-	if (m_PaintBulletTraceDeadTime > 1000)
+	//++m_PaintBulletTraceDeadTime;		//Update에서 탄흔 죽여버릴거임 프레임 단위로 컷트놓을 예정
+	if (m_PaintBulletTraceDeadTime > 3.f)
 		return OBJ_DEAD;
 	
 	

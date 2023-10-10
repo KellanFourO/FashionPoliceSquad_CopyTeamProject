@@ -19,6 +19,7 @@ CBullet::~CBullet()
 
 HRESULT CBullet::Ready_GameObject()
 {
+
 	return S_OK;
 }
 
@@ -95,6 +96,10 @@ void CBullet::OnCollisionEnter(CCollider* _pOther)
 	{
 		//TODO 몬스터 총알 오브젝트 풀링 할거면 여기서
 		dynamic_cast<CMonster*>(_pOther->Get_Host())->Attacked(m_fDmg);
+		m_bDead = true;
+	}
+	else if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE)
+	{
 		m_bDead = true;
 	}
 	else
