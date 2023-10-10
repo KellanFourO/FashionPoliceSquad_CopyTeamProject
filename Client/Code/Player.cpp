@@ -305,7 +305,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 	if (Engine::Get_DIKeyState(DIK_G) & 0x80)
 	{
-		TestRopeAction();
+		TestRopeAction(fTimeDelta);
 	}
 
 	if (Engine::Get_DIKeyState(DIK_O) & 0x80)
@@ -378,38 +378,53 @@ void CPlayer::Mouse_Input(const _float& fTimeDelta)
 	}
 }
 
-void CPlayer::TestRopeAction()
+void CPlayer::TestRopeAction(const _float& fTimeDelta)
 {
-	_vec3 vPlayerPos, vTargetPos;
+	_vec3 vPlayerPos, vTargetPos, vLook;
 	m_pTransformCom->Get_Info(INFO_POS, &vPlayerPos);
+	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
 
-	vTargetPos = vPlayerPos + 100;
-	//auto& ObjList = Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::MONSTER);
+		_float fRopeLength = 10.f;
+		_float fGravity = 9.8f;
+		_float fTension = 0.0f;
 
-	//for (auto iter : ObjList)
-	//{
-	//	iter->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
-		_vec3 vDir = vTargetPos - vPlayerPos;
-		_float fDistance = D3DXVec3Length(&vDir);
+	auto& ObjList = Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::BOSS);
 
-		if (fDistance < 50)
+	for (auto iter : ObjList)
+	{
+		iter->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
+		_vec3 vBossToPlayer = vPlayerPos - vTargetPos;
+
+		_float fCurLength = D3DXVec3Length(&vBossToPlayer);
+
+		fTension = (fCurLength - fRopeLength) * 5;
+
+		if (fCurLength < 200)
 		{
-			D3DXVec3Normalize(&vDir, &vDir);
+			_vec3 vForce = { 0.0f, -fTension, 0.0f};
+			_vec3 vGravityForce = { 0.0f, -fGravity, 0.0f};
 
-			_float fAngle = acos(D3DXVec3Dot(&vDir, &D3DXVECTOR3(0, 0, 1)));
-			// 방향을 내적하고 acos을 통해 각도를 구함.
+			_vec3 fTotalForce = vForce + vGravityForce;
+			vPlayerPos += fTotalForce * fTimeDelta;
 
-
-			_float fForce = 10.f;
-			_float forceX = fForce * sin(fAngle); //
-			_float forceY = fForce * cos(fAngle);
-
-
-			m_pRigidBody->Add_Force(_vec3(forceX, forceY, 0.f));
+			m_pRigidBody->Add_Force(vPlayerPos);
+// 			D3DXVec3Normalize(&vDir, &vDir);
+//
+// 			// 방향을 내적하고 acos을 통해 각도를 구함.
+// 			_float fAngle = acos(D3DXVec3Dot(&vDir, &D3DXVECTOR3(0, 1, 0)));
+//
+//
+//
+// 			_float fForce = 10.f;
+// 			_float forceX = fForce * sin(fAngle); //
+// 			_float forceY = fForce * cos(fAngle); //
+// 			_float forceZ = fForce * sin(fAngle); //
+//
+// 			m_pRigidBody->Add_Force(_vec3(forceX, forceY, forceZ));
 		}
 
 
-	//}
+	}
 }
 
 
