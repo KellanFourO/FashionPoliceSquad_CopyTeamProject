@@ -74,6 +74,7 @@ public:
 		++m_iColorIndex;
 		if (m_iColorIndex > 8)
 			m_iColorIndex = 1;
+		m_pColorTag =(COLORTAG)m_iColorIndex;//색깔 인덱스말고 태그도 같이 넣어줘라
 	}
 
 protected:
@@ -93,7 +94,7 @@ protected:
 	_vec3				m_vShotDir;  // 발사할 방향
 
 	_int				m_iColorIndex = 1;
-
+	COLORTAG			m_pColorTag = COLORTAG::RED;
 	CPlayerGunState*	m_pGunState = nullptr; // 총 상태
 	vector<CShotGunBullet*>		m_vecShotGunBullet; // 총알 관리하는 벡터
 	vector<CRifle_Bullet1*>    m_vecRifleBullet;

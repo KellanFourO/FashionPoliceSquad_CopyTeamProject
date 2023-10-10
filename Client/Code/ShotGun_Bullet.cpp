@@ -1,10 +1,9 @@
 #include "stdafx.h"
 #include "ShotGun_Bullet.h"
 
-#include "Monster.h"
-
 #include "Export_System.h"
 #include "Export_Utility.h"
+#include "PaintBulletTrace.h"
 
 CShotGunBullet::CShotGunBullet(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CBullet(pGraphicDev)
@@ -20,7 +19,7 @@ CShotGunBullet::~CShotGunBullet()
 {
 }
 
-HRESULT CShotGunBullet::Ready_GameObject(_vec3 _StartPos, _int iColorIndex)
+HRESULT CShotGunBullet::Ready_GameObject(_vec3 _StartPos, _int iColorIndex,COLORTAG pColorTag)
 {
 
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
@@ -32,7 +31,7 @@ HRESULT CShotGunBullet::Ready_GameObject(_vec3 _StartPos, _int iColorIndex)
 
 
 	m_pBufferCom->SetCount(8,1);
-
+	Set_ColorTag(COLORTAG::RED);
 	m_pTransformCom->Set_Host(this);
 	m_pCollider->Set_Host(this);
 	m_pCollider->Set_Transform(m_pTransformCom);
@@ -53,7 +52,17 @@ Engine::_int CShotGunBullet::Update_GameObject(const _float& fTimeDelta)
 		__super::Update_GameObject(fTimeDelta);
 
 	if(m_bDead)
-	return OBJ_DEAD;
+	{
+		if ((COLORTAG)m_iColorIndex == m_pColorTag)
+		{
+			CPaintBulletTrace* pTrace = CPaintBulletTrace::Create(m_pGraphicDev, m_pColorTag);
+			pTrace->Set_ObjectTag(OBJECTTAG::EFFECT);
+
+
+			return OBJ_DEAD;
+		}
+	}
+
 
 	return OBJ_NOEVENT;
 }
@@ -106,6 +115,10 @@ HRESULT CShotGunBullet::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
 
+// 	pComponent = m_pPaintBulletTrace = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_PaintBallTrace"));
+// 	NULL_CHECK_RETURN(pComponent, E_FAIL);
+// 	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
+
 	pComponent = m_pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Proto_Collider"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].emplace(COMPONENTTAG::COLLIDER, pComponent);
@@ -117,11 +130,11 @@ HRESULT CShotGunBullet::Add_Component()
 }
 
 
-CShotGunBullet* CShotGunBullet::Create(LPDIRECT3DDEVICE9 pGraphicDev,_vec3 _StartPos, _int iColorIndex)
+CShotGunBullet* CShotGunBullet::Create(LPDIRECT3DDEVICE9 pGraphicDev,_vec3 _StartPos, _int iColorIndex,COLORTAG pColorTag)
 {
 	CShotGunBullet* pInstance = new CShotGunBullet(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_GameObject(_StartPos, iColorIndex)))
+	if (FAILED(pInstance->Ready_GameObject(_StartPos, iColorIndex,pColorTag)))
 	{
 		Safe_Release(pInstance);
 		MSG_BOX("ShotGunBullet Create Failed");

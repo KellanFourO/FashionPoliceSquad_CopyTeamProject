@@ -266,6 +266,7 @@
     <ClInclude Include="..\Header\MyUI.h" />
     <ClInclude Include="..\Header\NewFPSCamera.h" />
     <ClInclude Include="..\Header\ObjectPoolMgr.h" />
+    <ClInclude Include="..\Header\PaintBulletTrace.h" />
     <ClInclude Include="..\Header\PaintShotGun.h" />
     <ClInclude Include="..\Header\PaintShotGun_Enter.h" />
     <ClInclude Include="..\Header\PaintShotGun_Idle.h" />
@@ -367,6 +368,7 @@
     <ClCompile Include="..\Code\LoadingStage1.cpp" />
     <ClCompile Include="..\Code\ObjectPoolMgr.cpp" />
     <ClCompile Include="..\Code\MissionObjective.cpp" />
+    <ClCompile Include="..\Code\PaintBulletTrace.cpp" />
     <ClCompile Include="..\Code\PaintShotGun.cpp" />
     <ClCompile Include="..\Code\PaintShotGun_Enter.cpp" />
     <ClCompile Include="..\Code\PaintShotGun_Idle.cpp" />

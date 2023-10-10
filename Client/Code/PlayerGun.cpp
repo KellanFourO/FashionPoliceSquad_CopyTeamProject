@@ -57,7 +57,7 @@ void CPlayerGun::Fire()
 
 			for (int i = 0; i < 8; ++i)
 			{
-				CShotGunBullet* pBullet = CShotGunBullet::Create(m_pGraphicDev, m_vShotPos, m_iColorIndex);
+				CShotGunBullet* pBullet = CShotGunBullet::Create(m_pGraphicDev, m_vShotPos, m_iColorIndex,m_pColorTag);
 				pBullet->Set_ObjectTag(OBJECTTAG::PLAYERBULLET);
 
 				Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::PLAYERBULLET, pBullet);
@@ -72,6 +72,7 @@ void CPlayerGun::Fire()
 
 					if(!m_vecShotGunBullet[i]->Get_Dead() && m_vecShotGunBullet[i]->Get_BulletType() == m_eBulletType)
 					m_vecShotGunBullet[i]->Set_Color(m_iColorIndex);
+					m_vecShotGunBullet[i]->Set_ColorTag(m_pColorTag);
 				}
 
 				for (int i = 0; i < m_vecShotGunBullet.size(); ++i)
@@ -153,7 +154,7 @@ void CPlayerGun::Reload(_int _ColorIndex,_int iRandomIndex)
 		m_vecShotGunBullet.clear();
 			for (int i = 0; i < m_tGunInfo.m_iReloadBullet; ++i)
 			{
-				CShotGunBullet* pBullet = CShotGunBullet::Create(m_pGraphicDev, _vec3(0,0,0), _ColorIndex);
+				CShotGunBullet* pBullet = CShotGunBullet::Create(m_pGraphicDev, _vec3(0,0,0), _ColorIndex,m_pColorTag);
 				pBullet->Set_ObjectTag(OBJECTTAG::PLAYERBULLET);
 				Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::PLAYERBULLET,pBullet);
 				m_vecShotGunBullet.push_back(pBullet);
