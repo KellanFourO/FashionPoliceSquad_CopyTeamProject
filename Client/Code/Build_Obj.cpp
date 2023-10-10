@@ -69,7 +69,7 @@ HRESULT CBuild_Obj::Add_Component()
 
 	pComponent = m_pCollider = dynamic_cast<CCollider*>(Engine::ProtoMgr()->Clone_Proto(L"Proto_Collider"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::COLLIDER, pComponent); // 승용 DYNAMIC에서 STATIC 변경
+	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::COLLIDER, pComponent);
 
 	return S_OK;
 
@@ -79,9 +79,8 @@ HRESULT CBuild_Obj::Add_Component()
 
 HRESULT CBuild_Obj::Ready_GameObject(_uint pRotate, _vec3 pMouse_Pos, _vec3 Size)
 {
-	Set_ObjectTag(OBJECTTAG::BUILD_OBJ);
-
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
+	Set_ObjectTag(OBJECTTAG::BUILD_OBJ);
 
 	m_pCollider->Set_Host(this);
 	m_pCollider->Set_Transform(m_pTransformCom);
@@ -113,6 +112,7 @@ HRESULT CBuild_Obj::Ready_GameObject(_uint pRotate, _vec3 pMouse_Pos, _vec3 Size
 
 	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], m_pTransformCom->m_vScale);
 	
+	// billboard 용
 	m_pPlayerTransform = dynamic_cast<CTransform*>(Management()->Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
 
 	return S_OK;
@@ -130,7 +130,7 @@ _int CBuild_Obj::Update_GameObject(const _float& fTimeDelta)
 		Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
 
 		if (m_eAttribute == OBJ_ATTRIBUTE::BILL_OBJ)
-		{
+	 	{
 			Init_PlayerTransform();
 			if (m_pPlayerTransform && m_bBillBoard)
 			{
@@ -249,19 +249,19 @@ void CBuild_Obj::BillBoard()
 
 void CBuild_Obj::BillBoard_X()
 {
-// 	_vec3 vPlayerPos, vPlayerPos_Rel;
-// 	m_pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);
-// 	vPlayerPos.x = 0.f;
-// 	// 이동 코드
-// 
-// 	m_pTransformCom->Get_Info(INFO_POS, &m_myObjPos);
-// 	vPlayerPos_Rel = vPlayerPos - m_myObjPos;
-// 
-// 	D3DXVec3Normalize(&vPlayerPos_Rel, &vPlayerPos_Rel);
-// 
-// 	_float fAngle = atan2f(vPlayerPos_Rel.y, vPlayerPos_Rel.z);
-// 	m_pTransformCom->Set_Rotate(ROT_X, fAngle + D3DX_PI);
-// 	//방향전환 코드 (플레이어 방향)
+ 	_vec3 vPlayerPos, vPlayerPos_Rel;
+ 	m_pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);
+ 	vPlayerPos.x = 0.f;
+ 	// 이동 코드
+ 
+ 	m_pTransformCom->Get_Info(INFO_POS, &m_myObjPos);
+ 	vPlayerPos_Rel = vPlayerPos - m_myObjPos;
+ 
+ 	D3DXVec3Normalize(&vPlayerPos_Rel, &vPlayerPos_Rel);
+ 
+ 	_float fAngle = atan2f(vPlayerPos_Rel.y, vPlayerPos_Rel.z);
+ 	m_pTransformCom->Set_Rotate(ROT_X, fAngle + D3DX_PI);
+ 	//방향전환 코드 (플레이어 방향)
 }
 
 void CBuild_Obj::Init_PlayerTransform()
