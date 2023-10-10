@@ -57,7 +57,7 @@ void CPlayerGun::Fire()
 
 			for (int i = 0; i < 8; ++i)
 			{
-				CBullet* pBullet = CShotGunBullet::Create(m_pGraphicDev, m_vShotPos, m_iColorIndex);
+				CShotGunBullet* pBullet = CShotGunBullet::Create(m_pGraphicDev, m_vShotPos, m_iColorIndex);
 				pBullet->Set_ObjectTag(OBJECTTAG::PLAYERBULLET);
 
 				Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::PLAYERBULLET, pBullet);
@@ -71,7 +71,7 @@ void CPlayerGun::Fire()
 				{
 
 					if(!m_vecShotGunBullet[i]->Get_Dead() && m_vecShotGunBullet[i]->Get_BulletType() == m_eBulletType)
-					dynamic_cast<CShotGunBullet*>(m_vecShotGunBullet[i])->Set_Color(m_iColorIndex);
+					m_vecShotGunBullet[i]->Set_Color(m_iColorIndex);
 				}
 
 				for (int i = 0; i < m_vecShotGunBullet.size(); ++i)
@@ -116,7 +116,7 @@ void CPlayerGun::Fire()
 		case BULLETTYPE::ASSERTRIFLE_BULLET:
 		{
 
-				CBullet* pBullet = CRifle_Bullet1::Create(m_pGraphicDev, m_vShotPos, m_iColorIndex);
+				CRifle_Bullet1* pBullet = CRifle_Bullet1::Create(m_pGraphicDev, m_vShotPos, m_iColorIndex);
 				pBullet->Set_ObjectTag(OBJECTTAG::PLAYERBULLET);
 				Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::PLAYERBULLET, pBullet);
 				m_vecRifleBullet.push_back(pBullet);
@@ -153,7 +153,7 @@ void CPlayerGun::Reload(_int _ColorIndex,_int iRandomIndex)
 		m_vecShotGunBullet.clear();
 			for (int i = 0; i < m_tGunInfo.m_iReloadBullet; ++i)
 			{
-				CBullet* pBullet = CShotGunBullet::Create(m_pGraphicDev, _vec3(0,0,0), _ColorIndex);
+				CShotGunBullet* pBullet = CShotGunBullet::Create(m_pGraphicDev, _vec3(0,0,0), _ColorIndex);
 				pBullet->Set_ObjectTag(OBJECTTAG::PLAYERBULLET);
 				Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::PLAYERBULLET,pBullet);
 				m_vecShotGunBullet.push_back(pBullet);
@@ -167,7 +167,7 @@ void CPlayerGun::Reload(_int _ColorIndex,_int iRandomIndex)
 		m_vecRifleBullet.clear();
 			for (int i = 0; i < m_tGunInfo.m_iReloadBullet; ++i)
 			{
-				CBullet* pBullet = CRifle_Bullet1::Create(m_pGraphicDev, _vec3(0, 0, 0),iRandomIndex);
+				CRifle_Bullet1* pBullet = CRifle_Bullet1::Create(m_pGraphicDev, _vec3(0, 0, 0),iRandomIndex);
 				pBullet->Set_ObjectTag(OBJECTTAG::PLAYERBULLET);
 				Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::PLAYERBULLET, pBullet);
 				m_vecRifleBullet.push_back(pBullet);

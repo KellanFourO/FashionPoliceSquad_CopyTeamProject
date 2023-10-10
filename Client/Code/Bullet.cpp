@@ -40,7 +40,7 @@ _int CBullet::Update_GameObject(const _float& fTimeDelta)
 		m_bLateInit = false;
 	}
 
-	if (m_bShot)
+	if (m_bShot && m_eObjectTag !=OBJECTTAG::PLAYER_LAZER)
 	{
 		_vec3 vPlayerPos, vMyPos, vLook;
 

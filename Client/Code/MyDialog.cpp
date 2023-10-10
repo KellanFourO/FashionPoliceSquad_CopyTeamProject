@@ -175,7 +175,7 @@ void CMyDialog::LoadText(DIALOGTAG eDialogTag)
 
 void CMyDialog::KeyInput()
 {
-	if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80 && m_bTick && m_PortraitList.size() != 0 && m_TextList.size() != 0)
+	if (Engine::Get_DIKeyState(DIK_RETURN) & 0x80 && m_bTick && m_PortraitList.size() != 0 && m_TextList.size() != 0)
 	{
 		m_PortraitList.pop_front();
 		m_TextList.pop_front();

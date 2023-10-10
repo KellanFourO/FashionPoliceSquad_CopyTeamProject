@@ -30,7 +30,7 @@ HRESULT CLazer::Ready_GameObject()
 	m_fFrame = 0.f;
 	m_fLiveTime = 0.f;
 	m_fTestTime = 0.06f;
-
+	m_fDmg = 1.f;
 	m_pTransformCom->Set_Host(this);
 	m_pTransformCom->Set_Scale(_vec3(0.1f, 0.1f, 0.05f));
 
@@ -44,6 +44,7 @@ HRESULT CLazer::Ready_GameObject()
 
 Engine::_int CLazer::Update_GameObject(const _float& fTimeDelta)
 {
+	
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 
 	if (m_bLateInit)
@@ -59,13 +60,13 @@ Engine::_int CLazer::Update_GameObject(const _float& fTimeDelta)
 	{
 		++m_fFrame;
 		m_fTestTime += 0.004f;
-		m_pTransformCom->Set_Scale(_vec3(10.f, m_fTestTime, 0.05f));
+		m_pTransformCom->Set_Scale(_vec3(40.f, m_fTestTime, 1.f));
 		m_fAnimateTime = 0;
 		if (m_fFrame > 10)
 		{
 			m_fFrame = 0;
 			m_fTestTime = 0.1f;
-			m_pTransformCom->Set_Scale(_vec3(10.f, m_fTestTime, 0.05f));
+			m_pTransformCom->Set_Scale(_vec3(40.f, m_fTestTime, 1.f));
 		}
 	}
 
@@ -114,10 +115,12 @@ void CLazer::Render_GameObject()
 
 void CLazer::OnCollisionEnter(CCollider* _pOther)
 {
+	__super::OnCollisionEnter(_pOther);
 }
 
 void CLazer::OnCollisionStay(CCollider* _pOther)
 {
+	__super::OnCollisionStay(_pOther);
 }
 
 void CLazer::OnCollisionExit(CCollider* _pOther)
@@ -180,7 +183,7 @@ void CLazer::StartPosition()
 	_vec3 vStartPos = vPlayerPos + vPlayerLook / 4 + vGunMoveRight * 1.5 + vGunMoveDown * 1.0f;
 
 
-	m_pTransformCom->Set_Pos(vPlayerPos + vPlayerLook*3.f + vGunMoveRight * m_fGunMoveRight + vGunMoveDown * m_fGunMoveDown);
+	m_pTransformCom->Set_Pos(vPlayerPos + vPlayerLook/4 + vGunMoveRight * m_fGunMoveRight + vGunMoveDown * m_fGunMoveDown);
 	m_pTransformCom->RotateAxis(vPlayerUp, D3DXToRadian(90));
 
 }

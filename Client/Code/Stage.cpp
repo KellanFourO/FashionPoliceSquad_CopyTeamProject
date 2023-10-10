@@ -516,7 +516,7 @@ void CStage::Admin_KeyInput()
 
 	if (Engine::Get_DIKeyState(DIK_F8) & 0x80 && m_bAdminSwitch)
 	{
-		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::STAGE, DIALOGTAG::STORY_ST1_INTRO);
+		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::STAGE, DIALOGTAG::QUEST_1);
 		m_bAdminSwitch = false;
 	}
 

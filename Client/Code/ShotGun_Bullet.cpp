@@ -26,7 +26,7 @@ HRESULT CShotGunBullet::Ready_GameObject(_vec3 _StartPos, _int iColorIndex)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	Set_ObjectTag(OBJECTTAG::PLAYERBULLET);
 	m_eBulletType = BULLETTYPE::SHOTGUN_BULLET;
-	m_fSpeed = 1.f;
+	m_fSpeed = 100.f;
 	m_fLiveTime = 0.f;
 	m_fDmg = 10.f;
 

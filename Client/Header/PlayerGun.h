@@ -1,7 +1,8 @@
 #pragma once
 #include "Base.h"
 #include "GameObject.h"
-#include "Bullet.h"
+#include "ShotGun_Bullet.h"
+#include "Rifle_Bullet1.h"
 //#include "Engine_Define.h"
 
 class CPlayerGunState;
@@ -94,8 +95,8 @@ protected:
 	_int				m_iColorIndex = 1;
 
 	CPlayerGunState*	m_pGunState = nullptr; // ÃÑ »óÅÂ
-	vector<CBullet*>	m_vecShotGunBullet; // ÃÑ¾Ë °ü¸®ÇÏ´Â º¤ÅÍ
-	vector<CBullet*>    m_vecRifleBullet;
+	vector<CShotGunBullet*>		m_vecShotGunBullet; // ÃÑ¾Ë °ü¸®ÇÏ´Â º¤ÅÍ
+	vector<CRifle_Bullet1*>    m_vecRifleBullet;
 
 	CGameObject*		m_pHost	= nullptr;
 	BULLETTYPE			m_eBulletType = BULLETTYPE::BULLETTYPE_END;
