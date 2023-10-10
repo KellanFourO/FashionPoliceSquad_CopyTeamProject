@@ -170,7 +170,7 @@ void CBuild_Obj::Render_GameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	
-	m_pCollider->Render_Collider(); //
+	//m_pCollider->Render_Collider(); //
 	FAILED_CHECK_RETURN(SetUp_Meterial(), );
 	
 	Render_Texture();
