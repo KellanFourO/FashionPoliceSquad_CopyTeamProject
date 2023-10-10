@@ -87,6 +87,7 @@ private:
 public:
 	void				LoadTexturesFromDirectory
 						(const wchar_t* folderPath, vector<IDirect3DCubeTexture9*>& textureVector);
+
 	void				LoadTexturesFromDirectory
 						(const wchar_t* folderPath, vector<IDirect3DBaseTexture9*>& textureVector);
 	bool				Get_OBJModeCheck() { return m_bOBJ_Mode_Check; }
@@ -135,7 +136,7 @@ private:
 	bool								m_bCubeType				= false;
 	bool								m_bPlaneType			= false;
 	OBJ_TYPE							m_eOBJType				= OBJ_TYPE::OBJ_TYPE_END;
-	int									m_forObjAttribute		= 3; //0,1,2,3만 선택할거라서
+	int									m_forObjAttribute		= 4; //0~4만 선택할거라서
 	OBJ_ATTRIBUTE						m_eOBJ_Attribute		= OBJ_ATTRIBUTE::ATTRIBUTE_END;
 
 	vector<OBJData*>					vectorOBJTemp;

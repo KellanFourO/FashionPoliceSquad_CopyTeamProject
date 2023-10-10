@@ -43,7 +43,7 @@ HRESULT CPlayer::Ready_GameObject()
 	m_pTransformCom->Set_Host(this);
 	m_pCollider->Set_Host(this);
 	m_pCollider->Set_Transform(m_pTransformCom);
-	
+
 	m_pRigidBody->Set_Host(this);
 	m_pRigidBody->Set_Transform(m_pTransformCom);
 
@@ -302,6 +302,12 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	{
 		Armor_Get(10);
 	}
+
+	if (Engine::Get_DIKeyState(DIK_G) & 0x80)
+	{
+		TestRopeAction(fTimeDelta);
+	}
+
 	if (Engine::Get_DIKeyState(DIK_O) & 0x80)
 	{
 		Healed(40);
@@ -369,6 +375,55 @@ void CPlayer::Mouse_Input(const _float& fTimeDelta)
 	else if (!(Engine::Get_DIMouseState(DIM_RB)))
 	{
 		m_pGun->Set_RBFire(false);
+	}
+}
+
+void CPlayer::TestRopeAction(const _float& fTimeDelta)
+{
+	_vec3 vPlayerPos, vTargetPos, vLook;
+	m_pTransformCom->Get_Info(INFO_POS, &vPlayerPos);
+	m_pTransformCom->Get_Info(INFO_LOOK, &vLook);
+
+		_float fRopeLength = 10.f;
+		_float fGravity = 9.8f;
+		_float fTension = 0.0f;
+
+	auto& ObjList = Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::BOSS);
+
+	for (auto iter : ObjList)
+	{
+		iter->Get_Transform()->Get_Info(INFO_POS, &vTargetPos);
+		_vec3 vBossToPlayer = vPlayerPos - vTargetPos;
+
+		_float fCurLength = D3DXVec3Length(&vBossToPlayer);
+
+		fTension = (fCurLength - fRopeLength) * 5;
+
+		if (fCurLength < 200)
+		{
+			_vec3 vForce = { 0.0f, -fTension, 0.0f};
+			_vec3 vGravityForce = { 0.0f, -fGravity, 0.0f};
+
+			_vec3 fTotalForce = vForce + vGravityForce;
+			vPlayerPos += fTotalForce * fTimeDelta;
+
+			m_pRigidBody->Add_Force(vPlayerPos);
+// 			D3DXVec3Normalize(&vDir, &vDir);
+//
+// 			// 방향을 내적하고 acos을 통해 각도를 구함.
+// 			_float fAngle = acos(D3DXVec3Dot(&vDir, &D3DXVECTOR3(0, 1, 0)));
+//
+//
+//
+// 			_float fForce = 10.f;
+// 			_float forceX = fForce * sin(fAngle); //
+// 			_float forceY = fForce * cos(fAngle); //
+// 			_float forceZ = fForce * sin(fAngle); //
+//
+// 			m_pRigidBody->Add_Force(_vec3(forceX, forceY, forceZ));
+		}
+
+
 	}
 }
 

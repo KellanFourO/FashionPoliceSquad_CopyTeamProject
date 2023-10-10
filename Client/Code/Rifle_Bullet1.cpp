@@ -52,19 +52,9 @@ Engine::_int CRifle_Bullet1::Update_GameObject(const _float& fTimeDelta)
 
 	__super::Update_GameObject(fTimeDelta);
 
+	if (m_bDead)
+		return OBJ_DEAD;
 
-	_vec3 vPlayerPos, vMyPos, vLook;
-
-	m_pPlayerTransformCom->Get_Info(INFO_POS, &vPlayerPos);
-	m_pTransformCom->Get_Info(INFO_POS, &m_vPos);
-	vLook = vPlayerPos - m_vPos;
-	D3DXVec3Normalize(&vLook, &vLook);
-
-
-
-	_float fAngle = atan2f(vLook.x, vLook.z);
-	m_pTransformCom->Set_Rotate(ROT_Y, fAngle + D3DX_PI);
-	m_pTransformCom->Move_Pos(&m_vShotDir, fTimeDelta, m_fSpeed);
 
 	return OBJ_NOEVENT;
 }

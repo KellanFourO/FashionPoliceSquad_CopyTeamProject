@@ -32,11 +32,13 @@ public:
 	CTexture* m_pTextureCom = nullptr; // 텍스쳐 컴포넌트
 	CTexture* m_pTextureCom_2 = nullptr; // 차지
 	CTexture* m_pTextureCom_3 = nullptr; // 차지
+	CTransform* m_pPlayerTransform = nullptr;
 
 private:
 	HRESULT Add_Component();
 	void Mouse_Input(const _float& fTimeDelta);
 	void Key_Input();
+	void Rope();
 
 public:
 	_float m_fBeltMoveRight = 0.f;
@@ -49,12 +51,13 @@ public:
 	CBeltState* BeltState = nullptr;	// 총 상태
 
 	_bool			m_bCharged = false;
-
+	_bool			m_bLateInit = true;
 	_bool			m_bHit = false;
 
 	_bool			m_bFix = false;
 	_bool			m_bCheck = false;
 
+	CPlayer*		m_pPlayer = nullptr;
 public:
 	static CBelt* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
