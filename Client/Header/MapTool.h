@@ -63,8 +63,11 @@ private:
 	_float				m_vCursor_Height;
 	CUBESIZE			m_fCubesize;
 
-	bool				m_Build_time_Check		= false;
+	bool				m_Build_time_Check		= false; //큐브
 	_int				m_Build_time			= 0;
+
+	bool				m_Build_time_Check2		= false; //OBJ
+	_int				m_Build_time2			= 0;
 
 	//객체 인덱스 : 한 개 한 개 마다의 번호(중복 없게)
 	_uint				m_iOBJIndex				= 5000;   //오브젝트용 5000~9999

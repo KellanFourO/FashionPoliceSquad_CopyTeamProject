@@ -69,13 +69,9 @@ private:
 	_tchar*			m_pColorTag;
 	_int			m_iColorIndex;
 
-	_int			m_SpinAngle2 = 0.f;
-	_int			m_SpinAngle3 = 0.f;
-
 	_vec3			m_vStartPos;
 
 	_float			m_fAnimateTime,m_fFrame,m_fTestTime;
-	_bool			CollideMob = false;
 
 	_matrix			m_Mat_Axis;
 

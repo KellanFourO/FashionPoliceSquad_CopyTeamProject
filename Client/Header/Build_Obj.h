@@ -32,6 +32,11 @@ public:
 
 	void			Render_Texture();
 
+	void			Init_PlayerTransform();
+	void			Set_BillBoard(_bool _BillCheck) { m_bBillBoard = _BillCheck; }
+	void			BillBoard();
+	void			BillBoard_X();
+
 	void			Set_TextrureNum(_uint iNum) { m_TextureNumber = iNum; }
 	void			Set_OBJ_TYPE(OBJ_TYPE eType) { m_eOBJ_Type = eType; }
 	void			Set_OBJ_ATTRIBUTE(OBJ_ATTRIBUTE eAttri) { m_eAttribute = eAttri; }
@@ -41,7 +46,7 @@ public:
 
 	int				Get_OBJ_HP() { return m_iHp; }
 	OBJ_INTERACTION Get_OBJ_Interaction() { return m_eInteraction; }
-
+	
 protected:
 	virtual HRESULT	Add_Component();
 
@@ -61,10 +66,15 @@ private:
 	CTransform*			m_pTransformCom		= nullptr;
 	CTexture*			m_pTextureCom		= nullptr;
 	CCalculator*		m_pCalculatorCom	= nullptr;
+	CTransform*			m_pPlayerTransform	= nullptr;
 
-	const int			cubeTextureStartIndex = 1000;
+	const int			cubeTextureStartIndex  = 1000;
 	const int			planeTextureStartIndex = 3000;
 
+	_bool				m_bLateInit			= true;
+	_bool				m_bBillBoard		= true;
+
+	_vec3				m_myObjPos;
 	_vec3				m_Cursor_Pos		= {};
 	_uint				m_TextureNumber		= 0;
 

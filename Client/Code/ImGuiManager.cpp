@@ -136,11 +136,17 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 
 							}
 
+							if (ImGui::Button(" +5 "))
+								m_fCubeHeightLevel += 5;
+							ImGui::SameLine();
+							if (ImGui::Button(" -5 "))
+								m_fCubeHeightLevel -= 5;
+							ImGui::SameLine();
 							if (ImGui::Button(" + "))
-								m_fCubeHeightLevel += VTXWITV * 0.5;
+								m_fCubeHeightLevel += 1;
 							ImGui::SameLine();
 							if (ImGui::Button(" - "))
-								m_fCubeHeightLevel -= VTXWITV * 0.5;
+								m_fCubeHeightLevel -= 1;
 
 							ImGui::SameLine();
 							char TextNow[MAX_PATH];
@@ -214,7 +220,7 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 			{
 				if (ImGui::BeginTabItem(u8"입체 오브젝트"))
 				{
-					ImVec2 size1 = ImVec2(32.0f, 32.0f);                      // Size of the image we want to make visible
+					ImVec2 size1 = ImVec2(40.0f, 40.0f);                      // Size of the image we want to make visible
 					ImVec2 uv2 = ImVec2(0.0f, 0.0f);                          // UV coordinates for lower-left
 					ImVec2 uv3 = ImVec2(1.0f, 1.0f);                          // UV coordinates for (32,32) in our texture
 					ImVec4 bg_col1 = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);          // Black background
@@ -225,7 +231,7 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 					{
 						m_bBuild_Mode_Check = false;
 
-						float step = 2.f; // 단위 설정
+						float step = 0.5f; // 단위 설정
 
 						ImGui::Image(selected_texture1, ImVec2(96.0f, 96.0f), uv2, uv3, tint_col1, ImVec4(0.0f, 1.0f, 0.0f, 1.0f));
 						ImGui::NewLine();
@@ -242,21 +248,34 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 							m_bOBJLoad_Check = true;
 						}
 
+						ImGui::NewLine();
 
+						if (ImGui::Button(" +5 "))
+							m_fCubeHeightLevel += 5;
+						ImGui::SameLine();
+						if (ImGui::Button(" -5 "))
+							m_fCubeHeightLevel -= 5;
+						ImGui::SameLine();
 						if (ImGui::Button(" + "))
-							m_fCubeHeightLevel += VTXITV;
+							m_fCubeHeightLevel += 1;
 						ImGui::SameLine();
 						if (ImGui::Button(" - "))
-							m_fCubeHeightLevel -= VTXITV;
+							m_fCubeHeightLevel -= 1;
 
 						ImGui::SameLine();
 						char TextNow[MAX_PATH];
 						sprintf_s(TextNow, u8"높이: %.f   ", m_fCubeHeightLevel);
 						ImGui::Text(TextNow);
+						ImGui::SameLine();
+						if (ImGui::Button(u8"높이 초기화"))
+						{
+							m_fCubeHeightLevel = 0;
+						}
 
 						ImGui::SameLine();	
 						ImGui::Checkbox("Delete Mode", &m_bDelete_Mode_Check);
 
+						ImGui::NewLine();
 
 						ImGui::RadioButton(u8"파괴OBJ", &m_forObjAttribute, 0);
 						ImGui::SameLine();
@@ -264,7 +283,9 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 						ImGui::SameLine();
 						ImGui::RadioButton(u8"조명OBJ", &m_forObjAttribute, 2);
 						ImGui::SameLine();
-						ImGui::RadioButton(u8"단순 장식OBJ", &m_forObjAttribute, 3);
+						ImGui::RadioButton(u8"빌보드OBJ", &m_forObjAttribute, 3);
+						ImGui::SameLine();
+						ImGui::RadioButton(u8"단순 장식OBJ", &m_forObjAttribute, 4);
 
 						switch (m_forObjAttribute)
 						{
@@ -278,6 +299,9 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 							m_eOBJ_Attribute = OBJ_ATTRIBUTE::LIGHT_OBJ;
 							break;
 						case 3:
+							m_eOBJ_Attribute = OBJ_ATTRIBUTE::BILL_OBJ;
+							break;
+						case 4:
 							m_eOBJ_Attribute = OBJ_ATTRIBUTE::NONE_OBJ;
 							break;
 
@@ -286,6 +310,24 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 							break;
 						}
 
+						ImGui::NewLine();
+
+
+						if (ImGui::Button(u8"시계방향 회전")) //90도 단위로 회전
+						{
+							m_Rotate_Count_CW++;
+						}
+
+						ImGui::SameLine();
+						ImGui::Text(u8"회전 횟수 : %d", (m_Rotate_Count_CW));
+
+						ImGui::SameLine();
+						if (ImGui::Button(u8"회전 카운트 Reset"))
+						{
+							Set_OBJ_RotateCountCW_Zero();
+						};
+
+						ImGui::NewLine();
 
 						ImGui::Checkbox("unnormalized", &m_bNotNormal_Check);
 						if (m_bNotNormal_Check == false)
@@ -295,17 +337,17 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 						else if (m_bNotNormal_Check == true) {
 							ImGui::SetNextItemWidth(70.0f);
 							if (ImGui::InputFloat("sizeX", &m_fCubesize.fX))
-								m_fCubesize.fX = (roundf(m_fCubesize.fX / step) * step) + 1.f;
+								m_fCubesize.fX = (roundf(m_fCubesize.fX / step) * step);
 							ImGui::SameLine();
 
 							ImGui::SetNextItemWidth(70.0f);
 							if (ImGui::InputFloat("SizeY", &m_fCubesize.fY))
-								m_fCubesize.fY = (roundf(m_fCubesize.fY / step) * step) + 1.f;
+								m_fCubesize.fY = (roundf(m_fCubesize.fY / step) * step);
 							ImGui::SameLine();
 
 							ImGui::SetNextItemWidth(70.0f);
 							if (ImGui::InputFloat("SizeZ", &m_fCubesize.fZ))
-								m_fCubesize.fZ = (roundf(m_fCubesize.fZ / step) * step) + 1.f;
+								m_fCubesize.fZ = (roundf(m_fCubesize.fZ / step) * step);
 						}
 
 
@@ -353,25 +395,11 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 							Set_OBJType(OBJ_TYPE::PLANE_OBJ);
 
 
-							if(ImGui::Button(u8"시계방향 회전")) //90도 단위로 회전
-							{
-								m_Rotate_Count_CW++;
-							}
-
-							ImGui::SameLine();
-							ImGui::Text(u8"회전 횟수 : %d", (m_Rotate_Count_CW));
-
-							ImGui::SameLine();
-							if (ImGui::Button(u8"회전 카운트 Reset") )
-							{
-								Set_OBJ_RotateCountCW_Zero();
-							};
-
 							for (int i = 0; i < 1; i++) //가로줄(행) 갯수
 							{
-								for (int j = 0; j < 30; j++) //세로줄(열) 갯수
+								for (int j = 0; j < 60; j++) //세로줄(열) 갯수
 								{
-									_int iIndex = (30 * i + j) + planeTextureStartIndex;
+									_int iIndex = (60 * i + j) + planeTextureStartIndex;
 
 									if (iIndex >= planeTextureStartIndex && iIndex < planeTextureStartIndex + m_pPlaneTextureObj.size())
 									{
@@ -791,7 +819,11 @@ void CImGuiManager::LoadTexturesFromDirectory(const wchar_t* folderPath, vector<
 		textureVector.push_back(iter->tTexture);
 	}
 
-	int i = 0;
+	for (auto& iter : m_pCubeForSort)
+	{
+		Safe_Delete(iter);
+	}
+	m_pCubeForSort.clear();
 }
 
 void CImGuiManager::LoadTexturesFromDirectory(const wchar_t* folderPath, vector<IDirect3DBaseTexture9*>& textureVector)
@@ -858,7 +890,11 @@ void CImGuiManager::LoadTexturesFromDirectory(const wchar_t* folderPath, vector<
 		textureVector.push_back(iter->tTexture);
 	}
 
-	int i = 0;
+	for (auto& iter : m_pTexForSort)
+	{
+		Safe_Delete(iter);
+	}
+	m_pTexForSort.clear();
 }
 
 

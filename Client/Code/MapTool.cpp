@@ -168,8 +168,6 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
                 OBJTemp = new OBJData;
             }
 
-
-            //////////////////공통 부분/////////////////////
             Cursor_Update();
             _vec3 CursorTemp = { m_vCursor_Pos->x, m_vCursor_Height, m_vCursor_Pos->z };
 
@@ -179,21 +177,14 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
             {
                 m_Build_time_Check = true;
 
-                if (CImGuiManager::GetInstance()->Get_NotNormal_Check() == false)
-                {
-                    m_fCubesize = { VTXITV, VTXITV, VTXITV };
-                }
+				if (CImGuiManager::GetInstance()->Get_NotNormal_Check() == false)
+				{	m_fCubesize = { VTXITV, VTXITV, VTXITV };		}
 
-                else if (CImGuiManager::GetInstance()->Get_NotNormal_Check() == true)
-                {
-                    CubeSize_Update();
-                }
+				else if (CImGuiManager::GetInstance()->Get_NotNormal_Check() == true)
+				{	CubeSize_Update();		}
 
                 _vec3 CubeSize, ObjSize;
                 CubeSize = ObjSize = { m_fCubesize.fX, m_fCubesize.fY, m_fCubesize.fZ };
-                ///////////////////////////////////////////////
-
-
 
                 //이 녀석이 Build_Cube에 해당될 경우
                 if (CImGuiManager::GetInstance()->Get_BuildModeCheck() == true) {
@@ -214,10 +205,24 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
                     m_VecCubeData.push_back(CubeTemp2);
                     m_iCubeIndex++;
                 }
+            }
 
+			if ((CursorTemp.x > -1) && (CursorTemp.y > -1)
+				&& (CursorTemp.z > -1) && (m_Build_time_Check2 == false))
+			{
+                m_Build_time_Check2 = true;
+
+				if (CImGuiManager::GetInstance()->Get_NotNormal_Check() == false)
+				{	m_fCubesize = { VTXITV, VTXITV, VTXITV };		}
+
+				else if (CImGuiManager::GetInstance()->Get_NotNormal_Check() == true)
+				{	CubeSize_Update();		}
+
+				_vec3 CubeSize, ObjSize;
+				CubeSize = ObjSize = { m_fCubesize.fX, m_fCubesize.fY, m_fCubesize.fZ };
                 //이 녀석이 Build_OBJ에 해당될 경우
                 // + 큐브OBJ 또는 PlaneOBJ 라는 타입을 선택한 상황인 경우
-           else if ((CImGuiManager::GetInstance()->Get_OBJModeCheck() == true) &&
+                if ((CImGuiManager::GetInstance()->Get_OBJModeCheck() == true) &&
                    ((CImGuiManager::GetInstance()->Get_CubeType() == true) ||
                     (CImGuiManager::GetInstance()->Get_PlaneType() == true) ))
                 {
@@ -264,14 +269,33 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
             {
                 m_Build_time++;
 
-                if (m_Build_time >= 5)
+                if (m_Build_time >= 7)
                 {
                     m_Build_time = 0;
                     m_Build_time_Check = false;
                 }
             }
+
+			if (m_Build_time_Check2 == true)
+			{
+                m_Build_time2++;
+
+				if (m_Build_time2 >= 7)
+				{
+                    m_Build_time2 = 0;
+                    m_Build_time_Check2 = false;
+				}
+			}
         }
     }
+
+// 
+// 	if (CImGuiManager::GetInstance()->Get_BuildModeCheck() == true) {
+// 		Safe_Delete(CubeTemp2);
+// 	}
+// 	else if (CImGuiManager::GetInstance()->Get_OBJModeCheck() == true) {
+//         Safe_Delete(OBJTemp);
+// 	}
     return S_OK;
 }
 
