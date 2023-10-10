@@ -26,7 +26,7 @@ HRESULT CShotGunBullet::Ready_GameObject(_vec3 _StartPos, _int iColorIndex)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	Set_ObjectTag(OBJECTTAG::PLAYERBULLET);
 	m_eBulletType = BULLETTYPE::SHOTGUN_BULLET;
-	m_fSpeed = 100.f;
+	m_fSpeed = 1.f;
 	m_fLiveTime = 0.f;
 	m_fDmg = 10.f;
 
@@ -52,21 +52,8 @@ Engine::_int CShotGunBullet::Update_GameObject(const _float& fTimeDelta)
 		Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 		__super::Update_GameObject(fTimeDelta);
 
-
-			_vec3 vPlayerPos, vMyPos, vLook;
-
-			m_pPlayerTransformCom->Get_Info(INFO_POS, &vPlayerPos);
-			m_pTransformCom->Get_Info(INFO_POS, &m_vPos);
-			vLook = vPlayerPos - m_vPos;
-			D3DXVec3Normalize(&vLook, &vLook);
-
-
-
-
-
-			_float fAngle = atan2f(vLook.x, vLook.z);
-			m_pTransformCom->Set_Rotate(ROT_Y, fAngle + D3DX_PI);
-			m_pTransformCom->Move_Pos(&m_vShotDir, fTimeDelta, m_fSpeed);
+	if(m_bDead)
+	return OBJ_DEAD;
 
 	return OBJ_NOEVENT;
 }

@@ -81,11 +81,16 @@ _int CLayer::Update_Layer(const _float& fTimeDelta)
 
  	for (auto& iter : m_mapObject)
  	{
+
+
  		for (auto iter2 = iter.second.begin(); iter2 != iter.second.end();)
  		{
+
  			if (*iter2 != nullptr)
  			{
+
  				iResult = (*iter2)->Update_GameObject(fTimeDelta);
+
 
  				if (iResult == OBJ_DEAD)
  				{

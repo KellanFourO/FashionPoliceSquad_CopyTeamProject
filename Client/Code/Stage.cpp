@@ -35,7 +35,7 @@ HRESULT CStage::Ready_Scene()
 
 	FAILED_CHECK_RETURN(Ready_Layer_UI(LAYERTAG::UI), E_FAIL);
 
-	
+
 
 	srand(GetTickCount64());
 
@@ -78,7 +78,7 @@ void CStage::LateUpdate_Scene()
 
 
 
-	
+
 
 
 
@@ -608,14 +608,14 @@ CStage* CStage::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CStage::Free()
 {
- 
+
 // 	for (int i = 0; i < m_VecTempCube.size(); ++i)
 // 	{
 // 		Safe_Delete(m_VecTempCube[i]);
 // 	}
 // 	m_VecTempCube.clear();
-// 
-// 
+//
+//
 // 	for (int i = 0; i < m_VecTempPlane.size(); ++i)
 // 	{
 // 		Safe_Delete(m_VecTempPlane[i]);

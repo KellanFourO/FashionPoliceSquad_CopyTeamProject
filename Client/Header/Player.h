@@ -57,6 +57,7 @@ private:
 	HRESULT			Add_Component();
 	void			SetGun();
 	void			Mouse_Input(const _float& fTimeDelta);
+	void			TestRopeAction(const _float& fTimeDelta);
 
 	void			StateMachine(_float _fTimeDelta);
 

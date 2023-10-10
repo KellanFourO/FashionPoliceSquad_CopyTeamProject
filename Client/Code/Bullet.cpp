@@ -24,12 +24,15 @@ HRESULT CBullet::Ready_GameObject()
 
 _int CBullet::Update_GameObject(const _float& fTimeDelta)
 {
+	_int iExit = __super::Update_GameObject(fTimeDelta);
 
 	if(m_eObjectTag != OBJECTTAG::PLAYER_LAZER)
 	Destroy(fTimeDelta);
 
-	if(m_bDead)
-	return OBJ_DEAD;
+	if (m_bDead)
+	{
+		return OBJ_DEAD;
+	}
 
 	if (m_bLateInit)
 	{
@@ -39,13 +42,24 @@ _int CBullet::Update_GameObject(const _float& fTimeDelta)
 
 	if (m_bShot)
 	{
-		m_pTransformCom->Move_Pos(&m_vShotDir,fTimeDelta,m_fSpeed);
+		_vec3 vPlayerPos, vMyPos, vLook;
+
+		m_pPlayerTransformCom->Get_Info(INFO_POS, &vPlayerPos);
+		m_pTransformCom->Get_Info(INFO_POS, &vMyPos);
+		vLook = vPlayerPos - vMyPos;
+		D3DXVec3Normalize(&vLook, &vLook);
+
+
+
+		_float fAngle = atan2f(vLook.x, vLook.z);
+		m_pTransformCom->Set_Rotate(ROT_Y, fAngle + D3DX_PI);
+		m_pTransformCom->Move_Pos(&m_vShotDir, fTimeDelta, m_fSpeed);
 	}
 
 
 	m_pCollider->SetCenterPos(m_pTransformCom->m_vInfo[INFO_POS]);
 
-	_int iExit = __super::Update_GameObject(fTimeDelta);
+
 	return iExit;
 }
 

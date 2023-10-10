@@ -3,7 +3,7 @@
 #include "Belt_IDLE.h"
 #include "PaintBall.h"
 #include "MuzzleFlash.h"
-
+#include "Player.h"
 
 #include "Export_System.h"
 #include "Export_Utility.h"
@@ -48,6 +48,15 @@ Engine::_int CBelt::Update_GameObject(const _float& fTimeDelta)
 {
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
+
+	if (m_bLateInit)
+	{
+		m_pPlayer = dynamic_cast<CPlayer*>(Management()->Get_ObjectList(LAYERTAG::GAMELOGIC,OBJECTTAG::PLAYER).back());
+		m_pPlayerTransform = m_pPlayer->Get_Transform();
+		m_bLateInit = false;
+	}
+	Rope();
+
 	CBeltState* State = BeltState->Update(this, fTimeDelta);
 	if (State != nullptr) {
 		BeltState->Release(this);
@@ -56,19 +65,11 @@ Engine::_int CBelt::Update_GameObject(const _float& fTimeDelta)
 		BeltState->Initialize(this);
 	} // 상태 패턴
 
-
-
-
-	CTransform* pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
-
-	NULL_CHECK_RETURN(pPlayerTransCom, -1);
-
 	_vec3	vPlayerPos, vPlayerUp;
 
-
-	pPlayerTransCom->Get_Info(INFO_UP, &vPlayerUp);
-	pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
-	pPlayerTransCom->Get_Info(INFO_LOOK, &m_vPlayerLook);
+	m_pPlayerTransform->Get_Info(INFO_UP, &vPlayerUp);
+	m_pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);
+	m_pPlayerTransform->Get_Info(INFO_LOOK, &m_vPlayerLook);
 	D3DXVec3Normalize(&m_vPlayerLook, &m_vPlayerLook);
 
 
@@ -84,15 +85,15 @@ Engine::_int CBelt::Update_GameObject(const _float& fTimeDelta)
 	_vec3 vGunMoveRight = vGunMove / 20;
 	_vec3 vGunMoveDown = -vPlayerUp / 20;
 
-	
+
 	m_pTransformCom->Set_Scale(m_vBeltScale);
 	m_pTransformCom->Set_Pos(vPlayerPos + m_vPlayerLook /3 - vGunMoveRight * m_fBeltMoveRight*1.3f + vGunMoveDown * m_fBeltMoveDown * 1.7f);
 
 
 
 
-	
-	
+
+
 
 	Key_Input();
 	Mouse_Input(fTimeDelta);
@@ -111,7 +112,7 @@ void CBelt::Render_GameObject()
 {
 	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
-	
+
 
 	if (m_bHit == true) {
 		m_pTextureCom->Render_Textrue(2);
@@ -125,7 +126,7 @@ void CBelt::Render_GameObject()
 		m_pTextureCom->Render_Textrue(1);
 		m_pBufferCom->Render_Buffer();
 	}
-	
+
 	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
 }
 
@@ -185,6 +186,11 @@ void CBelt::Key_Input()
 
 	if (false == m_bFix)
 		return;
+}
+
+void CBelt::Rope()
+{
+
 }
 
 
