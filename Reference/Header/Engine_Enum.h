@@ -44,14 +44,17 @@ namespace Engine
 
 
 	//유진) 설치물OBJ 구분용
-	enum class OBJ_TYPE { BUILDING, CUBE_OBJ, PLANE_OBJ, OBJ_TYPE_END };
-						//빌딩용  , 큐브OBJ,  평면OBJ
-	enum class OBJ_ATTRIBUTE { DES_OBJ, INTER_OBJ, LIGHT_OBJ, BILL_OBJ, NONE_OBJ, ATTRIBUTE_END };
-							//파괴OBJ, 상호작용OBJ, 조명OBJ, 빌보드 OBJ,  장식 OBJ
+	enum class OBJ_TYPE { BUILDING_TYPE, CUBE_TYPE, PLANE_TYPE, OBJ_TYPE_END };
+						//    빌딩용  ,    큐브OBJ   평면OBJ
+	enum class OBJ_ATTRIBUTE { DES_OBJ, INTER_OBJ, LIGHT_OBJ, BILL_OBJ, NONE_OBJ, TRIGGER_OBJ, C_POINT_OBJ, ATTRIBUTE_END };
+							//파괴OBJ, 상호작용OBJ, 조명OBJ, 빌보드 OBJ, 장식 OBJ, 트리거 OBJ, CreatePoint
 	enum class OBJ_INTERACTION { OBJ_LOCK_ON, OBJ_LOCK_OFF, INTER_NONE, INTER_END };
 			//상호작용 OBJ에서	  LOCK_ON,	   LOCK_OFF,	상호작용 비해당  을 의미
 	enum class CAMERA_TYPE { NOTMOVE_CAMERA, MOVE_CAMERA, CAMERA_END };
 	enum class LIGHT_TYPE { LIGHT_DIRECTIONAL, LIGHT_POINT, LIGHT_SPOT, LIGHT_END };
+	//C POINT (몬스터 Create를 위한 ) 구분 enum
+	enum class MonsterType { BIGDADDY, DULLSUIT, KCIKBOARD, SMOKER, BOSS, MOBTYPE_END };
+
 
 
 	//TODO - 승용 UI 타입별 태그 정리 시작
@@ -93,9 +96,7 @@ namespace Engine
 	enum class MonsterState {
 		IDLE, AGGRO_ON, HIT, DEAD, MOBSTATE_END
 	};
-	enum class MonsterType {
-		BRIFBIG, BRIFSMALL, KCIKBOARD, SMOKER, BOSS, MOBTYPE_END
-	};
+
 	enum class MonsterHit
 	{};
 	enum class GunID        // 총 ID (dynamic_cast<CGun*>(pGun)->GUN_ID == GunID::DYEHARD) 같은 방법으로 찾으면 됨

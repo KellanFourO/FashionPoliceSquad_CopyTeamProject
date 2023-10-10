@@ -34,6 +34,7 @@ private:
 
 	HRESULT				Load_Cube(const TCHAR* pFilePath);
 	HRESULT				Load_Obj(const TCHAR* pFilePath);
+	HRESULT				Load_CPoint(const TCHAR* pFilePath);
 	bool				CheckDuplicateCube(const _vec3& pPos, const _vec3& pSize);
 
 public:
@@ -42,6 +43,9 @@ public:
 
 	vector<OBJData*>&	Get_VecOBJData() { return m_VecOBJData; }
 	void				Set_VecOBJData(vector<OBJData*>* pVecOBjData) { m_VecOBJData = *pVecOBjData; }
+
+	vector<OBJData*>&	Get_VecTrigger() { return m_VecTrigger; }
+	vector<C_POINT*>&	Get_VecCreatePoint() { return m_VecCreatePoint; }
 
 	void				Cursor_Update();
 	void				CubeSize_Update();
@@ -54,6 +58,10 @@ private:
 	//BuildOBJ내에서 텍스쳐넘버 구분용으로 씀
 	vector<IDirect3DCubeTexture9*> m_VecTempCube;
 	vector<IDirect3DBaseTexture9*> m_VecTempPlane;
+
+	//트리거, Create Point 용 벡터 컨테이너
+	vector<OBJData*>			   m_VecTrigger;
+	vector<C_POINT*>			   m_VecCreatePoint;
 
 	CLayer*				m_pLayer				= nullptr;
 	CMapCursor*			m_pMapCursor			= nullptr;
@@ -70,8 +78,8 @@ private:
 	_int				m_Build_time2			= 0;
 
 	//객체 인덱스 : 한 개 한 개 마다의 번호(중복 없게)
-	_uint				m_iOBJIndex				= 5000;   //오브젝트용 5000~9999
-	_uint				m_iCubeIndex			= 10000;  //맵 큐브용 : 맵을 제일 큰 단위로 놓을 것 - 10000~
+	_uint				m_iOBJIndex				= 10000;   //오브젝트용 10000~19999
+	_uint				m_iCubeIndex			= 20000;  //맵 큐브용 : 맵을 제일 큰 단위로 놓을 것 - 10000~
 
 	//텍스쳐 인덱스 : 한 텍스쳐 마다의 번호(같은 텍스쳐라면 같을 수도 있음)
 	_uint				m_iTextureNum			= 0;  //몇 번째 텍스쳐냐
@@ -90,6 +98,7 @@ private:
 public:
 	OBJData*			OBJTemp					= nullptr;  //오브젝트용
 	CUBE*				CubeTemp2				= nullptr; //맵 큐브용
+	C_POINT*			OBJ_C_POINT				= nullptr; //몬스터 리젠 위치용
 
 public:
 	static CMapTool*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

@@ -34,7 +34,7 @@ HRESULT CBigDaddyMonster::Ready_GameObject()
 	__super::Ready_GameObject();
 
 	Set_ObjectTag(OBJECTTAG::MONSTER);
-	INFO.iMobType = MonsterType::BRIFBIG;
+	INFO.iMobType = MonsterType::BIGDADDY;
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	ReadyState();

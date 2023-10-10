@@ -30,13 +30,13 @@ HRESULT CBuild_Obj::Add_Component()
 
 	switch (m_eOBJ_Type)
 	{
-	case OBJ_TYPE::CUBE_OBJ:
+	case OBJ_TYPE::CUBE_TYPE:
 		pComponent = m_pBufferCubeCom = dynamic_cast<CCubeTex*>(Engine::Clone_Proto(L"Proto_CubeTex"));
 		NULL_CHECK_RETURN(pComponent, E_FAIL);
 		m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::BUFFER, pComponent);
 		break;
 
-	case OBJ_TYPE::PLANE_OBJ:
+	case OBJ_TYPE::PLANE_TYPE:
 		pComponent = m_pBufferRcCom = dynamic_cast<CRcTex*>(Engine::Clone_Proto(L"Proto_PlaneTex"));
 		NULL_CHECK_RETURN(pComponent, E_FAIL);
 		m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::BUFFER, pComponent);
@@ -54,13 +54,13 @@ HRESULT CBuild_Obj::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].emplace(COMPONENTTAG::TRANSFORM, pComponent);
 
-	if (m_eOBJ_Type == OBJ_TYPE::CUBE_OBJ)
+	if (m_eOBJ_Type == OBJ_TYPE::CUBE_TYPE)
 	{
 		pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_CubeTexture"));
 		NULL_CHECK_RETURN(pComponent, E_FAIL);
 		m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
 	}
-	if (m_eOBJ_Type == OBJ_TYPE::PLANE_OBJ)
+	if (m_eOBJ_Type == OBJ_TYPE::PLANE_TYPE)
 	{
 		pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_PlaneTexture"));
 		NULL_CHECK_RETURN(pComponent, E_FAIL);
@@ -121,13 +121,14 @@ HRESULT CBuild_Obj::Ready_GameObject(_uint pRotate, _vec3 pMouse_Pos, _vec3 Size
 
 _int CBuild_Obj::Update_GameObject(const _float& fTimeDelta)
 {
-	if (m_eOBJ_Type == OBJ_TYPE::CUBE_OBJ)
+	if (m_eOBJ_Type == OBJ_TYPE::CUBE_TYPE)
 	{
 		Engine::Add_RenderGroup(RENDER_ALPHATEST, this); //Render_Block은 Octree 용
 	}
-	else if (m_eOBJ_Type == OBJ_TYPE::PLANE_OBJ)
+	else if (m_eOBJ_Type == OBJ_TYPE::PLANE_TYPE)
 	{
 		Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
+
 
 		if (m_eAttribute == OBJ_ATTRIBUTE::BILL_OBJ)
 	 	{
@@ -170,6 +171,9 @@ void CBuild_Obj::Render_GameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	
+	if ((m_eAttribute == OBJ_ATTRIBUTE::C_POINT_OBJ) || (m_eAttribute == OBJ_ATTRIBUTE::TRIGGER_OBJ))
+	{	m_pCollider->Render_Collider(); }
+
 	//m_pCollider->Render_Collider(); //
 	FAILED_CHECK_RETURN(SetUp_Meterial(), );
 	
@@ -182,35 +186,16 @@ void CBuild_Obj::Render_GameObject()
 
 void CBuild_Obj::Render_Texture()
 {
-	if (m_NowScene == SCENETAG::MAPTOOL)
+	if (m_eOBJ_Type == OBJ_TYPE::CUBE_TYPE)
 	{
-		if (m_eOBJ_Type == OBJ_TYPE::CUBE_OBJ)  //텍스쳐가 버퍼보다 먼저 ... ... ㅎ... ...
-		{
-			m_pTextureCom->Render_ObjCubeTex(m_TextureNumber);
-			m_pBufferCubeCom->Render_Buffer();
-		}
-		else if (m_eOBJ_Type == OBJ_TYPE::PLANE_OBJ)
-		{
-			m_pTextureCom->Render_ObjPlaneTex(m_TextureNumber);
-			m_pBufferRcCom->Render_Buffer();
-		}
+		m_pTextureCom->Render_ObjCubeTex(m_TextureNumber);
+		m_pBufferCubeCom->Render_Buffer();
 	}
-
-	if (m_NowScene == SCENETAG::STAGE)
+	else if (m_eOBJ_Type == OBJ_TYPE::PLANE_TYPE)
 	{
-		if (m_eOBJ_Type == OBJ_TYPE::CUBE_OBJ)
-		{
-			m_pTextureCom->Render_ObjCubeTex(m_TextureNumber);
-			m_pBufferCubeCom->Render_Buffer();
-		}
-		else if (m_eOBJ_Type == OBJ_TYPE::PLANE_OBJ)
-		{
-			m_pTextureCom->Render_ObjPlaneTex(m_TextureNumber);
-			m_pBufferRcCom->Render_Buffer();
-		}
+		m_pTextureCom->Render_ObjPlaneTex(m_TextureNumber);
+		m_pBufferRcCom->Render_Buffer();
 	}
-
-	//스테이지 변경에 따른 반영사항 추가 필요
 }
 
 HRESULT CBuild_Obj::SetUp_Meterial()

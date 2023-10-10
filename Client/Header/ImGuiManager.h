@@ -96,9 +96,12 @@ public:
 	bool				Get_PlaneType() { return m_bPlaneType; }
 
 	void				Save_ObjData();
+	void				Save_CPointData();
 
 	bool				Get_OBJLoad_Check() { return m_bOBJLoad_Check; }
 	void	 			Set_OBJLoad_Check() { m_bOBJLoad_Check = !m_bOBJLoad_Check; }
+	bool				Get_CPOINT_Load_Check() { return m_bCPOINT_Load_Check; }
+	void	 			Set_CPOINT_Load_Check() { m_bCPOINT_Load_Check = !m_bCPOINT_Load_Check; }
 
 	OBJ_TYPE			Get_OBJType() { return m_eOBJType; }
 	void				Set_OBJType(OBJ_TYPE eType) { m_eOBJType = eType; }
@@ -106,6 +109,8 @@ public:
 	
 	OBJ_ATTRIBUTE		Get_OBJATTRIBUTE() { return m_eOBJ_Attribute; }
 	void				Set_OBJATTRIBUTE(OBJ_ATTRIBUTE eAttri) { m_eOBJ_Attribute = eAttri; }
+
+	MonsterType			Get_MonsterType() { return m_eMonsterType; }
 
 	_uint				Get_OBJ_RotateCountCW() { return m_Rotate_Count_CW; }
 	void				Set_OBJ_RotateCountCW_Zero() { m_Rotate_Count_CW = 0; }
@@ -127,17 +132,22 @@ private:
 
 	const int							cubeTextureStartIndex   = 1000;
 	const int							planeTextureStartIndex  = 3000;
-
+	
 	_uint								m_Rotate_Count_CW;		//시계방향
 	
 	bool								m_bOBJ_Mode_Check		= false;
 	bool								m_bOBJLoad_Check		= false;
+	bool								m_bCPOINT_Load_Check	= false;
 
 	bool								m_bCubeType				= false;
 	bool								m_bPlaneType			= false;
 	OBJ_TYPE							m_eOBJType				= OBJ_TYPE::OBJ_TYPE_END;
-	int									m_forObjAttribute		= 4; //0~4만 선택할거라서
+	
+	int									m_forObjAttribute		= 6; //0 ~ 6
 	OBJ_ATTRIBUTE						m_eOBJ_Attribute		= OBJ_ATTRIBUTE::ATTRIBUTE_END;
+
+	int									m_forMobType			= 4; // 0 ~ 4
+	MonsterType							m_eMonsterType			= MonsterType::MOBTYPE_END;
 
 	vector<OBJData*>					vectorOBJTemp;
 

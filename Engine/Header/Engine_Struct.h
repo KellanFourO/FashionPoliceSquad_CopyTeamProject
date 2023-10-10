@@ -125,13 +125,16 @@ namespace Engine
 		OBJ_TYPE				eOBJ_TYPE;		//OBJ 타입 enum class (건물/OBJ큐브/OBJ평면)
 		OBJ_ATTRIBUTE			eOBJ_Attribute;	//OBJ 속성(파괴/상호작용/장식)
 
-		//OBJ속성이 '파괴'일 경우
-		_uint					uiOBJ_HP;		//체력이 다 깎이면 파괴됨
-
-		//OBJ속성이 '상호작용'일 경우 : 로프액션 Pole 등
-		OBJ_INTERACTION			eOBJ_Interaction;
+		_uint					uiOBJ_HP;		//속성이 '파괴'일 경우 - 체력이 다 깎이면 파괴됨
+		OBJ_INTERACTION			eOBJ_Interaction;//속성이 '상호작용'일 경우 : 로프액션 Pole 등
 
 	}OBJData;
+
+	typedef struct tagCreatePoint
+	{
+		OBJData					defOBJData;
+		MonsterType				eMonsterType;
+	}C_POINT;
 
 	typedef struct	SortCube {  //큐브 텍스쳐 정렬 목적 구조체
 		char*					stFileName;		//파일 이름(정렬 용)

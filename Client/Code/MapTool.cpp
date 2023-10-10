@@ -28,7 +28,7 @@ HRESULT CMapTool::Ready_Scene()
 HRESULT CMapTool::Ready_LightInfo()
 {
     m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
-    //mainApp 말고 stage-Mapttol ek여기에서 켜기
+    //mainApp 말고 stage-Maptool 여기에서 켜기
     m_pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, TRUE);
 
     D3DLIGHT9 tLightInfo;
@@ -64,7 +64,11 @@ _int CMapTool::Update_Scene(const _float& fTimeDelta)
 		Load_Obj(L"../Bin/Data/OBJ/OBJData");
 		CImGuiManager::GetInstance()->Set_OBJLoad_Check();
 	}
-
+	if (CImGuiManager::GetInstance()->Get_CPOINT_Load_Check() == true)
+	{
+		Load_CPoint(L"../Bin/Data/CPoint/CPointData");
+		CImGuiManager::GetInstance()->Set_CPOINT_Load_Check();
+	}
 
     return iExit;
 }
@@ -166,6 +170,7 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
             }
             else if (CImGuiManager::GetInstance()->Get_OBJModeCheck() == true) {
                 OBJTemp = new OBJData;
+                OBJ_C_POINT = new C_POINT;
             }
 
             Cursor_Update();
@@ -197,7 +202,7 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
                     m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
 
                     CubeTemp2->vSize = CubeSize;
-                    CubeTemp2->eOBJ_TYPE = OBJ_TYPE::BUILDING;
+                    CubeTemp2->eOBJ_TYPE = OBJ_TYPE::BUILDING_TYPE;
                     CubeTemp2->uITextureNum = m_iTextureNum;
                     CubeTemp2->vPos = CursorTemp;
                     CubeTemp2->iCubeIndex = m_iCubeIndex;
@@ -221,7 +226,7 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
 				_vec3 CubeSize, ObjSize;
 				CubeSize = ObjSize = { m_fCubesize.fX, m_fCubesize.fY, m_fCubesize.fZ };
                 //이 녀석이 Build_OBJ에 해당될 경우
-                // + 큐브OBJ 또는 PlaneOBJ 라는 타입을 선택한 상황인 경우
+                // + 큐브Type 또는 PlaneType 라는 타입을 선택한 상황인 경우
                 if ((CImGuiManager::GetInstance()->Get_OBJModeCheck() == true) &&
                    ((CImGuiManager::GetInstance()->Get_CubeType() == true) ||
                     (CImGuiManager::GetInstance()->Get_PlaneType() == true) ))
@@ -248,19 +253,38 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
                     OBJTemp->uiOBJ_HP = dynamic_cast<CBuild_Obj*>(pGameObject)->Get_OBJ_HP();
                     OBJTemp->eOBJ_Interaction = dynamic_cast<CBuild_Obj*>(pGameObject)->Get_OBJ_Interaction();
 
-                    if (eTypeTemp == OBJ_TYPE::CUBE_OBJ)
+                    if (eTypeTemp == OBJ_TYPE::CUBE_TYPE)
                     {
                         m_VecTempCube.clear();
                         m_VecTempCube = CImGuiManager::GetInstance()->Get_CubeTextureObjVector();
                         OBJTemp->pCubeTexture = m_VecTempCube[m_iTextureNum2 - cubeObjTextureStartIndex];
                     }
-                    else if (eTypeTemp == OBJ_TYPE::PLANE_OBJ)
+                    else if (eTypeTemp == OBJ_TYPE::PLANE_TYPE)
                     {
                         m_VecTempPlane.clear();
                         m_VecTempPlane = CImGuiManager::GetInstance()->Get_PlaneTextureObjVector();
                         OBJTemp->pBaseTexture = m_VecTempPlane[m_iTextureNum2 - planeObjTextureStartIndex];
                     }
-                    m_VecOBJData.push_back(OBJTemp);
+
+
+                    if (eAttribute != OBJ_ATTRIBUTE::C_POINT_OBJ)
+                    {
+                        m_VecOBJData.push_back(OBJTemp);  // C_POINT 빼곤 다 담겨야함
+                    }
+
+
+                    if (eAttribute == OBJ_ATTRIBUTE::TRIGGER_OBJ)
+                    {
+                        m_VecTrigger.push_back(OBJTemp); //위에도 담기고 별도로 관리차원에서 여기도 담는 것
+                    }
+					if (eAttribute == OBJ_ATTRIBUTE::C_POINT_OBJ)
+                    {
+                        OBJ_C_POINT->defOBJData = *OBJTemp;
+                        OBJ_C_POINT->eMonsterType = CImGuiManager::GetInstance()->Get_MonsterType();
+                        
+                        m_VecCreatePoint.push_back(OBJ_C_POINT); //얜 이거 따로 저장
+                    }
+
                     m_iOBJIndex++;
                 }
             }
@@ -398,7 +422,6 @@ HRESULT CMapTool::Load_Obj(const TCHAR* pFilePath)
 			Safe_Delete(pOBJ);
 			break;
 		}
-
         m_VecOBJData.push_back(pOBJ);
 	}
 	CloseHandle(hFile);
@@ -428,6 +451,69 @@ HRESULT CMapTool::Load_Obj(const TCHAR* pFilePath)
 	return S_OK;
 }
 
+HRESULT CMapTool::Load_CPoint(const TCHAR* pFilePath)
+{
+	//파일 개방해서 받아오기
+	string m_strText = "CPointData";
+
+	HANDLE      hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+		return E_FAIL;
+
+	DWORD   dwByte = 0;
+	DWORD   dwStrByte = 0;
+    C_POINT* pOBJ = nullptr;
+
+	ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
+	pTag = new CHAR[dwStrByte];
+
+	ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
+	m_strText = pTag;
+
+	basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
+
+	//저장된 데이터대로 동적할당해서 벡터에 담기
+	while (true)
+	{
+		pOBJ = new C_POINT;
+
+		ReadFile(hFile, pOBJ, sizeof(C_POINT), &dwByte, nullptr);
+
+		if (0 == dwByte)
+		{
+			Safe_Delete(pOBJ);
+			break;
+		}
+        m_VecCreatePoint.push_back(pOBJ);
+	}
+	CloseHandle(hFile);
+
+	Engine::CGameObject* pGameObject = nullptr;
+
+	//벡터 내용물만큼 실제 생성해 레이어에 담기
+	for (auto& iter : m_VecCreatePoint)
+	{
+		pGameObject = CBuild_Obj::Create(m_pGraphicDev, iter->defOBJData.vPos, iter->defOBJData.uiTextureNum, 
+            iter->defOBJData.vSize, iter->defOBJData.iRotateCount, m_iOBJIndex, iter->defOBJData.eOBJ_TYPE, iter->defOBJData.eOBJ_Attribute);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
+		m_iOBJIndex++;
+	}
+	m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
+
+	delete[] pTag;
+	pTag = nullptr;
+
+	if (m_VecTempCube.empty())
+		m_VecTempCube = CImGuiManager::GetInstance()->Get_CubeTextureObjVector();
+
+	if (m_VecTempPlane.empty())
+		m_VecTempPlane = CImGuiManager::GetInstance()->Get_PlaneTextureObjVector();
+
+	MSG_BOX("Load Complete.");
+	return S_OK;
+}
 
 
 
@@ -600,6 +686,7 @@ void CMapTool::Free()
 
     Safe_Delete(OBJTemp);
     Safe_Delete(CubeTemp2);
+    Safe_Delete(OBJ_C_POINT);
 
     if (!m_VecCubeData.empty()) {
         for (int i = 0; i < m_VecCubeData.size(); ++i)

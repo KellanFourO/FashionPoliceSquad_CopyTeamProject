@@ -110,7 +110,7 @@ CTexture* CTexture::Create(LPDIRECT3DDEVICE9 pGraphicDev, TEXTUREID eType, _tcha
 HRESULT CTexture::Ready_Texture(TEXTUREID eType,
 	const _tchar* pPath, const _uint& iCnt, OBJ_TYPE eOBJType)
 {
-	if (eOBJType == OBJ_TYPE::CUBE_OBJ)
+	if (eOBJType == OBJ_TYPE::CUBE_TYPE)
 	{
 		m_vecCubeTexture.reserve(iCnt);
 		IDirect3DCubeTexture9* pTexture = nullptr;
@@ -134,7 +134,7 @@ HRESULT CTexture::Ready_Texture(TEXTUREID eType,
 			m_vecCubeTexture.push_back(pTexture);
 		}
 	}
-	else if (eOBJType == OBJ_TYPE::PLANE_OBJ)
+	else if (eOBJType == OBJ_TYPE::PLANE_TYPE)
 	{
 		m_vecPlaneTexture.reserve(iCnt);
 		IDirect3DBaseTexture9* pTexture = nullptr;

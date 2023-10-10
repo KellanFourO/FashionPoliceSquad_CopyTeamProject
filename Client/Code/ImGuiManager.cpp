@@ -124,7 +124,7 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 										selected_texture0 = m_MainCubeTexture[iIndex];
 										selected_texture_index0 = iIndex;
 										m_iTextureNum = iIndex;
-										Set_OBJType(OBJ_TYPE::BUILDING);
+										Set_OBJType(OBJ_TYPE::BUILDING_TYPE);
 									}
 									ImGui::PopID();
 									ImGui::SameLine();
@@ -227,6 +227,7 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 					ImVec4 tint_col1 = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);        // No tint
 
 					ImGui::Checkbox(u8"환경OBJ 모드", &m_bOBJ_Mode_Check);
+
 					if (m_bOBJ_Mode_Check)
 					{
 						m_bBuild_Mode_Check = false;
@@ -246,6 +247,19 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 						if (ImGui::Button("OBJ Load"))
 						{
 							m_bOBJLoad_Check = true;
+						}
+
+						ImGui::NewLine();
+	
+						if (ImGui::Button("C_Point Save"))
+						{
+							Save_CPointData();
+						}
+						ImGui::SameLine();
+
+						if (ImGui::Button("C_Point Load"))
+						{
+							m_bCPOINT_Load_Check = true;
 						}
 
 						ImGui::NewLine();
@@ -272,20 +286,18 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 							m_fCubeHeightLevel = 0;
 						}
 
-						ImGui::SameLine();	
+						ImGui::NewLine();
 						ImGui::Checkbox("Delete Mode", &m_bDelete_Mode_Check);
 
 						ImGui::NewLine();
 
 						ImGui::RadioButton(u8"파괴OBJ", &m_forObjAttribute, 0);
-						ImGui::SameLine();
 						ImGui::RadioButton(u8"상호작용OBJ", &m_forObjAttribute, 1);
-						ImGui::SameLine();
 						ImGui::RadioButton(u8"조명OBJ", &m_forObjAttribute, 2);
-						ImGui::SameLine();
 						ImGui::RadioButton(u8"빌보드OBJ", &m_forObjAttribute, 3);
-						ImGui::SameLine();
-						ImGui::RadioButton(u8"단순 장식OBJ", &m_forObjAttribute, 4);
+						ImGui::RadioButton(u8"트리거OBJ", &m_forObjAttribute, 4);
+						ImGui::RadioButton(u8"C_Point OBJ", &m_forObjAttribute, 5);
+						ImGui::RadioButton(u8"단순 장식OBJ", &m_forObjAttribute, 6);
 
 						switch (m_forObjAttribute)
 						{
@@ -302,6 +314,12 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 							m_eOBJ_Attribute = OBJ_ATTRIBUTE::BILL_OBJ;
 							break;
 						case 4:
+							m_eOBJ_Attribute = OBJ_ATTRIBUTE::TRIGGER_OBJ;
+							break;
+						case 5:
+							m_eOBJ_Attribute = OBJ_ATTRIBUTE::C_POINT_OBJ;
+							break;
+						case 6:
 							m_eOBJ_Attribute = OBJ_ATTRIBUTE::NONE_OBJ;
 							break;
 
@@ -309,6 +327,34 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 							m_eOBJ_Attribute = OBJ_ATTRIBUTE::NONE_OBJ;
 							break;
 						}
+
+						if (m_forObjAttribute == 5)
+						{
+							ImGui::Separator(); // 가로 줄 추가
+							ImGui::RadioButton(u8"BIGDADDY", &m_forMobType, 0);
+							ImGui::SameLine();
+							ImGui::RadioButton(u8"DULLSUIT", &m_forMobType, 1);
+							ImGui::SameLine();
+							ImGui::RadioButton(u8"KCIKBOARD", &m_forMobType, 2);
+						}
+
+						switch (m_forMobType)
+						{
+						case 0:
+							m_eMonsterType = MonsterType::BIGDADDY;
+							break;
+						case 1:
+							m_eMonsterType = MonsterType::DULLSUIT;
+							break;
+						case 2:
+							m_eMonsterType = MonsterType::KCIKBOARD;
+							break;
+
+						default:
+							m_eMonsterType = MonsterType::MOBTYPE_END;
+							break;
+						}
+
 
 						ImGui::NewLine();
 
@@ -350,6 +396,7 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 								m_fCubesize.fZ = (roundf(m_fCubesize.fZ / step) * step);
 						}
 
+						ImGui::NewLine();
 
 						ImGui::Separator(); // 가로 줄 추가
 						ImGui::Text(u8"OBJ - Cube Texture");
@@ -358,7 +405,7 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 						if (true == m_bCubeType)
 						{
 							m_bPlaneType = false;
-							Set_OBJType(OBJ_TYPE::CUBE_OBJ);
+							Set_OBJType(OBJ_TYPE::CUBE_TYPE);
 
 							for (int i = 0; i < 1; i++) //가로줄(행) 갯수
 							{
@@ -392,7 +439,7 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 						if (true == m_bPlaneType)
 						{
 							m_bCubeType = false;
-							Set_OBJType(OBJ_TYPE::PLANE_OBJ);
+							Set_OBJType(OBJ_TYPE::PLANE_TYPE);
 
 
 							for (int i = 0; i < 1; i++) //가로줄(행) 갯수
@@ -1102,6 +1149,68 @@ void CImGuiManager::Save_ObjData()
 		MSG_BOX("Save Complete.");
 	}
 }
+
+
+void CImGuiManager::Save_CPointData()
+{
+	string m_strText = "CPointData";
+	vector<C_POINT*> m_CPOINT = {};
+	OPENFILENAME    open;
+	TCHAR   lpstrFile[MAX_PATH] = L"";
+	static TCHAR filter[] = L"*.dat";
+
+
+	ZeroMemory(&open, sizeof(OPENFILENAME));
+	open.lStructSize = sizeof(OPENFILENAME);
+	open.lpstrFilter = filter;
+	open.lpstrFile = lpstrFile;
+	open.nMaxFile = 256;
+	open.lpstrInitialDir = L"";
+
+	GetModuleFileName(NULL, lpstrFile, MAX_PATH);
+	//C:\Users\wnqj4\Desktop\SR_Project\Client\Bin\Client.exe
+
+	PathRemoveFileSpec(lpstrFile);
+	//C:\Users\wnqj4\Desktop\SR_Project\Client\Bin
+
+	lstrcat(lpstrFile, L"\\Data\\CPoint");
+	//C:\Users\wnqj4\Desktop\SR_Project\Client\Bin\Data\CPoint
+
+	basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
+	const _tchar* aa = converted.c_str();
+
+	wcscat_s(lpstrFile, L"\\");
+	wcscat_s(lpstrFile, aa);
+
+
+	if (GetSaveFileName(&open) != 0) {
+
+		{HANDLE hFile = CreateFile(lpstrFile, GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
+
+		if (INVALID_HANDLE_VALUE == hFile)
+			return;
+
+		DWORD   dwByte = 0;
+		DWORD   dwStrByte = 0;
+
+		dwStrByte = sizeof(CHAR) * (m_strText.length() + 1);
+
+		WriteFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
+		//문자열 데이터의 크기 dwStrByte를 파일에 쓰고, 데이터의 크기를 알려주는 역할
+		WriteFile(hFile, m_strText.c_str(), dwStrByte, &dwByte, nullptr);
+		//문자열 m_strText를 파일에 쓰는데, 직전 단계에서 계산한 크기만큼 쓰여짐
+
+		vector<C_POINT*> vectorCPointTemp = dynamic_cast<CMapTool*>(Engine::Management()->Get_One_Scene(SCENETAG::MAPTOOL))->Get_VecCreatePoint();
+		for (auto& iter : vectorCPointTemp) { WriteFile(hFile, iter, sizeof(C_POINT), &dwByte, nullptr); }
+
+		CloseHandle(hFile); }
+
+		MSG_BOX("Save Complete.");
+	}
+
+
+}
+
 
 ///////////////////////////////////////////////////////////////////////
 

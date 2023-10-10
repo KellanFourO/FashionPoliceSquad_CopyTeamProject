@@ -142,6 +142,7 @@ HRESULT CStage::Ready_Layer_Environment(LAYERTAG eLayerTag)
 
 	Load_Data(L"../Bin/Data/Map/MapData", OBJECTTAG::BUILD_CUBE);
 	Load_Data(L"../Bin/Data/OBJ/OBJData", OBJECTTAG::BUILD_OBJ);
+	Load_Data_C(L"../Bin/Data/CPoint/CPointData", OBJECTTAG::BUILD_OBJ);
 
 	m_mapLayer.insert({ eLayerTag, m_pLayer });
 
@@ -387,7 +388,7 @@ HRESULT CStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 
 	if (eTag == OBJECTTAG::BUILD_OBJ) {
 		//파일 개방해서 받아오기
-		string m_strText = "MapData";
+		string m_strText = "OBJData";
 
 		HANDLE      hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
 
@@ -418,7 +419,6 @@ HRESULT CStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 				Safe_Delete(pOBJ);
 				break;
 			}
-
 			m_VecOBJData.push_back(pOBJ);
 		}
 		CloseHandle(hFile);
@@ -441,6 +441,64 @@ HRESULT CStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 
 	return S_OK;
 }
+
+HRESULT CStage::Load_Data_C(const TCHAR* pFilePath, OBJECTTAG eTag)
+{
+	//파일 개방해서 받아오기
+	string m_strText = "CPointData";
+
+	HANDLE      hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+		return E_FAIL;
+
+	DWORD   dwByte = 0;
+	DWORD   dwStrByte = 0;
+	C_POINT* pOBJ = nullptr;
+
+	ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
+	CHAR* pTag = new CHAR[dwStrByte];
+
+	ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
+	m_strText = pTag;
+
+	basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
+
+	//저장된 데이터대로 동적할당해서 벡터에 담기
+	while (true)
+	{
+		pOBJ = new C_POINT;
+
+		ReadFile(hFile, pOBJ, sizeof(C_POINT), &dwByte, nullptr);
+
+		if (0 == dwByte)
+		{
+			Safe_Delete(pOBJ);
+			break;
+		}
+		m_VecCreatePoint.push_back(pOBJ);
+	}
+	CloseHandle(hFile);
+
+	Engine::CGameObject* pGameObject = nullptr;
+
+	//벡터 내용물만큼 실제 생성해 레이어에 담기
+	for (auto& iter : m_VecCreatePoint)
+	{
+		pGameObject = CBuild_Obj::Create(m_pGraphicDev, iter->defOBJData.vPos, iter->defOBJData.uiTextureNum,
+			iter->defOBJData.vSize, iter->defOBJData.iRotateCount, m_iOBJIndex, iter->defOBJData.eOBJ_TYPE, iter->defOBJData.eOBJ_Attribute);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
+		m_iOBJIndex++;
+	}
+	m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
+
+	delete[] pTag;
+	pTag = nullptr;
+
+	return S_OK;
+}
+
 
 
 HRESULT CStage::Load_UI()
@@ -516,7 +574,7 @@ void CStage::Admin_KeyInput()
 
 	if (Engine::Get_DIKeyState(DIK_F8) & 0x80 && m_bAdminSwitch)
 	{
-		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::STAGE, DIALOGTAG::STORY_ST1_INTRO);
+		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::STAGE, DIALOGTAG::QUEST_1);
 		m_bAdminSwitch = false;
 	}
 

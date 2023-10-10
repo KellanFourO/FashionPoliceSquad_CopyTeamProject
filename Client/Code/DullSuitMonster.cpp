@@ -29,7 +29,7 @@ HRESULT CDullSuitMonster::Ready_GameObject()
 {
     __super::Ready_GameObject();
 
-    INFO.iMobType = MonsterType::BRIFSMALL;
+    INFO.iMobType = MonsterType::DULLSUIT;
     FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
     ReadyState();
