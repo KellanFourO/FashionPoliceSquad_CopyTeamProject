@@ -391,6 +391,9 @@
     <Filter Include="02. GameObject\06. Effect\01.PaintBulletTrace">
       <UniqueIdentifier>{004f2468-e8cd-4414-bd28-70dcc1d18e78}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\06. Effect\02.MonsterBomb">
+      <UniqueIdentifier>{e75d379d-dbc7-4308-a678-7d9f3a50b9c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -810,9 +813,6 @@
     <ClInclude Include="..\Header\TailorAssertRifle.h">
       <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\PlayerGun.h">
-      <Filter>02. GameObject\01. Player\03. PlayerGun</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\PaintShotGun.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -848,6 +848,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\PaintBulletTrace.h">
       <Filter>02. GameObject\06. Effect\01.PaintBulletTrace</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerGun.h">
+      <Filter>02. GameObject\01. Player\03. PlayerGun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MonsterBombEffect.h">
+      <Filter>02. GameObject\06. Effect\02.MonsterBomb</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1250,9 +1256,6 @@
     <ClCompile Include="..\Code\TailorAssertRifle.cpp">
       <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\PlayerGun.cpp">
-      <Filter>02. GameObject\01. Player\03. PlayerGun</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\PaintShotGun.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -1294,6 +1297,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\PaintBulletTrace.cpp">
       <Filter>02. GameObject\06. Effect\01.PaintBulletTrace</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerGun.cpp">
+      <Filter>02. GameObject\01. Player\03. PlayerGun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MonsterBombEffect.cpp">
+      <Filter>02. GameObject\06. Effect\02.MonsterBomb</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
