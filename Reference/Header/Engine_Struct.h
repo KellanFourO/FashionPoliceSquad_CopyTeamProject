@@ -130,6 +130,16 @@ namespace Engine
 
 	}OBJData;
 
+	typedef struct tagTriggerBox
+	{
+		char*					stTriggerName;
+		OBJData					defOBJInfo;
+		TRIGGER_CASE			TrCase;
+		TRIGGER_TYPE			TrType;
+		TRIGGER_STATE			TrSTATE;
+
+	}TRIGGER;
+
 	typedef struct tagCreatePoint
 	{
 		OBJData					defOBJData;

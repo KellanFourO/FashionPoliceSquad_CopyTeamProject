@@ -343,7 +343,7 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 							break;
 						}
 
-						if (m_forObjAttribute == 5)
+						if (m_forObjAttribute == 5) // CPoint OBJ 인 경우
 						{
 							ImGui::Separator(); // 가로 줄 추가
 							ImGui::RadioButton(u8"BIGDADDY", &m_forMobType, 0);
@@ -369,6 +369,19 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 							m_eMonsterType = MonsterType::MOBTYPE_END;
 							break;
 						}
+
+						if (m_forObjAttribute == 4) //트리거 OBJ일 경우
+						{
+							// 이름 입력하는 창, 이름 변수
+							// 이름 변수는 char* 타입임
+							// 
+							// 드롭다운 박스로 enum 값 선택할 수 있도록
+							// 선택할 수 있는 enum값은 case와 Type. STATE는 못 줘.
+							// 드롭다운 선택한 값도 변수에 담기
+
+							// 나중에 이 값들은 MAPTOOL, STAGE에서 불러와서 create 직전에
+						}
+
 
 
 						ImGui::NewLine();
