@@ -21,7 +21,7 @@ private:
 	explicit CTailorAssertRifle(const CTailorAssertRifle& rhs);
 	virtual ~CTailorAssertRifle();
 
-	enum ASSERTRIFLESTATE { IDLE, WALK, JUMP, READY, SHOT, RELOAD, BOMB, ASSERTRIFLESTATE_END };
+	enum ASSERTRIFLESTATE { IDLE, WALK, READY, SHOT, RELOAD, ASSERTRIFLESTATE_END };
 
 public:
 	virtual	HRESULT	Ready_GameObject() override;

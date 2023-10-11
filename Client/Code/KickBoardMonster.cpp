@@ -35,7 +35,7 @@ HRESULT CKickBoardMonster::Ready_GameObject()
     FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
     ReadyState();
-    
+
     INFO.MonsterState = m_pStateArray[IDLE];
     INFO.MonsterState->Initialize(this);
     INFO.fHP = 100.f;
@@ -45,7 +45,7 @@ HRESULT CKickBoardMonster::Ready_GameObject()
     m_fDectedRange = 70.f;
     m_fAttackRange = 20.f;
     m_fSpeed = 25.f;
-    
+
 
     m_pTransformCom->Set_Scale({ 5.0f,5.0f, 5.0f });
     m_pTransformCom->Set_Pos(INFO.vPos);
@@ -131,7 +131,7 @@ void CKickBoardMonster::OnCollisionEnter(CCollider* _pOther)
 
 void CKickBoardMonster::OnCollisionStay(CCollider* _pOther)
 {
-	
+
     __super::OnCollisionStay(_pOther);
 
 	// 충돌 밀어내기 후 이벤트 여기다가 구현 ㄱㄱ ! .

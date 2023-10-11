@@ -107,10 +107,11 @@ void CTailorAssertRifle::ReadyState()
 {
 	m_pStateArray[IDLE] = new CTailorAssertRifle_Idle;
 	m_pStateArray[WALK] = new CTailorAssertRifle_Walk;
-	//m_pStateArray[JUMP] = new CTailorAssertRifle_Jump;
 	m_pStateArray[READY] = new CTailorAssertRifle_Ready;
 	m_pStateArray[SHOT] = new CTailorAssertRifle_Shot;
 	m_pStateArray[RELOAD] = new CTailorAssertRifle_Reload;
+
+	//m_pStateArray[JUMP] = new CTailorAssertRifle_Jump;
 	//m_pStateArray[BOMB] = new CTailorAssertRifle_Bomb;
 	//m_pStateArray[ENTER] = new CTailorAssertRifle_Enter;
 }
@@ -154,5 +155,6 @@ void CTailorAssertRifle::Free()
 {
 	for (auto iter : m_pStateArray)
 		Safe_Delete(iter);
+
 	__super::Free();
 }

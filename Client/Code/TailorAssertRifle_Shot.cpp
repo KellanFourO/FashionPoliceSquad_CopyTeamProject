@@ -56,7 +56,7 @@ CPlayerGunState* CTailorAssertRifle_Shot::Update(CPlayerGun* Rifle, const float&
     {
         m_pHost->Set_Fire(false);
         m_bAttack = true;
-        return dynamic_cast<CTailorAssertRifle*>(m_pHost)->Get_State(0);
+        return dynamic_cast<CTailorAssertRifle*>(m_pHost)->Get_State(0); // Idle
     }
 
     return nullptr;

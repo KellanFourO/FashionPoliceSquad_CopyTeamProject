@@ -14,6 +14,7 @@
 #include "Export_System.h"
 #include "Export_Utility.h"
 
+#include "MonsterBombEffect.h"
 #include "BossState.h"
 
 
@@ -69,16 +70,7 @@ _int CStage1Boss::Update_GameObject(const _float& fTimeDelta)
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 	__super::Update_GameObject(fTimeDelta);
 
-	CMonsterState* State = INFO.MonsterState->Update(this, fTimeDelta);
-	if (State != nullptr) {
-		INFO.MonsterState = State;
-		INFO.MonsterState->Initialize(this);
-	} // 상태 패턴
-
 	m_pRigidBody->Update_RigidBody(fTimeDelta);
-
-
-
 
 	return OBJ_NOEVENT;
 }
@@ -88,7 +80,15 @@ void CStage1Boss::LateUpdate_GameObject()
 	__super::LateUpdate_GameObject();
 
 	// 사망판정
-	INFO.MonsterState->LateUpdate(this);
+	if (INFO.bDead) {
+		CMonsterBombEffect* MBEffect = CMonsterBombEffect::Create(m_pGraphicDev);
+		MBEffect->Set_ObjectTag(OBJECTTAG::EFFECT);
+		Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::EFFECT, MBEffect);
+		MBEffect->Get_Transform()->Set_Pos(m_pTransformCom->m_vInfo[INFO_POS]);
+		INFO.MonsterState = m_pStateArray[DEAD];
+		INFO.MonsterState->Initialize(this);
+		INFO.bDead = false;
+	}   // 사망판정
 
 	_vec3	vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
@@ -108,12 +108,6 @@ void CStage1Boss::OnCollisionEnter(CCollider* _pOther)
 {
 	__super::OnCollisionEnter(_pOther);
 
-
-	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYERBULLET)
-	{
-		int i = 0;
-
-	}
 }
 
 void CStage1Boss::OnCollisionStay(CCollider* _pOther)
@@ -122,14 +116,11 @@ void CStage1Boss::OnCollisionStay(CCollider* _pOther)
 
 	// 충돌 밀어내기 후 이벤트 여기다가 구현 ㄱㄱ ! .
 
-	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYERBULLET)
-	{
-		int i = 0;
-	}
 }
 
 void CStage1Boss::OnCollisionExit(CCollider* _pOther)
 {
+	__super::OnCollisionStay(_pOther);
 }
 
 HRESULT CStage1Boss::Add_Component()
