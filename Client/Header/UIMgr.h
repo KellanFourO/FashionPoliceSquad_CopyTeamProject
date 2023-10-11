@@ -4,13 +4,13 @@
 #include "Engine_Define.h"
 #include "MyUI.h"
 
-class CUIMgr : public CBase
+class CUIMgr
 {
 	DECLARE_SINGLETON(CUIMgr)
 
 private:
-	explicit CUIMgr();
-	virtual ~CUIMgr();
+	 CUIMgr();
+	~CUIMgr();
 
 public:
 
@@ -58,8 +58,9 @@ public:
 		return iter->second->Get_Clone();
 	}
 
-public:
-	virtual void Free();
+private:
+	void Free();
+
 
 private:
 	map<const _tchar*, CMyUI*>			m_mapLoadUI;

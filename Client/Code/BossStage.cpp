@@ -38,6 +38,7 @@ HRESULT CBossStage::Ready_Scene()
 	//TODO - 승용추가 크로스헤어 추가, 기본 커서 안보이게
 	ShowCursor(FALSE);
 
+	m_eSceneTag = SCENETAG::BOSS_STAGE;
 	return S_OK;
 }
 
@@ -47,7 +48,7 @@ _int CBossStage::Update_Scene(const _float& fTimeDelta)
 
 	if (m_bReadyCube)
 	{
-		Octree()->Update_Octree();
+		//Octree()->Update_Octree();
 	}
 
 	m_fAdminTick += fTimeDelta;
@@ -242,7 +243,7 @@ HRESULT CBossStage::Ready_Layer_UI(LAYERTAG eLayerTag)
 
 	//승용
 
-	Load_UI();
+	//Load_UI();
 
 	//pGameObject = CImGuiManager::GetInstance()->Get_UI(L"Checkmark.png");
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);

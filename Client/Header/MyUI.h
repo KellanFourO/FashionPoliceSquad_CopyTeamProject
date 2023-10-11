@@ -38,6 +38,7 @@ public:
 	{
 		CMyUI* pClone = new CMyUI(*this);
 		pClone->m_bClone = true;
+		this->AddRef();
 
 		if (FAILED(pClone->Ready_GameObject(pClone->Get_Info()->pTexture)))
 		{

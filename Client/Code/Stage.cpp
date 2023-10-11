@@ -53,9 +53,10 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 
 	_int	iExit = __super::Update_Scene(fTimeDelta);
 
+
 	if (m_bReadyCube)
 	{
-		Octree()->Update_Octree();
+		//Octree()->Update_Octree();
 	}
 
 	m_fAdminTick += fTimeDelta;
@@ -65,7 +66,6 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 		m_fAdminTick = 0.F;
 	}
 
-	Admin_KeyInput();
 
 	return iExit;
 }
@@ -79,7 +79,7 @@ void CStage::LateUpdate_Scene()
 
 
 
-
+	Admin_KeyInput();
 
 
 
@@ -308,15 +308,50 @@ HRESULT CStage::Ready_Layer_UI(LAYERTAG eLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MISSION, pGameObject), E_FAIL);
 
+	pGameObject = CHPBarFrame::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
 
+	pGameObject = CHPBarValue::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
 
+	pGameObject = CHPMark::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
 
+	pGameObject = CShieldFrame::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
 
+	pGameObject = CShieldValue::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CShieldMark::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CBerserkFrame_UI::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CBerserk_UI::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CPlayerFace::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CHat::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ eLayerTag, pLayer });
 
 	//½Â¿ë
-	Load_UI();
+	//Load_UI();
 
 	//pGameObject = CImGuiManager::GetInstance()->Get_UI(L"Checkmark.png");
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -589,7 +624,7 @@ void CStage::Admin_KeyInput()
 		CUIMgr::GetInstance()->DestroyInstance();
 
 		Management()->Set_SYSceneChange(true);
-		Management()->Set_Scene(pScene);
+		Management()->Change_Scene(pScene);
 
 
 		m_bAdminSwitch = false;
@@ -625,6 +660,11 @@ void CStage::Free()
 		Safe_Delete(m_VecOBJData[i]);
 	}
 	m_VecOBJData.clear();
+
+	for (int i = 0; i < m_VecCreatePoint.size(); ++i)
+	{
+		Safe_Delete(m_VecCreatePoint[i]);
+	}
 
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);

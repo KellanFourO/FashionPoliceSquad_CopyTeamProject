@@ -5,7 +5,7 @@
 
 //TODO - ½Â¿ëÃß°¡
 #include "MyUI.h"
-#include "RecognitionRange.h"
+#include "UI_RecognitionRange.h"
 
 class CMonsterState;
 class CBossState;

@@ -34,18 +34,18 @@
 
 
 //TODO ½Â¿ë
-#include "MyDialog.h"
-#include "Portrait.h"
+#include "UI_MyDialog.h"
+#include "UI_Portrait.h"
 
 #include "MyUI.h"
-#include "CardList.h"
-#include "CrossHair.h"
+#include "UI_CardList.h"
+#include "UI_CrossHair.h"
 
 #include "PaintShotGun.h"
 #include "TailorAssertRifle.h"
 #include "TailorAssertRifleHand.h"
 
-#include "MissionObjective.h"
+#include "UI_MissionObjective.h"
 
 
 class CBossStage : public Engine::CScene

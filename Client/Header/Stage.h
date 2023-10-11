@@ -35,12 +35,27 @@
 
 // TODO - ½Â¿ë
 #include "MyUI.h"
-#include "CardList.h"
+#include "UI_CardList.h"
 #include "UICamera.h"
-#include "MyDialog.h"
-#include "Portrait.h"
-#include "CrossHair.h"
-#include "MissionObjective.h"
+#include "UI_MyDialog.h"
+#include "UI_Portrait.h"
+#include "UI_CrossHair.h"
+#include "UI_MissionObjective.h"
+
+#include "UI_Berserk.h"
+#include "UI_BerserkFrame.h"
+
+#include "UI_HPBarValue.h"
+#include "UI_HPBarFrame.h"
+#include "UI_HPMark.h"
+
+#include "UI_ShieldFrame.h"
+#include "UI_ShieldValue.h"
+#include "UI_ShieldMark.h"
+
+#include "UI_PlayerFace.h"
+#include "UI_Hat.h"
+
 #include "PaintShotGun.h"
 #include "TailorAssertRifle.h"
 #include "TailorAssertRifleHand.h"

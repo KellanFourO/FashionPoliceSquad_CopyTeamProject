@@ -394,6 +394,27 @@
     <Filter Include="02. GameObject\06. Effect\02.MonsterBomb">
       <UniqueIdentifier>{e75d379d-dbc7-4308-a678-7d9f3a50b9c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\20.UI\06. HPBar">
+      <UniqueIdentifier>{b2f3f6ed-de46-4eb5-aed9-195881bb37fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\20.UI\07. PlayerFace">
+      <UniqueIdentifier>{8a70b776-32a7-4d74-9ccb-733b5bcb8ee8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\20.UI\08. BulletInfo">
+      <UniqueIdentifier>{3ea25f43-5042-437c-af8f-62efc783d7eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\20.UI\09. WeaponInfo">
+      <UniqueIdentifier>{97e2b3cc-ebb6-455f-ab70-127074b717b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\20.UI\10. Shield">
+      <UniqueIdentifier>{1000cb00-c964-4659-9124-a6c7e383a9fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\20.UI\11. Berserk">
+      <UniqueIdentifier>{e3ab17f3-d0db-4e23-8769-5ab72643d8b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\20.UI\07. PlayerFace\00. Hat">
+      <UniqueIdentifier>{c8bf9ae2-5053-428d-8bfc-5592f158561e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -501,10 +522,10 @@
     <ClInclude Include="..\Header\MyUI.h">
       <Filter>02. GameObject\20.UI\00. MyUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\MyDialog.h">
+    <ClInclude Include="..\Header\UI_MyDialog.h">
       <Filter>02. GameObject\20.UI\01. MyDialog</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Portrait.h">
+    <ClInclude Include="..\Header\UI_Portrait.h">
       <Filter>02. GameObject\20.UI\01. MyDialog\00. Portrait</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\FlyingCamera.h">
@@ -522,7 +543,7 @@
     <ClInclude Include="..\Header\Item.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CrossHair.h">
+    <ClInclude Include="..\Header\UI_CrossHair.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Monster.h">
@@ -567,10 +588,10 @@
     <ClInclude Include="..\Header\DullSuitMonster_Idle.h">
       <Filter>02. GameObject\02. Monster\01. DullSuitMonster\99. DullSuitMonster_State\01.DullSuitMonster_Idle</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\MyCard.h">
+    <ClInclude Include="..\Header\UI_MyCard.h">
       <Filter>02. GameObject\20.UI\01. MyDialog\00. Portrait</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\MyCardTexture.h">
+    <ClInclude Include="..\Header\UI_MyCardTexture.h">
       <Filter>02. GameObject\20.UI\01. MyDialog\00. Portrait</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BigDaddyMonster_Idle.h">
@@ -606,7 +627,7 @@
     <ClInclude Include="..\Header\CrossHair.h">
       <Filter>02. GameObject\20.UI\02. CrossHair</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\CardList.h">
+    <ClInclude Include="..\Header\UI_CardList.h">
       <Filter>02. GameObject\20.UI\03. MyCard\01. CardList</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\FootRay.h">
@@ -624,10 +645,10 @@
     <ClInclude Include="..\Header\ObjectPoolMgr.h">
       <Filter>04. Manager\01.ObjectPooling</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\MissionObjective.h">
+    <ClInclude Include="..\Header\UI_MissionObjective.h">
       <Filter>02. GameObject\20.UI\04. MissionObjective</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\RecognitionRange.h">
+    <ClInclude Include="..\Header\UI_RecognitionRange.h">
       <Filter>02. GameObject\20.UI\05. RecognitionRange</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\DustGrey.h">
@@ -855,6 +876,36 @@
     <ClInclude Include="..\Header\MonsterBombEffect.h">
       <Filter>02. GameObject\06. Effect\02.MonsterBomb</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\UI_HPBarFrame.h">
+      <Filter>02. GameObject\20.UI\06. HPBar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_HPBarValue.h">
+      <Filter>02. GameObject\20.UI\06. HPBar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_ShieldFrame.h">
+      <Filter>02. GameObject\20.UI\10. Shield</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_ShieldMark.h">
+      <Filter>02. GameObject\20.UI\10. Shield</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_ShieldValue.h">
+      <Filter>02. GameObject\20.UI\10. Shield</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_Berserk.h">
+      <Filter>02. GameObject\20.UI\11. Berserk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_HPMark.h">
+      <Filter>02. GameObject\20.UI\06. HPBar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_BerserkFrame.h">
+      <Filter>02. GameObject\20.UI\11. Berserk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_PlayerFace.h">
+      <Filter>02. GameObject\20.UI\07. PlayerFace</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_Hat.h">
+      <Filter>02. GameObject\20.UI\07. PlayerFace\00. Hat</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -947,10 +998,10 @@
     <ClCompile Include="..\Code\MyUI.cpp">
       <Filter>02. GameObject\20.UI\00. MyUI</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\MyDialog.cpp">
+    <ClCompile Include="..\Code\UI_MyDialog.cpp">
       <Filter>02. GameObject\20.UI\01. MyDialog</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Portrait.cpp">
+    <ClCompile Include="..\Code\UI_Portrait.cpp">
       <Filter>02. GameObject\20.UI\01. MyDialog\00. Portrait</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\FlyingCamera.cpp">
@@ -968,7 +1019,7 @@
     <ClCompile Include="..\Code\Item.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CrossHair.cpp">
+    <ClCompile Include="..\Code\UI_CrossHair.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Monster.cpp">
@@ -1004,10 +1055,10 @@
     <ClCompile Include="..\Code\DullSuitMonster_Idle.cpp">
       <Filter>02. GameObject\02. Monster\01. DullSuitMonster\99. DullSuitMonster_State\01.DullSuitMonster_Idle</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\MyCard.cpp">
+    <ClCompile Include="..\Code\UI_MyCard.cpp">
       <Filter>02. GameObject\20.UI\01. MyDialog\00. Portrait</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\MyCardTexture.cpp">
+    <ClCompile Include="..\Code\UI_MyCardTexture.cpp">
       <Filter>02. GameObject\20.UI\01. MyDialog\00. Portrait</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\DullSuitMonster_Attack.cpp">
@@ -1034,7 +1085,7 @@
     <ClCompile Include="..\Code\CrossHair.cpp">
       <Filter>02. GameObject\20.UI\02. CrossHair</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\CardList.cpp">
+    <ClCompile Include="..\Code\UI_CardList.cpp">
       <Filter>02. GameObject\20.UI\03. MyCard\01. CardList</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\FootRay.cpp">
@@ -1052,10 +1103,10 @@
     <ClCompile Include="..\Code\ObjectPoolMgr.cpp">
       <Filter>04. Manager\01.ObjectPooling</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\MissionObjective.cpp">
+    <ClCompile Include="..\Code\UI_MissionObjective.cpp">
       <Filter>02. GameObject\20.UI\04. MissionObjective</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\RecognitionRange.cpp">
+    <ClCompile Include="..\Code\UI_RecognitionRange.cpp">
       <Filter>02. GameObject\20.UI\05. RecognitionRange</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\DustGrey.cpp">
@@ -1303,6 +1354,36 @@
     </ClCompile>
     <ClCompile Include="..\Code\MonsterBombEffect.cpp">
       <Filter>02. GameObject\06. Effect\02.MonsterBomb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_HPBarFrame.cpp">
+      <Filter>02. GameObject\20.UI\06. HPBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_HPBarValue.cpp">
+      <Filter>02. GameObject\20.UI\06. HPBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_ShieldFrame.cpp">
+      <Filter>02. GameObject\20.UI\10. Shield</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_ShieldMark.cpp">
+      <Filter>02. GameObject\20.UI\10. Shield</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_ShieldValue.cpp">
+      <Filter>02. GameObject\20.UI\10. Shield</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_HPMark.cpp">
+      <Filter>02. GameObject\20.UI\06. HPBar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_Berserk.cpp">
+      <Filter>02. GameObject\20.UI\11. Berserk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_BerserkFrame.cpp">
+      <Filter>02. GameObject\20.UI\11. Berserk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_PlayerFace.cpp">
+      <Filter>02. GameObject\20.UI\07. PlayerFace</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_Hat.cpp">
+      <Filter>02. GameObject\20.UI\07. PlayerFace\00. Hat</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -2,7 +2,7 @@
 #include "Player.h"
 
 #include "Dyehard.h"
-#include "CrossHair.h"
+#include "UI_CrossHair.h"
 
 #include "Player_IDLE.h"
 #include "Player_Armor.h"
