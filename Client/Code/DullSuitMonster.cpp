@@ -7,6 +7,7 @@
 #include "DullSuitMonster_Attack.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
+#include "MonsterBombEffect.h"
 
 #include "MonsterState.h"
 
@@ -65,22 +66,32 @@ HRESULT CDullSuitMonster::Ready_GameObject()
 _int CDullSuitMonster::Update_GameObject(const _float& fTimeDelta)
 {
     __super::Update_GameObject(fTimeDelta);
-
+// 	if (INFO.bDead)
+// 	{
+// 		CMonsterBombEffect* MBEffect = CMonsterBombEffect::Create(m_pGraphicDev);
+// 		Management()->Get_Layer(LAYERTAG::EFFECT)->Add_GameObject(OBJECTTAG::EFFECT, MBEffect);
+// 		MBEffect->Get_Transform()->Set_Pos(m_pTransformCom->m_vInfo[INFO_POS]);
+// 	}
 	m_pRigidBody->Update_RigidBody(fTimeDelta);
     return OBJ_NOEVENT;
 }
 
 void CDullSuitMonster::LateUpdate_GameObject()
 {
-    __super::LateUpdate_GameObject();
 
 
      if (INFO.bDead)
      {
+		 CMonsterBombEffect* MBEffect = CMonsterBombEffect::Create(m_pGraphicDev);
+		 MBEffect->Set_ObjectTag(OBJECTTAG::EFFECT);
+		 Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::EFFECT, MBEffect);
+		 MBEffect->Get_Transform()->Set_Pos(m_pTransformCom->m_vInfo[INFO_POS]);
+
          INFO.MonsterState = m_pStateArray[DEAD];
          INFO.MonsterState->Initialize(this);
          INFO.bDead = false;
      }   // »ç¸ÁÆÇÁ¤
+    __super::LateUpdate_GameObject();
 
 	//_vec3	vPos;
 	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
