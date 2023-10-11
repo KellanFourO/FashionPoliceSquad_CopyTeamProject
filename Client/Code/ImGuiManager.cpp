@@ -152,7 +152,8 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 							char TextNow[MAX_PATH];
 							sprintf_s(TextNow, u8"큐브 높이: %.f", m_fCubeHeightLevel);
 							ImGui::Text(TextNow);
-
+								
+							ImGui::SameLine();
 							if (ImGui::Button(u8"높이 초기화"))
 							{	m_fCubeHeightLevel = 0;	}
 
@@ -306,9 +307,9 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 						ImGui::Text(TextNow22);
 						ImGui::RadioButton(u8"C_Point OBJ", &m_forObjAttribute, 5);
 						ImGui::RadioButton(u8"무빙 OBJ", &m_forObjAttribute, 6);
-						ImGui::RadioButton(u8"단순 장식OBJ", &m_forObjAttribute, 7);
 						ImGui::SameLine();
 						ImGui::Text(TextNow2);
+						ImGui::RadioButton(u8"단순 장식OBJ", &m_forObjAttribute, 7);
 
 						switch (m_forObjAttribute)
 						{

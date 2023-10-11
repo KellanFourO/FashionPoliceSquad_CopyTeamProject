@@ -609,25 +609,18 @@ CStage* CStage::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 void CStage::Free()
 {
 
-// 	for (int i = 0; i < m_VecTempCube.size(); ++i)
-// 	{
-// 		Safe_Delete(m_VecTempCube[i]);
-// 	}
-// 	m_VecTempCube.clear();
-//
-//
-// 	for (int i = 0; i < m_VecTempPlane.size(); ++i)
-// 	{
-// 		Safe_Delete(m_VecTempPlane[i]);
-// 	}
-// 	m_VecTempPlane.clear();
-
-
 	for (int i = 0; i < m_VecCubeData.size(); ++i)
 	{
 		Safe_Delete(m_VecCubeData[i]);
 	}
 	m_VecCubeData.clear();
+
+	for (int i = 0; i < m_VecOBJData.size(); ++i)
+	{
+		Safe_Delete(m_VecOBJData[i]);
+	}
+	m_VecOBJData.clear();
+
 
 	__super::Free();
 

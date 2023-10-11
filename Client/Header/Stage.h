@@ -80,15 +80,9 @@ public:
 	virtual HRESULT		Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag);
 	HRESULT				Load_Data_C(const TCHAR* pFilePath, OBJECTTAG eTag);
 
-	vector<IDirect3DCubeTexture9*>& Get_VecTempCube() { return m_VecTempCube; }
-	vector<IDirect3DBaseTexture9*>& Get_VecTempPlane() { return m_VecTempPlane; }
-
 private:
-	//BuildOBJ내에서 텍스쳐넘버 구분용으로 씀
-	vector<IDirect3DCubeTexture9*>	m_VecTempCube;
-	vector<IDirect3DBaseTexture9*>	m_VecTempPlane;
-
 	vector<C_POINT*>			    m_VecCreatePoint;
+
 	vector<OBJData*>				m_VecOBJData;
 	_uint							m_iOBJIndex = 0;
 
