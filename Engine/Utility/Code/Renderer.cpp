@@ -126,8 +126,8 @@ void CRenderer::Render_Block(LPDIRECT3DDEVICE9& pGraphicDev)
 	}
 
 
-	pGraphicDev->SetRenderState(D3DRS_ALPHAREF, (DWORD)0x00000001);
-	pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
+	pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE); //아랫줄이랑 순서바꿈
+	pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 50); //50 손대지마시오 - 유진
 	pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATEREQUAL);
 
 		for (auto& iter : m_RenderGroup[RENDER_BLOCK])

@@ -107,7 +107,7 @@ _uint CLoading::Loading_For_Stage()
 	}
 	// 플레이어 관련 Ready_Proto
 
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Build_Cube_Texture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Bin/Resource/Texture/Cube/CubeTest%d.dds", 21)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Build_Cube_Texture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Bin/Resource/Texture/Cube/CubeTest%d.dds", 22)), E_FAIL);
 	Set_Value(3);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_BaseUI", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/all wheels.png")), E_FAIL);
 	Set_Value(3);
@@ -156,7 +156,7 @@ _uint CLoading::Loading_For_MapTool()
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_WireTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Terrain/MainTile_%d.png", 1)), E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_RcCol", CRcCol::Create(m_pGraphicDev)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Build_Cube_Texture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Bin/Resource/Texture/Cube/CubeTest%d.dds", 21)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Build_Cube_Texture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Bin/Resource/Texture/Cube/CubeTest%d.dds", 22)), E_FAIL);
 
 	m_bFinish = true;
 

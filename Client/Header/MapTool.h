@@ -45,6 +45,7 @@ public:
 	void				Set_VecOBJData(vector<OBJData*>* pVecOBjData) { m_VecOBJData = *pVecOBjData; }
 
 	vector<OBJData*>&	Get_VecTrigger() { return m_VecTrigger; }
+	vector<OBJData*>&	Get_VecMoving()  { return m_VecMoving; }
 	vector<C_POINT*>&	Get_VecCreatePoint() { return m_VecCreatePoint; }
 
 	void				Cursor_Update();
@@ -61,6 +62,7 @@ private:
 
 	//트리거, Create Point 용 벡터 컨테이너
 	vector<OBJData*>			   m_VecTrigger;
+	vector<OBJData*>			   m_VecMoving;
 	vector<C_POINT*>			   m_VecCreatePoint;
 
 	CLayer*				m_pLayer				= nullptr;
@@ -95,8 +97,10 @@ private:
 	vector<OBJData*>	m_VecOBJData;	//메인 OBJ 데이터(큐브타입+플레인타입) 벡터
 	vector<CUBE*>		m_VecCubeData;	//빌딩용 큐브 한정 데이터 벡터
 
-public:
+private:
 	OBJData*			OBJTemp					= nullptr;  //오브젝트용
+	OBJData*			OBJTemp2				= nullptr;  //오브젝트용
+	OBJData*			OBJTemp3				= nullptr;  //오브젝트용
 	CUBE*				CubeTemp2				= nullptr; //맵 큐브용
 	C_POINT*			OBJ_C_POINT				= nullptr; //몬스터 리젠 위치용
 

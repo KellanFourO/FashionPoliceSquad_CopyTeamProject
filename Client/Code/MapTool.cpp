@@ -275,8 +275,15 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
 
                     if (eAttribute == OBJ_ATTRIBUTE::TRIGGER_OBJ)
                     {
-                        m_VecTrigger.push_back(OBJTemp); //위에도 담기고 별도로 관리차원에서 여기도 담는 것
+                        OBJTemp2 = new OBJData(*OBJTemp);
+                        m_VecTrigger.push_back(OBJTemp2); //위에도 담기고 별도로 관리차원에서 여기도 담는 것
                     }
+					if (eAttribute == OBJ_ATTRIBUTE::MOVING_OBJ)
+					{
+						OBJTemp3 = new OBJData(*OBJTemp);
+						m_VecMoving.push_back(OBJTemp3); //상동 
+					}
+
 					if (eAttribute == OBJ_ATTRIBUTE::C_POINT_OBJ)
                     {
                         OBJ_C_POINT->defOBJData = *OBJTemp;
@@ -391,7 +398,7 @@ HRESULT CMapTool::Load_Cube(const TCHAR* pFilePath)
 HRESULT CMapTool::Load_Obj(const TCHAR* pFilePath)
 {
 	//파일 개방해서 받아오기
-	string m_strText = "MapData";
+	string m_strText = "OBJData";
 
 	HANDLE      hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
 
@@ -523,6 +530,11 @@ HRESULT CMapTool::Delete_Map()
     // 1. 맵툴이 가지고 있는 create-delete & save-load 용 벡터
     // 2. Create 시 생성되어 Layer 가 갖게 되는 GameObject 벡터
 
+    // 3개 더 추가
+    // 3. (해당 시) 트리거 OBJ 벡터
+    // 4. (해당 시) 무빙 OBJ 벡터
+    // 5. (해당 시) CPoint OBJ 벡터
+
     if (Engine::Get_DIMouseState(DIM_RB))
     {
         Cursor_Update();
@@ -568,6 +580,7 @@ HRESULT CMapTool::Delete_Map()
 
         if (CImGuiManager::GetInstance()->Get_OBJModeCheck() == true)
         {
+            bool bOBJ_DeleteCheck = false;
             for (auto iter = m_VecOBJData.begin(); iter != m_VecOBJData.end();)
             {
                 if (fabsf((*iter)->vPos.x - CursorTemp.x) < VTXITV &&
@@ -575,6 +588,7 @@ HRESULT CMapTool::Delete_Map()
                     fabsf((*iter)->vPos.z - CursorTemp.z) < VTXITV)
                 {
                     IndexTemp = (*iter)->iIndex;
+                    bOBJ_DeleteCheck = true;
 
                     delete* iter;
                     //*iter = nullptr;
@@ -600,7 +614,72 @@ HRESULT CMapTool::Delete_Map()
                     ++iter;
                 }
             }
+
+            for (auto iter = m_VecCreatePoint.begin(); iter != m_VecCreatePoint.end();)
+            {
+                if (fabsf((*iter)->defOBJData.vPos.x - CursorTemp.x) < VTXITV &&
+                    fabsf((*iter)->defOBJData.vPos.y - CursorTemp.y) < VTXITV &&
+                    fabsf((*iter)->defOBJData.vPos.z - CursorTemp.z) < VTXITV)
+                {
+                    IndexTemp = (*iter)->defOBJData.iIndex;
+
+                    delete* iter;
+                    iter = m_VecCreatePoint.erase(iter);
+
+                    if (IndexTemp != -1) {
+                        auto& ObjVectorTemp = Engine::Management()->GetInstance()->Get_Scene()->Get_ObjectList(LAYERTAG::ENVIRONMENT, OBJECTTAG::BUILD_OBJ);
+
+                        for (int i = 0; i < ObjVectorTemp.size(); ++i)
+                        {
+                            if (IndexTemp == ObjVectorTemp[i]->Get_iIndex())
+                            {
+                                m_pLayer->Delete_GameObject(OBJECTTAG::BUILD_OBJ, ObjVectorTemp[i], IndexTemp);
+                                break;
+                            }
+                        }
+                    }
+
+                }
+            }
+
+
+            if (bOBJ_DeleteCheck == true)
+            {
+                if (!m_VecTrigger.empty())
+                {
+                    for (auto& iter = m_VecTrigger.begin(); iter != m_VecTrigger.end();)
+                    {
+                        if ((*iter)->iIndex == IndexTemp)
+                        {
+                            delete* iter;
+                            iter = m_VecTrigger.erase(iter);
+                            bOBJ_DeleteCheck = false;
+                        }
+                        else
+                        {
+                            ++iter;
+                        }
+                    }
+                }
+				if (!m_VecMoving.empty())
+				{
+					for (auto& iter = m_VecMoving.begin(); iter != m_VecMoving.end();)
+					{
+						if ((*iter)->iIndex == IndexTemp)
+						{
+							delete* iter;
+							iter = m_VecMoving.erase(iter);
+							bOBJ_DeleteCheck = false;
+						}
+						else
+						{
+							++iter;
+						}
+					}
+				}
+            }
         }
+        int i = 0;
     }
     return S_OK;
 }
@@ -685,6 +764,8 @@ void CMapTool::Free()
     }
 
     Safe_Delete(OBJTemp);
+    Safe_Delete(OBJTemp2);
+    Safe_Delete(OBJTemp3);
     Safe_Delete(CubeTemp2);
     Safe_Delete(OBJ_C_POINT);
 
