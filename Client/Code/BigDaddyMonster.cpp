@@ -8,7 +8,7 @@
 
 #include "Export_System.h"
 #include "Export_Utility.h"
-
+#include "MonsterBombEffect.h"
 #include "MonsterState.h"
 
 // TODO - 승용 추가 : 몬스터 HP UI.
@@ -70,7 +70,12 @@ HRESULT CBigDaddyMonster::Ready_GameObject()
 _int CBigDaddyMonster::Update_GameObject(const _float& fTimeDelta)
 {
 	__super::Update_GameObject(fTimeDelta);
-
+// 	if (INFO.bDead)
+// 	{
+// 		CMonsterBombEffect* MBEffect = CMonsterBombEffect::Create(m_pGraphicDev);
+// 		Management()->Get_Layer(LAYERTAG::EFFECT)->Add_GameObject(OBJECTTAG::EFFECT, MBEffect);
+// 		MBEffect->Get_Transform()->Set_Pos(m_pTransformCom->m_vInfo[INFO_POS]);
+// 	}
 	//m_pUI_Recognition->Update_GameObject(fTimeDelta);
 	m_pRigidBody->Update_RigidBody(fTimeDelta);
 	return OBJ_NOEVENT;
@@ -78,17 +83,21 @@ _int CBigDaddyMonster::Update_GameObject(const _float& fTimeDelta)
 
 void CBigDaddyMonster::LateUpdate_GameObject()
 {
-	__super::LateUpdate_GameObject();
 
 	if (INFO.bDead) {
+		CMonsterBombEffect* MBEffect = CMonsterBombEffect::Create(m_pGraphicDev);
+		MBEffect->Set_ObjectTag(OBJECTTAG::EFFECT);
+		Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::EFFECT, MBEffect);
+		MBEffect->Get_Transform()->Set_Pos(m_pTransformCom->m_vInfo[INFO_POS]);
 		INFO.MonsterState = m_pStateArray[DEAD];
 		INFO.MonsterState->Initialize(this);
 		INFO.bDead = false;
 	}   // 사망판정
 
-	_vec3	vPos;
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	__super::Compute_ViewZ(&vPos);
+	//_vec3	vPos;
+	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	//__super::Compute_ViewZ(&vPos);
+	__super::LateUpdate_GameObject();
 
 	//m_pUI_Recognition->LateUpdate_GameObject();
 

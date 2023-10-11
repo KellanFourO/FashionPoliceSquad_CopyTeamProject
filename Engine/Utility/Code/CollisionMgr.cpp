@@ -180,7 +180,7 @@ void CollisionMgr::CheckCollisionByType(OBJECTTAG _eObjectLeft, OBJECTTAG _eObje
 					pLeftCol->OnCollisionExit(pRightCol);
 					pRightCol->OnCollisionExit(pLeftCol);
 					iter->second = false;
-					return;
+					//return;
 				}
 			}
 		}
@@ -273,7 +273,7 @@ void CollisionMgr::CheckCollisionStatic(OBJECTTAG _eObjectLeft)
 					pLeftCol->OnCollisionExit(pRightCol);
 					pRightCol->OnCollisionExit(pLeftCol);
 					iter->second = false;
-					return;
+					//return;
 				}
 			}
 		}

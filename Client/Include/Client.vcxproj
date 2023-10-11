@@ -254,6 +254,7 @@
     <ClInclude Include="..\Header\MapTool.h" />
     <ClInclude Include="..\Header\MissionObjective.h" />
     <ClInclude Include="..\Header\Monster.h" />
+    <ClInclude Include="..\Header\MonsterBombEffect.h" />
     <ClInclude Include="..\Header\MonsterState.h" />
     <ClInclude Include="..\Header\BigDaddyMonster_Chase.h" />
     <ClInclude Include="..\Header\BigDaddyMonster_Dead.h" />
@@ -266,6 +267,7 @@
     <ClInclude Include="..\Header\MyUI.h" />
     <ClInclude Include="..\Header\NewFPSCamera.h" />
     <ClInclude Include="..\Header\ObjectPoolMgr.h" />
+    <ClInclude Include="..\Header\PaintBulletTrace.h" />
     <ClInclude Include="..\Header\PaintShotGun.h" />
     <ClInclude Include="..\Header\PaintShotGun_Enter.h" />
     <ClInclude Include="..\Header\PaintShotGun_Idle.h" />
@@ -363,10 +365,12 @@
     <ClCompile Include="..\Code\KickBoardMonster_Idle.cpp" />
     <ClCompile Include="..\Code\KickBoardMonster_Patrol.cpp" />
     <ClCompile Include="..\Code\Lazer.cpp" />
+    <ClCompile Include="..\Code\MonsterBombEffect.cpp" />
     <ClCompile Include="..\Code\MuzzlefFlash_Rifle.cpp" />
     <ClCompile Include="..\Code\LoadingStage1.cpp" />
     <ClCompile Include="..\Code\ObjectPoolMgr.cpp" />
     <ClCompile Include="..\Code\MissionObjective.cpp" />
+    <ClCompile Include="..\Code\PaintBulletTrace.cpp" />
     <ClCompile Include="..\Code\PaintShotGun.cpp" />
     <ClCompile Include="..\Code\PaintShotGun_Enter.cpp" />
     <ClCompile Include="..\Code\PaintShotGun_Idle.cpp" />

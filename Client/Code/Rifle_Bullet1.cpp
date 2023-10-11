@@ -27,13 +27,15 @@ HRESULT CRifle_Bullet1::Ready_GameObject(_vec3 _StartPos, _int iColorIndex)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	m_eBulletType = BULLETTYPE::ASSERTRIFLE_BULLET;
 
-	m_fSpeed = 110.f;
+	m_fSpeed = 300.f;
 	m_fDmg = 10.f;
 
 
 
 	_vec3 vScale = { 0.7f, 0.7f, 0.7f};
+	_vec3 vPos = { 9999.f,9999.f,9999.f };
 
+	m_pTransformCom->Set_Pos(vPos);
 	m_pTransformCom->Set_Scale(vScale);
 	m_pTransformCom->Set_Host(this);
 

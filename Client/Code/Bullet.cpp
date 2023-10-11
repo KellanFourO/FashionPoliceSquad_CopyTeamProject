@@ -19,6 +19,10 @@ CBullet::~CBullet()
 
 HRESULT CBullet::Ready_GameObject()
 {
+	_vec3 vPos = { 9999.f,9999.f,9999.f };
+
+	m_pTransformCom->Set_Pos(vPos);
+
 	return S_OK;
 }
 
@@ -40,7 +44,7 @@ _int CBullet::Update_GameObject(const _float& fTimeDelta)
 		m_bLateInit = false;
 	}
 
-	if (m_bShot)
+	if (m_bShot && m_eObjectTag !=OBJECTTAG::PLAYER_LAZER)
 	{
 		_vec3 vPlayerPos, vMyPos, vLook;
 
@@ -97,6 +101,10 @@ void CBullet::OnCollisionEnter(CCollider* _pOther)
 		dynamic_cast<CMonster*>(_pOther->Get_Host())->Attacked(m_fDmg);
 		m_bDead = true;
 	}
+	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE)
+	{
+		m_bDead = true;
+	}
 	else
 		return;
 }
@@ -104,8 +112,9 @@ void CBullet::OnCollisionEnter(CCollider* _pOther)
 void CBullet::OnCollisionStay(CCollider* _pOther)
 {
 	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE)
-		return;
-
+	{
+		m_bDead = true;
+	}
 	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYER)
 	{
 		dynamic_cast<CPlayer*>(_pOther->Get_Host())->Attacked(m_fDmg);
@@ -123,22 +132,22 @@ void CBullet::OnCollisionStay(CCollider* _pOther)
 
 void CBullet::OnCollisionExit(CCollider* _pOther)
 {
-	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE)
-		return;
-
-	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYER)
-	{
-		dynamic_cast<CPlayer*>(_pOther->Get_Host())->Attacked(m_fDmg);
-		//TODO 플레이어 총알 오브젝트 풀링 할거면 여기서
-	}
-	// && m_eHitType == _pOther->Get_Host()->Get_HitType()f
-	else if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::MONSTER)
-	{
-		//TODO 몬스터 총알 오브젝트 풀링 할거면 여기서
-		dynamic_cast<CMonster*>(_pOther->Get_Host())->Attacked(m_fDmg);
-	}
-	else
-		return;
+// 	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE)
+// 		return;
+// 
+// 	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYER)
+// 	{
+// 		dynamic_cast<CPlayer*>(_pOther->Get_Host())->Attacked(m_fDmg);
+// 		//TODO 플레이어 총알 오브젝트 풀링 할거면 여기서
+// 	}
+// 	// && m_eHitType == _pOther->Get_Host()->Get_HitType()f
+// 	else if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::MONSTER)
+// 	{
+// 		//TODO 몬스터 총알 오브젝트 풀링 할거면 여기서
+// 		dynamic_cast<CMonster*>(_pOther->Get_Host())->Attacked(m_fDmg);
+// 	}
+// 	else
+// 		return;
 }
 
 void CBullet::Fire(_vec3 vShotPos, _vec3 vShotDir)

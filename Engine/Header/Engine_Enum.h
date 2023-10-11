@@ -68,7 +68,7 @@ namespace Engine
 
 	//TODO - 승용 UI 타입별 태그 정리 끝
 
-
+	enum class COLORTAG{RED,ORANGE,YELLOW,GREEN,DEEPGREEN,BLUE,PURPLE,PINK};
 
 	//enum class TIMERTAG {,TIMERTAG_END};
 
