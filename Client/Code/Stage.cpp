@@ -13,6 +13,8 @@
 #include "MonsterBombEffect.h"
 #include "FootRay.h"
 
+#include "LoadingStage1.h"
+
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
 {
@@ -224,11 +226,12 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 
 	//¸ó½ºÅÍ
 
-	{
-		pGameObject = CStage1Boss::Create(m_pGraphicDev);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::BOSS, pGameObject), E_FAIL);
-	}
+	//{
+	//	pGameObject = CStage1Boss::Create(m_pGraphicDev);
+	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::BOSS, pGameObject), E_FAIL);
+	//}
+
 	for(int i = 0; i<5; ++i)
 	{
 	pGameObject = CBigDaddyMonster::Create(m_pGraphicDev);
@@ -568,6 +571,7 @@ void CStage::Admin_KeyInput()
 	if (Engine::Get_DIKeyState(DIK_F9) & 0x80 && m_bAdminSwitch)
 	{
 		CEventMgr::GetInstance()->OnLevelUp(m_pGraphicDev, SCENETAG::STAGE);
+		CEventMgr::GetInstance()->OnPause(true);
 		m_bAdminSwitch = false;
 	}
 
@@ -577,16 +581,18 @@ void CStage::Admin_KeyInput()
 		m_bAdminSwitch = false;
 	}
 
-	if (Engine::Get_DIKeyState(DIK_F9) & 0x80)
+	if (Engine::Get_DIKeyState(DIK_F10) & 0x80 && m_bAdminSwitch)
 	{
-		CEventMgr::GetInstance()->OnPause(true);
+		CLoadingStage1* pScene = nullptr;
+		pScene = CLoadingStage1::Create(m_pGraphicDev, SCENETAG::BOSS_STAGE);
 
-	}
+		CUIMgr::GetInstance()->DestroyInstance();
 
-	if (Engine::Get_DIKeyState(DIK_F10) & 0x80)
-	{
-		CEventMgr::GetInstance()->OnPause(false);
+		Management()->Set_SYSceneChange(true);
+		Management()->Set_Scene(pScene);
 
+
+		m_bAdminSwitch = false;
 	}
 }
 

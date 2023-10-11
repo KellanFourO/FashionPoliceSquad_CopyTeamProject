@@ -1,9 +1,10 @@
 #include "stdafx.h"
-#include "..\Header\Loading.h"
+#include "Loading.h"
 
 #include "Export_Utility.h"
 #include "ImGuiManager.h"
 #include "UIMgr.h"
+#include "Player.h"
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
@@ -73,8 +74,8 @@ _uint CLoading::Loading_For_Stage()
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_suit_2", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/dull_suit4.png")), E_FAIL);
 		Set_Value(3);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_KickBoardMonster", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/neonshirt-v1_Resize.png")), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Stage1Boss", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/boss 1 - hugo bauss sprite1.png")), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Stage1Bullet", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/gold-bar-projectile_0.png")), E_FAIL);
+		//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Stage1Boss", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/boss 1 - hugo bauss sprite1.png")), E_FAIL);
+		//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Stage1Bullet", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/gold-bar-projectile_0.png")), E_FAIL);
 		Set_Value(3);
 	}
 	// 몬스터 관련 Ready_Proto
@@ -126,6 +127,10 @@ _uint CLoading::Loading_For_Stage()
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CardFrontTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/card_frame01.png")), E_FAIL);
 		Set_Value(3);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CardBackTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/Card_Back.png")), E_FAIL);
+
+		CPlayer* pPlayer = CPlayer::Create(m_pGraphicDev);
+		Management()->Set_Player(pPlayer);
+
 		Set_Value(4);
 
 	}
@@ -164,6 +169,25 @@ _uint CLoading::Loading_For_MapTool()
 	return 0;
 }
 
+_uint CLoading::Loading_For_Lobby()
+{
+	m_bFinish = true;
+	return 0;
+}
+
+_uint CLoading::Loading_For_BossStage()
+{
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Stage1Boss", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/boss 1 - hugo bauss sprite1.png")), E_FAIL);
+	Set_Value(25);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Stage1Bullet", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/gold-bar-projectile_0.png")), E_FAIL);
+	Set_Value(25);
+	CUIMgr::GetInstance()->Ready_UIMgr();
+	Set_Value(50);
+
+	m_bFinish = true;
+	return 0;
+}
+
 size_t CLoading::Thread_Main(void* pArg)
 {
 	CLoading* pLoading = reinterpret_cast<CLoading*>(pArg);
@@ -182,7 +206,12 @@ size_t CLoading::Thread_Main(void* pArg)
 		iFlag = pLoading->Loading_For_MapTool();
 		break;
 
+	case LOADING_LOBBY:
+		iFlag = pLoading->Loading_For_Lobby();
+		break;
+
 	case LOADING_BOSS:
+		iFlag = pLoading->Loading_For_BossStage();
 		break;
 	}
 

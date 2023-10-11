@@ -5,8 +5,6 @@
 #include "PaintShotGun.h"
 #include "TailorAssertRifle.h"
 
-#include "Inventory.h"
-
 class CPlayerState;
 
 BEGIN(Engine)
@@ -52,10 +50,11 @@ public:
 	CPlayerGun*		Get_Gun() { return m_pGun; }
 	_float			Get_XMove() { return m_fXmove;}
 
+	void			SetGun();
+	void			ClearGunList() { m_vecPlayerGun.clear(); }
 
 private:
 	HRESULT			Add_Component();
-	void			SetGun();
 	void			Mouse_Input(const _float& fTimeDelta);
 	void			TestRopeAction(const _float& fTimeDelta);
 

@@ -27,11 +27,18 @@ CComponent* Engine::CManagement::Get_Component(COMPONENTID eID, LAYERTAG eLayerT
 
 HRESULT CManagement::Set_Scene(CScene* pScene)
 {
-	Safe_Release(m_pScene);
+	if (m_bSYSceneChange)
+	{
+		m_pPlayer->AddRef();
+		m_pPlayer->ClearGunList();
+		m_bSYSceneChange = false;
+	}
 
-	Engine::Clear_RenderGroup();
+	Safe_Release(m_pScene);
+	Renderer()->Clear_RenderGroup();
 
 	m_pScene = pScene;
+	m_bStageVisit[(unsigned long long)pScene->Get_SceneTag()] = true;
 
 	return S_OK;
 }

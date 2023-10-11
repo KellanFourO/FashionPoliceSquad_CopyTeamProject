@@ -5,7 +5,7 @@
 class CLoading : public CBase
 {
 public:
-	enum LOADINGID { LOADING_STAGE, LOADING_MAPTOOL, LOADING_BOSS, LOADING_END};
+	enum LOADINGID { LOADING_STAGE, LOADING_MAPTOOL, LOADING_LOBBY, LOADING_BOSS, LOADING_END };
 
 private:
 	explicit CLoading(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -20,6 +20,8 @@ public:
 	HRESULT				Ready_Loading(LOADINGID eID);
 	_uint				Loading_For_Stage();
 	_uint				Loading_For_MapTool();
+	_uint				Loading_For_Lobby();
+	_uint				Loading_For_BossStage();
 
 	_float				Get_Value() { return m_fLoadingValue; }
 	void				Set_Value() { ++m_fLoadingValue; }
