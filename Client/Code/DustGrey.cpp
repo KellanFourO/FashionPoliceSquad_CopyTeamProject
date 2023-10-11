@@ -18,7 +18,7 @@ HRESULT CDustGrey::Ready_GameObject(_vec3 vOriginPos, _int numParticles)
 
 	//m_pTransformCom->Set_Scale({ 1.f,1.f,1.f });
 	//m_pTransformCom->Translate(_vec3(0.f, 10.f, 0.f));
-	
+
 
 	srand(_ulong(time(NULL)));
 	m_pBoungingBox.m_vMin = _vec3(-7.0f,-7.0f,-7.0f);
@@ -105,7 +105,7 @@ CDustGrey* CDustGrey::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vOriginPos, in
 void CDustGrey::ResetParticle(Attribute* attribute)
 {
 // 	std::default_random_engine generator;
-// 	std::uniform_real_distribution<float> distributionX(m_pBoungingBox.m_vMin.x, m_pBoungingBox.m_vMax.x); // X ÁÂÇ¥ ¹üÀ§ 
+// 	std::uniform_real_distribution<float> distributionX(m_pBoungingBox.m_vMin.x, m_pBoungingBox.m_vMax.x); // X ÁÂÇ¥ ¹üÀ§
 // 	std::uniform_real_distribution<float> distributionY(m_pBoungingBox.m_vMin.y, m_pBoungingBox.m_vMax.y); // Y ÁÂÇ¥ ¹üÀ§
 // 	std::uniform_real_distribution<float> distributionZ(m_pBoungingBox.m_vMin.z, m_pBoungingBox.m_vMax.z); // Z ÁÂÇ¥ ¹üÀ§
 // 	attribute->isAlive = true;
@@ -152,5 +152,5 @@ void CDustGrey::billboard()
 
 void CDustGrey::Free()
 {
-
+	__super::Free();
 }

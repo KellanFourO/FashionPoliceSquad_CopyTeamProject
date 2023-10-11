@@ -21,7 +21,6 @@ CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 
 CStage::~CStage()
 {
-	Free();
 }
 
 HRESULT CStage::Ready_Scene()
@@ -306,7 +305,7 @@ HRESULT CStage::Ready_Layer_UI(LAYERTAG eLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MISSION, pGameObject), E_FAIL);
 
-	
+
 
 
 
@@ -621,8 +620,6 @@ void CStage::Free()
 	}
 	m_VecOBJData.clear();
 
-
-	__super::Free();
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	m_pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, FALSE);

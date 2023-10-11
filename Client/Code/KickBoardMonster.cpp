@@ -244,6 +244,8 @@ CKickBoardMonster* CKickBoardMonster::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CKickBoardMonster::Free()
 {
+	for (auto iter : m_pStateArray)
+		Safe_Delete(iter);
 
     __super::Free();
 }

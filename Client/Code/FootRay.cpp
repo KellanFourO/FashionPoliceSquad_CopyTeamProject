@@ -18,7 +18,7 @@ CFootRay::CFootRay(const CFootRay& rhs)
 
 CFootRay::~CFootRay()
 {
-	Free();
+	//Free();
 }
 
 HRESULT CFootRay::Ready_GameObject()
@@ -44,9 +44,9 @@ _int CFootRay::Update_GameObject(const _float& fTimeDelta)
 
 void CFootRay::LateUpdate_GameObject()
 {
-	//나중에 여기에 게임 스탑할떄 여기도 넣어야 함 
+	//나중에 여기에 게임 스탑할떄 여기도 넣어야 함
 	__super::LateUpdate_GameObject();
-	//점프 -> 여기다가 구현해서 하믄됨 UseGravity가 중력임 강체 컴포넌트 쓰는 애들은 이거 적용할수 있게 ㄱㄱ 
+	//점프 -> 여기다가 구현해서 하믄됨 UseGravity가 중력임 강체 컴포넌트 쓰는 애들은 이거 적용할수 있게 ㄱㄱ
 // 	if (!m_pColTarget)
 // 	{
 // 		if (!static_cast<CPlayer*>(m_pHost)->IsJump())

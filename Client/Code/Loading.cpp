@@ -14,7 +14,6 @@ CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 
 CLoading::~CLoading()
 {
-	//Free();
 }
 
 HRESULT CLoading::Ready_Loading(LOADINGID eID)

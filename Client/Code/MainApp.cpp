@@ -5,6 +5,7 @@
 #include "ImGuiManager.h"
 #include "UIMgr.h"
 #include "FontMgr.h"
+#include "EventMgr.h"
 
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr), m_pGraphicDev(nullptr), m_pManagementClass(nullptr)
@@ -23,7 +24,7 @@ HRESULT CMainApp::Ready_MainApp()
 	FAILED_CHECK_RETURN(Ready_Scene(m_pGraphicDev, &m_pManagementClass), E_FAIL);
 
 	//CImGuiManager::GetInstance()->SetUp_ImGui(m_pGraphicDev);//
-	
+
 	m_pGraphicDev->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTEXF_LINEAR);
 	m_pGraphicDev->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTEXF_POINT);
 
@@ -138,7 +139,7 @@ CMainApp* CMainApp::Create()
 void CMainApp::Free()
 {
 	CUIMgr::GetInstance()->DestroyInstance();
-	CFontMgr::GetInstance()->DestroyInstance();
+	CEventMgr::GetInstance()->DestroyInstance();
 	CImGuiManager::GetInstance()->DestroyInstance();
 
 	Safe_Release(m_pGraphicDev);

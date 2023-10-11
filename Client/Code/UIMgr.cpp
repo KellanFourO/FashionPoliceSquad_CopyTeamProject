@@ -178,6 +178,7 @@ void CUIMgr::Free()
 
 	for (auto iter : m_mapLoadUI)
 	{
+
 		delete[] iter.first;
 	}
 
