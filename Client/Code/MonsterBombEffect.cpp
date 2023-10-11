@@ -24,41 +24,40 @@ HRESULT Engine::CMonsterBombEffect::Ready_GameObject()
 	m_eObjectTag = OBJECTTAG::EFFECT;
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
+	
 	m_pTransformCom->Set_Scale(_vec3{ 6.f, 6.f, 6.f });
-	//m_pTransformCom->Set_Pos(_vec3(_float(rand() % 20), 10.f, _float(rand() % 20)));
-	m_pTransformCom->Set_Pos(_vec3{ 40.f,5.f,20.f });
+
+
+
 	return S_OK;
 }
 
 Engine::_int Engine::CMonsterBombEffect::Update_GameObject(const _float& fTimeDelta)
 {
-	m_fFrame += 87.f * fTimeDelta;
+	m_pPlayerTransform = dynamic_cast<CTransform*>(Management()->Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
 
-	if (87.f < m_fFrame)
+	_vec3 vPlayerPos, vMyPos, vLook;
+
+	m_pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);
+	m_pTransformCom->Get_Info(INFO_POS, &vMyPos);
+	vLook = vPlayerPos - vMyPos;
+	D3DXVec3Normalize(&vLook, &vLook);
+
+	_float fAngle = atan2f(vLook.x, vLook.z);
+	m_pTransformCom->Set_Rotate(ROT_Y, fAngle + D3DX_PI);
+	
+
+	m_fFrame +=15.f* fTimeDelta;
+
+	if (15.f < m_fFrame)
+	{
 		m_fFrame = 0.f;
+		++m_fLoop;
+	}
+	if(m_fLoop>2.f)
+		return OBJ_DEAD;
 
 	_int iExit = __super::Update_GameObject(fTimeDelta);
-
-	_matrix		matWorld, matView, matBill;
-
-	matWorld = *m_pTransformCom->Get_WorldMatrix();
-
-	m_pGraphicDev->GetTransform(D3DTS_VIEW, &matView);
-	D3DXMatrixIdentity(&matBill);
-
-	matBill._11 = matView._11;
-	matBill._13 = matView._13;
-	matBill._31 = matView._31;
-	matBill._33 = matView._33;
-
-	D3DXMatrixInverse(&matBill, 0, &matBill);
-
-	// 주의 사항
-
-	// 빌(자전의 역행렬) * 월드(스 * 자 * 이)
-
-	m_pTransformCom->Set_WorldMatrix(&(matBill * matWorld));
-
 
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
@@ -67,10 +66,7 @@ Engine::_int Engine::CMonsterBombEffect::Update_GameObject(const _float& fTimeDe
 
 void Engine::CMonsterBombEffect::LateUpdate_GameObject()
 {
-	_vec3	vPos;
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-
-	__super::Compute_ViewZ(&vPos);
+	
 }
 
 CMonsterBombEffect* CMonsterBombEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -81,7 +77,7 @@ CMonsterBombEffect* CMonsterBombEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	{
 		Safe_Release(pInstance);
 
-		MSG_BOX("Effect Create Failed");
+		MSG_BOX("MonsterBombEffect Create Failed");
 		return nullptr;
 	}
 
@@ -120,7 +116,7 @@ HRESULT Engine::CMonsterBombEffect::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].emplace(COMPONENTTAG::TRANSFORM, pComponent);
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_EffectTexture"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_MonsterBombEffectTexture"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
 

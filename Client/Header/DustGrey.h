@@ -20,9 +20,8 @@ public:
 	_int							Update_GameObject(const _float& fTimeDelta);
 	void							LateUpdate_GameObject(void);
 	void							Render_GameObject();
-
+public:
 	static CDustGrey*				Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vOriginPos, int numParticles);
-
 private:
 	virtual void					ResetParticle(Attribute* attribute);
 	HRESULT							Add_Component();

@@ -112,8 +112,9 @@ void CBullet::OnCollisionEnter(CCollider* _pOther)
 void CBullet::OnCollisionStay(CCollider* _pOther)
 {
 	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE)
-		return;
-
+	{
+		m_bDead = true;
+	}
 	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYER)
 	{
 		dynamic_cast<CPlayer*>(_pOther->Get_Host())->Attacked(m_fDmg);
@@ -131,22 +132,22 @@ void CBullet::OnCollisionStay(CCollider* _pOther)
 
 void CBullet::OnCollisionExit(CCollider* _pOther)
 {
-	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE)
-		return;
-
-	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYER)
-	{
-		dynamic_cast<CPlayer*>(_pOther->Get_Host())->Attacked(m_fDmg);
-		//TODO 플레이어 총알 오브젝트 풀링 할거면 여기서
-	}
-	// && m_eHitType == _pOther->Get_Host()->Get_HitType()f
-	else if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::MONSTER)
-	{
-		//TODO 몬스터 총알 오브젝트 풀링 할거면 여기서
-		dynamic_cast<CMonster*>(_pOther->Get_Host())->Attacked(m_fDmg);
-	}
-	else
-		return;
+// 	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE)
+// 		return;
+// 
+// 	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYER)
+// 	{
+// 		dynamic_cast<CPlayer*>(_pOther->Get_Host())->Attacked(m_fDmg);
+// 		//TODO 플레이어 총알 오브젝트 풀링 할거면 여기서
+// 	}
+// 	// && m_eHitType == _pOther->Get_Host()->Get_HitType()f
+// 	else if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::MONSTER)
+// 	{
+// 		//TODO 몬스터 총알 오브젝트 풀링 할거면 여기서
+// 		dynamic_cast<CMonster*>(_pOther->Get_Host())->Attacked(m_fDmg);
+// 	}
+// 	else
+// 		return;
 }
 
 void CBullet::Fire(_vec3 vShotPos, _vec3 vShotDir)

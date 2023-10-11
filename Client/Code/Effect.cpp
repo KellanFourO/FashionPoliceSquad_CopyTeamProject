@@ -90,17 +90,17 @@ CEffect* CEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CEffect::Render_GameObject()
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-	//m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
-
-	m_pTextureCom->Render_Textrue(_ulong(m_fFrame));
-	m_pEffectBufferCom->Render_Buffer();
-
-	//m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
-	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+	//m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
+	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+	//m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	////m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
+	//
+	//m_pTextureCom->Render_Textrue(_ulong(m_fFrame));
+	//m_pEffectBufferCom->Render_Buffer();
+	//
+	////m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
+	//m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+	//m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
 void Engine::CEffect::Free()
@@ -110,27 +110,27 @@ void Engine::CEffect::Free()
 
 HRESULT Engine::CEffect::Add_Component()
 {
-	CComponent* pComponent = nullptr;
-
-	pComponent = m_pEffectBufferCom = dynamic_cast<CEffectTex*>(Engine::Clone_Proto(L"Proto_EffectTex"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::BUFFER, pComponent);
-
-	pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_Transform"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_DYNAMIC].emplace(COMPONENTTAG::TRANSFORM, pComponent);
-
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_EffectTexture"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
-
-	/*pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(Engine::Clone_Proto(L"Proto_Calculator"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Com_Calculator", pComponent });*/
-
-	for (_uint i = 0; i < ID_END; ++i)
-		for (auto& iter : m_mapComponent[i])
-			iter.second->Init_Property(this);
+	//CComponent* pComponent = nullptr;
+	//
+	//pComponent = m_pEffectBufferCom = dynamic_cast<CEffectTex*>(Engine::Clone_Proto(L"Proto_EffectTex"));
+	//NULL_CHECK_RETURN(pComponent, E_FAIL);
+	//m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::BUFFER, pComponent);
+	//
+	//pComponent = m_pTransformCom = dynamic_cast<CTransform*>(Engine::Clone_Proto(L"Proto_Transform"));
+	//NULL_CHECK_RETURN(pComponent, E_FAIL);
+	//m_mapComponent[ID_DYNAMIC].emplace(COMPONENTTAG::TRANSFORM, pComponent);
+	//
+	////pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_EffectTexture"));
+	////NULL_CHECK_RETURN(pComponent, E_FAIL);
+	////m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
+	//
+	///*pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(Engine::Clone_Proto(L"Proto_Calculator"));
+	//NULL_CHECK_RETURN(pComponent, E_FAIL);
+	//m_mapComponent[ID_STATIC].insert({ L"Com_Calculator", pComponent });*/
+	//
+	//for (_uint i = 0; i < ID_END; ++i)
+	//	for (auto& iter : m_mapComponent[i])
+	//		iter.second->Init_Property(this);
 
 	return S_OK;
 }

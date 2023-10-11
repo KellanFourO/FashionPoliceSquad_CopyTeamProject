@@ -27,12 +27,15 @@ private:
 	HRESULT					Add_Component();
 
 private:
-	CEffectTex* m_pEffectBufferCom = nullptr;
-	//CTransform* m_pTransformCom = nullptr;
-	CTexture* m_pTextureCom = nullptr;
-	CCalculator* m_pCalculatorCom = nullptr;
-
+	_bool				m_bLateInit = true;
+	CEffectTex*			m_pEffectBufferCom = nullptr;
+	CTransform*			m_pPlayerTransform = nullptr;
+	CTexture*			m_pTextureCom = nullptr;
+	CCalculator*		m_pCalculatorCom = nullptr;
+	_float				m_fLoop = 0.f;
 	_float				m_fFrame = 0.f;
+
+	_float				m_fEffectDieTime = 0.f;
 
 public:
 	static CMonsterBombEffect* Create(LPDIRECT3DDEVICE9 pGraphicDev);

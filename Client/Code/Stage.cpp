@@ -10,7 +10,7 @@
 #include "DustGrey.h"
 #include <sstream>
 #include <utility>
-
+#include "MonsterBombEffect.h"
 #include "FootRay.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -248,11 +248,11 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 //이펙트 파티클
 	{
 		//이펙트
-		pGameObject = CEffect::Create(m_pGraphicDev);
+		pGameObject = CMonsterBombEffect::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::EFFECT, pGameObject), E_FAIL);
 		//파티클
-		pGameObject = CDustGrey::Create(m_pGraphicDev, _vec3(50.f, 10.f, 25.f), 128);
+		pGameObject = CDustGrey::Create(m_pGraphicDev, _vec3(50.f, 10.f, 25.f), 256);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::PARTICLE, pGameObject), E_FAIL);
 	}
@@ -305,7 +305,7 @@ HRESULT CStage::Ready_Layer_UI(LAYERTAG eLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MISSION, pGameObject), E_FAIL);
 
-
+	
 
 
 

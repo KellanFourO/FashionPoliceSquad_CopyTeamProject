@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "DustGrey.h"
+#include <random>
 
 
 CDustGrey::CDustGrey(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -17,10 +18,11 @@ HRESULT CDustGrey::Ready_GameObject(_vec3 vOriginPos, _int numParticles)
 
 	//m_pTransformCom->Set_Scale({ 1.f,1.f,1.f });
 	//m_pTransformCom->Translate(_vec3(0.f, 10.f, 0.f));
+	
 
 	srand(_ulong(time(NULL)));
-	m_pBoungingBox.m_vMin = _vec3(-5.0f,-5.0f,-5.0f);
-	m_pBoungingBox.m_vMax = _vec3(5.0f, 5.0f, 5.0f);
+	m_pBoungingBox.m_vMin = _vec3(-7.0f,-7.0f,-7.0f);
+	m_pBoungingBox.m_vMax = _vec3(7.0f, 7.0f, 7.0f);
 
 	m_vOrigin = vOriginPos;			// 시스템 내에서 파티클이 시작되는 곳.
 	m_fSize = 1.f;					// 시스템 내 모든 파티클의 크기
@@ -40,29 +42,30 @@ HRESULT CDustGrey::Ready_GameObject(_vec3 vOriginPos, _int numParticles)
 
 _int CDustGrey::Update_GameObject(const _float& fTimeDelta)
 {
-	m_fTime += 1.f * fTimeDelta;
-	CPSystem::Update_GameObject(fTimeDelta);
-// 	for (auto& iter : m_ParticlesList)
-// 	{
-// 		if (iter.isAlive)
-// 		{
-// 			iter.position += iter.velocity * fTimeDelta;
-// 
-// 			iter.age += fTimeDelta;
-// 
-// 			if (iter.age > iter.lifeTime)
-// 				iter.isAlive = false;
-// 
-// 			if (m_pBoungingBox.m_vMax.x+ m_vOrigin.x < iter.position.x || m_pBoungingBox.m_vMin.x + m_vOrigin.x> iter.position.x ||
-// 				m_pBoungingBox.m_vMax.y+ m_vOrigin.y < iter.position.y || m_pBoungingBox.m_vMin.y + m_vOrigin.y> iter.position.y ||
-// 				m_pBoungingBox.m_vMax.z+ m_vOrigin.z < iter.position.z || m_pBoungingBox.m_vMin.z + m_vOrigin.z> iter.position.z)
-// 			{
-// 				// 재활용
-// 				ResetParticle(&iter);
-// 			}
-// 			
-// 		}
-// 	}
+	//m_fTime += 1.f * fTimeDelta;
+	//CPSystem::Update_GameObject(fTimeDelta);
+	for (auto& iter : m_ParticlesList)
+	{
+		if (iter.isAlive)
+		{
+			iter.position += iter.velocity * fTimeDelta;
+
+			iter.age += fTimeDelta;
+
+			if (iter.age > iter.lifeTime)
+				iter.isAlive = false;
+
+			// 경계 범위를 벗어났는지 여부 확인
+			if (m_pBoungingBox.m_vMax.x + m_vOrigin.x < iter.position.x || m_pBoungingBox.m_vMin.x + m_vOrigin.x> iter.position.x ||
+				m_pBoungingBox.m_vMax.y + m_vOrigin.y < iter.position.y || m_pBoungingBox.m_vMin.y + m_vOrigin.y> iter.position.y ||
+				m_pBoungingBox.m_vMax.z + m_vOrigin.z < iter.position.z || m_pBoungingBox.m_vMin.z + m_vOrigin.z> iter.position.z)
+			{
+				// 재활용
+				ResetParticle(&iter);
+			}
+
+		}
+	}
 
 	billboard();
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
@@ -97,8 +100,19 @@ CDustGrey* CDustGrey::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vOriginPos, in
 	return pInstance;
 }
 
+
+
 void CDustGrey::ResetParticle(Attribute* attribute)
 {
+// 	std::default_random_engine generator;
+// 	std::uniform_real_distribution<float> distributionX(m_pBoungingBox.m_vMin.x, m_pBoungingBox.m_vMax.x); // X 좌표 범위 
+// 	std::uniform_real_distribution<float> distributionY(m_pBoungingBox.m_vMin.y, m_pBoungingBox.m_vMax.y); // Y 좌표 범위
+// 	std::uniform_real_distribution<float> distributionZ(m_pBoungingBox.m_vMin.z, m_pBoungingBox.m_vMax.z); // Z 좌표 범위
+// 	attribute->isAlive = true;
+// 	attribute->position.x = distributionX(generator);
+// 	attribute->position.y = distributionY(generator);
+// 	attribute->position.z = distributionZ(generator);
+
 	attribute->isAlive = true;
 	attribute->position = m_vOrigin;
 
@@ -110,7 +124,7 @@ void CDustGrey::ResetParticle(Attribute* attribute)
 	//구체를 만들기 위한 정규화
 	D3DXVec3Normalize(&attribute->velocity, &attribute->velocity);
 
-	attribute->velocity *= 2.f;
+	attribute->velocity.y *= 2.f;
 
 	attribute->color = D3DXCOLOR(158.f, 158.f, 158.f, 1.f);
 	//attribute->color = D3DXCOLOR(GetRandomFloat(0.f, 1.f), GetRandomFloat(0.f, 1.f), GetRandomFloat(0.f, 1.f), 1.f);
