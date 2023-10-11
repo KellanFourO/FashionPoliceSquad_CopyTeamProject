@@ -51,15 +51,21 @@ void CPlayerGun::Fire()
 	{
 		case BULLETTYPE::SHOTGUN_BULLET:
 		{
+			//float fRandomRange = 0.5f;
+			float fRandomRange = 0.005f;//((float)rand() / RAND_MAX)* D3DXToRadian(0.5f);
+			//int iRandom = rand() % 2;
+			//_vec3			vBulletDirMove;
+			//CTransform* pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
+			//NULL_CHECK(pPlayerTransCom); // 플레이어 가져오기
 
-			float fRandomRange = ((float)rand() / RAND_MAX) * D3DXToRadian(0.5f);
-			int iRandom = rand() % 2;
-
+			//pPlayerTransCom->Get_Info(INFO_LOOK, &m_vShotDir);
+			//pPlayerTransCom->Get_Info(INFO_RIGHT, &vBulletDirMove);
+			//D3DXVec3Normalize(&m_vShotDir, &m_vShotDir);
 			for (int i = 0; i < 8; ++i)
 			{
-				CShotGunBullet* pBullet = CShotGunBullet::Create(m_pGraphicDev, m_vShotPos, m_iColorIndex,m_pColorTag);
+				CShotGunBullet* pBullet = CShotGunBullet::Create(m_pGraphicDev, m_vShotPos,m_vShotDir, m_iColorIndex,m_pColorTag);
 				pBullet->Set_ObjectTag(OBJECTTAG::PLAYERBULLET);
-
+				m_pColorTag = (COLORTAG)m_iColorIndex;
 				Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::PLAYERBULLET, pBullet);
 				m_vecShotGunBullet.push_back(pBullet);
 			}
@@ -77,23 +83,37 @@ void CPlayerGun::Fire()
 
 				for (int i = 0; i < m_vecShotGunBullet.size(); ++i)
 				{
-
-					if (iRandom)
-					{
-						m_vShotDir.x += rand() % 5 * fRandomRange;
-
-						m_vShotDir.y += rand() % 5 * fRandomRange;
-
-						m_vShotDir.z += rand() % 5 * fRandomRange;
+					if (rand() % 2 == 1) {
+						fRandomRange *= -1;
 					}
-					else
-					{
-						m_vShotDir.x -= rand() % 5 * fRandomRange;
-
-						m_vShotDir.y -= rand() % 5 * fRandomRange;
-
-						m_vShotDir.z -= rand() % 5 * fRandomRange;
+					m_vShotDir.x += (rand() % 8) * fRandomRange;
+					if (rand() % 2 == 1) {
+						fRandomRange *= -1;
 					}
+					m_vShotDir.y += (rand() % 8) * fRandomRange;
+					if (rand() % 2 == 1) {
+						fRandomRange *= -1;
+					}
+					m_vShotDir.z += (rand() % 8) * fRandomRange;
+					//D3DXVec3Normalize(&vBulletDirMove, &vBulletDirMove);
+					//m_vShotDir += _vec3(0.f, 0.f, 0.06f); //- vBulletDirMove / 40;
+					
+// 					if (iRandom)
+// 					{
+// 						m_vShotDir.x += rand() % 5 * fRandomRange;
+// 
+// 						m_vShotDir.y += rand() % 5 * fRandomRange;
+// 
+// 						m_vShotDir.z += rand() % 5 * fRandomRange;
+// 					}
+// 					else
+// 					{
+// 						m_vShotDir.x -= rand() % 5 * fRandomRange;
+// 
+// 						m_vShotDir.y -= rand() % 5 * fRandomRange;
+// 
+// 						m_vShotDir.z -= rand() % 5 * fRandomRange;
+// 					}
 
 					m_vecShotGunBullet.back()->Fire(m_vShotPos, m_vShotDir);
 					m_vecShotGunBullet.pop_back();
@@ -154,7 +174,7 @@ void CPlayerGun::Reload(_int _ColorIndex,_int iRandomIndex)
 		m_vecShotGunBullet.clear();
 			for (int i = 0; i < m_tGunInfo.m_iReloadBullet; ++i)
 			{
-				CShotGunBullet* pBullet = CShotGunBullet::Create(m_pGraphicDev, _vec3(0,0,0), _ColorIndex,m_pColorTag);
+				CShotGunBullet* pBullet = CShotGunBullet::Create(m_pGraphicDev, _vec3(0,0,0),m_vShotDir, _ColorIndex,m_pColorTag);
 				pBullet->Set_ObjectTag(OBJECTTAG::PLAYERBULLET);
 				Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::PLAYERBULLET,pBullet);
 				m_vecShotGunBullet.push_back(pBullet);

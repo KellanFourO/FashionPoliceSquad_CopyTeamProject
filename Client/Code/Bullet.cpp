@@ -19,6 +19,9 @@ CBullet::~CBullet()
 
 HRESULT CBullet::Ready_GameObject()
 {
+	_vec3 vPos = { 9999.f,9999.f,9999.f };
+
+	m_pTransformCom->Set_Pos(vPos);
 
 	return S_OK;
 }
@@ -98,7 +101,7 @@ void CBullet::OnCollisionEnter(CCollider* _pOther)
 		dynamic_cast<CMonster*>(_pOther->Get_Host())->Attacked(m_fDmg);
 		m_bDead = true;
 	}
-	else if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE)
+	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE)
 	{
 		m_bDead = true;
 	}

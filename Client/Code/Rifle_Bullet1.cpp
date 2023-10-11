@@ -33,7 +33,9 @@ HRESULT CRifle_Bullet1::Ready_GameObject(_vec3 _StartPos, _int iColorIndex)
 
 
 	_vec3 vScale = { 0.7f, 0.7f, 0.7f};
+	_vec3 vPos = { 9999.f,9999.f,9999.f };
 
+	m_pTransformCom->Set_Pos(vPos);
 	m_pTransformCom->Set_Scale(vScale);
 	m_pTransformCom->Set_Host(this);
 

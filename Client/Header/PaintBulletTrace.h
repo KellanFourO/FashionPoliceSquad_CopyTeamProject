@@ -23,18 +23,22 @@ public:
 	virtual HRESULT			Ready_GameObject() override;
 	virtual _int			Update_GameObject(const _float& fTimeDelta) override;
 	virtual void			LateUpdate_GameObject() override;
-
+public:
+	void					Set_ColorTag(COLORTAG pColorTag) { m_pColorTag = pColorTag; }
+	void					Set_ShotDir(_vec3 ShotDir) { m_vShotDir = ShotDir; }
 private:
 	HRESULT					Add_Component();
 
 private:
 	CEffectTex*			m_pEffectBufferCom = nullptr;
-	//CTransform* m_pTransformCom = nullptr;
 	CTexture*			m_pTextureCom = nullptr;
 	CCalculator*		m_pCalculatorCom = nullptr;
+	CTransform*			m_pPlayerTransform = nullptr;
 	_float				m_fFrame= 0.f;
 	_float				m_PaintBulletTraceDeadTime = 0.f;
 	_bool				m_bDead = false;
+	COLORTAG			m_pColorTag = COLORTAG::RED;
+	_vec3				m_vShotDir;
 public:
 	static CPaintBulletTrace* Create(LPDIRECT3DDEVICE9 pGraphicDev,COLORTAG pColorTag);
 

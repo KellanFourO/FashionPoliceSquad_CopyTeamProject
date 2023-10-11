@@ -49,7 +49,7 @@ private:
 
 	COLORTAG		m_pColorTag;
 	_int			m_iColorIndex;
-
+	_vec3			m_vShotDir;
 	_vec3			m_vStartPos;
 
 	D3DXCOLOR		m_FilterColor; // 필터 색상
@@ -59,7 +59,7 @@ private:
 
 
 public:
-	static CShotGunBullet* Create(LPDIRECT3DDEVICE9 pGraphicDev,_vec3 _StartPos, _int iColorIndex,COLORTAG pColorTag);
+	static CShotGunBullet* Create(LPDIRECT3DDEVICE9 pGraphicDev,_vec3 _StartPos,_vec3 _vShotDir, _int iColorIndex,COLORTAG pColorTag);
 
 private:
 	virtual void Free()	override;

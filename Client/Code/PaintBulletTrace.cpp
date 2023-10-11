@@ -26,9 +26,10 @@ HRESULT Engine::CPaintBulletTrace::Ready_GameObject()
 
 	m_pTransformCom->Set_Scale(_vec3{ 1.f, 1.f, 1.f });
 	//m_pTransformCom->Set_Pos(_vec3(_float(rand() % 20), 10.f, _float(rand() % 20)));
-	_vec3 vPos;
-	m_pTransformCom->Get_Info(INFO_POS,&vPos);
-
+// 	_vec3 vPos = { 9999.f,9999.f,9999.f };
+// 
+// 	m_pTransformCom->Set_Pos(vPos);
+	m_pPlayerTransform = dynamic_cast<CTransform*>(Management()->Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
 	return S_OK;
 }
 
@@ -37,6 +38,19 @@ Engine::_int Engine::CPaintBulletTrace::Update_GameObject(const _float& fTimeDel
 
 	m_PaintBulletTraceDeadTime += fTimeDelta;
 
+	m_fFrame = ((_float)(m_pColorTag)-1.f); // Color 받아오기 
+
+	_vec3 vPlayerPos, vMyPos, vLook;
+
+	m_pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);
+	m_pTransformCom->Get_Info(INFO_POS, &vMyPos);
+	vLook = vPlayerPos - vMyPos;
+	D3DXVec3Normalize(&vLook, &vLook);
+
+
+
+	_float fAngle = atan2f(vLook.x, vLook.z);
+	m_pTransformCom->Set_Rotate(ROT_Y, fAngle + D3DX_PI);
 // 	m_fFrame += 87.f * fTimeDelta;
 // 
 // 	if (87.f < m_fFrame)
@@ -134,17 +148,10 @@ HRESULT Engine::CPaintBulletTrace::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].emplace(COMPONENTTAG::TRANSFORM, pComponent);
 
-// 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_EffectTexture"));
-// 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-// 	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
-
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_PaintBulletTrace"));
  	NULL_CHECK_RETURN(pComponent, E_FAIL);
  	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
 
-	/*pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(Engine::Clone_Proto(L"Proto_Calculator"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].insert({ L"Com_Calculator", pComponent });*/
 
 	for (_uint i = 0; i < ID_END; ++i)
 		for (auto& iter : m_mapComponent[i])

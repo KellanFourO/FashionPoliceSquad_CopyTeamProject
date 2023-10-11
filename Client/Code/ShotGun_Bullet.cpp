@@ -25,13 +25,13 @@ HRESULT CShotGunBullet::Ready_GameObject(_vec3 _StartPos, _int iColorIndex,COLOR
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	Set_ObjectTag(OBJECTTAG::PLAYERBULLET);
 	m_eBulletType = BULLETTYPE::SHOTGUN_BULLET;
-	m_fSpeed = 100.f;
+	m_fSpeed = 300.f;
 	m_fLiveTime = 0.f;
 	m_fDmg = 10.f;
 
 
 	m_pBufferCom->SetCount(8,1);
-	Set_ColorTag(COLORTAG::RED);
+	//Set_ColorTag(COLORTAG::RED);
 	m_pTransformCom->Set_Host(this);
 	m_pCollider->Set_Host(this);
 	m_pCollider->Set_Transform(m_pTransformCom);
@@ -39,6 +39,10 @@ HRESULT CShotGunBullet::Ready_GameObject(_vec3 _StartPos, _int iColorIndex,COLOR
 
 
 	_vec3	vBulletScale = { 0.3f,0.3f,0.3f };
+	_vec3	vPos = { 9999.f,9999.f,9999.f };
+
+	m_pTransformCom->Set_Pos(vPos);
+
 	m_pTransformCom->Set_Scale(vBulletScale);
 	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
 
@@ -58,8 +62,9 @@ Engine::_int CShotGunBullet::Update_GameObject(const _float& fTimeDelta)
 			CPaintBulletTrace* pTrace = CPaintBulletTrace::Create(m_pGraphicDev, m_pColorTag);
 			pTrace->Set_ObjectTag(OBJECTTAG::EFFECT);
 			Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::EFFECT,pTrace);
-
-
+			pTrace->Get_Transform()->Set_Pos(m_pTransformCom->m_vInfo[INFO_POS]);
+			pTrace->Set_ColorTag(m_pColorTag);
+			pTrace->Set_ShotDir(m_vShotDir);
 			return OBJ_DEAD;
 		}
 	}
@@ -116,10 +121,6 @@ HRESULT CShotGunBullet::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
 
-// 	pComponent = m_pPaintBulletTrace = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_PaintBallTrace"));
-// 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-// 	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
-
 	pComponent = m_pCollider = dynamic_cast<CCollider*>(Engine::Clone_Proto(L"Proto_Collider"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].emplace(COMPONENTTAG::COLLIDER, pComponent);
@@ -131,7 +132,7 @@ HRESULT CShotGunBullet::Add_Component()
 }
 
 
-CShotGunBullet* CShotGunBullet::Create(LPDIRECT3DDEVICE9 pGraphicDev,_vec3 _StartPos, _int iColorIndex,COLORTAG pColorTag)
+CShotGunBullet* CShotGunBullet::Create(LPDIRECT3DDEVICE9 pGraphicDev,_vec3 _StartPos, _vec3 _vShotDir ,_int iColorIndex,COLORTAG pColorTag)
 {
 	CShotGunBullet* pInstance = new CShotGunBullet(pGraphicDev);
 

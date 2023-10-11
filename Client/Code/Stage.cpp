@@ -571,8 +571,8 @@ void CStage::Free()
 	}
 	m_VecCubeData.clear();
 
-	__super::Free();
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	m_pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, FALSE);
+	__super::Free();
 }
