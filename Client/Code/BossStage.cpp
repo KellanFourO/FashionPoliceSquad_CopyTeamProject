@@ -494,6 +494,19 @@ void CBossStage::Free()
 	}
 	m_VecCubeData.clear();
 
+	for (int i = 0; i < m_VecOBJData.size(); ++i)
+	{
+		Safe_Delete(m_VecOBJData[i]);
+	}
+	m_VecOBJData.clear();
+
+	//for (int i = 0; i < m_VecCreatePoint.size(); ++i)
+	//{
+	//	Safe_Delete(m_VecCreatePoint[i]);
+	//}
+	//m_VecCreatePoint.clear();
+
+
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	m_pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, FALSE);

@@ -26,7 +26,7 @@ HRESULT Engine::CHPBarValue::Ready_GameObject()
 	D3DXMatrixOrthoLH(&m_matProj, WINCX, WINCY, 0.0f, 100.0f);
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_vPos = { 210.f, 580.f, 0.1f };
+	m_vPos = { 220.f, 580.f, 0.1f };
 	m_vScale = { 59.f, 4.f, 0.f };
 
 	m_pTransformCom->Set_Scale(m_vScale);

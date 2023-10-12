@@ -678,6 +678,7 @@ void CStage::Free()
 	{
 		Safe_Delete(m_VecCreatePoint[i]);
 	}
+	m_VecCreatePoint.clear();
 
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
