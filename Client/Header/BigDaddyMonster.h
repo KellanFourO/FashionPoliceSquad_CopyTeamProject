@@ -4,8 +4,6 @@
 #include "Monster.h"
 #include "BrifCase.h"
 
-//TODO - ½Â¿ëÃß°¡
-#include "MyUI.h"
 
 class CMonsterState;
 

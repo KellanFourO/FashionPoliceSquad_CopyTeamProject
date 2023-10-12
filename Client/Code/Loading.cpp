@@ -1,9 +1,7 @@
 #include "stdafx.h"
 #include "Loading.h"
-
 #include "Export_Utility.h"
 #include "ImGuiManager.h"
-#include "UIMgr.h"
 #include "Player.h"
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -123,10 +121,17 @@ _uint CLoading::Loading_For_Stage()
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_PortraitTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-des.png")), E_FAIL);
 		Set_Value(3);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CrossHairTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/CROSSHAIR/UI-crosshair_2.png")), E_FAIL);
-		Set_Value(3);
+
+
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CardFrontTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/card_frame01.png")), E_FAIL);
-		Set_Value(3);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CardBackTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/Card_Back.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CardForceTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardBlueEyeDragon.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CardSpeedTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardFedderMan.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CardIntelliTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardYugioh.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CardStrengthTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardOvelisk.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CardBonusTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardBonus.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CardBombTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardGreedPot.png")), E_FAIL);
+		Set_Value(3);
 
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_HPFrameTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HP_BAR/HP_Frame.png")), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_HPValueTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HP_BAR/VALUE_Player.png")), E_FAIL);
@@ -141,6 +146,15 @@ _uint CLoading::Loading_For_Stage()
 
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_PlayerFaceTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Player_HUD/SPRITE_hud_front.png")), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_HatTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HAT/hat v2_0.png")), E_FAIL);
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_BulletCountTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/BULLET_INFO/BULLET_COUNT1.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_BulletNameTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/BULLET_INFO/BULLET_Name1.png")), E_FAIL);
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ShotGunIconTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/WEAPON/ui-weapons_0.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_MissionUITexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HP_BAR/UI_391.png")), E_FAIL);
+		Set_Value(3);
+
+
 
 
 		CPlayer* pPlayer = CPlayer::Create(m_pGraphicDev);
@@ -192,13 +206,9 @@ _uint CLoading::Loading_For_Lobby()
 
 _uint CLoading::Loading_For_BossStage()
 {
-	//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Stage1Boss", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/boss 1 - hugo bauss sprite1.png")), E_FAIL);
-	Set_Value(25);
-	//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Stage1Bullet", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/gold-bar-projectile_0.png")), E_FAIL);
-
-
-	Set_Value(25);
-	//CUIMgr::GetInstance()->Ready_UIMgr();
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Stage1Boss", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/boss 1 - hugo bauss sprite1.png")), E_FAIL);
+	Set_Value(50);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Stage1Bullet", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/gold-bar-projectile_0.png")), E_FAIL);
 	Set_Value(50);
 
 	m_bFinish = true;

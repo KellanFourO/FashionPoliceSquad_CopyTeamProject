@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "UI_MyDialog.h"
-#include "UIMgr.h"
 #include <commdlg.h>
 #include <Shlwapi.h>
 #include <sstream>

@@ -225,6 +225,8 @@
     <ClInclude Include="..\Header\Bullet_GoldBar.h" />
     <ClInclude Include="..\Header\UI_Berserk.h" />
     <ClInclude Include="..\Header\UI_BerserkFrame.h" />
+    <ClInclude Include="..\Header\UI_BulletInfoCount.h" />
+    <ClInclude Include="..\Header\UI_BulletInfoName.h" />
     <ClInclude Include="..\Header\UI_CardList.h" />
     <ClInclude Include="..\Header\UI_CrossHair.h" />
     <ClInclude Include="..\Header\Build_Obj.h" />
@@ -236,7 +238,6 @@
     <ClInclude Include="..\Header\FlyingCamera.h" />
     <ClInclude Include="..\Header\FootRay.h" />
     <ClInclude Include="..\Header\ImGuiManager.h" />
-    <ClInclude Include="..\Header\Dyehard.h" />
     <ClInclude Include="..\Header\FPSCamera.h" />
     <ClInclude Include="..\Header\Item.h" />
     <ClInclude Include="..\Header\JumpSmoke.h" />
@@ -270,7 +271,6 @@
     <ClInclude Include="..\Header\UI_MyCard.h" />
     <ClInclude Include="..\Header\UI_MyCardTexture.h" />
     <ClInclude Include="..\Header\UI_MyDialog.h" />
-    <ClInclude Include="..\Header\MyUI.h" />
     <ClInclude Include="..\Header\NewFPSCamera.h" />
     <ClInclude Include="..\Header\ObjectPoolMgr.h" />
     <ClInclude Include="..\Header\PaintBulletTrace.h" />
@@ -321,10 +321,11 @@
     <ClInclude Include="..\Header\TailorAssertRifle_Walk.h" />
     <ClInclude Include="..\Header\Terrain.h" />
     <ClInclude Include="..\Header\Title.h" />
-    <ClInclude Include="..\Header\UIMgr.h" />
     <ClInclude Include="..\Header\UI_ShieldFrame.h" />
     <ClInclude Include="..\Header\UI_ShieldMark.h" />
     <ClInclude Include="..\Header\UI_ShieldValue.h" />
+    <ClInclude Include="..\Header\UI_WeaponIcon.h" />
+    <ClInclude Include="..\Header\UI_WeaponInfo.h" />
     <ClInclude Include="..\Header\WireFrame.h" />
     <ClInclude Include="Client.h" />
     <ClInclude Include="framework.h" />
@@ -365,6 +366,8 @@
     <ClCompile Include="..\Code\Bullet_GoldBar.cpp" />
     <ClCompile Include="..\Code\UI_Berserk.cpp" />
     <ClCompile Include="..\Code\UI_BerserkFrame.cpp" />
+    <ClCompile Include="..\Code\UI_BulletInfoCount.cpp" />
+    <ClCompile Include="..\Code\UI_BulletInfoName.cpp" />
     <ClCompile Include="..\Code\UI_CardList.cpp" />
     <ClCompile Include="..\Code\DustGrey.cpp" />
     <ClCompile Include="..\Code\FootRay.cpp" />
@@ -403,7 +406,6 @@
     <ClCompile Include="..\Code\CameraManager.cpp" />
     <ClCompile Include="..\Code\Build_Obj.cpp" />
     <ClCompile Include="..\Code\DynamicCamera.cpp" />
-    <ClCompile Include="..\Code\Dyehard.cpp" />
     <ClCompile Include="..\Code\Effect.cpp" />
     <ClCompile Include="..\Code\FlyingCamera.cpp" />
     <ClCompile Include="..\Code\FPSCamera.cpp" />
@@ -422,7 +424,6 @@
     <ClCompile Include="..\Code\UI_MyCard.cpp" />
     <ClCompile Include="..\Code\UI_MyCardTexture.cpp" />
     <ClCompile Include="..\Code\UI_MyDialog.cpp" />
-    <ClCompile Include="..\Code\MyUI.cpp" />
     <ClCompile Include="..\Code\NewFPSCamera.cpp" />
     <ClCompile Include="..\Code\Player.cpp" />
     <ClCompile Include="..\Code\Player_Heal.cpp" />
@@ -458,10 +459,11 @@
     <ClCompile Include="..\Code\TailorAssertRifle_Walk.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="..\Code\Title.cpp" />
-    <ClCompile Include="..\Code\UIMgr.cpp" />
     <ClCompile Include="..\Code\UI_ShieldFrame.cpp" />
     <ClCompile Include="..\Code\UI_ShieldMark.cpp" />
     <ClCompile Include="..\Code\UI_ShieldValue.cpp" />
+    <ClCompile Include="..\Code\UI_WeaponIcon.cpp" />
+    <ClCompile Include="..\Code\UI_WeaponInfo.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="stdafx.cpp">

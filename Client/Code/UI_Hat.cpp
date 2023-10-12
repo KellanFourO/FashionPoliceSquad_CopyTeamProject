@@ -1,7 +1,5 @@
 #include "stdafx.h"
 #include "UI_Hat.h"
-#include "UIMgr.h"
-
 
 #include "Export_Utility.h"
 #include "Export_System.h"
@@ -42,11 +40,12 @@ HRESULT Engine::CHat::Ready_GameObject()
 	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/HAT/hat v2_1.png", 1);
 	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/HAT/hat v2_2.png", 2);
 
-	m_pTransformCom->Set_Scale(m_vScale);
-	m_pTransformCom->Set_Pos(m_vPos);
+	m_pTransformCom->m_vScale.x = m_vScale.x;
+	m_pTransformCom->m_vScale.y = m_vScale.y;
+	m_pTransformCom->m_vInfo[INFO_POS].x = m_fX;
+	m_pTransformCom->m_vInfo[INFO_POS].y = m_fY;
 
 	m_pPlayer = Management()->Get_Player();
-
 	return S_OK;
 }
 
@@ -54,10 +53,11 @@ Engine::_int Engine::CHat::Update_GameObject(const _float& fTimeDelta)
 {
 	Engine::Add_RenderGroup(RENDER_UI, this);
 
-	m_pTransformCom->m_vScale.x = m_vScale.x;
-	m_pTransformCom->m_vScale.y = m_vScale.y;
-	m_pTransformCom->m_vInfo[INFO_POS].x = m_fX;
-	m_pTransformCom->m_vInfo[INFO_POS].y = m_fY;
+// 	if (m_bLateInit)
+// 	{
+// 		m_pPlayer = dynamic_cast<CPlayer*>(Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER).back());
+// 		m_bLateInit = false;
+// 	}
 
 	switch (m_pPlayer->Get_INFO()->PlayerState->StateID)
 	{

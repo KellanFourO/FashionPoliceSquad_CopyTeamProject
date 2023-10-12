@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "UI_MyCard.h"
-#include "UIMgr.h"
 
 #include "Export_Utility.h"
 #include "Export_System.h"
@@ -66,7 +65,16 @@ HRESULT Engine::CMyCard::Ready_GameObject(_float StartX)
 	m_pTransformCom->Set_Scale(m_vScale);
 	m_pTransformCom->Set_Pos(m_vPos);
 
+	m_pTextureFrontCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardBlueEyeDragon.png", 1);
+	m_pTextureFrontCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardFedderMan.png", 2);
+	m_pTextureFrontCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardYugioh.png", 3);
+	m_pTextureFrontCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardOvelisk.png", 4);
+	m_pTextureFrontCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardBonus.png", 5);
+	m_pTextureFrontCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardGreedPot.png", 6);
+
 	RandomCard();
+
+
 	return S_OK;
 }
 
@@ -272,7 +280,7 @@ void CMyCard::CardPicking(const _float& fTimeDelta)
 
 				if (m_bRealPick)
 				{
-					CPlayer* pPlayer = dynamic_cast<CPlayer*>(Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER).back());
+					CPlayer* pPlayer = Management()->Get_Player();
 
 					switch (m_eCardType)
 					{
@@ -328,25 +336,26 @@ void CMyCard::RandomCard()
 
 void CMyCard::SelectTexture()
 {
+
 	switch (m_eCardType)
 	{
 	case CARD_TYPE::FORCE:
-		m_pCardTexture->Get_Texture()->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"CardBlueEyeDragon.png")->Get_Info()->pTexture,0);
+		m_pCardTexture->Get_Texture()->Set_Texture(m_pTextureFrontCom->Get_Texture(1), 0);
 		break;
 	case CARD_TYPE::SPEED:
-		m_pCardTexture->Get_Texture()->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"CardFedderMan.png")->Get_Info()->pTexture, 0);
+		m_pCardTexture->Get_Texture()->Set_Texture(m_pTextureFrontCom->Get_Texture(2), 0);
 		break;
 	case CARD_TYPE::INTELLIGENCE:
-		m_pCardTexture->Get_Texture()->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"CardYugioh.png")->Get_Info()->pTexture, 0);
+		m_pCardTexture->Get_Texture()->Set_Texture(m_pTextureFrontCom->Get_Texture(3), 0);
 		break;
 	case CARD_TYPE::STRENGTH:
-		m_pCardTexture->Get_Texture()->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"CardOvelisk.png")->Get_Info()->pTexture, 0);
+		m_pCardTexture->Get_Texture()->Set_Texture(m_pTextureFrontCom->Get_Texture(4), 0);
 		break;
 	case CARD_TYPE::BONUS:
-		m_pCardTexture->Get_Texture()->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"CardBonus.png")->Get_Info()->pTexture, 0);
+		m_pCardTexture->Get_Texture()->Set_Texture(m_pTextureFrontCom->Get_Texture(5), 0);
 		break;
 	case CARD_TYPE::BOMB:
-		m_pCardTexture->Get_Texture()->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"CardGreedPot.png")->Get_Info()->pTexture, 0);
+		m_pCardTexture->Get_Texture()->Set_Texture(m_pTextureFrontCom->Get_Texture(6), 0);
 		break;
 	}
 }

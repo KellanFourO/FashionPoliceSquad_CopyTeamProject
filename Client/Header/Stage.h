@@ -34,7 +34,6 @@
 #include "Engine_Define.h"
 
 // TODO - ½Â¿ë
-#include "MyUI.h"
 #include "UI_CardList.h"
 #include "UICamera.h"
 #include "UI_MyDialog.h"
@@ -55,6 +54,11 @@
 
 #include "UI_PlayerFace.h"
 #include "UI_Hat.h"
+
+#include "UI_BulletInfoCount.h"
+#include "UI_BulletInfoName.h"
+
+#include "UI_WeaponInfo.h"
 
 #include "PaintShotGun.h"
 #include "TailorAssertRifle.h"

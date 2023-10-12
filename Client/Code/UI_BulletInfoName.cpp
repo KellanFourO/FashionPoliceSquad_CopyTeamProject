@@ -1,35 +1,36 @@
 #include "stdafx.h"
-#include "UI_HPBarFrame.h"
+#include "UI_BulletInfoName.h"
+#include "FontMgr.h"
 
 #include "Export_Utility.h"
 #include "Export_System.h"
 
 
 
-CHPBarFrame::CHPBarFrame(LPDIRECT3DDEVICE9 pGraphicDev)
+CBulletInfoName::CBulletInfoName(LPDIRECT3DDEVICE9 pGraphicDev)
 	:Engine::CGameObject(pGraphicDev)
 {
 	ZeroMemory(&m_tInfo, sizeof(UIDATA));
 }
 
-CHPBarFrame::CHPBarFrame(const CHPBarFrame& rhs)
+CBulletInfoName::CBulletInfoName(const CBulletInfoName& rhs)
 	: Engine::CGameObject(rhs)
 {
 }
 
-CHPBarFrame::~CHPBarFrame()
+CBulletInfoName::~CBulletInfoName()
 {
 }
 
-HRESULT Engine::CHPBarFrame::Ready_GameObject()
+HRESULT Engine::CBulletInfoName::Ready_GameObject()
 {
 	D3DXMatrixIdentity(&m_matView);
 	D3DXMatrixOrthoLH(&m_matProj, WINCX, WINCY, 0.0f, 100.0f);
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 
-	m_vPos = { 220.f, 580.f, 1.f };
-	m_vScale = { 54.f, 8.f, 0.f };
+	m_vPos = { 715.f, 525.f, 0.f };
+	m_vScale = { 85.f, 15.f, 1.f };
 
 	m_fX = m_vPos.x - WINCX * 0.5f; // 150 - 400 = -250
 	m_fY = -m_vPos.y + WINCY * 0.5f; // -50 + 300 = 250
@@ -39,14 +40,25 @@ HRESULT Engine::CHPBarFrame::Ready_GameObject()
 	m_pTransformCom->m_vInfo[INFO_POS].x = m_fX;
 	m_pTransformCom->m_vInfo[INFO_POS].y = m_fY;
 
-	m_pPlayer = Management()->Get_Player();
 
+	m_pPlayer = Management()->Get_Player();
 	return S_OK;
 }
 
-Engine::_int Engine::CHPBarFrame::Update_GameObject(const _float& fTimeDelta)
+Engine::_int Engine::CBulletInfoName::Update_GameObject(const _float& fTimeDelta)
 {
+// 	if (m_bLateInit)
+// 	{
+// 		m_pPlayer = dynamic_cast<CPlayer*>(Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER).back());
+// 		m_bLateInit = false;
+// 	}
+
+
+
+
 	Engine::Add_RenderGroup(RENDER_UI, this);
+
+
 
 	_int iExit = __super::Update_GameObject(fTimeDelta);
 
@@ -54,12 +66,12 @@ Engine::_int Engine::CHPBarFrame::Update_GameObject(const _float& fTimeDelta)
 	return 0;
 }
 
-void Engine::CHPBarFrame::LateUpdate_GameObject()
+void Engine::CBulletInfoName::LateUpdate_GameObject()
 {
 	CGameObject::LateUpdate_GameObject();
 }
 
-void CHPBarFrame::Render_GameObject()
+void CBulletInfoName::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
@@ -77,6 +89,10 @@ void CHPBarFrame::Render_GameObject()
 	m_pTextureCom->Render_Textrue();
 	m_pBufferCom->Render_Buffer();
 
+	if (!m_pPlayer->Get_SceneChange())
+	{
+		Engine::Render_Font(L"UI_WEAPON_NAME", m_pPlayer->Get_Gun()->Get_GunInfo()->m_szGunName, &_vec2(640, 520), D3DXCOLOR(D3DCOLOR_ARGB(255, 255, 255, 255)));
+	}
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
@@ -84,7 +100,7 @@ void CHPBarFrame::Render_GameObject()
 
 }
 
-HRESULT Engine::CHPBarFrame::Add_Component()
+HRESULT Engine::CBulletInfoName::Add_Component()
 {
 	CComponent* pComponent = nullptr;
 
@@ -96,7 +112,7 @@ HRESULT Engine::CHPBarFrame::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].emplace(COMPONENTTAG::TRANSFORM, pComponent);
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_HPFrameTexture"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_BulletNameTexture"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
 
@@ -105,9 +121,9 @@ HRESULT Engine::CHPBarFrame::Add_Component()
 }
 
 
-CHPBarFrame* CHPBarFrame::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CBulletInfoName* CBulletInfoName::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CHPBarFrame* pInstance = new CHPBarFrame(pGraphicDev);
+	CBulletInfoName* pInstance = new CBulletInfoName(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
@@ -119,7 +135,7 @@ CHPBarFrame* CHPBarFrame::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-void Engine::CHPBarFrame::Free()
+void Engine::CBulletInfoName::Free()
 {
 	__super::Free();
 }

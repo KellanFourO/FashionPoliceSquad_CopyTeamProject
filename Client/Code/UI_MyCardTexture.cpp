@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "UI_MyCardTexture.h"
-#include "UIMgr.h"
 
 #include "Export_Utility.h"
 #include "Export_System.h"
@@ -38,6 +37,8 @@ HRESULT Engine::CMyCardTexture::Ready_GameObject(_float StartX)
 
 	m_pTransformCom->Set_Scale(m_vScale);
 	m_pTransformCom->Set_Pos(m_vPos);
+
+
 
 
 	return S_OK;

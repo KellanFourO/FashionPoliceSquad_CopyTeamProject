@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "UI_BerserkFrame.h"
-#include "UIMgr.h"
 
 
 #include "Export_Utility.h"

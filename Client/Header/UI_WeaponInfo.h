@@ -1,23 +1,19 @@
 #pragma once
 #include "GameObject.h"
-
-
+#include "Player.h"
+#include "UI_WeaponIcon.h"
 
 // TODO Á¤½Â¿ë ÀÛ¼º
 
 BEGIN(Engine)
 
-class CUITex;
-class CTexture;
-class CTransform;
-
-class CMissionObjective : public Engine::CGameObject
+class CWeaponInfo : public Engine::CGameObject
 {
 
 private:
-	explicit					 CMissionObjective(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit					 CMissionObjective(const CMissionObjective& rhs);
-	virtual						~CMissionObjective();
+	explicit					 CWeaponInfo(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit					 CWeaponInfo(const CWeaponInfo& rhs);
+	virtual						~CWeaponInfo();
 
 public:
 	virtual HRESULT				Ready_GameObject();
@@ -25,29 +21,15 @@ public:
 	virtual _int				Update_GameObject(const _float& fTimeDelta) override;
 	virtual void				LateUpdate_GameObject() override;
 
-public:
-	void						Set_Title(const _tchar* _szTitle) { m_wstrTitle = _szTitle; }
-	void						Set_Objective(const _tchar* _szObjective) { m_wstrObjective = _szObjective; }
-
 private:
-	HRESULT						Add_Component();
-
-
-private:
-	CUITex*						m_pBufferCom = nullptr;
-	CTexture*					m_pTextureCom = nullptr;
-
-	CTransform*					m_pTransformCom = nullptr;
-
-	_matrix						m_matProj, m_matView;
-
-	_vec3						m_vPos, m_vScale;
-
-	wstring						m_wstrTitle;
-	wstring						m_wstrObjective;
+	CPlayer*			 m_pPlayer;
+	vector<CWeaponIcon*> m_vecWeaponIcon;
+	_int				 m_iSelectIndex = 0;
+	_bool				 m_bLateInit = true;
+	//_int				 m_iPreIndex = 0;
 
 public:
-	static CMissionObjective*			Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CWeaponInfo*			Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void				Free() override;

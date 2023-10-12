@@ -52,6 +52,8 @@ private:
 
 	PORTRAITTAG							m_ePortrait;
 
+	_int								m_iTextureIndex = 1;
+
 private:
 	_float								m_fX, m_fY, m_fSizeX, m_fSizeY;
 	_matrix								m_ViewMatrix, m_ProjMatrix;

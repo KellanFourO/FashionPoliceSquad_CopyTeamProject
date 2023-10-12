@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "UI_RecognitionRange.h"
-#include "UIMgr.h"
 
 #include "Export_Utility.h"
 #include "Export_System.h"
@@ -32,14 +31,14 @@ HRESULT Engine::CRecognitionRange::Ready_GameObject()
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 
-	m_pTextureArray[SEARCH] = CUIMgr::GetInstance()->Get_UI_Clone(L"!.png")->Get_Info()->pTexture;
-	m_pTextureArray[NOSEARCH] = CUIMgr::GetInstance()->Get_UI_Clone(L"Sleep.png")->Get_Info()->pTexture;
-	m_pTextureArray[MATCH] = CUIMgr::GetInstance()->Get_UI_Clone(L"Match.png")->Get_Info()->pTexture;
-	m_pTextureArray[NOMATCH] = CUIMgr::GetInstance()->Get_UI_Clone(L"NoMatch.png")->Get_Info()->pTexture;
-	m_pTextureArray[STUN] = CUIMgr::GetInstance()->Get_UI_Clone(L"sturnstar.png")->Get_Info()->pTexture;
-	m_pTextureArray[STUNRING] = CUIMgr::GetInstance()->Get_UI_Clone(L"stunring.png")->Get_Info()->pTexture;
+	//m_pTextureArray[SEARCH] = CUIMgr::GetInstance()->Get_UI_Clone(L"!.png")->Get_Info()->pTexture;
+	//m_pTextureArray[NOSEARCH] = CUIMgr::GetInstance()->Get_UI_Clone(L"Sleep.png")->Get_Info()->pTexture;
+	//m_pTextureArray[MATCH] = CUIMgr::GetInstance()->Get_UI_Clone(L"Match.png")->Get_Info()->pTexture;
+	//m_pTextureArray[NOMATCH] = CUIMgr::GetInstance()->Get_UI_Clone(L"NoMatch.png")->Get_Info()->pTexture;
+	//m_pTextureArray[STUN] = CUIMgr::GetInstance()->Get_UI_Clone(L"sturnstar.png")->Get_Info()->pTexture;
+	//m_pTextureArray[STUNRING] = CUIMgr::GetInstance()->Get_UI_Clone(L"stunring.png")->Get_Info()->pTexture;
 
-	m_pFrontTextureCom->Set_Texture(m_pTextureArray[NOSEARCH], 0);
+	//m_pFrontTextureCom->Set_Texture(m_pTextureArray[NOSEARCH], 0);
 	return S_OK;
 }
 
@@ -379,10 +378,10 @@ CRecognitionRange* CRecognitionRange::Create(LPDIRECT3DDEVICE9 pGraphicDev, CGam
 
 void Engine::CRecognitionRange::Free()
 {
-	for (auto iter : m_pTextureArray)
-	{
-		Safe_Release(iter);
-	}
+	//for (auto iter : m_pTextureArray)
+	//{
+	//	Safe_Release(iter);
+	//}
 
 	__super::Free();
 }

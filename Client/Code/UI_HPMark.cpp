@@ -1,7 +1,5 @@
 #include "stdafx.h"
 #include "UI_HPMark.h"
-#include "UIMgr.h"
-
 
 #include "Export_Utility.h"
 #include "Export_System.h"
@@ -36,11 +34,10 @@ HRESULT Engine::CHPMark::Ready_GameObject()
 	m_fX = m_vPos.x - WINCX * 0.5f; // 150 - 400 = -250
 	m_fY = -m_vPos.y + WINCY * 0.5f; // -50 + 300 = 250
 
-	//m_tInfo.vPos = m_vPos;
-	//m_tInfo.vSize = m_vScale;
-
-	m_pTransformCom->Set_Scale(m_vScale);
-	m_pTransformCom->Set_Pos(m_vPos);
+	m_pTransformCom->m_vScale.x = m_vScale.x;
+	m_pTransformCom->m_vScale.y = m_vScale.y;
+	m_pTransformCom->m_vInfo[INFO_POS].x = m_fX;
+	m_pTransformCom->m_vInfo[INFO_POS].y = m_fY;
 
 	m_pPlayer = Management()->Get_Player();
 
@@ -51,10 +48,7 @@ Engine::_int Engine::CHPMark::Update_GameObject(const _float& fTimeDelta)
 {
 	Engine::Add_RenderGroup(RENDER_UI, this);
 
-	m_pTransformCom->m_vScale.x = m_vScale.x;
-	m_pTransformCom->m_vScale.y = m_vScale.y;
-	m_pTransformCom->m_vInfo[INFO_POS].x = m_fX;
-	m_pTransformCom->m_vInfo[INFO_POS].y = m_fY;
+
 
 	_int iExit = __super::Update_GameObject(fTimeDelta);
 

@@ -1,7 +1,5 @@
 #include "stdafx.h"
 #include "UI_ShieldFrame.h"
-#include "UIMgr.h"
-
 
 #include "Export_Utility.h"
 #include "Export_System.h"
@@ -36,11 +34,10 @@ HRESULT Engine::CShieldFrame::Ready_GameObject()
 	m_fX = m_vPos.x - WINCX * 0.5f; // 150 - 400 = -250
 	m_fY = -m_vPos.y + WINCY * 0.5f; // -50 + 300 = 250
 
-	//m_tInfo.vPos = m_vPos;
-	//m_tInfo.vSize = m_vScale;
-
-	m_pTransformCom->Set_Scale(m_vScale);
-	m_pTransformCom->Set_Pos(m_vPos);
+	m_pTransformCom->m_vScale.x = m_vScale.x;
+	m_pTransformCom->m_vScale.y = m_vScale.y;
+	m_pTransformCom->m_vInfo[INFO_POS].x = m_fX;
+	m_pTransformCom->m_vInfo[INFO_POS].y = m_fY;
 
 	m_pPlayer = Management()->Get_Player();
 
@@ -51,10 +48,7 @@ Engine::_int Engine::CShieldFrame::Update_GameObject(const _float& fTimeDelta)
 {
 	Engine::Add_RenderGroup(RENDER_UI, this);
 
-	m_pTransformCom->m_vScale.x = m_vScale.x;
-	m_pTransformCom->m_vScale.y = m_vScale.y;
-	m_pTransformCom->m_vInfo[INFO_POS].x = m_fX;
-	m_pTransformCom->m_vInfo[INFO_POS].y = m_fY;
+
 
 	_int iExit = __super::Update_GameObject(fTimeDelta);
 
@@ -72,8 +66,6 @@ void CShieldFrame::Render_GameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
-
-
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 
 	m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
@@ -81,10 +73,8 @@ void CShieldFrame::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
 
-
 	m_pTextureCom->Render_Textrue();
 	m_pBufferCom->Render_Buffer();
-
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);

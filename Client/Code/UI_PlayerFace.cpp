@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "UI_PlayerFace.h"
-#include "UIMgr.h"
 
 #include "Export_Utility.h"
 #include "Export_System.h"
@@ -29,8 +28,13 @@ HRESULT Engine::CPlayerFace::Ready_GameObject()
 	m_vPos = { 50.f, 560.f, 0.f };
 	m_vScale = { 28.f, 35.f, 1.f };
 
-	m_pTransformCom->Set_Scale(m_vScale);
-	m_pTransformCom->Set_Pos(m_vPos);
+	m_fX = m_vPos.x - WINCX * 0.5f;
+	m_fY = -m_vPos.y + WINCY * 0.5f;
+
+	m_pTransformCom->m_vScale.x = m_vScale.x;
+	m_pTransformCom->m_vScale.y = m_vScale.y;
+	m_pTransformCom->m_vInfo[INFO_POS].x = m_fX;
+	m_pTransformCom->m_vInfo[INFO_POS].y = m_fY;
 
 	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Player_HUD/des-hud_left.png", 1);
 	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Player_HUD/des-hud_right.png", 2);
@@ -38,21 +42,19 @@ HRESULT Engine::CPlayerFace::Ready_GameObject()
 	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Player_HUD/des-hud_smile.png", 4);
 	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Player_HUD/des-hud_smirk_low.png", 5);
 
-
 	m_pPlayer = Management()->Get_Player();
-
 	return S_OK;
 }
 
 Engine::_int Engine::CPlayerFace::Update_GameObject(const _float& fTimeDelta)
 {
+// 	if (m_bLateInit)
+// 	{
+// 		m_pPlayer = dynamic_cast<CPlayer*>(Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER).back());
+// 		m_bLateInit = false;
+// 	}
 
 	Engine::Add_RenderGroup(RENDER_UI, this);
-
-	m_pTransformCom->m_vScale.x = m_vScale.x;
-	m_pTransformCom->m_vScale.y = m_vScale.y;
-	m_pTransformCom->m_vInfo[INFO_POS].x = m_fX;
-	m_pTransformCom->m_vInfo[INFO_POS].y = m_fY;
 
 	switch (m_pPlayer->Get_INFO()->PlayerState->StateID)
 	{

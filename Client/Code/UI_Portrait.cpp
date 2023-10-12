@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "UI_Portrait.h"
-#include "UIMgr.h"
 
 #include "Export_System.h"
 #include "Export_Utility.h"
@@ -82,6 +81,13 @@ HRESULT CPortrait::Ready_GameObject()
 
 	// -1 ~ 1 -> 0 ~ 2
 
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-des.png", 1);
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-des-neon.png", 2);
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-haley.png", 3);
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-deepcoat.png", 4);
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-bauss.png", 5);
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-turncoat.png", 6);
+
 	return S_OK;
 }
 
@@ -134,7 +140,7 @@ void CPortrait::Render_GameObject()
 		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 		m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
 
-		m_pTextureCom->Render_Textrue(0);
+		m_pTextureCom->Render_Textrue(m_iTextureIndex);
 		m_pBufferCom->Render_Buffer();
 
 		m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
@@ -145,25 +151,26 @@ void CPortrait::Render_GameObject()
 
 void CPortrait::SetPortrait()
 {
+
 	switch (m_ePortrait)
 	{
 	case Engine::PORTRAITTAG::PORT_DES:
-		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"portrait-des.png")->Get_Info()->pTexture, 0);
+		m_iTextureIndex = 1;
 		break;
 	case Engine::PORTRAITTAG::PORT_DESNEON:
-		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"portrait-des-neon.png")->Get_Info()->pTexture, 0);
+		m_iTextureIndex = 2;
 		break;
 	case Engine::PORTRAITTAG::PORT_HALEY:
-		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"portrait-haley.png")->Get_Info()->pTexture, 0);
+		m_iTextureIndex = 3;
 		break;
 	case Engine::PORTRAITTAG::PORT_DEEPCOAT:
-		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"portrait-deepcoat.png")->Get_Info()->pTexture, 0);
+		m_iTextureIndex = 4;
 		break;
 	case Engine::PORTRAITTAG::PORT_BAUSS:
-		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"portrait-bauss.png")->Get_Info()->pTexture, 0);
+		m_iTextureIndex = 5;
 		break;
 	case Engine::PORTRAITTAG::PORT_TURNCOAT:
-		m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"portrait-turncoat.png")->Get_Info()->pTexture, 0);
+		m_iTextureIndex = 6;
 		break;
 	}
 }

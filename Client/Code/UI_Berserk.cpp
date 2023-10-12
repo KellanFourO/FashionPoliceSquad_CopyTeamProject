@@ -1,8 +1,5 @@
 #include "stdafx.h"
 #include "UI_Berserk.h"
-#include "UIMgr.h"
-
-
 #include "Export_Utility.h"
 #include "Export_System.h"
 
@@ -30,7 +27,7 @@ HRESULT Engine::CBerserk_UI::Ready_GameObject()
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 
-	m_vPos = { 400.f, 570.f, 0.f };
+	m_vPos = { 400.f, 570.f, 1.f };
 	m_vScale = { 15.f, 23.f, 1.f };
 
 	m_fX = m_vPos.x - WINCX * 0.5f; // 150 - 400 = -250
@@ -51,23 +48,27 @@ Engine::_int Engine::CBerserk_UI::Update_GameObject(const _float& fTimeDelta)
 {
 	Engine::Add_RenderGroup(RENDER_UI, this);
 
-	_float fMaxHp = m_pPlayer->Get_INFO()->fMaxHP;
-	_float fCurHp = m_pPlayer->Get_INFO()->fHP;
-
-	_float fRatio = fCurHp / fMaxHp;
-	_float fOrigin = m_tInfo.vSize.x;
-	_float fSecond = fOrigin * fRatio;
-
-	_float fResult = fOrigin - fSecond;
-
-	m_pBufferCom->SetRatio(fRatio);
-
-	m_pTransformCom->m_vScale.x = m_vScale.x * fRatio;
+	//_float fMaxHp = m_pPlayer->Get_INFO()->fMaxHP;
+	//_float fCurHp = m_pPlayer->Get_INFO()->fHP;
+	//
+	//_float fRatio = fCurHp / fMaxHp;
+	//_float fOrigin = m_tInfo.vSize.x;
+	//_float fSecond = fOrigin * fRatio;
+	//
+	//_float fResult = fOrigin - fSecond;
+	//
+	//m_pBufferCom->SetRatio(fRatio);
+	//
+	//m_pTransformCom->m_vScale.x = m_vScale.x * fRatio;
+	//m_pTransformCom->m_vScale.y = m_vScale.y;
+	//m_fX = m_vPos.x - fResult;
+	//m_fY = m_vPos.y;
+	//m_pTransformCom->m_vInfo[INFO_POS].x = m_fX - WINCX * 0.5f;
+	//m_pTransformCom->m_vInfo[INFO_POS].y = -m_fY + WINCY * 0.5f;
+	m_pTransformCom->m_vScale.x = m_vScale.x;
 	m_pTransformCom->m_vScale.y = m_vScale.y;
-	m_fX = m_vPos.x - fResult;
-	m_fY = m_vPos.y;
-	m_pTransformCom->m_vInfo[INFO_POS].x = m_fX - WINCX * 0.5f;
-	m_pTransformCom->m_vInfo[INFO_POS].y = -m_fY + WINCY * 0.5f;
+	m_pTransformCom->m_vInfo[INFO_POS].x = m_fX;
+	m_pTransformCom->m_vInfo[INFO_POS].y = m_fY;
 
 	_int iExit = __super::Update_GameObject(fTimeDelta);
 

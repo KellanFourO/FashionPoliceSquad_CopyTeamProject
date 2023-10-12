@@ -3,7 +3,6 @@
 #include "Logo.h"
 #include "Stage.h"
 #include "ImGuiManager.h"
-#include "UIMgr.h"
 #include "FontMgr.h"
 #include "EventMgr.h"
 
@@ -138,7 +137,7 @@ CMainApp* CMainApp::Create()
 
 void CMainApp::Free()
 {
-	CUIMgr::GetInstance()->DestroyInstance();
+
 	CEventMgr::GetInstance()->DestroyInstance();
 	CImGuiManager::GetInstance()->DestroyInstance();
 

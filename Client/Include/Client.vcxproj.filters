@@ -58,9 +58,6 @@
     <Filter Include="03. ImGuI\Include">
       <UniqueIdentifier>{37d7becd-1bcd-4539-8668-0571a441b9c2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\01. Player\01. Dyehard">
-      <UniqueIdentifier>{8deca1f7-f053-478b-a0e4-500a87c5d315}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\04. Camera\00. FPSCamera">
       <UniqueIdentifier>{3214d6f2-3246-4e44-a214-b84c98bf8be0}</UniqueIdentifier>
     </Filter>
@@ -79,9 +76,6 @@
     <Filter Include="03. ImGuI\Manager\00. ImGuiMgr">
       <UniqueIdentifier>{e542f674-504f-4d87-87e4-969a3877b95d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03. ImGuI\Manager\20. UIMgr">
-      <UniqueIdentifier>{06da1a0d-0ab6-43a0-9344-d481c19b2051}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\06. Effect">
       <UniqueIdentifier>{efd01413-82f8-4dcc-990c-23e23788dc7a}</UniqueIdentifier>
     </Filter>
@@ -93,9 +87,6 @@
     </Filter>
     <Filter Include="02. GameObject\00. BackGround\00.Title">
       <UniqueIdentifier>{682b4052-8c2b-41eb-812e-d0db50c135fe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. GameObject\20.UI\00. MyUI">
-      <UniqueIdentifier>{74f49df2-6bf9-4df0-b9a4-a0c04b7a9924}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\20.UI\01. MyDialog">
       <UniqueIdentifier>{6b7b3752-34b7-4d83-bd51-a38a3af509e9}</UniqueIdentifier>
@@ -459,9 +450,6 @@
     <ClInclude Include="..\Header\SkyBox.h">
       <Filter>02. GameObject\05. SkyBox</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Dyehard.h">
-      <Filter>02. GameObject\01. Player\01. Dyehard</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\MapTool.h">
       <Filter>01.Scene\10. MapTool</Filter>
     </ClInclude>
@@ -479,9 +467,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\ImGuiManager.h">
       <Filter>03. ImGuI\Manager\00. ImGuiMgr</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\UIMgr.h">
-      <Filter>03. ImGuI\Manager\20. UIMgr</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Effect.h">
       <Filter>02. GameObject\06. Effect</Filter>
@@ -518,9 +503,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\Title.h">
       <Filter>02. GameObject\00. BackGround\00.Title</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\MyUI.h">
-      <Filter>02. GameObject\20.UI\00. MyUI</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\UI_MyDialog.h">
       <Filter>02. GameObject\20.UI\01. MyDialog</Filter>
@@ -906,6 +888,18 @@
     <ClInclude Include="..\Header\UI_Hat.h">
       <Filter>02. GameObject\20.UI\07. PlayerFace\00. Hat</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\UI_BulletInfoName.h">
+      <Filter>02. GameObject\20.UI\08. BulletInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_WeaponInfo.h">
+      <Filter>02. GameObject\20.UI\09. WeaponInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_BulletInfoCount.h">
+      <Filter>02. GameObject\20.UI\08. BulletInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_WeaponIcon.h">
+      <Filter>02. GameObject\20.UI\09. WeaponInfo</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -941,9 +935,6 @@
     <ClCompile Include="..\Code\SkyBox.cpp">
       <Filter>02. GameObject\05. SkyBox</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Dyehard.cpp">
-      <Filter>02. GameObject\01. Player\01. Dyehard</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\MapTool.cpp">
       <Filter>01.Scene\10. MapTool</Filter>
     </ClCompile>
@@ -961,9 +952,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\ImGuiManager.cpp">
       <Filter>03. ImGuI\Manager\00. ImGuiMgr</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\UIMgr.cpp">
-      <Filter>03. ImGuI\Manager\20. UIMgr</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Effect.cpp">
       <Filter>02. GameObject\06. Effect</Filter>
@@ -994,9 +982,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\Title.cpp">
       <Filter>02. GameObject\00. BackGround\00.Title</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\MyUI.cpp">
-      <Filter>02. GameObject\20.UI\00. MyUI</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_MyDialog.cpp">
       <Filter>02. GameObject\20.UI\01. MyDialog</Filter>
@@ -1384,6 +1369,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\UI_Hat.cpp">
       <Filter>02. GameObject\20.UI\07. PlayerFace\00. Hat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_BulletInfoName.cpp">
+      <Filter>02. GameObject\20.UI\08. BulletInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_WeaponInfo.cpp">
+      <Filter>02. GameObject\20.UI\09. WeaponInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_BulletInfoCount.cpp">
+      <Filter>02. GameObject\20.UI\08. BulletInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_WeaponIcon.cpp">
+      <Filter>02. GameObject\20.UI\09. WeaponInfo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

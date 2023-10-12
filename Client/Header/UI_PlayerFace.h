@@ -30,6 +30,7 @@ private:
 
 
 private:
+	_bool				m_bLateInit = true;
 	CUITex*				m_pBufferCom = nullptr;
 	CTexture*			m_pTextureCom = nullptr;
 

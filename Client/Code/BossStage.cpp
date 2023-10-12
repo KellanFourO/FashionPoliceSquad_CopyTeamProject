@@ -4,7 +4,6 @@
 #include "Export_Utility.h"
 
 #include "ImGuiManager.h"
-#include "UIMgr.h"
 #include "EventMgr.h"
 #include "DustGrey.h"
 #include <sstream>
@@ -46,10 +45,10 @@ _int CBossStage::Update_Scene(const _float& fTimeDelta)
 {
 	_int	iExit = __super::Update_Scene(fTimeDelta);
 
-	if (m_bReadyCube)
-	{
-		//Octree()->Update_Octree();
-	}
+	//if (m_bReadyCube)
+	//{
+	//	Octree()->Update_Octree();
+	//}
 
 	m_fAdminTick += fTimeDelta;
 	if (m_fAdminTick >= 3.f)
@@ -143,6 +142,7 @@ HRESULT CBossStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 
 		dynamic_cast<CPlayer*>(pPlayer)->ClearGunList();
 
+
 		CGameObject* pShotGun = pGameObject = CPaintShotGun::Create(m_pGraphicDev, dynamic_cast<CPlayer*>(pPlayer));
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_GUN, pGameObject), E_FAIL);
@@ -153,7 +153,7 @@ HRESULT CBossStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_GUN, pGameObject), E_FAIL);
 		dynamic_cast<CTailorAssertRifle*>(pGameObject)->Set_Host(pPlayer);
 
-
+		dynamic_cast<CPlayer*>(pPlayer)->Set_SceneChange(false);
 
 		pGameObject = CTailorAssertRifleHand::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -238,6 +238,58 @@ HRESULT CBossStage::Ready_Layer_UI(LAYERTAG eLayerTag)
 	pGameObject = CMissionObjective::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MISSION, pGameObject), E_FAIL);
+
+	pGameObject = CHPBarFrame::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CHPBarValue::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CHPMark::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CShieldFrame::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CShieldValue::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CShieldMark::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CBerserkFrame_UI::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CBerserk_UI::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CPlayerFace::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CHat::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CBulletInfoName::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CBulletInfoCount::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CWeaponInfo::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ eLayerTag, pLayer });
 
@@ -372,68 +424,7 @@ HRESULT CBossStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 	return S_OK;
 }
 
-HRESULT CBossStage::Load_UI()
-{
-	Engine::CGameObject* pGameObject = nullptr;
 
-	wifstream fin;
-
-	fin.open(L"../Bin/Data/UI/UIdata.dat");
-
-	if (!fin.fail())
-	{
-		wstring line;
-
-		while (getline(fin, line)) // 한 줄씩 읽기
-		{
-			wistringstream iss(line);
-			wstring token;
-
-			_tchar szKey[MAX_PATH] = L"";
-			_tchar szSizeX[MAX_PATH] = L"";
-			_tchar szSizeY[MAX_PATH] = L"";
-			_tchar szSizeZ[MAX_PATH] = L"";
-			_tchar szPosX[MAX_PATH] = L"";
-			_tchar szPosY[MAX_PATH] = L"";
-			_tchar szPosZ[MAX_PATH] = L"";
-
-			getline(iss, token, L','); // ','를 구분자로 사용하여 값을 자름
-			_tcscpy_s(szKey, MAX_PATH, token.c_str());
-
-			getline(iss, token, L',');
-			_tcscpy_s(szSizeX, MAX_PATH, token.c_str());
-
-			getline(iss, token, L',');
-			_tcscpy_s(szSizeY, MAX_PATH, token.c_str());
-
-			getline(iss, token, L',');
-			_tcscpy_s(szSizeZ, MAX_PATH, token.c_str());
-
-			getline(iss, token, L',');
-			_tcscpy_s(szPosX, MAX_PATH, token.c_str());
-
-			getline(iss, token, L',');
-			_tcscpy_s(szPosY, MAX_PATH, token.c_str());
-
-			getline(iss, token, L',');
-			_tcscpy_s(szPosZ, MAX_PATH, token.c_str());
-
-			if (wcsstr(szKey, L"des"))
-			{
-				continue;
-			}
-			pGameObject = CUIMgr::GetInstance()->Get_UI(szKey);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
-
-		}
-	}
-	fin.close();
-
-	m_mapLayer.insert({ LAYERTAG::UI, m_pLayer });
-
-	return S_OK;
-}
 
 void CBossStage::Admin_KeyInput()
 {

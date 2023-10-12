@@ -18,9 +18,6 @@
 #include "BossState.h"
 
 
-// TODO - 승용 추가 : 몬스터 HP UI.
-#include "UIMgr.h"
-
 CStage1Boss::CStage1Boss(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {

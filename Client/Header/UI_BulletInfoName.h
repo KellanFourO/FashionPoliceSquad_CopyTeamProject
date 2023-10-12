@@ -11,13 +11,13 @@ class CUITex;
 class CTexture;
 class CTransform;
 
-class CHat : public Engine::CGameObject
+class CBulletInfoName : public Engine::CGameObject
 {
 
 private:
-	explicit					 CHat(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit					 CHat(const CHat& rhs);
-	virtual						~CHat();
+	explicit					 CBulletInfoName(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit					 CBulletInfoName(const CBulletInfoName& rhs);
+	virtual						~CBulletInfoName();
 
 public:
 	virtual HRESULT				Ready_GameObject();
@@ -37,7 +37,7 @@ private:
 	_bool						m_bLateInit = true;
 	CUITex*						m_pBufferCom = nullptr;
 	CTexture*					m_pTextureCom = nullptr;
-	_int						m_iTextureIndex = 0;
+
 
 	CTransform*					m_pTransformCom = nullptr;
 
@@ -53,7 +53,7 @@ private:
 
 	_float				m_fX, m_fY, m_fSizeX, m_fSizeY;
 public:
-	static CHat*			Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CBulletInfoName*			Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void				Free() override;

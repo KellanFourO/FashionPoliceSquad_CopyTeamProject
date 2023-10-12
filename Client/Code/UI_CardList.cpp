@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "UI_CardList.h"
-#include "UIMgr.h"
 
 #include "Export_Utility.h"
 #include "Export_System.h"

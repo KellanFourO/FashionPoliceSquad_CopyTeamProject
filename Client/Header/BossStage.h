@@ -37,7 +37,6 @@
 #include "UI_MyDialog.h"
 #include "UI_Portrait.h"
 
-#include "MyUI.h"
 #include "UI_CardList.h"
 #include "UI_CrossHair.h"
 

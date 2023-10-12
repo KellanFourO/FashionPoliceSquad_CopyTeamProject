@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "UI_MissionObjective.h"
-#include "UIMgr.h"
 
 #include "Export_Utility.h"
 #include "Export_System.h"
@@ -37,8 +36,6 @@ HRESULT Engine::CMissionObjective::Ready_GameObject()
 
 	m_pTransformCom->Set_Scale(m_vScale);
 	m_pTransformCom->Set_Pos(m_vPos);
-
-	//m_pTextureCom->Set_Texture(CUIMgr::GetInstance()->Get_UI(L"UI_391.png")->Get_Info()->pTexture,0);
 
 	m_wstrObjective = L"";
 	m_wstrTitle = L"";
@@ -107,7 +104,7 @@ HRESULT Engine::CMissionObjective::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].emplace(COMPONENTTAG::TRANSFORM, pComponent);
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_CardFrontTexture"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_MissionUITexture"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
 

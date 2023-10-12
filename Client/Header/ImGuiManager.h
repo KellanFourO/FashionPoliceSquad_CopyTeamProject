@@ -7,7 +7,7 @@
 
 #include "Base.h"
 #include "Engine_Define.h"
-#include "MyUI.h"
+//#include "MyUI.h"
 #include "Export_Utility.h"
 //#include "UIMgr.h"
 
@@ -61,7 +61,7 @@ private:
 	SORTCUBE*							m_defSortCube = nullptr;
 
 	vector<SORTCUBE*>					m_pCubeForSort; //큐브 정렬용
-	
+
 	//vector<const char*>				m_FileName;
 	vector<CUBE*>						vectorCubeTemp;
 
@@ -81,7 +81,7 @@ private:
 	bool								m_bRotate_Check			 = false;
 
 	bool								m_bBuild_Mode_Check		 = false;
-	 
+
 
 	///////////////////// 유진 OBJ툴 ////////////////////////////////
 public:
@@ -91,7 +91,7 @@ public:
 	void				LoadTexturesFromDirectory
 						(const wchar_t* folderPath, vector<IDirect3DBaseTexture9*>& textureVector);
 	bool				Get_OBJModeCheck() { return m_bOBJ_Mode_Check; }
-	
+
 	bool				Get_CubeType() { return m_bCubeType; }
 	bool				Get_PlaneType() { return m_bPlaneType; }
 
@@ -106,7 +106,7 @@ public:
 	OBJ_TYPE			Get_OBJType() { return m_eOBJType; }
 	void				Set_OBJType(OBJ_TYPE eType) { m_eOBJType = eType; }
 	_uint				Get_OBJTexNum() { return m_iOBJTextureNum; }
-	
+
 	OBJ_ATTRIBUTE		Get_OBJATTRIBUTE() { return m_eOBJ_Attribute; }
 	void				Set_OBJATTRIBUTE(OBJ_ATTRIBUTE eAttri) { m_eOBJ_Attribute = eAttri; }
 
@@ -132,9 +132,9 @@ private:
 
 	const int							cubeTextureStartIndex   = 1000;
 	const int							planeTextureStartIndex  = 3000;
-	
+
 	_uint								m_Rotate_Count_CW;		//시계방향
-	
+
 	bool								m_bOBJ_Mode_Check		= false;
 	bool								m_bOBJLoad_Check		= false;
 	bool								m_bCPOINT_Load_Check	= false;
@@ -142,7 +142,7 @@ private:
 	bool								m_bCubeType				= false;
 	bool								m_bPlaneType			= false;
 	OBJ_TYPE							m_eOBJType				= OBJ_TYPE::OBJ_TYPE_END;
-	
+
 	int									m_forObjAttribute		= 7; //0 ~ 7
 	OBJ_ATTRIBUTE						m_eOBJ_Attribute		= OBJ_ATTRIBUTE::ATTRIBUTE_END;
 
@@ -154,17 +154,17 @@ private:
 
 	///////////////////// 승용 UI툴 /////////////////////////////////
 public:
-	CMyUI*				Get_ImguiUI() { return m_vecUIList[selected_UIIndex]; }
-	CMyUI*				Get_UI(const _tchar* szKey) { return FindUI(szKey); }
-	vector<CMyUI*>		Get_vecUI() { return m_vecUIList; };
+	//CMyUI*				Get_ImguiUI() { return m_vecUIList[selected_UIIndex]; }
+	//CMyUI*				Get_UI(const _tchar* szKey) { return FindUI(szKey); }
+	//vector<CMyUI*>		Get_vecUI() { return m_vecUIList; };
 
 public:
 	void				Toggle_OnOff() { bUI_OnOff = !bUI_OnOff; }
-	HRESULT				ReadImgPath(const _tchar* folderPath, LPDIRECT3DDEVICE9 pGraphicDev);
-	HRESULT				SaveData(const _tchar* mapTag);
+	//HRESULT				ReadImgPath(const _tchar* folderPath, LPDIRECT3DDEVICE9 pGraphicDev);
+	//HRESULT				SaveData(const _tchar* mapTag);
 
-	void				SaveUI(wstring wstrFileName, wstring wstrFilePath);
-	CMyUI*				FindUI(const _tchar* szKey);
+	//void				SaveUI(wstring wstrFileName, wstring wstrFilePath);
+	//CMyUI*				FindUI(const _tchar* szKey);
 
 private:
 	_bool								m_bToolSwitch;
@@ -172,8 +172,8 @@ private:
 	_bool								bUI_OnOff;
 
 private:
-	map<const _tchar*, CMyUI*>			m_mapLoadUI1;
-	map<const _tchar*, CMyUI*>			m_mapChoiceUI;
+	//map<const _tchar*, CMyUI*>			m_mapLoadUI1;
+	//map<const _tchar*, CMyUI*>			m_mapChoiceUI;
 
 	_tchar*								selected_UI_FileName;
 	_uint								selected_UIIndex = 0;
@@ -182,8 +182,8 @@ private:
 	int									m_iUI_Type;
 	ImGuiIO*							m_pIo;
 
-	vector<CMyUI*>						m_vecUIList;
-	vector<const _tchar*>				m_vecUIName;
+	//vector<CMyUI*>						m_vecUIList;
+	//vector<const _tchar*>				m_vecUIName;
 
 
 

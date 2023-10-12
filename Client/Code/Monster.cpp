@@ -10,8 +10,6 @@
 
 #include "MonsterState.h"
 
-// TODO - 승용 추가 : 몬스터 HP UI.
-#include "UIMgr.h"
 
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev)
 	:Engine::CGameObject(pGraphicDev)

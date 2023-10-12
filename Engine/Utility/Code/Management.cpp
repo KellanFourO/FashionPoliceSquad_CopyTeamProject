@@ -45,6 +45,12 @@ HRESULT CManagement::Set_Scene(CScene* pScene)
 
 HRESULT CManagement::Change_Scene(CScene* pScene)
 {
+	if (m_bSYSceneChange)
+	{
+		m_pPlayer->AddRef();
+		m_pPlayer->ClearGunList();
+		m_bSYSceneChange = false;
+	}
 	m_bSceneChange = true;
 
 	m_pPreScene = m_pScene;
