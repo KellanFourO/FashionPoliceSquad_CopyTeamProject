@@ -53,7 +53,7 @@ CMonsterState* CBigDaddyMonster_Attack::Update(CMonster* Monster, const float& f
 		if (m_fTick >= 1.f)
 		{
 			m_pHost->Set_Bullet(LoadBullet());
-			dynamic_cast<CBrifCase*>(m_pHost->Get_MonsterBullet())->Shot(m_pHost->Get_Info().vPos);
+			static_cast<CBrifCase*>(m_pHost->Get_MonsterBullet())->Shot(m_pHost->Get_Info().vPos);
 
 			++m_fCurFrame;
 			m_eAttack = THROW;

@@ -381,6 +381,6 @@ CMyCard* CMyCard::Create(LPDIRECT3DDEVICE9 pGraphicDev, _float StartX, CARD_DIR 
 void Engine::CMyCard::Free()
 {
 
-	Safe_Release(m_pCardTexture);
 	__super::Free();
+	Safe_Release(m_pCardTexture);
 }

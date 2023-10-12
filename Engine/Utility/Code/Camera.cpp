@@ -43,7 +43,7 @@ void CCamera::Make_ViewMatrix(D3DXMATRIX* pOut, const _vec3* pEye, const _vec3* 
 
 	_vec3 vLook = *pAt - *pEye;
 	D3DXVec3Normalize(&vLook, &vLook);
-	
+
 	_vec3 vRight;
 	D3DXVec3Cross(&vRight, pUp, &vLook);
 	D3DXVec3Normalize(&vRight, &vRight);
@@ -58,18 +58,18 @@ void CCamera::Make_ViewMatrix(D3DXMATRIX* pOut, const _vec3* pEye, const _vec3* 
 	memcpy(&pOut->m[2][0], &vLook, sizeof(_vec3));
 	memcpy(&pOut->m[3][0], pEye, sizeof(_vec3));
 	D3DXMatrixInverse(pOut, nullptr, pOut);
-	
+
 }
 
 void CCamera::Make_PerspectiveMatrix(D3DXMATRIX* pOut, float fFovy, float fAspect, float fNear, float fFar)
 {
 	D3DXMatrixIdentity(pOut);
-	
+
 	float YSize = 1.0f / tanf(fFovy * 0.5f);
 	float XSize = YSize / fAspect;
 	int i = 0;
 
-	
+
 	pOut->m[0][0] = XSize;
 	pOut->m[1][1] = YSize;
 	pOut->m[2][2] = fFar / (fFar - fNear);

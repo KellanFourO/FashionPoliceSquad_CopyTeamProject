@@ -90,8 +90,8 @@ void CBulletInfoCount::Render_GameObject()
 
 	if (!m_pPlayer->Get_SceneChange())
 	{
-		Engine::Render_Font(L"UI_FONT", to_wstring(m_pPlayer->Get_Gun()->Get_GunInfo()->m_iCurrentBullet).c_str(), &_vec2(670, 550), D3DXCOLOR(D3DCOLOR_ARGB(255, 130, 245, 209)));
-		Engine::Render_Font(L"UI_FONT", to_wstring(m_pPlayer->Get_Gun()->Get_GunInfo()->m_iMaxBullet).c_str(), &_vec2(730, 550), D3DXCOLOR(D3DCOLOR_ARGB(255, 130, 245, 209)));
+		//Engine::Render_Font(L"UI_FONT", to_wstring(m_pPlayer->Get_Gun()->Get_GunInfo()->m_iCurrentBullet).c_str(), &_vec2(670, 550), D3DXCOLOR(D3DCOLOR_ARGB(255, 130, 245, 209)));
+		//Engine::Render_Font(L"UI_FONT", to_wstring(m_pPlayer->Get_Gun()->Get_GunInfo()->m_iMaxBullet).c_str(), &_vec2(730, 550), D3DXCOLOR(D3DCOLOR_ARGB(255, 130, 245, 209)));
 	}
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);

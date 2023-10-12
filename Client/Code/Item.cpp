@@ -19,7 +19,6 @@ CItem::CItem(const CItem& rhs) : CGameObject(rhs)
 
 CItem::~CItem()
 {
-	Free();
 }
 
 HRESULT CItem::Ready_GameObject()

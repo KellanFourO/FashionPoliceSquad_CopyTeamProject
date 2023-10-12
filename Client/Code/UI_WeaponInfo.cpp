@@ -113,6 +113,7 @@ CWeaponInfo* CWeaponInfo::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void Engine::CWeaponInfo::Free()
 {
+
 	for (int i = 0; i < m_vecWeaponIcon.size(); ++i)
 	{
 		Safe_Release(m_vecWeaponIcon[i]);

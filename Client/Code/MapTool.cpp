@@ -14,7 +14,6 @@ CMapTool::CMapTool(LPDIRECT3DDEVICE9 pGraphicDev)
 
 CMapTool::~CMapTool()
 {
-    Free();
 }
 
 HRESULT CMapTool::Ready_Scene()
