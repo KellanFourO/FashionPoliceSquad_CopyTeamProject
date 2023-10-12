@@ -10,6 +10,10 @@
 #include "Engine_Define.h"
 
 #include "Loading.h"
+#include "MapTool.h"
+#include "BossStage.h"
+#include "Stage.h"
+//#include "Lobby.h"
 
 
 class CLoadingStage1 : public Engine::CScene
@@ -19,7 +23,7 @@ private:
 	virtual ~CLoadingStage1();
 
 public:
-	virtual HRESULT		Ready_Scene();
+	virtual HRESULT		Ready_Scene(SCENETAG eSceneTag);
 	virtual _int		Update_Scene(const _float& fTimeDelta);
 	virtual void		LateUpdate_Scene();
 	virtual void		Render_Scene();
@@ -38,10 +42,8 @@ private:
 	CProgressValue*				m_pProgressBar = nullptr;
 
 
-
-
 public:
-	static CLoadingStage1* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CLoadingStage1* Create(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag);
 private:
 	virtual void		Free();
 };

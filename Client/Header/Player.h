@@ -5,8 +5,6 @@
 #include "PaintShotGun.h"
 #include "TailorAssertRifle.h"
 
-#include "Inventory.h"
-
 class CPlayerState;
 
 BEGIN(Engine)
@@ -52,10 +50,14 @@ public:
 	CPlayerGun*		Get_Gun() { return m_pGun; }
 	_float			Get_XMove() { return m_fXmove;}
 
+	_bool			Get_SceneChange() { return m_bSceneChange;}
+
+	void			Set_SceneChange(_bool _bSceneChange) { m_bSceneChange = _bSceneChange;}
+	void			SetGun();
+	void			ClearGunList() { m_vecPlayerGun.clear(); }
 
 private:
 	HRESULT			Add_Component();
-	void			SetGun();
 	void			Mouse_Input(const _float& fTimeDelta);
 	void			TestRopeAction(const _float& fTimeDelta);
 
@@ -79,6 +81,7 @@ private:
 
 	Player_INFO		INFO;
 
+	_bool			m_bSceneChange = false; // 플레이어 신 넘어갈때 제어용
 	_bool			m_bJump = false;
 	_bool			m_bFix;
 	_bool			m_bCheck;

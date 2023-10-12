@@ -49,7 +49,7 @@ HRESULT CImGuiManager::SetUp_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 
     //승용 시작
     //Engine::Ready_Proto(L"Proto_EffectTexture", CTexture::Create(Engine::Get_GraphicDev(), TEX_NORMAL, L"../Bin/Resource/Texture/UI/Explosion%d.png", 90));
-    ReadImgPath(L"..\\Bin\\Resource\\Texture\\UI", pGraphicDev);
+    //ReadImgPath(L"..\\Bin\\Resource\\Texture\\UI", pGraphicDev);
 
 	//맵툴(환경)에서 사용할 파일 읽어오기 - 유진
 	LoadTexturesFromDirectory(L"../Bin/Resource/Texture/Cube", m_MainCubeTexture);
@@ -63,7 +63,7 @@ HRESULT CImGuiManager::SetUp_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 _int CImGuiManager::Update_ImGui(const _float& fTimeDelta)
 {
 
-	
+
 	return 0;
 }
 
@@ -150,7 +150,7 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 							char TextNow[MAX_PATH];
 							sprintf_s(TextNow, u8"큐브 높이: %.f", m_fCubeHeightLevel);
 							ImGui::Text(TextNow);
-								
+
 							ImGui::SameLine();
 							if (ImGui::Button(u8"높이 초기화"))
 							{	m_fCubeHeightLevel = 0;	}
@@ -250,7 +250,7 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 						}
 
 						ImGui::NewLine();
-	
+
 						if (ImGui::Button("C_Point Save"))
 						{
 							Save_CPointData();
@@ -750,118 +750,118 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 
 
 #pragma region UI 툴
-if (ImGui::TreeNode(u8"UI 툴"))
-{
-
-	ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
-	if (ImGui::BeginTabBar("UI 툴", tab_bar_flags))
-	{
-		if (ImGui::BeginTabItem(u8"UI_1"))
-		{
-
-			ImGui::SeparatorText(u8"추가한 데이터 (인덱스기준)");
-			{
-				if (ImGui::Button(u8"빈 데이터 추가"))
-				{
-					CMyUI* pMyUI = CMyUI::Create(Engine::Get_GraphicDev(), nullptr, UI_TYPE::BASIC);
-
-					m_vecUIList.push_back(pMyUI);
-					m_vecUIName.push_back(L"test");
-
-				}
-				ImGui::SetNextItemWidth(ImGui::GetFontSize() * 8);
-
-				ImGui::PushStyleColor(ImGuiCol_ChildBg, IM_COL32(255, 0, 0, 100));
-
-				ImGui::BeginListBox("Red", ImVec2(200, 800));
-				{
-					for (int i = 0; i < m_vecUIList.size(); ++i)
-					{
-						if (ImGui::Selectable(to_string(i).c_str()))
-						{
-							selected_UIIndex = i;
-						}
-
-					}
-				ImGui::EndListBox();
-				}
-				ImGui::PopStyleColor();
-			}
-
-			ImGui::SameLine();
-
-			if (m_vecUIList.size() != 0 && m_vecUIList[selected_UIIndex] && !m_bClick)
-			{
-				ImGui::BeginListBox(u8"이미지 박스", ImVec2(800, 800));
-				{
-
-					int UI_Index = 0;
-					for (auto iter : m_mapLoadUI1)
-					{
-						ImGui::PushID(UI_Index);
-						if (ImGui::ImageButton("", iter.second->Get_Info()->pTexture, ImVec2(96.f, 96.f)))
-						{
-							//lstrcmp(selected_UI_FileName, iter.first);
-							m_vecUIName[selected_UIIndex] = iter.first;
-							m_vecUIList[selected_UIIndex] = iter.second;
-							m_bClick = true;
-						}
-
-						++UI_Index;
-						ImGui::PopID();
-
-						if (UI_Index % 6 == 0)
-						{
-							ImGui::NewLine();
-						}
-						else
-						{
-							ImGui::SameLine();
-						}
-					}
-				ImGui::EndListBox();
-				}
-
-				if (ImGui::Button(u8"저장하기"))
-				{
-					for (int i = 0; i < m_vecUIList.size(); ++i)
-					{
-						m_mapChoiceUI.emplace(m_vecUIName[i], m_vecUIList[i]);
-					}
-
-					SaveData(L"UI");
-				}
-
-			}
-			else if (m_bClick)
-			{
-				ImGui::SameLine();
-				ImGui::BeginListBox(u8"데이터 입력", ImVec2(800, 800));
-				{
-
-					ImVec2 uv0 = ImVec2(0.0f, 0.0f);                            // UV coordinates for lower-left
-					ImVec2 uv1 = ImVec2(1.0f, 1.0f);                          // UV coordinates for (32,32) in our texture
-					ImVec4 bg_col = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);             // Black background
-					ImVec4 tint_col = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
-					ImGui::SameLine();
-					ImGui::Image(m_vecUIList[selected_UIIndex]->Get_Info()->pTexture, ImVec2(96.f, 96.f), uv0, uv1, tint_col, ImVec4(0.0f, 1.0f, 0.0f, 1.0f));
-					ImGui::InputFloat3(u8"위치", m_vecUIList[selected_UIIndex]->Get_Info()->vPos);
-					ImGui::InputFloat3(u8"크기", m_vecUIList[selected_UIIndex]->Get_Info()->vSize);
-
-					if (ImGui::Button(u8"선택 취소"))
-					{
-						m_bClick = false;
-					}
-				ImGui::EndListBox();
-				}
-			}
-			ImGui::EndTabItem();
-		}
-		ImGui::EndTabBar();
-	}
-	ImGui::Separator();
-	ImGui::TreePop();
-}
+// if (ImGui::TreeNode(u8"UI 툴"))
+// {
+//
+// 	ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
+// 	if (ImGui::BeginTabBar("UI 툴", tab_bar_flags))
+// 	{
+// 		if (ImGui::BeginTabItem(u8"UI_1"))
+// 		{
+//
+// 			ImGui::SeparatorText(u8"추가한 데이터 (인덱스기준)");
+// 			{
+// 				if (ImGui::Button(u8"빈 데이터 추가"))
+// 				{
+// 					CMyUI* pMyUI = CMyUI::Create(Engine::Get_GraphicDev(), nullptr, UI_TYPE::BASIC);
+//
+// 					m_vecUIList.push_back(pMyUI);
+// 					m_vecUIName.push_back(L"test");
+//
+// 				}
+// 				ImGui::SetNextItemWidth(ImGui::GetFontSize() * 8);
+//
+// 				ImGui::PushStyleColor(ImGuiCol_ChildBg, IM_COL32(255, 0, 0, 100));
+//
+// 				ImGui::BeginListBox("Red", ImVec2(200, 800));
+// 				{
+// 					for (int i = 0; i < m_vecUIList.size(); ++i)
+// 					{
+// 						if (ImGui::Selectable(to_string(i).c_str()))
+// 						{
+// 							selected_UIIndex = i;
+// 						}
+//
+// 					}
+// 				ImGui::EndListBox();
+// 				}
+// 				ImGui::PopStyleColor();
+// 			}
+//
+// 			ImGui::SameLine();
+//
+// 			if (m_vecUIList.size() != 0 && m_vecUIList[selected_UIIndex] && !m_bClick)
+// 			{
+// 				ImGui::BeginListBox(u8"이미지 박스", ImVec2(800, 800));
+// 				{
+//
+// 					int UI_Index = 0;
+// 					for (auto iter : m_mapLoadUI1)
+// 					{
+// 						ImGui::PushID(UI_Index);
+// 						if (ImGui::ImageButton("", iter.second->Get_Info()->pTexture, ImVec2(96.f, 96.f)))
+// 						{
+// 							//lstrcmp(selected_UI_FileName, iter.first);
+// 							m_vecUIName[selected_UIIndex] = iter.first;
+// 							m_vecUIList[selected_UIIndex] = iter.second;
+// 							m_bClick = true;
+// 						}
+//
+// 						++UI_Index;
+// 						ImGui::PopID();
+//
+// 						if (UI_Index % 6 == 0)
+// 						{
+// 							ImGui::NewLine();
+// 						}
+// 						else
+// 						{
+// 							ImGui::SameLine();
+// 						}
+// 					}
+// 				ImGui::EndListBox();
+// 				}
+//
+// 				if (ImGui::Button(u8"저장하기"))
+// 				{
+// 					for (int i = 0; i < m_vecUIList.size(); ++i)
+// 					{
+// 						m_mapChoiceUI.emplace(m_vecUIName[i], m_vecUIList[i]);
+// 					}
+//
+// 					SaveData(L"UI");
+// 				}
+//
+// 			}
+// 			else if (m_bClick)
+// 			{
+// 				ImGui::SameLine();
+// 				ImGui::BeginListBox(u8"데이터 입력", ImVec2(800, 800));
+// 				{
+//
+// 					ImVec2 uv0 = ImVec2(0.0f, 0.0f);                            // UV coordinates for lower-left
+// 					ImVec2 uv1 = ImVec2(1.0f, 1.0f);                          // UV coordinates for (32,32) in our texture
+// 					ImVec4 bg_col = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);             // Black background
+// 					ImVec4 tint_col = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
+// 					ImGui::SameLine();
+// 					ImGui::Image(m_vecUIList[selected_UIIndex]->Get_Info()->pTexture, ImVec2(96.f, 96.f), uv0, uv1, tint_col, ImVec4(0.0f, 1.0f, 0.0f, 1.0f));
+// 					ImGui::InputFloat3(u8"위치", m_vecUIList[selected_UIIndex]->Get_Info()->vPos);
+// 					ImGui::InputFloat3(u8"크기", m_vecUIList[selected_UIIndex]->Get_Info()->vSize);
+//
+// 					if (ImGui::Button(u8"선택 취소"))
+// 					{
+// 						m_bClick = false;
+// 					}
+// 				ImGui::EndListBox();
+// 				}
+// 			}
+// 			ImGui::EndTabItem();
+// 		}
+// 		ImGui::EndTabBar();
+// 	}
+// 	ImGui::Separator();
+// 	ImGui::TreePop();
+// }
 #pragma endregion
 
 #pragma region 카메라툴
@@ -898,167 +898,167 @@ void CImGuiManager::Render_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 
 #pragma region 승용 오빠 파일 Save/Load 관련 함수
 
-HRESULT CImGuiManager::ReadImgPath(const _tchar* folderPath, LPDIRECT3DDEVICE9 pGraphicDev)
-{
-	//파일 및 디렉토리 정보를 저장하기 위한 구조체
-	WIN32_FIND_DATA findData;
+// HRESULT CImGuiManager::ReadImgPath(const _tchar* folderPath, LPDIRECT3DDEVICE9 pGraphicDev)
+// {
+// 	파일 및 디렉토리 정보를 저장하기 위한 구조체
+// 		WIN32_FIND_DATA findData;
+//
+// 		//floderPath의 값을 wFolderPath에 저장 (폴더 경로를 유니코드문자열로 처리)
+//
+// 		wstring wfolderPath = (wstring)folderPath + L"\\*.*";
+//
+// 		HANDLE hFind = FindFirstFileW(wfolderPath.c_str(), &findData);
+//
+// 		if (hFind != INVALID_HANDLE_VALUE)
+// 		{
+// 			//폴더 내의 모든 파일과 디렉토리를 검색 FindNextFile함수를 사용해서 다음파일 또는 디렉토리를 찾는다
+// 			do
+// 			{
+// 				if (findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+// 				{
+// 					// 디렉토리인 경우, "."(현재 디렉토리)와 ".."(상위 디렉토리)를 제외
+// 					if (lstrcmp(findData.cFileName, L".") != 0 && lstrcmp(findData.cFileName, L"..") != 0)
+// 					{
+// 						// 하위 폴더의 경로 생성
+// 						wstring subFolderPath = (wstring)folderPath + L"\\" + findData.cFileName;
+// 						// 재귀 호출로 하위 디렉토리 검사
+//
+// 						ReadImgPath(subFolderPath.c_str(), pGraphicDev);
+//
+// 					}
+// 				}
+// 				else
+// 				{
+// 					// 파일인 경우, 이미지 파일인지 확인하고 로드
+// 					wstring filePath = (wstring)folderPath + L"\\" + findData.cFileName;
+//
+// 					if (wcsstr(findData.cFileName, L".png") || wcsstr(findData.cFileName, L".jpg") ||
+// 						wcsstr(findData.cFileName, L".bmp") || wcsstr(findData.cFileName, L".tga"))
+// 					{
+// 						IDirect3DBaseTexture9* pTexture = nullptr;
+// 						if (SUCCEEDED(D3DXCreateTextureFromFile(Engine::Get_GraphicDev(), filePath.c_str(), (LPDIRECT3DTEXTURE9*)&pTexture)))
+// 						{
+// 							const _tchar* szKey = findData.cFileName;
+// 							CMyUI* pMyUI = nullptr;
+//
+// 							if (!FindUI(szKey))
+// 							{
+// 								// szKey를 복사하여 동적으로 할당
+// 								_tchar* copiedKey = new _tchar[_tcslen(szKey) + 1];
+// 								_tcscpy_s(copiedKey, _tcslen(szKey) + 1, szKey);
+// 								Engine::Ready_Proto(L"Proto_UITex", CUITex::Create(pGraphicDev));
+// 								Engine::Ready_Proto(L"Proto_BaseUI", CTexture::Create(pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/all wheels.png"));
+//
+// 								if (wcsstr(findData.cFileName, L"HP"))
+// 								{
+// 									pMyUI = CMyUI::Create(pGraphicDev, pTexture, UI_TYPE::HP);
+//
+// 								}
+// 								else
+// 								{
+// 									pMyUI = CMyUI::Create(pGraphicDev, pTexture, UI_TYPE::BASIC);
+// 								}
+//
+//
+// 								// 동적으로 할당한 copiedKey를 맵에 넣어야 합니다.
+// 								m_mapLoadUI1.emplace(copiedKey, pMyUI);
+// 							}
+// 						}
+// 					}
+// 				}
+// 			} while (FindNextFile(hFind, &findData));
+//
+// 			FindClose(hFind); // 파일 핸들을 닫음
+//
+// 		}
+//
+// 		return S_OK;
+// }
 
-	//floderPath의 값을 wFolderPath에 저장 (폴더 경로를 유니코드문자열로 처리)
-
-	wstring wfolderPath = (wstring)folderPath + L"\\*.*";
-
-	HANDLE hFind = FindFirstFileW(wfolderPath.c_str(), &findData);
-
-	if (hFind != INVALID_HANDLE_VALUE)
-	{
-		//폴더 내의 모든 파일과 디렉토리를 검색 FindNextFile함수를 사용해서 다음파일 또는 디렉토리를 찾는다
-		do
-		{
-			if (findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
-			{
-				// 디렉토리인 경우, "."(현재 디렉토리)와 ".."(상위 디렉토리)를 제외
-				if (lstrcmp(findData.cFileName, L".") != 0 && lstrcmp(findData.cFileName, L"..") != 0)
-				{
-					// 하위 폴더의 경로 생성
-					wstring subFolderPath = (wstring)folderPath + L"\\" + findData.cFileName;
-					// 재귀 호출로 하위 디렉토리 검사
-
-					ReadImgPath(subFolderPath.c_str(), pGraphicDev);
-
-				}
-			}
-			else
-			{
-				// 파일인 경우, 이미지 파일인지 확인하고 로드
-				wstring filePath = (wstring)folderPath + L"\\" + findData.cFileName;
-
-				if (wcsstr(findData.cFileName, L".png") || wcsstr(findData.cFileName, L".jpg") ||
-					wcsstr(findData.cFileName, L".bmp") || wcsstr(findData.cFileName, L".tga"))
-				{
-					IDirect3DBaseTexture9* pTexture = nullptr;
-					if (SUCCEEDED(D3DXCreateTextureFromFile(Engine::Get_GraphicDev(), filePath.c_str(), (LPDIRECT3DTEXTURE9*)&pTexture)))
-					{
-						const _tchar* szKey = findData.cFileName;
-						CMyUI* pMyUI = nullptr;
-
-						if (!FindUI(szKey))
-						{
-							// szKey를 복사하여 동적으로 할당
-							_tchar* copiedKey = new _tchar[_tcslen(szKey) + 1];
-							_tcscpy_s(copiedKey, _tcslen(szKey) + 1, szKey);
-							Engine::Ready_Proto(L"Proto_UITex", CUITex::Create(pGraphicDev));
-							Engine::Ready_Proto(L"Proto_BaseUI", CTexture::Create(pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/all wheels.png"));
-
-							if (wcsstr(findData.cFileName, L"HP"))
-							{
-								pMyUI = CMyUI::Create(pGraphicDev, pTexture, UI_TYPE::HP);
-
-							}
-							else
-							{
-								pMyUI = CMyUI::Create(pGraphicDev, pTexture, UI_TYPE::BASIC);
-							}
-
-
-							// 동적으로 할당한 copiedKey를 맵에 넣어야 합니다.
-							m_mapLoadUI1.emplace(copiedKey, pMyUI);
-						}
-					}
-				}
-			}
-		} while (FindNextFile(hFind, &findData));
-
-		FindClose(hFind); // 파일 핸들을 닫음
-
-	}
-
-	return S_OK;
-}
-
-HRESULT CImGuiManager::SaveData(const _tchar* mapTag)
-{
-	wstring m_strText = L"UIData.dat";
-
-
-	OPENFILENAME    open;
-	TCHAR   lpstrFile[MAX_PATH] = L"";
-	static TCHAR filter[] = L"*.dat";
-
-	ZeroMemory(&open, sizeof(OPENFILENAME));
-	open.lStructSize = sizeof(OPENFILENAME);
-	open.lpstrFilter = filter;
-	open.lpstrFile = lpstrFile;
-	open.nMaxFile = 2562;
-	open.lpstrInitialDir = L"";
-
-	GetModuleFileName(NULL, lpstrFile, MAX_PATH);
-	//C:\Users\wnqj4\Desktop\SR_Project\Client\Bin\Client.exe
-
-	PathRemoveFileSpec(lpstrFile);
-	//C:\Users\wnqj4\Desktop\SR_Project\Client\Bin
-
-	lstrcat(lpstrFile, L"\\Data\\UI");
-	//C:\Users\wnqj4\Desktop\SR_Project\Client\Bin\Data\UI
-
-	//basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
-	const _tchar* aa = m_strText.c_str();
-
-	wcscat_s(lpstrFile, L"\\");
-	wcscat_s(lpstrFile, aa);
-
-
-	if (GetSaveFileName(&open) != 0) {
-
-		SaveUI(m_strText, lpstrFile);
-
-
-		MSG_BOX("저장 완료");
-		return S_OK;
-	}
-}
-
-
-
-void CImGuiManager::SaveUI(wstring wstrFileName, wstring wstrFilePath)
-{
-	FILE* op = NULL;
-	//lpstrFile
-
-	_wfopen_s(&op, wstrFileName.c_str(), L"w");
-
-	if (op == NULL)
-		return;
-
-	//        fwprintf(op, L"#KEY             TEXTURE                  SIZE(X,Y,Z)                   POS(X,Y,Z)\n");
-
-	for (const auto& iter : m_mapChoiceUI)
-	{
-
-		wstring wstrkey = iter.first;
-		_vec3                  vSize = iter.second->Get_Info()->vSize;
-		_vec3                  vPos = iter.second->Get_Info()->vPos;
+// HRESULT CImGuiManager::SaveData(const _tchar* mapTag)
+// {
+// 	wstring m_strText = L"UIData.dat";
+//
+//
+// 	OPENFILENAME    open;
+// 	TCHAR   lpstrFile[MAX_PATH] = L"";
+// 	static TCHAR filter[] = L"*.dat";
+//
+// 	ZeroMemory(&open, sizeof(OPENFILENAME));
+// 	open.lStructSize = sizeof(OPENFILENAME);
+// 	open.lpstrFilter = filter;
+// 	open.lpstrFile = lpstrFile;
+// 	open.nMaxFile = 2562;
+// 	open.lpstrInitialDir = L"";
+//
+// 	GetModuleFileName(NULL, lpstrFile, MAX_PATH);
+// 	//C:\Users\wnqj4\Desktop\SR_Project\Client\Bin\Client.exe
+//
+// 	PathRemoveFileSpec(lpstrFile);
+// 	//C:\Users\wnqj4\Desktop\SR_Project\Client\Bin
+//
+// 	lstrcat(lpstrFile, L"\\Data\\UI");
+// 	//C:\Users\wnqj4\Desktop\SR_Project\Client\Bin\Data\UI
+//
+// 	//basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
+// 	const _tchar* aa = m_strText.c_str();
+//
+// 	wcscat_s(lpstrFile, L"\\");
+// 	wcscat_s(lpstrFile, aa);
+//
+//
+// 	if (GetSaveFileName(&open) != 0) {
+//
+// 		SaveUI(m_strText, lpstrFile);
+//
+//
+// 		MSG_BOX("저장 완료");
+// 		return S_OK;
+// 	}
+// }
 
 
-		fwprintf(op, L"%s,%f,%f,%f,%f,%f,%f\n", wstrkey.c_str(), vSize.x, vSize.y, vSize.z, vPos.x, vPos.y, vPos.z);
-	}
+//
+// void CImGuiManager::SaveUI(wstring wstrFileName, wstring wstrFilePath)
+// {
+// 	FILE* op = NULL;
+// 	//lpstrFile
+//
+// 	_wfopen_s(&op, wstrFileName.c_str(), L"w");
+//
+// 	if (op == NULL)
+// 		return;
+//
+// 	//        fwprintf(op, L"#KEY             TEXTURE                  SIZE(X,Y,Z)                   POS(X,Y,Z)\n");
+//
+// 	for (const auto& iter : m_mapChoiceUI)
+// 	{
+//
+// 		wstring wstrkey = iter.first;
+// 		_vec3                  vSize = iter.second->Get_Info()->vSize;
+// 		_vec3                  vPos = iter.second->Get_Info()->vPos;
+//
+//
+// 		fwprintf(op, L"%s,%f,%f,%f,%f,%f,%f\n", wstrkey.c_str(), vSize.x, vSize.y, vSize.z, vPos.x, vPos.y, vPos.z);
+// 	}
+//
+// 	if (op == NULL)
+// 	{
+// 		MSG_BOX("op 널이다~");
+// 	}
+//
+// 	fclose(op);
+// }
 
-	if (op == NULL)
-	{
-		MSG_BOX("op 널이다~");
-	}
-
-	fclose(op);
-}
-
-CMyUI* CImGuiManager::FindUI(const _tchar* szKey)
-{
-	auto iter = find_if(m_mapLoadUI1.begin(), m_mapLoadUI1.end(), CTag_Finder(szKey));
-
-	if (iter == m_mapLoadUI1.end())
-		return nullptr;
-
-	return iter->second;
-}
+// CMyUI* CImGuiManager::FindUI(const _tchar* szKey)
+// {
+// 	auto iter = find_if(m_mapLoadUI1.begin(), m_mapLoadUI1.end(), CTag_Finder(szKey));
+//
+// 	if (iter == m_mapLoadUI1.end())
+// 		return nullptr;
+//
+// 	return iter->second;
+// }
 
 #pragma endregion
 

@@ -3,9 +3,6 @@
 #include "GameObject.h"
 #include "Monster.h"
 
-//TODO - ½Â¿ëÃß°¡
-#include "MyUI.h"
-
 class CMonsterState;
 
 BEGIN(Engine)
@@ -28,7 +25,7 @@ private:
 	explicit			CDullSuitMonster(CMonster& rhs);
 	virtual				~CDullSuitMonster();
 
-public:		
+public:
 	virtual HRESULT		Ready_GameObject() override;
 	virtual _int		Update_GameObject(const _float& fTimeDelta) override;
 	virtual void		LateUpdate_GameObject() override;

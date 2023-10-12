@@ -31,6 +31,6 @@ private:
 	_float      m_fMoveTime = 20.f;
 	_float		m_fDieTime = 20.f;
 private:
-	virtual void Free() override;
+	virtual void Free();
 };
 

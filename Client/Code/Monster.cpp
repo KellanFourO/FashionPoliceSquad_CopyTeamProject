@@ -10,8 +10,6 @@
 
 #include "MonsterState.h"
 
-// TODO - 승용 추가 : 몬스터 HP UI.
-#include "UIMgr.h"
 
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev)
 	:Engine::CGameObject(pGraphicDev)
@@ -32,10 +30,10 @@ HRESULT CMonster::Ready_GameObject()
 	Set_ObjectTag(OBJECTTAG::MONSTER);
 
 	// TODO - 승용 추가
-	if (Set_HP() == E_FAIL)
-	{
-		MSG_BOX("승용 몬스터 HP 에러");
-	}
+	//if (Set_HP() == E_FAIL)
+	//{
+	//	MSG_BOX("승용 몬스터 HP 에러");
+	//}
 	// TODO - 승용 추가 종료
 
 
@@ -65,8 +63,8 @@ _int CMonster::Update_GameObject(const _float& fTimeDelta)
 
 	StateMachine(fTimeDelta);
 
-	m_pUI_HPFrame->Update_GameObject(fTimeDelta);
-	m_pUI_HPValue->Update_GameObject(fTimeDelta);
+	//m_pUI_HPFrame->Update_GameObject(fTimeDelta);
+	//m_pUI_HPValue->Update_GameObject(fTimeDelta);
 	m_pCollider->SetCenterPos(m_pTransformCom->m_vInfo[INFO_POS]);
 	m_pRigidBody->Update_RigidBody(fTimeDelta);
 
@@ -80,8 +78,8 @@ void CMonster::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
 
-	m_pUI_HPFrame->LateUpdate_GameObject();
-	m_pUI_HPValue->LateUpdate_GameObject();
+	//m_pUI_HPFrame->LateUpdate_GameObject();
+	//m_pUI_HPValue->LateUpdate_GameObject();
 }
 
 void CMonster::Render_GameObject()
@@ -283,24 +281,24 @@ void CMonster::StateMachine(const _float& fTimeDelta)
 
 HRESULT CMonster::Set_HP()
 {
-	m_pUI_HPFrame = CUIMgr::GetInstance()->Get_UI_Clone(L"HP_Monster.png");
-	m_pUI_HPValue = CUIMgr::GetInstance()->Get_UI_Clone(L"VALUE_Monster.png");
-
-	//m_pUI_Recognition = CRecognitionRange::Create(m_pGraphicDev, this);
-
-	m_pUI_HPFrame->Set_Target(this);
-	m_pUI_HPValue->Set_Target(this);
-
-	_float fRatio = 5.f;
-	_float fFrame = 5.1f;
-	m_pUI_HPFrame->Set_ScaleRatio(fFrame);
-	m_pUI_HPValue->Set_ScaleRatio(fRatio);
+	//m_pUI_HPFrame = CUIMgr::GetInstance()->Get_UI_Clone(L"HP_Monster.png");
+	//m_pUI_HPValue = CUIMgr::GetInstance()->Get_UI_Clone(L"VALUE_Monster.png");
+	//
+	////m_pUI_Recognition = CRecognitionRange::Create(m_pGraphicDev, this);
+	//
+	//m_pUI_HPFrame->Set_Target(this);
+	//m_pUI_HPValue->Set_Target(this);
+	//
+	//_float fRatio = 5.f;
+	//_float fFrame = 5.1f;
+	//m_pUI_HPFrame->Set_ScaleRatio(fFrame);
+	//m_pUI_HPValue->Set_ScaleRatio(fRatio);
 
 
 	int i = 0;
 
-	if (!m_pUI_HPValue || !m_pUI_HPFrame)
-		return E_FAIL;
+	//if (!m_pUI_HPValue || !m_pUI_HPFrame)
+	//	return E_FAIL;
 
 	return S_OK;
 }
@@ -407,8 +405,8 @@ void CMonster::Set_Pos(_vec3 _vPos)
 
 void CMonster::Free()
 {
-	Safe_Release(m_pUI_HPFrame);
-	Safe_Release(m_pUI_HPValue);
+	//Safe_Release(m_pUI_HPFrame);
+	//Safe_Release(m_pUI_HPValue);
 
 
 	__super::Free();

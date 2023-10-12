@@ -30,6 +30,7 @@ HRESULT COctree::Ready_Octree()
 	//TODO - 승용추가 옥트리 어떻게 돌아가는진 모르겠으나 밑에서 절두체 MakeFrustum 으로 값셋팅됏으니 어케 잘 쓰면 가능할지도.
 	m_pFrustum = new CFrustum;
 
+
 	return S_OK;
 }
 

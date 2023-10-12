@@ -142,5 +142,5 @@ void CJumpSmoke::billboard()
 
 void CJumpSmoke::Free()
 {
-
+	__super::Free();
 }

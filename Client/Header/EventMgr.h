@@ -1,8 +1,8 @@
 #pragma once
 #include "Engine_Define.h"
 #include "Base.h"
-#include "CardList.h"
-#include "MyDialog.h"
+#include "UI_CardList.h"
+#include "UI_MyDialog.h"
 
 BEGIN(Engine)
 

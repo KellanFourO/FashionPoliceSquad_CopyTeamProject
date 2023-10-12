@@ -40,11 +40,11 @@ CPlayerGunState* CTailorAssertRifle_Idle::Update(CPlayerGun* Rifle, const float&
 	m_vPrePos = vPlayerPos; // 이전 좌표랑 비교해서 숫자가 다르면 WALK로 넘김
 
 	if (m_pHost->Get_Fire() && m_pHost->Get_GunInfo()->m_iCurrentBullet > 0)
-		return dynamic_cast<CTailorAssertRifle*>(m_pHost)->Get_State(4);
+		return dynamic_cast<CTailorAssertRifle*>(m_pHost)->Get_State(3); // Shot
 
 	else if (m_pHost->Get_GunInfo()->m_iCurrentBullet <= 0)
 	{
-		return dynamic_cast<CTailorAssertRifle*>(m_pHost)->Get_State(5);
+		return dynamic_cast<CTailorAssertRifle*>(m_pHost)->Get_State(4); // Reload
 	}
 
     return nullptr;

@@ -104,7 +104,7 @@ void CollisionMgr::CheckCollisionByType(OBJECTTAG _eObjectLeft, OBJECTTAG _eObje
 	//for (auto& iterL = vecLeft.begin(); iterL != vecLeft.end(); ++iterL)
 	for (auto& iterL : vecLeft)
 	{
-	
+
 		//for (auto& iterR = vecRight.begin(); iterR != vecRight.end(); ++iterR)
 		for (auto& iterR : vecRight)
 		{
@@ -206,11 +206,12 @@ void CollisionMgr::CheckCollisionStatic(OBJECTTAG _eObjectLeft)
 
 
 		_vec3 vHostPos = dynamic_cast<CTransform*>(iterL->Get_Component(ID_DYNAMIC, COMPONENTTAG::TRANSFORM))->m_vInfo[INFO_POS];
-		COctreeNode* pParentNode = Octree()->GetParentNodeByPos(vHostPos, Engine::Octree()->GetOctreeRoot());
-		if (!pParentNode) return;
+		//COctreeNode* pParentNode = Octree()->GetParentNodeByPos(vHostPos, Engine::Octree()->GetOctreeRoot());
 
-		const vector<CGameObject*>& vecRight = pParentNode->GetObjectList();
-		//const vector<CGameObject*>& vecRight = pScene->Get_ObjectList(LAYERTAG::ENVIRONMENT, OBJECTTAG::BUILD_CUBE); // 유진 추가
+		//if (!pParentNode) return;
+
+		//const vector<CGameObject*>& vecRight = pParentNode->GetObjectList();
+		const vector<CGameObject*>& vecRight = pScene->Get_ObjectList(LAYERTAG::ENVIRONMENT, OBJECTTAG::BUILD_CUBE); // 유진 추가
 
 		for (auto& iterR : vecRight)
 		{

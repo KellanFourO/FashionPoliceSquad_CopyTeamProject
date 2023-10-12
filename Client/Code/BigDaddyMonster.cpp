@@ -11,9 +11,6 @@
 #include "MonsterBombEffect.h"
 #include "MonsterState.h"
 
-// TODO - 승용 추가 : 몬스터 HP UI.
-#include "UIMgr.h"
-
 CBigDaddyMonster::CBigDaddyMonster(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {

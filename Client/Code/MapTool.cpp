@@ -14,7 +14,6 @@ CMapTool::CMapTool(LPDIRECT3DDEVICE9 pGraphicDev)
 
 CMapTool::~CMapTool()
 {
-    Free();
 }
 
 HRESULT CMapTool::Ready_Scene()
@@ -87,7 +86,7 @@ void CMapTool::LateUpdate_Scene()
 
 void CMapTool::Render_Scene()
 {
-    // -DEBUG 등 
+    // -DEBUG 등
 }
 
 
@@ -281,14 +280,14 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
 					if (eAttribute == OBJ_ATTRIBUTE::MOVING_OBJ)
 					{
 						OBJTemp3 = new OBJData(*OBJTemp);
-						m_VecMoving.push_back(OBJTemp3); //상동 
+						m_VecMoving.push_back(OBJTemp3); //상동
 					}
 
 					if (eAttribute == OBJ_ATTRIBUTE::C_POINT_OBJ)
                     {
                         OBJ_C_POINT->defOBJData = *OBJTemp;
                         OBJ_C_POINT->eMonsterType = CImGuiManager::GetInstance()->Get_MonsterType();
-                        
+
                         m_VecCreatePoint.push_back(OBJ_C_POINT); //얜 이거 따로 저장
                     }
 
@@ -320,7 +319,7 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
         }
     }
 
-// 
+//
 // 	if (CImGuiManager::GetInstance()->Get_BuildModeCheck() == true) {
 // 		Safe_Delete(CubeTemp2);
 // 	}
@@ -501,7 +500,7 @@ HRESULT CMapTool::Load_CPoint(const TCHAR* pFilePath)
 	//벡터 내용물만큼 실제 생성해 레이어에 담기
 	for (auto& iter : m_VecCreatePoint)
 	{
-		pGameObject = CBuild_Obj::Create(m_pGraphicDev, iter->defOBJData.vPos, iter->defOBJData.uiTextureNum, 
+		pGameObject = CBuild_Obj::Create(m_pGraphicDev, iter->defOBJData.vPos, iter->defOBJData.uiTextureNum,
             iter->defOBJData.vSize, iter->defOBJData.iRotateCount, m_iOBJIndex, iter->defOBJData.eOBJ_TYPE, iter->defOBJData.eOBJ_Attribute);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
@@ -736,7 +735,7 @@ bool CMapTool::CheckDuplicateCube(const _vec3& pPos, const _vec3& pSize)
         if (bCheckPoint == true) //트루로 시작해서 쭉 그대로 왔다는건 하나도 안 걸린 것
         {
             return true;
-        }  // 즉 중복이 발생한 거임 그럼 바로 return한다      
+        }  // 즉 중복이 발생한 거임 그럼 바로 return한다
     }
 
     return false; // 안 겹쳤어 끝까지! = 설치 가능/ 중복 아님

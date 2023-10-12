@@ -16,7 +16,6 @@ CSkyBox::CSkyBox(const CSkyBox& rhs)
 
 CSkyBox::~CSkyBox()
 {
-	Free();
 }
 
 HRESULT CSkyBox::Add_Component()
