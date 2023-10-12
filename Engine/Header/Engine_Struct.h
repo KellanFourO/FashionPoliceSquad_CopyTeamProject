@@ -271,7 +271,11 @@ namespace Engine
 		bool		isAlive;	//파티클이 생존한 경우 True , 소멸한 경우 False
 	}ATTRIBUTE;
 
-
+	typedef struct      Ray_Info
+	{
+		_vec3 vRayPos;
+		_vec3 vRayDir;
+	}RAY;
 
 
 }

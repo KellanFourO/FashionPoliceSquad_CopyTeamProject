@@ -6,7 +6,7 @@
 //TODO - ½Â¿ëÃß°¡
 #include "MyUI.h"
 #include "RecognitionRange.h"
-
+#include "DustGrey.h"
 class CMonsterState;
 class CBossState;
 

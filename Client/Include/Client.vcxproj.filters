@@ -400,6 +400,9 @@
     <Filter Include="02. GameObject\06. Effect\03.MBulletExplosion">
       <UniqueIdentifier>{994b08d2-e431-4213-b9ce-ae62c240a2e7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\01. Player\97.RAY">
+      <UniqueIdentifier>{21d9c14e-a73f-4850-af67-26cddf3fb4bf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -867,6 +870,9 @@
     <ClInclude Include="..\Header\MBulletBombEffect.h">
       <Filter>02. GameObject\06. Effect\03.MBulletExplosion</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Ray.h">
+      <Filter>02. GameObject\01. Player\97.RAY</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1321,6 +1327,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\MBulletBombEffect.cpp">
       <Filter>02. GameObject\06. Effect\03.MBulletExplosion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Ray.cpp">
+      <Filter>02. GameObject\01. Player\97.RAY</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

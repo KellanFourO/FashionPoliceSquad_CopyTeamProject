@@ -293,6 +293,7 @@
     <ClInclude Include="..\Header\Portrait.h" />
     <ClInclude Include="..\Header\ProgressFrame.h" />
     <ClInclude Include="..\Header\ProgressValue.h" />
+    <ClInclude Include="..\Header\Ray.h" />
     <ClInclude Include="..\Header\RecognitionRange.h" />
     <ClInclude Include="..\Header\Rifle_Bullet1.h" />
     <ClInclude Include="..\Header\ShotGun_Bullet.h" />
@@ -423,6 +424,7 @@
     <ClCompile Include="..\Code\Portrait.cpp" />
     <ClCompile Include="..\Code\ProgressFrame.cpp" />
     <ClCompile Include="..\Code\ProgressValue.cpp" />
+    <ClCompile Include="..\Code\Ray.cpp" />
     <ClCompile Include="..\Code\RecognitionRange.cpp" />
     <ClCompile Include="..\Code\Rifle_Bullet1.cpp" />
     <ClCompile Include="..\Code\ShotGun_Bullet.cpp" />
