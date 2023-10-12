@@ -181,16 +181,29 @@ HRESULT CPlayer::Add_Component()
 	return S_OK;
 }
 
-void CPlayer::SetGun()
+void CPlayer::SetGun(CLayer* _pLayer)
 {
 
 	CPlayerGun* pPlayerGun = nullptr;
 
-	pPlayerGun = dynamic_cast<CPaintShotGun*>(Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER_GUN).front());
-	m_vecPlayerGun.push_back(pPlayerGun);
+	if (_pLayer)
+	{
+		pPlayerGun = dynamic_cast<CPaintShotGun*>(_pLayer->Get_ObjectList(OBJECTTAG::PLAYER_GUN).front());
+		m_vecPlayerGun.push_back(pPlayerGun);
 
-	pPlayerGun = dynamic_cast<CTailorAssertRifle*>(Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER_GUN).back());
-	m_vecPlayerGun.push_back(pPlayerGun);
+		pPlayerGun = dynamic_cast<CTailorAssertRifle*>(_pLayer->Get_ObjectList(OBJECTTAG::PLAYER_GUN).back());
+		m_vecPlayerGun.push_back(pPlayerGun);
+	}
+	else
+	{
+		pPlayerGun = dynamic_cast<CPaintShotGun*>(Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER_GUN).front());
+		m_vecPlayerGun.push_back(pPlayerGun);
+
+		pPlayerGun = dynamic_cast<CTailorAssertRifle*>(Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER_GUN).back());
+		m_vecPlayerGun.push_back(pPlayerGun);
+	}
+
+
 	//
 	m_pGun = m_vecPlayerGun[0];
 

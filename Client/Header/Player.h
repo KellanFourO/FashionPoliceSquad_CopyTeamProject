@@ -53,7 +53,7 @@ public:
 	_bool			Get_SceneChange() { return m_bSceneChange;}
 
 	void			Set_SceneChange(_bool _bSceneChange) { m_bSceneChange = _bSceneChange;}
-	void			SetGun();
+	void			SetGun(CLayer* _pLayer = nullptr);
 	void			ClearGunList() { m_vecPlayerGun.clear(); }
 
 private:

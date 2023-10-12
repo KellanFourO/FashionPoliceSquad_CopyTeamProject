@@ -97,6 +97,7 @@ HRESULT CBossStage::Ready_LightInfo()
 
 HRESULT CBossStage::Ready_Prototype()
 {
+	//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_UITex", CUITex::Create(m_pGraphicDev)), E_FAIL);
 	return S_OK;
 }
 
@@ -120,7 +121,7 @@ HRESULT CBossStage::Ready_Layer_Environment(LAYERTAG eLayerTag)
 
 
 	Load_Data(L"../Bin/Data/Map/BossStage/MapData", OBJECTTAG::BUILD_CUBE);
-	//Load_Data(L"../Bin/Data/OBJ/BossStage/OBJData", OBJECTTAG::BUILD_OBJ);
+	Load_Data(L"../Bin/Data/OBJ/BossStage/OBJData", OBJECTTAG::BUILD_OBJ);
 
 	m_mapLayer.insert({ eLayerTag, m_pLayer });
 
@@ -154,6 +155,7 @@ HRESULT CBossStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		dynamic_cast<CTailorAssertRifle*>(pGameObject)->Set_Host(pPlayer);
 
 		dynamic_cast<CPlayer*>(pPlayer)->Set_SceneChange(false);
+		dynamic_cast<CPlayer*>(pPlayer)->SetGun(pLayer);
 
 		pGameObject = CTailorAssertRifleHand::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);

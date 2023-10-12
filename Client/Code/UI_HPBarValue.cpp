@@ -45,7 +45,7 @@ Engine::_int Engine::CHPBarValue::Update_GameObject(const _float& fTimeDelta)
 	_float fCurHp = m_pPlayer->Get_INFO()->fHP;
 
 	_float fRatio = fCurHp / fMaxHp;
-	_float fOrigin = m_tInfo.vSize.x;
+	_float fOrigin = m_vScale.x;
 	_float fSecond = fOrigin * fRatio;
 
 	_float fResult = fOrigin - fSecond;

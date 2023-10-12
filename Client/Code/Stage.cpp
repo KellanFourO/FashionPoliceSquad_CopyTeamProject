@@ -542,6 +542,7 @@ HRESULT CStage::Load_Data_C(const TCHAR* pFilePath, OBJECTTAG eTag)
 	}
 	m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
 
+
 	delete[] pTag;
 	pTag = nullptr;
 
