@@ -86,7 +86,7 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
         ImGui::Begin("Tool", &m_bToolSwitch);
 
 #pragma region 맵툴
-        if (ImGui::TreeNode(u8"맵 툴 / OBJ 툴"))
+        if (ImGui::TreeNode(u8"맵 툴 / OBJ 툴 / 트리거 툴"))
         {
             if (ImGui::TreeNode(u8"건물"))
             {
@@ -106,6 +106,8 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 						if (m_bBuild_Mode_Check)
 						{
 							m_bOBJ_Mode_Check = false;
+							m_bTrigger_Mode_Check = false;
+
 							ImGui::Image(selected_texture0, ImVec2(96.0f, 96.0f), uv0, uv1, tint_col, ImVec4(0.0f, 1.0f, 0.0f, 1.0f));
 							ImGui::NewLine();
 
@@ -136,17 +138,13 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 
 							}
 
-							if (ImGui::Button(" +5 "))
-								m_fCubeHeightLevel += 5;
+							if (ImGui::Button(" +5 ")) { m_fCubeHeightLevel += 5; }
 							ImGui::SameLine();
-							if (ImGui::Button(" -5 "))
-								m_fCubeHeightLevel -= 5;
+							if (ImGui::Button(" -5 ")) { m_fCubeHeightLevel -= 5; }
 							ImGui::SameLine();
-							if (ImGui::Button(" + "))
-								m_fCubeHeightLevel += 1;
+							if (ImGui::Button(" + ")) { m_fCubeHeightLevel += 1; }
 							ImGui::SameLine();
-							if (ImGui::Button(" - "))
-								m_fCubeHeightLevel -= 1;
+							if (ImGui::Button(" - ")) { m_fCubeHeightLevel -= 1; }
 
 							ImGui::SameLine();
 							char TextNow[MAX_PATH];
@@ -227,11 +225,12 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 					ImVec4 bg_col1 = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);          // Black background
 					ImVec4 tint_col1 = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);        // No tint
 
-					ImGui::Checkbox(u8"환경OBJ 모드", &m_bOBJ_Mode_Check);
+					ImGui::Checkbox(u8"OBJ 모드", &m_bOBJ_Mode_Check);
 
 					if (m_bOBJ_Mode_Check)
 					{
 						m_bBuild_Mode_Check = false;
+						m_bTrigger_Mode_Check = false;
 
 						float step = 0.5f; // 단위 설정
 
@@ -265,17 +264,13 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 
 						ImGui::NewLine();
 
-						if (ImGui::Button(" +5 "))
-							m_fCubeHeightLevel += 5;
+						if (ImGui::Button(" +5 ")) { m_fCubeHeightLevel += 5; }
 						ImGui::SameLine();
-						if (ImGui::Button(" -5 "))
-							m_fCubeHeightLevel -= 5;
+						if (ImGui::Button(" -5 ")) { m_fCubeHeightLevel -= 5; }
 						ImGui::SameLine();
-						if (ImGui::Button(" + "))
-							m_fCubeHeightLevel += 1;
+						if (ImGui::Button(" + ")) { m_fCubeHeightLevel += 1; }
 						ImGui::SameLine();
-						if (ImGui::Button(" - "))
-							m_fCubeHeightLevel -= 1;
+						if (ImGui::Button(" - ")) { m_fCubeHeightLevel -= 1; }
 
 						ImGui::SameLine();
 						char TextNow[MAX_PATH];
@@ -291,7 +286,7 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 						ImGui::Checkbox("Delete Mode", &m_bDelete_Mode_Check);
 
 						char TextNow22[MAX_PATH];
-						sprintf_s(TextNow22, u8" : 발동 조건 충족만을 목표로 하는 큐브");
+						sprintf_s(TextNow22, u8" : 사용 안함!!!!따로 뺌");
 
 						char TextNow2[MAX_PATH];
 						sprintf_s(TextNow2, u8" : 언젠가 움직일지도 모르는 큐브");
@@ -302,9 +297,9 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 						ImGui::RadioButton(u8"상호작용OBJ", &m_forObjAttribute, 1);
 						ImGui::RadioButton(u8"조명OBJ", &m_forObjAttribute, 2);
 						ImGui::RadioButton(u8"빌보드OBJ", &m_forObjAttribute, 3);
-						ImGui::RadioButton(u8"트리거OBJ", &m_forObjAttribute, 4); 
-						ImGui::SameLine();
-						ImGui::Text(TextNow22);
+// 						ImGui::RadioButton(u8"트리거OBJ", &m_forObjAttribute, 4); 
+// 						ImGui::SameLine();
+// 						ImGui::Text(TextNow22);
 						ImGui::RadioButton(u8"C_Point OBJ", &m_forObjAttribute, 5);
 						ImGui::RadioButton(u8"무빙 OBJ", &m_forObjAttribute, 6);
 						ImGui::SameLine();
@@ -325,9 +320,9 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 						case 3:
 							m_eOBJ_Attribute = OBJ_ATTRIBUTE::BILL_OBJ;
 							break;
-						case 4:
-							m_eOBJ_Attribute = OBJ_ATTRIBUTE::TRIGGER_OBJ;
-							break;
+// 						case 4:
+// 							m_eOBJ_Attribute = OBJ_ATTRIBUTE::TRIGGER_OBJ;
+// 							break;
 						case 5:
 							m_eOBJ_Attribute = OBJ_ATTRIBUTE::C_POINT_OBJ;
 							break;
@@ -369,20 +364,6 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 							m_eMonsterType = MonsterType::MOBTYPE_END;
 							break;
 						}
-
-						if (m_forObjAttribute == 4) //트리거 OBJ일 경우
-						{
-							// 이름 입력하는 창, 이름 변수
-							// 이름 변수는 char* 타입임
-							// 
-							// 드롭다운 박스로 enum 값 선택할 수 있도록
-							// 선택할 수 있는 enum값은 case와 Type. STATE는 못 줘.
-							// 드롭다운 선택한 값도 변수에 담기
-
-							// 나중에 이 값들은 MAPTOOL, STAGE에서 불러와서 create 직전에
-						}
-
-
 
 						ImGui::NewLine();
 
@@ -492,23 +473,229 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 									}
 									if (j % 5 == 4) { ImGui::NewLine(); }
 								}
-
 							}
 						}
-
 					}
 					ImGui::EndTabItem();
 				}
-
 		        ImGui::EndTabBar();
 		   }
 		  ImGui::Separator();
 		  ImGui::TreePop();
 		}
 
+#pragma endregion
+
+
+#pragma region 트리거 툴
+
+		if (ImGui::TreeNode(u8"트리거"))
+		{
+			ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
+			if (ImGui::BeginTabBar(u8"트리거", tab_bar_flags))
+			{
+				if (ImGui::BeginTabItem(u8"트리거 오브젝트"))
+				{
+					ImGui::Checkbox(u8"트리거 OBJ 모드", &m_bTrigger_Mode_Check);
+
+					if (m_bTrigger_Mode_Check)
+					{
+						m_bBuild_Mode_Check = false;
+						m_bOBJ_Mode_Check = false;
+
+						ImGui::Columns(2);
+
+						ImGui::Checkbox("Delete Mode", &m_bDelete_Mode_Check);
+						ImGui::NewLine();
+
+						float step = 0.5f; // 단위 설정
+
+						if (ImGui::Button("Trigger Save"))
+						{
+							Save_ObjData();
+						}
+						ImGui::SameLine();
+
+						if (ImGui::Button("Trigger Load"))
+						{
+							m_bTriggerLoad_Check = true;
+						}
+						ImGui::NewLine();
+
+						char TextNow111[MAX_PATH];
+						sprintf_s(TextNow111, u8"<1> 높이 및 크기 (SIZE)");
+
+						if (ImGui::Button(" +5 ")) { m_fCubeHeightLevel += 5; }
+						ImGui::SameLine();
+						if (ImGui::Button(" -5 ")) { m_fCubeHeightLevel -= 5; }
+						ImGui::SameLine();
+						if (ImGui::Button(" + ")) { m_fCubeHeightLevel += 1; }
+						ImGui::SameLine();
+						if (ImGui::Button(" - ")) { m_fCubeHeightLevel -= 1; }
+
+						ImGui::SameLine();
+						char TextNow[MAX_PATH];
+						sprintf_s(TextNow, u8"높이: %.f   ", m_fCubeHeightLevel);
+						ImGui::Text(TextNow);
+						ImGui::SameLine();
+						if (ImGui::Button(u8"높이 초기화"))
+						{
+							m_fCubeHeightLevel = 0;
+						}
+
+						ImGui::NewLine();
+
+						ImGui::SetNextItemWidth(70.0f);
+						if (ImGui::InputFloat("sizeX", &m_fCubesize.fX, 0.f, 0.f, "%.2f", !m_SizeSet_Check))
+							{
+							if (!m_SizeSet_Check) { m_fCubesize.fX = (roundf(m_fCubesize.fX / step) * step); }
+							}
+						ImGui::SameLine();
+
+						ImGui::SetNextItemWidth(70.0f);
+						if (ImGui::InputFloat("SizeY", &m_fCubesize.fY, 0.f, 0.f, "%.2f", !m_SizeSet_Check))
+							{
+							if (!m_SizeSet_Check) { m_fCubesize.fY = (roundf(m_fCubesize.fY / step) * step); }
+							}
+						ImGui::SameLine();
+
+						ImGui::SetNextItemWidth(70.0f);
+						if (ImGui::InputFloat("SizeZ", &m_fCubesize.fZ, 0.f, 0.f, "%.2f", !m_SizeSet_Check))
+							{
+								if (!m_SizeSet_Check) {m_fCubesize.fZ = (roundf(m_fCubesize.fZ / step) * step);}
+							}
+						ImGui::Checkbox(u8"사이즈 세팅 완료", &m_SizeSet_Check);
+						
+						ImGui::NewLine();
+
+
+
+						char TextNow222[MAX_PATH];
+						sprintf_s(TextNow222, u8"<2> 세부 속성값 (이름, case, type 등)");
+
+						char NameBuffer[MAX_PATH] = "";
+
+						int iComboTemp = static_cast<int>(m_eTR_CASE);
+						ImGui::SetNextItemWidth(150.0f);
+						ImGui::Combo(u8"Case 선택", &iComboTemp, Trigger_Case, static_cast<int>(TRIGGER_CASE::TR_CASE_END));
+
+						switch (iComboTemp)
+						{
+						case 0:
+							m_eTR_CASE = TRIGGER_CASE::TR_ONCE;
+							break;
+						case 1:
+							m_eTR_CASE = TRIGGER_CASE::TR_TWICE;
+							break;
+						case 2:
+							m_eTR_CASE = TRIGGER_CASE::TR_REPEAT;
+							break;
+						default:
+							m_eTR_CASE = TRIGGER_CASE::TR_CASE_END;
+							break;
+						}
+
+
+						int iComboTemp2 = static_cast<int>(m_eTR_TYPE);
+						ImGui::SetNextItemWidth(150.0f);
+						ImGui::Combo(u8"Type 선택", &iComboTemp2, Trigger_Type, static_cast<int>(TRIGGER_TYPE::TR_TYPE_END));
+
+						switch (iComboTemp2)
+						{
+						case 0:
+							m_eTR_TYPE = TRIGGER_TYPE::TR_MOVING;
+							break;
+						case 1:
+							m_eTR_TYPE = TRIGGER_TYPE::TR_UI;
+							break;
+						case 2:
+							m_eTR_TYPE = TRIGGER_TYPE::TR_DAMAGE;
+							break;
+						case 3:
+							m_eTR_TYPE = TRIGGER_TYPE::TR_MONSTER;
+							break;
+						case 4:
+							m_eTR_TYPE = TRIGGER_TYPE::TR_NOTHING;
+							break;
+						default:
+							m_eTR_TYPE = TRIGGER_TYPE::TR_TYPE_END;
+							break;
+						}
+
+						if ((ImGui::Button(u8"이름 List 추가")) && (m_bTR_Set_Ready_Check == true))
+						{
+							m_TriggerTemp = new TRIGGER;
+
+							m_TriggerTemp->TrCase = m_eTR_CASE;
+							m_TriggerTemp->TrType = m_eTR_TYPE;
+							m_TriggerTemp->vSize = { m_fCubesize.fX, m_fCubesize.fY, m_fCubesize.fZ };
+
+							m_VecListbox.push_back(m_TriggerTemp);
+							m_bTriggerReady_Check = true;
+
+							for (int i = 0; i < m_VecListbox.size(); ++i)
+							{
+								m_VecListbox[i]->stTriggerName = to_string(i).c_str();
+							}
+
+							Trigger_Info_Clear();
+						}	
+
+						ImGui::SameLine();
+						if (ImGui::Button(u8"선택 해제"))
+						{
+							Trigger_Info_Clear();
+						}
+
+						ImGui::NextColumn();
+
+						ImGui::Text(u8"내용 입력 > 세팅 완료 > 추가 > 리스트 선택 > 맵툴 상 피킹");
+						ImGui::NewLine();
+
+						if ((NameBuffer != "") && (m_eTR_CASE != TRIGGER_CASE::TR_CASE_END)
+							&& (m_eTR_TYPE != TRIGGER_TYPE::TR_TYPE_END) && (m_SizeSet_Check == true))
+						{
+							ImGui::Text(u8" ! 트리거 세팅 준비 완료");
+							m_bTR_Set_Ready_Check = true;
+						}
+						else {
+							ImGui::Text(u8" ! 트리거 세팅 불완전. 다시 확인바람.");
+							m_bTR_Set_Ready_Check = false;
+						}
+						ImGui::NewLine();
+
+						ImGui::BeginListBox("NameList", ImVec2(200, 350));
+						{
+							for (int i = 0; i < m_VecListbox.size(); ++i)
+							{
+								if (ImGui::Selectable(to_string(i).c_str()))
+								{
+									selected_UIIndex = i;
+
+									m_eTR_CASE = m_VecListbox[i]->TrCase;
+									m_eTR_TYPE = m_VecListbox[i]->TrType;
+									m_fCubesize.fX = m_VecListbox[i]->vSize.x;
+									m_fCubesize.fY = m_VecListbox[i]->vSize.y;
+									m_fCubesize.fZ = m_VecListbox[i]->vSize.z;
+								}
+							}
+							ImGui::EndListBox();
+						}
+
+
+					}
+					ImGui::EndTabItem();
+				}
+				ImGui::EndTabBar();
+			}
+			ImGui::Separator();
+			ImGui::TreePop();
+		}
            ImGui::Separator();
            ImGui::TreePop();
         }
+
+		ImGui::Columns(1); 
 
 #pragma endregion
 
@@ -1278,6 +1465,7 @@ void CImGuiManager::Free()
 
 	// m_mapLoadUI1.clear();
 
+	Safe_Delete(m_TriggerTemp);
 	Safe_Delete(m_defSortCube);
 	Safe_Delete(m_defSortTex);
 

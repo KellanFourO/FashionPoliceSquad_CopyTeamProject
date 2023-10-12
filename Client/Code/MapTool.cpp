@@ -273,11 +273,11 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
                     }
 
 
-                    if (eAttribute == OBJ_ATTRIBUTE::TRIGGER_OBJ)
-                    {
-                        OBJTemp2 = new OBJData(*OBJTemp);
-                        m_VecTrigger.push_back(OBJTemp2); //위에도 담기고 별도로 관리차원에서 여기도 담는 것
-                    }
+//                     if (eAttribute == OBJ_ATTRIBUTE::TRIGGER_OBJ)
+//                     {
+//                         OBJTemp2 = new OBJData(*OBJTemp);
+//                         m_VecTrigger.push_back(OBJTemp2); //위에도 담기고 별도로 관리차원에서 여기도 담는 것
+//                     }
 					if (eAttribute == OBJ_ATTRIBUTE::MOVING_OBJ)
 					{
 						OBJTemp3 = new OBJData(*OBJTemp);
@@ -645,22 +645,22 @@ HRESULT CMapTool::Delete_Map()
 
             if (bOBJ_DeleteCheck == true)
             {
-                if (!m_VecTrigger.empty())
-                {
-                    for (auto& iter = m_VecTrigger.begin(); iter != m_VecTrigger.end();)
-                    {
-                        if ((*iter)->iIndex == IndexTemp)
-                        {
-                            delete* iter;
-                            iter = m_VecTrigger.erase(iter);
-                            bOBJ_DeleteCheck = false;
-                        }
-                        else
-                        {
-                            ++iter;
-                        }
-                    }
-                }
+//                 if (!m_VecTrigger.empty())
+//                 {
+//                     for (auto& iter = m_VecTrigger.begin(); iter != m_VecTrigger.end();)
+//                     {
+//                         if ((*iter)->iIndex == IndexTemp)
+//                         {
+//                             delete* iter;
+//                             iter = m_VecTrigger.erase(iter);
+//                             bOBJ_DeleteCheck = false;
+//                         }
+//                         else
+//                         {
+//                             ++iter;
+//                         }
+//                     }
+//                 }
 				if (!m_VecMoving.empty())
 				{
 					for (auto& iter = m_VecMoving.begin(); iter != m_VecMoving.end();)

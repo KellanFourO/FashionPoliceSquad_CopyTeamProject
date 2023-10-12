@@ -130,13 +130,16 @@ namespace Engine
 
 	}OBJData;
 
-	typedef struct tagTriggerBox
+	typedef struct tagTriggerInfo
 	{
-		char*					stTriggerName;
-		OBJData					defOBJInfo;
-		TRIGGER_CASE			TrCase;
-		TRIGGER_TYPE			TrType;
-		TRIGGER_STATE			TrSTATE;
+		const char*				stTriggerName;	//트리거 이름. 이거로 검색할 거다.
+		_vec3					vSize;			//x, y, z 길이
+		_vec3					vPos;			//x, y, z 중점
+		_uint					iIndex;			//몇 번째로 만들어지는? 고유인덱스
+		IDirect3DCubeTexture9*  pCubeTexture;   //투명 큐브 쓸 것임
+		TRIGGER_CASE			TrCase;			//한 번, 두 번, 반복 발동 중
+		TRIGGER_TYPE			TrType;			//발동 시 어떤 반응을 만들어낼 것인지
+		TRIGGER_STATE			TrSTATE;		//발동 전, 중, 후
 
 	}TRIGGER;
 

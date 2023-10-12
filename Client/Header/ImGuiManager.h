@@ -151,6 +151,44 @@ private:
 
 	vector<OBJData*>					vectorOBJTemp;
 
+	///////////////////// 유진 트리거 툴 ////////////////////////////
+public:
+	bool				Get_TriggerMode_Check() { return m_bTrigger_Mode_Check; }
+	void				Set_TriggerMode_Check() { m_bTrigger_Mode_Check = !m_bTrigger_Mode_Check; }
+
+	bool				Get_TriggerLoad_Check() { return m_bTriggerLoad_Check; }
+	void				Set_TriggerLoad_Check() { m_bTriggerLoad_Check = !m_bTriggerLoad_Check; }
+
+	vector<TRIGGER*>&	Get_VecTrigger() { return m_VecTrigger; }
+	void				Trigger_Info_Clear() {
+		m_eTR_CASE = TRIGGER_CASE::TR_CASE_END;
+		m_eTR_TYPE = TRIGGER_TYPE::TR_TYPE_END;
+		m_fCubesize.fX = 1.f;
+		m_fCubesize.fY = 1.f;
+		m_fCubesize.fZ = 1.f;
+		m_SizeSet_Check = false;
+	}
+
+private:
+	//콤보박스 선택용
+	const char*				Trigger_Case[4] = { "ONCE", "TWICE", "REPEAT", "CASE_END"};
+	const char*				Trigger_Type[6] = { "MOVING", "UI", "DAMAGE", "MONSTER", "NOTHING", "TYPE_END"};
+	
+	vector<TRIGGER*>		m_VecListbox;
+	TRIGGER_CASE			m_eTR_CASE = TRIGGER_CASE::TR_CASE_END;
+	TRIGGER_TYPE			m_eTR_TYPE = TRIGGER_TYPE::TR_TYPE_END;
+
+private:
+	bool					m_SizeSet_Check = false;			
+	bool					m_bTrigger_Mode_Check = false;
+	bool					m_bTriggerLoad_Check = false;
+	bool					m_bTR_Set_Ready_Check = false; //항목 세팅
+	bool					m_bTriggerReady_Check = false; //리스트 넣고 찍기 직전
+
+	TRIGGER*				m_TriggerTemp = nullptr;
+	vector<TRIGGER*>		m_VecTrigger;
+
+
 
 	///////////////////// 승용 UI툴 /////////////////////////////////
 public:
