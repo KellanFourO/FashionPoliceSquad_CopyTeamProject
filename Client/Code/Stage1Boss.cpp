@@ -47,8 +47,9 @@ HRESULT CStage1Boss::Ready_GameObject()
 	INFO.fHP = 1000.f;
 	INFO.fMaxHP = 1000.f;
 
-	m_pTransformCom->Set_Pos((_vec3{ 100.f,50.f,50.f }));
+	m_pTransformCom->Set_Pos((_vec3{ 95.f,50.f,120.f }));
 	m_pTransformCom->Set_Scale({ 10.0f,13.0f,10.0f });
+	m_pTransformCom->Translate(_vec3(0.f,1.f,0.f));
 
 
 
