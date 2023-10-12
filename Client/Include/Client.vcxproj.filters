@@ -394,6 +394,9 @@
     <Filter Include="02. GameObject\06. Effect\02.MonsterBomb">
       <UniqueIdentifier>{e75d379d-dbc7-4308-a678-7d9f3a50b9c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\14. Trigger">
+      <UniqueIdentifier>{bfc2ca50-58ac-44ca-970e-7dd3ee356366}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -855,6 +858,9 @@
     <ClInclude Include="..\Header\MonsterBombEffect.h">
       <Filter>02. GameObject\06. Effect\02.MonsterBomb</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Trigger.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1303,6 +1309,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\MonsterBombEffect.cpp">
       <Filter>02. GameObject\06. Effect\02.MonsterBomb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\CTrigger.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Header\Trigger.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -522,8 +522,6 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 						}
 						ImGui::NewLine();
 
-						char TextNow111[MAX_PATH];
-						sprintf_s(TextNow111, u8"<1> 높이 및 크기 (SIZE)");
 
 						if (ImGui::Button(" +5 ")) { m_fCubeHeightLevel += 5; }
 						ImGui::SameLine();
@@ -570,10 +568,61 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 
 
 
-						char TextNow222[MAX_PATH];
-						sprintf_s(TextNow222, u8"<2> 세부 속성값 (이름, case, type 등)");
 
-						char NameBuffer[MAX_PATH] = "";
+						int iComboTemp0 = static_cast<int>(m_eTR_NUM);
+						ImGui::SetNextItemWidth(150.0f);
+						ImGui::Combo(u8"Number 선택", &iComboTemp0, Trigger_Number, static_cast<int>(TRIGGER_NUMBER::TR_END));
+
+						switch (iComboTemp0)
+						{
+						case 0:
+							m_eTR_NUM = TRIGGER_NUMBER::TR0;	break;
+						case 1:
+							m_eTR_NUM = TRIGGER_NUMBER::TR1;	break;
+						case 2:
+							m_eTR_NUM = TRIGGER_NUMBER::TR2;	break;
+						case 3:
+							m_eTR_NUM = TRIGGER_NUMBER::TR3;	break;
+						case 4:
+							m_eTR_NUM = TRIGGER_NUMBER::TR4;	break;
+						case 5:
+							m_eTR_NUM = TRIGGER_NUMBER::TR5;	break;
+						case 6:
+							m_eTR_NUM = TRIGGER_NUMBER::TR6;	break;
+						case 7:
+							m_eTR_NUM = TRIGGER_NUMBER::TR7;	break;
+						case 8:
+							m_eTR_NUM = TRIGGER_NUMBER::TR8;	break;
+						case 9:
+							m_eTR_NUM = TRIGGER_NUMBER::TR9;	break;
+						case 10:
+							m_eTR_NUM = TRIGGER_NUMBER::TR10;	break;
+						case 11:
+							m_eTR_NUM = TRIGGER_NUMBER::TR11;	break;
+						case 12:
+							m_eTR_NUM = TRIGGER_NUMBER::TR12;	break;
+						case 13:
+							m_eTR_NUM = TRIGGER_NUMBER::TR13;	break;
+						case 14:
+							m_eTR_NUM = TRIGGER_NUMBER::TR14;	break;
+						case 15:
+							m_eTR_NUM = TRIGGER_NUMBER::TR15;	break;
+						case 16:
+							m_eTR_NUM = TRIGGER_NUMBER::TR16;	break;
+						case 17:
+							m_eTR_NUM = TRIGGER_NUMBER::TR17;	break;
+						case 18:
+							m_eTR_NUM = TRIGGER_NUMBER::TR18;	break;
+						case 19:
+							m_eTR_NUM = TRIGGER_NUMBER::TR19;	break;
+						case 20:
+							m_eTR_NUM = TRIGGER_NUMBER::TR20;	break;
+
+						default:
+							m_eTR_NUM = TRIGGER_NUMBER::TR_END;
+							break;
+						}
+
 
 						int iComboTemp = static_cast<int>(m_eTR_CASE);
 						ImGui::SetNextItemWidth(150.0f);
@@ -626,17 +675,12 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 						{
 							m_TriggerTemp = new TRIGGER;
 
-							m_TriggerTemp->TrCase = m_eTR_CASE;
-							m_TriggerTemp->TrType = m_eTR_TYPE;
+							m_TriggerTemp->eTrName = m_eTR_NUM;
+							m_TriggerTemp->eTrCase = m_eTR_CASE;
+							m_TriggerTemp->eTrType = m_eTR_TYPE;
 							m_TriggerTemp->vSize = { m_fCubesize.fX, m_fCubesize.fY, m_fCubesize.fZ };
 
 							m_VecListbox.push_back(m_TriggerTemp);
-							m_bTriggerReady_Check = true;
-
-							for (int i = 0; i < m_VecListbox.size(); ++i)
-							{
-								m_VecListbox[i]->stTriggerName = to_string(i).c_str();
-							}
 
 							Trigger_Info_Clear();
 						}	
@@ -645,6 +689,7 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 						if (ImGui::Button(u8"선택 해제"))
 						{
 							Trigger_Info_Clear();
+							m_bTriggerReady_Check = false;
 						}
 
 						ImGui::NextColumn();
@@ -652,8 +697,9 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 						ImGui::Text(u8"내용 입력 > 세팅 완료 > 추가 > 리스트 선택 > 맵툴 상 피킹");
 						ImGui::NewLine();
 
-						if ((NameBuffer != "") && (m_eTR_CASE != TRIGGER_CASE::TR_CASE_END)
-							&& (m_eTR_TYPE != TRIGGER_TYPE::TR_TYPE_END) && (m_SizeSet_Check == true))
+						if ((m_eTR_CASE != TRIGGER_CASE::TR_CASE_END)
+							&& (m_eTR_TYPE != TRIGGER_TYPE::TR_TYPE_END) 
+							&& (m_SizeSet_Check == true))
 						{
 							ImGui::Text(u8" ! 트리거 세팅 준비 완료");
 							m_bTR_Set_Ready_Check = true;
@@ -672,11 +718,14 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 								{
 									selected_UIIndex = i;
 
-									m_eTR_CASE = m_VecListbox[i]->TrCase;
-									m_eTR_TYPE = m_VecListbox[i]->TrType;
+									m_eTR_NUM = m_VecListbox[i]->eTrName;
+									m_eTR_CASE = m_VecListbox[i]->eTrCase;
+									m_eTR_TYPE = m_VecListbox[i]->eTrType;
 									m_fCubesize.fX = m_VecListbox[i]->vSize.x;
 									m_fCubesize.fY = m_VecListbox[i]->vSize.y;
 									m_fCubesize.fZ = m_VecListbox[i]->vSize.z;
+
+									m_bTriggerReady_Check = true;
 								}
 							}
 							ImGui::EndListBox();

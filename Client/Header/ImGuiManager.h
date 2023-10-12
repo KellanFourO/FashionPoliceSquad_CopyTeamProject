@@ -161,6 +161,7 @@ public:
 
 	vector<TRIGGER*>&	Get_VecTrigger() { return m_VecTrigger; }
 	void				Trigger_Info_Clear() {
+		m_eTR_NUM = TRIGGER_NUMBER::TR_END;
 		m_eTR_CASE = TRIGGER_CASE::TR_CASE_END;
 		m_eTR_TYPE = TRIGGER_TYPE::TR_TYPE_END;
 		m_fCubesize.fX = 1.f;
@@ -171,10 +172,13 @@ public:
 
 private:
 	//콤보박스 선택용
+	const char*				Trigger_Number[21] = { "TR0", "TR1", "TR2", "TR3", "TR4", "TR5", "TR6", "TR7", "TR8", "TR9", "TR10",
+								"TR11", "TR12", "TR13", "TR14", "TR15", "TR16", "TR17", "TR18", "TR19", "TR20" };
 	const char*				Trigger_Case[4] = { "ONCE", "TWICE", "REPEAT", "CASE_END"};
 	const char*				Trigger_Type[6] = { "MOVING", "UI", "DAMAGE", "MONSTER", "NOTHING", "TYPE_END"};
 	
 	vector<TRIGGER*>		m_VecListbox;
+	TRIGGER_NUMBER			m_eTR_NUM = TRIGGER_NUMBER::TR_END;
 	TRIGGER_CASE			m_eTR_CASE = TRIGGER_CASE::TR_CASE_END;
 	TRIGGER_TYPE			m_eTR_TYPE = TRIGGER_TYPE::TR_TYPE_END;
 

@@ -314,6 +314,7 @@
     <ClInclude Include="..\Header\TailorAssertRifle_Walk.h" />
     <ClInclude Include="..\Header\Terrain.h" />
     <ClInclude Include="..\Header\Title.h" />
+    <ClInclude Include="..\Header\Trigger.h" />
     <ClInclude Include="..\Header\UIMgr.h" />
     <ClInclude Include="..\Header\WireFrame.h" />
     <ClInclude Include="Client.h" />
@@ -346,6 +347,7 @@
     <ClCompile Include="..\Code\BrifCase_2.cpp" />
     <ClCompile Include="..\Code\BigDaddyMonster.cpp" />
     <ClCompile Include="..\Code\Bullet.cpp" />
+    <ClCompile Include="..\Code\CTrigger.cpp" />
     <ClCompile Include="..\Code\DullSuitMonster_Attack.cpp" />
     <ClCompile Include="..\Code\DullSuitMonster.cpp" />
     <ClCompile Include="..\Code\DullSuitMonster_Chase.cpp" />
@@ -442,6 +444,7 @@
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="..\Code\Title.cpp" />
     <ClCompile Include="..\Code\UIMgr.cpp" />
+    <ClCompile Include="..\Header\Trigger.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="stdafx.cpp">
