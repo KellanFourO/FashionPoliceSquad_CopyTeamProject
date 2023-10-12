@@ -208,8 +208,10 @@ void COctreeNode::CheckCullNode(COctreeNode* Node)
 
 void COctreeNode::Free()
 {
+#ifdef _DEBUG
 	Safe_Release(m_pVB);
 	Safe_Release(m_pIB);
+#endif
 	Safe_Delete(m_pBoundingBox);
 
 	if (!m_vecChildren.empty())

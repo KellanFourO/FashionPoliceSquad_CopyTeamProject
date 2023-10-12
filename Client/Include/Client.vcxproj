@@ -252,6 +252,8 @@
     <ClInclude Include="..\Header\MainApp.h" />
     <ClInclude Include="..\Header\MapCursor.h" />
     <ClInclude Include="..\Header\MapTool.h" />
+    <ClInclude Include="..\Header\MBulletBombEffect.h" />
+    <ClInclude Include="..\Header\MBulletExplosion.h" />
     <ClInclude Include="..\Header\MissionObjective.h" />
     <ClInclude Include="..\Header\Monster.h" />
     <ClInclude Include="..\Header\MonsterBombEffect.h" />
@@ -365,6 +367,8 @@
     <ClCompile Include="..\Code\KickBoardMonster_Idle.cpp" />
     <ClCompile Include="..\Code\KickBoardMonster_Patrol.cpp" />
     <ClCompile Include="..\Code\Lazer.cpp" />
+    <ClCompile Include="..\Code\MBulletBombEffect.cpp" />
+    <ClCompile Include="..\Code\MBulletExplosion.cpp" />
     <ClCompile Include="..\Code\MonsterBombEffect.cpp" />
     <ClCompile Include="..\Code\MuzzlefFlash_Rifle.cpp" />
     <ClCompile Include="..\Code\LoadingStage1.cpp" />

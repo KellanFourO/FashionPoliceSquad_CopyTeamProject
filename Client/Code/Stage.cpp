@@ -12,6 +12,8 @@
 #include <utility>
 #include "MonsterBombEffect.h"
 #include "FootRay.h"
+#include "MBulletExplosion.h"
+#include "MBulletBombEffect.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -226,9 +228,9 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 	//몬스터
 
 	{
-		pGameObject = CStage1Boss::Create(m_pGraphicDev);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::BOSS, pGameObject), E_FAIL);
+		//pGameObject = CStage1Boss::Create(m_pGraphicDev);
+		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::BOSS, pGameObject), E_FAIL);
 	}
 	for(int i = 0; i<5; ++i)
 	{
@@ -249,11 +251,21 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 //이펙트 파티클
 	{
 		//이펙트
+		//몬스터 죽을떄 이펙트
 		pGameObject = CMonsterBombEffect::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::EFFECT, pGameObject), E_FAIL);
+
+		pGameObject = CMBulletBombEffect::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::EFFECT, pGameObject), E_FAIL);
+
 		//파티클
-		pGameObject = CDustGrey::Create(m_pGraphicDev, _vec3(50.f, 10.f, 25.f), 256);
+		//pGameObject = CDustGrey::Create(m_pGraphicDev, _vec3(9999.f, 9999.f, 9999.f),128);
+		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		//FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::PARTICLE, pGameObject), E_FAIL);
+
+		pGameObject = CMBulletExplosion::Create(m_pGraphicDev, _vec3(0.f, 0.f, 0.f), 256);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::PARTICLE, pGameObject), E_FAIL);
 	}
