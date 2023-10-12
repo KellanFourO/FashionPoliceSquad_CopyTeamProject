@@ -138,14 +138,14 @@ _int CBuild_Obj::Update_GameObject(const _float& fTimeDelta)
 				BillBoard();
 			}
 		}
-		if (m_eAttribute == OBJ_ATTRIBUTE::INTER_OBJ)
-		{
-			Init_PlayerTransform();
-			if (m_pPlayerTransform && m_bBillBoard)
-			{
-				BillBoard_X();
-			}
-		}
+// 		if (m_eAttribute == OBJ_ATTRIBUTE::INTER_OBJ)
+// 		{
+// 			Init_PlayerTransform();
+// 			if (m_pPlayerTransform && m_bBillBoard)
+// 			{
+// 				BillBoard_X();
+// 			}
+// 		}
 	}
 
 	m_pCollider->Set_Host(this);
