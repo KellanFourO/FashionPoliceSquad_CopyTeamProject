@@ -1,4 +1,4 @@
-#include "../Header/PSystem.h"
+#include "PSystem.h"
 
 
 CPSystem::CPSystem(LPDIRECT3DDEVICE9 pGraphicDev)

@@ -1,25 +1,25 @@
 #include "stdafx.h"
-#include "..\Header\MonsterBombEffect.h"
+#include "MBulletBombEffect.h"
 
 #include "Export_Utility.h"
 #include "EffectTex.h"
 
-CMonsterBombEffect::CMonsterBombEffect(LPDIRECT3DDEVICE9 pGraphicDev)
+CMBulletBombEffect::CMBulletBombEffect(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
 {
 }
-CMonsterBombEffect::CMonsterBombEffect(const CMonsterBombEffect& rhs)
+CMBulletBombEffect::CMBulletBombEffect(const CMBulletBombEffect& rhs)
 	: CGameObject(rhs)
 {
 
 }
 
-CMonsterBombEffect::~CMonsterBombEffect()
+CMBulletBombEffect::~CMBulletBombEffect()
 {
 
 }
 
-HRESULT Engine::CMonsterBombEffect::Ready_GameObject()
+HRESULT Engine::CMBulletBombEffect::Ready_GameObject()
 {
 	m_eObjectTag = OBJECTTAG::EFFECT;
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
@@ -32,7 +32,7 @@ HRESULT Engine::CMonsterBombEffect::Ready_GameObject()
 	return S_OK;
 }
 
-Engine::_int Engine::CMonsterBombEffect::Update_GameObject(const _float& fTimeDelta)
+Engine::_int Engine::CMBulletBombEffect::Update_GameObject(const _float& fTimeDelta)
 {
 	m_pPlayerTransform = dynamic_cast<CTransform*>(Management()->Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
 
@@ -47,14 +47,9 @@ Engine::_int Engine::CMonsterBombEffect::Update_GameObject(const _float& fTimeDe
 	m_pTransformCom->Set_Rotate(ROT_Y, fAngle + D3DX_PI);
 	
 
-	m_fFrame +=15.f* fTimeDelta;
+	m_fFrame +=87.f* fTimeDelta;
 
-	if (15.f < m_fFrame)
-	{
-		m_fFrame = 0.f;
-		++m_fLoop;
-	}
-	if(m_fLoop>2.f)
+	if (87.f < m_fFrame)
 		return OBJ_DEAD;
 
 	_int iExit = __super::Update_GameObject(fTimeDelta);
@@ -64,14 +59,14 @@ Engine::_int Engine::CMonsterBombEffect::Update_GameObject(const _float& fTimeDe
 	return iExit;
 }
 
-void Engine::CMonsterBombEffect::LateUpdate_GameObject()
+void Engine::CMBulletBombEffect::LateUpdate_GameObject()
 {
 	
 }
 
-CMonsterBombEffect* CMonsterBombEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CMBulletBombEffect* CMBulletBombEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CMonsterBombEffect* pInstance = new CMonsterBombEffect(pGraphicDev);
+	CMBulletBombEffect* pInstance = new CMBulletBombEffect(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
@@ -84,7 +79,7 @@ CMonsterBombEffect* CMonsterBombEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-void CMonsterBombEffect::Render_GameObject()
+void CMBulletBombEffect::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
@@ -99,12 +94,12 @@ void CMonsterBombEffect::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
-void Engine::CMonsterBombEffect::Free()
+void Engine::CMBulletBombEffect::Free()
 {
 	__super::Free();
 }
 
-HRESULT Engine::CMonsterBombEffect::Add_Component()
+HRESULT Engine::CMBulletBombEffect::Add_Component()
 {
 	CComponent* pComponent = nullptr;
 
@@ -116,9 +111,13 @@ HRESULT Engine::CMonsterBombEffect::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].emplace(COMPONENTTAG::TRANSFORM, pComponent);
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_MonsterBombEffectTexture"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_MBulletBombEffectTexture"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
+
+	/*pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(Engine::Clone_Proto(L"Proto_Calculator"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].insert({ L"Com_Calculator", pComponent });*/
 
 	for (_uint i = 0; i < ID_END; ++i)
 		for (auto& iter : m_mapComponent[i])

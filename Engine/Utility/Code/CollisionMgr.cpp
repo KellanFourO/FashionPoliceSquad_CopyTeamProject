@@ -11,13 +11,15 @@ CollisionMgr::CollisionMgr()
 	CheckGroup(OBJECTTAG::PLAYER, OBJECTTAG::BOSS);
 	//CheckGroup(OBJECTTAG::PLAYER, OBJECTTAG::ITEM);
 	CheckGroup(OBJECTTAG::PLAYER, OBJECTTAG::MONSTERBULLET);
-	//CheckGroup(OBJECTTAG::PLAYER, OBJECTTAG::OBJECT);
 	CheckGroup(OBJECTTAG::PLAYER, OBJECTTAG::BOSSBULLET);
+	CheckGroup(OBJECTTAG::PLAYER, OBJECTTAG::BUILD_OBJ);
 	CheckGroup(OBJECTTAG::MONSTER, OBJECTTAG::PLAYERBULLET);
-	//CheckGroup(OBJECTTAG::PLAYERBULLET, OBJECTTAG::MONSTER);
-	//CheckGroup(OBJECTTAG::MONSTER, OBJECTTAG::OBJECT);
-	//CheckGroup(OBJECTTAG::BOSS, OBJECTTAG::OBJECT);
+	CheckGroup(OBJECTTAG::MONSTER, OBJECTTAG::BUILD_OBJ);
+	CheckGroup(OBJECTTAG::BOSS, OBJECTTAG::BUILD_OBJ);
 	CheckGroup(OBJECTTAG::BOSS, OBJECTTAG::PLAYERBULLET);
+	CheckGroup(OBJECTTAG::RAY, OBJECTTAG::BUILD_OBJ);
+	CheckGroup(OBJECTTAG::RAY, OBJECTTAG::MONSTER);
+
 }
 
 CollisionMgr::~CollisionMgr()
@@ -26,7 +28,7 @@ CollisionMgr::~CollisionMgr()
 
 void CollisionMgr::LateUpdate_Collision()
 {
-	//static Object
+	//static buildcude
 	CheckCollisionStatic(OBJECTTAG::PLAYER);
 	CheckCollisionStatic(OBJECTTAG::MONSTER);
 	CheckCollisionStatic(OBJECTTAG::BOSS);
@@ -35,6 +37,14 @@ void CollisionMgr::LateUpdate_Collision()
 	//CheckCollisionStatic(OBJECTTAG::ITEM);
 	CheckCollisionStatic(OBJECTTAG::RAY);
 
+	//static OBj
+	CheckCollisionStaticOBJ(OBJECTTAG::PLAYER);
+	CheckCollisionStaticOBJ(OBJECTTAG::MONSTER);
+	CheckCollisionStaticOBJ(OBJECTTAG::BOSS);
+	CheckCollisionStaticOBJ(OBJECTTAG::MONSTERBULLET);
+	CheckCollisionStaticOBJ(OBJECTTAG::PLAYERBULLET);
+	CheckCollisionStaticOBJ(OBJECTTAG::RAY);
+	
 	//dynamic Object
 	for (UINT iRow = 0; iRow < (UINT)OBJECTTAG::OBJECT_END; ++iRow)
 		for (UINT iCol = iRow; iCol < (UINT)OBJECTTAG::OBJECT_END; ++iCol)
@@ -206,12 +216,106 @@ void CollisionMgr::CheckCollisionStatic(OBJECTTAG _eObjectLeft)
 
 
 		_vec3 vHostPos = dynamic_cast<CTransform*>(iterL->Get_Component(ID_DYNAMIC, COMPONENTTAG::TRANSFORM))->m_vInfo[INFO_POS];
+		COctreeNode* pParentNode = Octree()->GetParentNodeByPos(vHostPos, Engine::Octree()->GetOctreeRoot());
+
+		if (!pParentNode) return;
+
+		const vector<CGameObject*>& vecRight = pParentNode->GetObjectList();
+		//const vector<CGameObject*>& vecRight = pScene->Get_ObjectList(LAYERTAG::ENVIRONMENT, OBJECTTAG::BUILD_CUBE); // 유진 추가
+
+		for (auto& iterR : vecRight)
+		{
+			if (nullptr == iterR->Get_Collider() || iterL == iterR)
+				continue;
+
+			CCollider* pLeftCol = iterL->Get_Collider();
+			CCollider* pRightCol = iterR->Get_Collider();
+
+			COLLIDER_ID ID;
+			ID.Left_id = pLeftCol->GetID();
+			ID.Right_id = pRightCol->GetID();
+
+			iter = m_mapColInfo.find(ID.ID);
+
+			if (m_mapColInfo.end() == iter)
+			{
+				m_mapColInfo.insert(make_pair(ID.ID, false));
+				iter = m_mapColInfo.find(ID.ID);
+			}
+
+			if (IsCollision(pLeftCol, pRightCol))
+			{	// 현재 충돌 중
+				if (iter->second)
+				{	// 이전에도 충돌
+					if (iterL->IsDead() || iterR->IsDead())
+					{	// 둘 중 하나 삭제 예정이면 충돌 해제
+						pLeftCol->OnCollisionExit(pRightCol);
+						pRightCol->OnCollisionExit(pLeftCol);
+						iter->second = false;
+					}
+					else
+					{
+						pLeftCol->OnCollisionStay(pRightCol);
+						pRightCol->OnCollisionStay(pLeftCol);
+					}
+				}
+				else
+				{	// 이전에는 충돌 x	// 근데 둘 중 하나 삭제 예정이면 충돌하지 않은 것으로 취급
+					if (!iterL->IsDead() && !iterR->IsDead())
+					{
+						pLeftCol->OnCollisionEnter(pRightCol);
+						pRightCol->OnCollisionEnter(pLeftCol);
+						iter->second = true;
+					}
+					else
+					{
+						pLeftCol->OnCollisionExit(pRightCol);
+						pRightCol->OnCollisionExit(pLeftCol);
+						iter->second = false;
+					}
+				}
+
+				//return;
+			}
+			else
+			{		// 현재 충돌 x면
+				if (iter->second)
+				{	//이전에는 충돌하고 있었다.
+					pLeftCol->OnCollisionExit(pRightCol);
+					pRightCol->OnCollisionExit(pLeftCol);
+					iter->second = false;
+					//return;
+				}
+			}
+		}
+	}
+}
+
+void CollisionMgr::CheckCollisionStaticOBJ(OBJECTTAG _eObjectLeft)
+{
+	CScene* pScene = CManagement::GetInstance()->Get_Scene();
+
+	const vector<CGameObject*>& vecLeft = pScene->Get_ObjectList(LAYERTAG::GAMELOGIC, _eObjectLeft);
+
+	if (vecLeft.empty()) {
+		return;
+	}
+
+	map<ULONGLONG, bool>::iterator iter;
+
+	for (auto& iterL : vecLeft)
+	{
+		if (nullptr == iterL->Get_Collider())
+			continue;
+
+
+		_vec3 vHostPos = dynamic_cast<CTransform*>(iterL->Get_Component(ID_DYNAMIC, COMPONENTTAG::TRANSFORM))->m_vInfo[INFO_POS];
 		//COctreeNode* pParentNode = Octree()->GetParentNodeByPos(vHostPos, Engine::Octree()->GetOctreeRoot());
 
 		//if (!pParentNode) return;
 
 		//const vector<CGameObject*>& vecRight = pParentNode->GetObjectList();
-		const vector<CGameObject*>& vecRight = pScene->Get_ObjectList(LAYERTAG::ENVIRONMENT, OBJECTTAG::BUILD_CUBE); // 유진 추가
+		const vector<CGameObject*>& vecRight = pScene->Get_ObjectList(LAYERTAG::ENVIRONMENT, OBJECTTAG::BUILD_OBJ); // 유진 추가
 
 		for (auto& iterR : vecRight)
 		{

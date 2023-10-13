@@ -24,6 +24,18 @@ CBuild_Obj::~CBuild_Obj()
 }
 
 
+void CBuild_Obj::OnCollisionEnter(CCollider* _pOther)
+{
+}
+
+void CBuild_Obj::OnCollisionStay(CCollider* _pOther)
+{
+}
+
+void CBuild_Obj::OnCollisionExit(CCollider* _pOther)
+{
+}
+
 HRESULT CBuild_Obj::Add_Component()
 {
 	CComponent* pComponent = nullptr;

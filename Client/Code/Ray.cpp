@@ -1,37 +1,37 @@
 #include "stdafx.h"
-#include "../Header/FootRay.h"
+#include "Ray.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
 #include "Player.h"
 #include "Scene.h"
 #include "Build_Cube.h"
 
-CFootRay::CFootRay(LPDIRECT3DDEVICE9 pGraphicDev)
+CRay::CRay(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CGameObject(pGraphicDev)
 {
 }
 
-CFootRay::CFootRay(const CFootRay& rhs)
+CRay::CRay(const CRay& rhs)
 	:CGameObject(rhs)
 {
 }
 
-CFootRay::~CFootRay()
+CRay::~CRay()
 {
 }
 
-HRESULT CFootRay::Ready_GameObject()
+HRESULT CRay::Ready_GameObject()
 {
 	m_eObjectTag = OBJECTTAG::RAY;
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	//m_pTransformCom->Get_Host();
-	m_pTransformCom->Set_Scale(_vec3(0.000001f, 0.2f, 0.000001f));
+	m_pTransformCom->Set_Scale(_vec3(0.1f, 0.2f, 0.1f));
 	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_POS], *m_pTransformCom->Get_Scale());
 	return S_OK;
 }
 
-_int CFootRay::Update_GameObject(const _float& fTimeDelta)
+_int CRay::Update_GameObject(const _float& fTimeDelta)
 {
 
 	_int iExit = __super::Update_GameObject(fTimeDelta);
@@ -41,7 +41,7 @@ _int CFootRay::Update_GameObject(const _float& fTimeDelta)
 	return iExit;
 }
 
-void CFootRay::LateUpdate_GameObject()
+void CRay::LateUpdate_GameObject()
 {
 	//나중에 여기에 게임 스탑할떄 여기도 넣어야 함 
 	__super::LateUpdate_GameObject();
@@ -56,12 +56,12 @@ void CFootRay::LateUpdate_GameObject()
 // 	}
 }
 
-void CFootRay::Render_GameObject()
+void CRay::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_pTransformCom->WorldMatrix());
 }
 
-void CFootRay::OnCollisionEnter(CCollider* _pOther)
+void CRay::OnCollisionEnter(CCollider* _pOther)
 {
 	CPlayer& rPlayer = *Management()->Get_Scene()->Get_MainPlayer();
 
@@ -74,18 +74,18 @@ void CFootRay::OnCollisionEnter(CCollider* _pOther)
 	}
 }
 
-void CFootRay::OnCollisionStay(CCollider* _pOther)
+void CRay::OnCollisionStay(CCollider* _pOther)
 {
 	CGameObject* pOtherObj = _pOther->Get_Host();
-	if (OBJECTTAG::BUILD_CUBE == pOtherObj->Get_ObjectTag())
-	{
-		// 계속 충돌 중이라면 Host가 블럭 위에 서 있는 것. 따라서 점프 ㄱㄴ
-		//static_cast<CPlayer*>(m_pHost)->Set_JumpState(false);
-		static_cast<CPlayer*>(m_pHost)->Get_RigidBody()->UseGravity(false);
-	}
+// 	if (OBJECTTAG::BUILD_CUBE == pOtherObj->Get_ObjectTag())
+// 	{
+// 		// 계속 충돌 중이라면 Host가 블럭 위에 서 있는 것. 따라서 점프 ㄱㄴ
+// 		//static_cast<CPlayer*>(m_pHost)->Set_JumpState(false);
+// 		static_cast<CPlayer*>(m_pHost)->Get_RigidBody()->UseGravity(false);
+// 	}
 }
 
-void CFootRay::OnCollisionExit(CCollider* _pOther)
+void CRay::OnCollisionExit(CCollider* _pOther)
 {
 	CGameObject* pOtherObj = _pOther->Get_Host();
 	if (OBJECTTAG::BUILD_CUBE == pOtherObj->Get_ObjectTag())
@@ -103,13 +103,13 @@ void CFootRay::OnCollisionExit(CCollider* _pOther)
 
 		m_pColTarget = nullptr;
 		//static_cast<CPlayer*>(m_pHost)->Set_JumpState(true);
-		static_cast<CPlayer*>(m_pHost)->Get_RigidBody()->UseGravity(true);
+		//static_cast<CPlayer*>(m_pHost)->Get_RigidBody()->UseGravity(true);
 	}
 }
 
-CFootRay* CFootRay::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CRay* CRay::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CFootRay* pInstance = new CFootRay(pGraphicDev);
+	CRay* pInstance = new CRay(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
@@ -122,7 +122,7 @@ CFootRay* CFootRay::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-HRESULT CFootRay::Add_Component()
+HRESULT CRay::Add_Component()
 {
 	CComponent* pComponent = nullptr;
 
@@ -141,7 +141,7 @@ HRESULT CFootRay::Add_Component()
 	return S_OK;
 }
 
-void CFootRay::Free()
+void CRay::Free()
 {
 	__super::Free();
 }

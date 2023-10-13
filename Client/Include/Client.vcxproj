@@ -225,6 +225,8 @@
     <ClInclude Include="..\Header\Bullet_GoldBar.h" />
     <ClInclude Include="..\Header\LobbyStage.h" />
     <ClInclude Include="..\Header\Stage2.h" />
+    <ClInclude Include="..\Header\MBulletBombEffect.h" />
+    <ClInclude Include="..\Header\MBulletExplosion.h" />
     <ClInclude Include="..\Header\UI_Berserk.h" />
     <ClInclude Include="..\Header\UI_BerserkFrame.h" />
     <ClInclude Include="..\Header\UI_BulletInfoCount.h" />
@@ -361,6 +363,8 @@
     <ClCompile Include="..\Code\BrifCase_2.cpp" />
     <ClCompile Include="..\Code\BigDaddyMonster.cpp" />
     <ClCompile Include="..\Code\Bullet.cpp" />
+    <ClCompile Include="..\Code\MBulletBombEffect.cpp" />
+    <ClCompile Include="..\Code\MBulletExplosion.cpp" />
     <ClCompile Include="..\Code\Trigger.cpp" />
     <ClCompile Include="..\Code\DullSuitMonster_Attack.cpp" />
     <ClCompile Include="..\Code\DullSuitMonster.cpp" />
