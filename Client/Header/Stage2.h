@@ -47,11 +47,11 @@
 #include "UI_MissionObjective.h"
 
 
-class CBossStage : public Engine::CScene
+class CStage2 : public Engine::CScene
 {
 private:
-	explicit CBossStage(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CBossStage();
+	explicit CStage2(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CStage2();
 
 public:
 	virtual HRESULT		Ready_Scene();
@@ -68,15 +68,15 @@ private:
 	HRESULT				Ready_Layer_UI(LAYERTAG eLayerTag);
 
 private:
-	CLayer* m_pLayer = nullptr;
-	_bool	m_bLateInit = true;
+	CLayer*				m_pLayer = nullptr;
+	_bool				m_bLateInit = true;
 
 	//////////////////////유진 함수, 변수////////////////////////
 public:
-	vector<CUBE*>& Get_VecCubeData() { return m_VecCubeData; }
+	vector<CUBE*>&		Get_VecCubeData() { return m_VecCubeData; }
 	void				Set_VecCubeData(vector<CUBE*> pVecCubeData) { m_VecCubeData = pVecCubeData; }
 
-	vector<OBJData*>& Get_VecOBJData() { return m_VecOBJData; }
+	vector<OBJData*>&	Get_VecOBJData() { return m_VecOBJData; }
 	void				Set_VecOBJData(vector<OBJData*> pVecOBjData) { m_VecOBJData = pVecOBjData; }
 
 	virtual HRESULT		Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag);
@@ -95,9 +95,9 @@ private:
 	vector<CUBE*>					m_VecCubeData;
 	_uint							m_iCubeIndex = 0;
 
-	SORTCUBE* m_defSortCube = nullptr;//큐브 정렬용
+	SORTCUBE*						m_defSortCube = nullptr;//큐브 정렬용
 	vector<SORTCUBE*>				m_pCubeForSort;			//큐브 정렬용
-	SORTTEX* m_defSortTex = nullptr; //텍스쳐 정렬용
+	SORTTEX*						m_defSortTex = nullptr; //텍스쳐 정렬용
 	vector<SORTTEX*>				m_pTexForSort;			//텍스쳐 정렬용
 
 public:
@@ -107,7 +107,7 @@ public:
 	_float				m_fAdminTick = 0.f;	   // 어드민키인풋 레벨업 통제용
 
 public:
-	static CBossStage* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CStage2*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void		Free();

@@ -184,6 +184,6 @@ CLayer* CLayer::Create()
 
 void CLayer::Free()
 {
- 	for_each(m_mapObject.begin(), m_mapObject.end(), CDeleteVector());
-	m_mapObject.clear();
+ 	//for_each(m_mapObject.begin(), m_mapObject.end(), CDeleteVector());
+	//m_mapObject.clear();
 }

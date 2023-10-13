@@ -47,9 +47,9 @@ void CEventMgr::OnDialog(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag, DIAL
 
 }
 
-void CEventMgr::OnPause(_bool bPause)
+void CEventMgr::OnPause(_bool bPause, SCENETAG eSceneTag)
 {
-	if (Management()->Get_Scene()->Get_SceneTag() == SCENETAG::STAGE)
+	if (Management()->Get_Scene()->Get_SceneTag() == eSceneTag)
 	{
 		Management()->Get_Scene()->Set_Pause(bPause);
 	}

@@ -34,8 +34,8 @@ HRESULT CManagement::Set_Scene(CScene* pScene)
 		m_bSYSceneChange = false;
 	}
 
-	Safe_Release(m_pScene);
 	Renderer()->Clear_RenderGroup();
+	Safe_Release(m_pScene);
 
 	m_pScene = pScene;
 	//m_bStageVisit[(unsigned long long)pScene->Get_SceneTag()] = true;

@@ -47,11 +47,11 @@
 #include "UI_MissionObjective.h"
 
 
-class CBossStage : public Engine::CScene
+class CLobbyStage : public Engine::CScene
 {
 private:
-	explicit CBossStage(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CBossStage();
+	explicit CLobbyStage(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CLobbyStage();
 
 public:
 	virtual HRESULT		Ready_Scene();
@@ -107,7 +107,7 @@ public:
 	_float				m_fAdminTick = 0.f;	   // 어드민키인풋 레벨업 통제용
 
 public:
-	static CBossStage* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CLobbyStage* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void		Free();

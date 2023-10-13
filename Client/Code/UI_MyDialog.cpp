@@ -63,7 +63,9 @@ Engine::_int Engine::CMyDialog::Update_GameObject(const _float& fTimeDelta)
 
 	m_fNextTick += fTimeDelta;
 
-	if (m_fNextTick >= 3.f)
+
+
+	if (m_fNextTick >= 2.5f)
 	{
 		m_bTick = true;
 		m_fNextTick = 0.f;
@@ -138,6 +140,8 @@ void CMyDialog::LoadText(DIALOGTAG eDialogTag)
 	case Engine::DIALOGTAG::QUEST_2:
 		fin.open(L"../Bin/Data/UI/QUEST_ST2.dat");
 		break;
+	case Engine::DIALOGTAG::ST1_BOSS_START:
+		fin.open(L"../Bin/Data/UI/ST1_BOSS_START.dat");
 	}
 
 
@@ -186,6 +190,11 @@ void CMyDialog::KeyInput()
 					CMissionObjective* pMission = dynamic_cast<CMissionObjective*>(Management()->Get_ObjectList(LAYERTAG::UI, OBJECTTAG::MISSION).back());
 					pMission->Set_Title(L"QUEST_1");
 					pMission->Set_Objective(L"SR 팀과제를 완료하라");
+				}
+
+				if (Management()->Get_Scene()->Get_Pause())
+				{
+					Management()->Get_Scene()->Set_Pause(false);
 				}
 
 				m_IsDead = true;

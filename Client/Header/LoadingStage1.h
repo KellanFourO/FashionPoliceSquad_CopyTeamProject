@@ -13,7 +13,8 @@
 #include "MapTool.h"
 #include "BossStage.h"
 #include "Stage.h"
-//#include "Lobby.h"
+#include "Stage2.h"
+#include "LobbyStage.h"
 
 
 class CLoadingStage1 : public Engine::CScene

@@ -223,6 +223,8 @@
     <ClInclude Include="..\Header\Build_Cube.h" />
     <ClInclude Include="..\Header\BigDaddyMonsterState.h" />
     <ClInclude Include="..\Header\Bullet_GoldBar.h" />
+    <ClInclude Include="..\Header\LobbyStage.h" />
+    <ClInclude Include="..\Header\Stage2.h" />
     <ClInclude Include="..\Header\UI_Berserk.h" />
     <ClInclude Include="..\Header\UI_BerserkFrame.h" />
     <ClInclude Include="..\Header\UI_BulletInfoCount.h" />
@@ -367,6 +369,8 @@
     <ClCompile Include="..\Code\DullSuitMonster_Dead.cpp" />
     <ClCompile Include="..\Code\Build_Cube.cpp" />
     <ClCompile Include="..\Code\Bullet_GoldBar.cpp" />
+    <ClCompile Include="..\Code\LobbyStage.cpp" />
+    <ClCompile Include="..\Code\Stage2.cpp" />
     <ClCompile Include="..\Code\UI_Berserk.cpp" />
     <ClCompile Include="..\Code\UI_BerserkFrame.cpp" />
     <ClCompile Include="..\Code\UI_BulletInfoCount.cpp" />

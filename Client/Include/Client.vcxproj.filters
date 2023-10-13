@@ -409,6 +409,12 @@
     <Filter Include="02. GameObject\20.UI\07. PlayerFace\00. Hat">
       <UniqueIdentifier>{c8bf9ae2-5053-428d-8bfc-5592f158561e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Scene\04. LobbyStage">
+      <UniqueIdentifier>{9ad06684-8f22-4a26-a661-d182af11a931}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Scene\05. Stage2">
+      <UniqueIdentifier>{1711dd9d-49b7-4cf7-a461-269df59dfedb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -798,30 +804,6 @@
     <ClInclude Include="..\Header\TailorAssertRifle.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Reference\Header\ImGui\imconfig.h">
-      <Filter>03. ImGuI\Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Reference\Header\ImGui\imgui.h">
-      <Filter>03. ImGuI\Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Reference\Header\ImGui\imgui_impl_dx9.h">
-      <Filter>03. ImGuI\Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Reference\Header\ImGui\imgui_impl_win32.h">
-      <Filter>03. ImGuI\Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Reference\Header\ImGui\imgui_internal.h">
-      <Filter>03. ImGuI\Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Reference\Header\ImGui\imstb_rectpack.h">
-      <Filter>03. ImGuI\Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Reference\Header\ImGui\imstb_textedit.h">
-      <Filter>03. ImGuI\Include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Reference\Header\ImGui\imstb_truetype.h">
-      <Filter>03. ImGuI\Include</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\PaintBulletTrace.h">
       <Filter>02. GameObject\06. Effect\01.PaintBulletTrace</Filter>
     </ClInclude>
@@ -872,6 +854,36 @@
     </ClInclude>
     <ClInclude Include="..\Header\UI_WeaponIcon.h">
       <Filter>02. GameObject\20.UI\09. WeaponInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Reference\Header\ImGui\imconfig.h">
+      <Filter>03. ImGuI\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Reference\Header\ImGui\imgui.h">
+      <Filter>03. ImGuI\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Reference\Header\ImGui\imgui_impl_dx9.h">
+      <Filter>03. ImGuI\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Reference\Header\ImGui\imgui_impl_win32.h">
+      <Filter>03. ImGuI\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Reference\Header\ImGui\imgui_internal.h">
+      <Filter>03. ImGuI\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Reference\Header\ImGui\imstb_rectpack.h">
+      <Filter>03. ImGuI\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Reference\Header\ImGui\imstb_textedit.h">
+      <Filter>03. ImGuI\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Reference\Header\ImGui\imstb_truetype.h">
+      <Filter>03. ImGuI\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\LobbyStage.h">
+      <Filter>01.Scene\04. LobbyStage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Stage2.h">
+      <Filter>01.Scene\05. Stage2</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\UIMgr.h">
       <Filter>헤더 파일</Filter>
@@ -1268,27 +1280,6 @@
     <ClCompile Include="..\Code\TailorAssertRifle.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Reference\Header\ImGui\imgui.cpp">
-      <Filter>03. ImGuI\Include</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Reference\Header\ImGui\imgui_demo.cpp">
-      <Filter>03. ImGuI\Include</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Reference\Header\ImGui\imgui_draw.cpp">
-      <Filter>03. ImGuI\Include</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Reference\Header\ImGui\imgui_impl_dx9.cpp">
-      <Filter>03. ImGuI\Include</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Reference\Header\ImGui\imgui_impl_win32.cpp">
-      <Filter>03. ImGuI\Include</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Reference\Header\ImGui\imgui_tables.cpp">
-      <Filter>03. ImGuI\Include</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Reference\Header\ImGui\imgui_widgets.cpp">
-      <Filter>03. ImGuI\Include</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\PaintShotGun.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -1348,6 +1339,33 @@
     </ClCompile>
     <ClCompile Include="..\Code\UI_WeaponIcon.cpp">
       <Filter>02. GameObject\20.UI\09. WeaponInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Reference\Header\ImGui\imgui.cpp">
+      <Filter>03. ImGuI\Include</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Reference\Header\ImGui\imgui_demo.cpp">
+      <Filter>03. ImGuI\Include</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Reference\Header\ImGui\imgui_draw.cpp">
+      <Filter>03. ImGuI\Include</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Reference\Header\ImGui\imgui_impl_dx9.cpp">
+      <Filter>03. ImGuI\Include</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Reference\Header\ImGui\imgui_impl_win32.cpp">
+      <Filter>03. ImGuI\Include</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Reference\Header\ImGui\imgui_tables.cpp">
+      <Filter>03. ImGuI\Include</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Reference\Header\ImGui\imgui_widgets.cpp">
+      <Filter>03. ImGuI\Include</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\LobbyStage.cpp">
+      <Filter>01.Scene\04. LobbyStage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Stage2.cpp">
+      <Filter>01.Scene\05. Stage2</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UIMgr.cpp">
       <Filter>소스 파일</Filter>
