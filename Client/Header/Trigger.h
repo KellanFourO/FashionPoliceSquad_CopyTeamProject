@@ -37,10 +37,10 @@ protected:
 private:
 	SCENETAG			m_NowScene = SCENETAG::SCENETAG_END;
 
-	CCubeTex* m_pBufferCubeCom = nullptr;
-	CTransform* m_pTransformCom = nullptr;
-	CCalculator* m_pCalculatorCom = nullptr;
-	CTransform* m_pPlayerTransform = nullptr;
+	CCubeTex*			m_pBufferCubeCom = nullptr;
+	CTransform*			m_pTransformCom = nullptr;
+	CCalculator*		m_pCalculatorCom = nullptr;
+	CTransform*			m_pPlayerTransform = nullptr;
 
 	TRIGGER_CASE		m_eTRCase = TRIGGER_CASE::TR_CASE_END;
 	TRIGGER_TYPE		m_eTRType = TRIGGER_TYPE::TR_TYPE_END;

@@ -144,7 +144,7 @@ HRESULT CStage::Ready_Layer_Environment(LAYERTAG eLayerTag)
 	Load_Data(L"../Bin/Data/Map/MapData", OBJECTTAG::BUILD_CUBE);		// 큐브텍스
 	Load_Data(L"../Bin/Data/OBJ/OBJData", OBJECTTAG::BUILD_OBJ);		//TODO 얘는 섞여있다 큐브텍스랑 rcTEXT
 	Load_Data_C(L"../Bin/Data/CPoint/CPointData", OBJECTTAG::BUILD_OBJ); //TODO 큐브텍스
-
+	
 	m_mapLayer.insert({ eLayerTag, m_pLayer });
 
 	return S_OK;
@@ -152,7 +152,7 @@ HRESULT CStage::Ready_Layer_Environment(LAYERTAG eLayerTag)
 
 HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 {
-	Engine::CLayer* pLayer = Engine::CLayer::Create(eLayerTag);
+	Engine::CLayer* pLayer = m_pGLayer = Engine::CLayer::Create(eLayerTag);
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
 	Engine::CGameObject* pGameObject = nullptr;
@@ -271,6 +271,8 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 
 	m_mapLayer.insert({ eLayerTag, pLayer });
 
+	Load_Data_T(L"../Bin/Data/Trigger/TriggerData", OBJECTTAG::TRIGGER); //TODO 트리거
+	
 	return S_OK;
 }
 
@@ -564,6 +566,61 @@ HRESULT CStage::Load_Data_C(const TCHAR* pFilePath, OBJECTTAG eTag)
 	return S_OK;
 }
 
+HRESULT CStage::Load_Data_T(const TCHAR* pFilePath, OBJECTTAG eTag)
+{
+	//파일 개방해서 받아오기
+	string m_strText = "TriggerData";
+
+	HANDLE      hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+		return E_FAIL;
+
+	DWORD   dwByte = 0;
+	DWORD   dwStrByte = 0;
+	TRIGGER* pTR = nullptr;
+
+	ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
+	char* pTag = new CHAR[dwStrByte];
+
+	ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
+	m_strText = pTag;
+
+	basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
+
+	//저장된 데이터대로 동적할당해서 벡터에 담기
+	while (true)
+	{
+		pTR = new TRIGGER;
+
+		ReadFile(hFile, pTR, sizeof(TRIGGER), &dwByte, nullptr);
+
+		if (0 == dwByte)
+		{
+			Safe_Delete(pTR);
+			break;
+		}
+
+		m_TriggerDataTemp.push_back(pTR);
+	}
+	CloseHandle(hFile);
+
+	Engine::CGameObject* pGameObject = nullptr;
+
+	//벡터 내용물만큼 실제 생성해 레이어에 담기
+	for (auto& iter : m_TriggerDataTemp)
+	{
+		pGameObject = CTrigger::Create(m_pGraphicDev, iter->vPos, iter->vSize, iter->eTrCase, iter->eTrType, iter->eTrName);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::TRIGGER, pGameObject), E_FAIL);
+	}
+	m_mapLayer.emplace(LAYERTAG::GAMELOGIC, m_pGLayer);
+
+	delete[] pTag;
+	pTag = nullptr;
+
+	return S_OK;
+}
 
 
 // HRESULT CStage::Load_UI()

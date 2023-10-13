@@ -40,7 +40,8 @@ HRESULT CTrigger::Add_Component()
 
 	pComponent = m_pCollider = dynamic_cast<CCollider*>(Engine::ProtoMgr()->Clone_Proto(L"Proto_Collider"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::COLLIDER, pComponent);
+	m_mapComponent[ID_DYNAMIC].emplace(COMPONENTTAG::COLLIDER, pComponent);
+	//ID_STATIC이면 Collider -> Get_ID 에서 터짐!! -유진
 
 	return S_OK;
 }
@@ -80,15 +81,14 @@ void CTrigger::LateUpdate_GameObject()
 
 void CTrigger::Render_GameObject()
 {
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
-
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 	m_pCollider->Render_Collider();
+	//m_pBufferCubeCom->Render_Buffer();
+
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 }
 
 CTrigger* CTrigger::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 pMouse_Pos, _vec3 Size,

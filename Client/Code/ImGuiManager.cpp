@@ -512,7 +512,7 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 
 						if (ImGui::Button("Trigger Save"))
 						{
-							Save_ObjData();
+							Save_TriggerData();
 						}
 						ImGui::SameLine();
 
@@ -543,25 +543,26 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 
 						ImGui::NewLine();
 
-						ImGui::SetNextItemWidth(70.0f);
-						if (ImGui::InputFloat("sizeX", &m_fCubesize.fX, 0.f, 0.f, "%.2f", !m_SizeSet_Check))
-							{
-							if (!m_SizeSet_Check) { m_fCubesize.fX = (roundf(m_fCubesize.fX / step) * step); }
-							}
-						ImGui::SameLine();
+						ImGui::Checkbox("unnormalized", &m_bNotNormal_Check);
+						if (m_bNotNormal_Check == false)
+						{
+							m_fCubesize = { 1.f, 1.f, 1.f };
+						}
+						else if (m_bNotNormal_Check == true) {
+							ImGui::SetNextItemWidth(70.0f);
+							if (ImGui::InputFloat("sizeX", &m_fCubesize.fX))
+								m_fCubesize.fX = (roundf(m_fCubesize.fX / step) * step);
+							ImGui::SameLine();
 
-						ImGui::SetNextItemWidth(70.0f);
-						if (ImGui::InputFloat("SizeY", &m_fCubesize.fY, 0.f, 0.f, "%.2f", !m_SizeSet_Check))
-							{
-							if (!m_SizeSet_Check) { m_fCubesize.fY = (roundf(m_fCubesize.fY / step) * step); }
-							}
-						ImGui::SameLine();
+							ImGui::SetNextItemWidth(70.0f);
+							if (ImGui::InputFloat("SizeY", &m_fCubesize.fY))
+								m_fCubesize.fY = (roundf(m_fCubesize.fY / step) * step);
+							ImGui::SameLine();
 
-						ImGui::SetNextItemWidth(70.0f);
-						if (ImGui::InputFloat("SizeZ", &m_fCubesize.fZ, 0.f, 0.f, "%.2f", !m_SizeSet_Check))
-							{
-								if (!m_SizeSet_Check) {m_fCubesize.fZ = (roundf(m_fCubesize.fZ / step) * step);}
-							}
+							ImGui::SetNextItemWidth(70.0f);
+							if (ImGui::InputFloat("SizeZ", &m_fCubesize.fZ))
+								m_fCubesize.fZ = (roundf(m_fCubesize.fZ / step) * step);
+						}
 						ImGui::Checkbox(u8"사이즈 세팅 완료", &m_SizeSet_Check);
 						
 						ImGui::NewLine();
@@ -710,6 +711,15 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 						}
 						ImGui::NewLine();
 
+						if (m_bTriggerReady_Check == true)
+						{
+							ImGui::Text(u8"트리거 추가 가능! Ready!");
+						}
+						else if (m_bTriggerReady_Check == false)
+						{
+							ImGui::Text(u8"NameList에서 선택바람. 추가 불가.");
+						}
+						ImGui::NewLine();
 						ImGui::BeginListBox("NameList", ImVec2(200, 350));
 						{
 							for (int i = 0; i < m_VecListbox.size(); ++i)
@@ -1474,6 +1484,65 @@ void CImGuiManager::Save_CPointData()
 
 
 }
+
+void CImGuiManager::Save_TriggerData()
+{
+	string m_strText = "TriggerData";
+// 	vector<TRIGGER*> m_VectempTrigger = {};
+	OPENFILENAME    open;
+	TCHAR   lpstrFile[MAX_PATH] = L"";
+	static TCHAR filter[] = L"*.dat";
+
+
+	ZeroMemory(&open, sizeof(OPENFILENAME));
+	open.lStructSize = sizeof(OPENFILENAME);
+	open.lpstrFilter = filter;
+	open.lpstrFile = lpstrFile;
+	open.nMaxFile = 256;
+	open.lpstrInitialDir = L"";
+
+	GetModuleFileName(NULL, lpstrFile, MAX_PATH);
+	//C:\Users\wnqj4\Desktop\SR_Project\Client\Bin\Client.exe
+
+	PathRemoveFileSpec(lpstrFile);
+	//C:\Users\wnqj4\Desktop\SR_Project\Client\Bin
+
+	lstrcat(lpstrFile, L"\\Data\\Trigger");
+	//C:\Users\wnqj4\Desktop\SR_Project\Client\Bin\Data\Trigger
+
+	basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
+	const _tchar* aa = converted.c_str();
+
+	wcscat_s(lpstrFile, L"\\");
+	wcscat_s(lpstrFile, aa);
+
+
+	if (GetSaveFileName(&open) != 0) {
+
+		HANDLE hFile = CreateFile(lpstrFile, GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
+
+		if (INVALID_HANDLE_VALUE == hFile)
+			return;
+
+		DWORD   dwByte = 0;
+		DWORD   dwStrByte = 0;
+
+		dwStrByte = sizeof(CHAR) * (m_strText.length() + 1);
+
+		WriteFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
+		//문자열 데이터의 크기 dwStrByte를 파일에 쓰고, 데이터의 크기를 알려주는 역할
+		WriteFile(hFile, m_strText.c_str(), dwStrByte, &dwByte, nullptr);
+		//문자열 m_strText를 파일에 쓰는데, 직전 단계에서 계산한 크기만큼 쓰여짐
+
+		m_VecListbox = dynamic_cast<CMapTool*>(Engine::Management()->Get_One_Scene(SCENETAG::MAPTOOL))->Get_VecTrigger();
+		for (auto& iter : m_VecListbox) { WriteFile(hFile, iter, sizeof(TRIGGER), &dwByte, nullptr); }
+
+		CloseHandle(hFile);
+		MSG_BOX("Save Complete.");
+	}
+
+}
+
 
 
 ///////////////////////////////////////////////////////////////////////

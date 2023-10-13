@@ -6,6 +6,7 @@
 #include "MapCursor.h"
 #include "Build_Cube.h"
 #include "Build_Obj.h"
+#include "Trigger.h"
 
 #include "FlyingCamera.h"
 #include "DynamicCamera.h"
@@ -27,6 +28,7 @@ private:
 	HRESULT				Ready_LightInfo();
 
 	HRESULT				Ready_Layer_Environment(LAYERTAG eLayerTag);
+	HRESULT				Ready_Layer_GameLogic(LAYERTAG eLayerTag);
 	void				BUILD_NOP_MODE();
 
 	HRESULT				Build_Map();
@@ -35,6 +37,7 @@ private:
 	HRESULT				Load_Cube(const TCHAR* pFilePath);
 	HRESULT				Load_Obj(const TCHAR* pFilePath);
 	HRESULT				Load_CPoint(const TCHAR* pFilePath);
+	HRESULT				Load_Trigger(const TCHAR* pFilePath);
 	bool				CheckDuplicateCube(const _vec3& pPos, const _vec3& pSize);
 
 public:
@@ -43,8 +46,10 @@ public:
 
 	vector<OBJData*>&	Get_VecOBJData() { return m_VecOBJData; }
 	void				Set_VecOBJData(vector<OBJData*>* pVecOBjData) { m_VecOBJData = *pVecOBjData; }
+ 	
+	vector<TRIGGER*>&	Get_VecTrigger() { return m_TriggerData; }
+	void				Set_VecTrigger(vector<TRIGGER*>* pVecTRData) { m_TriggerData = *pVecTRData; }
 
-// 	vector<OBJData*>&	Get_VecTrigger() { return m_VecTrigger; }
 	vector<OBJData*>&	Get_VecMoving()  { return m_VecMoving; }
 	vector<C_POINT*>&	Get_VecCreatePoint() { return m_VecCreatePoint; }
 
@@ -61,11 +66,11 @@ private:
 	vector<IDirect3DBaseTexture9*> m_VecTempPlane;
 
 	//트리거, Create Point 용 벡터 컨테이너
-// 	vector<OBJData*>			   m_VecTrigger;
 	vector<OBJData*>			   m_VecMoving;
 	vector<C_POINT*>			   m_VecCreatePoint;
 
 	CLayer*				m_pLayer				= nullptr;
+	CLayer*				m_pGLayer				= nullptr;
 	CMapCursor*			m_pMapCursor			= nullptr;
 		
 	_vec3*				m_vCursor_Pos;
@@ -96,6 +101,7 @@ private:
 
 	vector<OBJData*>	m_VecOBJData;	//메인 OBJ 데이터(큐브타입+플레인타입) 벡터
 	vector<CUBE*>		m_VecCubeData;	//빌딩용 큐브 한정 데이터 벡터
+	vector<TRIGGER*>	m_TriggerData;  //Trigger 보관용 데이터 벡터
 
 private:
 	OBJData*			OBJTemp					= nullptr;  //오브젝트용
@@ -103,6 +109,7 @@ private:
 	OBJData*			OBJTemp3				= nullptr;  //오브젝트용
 	CUBE*				CubeTemp2				= nullptr; //맵 큐브용
 	C_POINT*			OBJ_C_POINT				= nullptr; //몬스터 리젠 위치용
+	TRIGGER*			TriggerTemp				= nullptr; //트리거 설치용
 
 public:
 	static CMapTool*	Create(LPDIRECT3DDEVICE9 pGraphicDev);

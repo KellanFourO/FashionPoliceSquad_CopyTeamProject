@@ -154,10 +154,19 @@ private:
 	///////////////////// 유진 트리거 툴 ////////////////////////////
 public:
 	bool				Get_TriggerMode_Check() { return m_bTrigger_Mode_Check; }
-	void				Set_TriggerMode_Check() { m_bTrigger_Mode_Check = !m_bTrigger_Mode_Check; }
+	void				Set_TriggerMode_Check() { m_bTrigger_Mode_Check = false; }
 
 	bool				Get_TriggerLoad_Check() { return m_bTriggerLoad_Check; }
-	void				Set_TriggerLoad_Check() { m_bTriggerLoad_Check = !m_bTriggerLoad_Check; }
+	void				Set_TriggerLoad_Check() { m_bTriggerLoad_Check = false; }
+
+	bool				Get_TriggerReady_Check() { return m_bTriggerReady_Check; }
+	void				Set_TriggerReady_Check() { m_bTriggerReady_Check = false; }
+
+	void				Save_TriggerData();
+
+	TRIGGER_NUMBER		Get_ImGuiTriggerNumber() { return m_eTR_NUM; }
+	TRIGGER_CASE		Get_ImGuiTriggerCase() { return m_eTR_CASE; }
+	TRIGGER_TYPE		Get_ImGuiTriggerType() { return m_eTR_TYPE; }
 
 	vector<TRIGGER*>&	Get_VecTrigger() { return m_VecTrigger; }
 	void				Trigger_Info_Clear() {

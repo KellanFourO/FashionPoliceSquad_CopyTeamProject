@@ -19,6 +19,8 @@ CMapTool::~CMapTool()
 HRESULT CMapTool::Ready_Scene()
 {
     FAILED_CHECK_RETURN(Ready_Layer_Environment(LAYERTAG::ENVIRONMENT), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_GameLogic(LAYERTAG::GAMELOGIC), E_FAIL);
+
     FAILED_CHECK_RETURN(Ready_LightInfo(), E_FAIL);
 
     return S_OK;
@@ -68,6 +70,12 @@ _int CMapTool::Update_Scene(const _float& fTimeDelta)
         Load_CPoint(L"../Bin/Data/CPoint/CPointData");
         CImGuiManager::GetInstance()->Set_CPOINT_Load_Check();
     }
+//     else if (CImGuiManager::GetInstance()->Get_TriggerLoad_Check() == true)
+//     {
+//         Load_Trigger(L"../Bin/Data/Trigger/TriggerData");
+//         CImGuiManager::GetInstance()->Set_TriggerLoad_Check();
+//     }
+
 
     return iExit;
 }
@@ -119,10 +127,26 @@ HRESULT CMapTool::Ready_Layer_Environment(LAYERTAG eLayerTag)
     NULL_CHECK_RETURN(pGameObject, E_FAIL);
     FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MAPCURSOR, pGameObject), E_FAIL);
 
-    m_mapLayer.insert({ eLayerTag, pLayer });
+    m_mapLayer.emplace( eLayerTag, pLayer );
 
     return S_OK;
 }
+
+HRESULT CMapTool::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
+{
+	Engine::CLayer* pLayer = m_pGLayer = Engine::CLayer::Create(eLayerTag);
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	Engine::CGameObject* pGameObject = nullptr;
+
+	// Trigger
+    Load_Trigger(L"../Bin/Data/Trigger/TriggerData");
+
+	m_mapLayer.emplace(eLayerTag, pLayer);
+
+	return S_OK;
+}
+
 
 void CMapTool::BUILD_NOP_MODE()
 {
@@ -171,6 +195,9 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
                 OBJTemp = new OBJData;
                 OBJ_C_POINT = new C_POINT;
             }
+			else if (CImGuiManager::GetInstance()->Get_TriggerMode_Check() == true) {
+                TriggerTemp = new TRIGGER;
+			}
 
             Cursor_Update();
             _vec3 CursorTemp = { m_vCursor_Pos->x, m_vCursor_Height, m_vCursor_Pos->z };
@@ -185,7 +212,6 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
                 {
                     m_fCubesize = { VTXITV, VTXITV, VTXITV };
                 }
-
                 else if (CImGuiManager::GetInstance()->Get_NotNormal_Check() == true)
                 {
                     CubeSize_Update();
@@ -202,7 +228,7 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
                     NULL_CHECK_RETURN(pGameObject, E_FAIL);
                     FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_CUBE, pGameObject), E_FAIL);
 
-                    m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
+                    m_mapLayer.emplace( LAYERTAG::ENVIRONMENT, m_pLayer );
 
                     CubeTemp2->vSize = CubeSize;
                     CubeTemp2->eOBJ_TYPE = OBJ_TYPE::BUILDING_TYPE;
@@ -213,6 +239,32 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
                     m_VecCubeData.push_back(CubeTemp2);
                     m_iCubeIndex++;
                 }
+
+				//이 녀석이 Trigger 에 해당될 경우
+                if ((CImGuiManager::GetInstance()->Get_TriggerMode_Check() == true)
+                    && (CImGuiManager::GetInstance()->Get_TriggerReady_Check() == true))
+                {
+                    TRIGGER_CASE		m_eTRCase = CImGuiManager::GetInstance()->Get_ImGuiTriggerCase();
+                    TRIGGER_TYPE		m_eTRType = CImGuiManager::GetInstance()->Get_ImGuiTriggerType();
+					TRIGGER_NUMBER		m_eTrName = CImGuiManager::GetInstance()->Get_ImGuiTriggerNumber();
+
+					pGameObject = CTrigger::Create(m_pGraphicDev, CursorTemp, CubeSize, m_eTRCase, m_eTRType, m_eTrName);
+
+					NULL_CHECK_RETURN(pGameObject, E_FAIL);
+					FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::TRIGGER, pGameObject), E_FAIL);
+
+                    m_mapLayer.emplace( LAYERTAG::GAMELOGIC, m_pGLayer);
+
+                    TriggerTemp->eTrName = m_eTrName;
+                    TriggerTemp->vSize = CubeSize;
+                    TriggerTemp->vPos = CursorTemp;
+                    TriggerTemp->eTrCase = m_eTRCase;
+                    TriggerTemp->eTrType = m_eTRType;
+                    TriggerTemp->eTrSTATE = TRIGGER_STATE::TR_BEFORE;
+
+                    m_TriggerData.push_back(TriggerTemp);
+                    CImGuiManager::GetInstance()->Set_TriggerReady_Check();
+				}
             }
 
             if ((CursorTemp.x > -1) && (CursorTemp.y > -1)
@@ -224,7 +276,6 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
                 {
                     m_fCubesize = { VTXITV, VTXITV, VTXITV };
                 }
-
                 else if (CImGuiManager::GetInstance()->Get_NotNormal_Check() == true)
                 {
                     CubeSize_Update();
@@ -392,7 +443,7 @@ HRESULT CMapTool::Load_Cube(const TCHAR* pFilePath)
         FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_CUBE, pGameObject), E_FAIL);
         m_iCubeIndex++;
     }
-    m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
+    m_mapLayer.emplace( LAYERTAG::ENVIRONMENT, m_pLayer );
 
     delete[] pTag;
     pTag = nullptr;
@@ -450,7 +501,7 @@ HRESULT CMapTool::Load_Obj(const TCHAR* pFilePath)
         FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
         m_iOBJIndex++;
     }
-    m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
+    m_mapLayer.emplace( LAYERTAG::ENVIRONMENT, m_pLayer );
 
     delete[] pTag;
     pTag = nullptr;
@@ -514,7 +565,7 @@ HRESULT CMapTool::Load_CPoint(const TCHAR* pFilePath)
         FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
         m_iOBJIndex++;
     }
-    m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
+    m_mapLayer.emplace(LAYERTAG::ENVIRONMENT, m_pLayer);
 
     delete[] pTag;
     pTag = nullptr;
@@ -527,6 +578,63 @@ HRESULT CMapTool::Load_CPoint(const TCHAR* pFilePath)
 
     MSG_BOX("Load Complete.");
     return S_OK;
+}
+
+HRESULT CMapTool::Load_Trigger(const TCHAR* pFilePath)
+{
+	//파일 개방해서 받아오기
+	string m_strText = "TriggerData";
+
+	HANDLE      hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+		return E_FAIL;
+
+	DWORD   dwByte = 0;
+	DWORD   dwStrByte = 0;
+    TRIGGER* pTR = nullptr;
+
+	ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
+	pTag = new CHAR[dwStrByte];
+
+	ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
+	m_strText = pTag;
+
+	basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
+
+	//저장된 데이터대로 동적할당해서 벡터에 담기
+	while (true)
+	{
+        pTR = new TRIGGER;
+
+		ReadFile(hFile, pTR, sizeof(TRIGGER), &dwByte, nullptr);
+
+		if (0 == dwByte)
+		{
+			Safe_Delete(pTR);
+			break;
+		}
+
+        m_TriggerData.push_back(pTR);
+	}
+	CloseHandle(hFile);
+
+	Engine::CGameObject* pGameObject = nullptr;
+
+	//벡터 내용물만큼 실제 큐브 생성해 레이어에 담기
+	for (auto& iter : m_TriggerData)
+	{
+		pGameObject = CTrigger::Create(m_pGraphicDev, iter->vPos, iter->vSize, iter->eTrCase, iter->eTrType, iter->eTrName);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::TRIGGER, pGameObject), E_FAIL);
+	}
+	m_mapLayer.emplace(LAYERTAG::GAMELOGIC, m_pGLayer);
+
+	delete[] pTag;
+	pTag = nullptr;
+
+	MSG_BOX("Load Complete.");
+	return S_OK;
 }
 
 
