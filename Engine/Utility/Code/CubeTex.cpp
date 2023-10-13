@@ -12,7 +12,6 @@ CCubeTex::CCubeTex(LPDIRECT3DDEVICE9 pGraphicDev)
 CCubeTex::CCubeTex(const CCubeTex& rhs)
 	: CVIBuffer(rhs)
 {
-
 }
 
 CCubeTex::~CCubeTex()
@@ -27,6 +26,7 @@ HRESULT CCubeTex::Ready_Buffer(void)
 	m_dwVtxSize = sizeof(VTXCUBE);
 
 	m_dwIdxSize = sizeof(INDEX32);
+
 	m_IdxFmt = D3DFMT_INDEX32;
 
 	FAILED_CHECK_RETURN(CVIBuffer::Ready_Buffer(), E_FAIL);
@@ -35,7 +35,7 @@ HRESULT CCubeTex::Ready_Buffer(void)
 
 	m_pVB->Lock(0, 0, (void**)&m_pVertex, 0);
 
-	// 
+	//
 
 	m_pVertex[0].vPosition = { -1.f, 1.f, -1.f };
 	m_pVertex[0].vTexUV = m_pVertex[0].vPosition;
@@ -61,7 +61,7 @@ HRESULT CCubeTex::Ready_Buffer(void)
 	m_pVertex[7].vPosition = { -1.f, -1.f, 1.f };
 	m_pVertex[7].vTexUV = m_pVertex[7].vPosition;
 
-	
+
 	INDEX32* pIndex = nullptr;
 
 	m_pIB->Lock(0, 0, (void**)&pIndex, 0);
@@ -71,12 +71,12 @@ HRESULT CCubeTex::Ready_Buffer(void)
 	pIndex[0]._0 = 1;
 	pIndex[0]._1 = 5;
 	pIndex[0]._2 = 6;
-		
-	// +X 오른쪽 아래 
+
+	// +X 오른쪽 아래
 	pIndex[1]._0 = 1;
 	pIndex[1]._1 = 6;
 	pIndex[1]._2 = 2;
-			
+
 	// -X 오른쪽 위
 	pIndex[2]._0 = 4;
 	pIndex[2]._1 = 0;
@@ -103,7 +103,7 @@ HRESULT CCubeTex::Ready_Buffer(void)
 	pIndex[6]._1 = 2;
 	pIndex[6]._2 = 6;
 
-	// -Y 왼쪽 아래 
+	// -Y 왼쪽 아래
 	pIndex[7]._0 = 3;
 	pIndex[7]._1 = 6;
 	pIndex[7]._2 = 7;
@@ -127,19 +127,19 @@ HRESULT CCubeTex::Ready_Buffer(void)
 	pIndex[11]._0 = 0;
 	pIndex[11]._1 = 2;
 	pIndex[11]._2 = 3;
-	
+
 
 	//삼각형 평면 기준
-	for (_ulong i = 0; i < m_dwTriCnt; ++i) 
+	for (_ulong i = 0; i < m_dwTriCnt; ++i)
  	{
     		_ulong i0 = pIndex[i]._0;
     		_ulong i1 = pIndex[i]._1;
     		_ulong i2 = pIndex[i]._2;
 
-			_vec3		vDst, vSrc, vNormal;  
+			_vec3		vDst, vSrc, vNormal;
 
-			vDst = m_pVertex[i1].vPosition - m_pVertex[i0].vPosition; 
-			vSrc = m_pVertex[i2].vPosition - m_pVertex[i1].vPosition; 
+			vDst = m_pVertex[i1].vPosition - m_pVertex[i0].vPosition;
+			vSrc = m_pVertex[i2].vPosition - m_pVertex[i1].vPosition;
 			D3DXVec3Cross(&vNormal, &vDst, &vSrc);													//
 
 			m_pVertex[i0].vNormal += vNormal;
@@ -148,7 +148,7 @@ HRESULT CCubeTex::Ready_Buffer(void)
  	}
 
 	//정규화
-		for (DWORD i = 0; i < m_dwVtxCnt; ++i)
+	for (DWORD i = 0; i < m_dwVtxCnt; ++i)
 	{
 		D3DXVec3Normalize(&m_pVertex[i].vNormal, &m_pVertex[i].vNormal);
 	}
@@ -186,7 +186,5 @@ CComponent* CCubeTex::Clone(void)
 
 void CCubeTex::Free(void)
 {
-
 	CVIBuffer::Free();
-
 }

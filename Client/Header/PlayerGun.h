@@ -43,6 +43,7 @@ public:
 	_bool			Get_Fire() { return m_bFire;}
 	_bool			Get_RBFire() { return m_bRBFire;}
 	Gun_INFO*		Get_GunInfo() { return &m_tGunInfo; }
+	BULLETTYPE		Get_BulletType() { return m_eBulletType;}
 
 	void			Set_Ready(_bool _bReady) { m_bReady = _bReady; }
 	void			Set_Fire (_bool _bFire) { m_bFire = _bFire; }

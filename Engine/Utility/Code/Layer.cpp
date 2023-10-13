@@ -110,7 +110,8 @@ _int CLayer::Update_Layer(const _float& fTimeDelta)
  				iter2 = iter.second.erase(iter2);
  			}
  		}
- 	}return iResult;
+ 	}
+	return iResult;
 	//for (auto& iter : m_mapObject)
 	//{
 	//	for (auto& iter2 : iter.second)

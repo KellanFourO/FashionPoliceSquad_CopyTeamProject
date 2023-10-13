@@ -192,5 +192,8 @@ CDullSuitMonster* CDullSuitMonster::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CDullSuitMonster::Free()
 {
+	for (auto iter : m_pStateArray)
+		Safe_Delete(iter);
+
     __super::Free();
 }

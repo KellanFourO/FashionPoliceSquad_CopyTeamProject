@@ -30,6 +30,6 @@ public:
 private:
 	HRESULT								Add_Component();
 private:
-	virtual void Free() override;
+	virtual void Free();
 };
 

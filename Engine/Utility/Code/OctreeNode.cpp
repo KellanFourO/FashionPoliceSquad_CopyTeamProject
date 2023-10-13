@@ -172,7 +172,7 @@ void COctreeNode::Render_OctreeNode(LPDIRECT3DDEVICE9 pGraphicDev, bool IsRoot /
 	{
 		for (auto& iter : m_vecChildren)
 		{
-			
+
 			if (0 == (iter->IsCulled()))
 				continue;
 			else if (1 == iter->IsCulled())
@@ -185,10 +185,10 @@ void COctreeNode::Render_OctreeNode(LPDIRECT3DDEVICE9 pGraphicDev, bool IsRoot /
 					iter2->Render_GameObject();
 				}
 			}
-		
+
 		}
 	}
-}	
+}
 
 void COctreeNode::CheckCullNode(COctreeNode* Node)
 {

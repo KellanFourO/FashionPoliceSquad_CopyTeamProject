@@ -34,12 +34,12 @@ CPlayerGunState* CTailorAssertRifle_Reload::Update(CPlayerGun* Rifle, const floa
 	if (m_fBehaviorTime >= 0.1f && m_pHost->Get_GunInfo()->m_iMaxBullet != 0)
 	{
 		m_pHost->Reload(0,0);
-		return dynamic_cast<CTailorAssertRifle*>(m_pHost)->Get_State(3);
+		return dynamic_cast<CTailorAssertRifle*>(m_pHost)->Get_State(2); //Ready
 	}
 
 	else if (m_pHost->Get_GunInfo()->m_iMaxBullet == 0)
 	{
-		return dynamic_cast<CTailorAssertRifle*>(m_pHost)->Get_State(0);
+		return dynamic_cast<CTailorAssertRifle*>(m_pHost)->Get_State(0); //Idle
 	}
 
 

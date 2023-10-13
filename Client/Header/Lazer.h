@@ -82,6 +82,6 @@ public:
 	static CLazer* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
-	virtual void Free()	override;
+	virtual void Free();
 };
 

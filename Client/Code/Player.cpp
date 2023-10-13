@@ -2,7 +2,7 @@
 #include "Player.h"
 
 #include "Dyehard.h"
-#include "CrossHair.h"
+#include "UI_CrossHair.h"
 
 #include "Player_IDLE.h"
 #include "Player_Armor.h"
@@ -181,17 +181,30 @@ HRESULT CPlayer::Add_Component()
 	return S_OK;
 }
 
-void CPlayer::SetGun()
+void CPlayer::SetGun(CLayer* _pLayer)
 {
 
 	CPlayerGun* pPlayerGun = nullptr;
 
-	pPlayerGun = dynamic_cast<CPaintShotGun*>(Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER_GUN).front());
-	m_vecPlayerGun.push_back(pPlayerGun);
+	if (_pLayer)
+	{
+		pPlayerGun = dynamic_cast<CPaintShotGun*>(_pLayer->Get_ObjectList(OBJECTTAG::PLAYER_GUN).front());
+		m_vecPlayerGun.push_back(pPlayerGun);
 
-	pPlayerGun = dynamic_cast<CTailorAssertRifle*>(Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER_GUN).back());
-	m_vecPlayerGun.push_back(pPlayerGun);
+		pPlayerGun = dynamic_cast<CTailorAssertRifle*>(_pLayer->Get_ObjectList(OBJECTTAG::PLAYER_GUN).back());
+		m_vecPlayerGun.push_back(pPlayerGun);
+	}
+	else
+	{
+		pPlayerGun = dynamic_cast<CPaintShotGun*>(Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER_GUN).front());
+		m_vecPlayerGun.push_back(pPlayerGun);
 
+		pPlayerGun = dynamic_cast<CTailorAssertRifle*>(Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER_GUN).back());
+		m_vecPlayerGun.push_back(pPlayerGun);
+	}
+
+
+	//
 	m_pGun = m_vecPlayerGun[0];
 
 }
@@ -372,10 +385,10 @@ void CPlayer::Mouse_Input(const _float& fTimeDelta)
 	{
 		m_pGun->Set_RBFire(true);
 	}
-	else if (!(Engine::Get_DIMouseState(DIM_RB)))
-	{
-		m_pGun->Set_RBFire(false);
-	}
+	//else if (!(Engine::Get_DIMouseState(DIM_RB)))
+	//{
+	//	m_pGun->Set_RBFire(false);
+	//}
 }
 
 void CPlayer::TestRopeAction(const _float& fTimeDelta)

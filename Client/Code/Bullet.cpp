@@ -101,6 +101,14 @@ void CBullet::OnCollisionEnter(CCollider* _pOther)
 		dynamic_cast<CMonster*>(_pOther->Get_Host())->Attacked(m_fDmg);
 		m_bDead = true;
 	}
+
+	else if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BOSS)
+	{
+		//TODO 몬스터 총알 오브젝트 풀링 할거면 여기서
+		dynamic_cast<CMonster*>(_pOther->Get_Host())->Attacked(m_fDmg);
+		m_bDead = true;
+	}
+
 	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE)
 	{
 		m_bDead = true;
@@ -134,7 +142,7 @@ void CBullet::OnCollisionExit(CCollider* _pOther)
 {
 // 	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE)
 // 		return;
-// 
+//
 // 	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYER)
 // 	{
 // 		dynamic_cast<CPlayer*>(_pOther->Get_Host())->Attacked(m_fDmg);

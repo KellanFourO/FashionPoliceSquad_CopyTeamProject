@@ -1,8 +1,8 @@
 #pragma once
 #include "Engine_Define.h"
 #include "Base.h"
-#include "CardList.h"
-#include "MyDialog.h"
+#include "UI_CardList.h"
+#include "UI_MyDialog.h"
 
 BEGIN(Engine)
 
@@ -21,7 +21,7 @@ public:
 	void	OnDialog(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag, DIALOGTAG eDialogTag); // 다이얼로그 생성
 	void	OnPause(_bool bPause);
 
-
+	
 
 
 

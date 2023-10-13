@@ -12,9 +12,9 @@ CMyFont::~CMyFont()
 {
 }
 
-HRESULT CMyFont::Ready_Font(const _tchar * pFontType, 
-							const _uint & iWidth, 
-							const _uint & iHeight, 
+HRESULT CMyFont::Ready_Font(const _tchar * pFontType,
+							const _uint & iWidth,
+							const _uint & iHeight,
 							const _uint & iWeight)
 {
 	D3DXFONT_DESC		Font_Desc;

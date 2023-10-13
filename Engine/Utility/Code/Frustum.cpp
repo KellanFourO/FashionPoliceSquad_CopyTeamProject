@@ -102,5 +102,6 @@ BOOL CFrustum::IsInSphere(_vec3& pv, _float _fRadius)
 
 void CFrustum::Free()
 {
+
 }
 //인스턴싱으로 절두체컬링으로 자르기

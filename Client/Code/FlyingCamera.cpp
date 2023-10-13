@@ -19,7 +19,6 @@ CFlyingCamera::CFlyingCamera(const CFlyingCamera& rhs)
 
 CFlyingCamera::~CFlyingCamera()
 {
-	Free();
 }
 
 HRESULT CFlyingCamera::Ready_GameObject(void)
@@ -81,7 +80,7 @@ HRESULT CFlyingCamera::Add_Component(void)
 }
 
 void CFlyingCamera::Key_Input(const _float& fTimeDelta)
-{	
+{
 	if (Engine::Get_DIKeyState(DIK_W) & 0x80)
 		m_pTransformCom->Translate(m_fSpeed * fTimeDelta * m_pTransformCom->m_vInfo[INFO_LOOK]);
 

@@ -3,9 +3,6 @@
 #include "GameObject.h"
 #include "Monster.h"
 
-//TODO - ½Â¿ëÃß°¡
-#include "MyUI.h"
-
 class CMonsterState;
 
 

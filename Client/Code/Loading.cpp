@@ -1,9 +1,8 @@
 #include "stdafx.h"
-#include "..\Header\Loading.h"
-
+#include "Loading.h"
 #include "Export_Utility.h"
 #include "ImGuiManager.h"
-#include "UIMgr.h"
+#include "Player.h"
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
@@ -14,7 +13,6 @@ CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 
 CLoading::~CLoading()
 {
-	//Free();
 }
 
 HRESULT CLoading::Ready_Loading(LOADINGID eID)
@@ -27,7 +25,7 @@ HRESULT CLoading::Ready_Loading(LOADINGID eID)
 
 	return S_OK;
 }
-
+\
 _uint CLoading::Loading_For_Stage()
 {
 
@@ -41,6 +39,7 @@ _uint CLoading::Loading_For_Stage()
 	Set_Value(3);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CubeTex", CCubeTex::Create(m_pGraphicDev)), E_FAIL);
 	Set_Value(3);
+
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_PlaneTex", CRcTex::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_EffectTex", CEffectTex::Create(m_pGraphicDev)), E_FAIL)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CubeTexture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Bin/Resource/Texture/Obj/CubeType/Box_Full%d.dds", OBJ_TYPE::CUBE_TYPE, 8)), E_FAIL);
@@ -117,17 +116,52 @@ _uint CLoading::Loading_For_Stage()
 
 	//½Â¿ë
 	{
-		CUIMgr::GetInstance()->Ready_UIMgr();
+		//CUIMgr::GetInstance()->Ready_UIMgr();
 		Set_Value(3);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_DialogTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/DIALOUGE/DIALOG_1_Fix1.png")), E_FAIL);
 		Set_Value(3);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_PortraitTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-des.png")), E_FAIL);
 		Set_Value(3);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CrossHairTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/CROSSHAIR/UI-crosshair_2.png")), E_FAIL);
-		Set_Value(3);
+
+
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CardFrontTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/card_frame01.png")), E_FAIL);
-		Set_Value(3);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CardBackTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/Card_Back.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CardForceTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardBlueEyeDragon.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CardSpeedTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardFedderMan.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CardIntelliTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardYugioh.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CardStrengthTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardOvelisk.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CardBonusTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardBonus.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CardBombTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardGreedPot.png")), E_FAIL);
+		Set_Value(3);
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_HPFrameTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HP_BAR/HP_Frame.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_HPValueTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HP_BAR/VALUE_Player.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_HPMarkTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HP_BAR/Hp_Mark.png")), E_FAIL);
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ShieldFrameTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HP_BAR/HP_Shield.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ShieldValueTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HP_BAR/UI_49.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ShieldMarkTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HP_BAR/Hp_ShieldMark.png")), E_FAIL);
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_BerserkTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/BERSERK/berserk-UI_1.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_BerserkFrameTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/BERSERK/berserk-UI_0.png")), E_FAIL);
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_PlayerFaceTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/Player_HUD/SPRITE_hud_front.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_HatTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HAT/hat v2_0.png")), E_FAIL);
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_BulletCountTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/BULLET_INFO/BULLET_COUNT1.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_BulletNameTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/BULLET_INFO/BULLET_Name1.png")), E_FAIL);
+
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ShotGunIconTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/WEAPON/ui-weapons_0.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_MissionUITexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HP_BAR/UI_391.png")), E_FAIL);
+		Set_Value(3);
+
+
+
+
+		CPlayer* pPlayer = CPlayer::Create(m_pGraphicDev);
+		Management()->Set_Player(pPlayer);
+
 		Set_Value(4);
 
 	}
@@ -166,6 +200,20 @@ _uint CLoading::Loading_For_MapTool()
 	return 0;
 }
 
+_uint CLoading::Loading_For_Lobby()
+{
+	m_bFinish = true;
+	return 0;
+}
+
+_uint CLoading::Loading_For_BossStage()
+{
+	Set_Value(100);
+
+	m_bFinish = true;
+	return 0;
+}
+
 size_t CLoading::Thread_Main(void* pArg)
 {
 	CLoading* pLoading = reinterpret_cast<CLoading*>(pArg);
@@ -184,7 +232,12 @@ size_t CLoading::Thread_Main(void* pArg)
 		iFlag = pLoading->Loading_For_MapTool();
 		break;
 
+	case LOADING_LOBBY:
+		iFlag = pLoading->Loading_For_Lobby();
+		break;
+
 	case LOADING_BOSS:
+		iFlag = pLoading->Loading_For_BossStage();
 		break;
 	}
 

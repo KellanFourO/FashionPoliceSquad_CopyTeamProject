@@ -6,20 +6,20 @@ UINT CCollider::g_iNextID = 0;
 
 CCollider::CCollider() : m_iID(g_iNextID++)
 {
-	::ZeroMemory(&m_vAxisDir, sizeof(_vec3));
-	::ZeroMemory(&m_fAxisLen, sizeof(_float));
+	::ZeroMemory(&m_vAxisDir, 3 * sizeof(_vec3));
+	::ZeroMemory(&m_fAxisLen, 3 * sizeof(_float));
 }
 
 CCollider::CCollider(LPDIRECT3DDEVICE9 pGraphicDev) :CComponent(pGraphicDev), m_iID(g_iNextID++)
 {
-	::ZeroMemory(&m_vAxisDir, sizeof(_vec3));
-	::ZeroMemory(&m_fAxisLen, sizeof(_float));
+	::ZeroMemory(&m_vAxisDir, 3 * sizeof(_vec3));
+	::ZeroMemory(&m_fAxisLen, 3 * sizeof(_float));
 }
 
 CCollider::CCollider(const CCollider& rhs) : CComponent(rhs), m_iID(g_iNextID++)
 {
-	::ZeroMemory(&m_vAxisDir, sizeof(_vec3));
-	::ZeroMemory(&m_fAxisLen, sizeof(_float));
+	::ZeroMemory(&m_vAxisDir, 3 * sizeof(_vec3));
+	::ZeroMemory(&m_fAxisLen, 3 * sizeof(_float));
 }
 
 CCollider::~CCollider()
@@ -47,29 +47,29 @@ void CCollider::Render_Collider()
 {
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
  		m_pGraphicDev->SetStreamSource(0, m_pVB, 0, sizeof(VTXCOL));
- 		
+
  		m_pGraphicDev->SetFVF(VTXCOL::FVF_COL);
  		m_pGraphicDev->SetIndices(m_pIB);
- 		
+
  			//m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
- 		
+
  		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
  		m_pGraphicDev->SetTexture(0, NULL);  //유진 추가 : 콜라이더 와이어프레임 선 색깔 고정
- 		
+
  			//_matrix matCollider, matrixPre;  //월드 이미 Transform 에서 받아옴
  			//D3DXMatrixIdentity(&matCollider);
- 		
+
  		//// Fixing Bounding Box
  		//for (_int i = 0; i < 3; ++i)
  		//	::CopyMemory(&matCollider.m[i], &m_vAxisDir[i], sizeof(_vec3));
  		//::CopyMemory(&matCollider.m[3], &m_vCenterPos, sizeof(_vec3));
- 		
+
  			//m_pGraphicDev->SetTransform(D3DTS_WORLD, &matCollider);
- 		
+
  		m_pGraphicDev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 8, 0, 12);
  		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
  		m_pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
- 	 	
+
 
 }
 
@@ -86,7 +86,7 @@ HRESULT CCollider::InitOBB(_vec3& _vCenter, _vec3* _vAxisDir, _float* _fAxisLen)
 		m_vAxisDir[i] = vAxisDir[i];
 		m_fAxisLen[i] = _fAxisLen[i];
 	}
-	 
+
 #if _DEBUG
 
 	FAILED_CHECK_RETURN(m_pGraphicDev->CreateVertexBuffer(8 * sizeof(VTXCOL), // 생성할 버퍼의 크기
@@ -113,7 +113,7 @@ HRESULT CCollider::InitOBB(_vec3& _vCenter, _vec3* _vAxisDir, _float* _fAxisLen)
 	m_pVB->Lock(0, 0, (void**)&pVertex, 0);
 
 
-	
+
 	//유진 변경 - 최종!
 	// 전면
 	pVertex[0].vPosition = { -1.f, 1.f, -1.f };

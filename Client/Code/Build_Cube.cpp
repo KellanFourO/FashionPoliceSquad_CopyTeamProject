@@ -165,5 +165,5 @@ CBuild_Cube* CBuild_Cube::Create
 
 void CBuild_Cube::Free()
 {
-	__super::Free(); // 승용 SafeRelase에서 터지길래 잠시막아놓음
+	__super::Free();
 }

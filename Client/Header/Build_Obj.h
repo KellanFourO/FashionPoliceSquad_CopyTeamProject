@@ -5,7 +5,6 @@
 BEGIN(Engine)
 
 class CCubeTex;
-class CCrossTex;
 class CRcTex;
 
 class CTexture;

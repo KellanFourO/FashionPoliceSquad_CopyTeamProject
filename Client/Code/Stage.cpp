@@ -5,15 +5,14 @@
 #include "Export_Utility.h"
 
 #include "ImGuiManager.h"
-#include "UIMgr.h"
 #include "EventMgr.h"
 #include "DustGrey.h"
 #include <sstream>
 #include <utility>
 #include "MonsterBombEffect.h"
 #include "FootRay.h"
-#include "MBulletExplosion.h"
-#include "MBulletBombEffect.h"
+
+#include "LoadingStage1.h"
 
 CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CScene(pGraphicDev)
@@ -23,7 +22,6 @@ CStage::CStage(LPDIRECT3DDEVICE9 pGraphicDev)
 
 CStage::~CStage()
 {
-	Free();
 }
 
 HRESULT CStage::Ready_Scene()
@@ -54,9 +52,10 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 
 	_int	iExit = __super::Update_Scene(fTimeDelta);
 
+
 	if (m_bReadyCube)
 	{
-		Octree()->Update_Octree();
+		//Octree()->Update_Octree();
 	}
 
 	m_fAdminTick += fTimeDelta;
@@ -66,7 +65,6 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 		m_fAdminTick = 0.F;
 	}
 
-	Admin_KeyInput();
 
 	return iExit;
 }
@@ -80,7 +78,7 @@ void CStage::LateUpdate_Scene()
 
 
 
-
+	Admin_KeyInput();
 
 
 
@@ -140,11 +138,9 @@ HRESULT CStage::Ready_Layer_Environment(LAYERTAG eLayerTag)
 
 	pTemp = pGameObject;
 
-
-
-	Load_Data(L"../Bin/Data/Map/MapData", OBJECTTAG::BUILD_CUBE);
-	Load_Data(L"../Bin/Data/OBJ/OBJData", OBJECTTAG::BUILD_OBJ);
-	Load_Data_C(L"../Bin/Data/CPoint/CPointData", OBJECTTAG::BUILD_OBJ);
+	Load_Data(L"../Bin/Data/Map/MapData", OBJECTTAG::BUILD_CUBE);		// 큐브텍스
+	Load_Data(L"../Bin/Data/OBJ/OBJData", OBJECTTAG::BUILD_OBJ);		//TODO 얘는 섞여있다 큐브텍스랑 rcTEXT
+	Load_Data_C(L"../Bin/Data/CPoint/CPointData", OBJECTTAG::BUILD_OBJ); //TODO 큐브텍스
 
 	m_mapLayer.insert({ eLayerTag, m_pLayer });
 
@@ -160,7 +156,7 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 
 	{
 		// Player
-		CGameObject* pPlayer = pGameObject = CPlayer::Create(m_pGraphicDev);
+		CGameObject* pPlayer = pGameObject = Management()->Get_Player();
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER, pGameObject), E_FAIL);	//플레이어
 
@@ -227,45 +223,36 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 
 	//몬스터
 
-	{
-		//pGameObject = CStage1Boss::Create(m_pGraphicDev);
-		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::BOSS, pGameObject), E_FAIL);
-	}
-	for(int i = 0; i<5; ++i)
-	{
-	pGameObject = CBigDaddyMonster::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+	//{
+	//	pGameObject = CStage1Boss::Create(m_pGraphicDev);
+	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::BOSS, pGameObject), E_FAIL);
+	//}
 
-	pGameObject = CKickBoardMonster::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+	for (int i = 0; i < 5; ++i)
+	{
+		pGameObject = CBigDaddyMonster::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
 
-	pGameObject = CDullSuitMonster::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+		pGameObject = CKickBoardMonster::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+
+		pGameObject = CDullSuitMonster::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
 
 	}
 
 //이펙트 파티클
 	{
 		//이펙트
-		//몬스터 죽을떄 이펙트
 		pGameObject = CMonsterBombEffect::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::EFFECT, pGameObject), E_FAIL);
-
-		pGameObject = CMBulletBombEffect::Create(m_pGraphicDev);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::EFFECT, pGameObject), E_FAIL);
-
 		//파티클
-		pGameObject = CDustGrey::Create(m_pGraphicDev, _vec3(0.f, 0.f, 0.f),128);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::PARTICLE, pGameObject), E_FAIL);
-
-		pGameObject = CMBulletExplosion::Create(m_pGraphicDev, _vec3(0.f, 0.f, 0.f), 256);
+		pGameObject = CDustGrey::Create(m_pGraphicDev, _vec3(50.f, 10.f, 25.f), 256);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::PARTICLE, pGameObject), E_FAIL);
 	}
@@ -318,7 +305,57 @@ HRESULT CStage::Ready_Layer_UI(LAYERTAG eLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MISSION, pGameObject), E_FAIL);
 
-	
+	pGameObject = CHPBarFrame::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CHPBarValue::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CHPMark::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CShieldFrame::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CShieldValue::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CShieldMark::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CBerserkFrame_UI::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CBerserk_UI::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CPlayerFace::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CHat::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CBulletInfoName::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CBulletInfoCount::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CWeaponInfo::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
 
 
 
@@ -326,7 +363,7 @@ HRESULT CStage::Ready_Layer_UI(LAYERTAG eLayerTag)
 	m_mapLayer.insert({ eLayerTag, pLayer });
 
 	//승용
-	Load_UI();
+	//Load_UI();
 
 	//pGameObject = CImGuiManager::GetInstance()->Get_UI(L"Checkmark.png");
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -505,6 +542,7 @@ HRESULT CStage::Load_Data_C(const TCHAR* pFilePath, OBJECTTAG eTag)
 	}
 	m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
 
+
 	delete[] pTag;
 	pTag = nullptr;
 
@@ -513,74 +551,75 @@ HRESULT CStage::Load_Data_C(const TCHAR* pFilePath, OBJECTTAG eTag)
 
 
 
-HRESULT CStage::Load_UI()
-{
-	Engine::CGameObject* pGameObject = nullptr;
-
-	wifstream fin;
-
-	fin.open(L"../Bin/Data/UI/UIdata.dat");
-
-	if (!fin.fail())
-	{
-		wstring line;
-
-		while (getline(fin, line)) // 한 줄씩 읽기
-		{
-			wistringstream iss(line);
-			wstring token;
-
-			_tchar szKey[MAX_PATH] = L"";
-			_tchar szSizeX[MAX_PATH] = L"";
-			_tchar szSizeY[MAX_PATH] = L"";
-			_tchar szSizeZ[MAX_PATH] = L"";
-			_tchar szPosX[MAX_PATH] = L"";
-			_tchar szPosY[MAX_PATH] = L"";
-			_tchar szPosZ[MAX_PATH] = L"";
-
-			getline(iss, token, L','); // ','를 구분자로 사용하여 값을 자름
-			_tcscpy_s(szKey, MAX_PATH, token.c_str());
-
-			getline(iss, token, L',');
-			_tcscpy_s(szSizeX, MAX_PATH, token.c_str());
-
-			getline(iss, token, L',');
-			_tcscpy_s(szSizeY, MAX_PATH, token.c_str());
-
-			getline(iss, token, L',');
-			_tcscpy_s(szSizeZ, MAX_PATH, token.c_str());
-
-			getline(iss, token, L',');
-			_tcscpy_s(szPosX, MAX_PATH, token.c_str());
-
-			getline(iss, token, L',');
-			_tcscpy_s(szPosY, MAX_PATH, token.c_str());
-
-			getline(iss, token, L',');
-			_tcscpy_s(szPosZ, MAX_PATH, token.c_str());
-
-			if (wcsstr(szKey, L"des"))
-			{
-				continue;
-			}
-			pGameObject = CUIMgr::GetInstance()->Get_UI(szKey);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
-
-		}
-	}
-	fin.close();
-
-		m_mapLayer.insert({ LAYERTAG::UI, m_pLayer });
-
-	return S_OK;
-}
+// HRESULT CStage::Load_UI()
+// {
+// 	Engine::CGameObject* pGameObject = nullptr;
+//
+// 	wifstream fin;
+//
+// 	fin.open(L"../Bin/Data/UI/UIdata.dat");
+//
+// 	if (!fin.fail())
+// 	{
+// 		wstring line;
+//
+// 		while (getline(fin, line)) // 한 줄씩 읽기
+// 		{
+// 			wistringstream iss(line);
+// 			wstring token;
+//
+// 			_tchar szKey[MAX_PATH] = L"";
+// 			_tchar szSizeX[MAX_PATH] = L"";
+// 			_tchar szSizeY[MAX_PATH] = L"";
+// 			_tchar szSizeZ[MAX_PATH] = L"";
+// 			_tchar szPosX[MAX_PATH] = L"";
+// 			_tchar szPosY[MAX_PATH] = L"";
+// 			_tchar szPosZ[MAX_PATH] = L"";
+//
+// 			getline(iss, token, L','); // ','를 구분자로 사용하여 값을 자름
+// 			_tcscpy_s(szKey, MAX_PATH, token.c_str());
+//
+// 			getline(iss, token, L',');
+// 			_tcscpy_s(szSizeX, MAX_PATH, token.c_str());
+//
+// 			getline(iss, token, L',');
+// 			_tcscpy_s(szSizeY, MAX_PATH, token.c_str());
+//
+// 			getline(iss, token, L',');
+// 			_tcscpy_s(szSizeZ, MAX_PATH, token.c_str());
+//
+// 			getline(iss, token, L',');
+// 			_tcscpy_s(szPosX, MAX_PATH, token.c_str());
+//
+// 			getline(iss, token, L',');
+// 			_tcscpy_s(szPosY, MAX_PATH, token.c_str());
+//
+// 			getline(iss, token, L',');
+// 			_tcscpy_s(szPosZ, MAX_PATH, token.c_str());
+//
+// 			if (wcsstr(szKey, L"des"))
+// 			{
+// 				continue;
+// 			}
+// 			pGameObject = CUIMgr::GetInstance()->Get_UI(szKey);
+// 			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+// 			FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+//
+// 		}
+// 	}
+// 	fin.close();
+//
+// 		m_mapLayer.insert({ LAYERTAG::UI, m_pLayer });
+//
+// 	return S_OK;
+// }
 
 void CStage::Admin_KeyInput()
 {
 	if (Engine::Get_DIKeyState(DIK_F9) & 0x80 && m_bAdminSwitch)
 	{
 		CEventMgr::GetInstance()->OnLevelUp(m_pGraphicDev, SCENETAG::STAGE);
+		CEventMgr::GetInstance()->OnPause(true);
 		m_bAdminSwitch = false;
 	}
 
@@ -590,16 +629,18 @@ void CStage::Admin_KeyInput()
 		m_bAdminSwitch = false;
 	}
 
-	if (Engine::Get_DIKeyState(DIK_F9) & 0x80)
+	if (Engine::Get_DIKeyState(DIK_F10) & 0x80 && m_bAdminSwitch)
 	{
-		CEventMgr::GetInstance()->OnPause(true);
+		CLoadingStage1* pScene = nullptr;
+		pScene = CLoadingStage1::Create(m_pGraphicDev, SCENETAG::BOSS_STAGE);
 
-	}
+		//CUIMgr::GetInstance()->DestroyInstance();
+		Management()->Get_Player()->Set_SceneChange(true);
+		Management()->Set_SYSceneChange(true);
+		Management()->Change_Scene(pScene);
 
-	if (Engine::Get_DIKeyState(DIK_F10) & 0x80)
-	{
-		CEventMgr::GetInstance()->OnPause(false);
 
+		m_bAdminSwitch = false;
 	}
 }
 
@@ -633,8 +674,12 @@ void CStage::Free()
 	}
 	m_VecOBJData.clear();
 
+	for (int i = 0; i < m_VecCreatePoint.size(); ++i)
+	{
+		Safe_Delete(m_VecCreatePoint[i]);
+	}
+	m_VecCreatePoint.clear();
 
-	__super::Free();
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	m_pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, FALSE);

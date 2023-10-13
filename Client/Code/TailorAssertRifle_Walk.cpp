@@ -62,11 +62,11 @@ CPlayerGunState* CTailorAssertRifle_Walk::Update(CPlayerGun* Rifle, const float&
 	m_vPrePos = vPlayerPos;
 
 	if (m_pHost->Get_Fire() && m_pHost->Get_GunInfo()->m_iCurrentBullet > 0)
-		return dynamic_cast<CTailorAssertRifle*>(m_pHost)->Get_State(4); // SHOT
+		return dynamic_cast<CTailorAssertRifle*>(m_pHost)->Get_State(3); // SHOT
 
 	else if (m_pHost->Get_GunInfo()->m_iCurrentBullet <= 0)
 	{
-		return dynamic_cast<CTailorAssertRifle*>(m_pHost)->Get_State(5); // RELOAD
+		return dynamic_cast<CTailorAssertRifle*>(m_pHost)->Get_State(4); // RELOAD
 	}
 
     return nullptr;

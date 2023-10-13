@@ -27,24 +27,37 @@ CComponent* Engine::CManagement::Get_Component(COMPONENTID eID, LAYERTAG eLayerT
 
 HRESULT CManagement::Set_Scene(CScene* pScene)
 {
+	if (m_bSYSceneChange)
+	{
+		m_pPlayer->AddRef();
+		m_pPlayer->ClearGunList();
+		m_bSYSceneChange = false;
+	}
+
+	Renderer()->Clear_RenderGroup();
 	Safe_Release(m_pScene);
 
-	Engine::Clear_RenderGroup();
-
 	m_pScene = pScene;
+	//m_bStageVisit[(unsigned long long)pScene->Get_SceneTag()] = true;
 
 	return S_OK;
 }
 
 HRESULT CManagement::Change_Scene(CScene* pScene)
 {
+	if (m_bSYSceneChange)
+	{
+		m_pPlayer->AddRef();
+		m_pPlayer->ClearGunList();
+		m_bSYSceneChange = false;
+	}
 	m_bSceneChange = true;
 
 	m_pPreScene = m_pScene;
 	m_pNextScene = pScene;
 
 	// 이전 씬을 방문 여부를 기록
-	m_bStageVisit[(_uint)pScene->Get_SceneTag() - 1] = true;
+	//m_bStageVisit[(_uint)pScene->Get_SceneTag() - 1] = true;
 	return S_OK;
 }
 
@@ -79,17 +92,30 @@ void CManagement::LateUpdate_Scene()
 void CManagement::Render_Scene(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 
+
+	//if (SCENETAG::STAGE == m_pScene->Get_SceneTag())
+	//	Octree()->Render_Octree(pGraphicDev);
+
+	Renderer()->Render_GameObject(pGraphicDev);
+
 	NULL_CHECK(m_pScene);
 	m_pScene->Render_Scene();
 
-	if (SCENETAG::STAGE == m_pScene->Get_SceneTag())
-		Octree()->Render_Octree(pGraphicDev);
+	if (m_bSceneChange)
+	{
+		Safe_Release(m_pPreScene);
+		Renderer()->Clear_RenderGroup();
+		m_pScene = m_pNextScene;
 
-	Renderer()->Render_GameObject(pGraphicDev);
+		Octree()->DestroyInstance();
+
+		m_bSceneChange = false;
+	}
 
 }
 
 void CManagement::Free()
 {
+	Safe_Release(m_pPlayer);
 	Safe_Release(m_pScene);
 }
