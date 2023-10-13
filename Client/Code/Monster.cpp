@@ -29,10 +29,6 @@ HRESULT CMonster::Ready_GameObject()
 {
 	Set_ObjectTag(OBJECTTAG::MONSTER);
 
-
-
-
-
 	return S_OK;
 }
 

@@ -48,7 +48,6 @@ HRESULT CStage1Boss::Ready_GameObject()
 	INFO.fMaxHP = 1000.f;
 
 
-	m_pTransformCom->Set_Host(this);
 
 	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/Monster/hugo bauss transformed1.png", 1);
 
@@ -56,7 +55,7 @@ HRESULT CStage1Boss::Ready_GameObject()
 
 	m_pCollider->Set_Host(this);
 	m_pRigidBody->Set_Host(this);
-
+	m_pTransformCom->Set_Host(this);
 	m_pCollider->Set_Transform(m_pTransformCom);
 	m_pRigidBody->Set_Transform(m_pTransformCom);
 
@@ -70,7 +69,7 @@ HRESULT CStage1Boss::Ready_GameObject()
 
 _int CStage1Boss::Update_GameObject(const _float& fTimeDelta)
 {
-	m_pCollider->SetCenterPos(m_pTransformCom->m_vInfo[INFO_POS]);
+	//m_pCollider->SetCenterPos(m_pTransformCom->m_vInfo[INFO_POS]);
 	m_pRigidBody->Update_RigidBody(fTimeDelta);
 	__super::Update_GameObject(fTimeDelta);
 
@@ -102,8 +101,13 @@ void CStage1Boss::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 
-	INFO.MonsterState->Render(this);
+	if (INFO.bHit)
+		m_iTextureIndex = 1;
+	else
+		m_iTextureIndex = 0;
 
+	m_pTextureCom->Render_Textrue(m_iTextureIndex);
+	m_pBufferCom->Render_Buffer(INFO.MonsterState->Get_CurFrame(), INFO.MonsterState->Get_Ver());
 }
 
 void CStage1Boss::OnCollisionEnter(CCollider* _pOther)

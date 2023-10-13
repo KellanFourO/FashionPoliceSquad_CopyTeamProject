@@ -3,7 +3,7 @@
 #include "SYTex.h"
 #include "Texture.h"
 #include "RigidBody.h"
-
+#include <random>
 
 CStage1Boss_Jump::CStage1Boss_Jump()
 {
@@ -29,10 +29,16 @@ void CStage1Boss_Jump::Initialize(CMonster* _Monster)
 	case Engine::BOSSPHASE::PHASE_3:
 		break;
 	}
+
+	m_fMinFrame = 2;
+	m_fMaxFrame = 4;
+	m_fCurFrame = m_fMinFrame;
+	m_iVer = 1;
 }
 
 CMonsterState* CStage1Boss_Jump::Update(CMonster* Monster, const float& fDetltaTime)
 {
+
 
 	switch (m_eJumpState)
 	{
@@ -42,7 +48,7 @@ CMonsterState* CStage1Boss_Jump::Update(CMonster* Monster, const float& fDetltaT
 
 			if (m_fTick > 1)
 			{
-				m_iJumpStart = 3;
+				m_fCurFrame = 3;
 				m_eJumpState = JUMP_START;
 				m_bJump = true;
 				m_fTick = 0;
@@ -56,15 +62,23 @@ CMonsterState* CStage1Boss_Jump::Update(CMonster* Monster, const float& fDetltaT
 
 			if (m_fTick > m_fJumpStaytime)
 			{
-				m_iJumpStart = 2;
+				m_fCurFrame = 4;
 				m_eJumpState = JUMP_END;
 				m_fTick = 0;
 			}
 
-			if (m_bJump)
+			if (m_pHost->m_bStart)
 			{
-				m_pHost->Get_RigidBodyCom()->Set_Force(_vec3{ 0.f,100.f,0.f });
-				m_bJump = false;
+				m_pHost->Get_RigidBodyCom()->Set_Force(_vec3{ 0.f, 100.f, 50.f});
+				m_pHost->m_bStart = FALSE;
+			}
+			else
+			{
+				if (m_bJump)
+				{
+					m_pHost->Get_RigidBodyCom()->Set_Force(_vec3{ 0.f,100.f,0.f });
+					m_bJump = false;
+				}
 			}
 		}
 
@@ -74,29 +88,18 @@ CMonsterState* CStage1Boss_Jump::Update(CMonster* Monster, const float& fDetltaT
 		{
 			m_fTick += fDetltaTime;
 
-			if (m_fTick > m_fAgainTime)
-			{
-				m_iJumpStart = 2;
-				m_eJumpState = JUMP_READY;
-				m_fTick = 0;
+			random_device rd;
+			mt19937 gen(rd());
 
+			uniform_int_distribution<int> distribution(2, 3); // 랜덤 시작 부터 마지막
 
-				return m_pHost->Get_State(2);
-			}
+			int iRandomValue = distribution(gen);
+
+ 			return m_pHost->Get_State(iRandomValue);
 
 		}
 
 		break;
-	}
-
-
-	if (m_bChange)
-	{
-		//TODO 페이즈에따라 점프횟수로 제한을 하거나, 일정 시간이 되면 상태를 변경시킬 수 있음.
-		//TODO 페이즈 증가에 따라 시간에 속도가 증가하는것도 좋을듯
-
-		return m_pHost->Get_State(2); // !THROWSINGLE
-
 	}
 
 	return nullptr;

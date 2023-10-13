@@ -54,6 +54,12 @@ _int CBossStage::Update_Scene(const _float& fTimeDelta)
 		m_bLateInit = false;
 	}
 
+
+	if (Management()->Get_Scene()->Get_Pause())
+	{
+		m_pBoss->Set_Start(true);
+	}
+
 	//if (m_bReadyCube)
 	//{
 	//	Octree()->Update_Octree();
@@ -208,6 +214,8 @@ HRESULT CBossStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		pGameObject = CStage1Boss::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::BOSS, pGameObject), E_FAIL);
+
+		m_pBoss = dynamic_cast<CStage1Boss*>(pGameObject);
 	}
 
 	//이펙트 파티클

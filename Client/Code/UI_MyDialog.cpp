@@ -7,6 +7,7 @@
 #include "UI_MissionObjective.h"
 #include "Export_Utility.h"
 #include "Export_System.h"
+#include "Stage1Boss.h"
 
 
 CMyDialog::CMyDialog(LPDIRECT3DDEVICE9 pGraphicDev)

@@ -222,14 +222,13 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 	}
 	// 아이템
 
-
 	//몬스터
-
 	//{
 	//	pGameObject = CStage1Boss::Create(m_pGraphicDev);
 	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::BOSS, pGameObject), E_FAIL);
 	//}
+
 
 	for (int i = 0; i < 5; ++i)
 	{

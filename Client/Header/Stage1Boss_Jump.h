@@ -19,6 +19,7 @@ private:
 
 
 private:
+
 	_bool				m_bChange = false;
 	int					m_iJumpStart = 2;
 	int					m_iJumpEnd = 4;
