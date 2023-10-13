@@ -151,24 +151,22 @@ HRESULT CLobbyStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		dynamic_cast<CPlayer*>(pPlayer)->ClearGunList();
 
 
-		CGameObject* pShotGun = pGameObject = CPaintShotGun::Create(m_pGraphicDev, dynamic_cast<CPlayer*>(pPlayer));
+		pGameObject = Management()->Get_ShotGun();
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_GUN, pGameObject), E_FAIL);
-		dynamic_cast<CPaintShotGun*>(pGameObject)->Set_Host(pPlayer);
 
-		CGameObject* pRifle = pGameObject = CTailorAssertRifle::Create(m_pGraphicDev, dynamic_cast<CPlayer*>(pPlayer));
+
+		pGameObject = Management()->Get_Rifle();
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_GUN, pGameObject), E_FAIL);
-		dynamic_cast<CTailorAssertRifle*>(pGameObject)->Set_Host(pPlayer);
+
+		pGameObject = Management()->Get_RifleHand();
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_HAND, pGameObject), E_FAIL);
 
 		dynamic_cast<CPlayer*>(pPlayer)->Set_SceneChange(false);
 		dynamic_cast<CPlayer*>(pPlayer)->SetGun(pLayer);
 		pPlayer->Get_Transform()->Set_Pos(20.f,5.0f,20.0f);
-
-		pGameObject = CTailorAssertRifleHand::Create(m_pGraphicDev);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_HAND, pGameObject), E_FAIL);
-
 
 		//FootRay
 		pGameObject = CFootRay::Create(m_pGraphicDev);
@@ -182,19 +180,19 @@ HRESULT CLobbyStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::RAY, pGameObject), E_FAIL);
 
 
-		pGameObject = CMuzzleFlash::Create(m_pGraphicDev);
+		pGameObject = Management()->Get_ShotGunFlash();
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::EFFECT, pGameObject), E_FAIL);	//¼¦°Ç¼¶±¤
 
-		pGameObject = CMuzzleFlash_Rifle::Create(m_pGraphicDev);
+		pGameObject = Management()->Get_RifleFlash();
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::EFFECT, pGameObject), E_FAIL);	//¶óÀÌÇÃ ¼¶±¤
 
-		pGameObject = CLazer::Create(m_pGraphicDev);
+		pGameObject = Management()->Get_Lazer();
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_LAZER, pGameObject), E_FAIL);
 
-		pGameObject = CBelt::Create(m_pGraphicDev);
+		pGameObject = Management()->Get_Belt();
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::OBJECT, pGameObject), E_FAIL);	//º§Æ®
 	}
@@ -212,10 +210,7 @@ HRESULT CLobbyStage::Ready_Layer_Camera(LAYERTAG eLayerTag)
 	Engine::CGameObject* pGameObject = nullptr;
 
 
-	pGameObject = CNewFPSCamera::Create(m_pGraphicDev,
-		&_vec3(0.f, 10.f, -10.f),
-		&_vec3(0.f, 0.f, 1.f),
-		&_vec3(0.f, 1.f, 0.f));
+	pGameObject = Management()->Get_Camera();
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::FPSCAMERA, pGameObject), E_FAIL);
 

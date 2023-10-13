@@ -3,6 +3,14 @@
 #include "Export_Utility.h"
 #include "ImGuiManager.h"
 #include "Player.h"
+#include "NewFPSCamera.h"
+#include "PaintShotGun.h"
+#include "TailorAssertRifle.h"
+#include "TailorAssertRifleHand.h"
+#include "Belt.h"
+#include "MuzzlefFlash_Rifle.h"
+#include "MuzzleFlash.h"
+#include "Lazer.h"
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
@@ -164,6 +172,36 @@ _uint CLoading::Loading_For_Stage()
 
 		CPlayer* pPlayer = CPlayer::Create(m_pGraphicDev);
 		Management()->Set_Player(pPlayer);
+
+		CNewFPSCamera* pCamera = CNewFPSCamera::Create(m_pGraphicDev,
+			&_vec3(0.f, 10.f, -10.f),
+			&_vec3(0.f, 0.f, 1.f),
+			&_vec3(0.f, 1.f, 0.f));
+
+		Management()->Set_Camera(pCamera);
+
+		CTailorAssertRifle* pRifle = CTailorAssertRifle::Create(m_pGraphicDev,pPlayer);
+		CPaintShotGun* pShotgun = CPaintShotGun::Create(m_pGraphicDev,pPlayer);
+
+		Management()->Set_Rifle(pRifle);
+		Management()->Set_ShotGun(pShotgun);
+
+		CTailorAssertRifleHand* pHand = CTailorAssertRifleHand::Create(m_pGraphicDev);
+		Management()->Set_RifleHand(pHand);
+
+		CBelt* pBelt = CBelt::Create(m_pGraphicDev);
+		Management()->Set_Belt(pBelt);
+
+
+		CMuzzleFlash_Rifle* pRifleFlash = CMuzzleFlash_Rifle::Create(m_pGraphicDev);
+		CMuzzleFlash* pShotGunFlash = CMuzzleFlash::Create(m_pGraphicDev);
+
+		Management()->Set_ShotGunFlash(pShotGunFlash);
+		Management()->Set_RifleFlash(pRifleFlash);
+
+		CLazer*	pLazer = CLazer::Create(m_pGraphicDev);
+
+		Management()->Set_Lazer(pLazer);
 
 		Set_Value(4);
 
