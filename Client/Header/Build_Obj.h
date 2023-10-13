@@ -45,7 +45,10 @@ public:
 
 	int				Get_OBJ_HP() { return m_iHp; }
 	OBJ_INTERACTION Get_OBJ_Interaction() { return m_eInteraction; }
-	
+public:
+	virtual void		OnCollisionEnter(CCollider* _pOther);
+	virtual void		OnCollisionStay(CCollider* _pOther);
+	virtual void		OnCollisionExit(CCollider* _pOther);
 protected:
 	virtual HRESULT	Add_Component();
 

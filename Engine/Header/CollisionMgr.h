@@ -32,6 +32,7 @@ private:
 	void CheckCollisionByType(OBJECTTAG _eObjectLeft, OBJECTTAG _eObjectRight);
 	//정적 물체와 충돌
 	void CheckCollisionStatic(OBJECTTAG _eObjectLeft);
+	void CheckCollisionStaticOBJ(OBJECTTAG _eObjectLeft);
 
 private:
 	virtual void Free();

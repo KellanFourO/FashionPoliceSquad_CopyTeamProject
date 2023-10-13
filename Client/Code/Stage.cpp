@@ -55,7 +55,7 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 
 	if (m_bReadyCube)
 	{
-		//Octree()->Update_Octree();
+		Octree()->Update_Octree();
 	}
 
 	m_fAdminTick += fTimeDelta;
@@ -86,10 +86,10 @@ void CStage::LateUpdate_Scene()
 
 void CStage::Render_Scene()
 {
-	//if (m_bReadyCube)
-	//{
-	//	Octree()->Render_Octree(m_pGraphicDev);
-	//}
+	if (m_bReadyCube)
+	{
+		Octree()->Render_Octree(m_pGraphicDev);
+	}
 	//Debug
 
 }
