@@ -321,6 +321,8 @@
     <ClInclude Include="..\Header\TailorAssertRifle_Walk.h" />
     <ClInclude Include="..\Header\Terrain.h" />
     <ClInclude Include="..\Header\Title.h" />
+    <ClInclude Include="..\Header\Trigger.h" />
+    <ClInclude Include="..\Header\UIMgr.h" />
     <ClInclude Include="..\Header\UI_ShieldFrame.h" />
     <ClInclude Include="..\Header\UI_ShieldMark.h" />
     <ClInclude Include="..\Header\UI_ShieldValue.h" />
@@ -357,6 +359,7 @@
     <ClCompile Include="..\Code\BrifCase_2.cpp" />
     <ClCompile Include="..\Code\BigDaddyMonster.cpp" />
     <ClCompile Include="..\Code\Bullet.cpp" />
+    <ClCompile Include="..\Code\Trigger.cpp" />
     <ClCompile Include="..\Code\DullSuitMonster_Attack.cpp" />
     <ClCompile Include="..\Code\DullSuitMonster.cpp" />
     <ClCompile Include="..\Code\DullSuitMonster_Chase.cpp" />
@@ -459,6 +462,8 @@
     <ClCompile Include="..\Code\TailorAssertRifle_Walk.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="..\Code\Title.cpp" />
+    <ClCompile Include="..\Code\UIMgr.cpp" />
+    <ClCompile Include="..\Header\Trigger.cpp" />
     <ClCompile Include="..\Code\UI_ShieldFrame.cpp" />
     <ClCompile Include="..\Code\UI_ShieldMark.cpp" />
     <ClCompile Include="..\Code\UI_ShieldValue.cpp" />

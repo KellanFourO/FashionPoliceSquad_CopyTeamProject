@@ -21,7 +21,7 @@ public:
 	void	OnDialog(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag, DIALOGTAG eDialogTag); // 다이얼로그 생성
 	void	OnPause(_bool bPause);
 
-
+	
 
 
 

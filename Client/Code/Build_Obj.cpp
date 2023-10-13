@@ -138,14 +138,14 @@ _int CBuild_Obj::Update_GameObject(const _float& fTimeDelta)
 				BillBoard();
 			}
 		}
-		if (m_eAttribute == OBJ_ATTRIBUTE::INTER_OBJ)
-		{
-			Init_PlayerTransform();
-			if (m_pPlayerTransform && m_bBillBoard)
-			{
-				BillBoard_X();
-			}
-		}
+// 		if (m_eAttribute == OBJ_ATTRIBUTE::INTER_OBJ)
+// 		{
+// 			Init_PlayerTransform();
+// 			if (m_pPlayerTransform && m_bBillBoard)
+// 			{
+// 				BillBoard_X();
+// 			}
+// 		}
 	}
 
 	m_pCollider->Set_Host(this);
@@ -171,7 +171,7 @@ void CBuild_Obj::Render_GameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	
-	if ((m_eAttribute == OBJ_ATTRIBUTE::C_POINT_OBJ) || (m_eAttribute == OBJ_ATTRIBUTE::TRIGGER_OBJ))
+	if (m_eAttribute == OBJ_ATTRIBUTE::C_POINT_OBJ)
 	{	m_pCollider->Render_Collider(); }
 
 	//m_pCollider->Render_Collider(); //

@@ -157,175 +157,334 @@ void CMapTool::CubeSize_Update()
 
 HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
 {
-//     if (false == m_BUILD_NOP_MODE) {
-//
-//
-//         if ((Engine::Get_DIMouseState(DIM_RB)) && (CImGuiManager::GetInstance()->Get_DeleteMode_Check() == false))
-//         {
-//             Engine::CGameObject* pGameObject = nullptr;
-//
-//             if (CImGuiManager::GetInstance()->Get_BuildModeCheck() == true) {
-//                 CubeTemp2 = new CUBE;
-//             }
-//             else if (CImGuiManager::GetInstance()->Get_OBJModeCheck() == true) {
-//                 OBJTemp = new OBJData;
-//                 OBJ_C_POINT = new C_POINT;
-//             }
-//
-//             Cursor_Update();
-//             _vec3 CursorTemp = { m_vCursor_Pos->x, m_vCursor_Height, m_vCursor_Pos->z };
-//
-//             if ((!CheckDuplicateCube(CursorTemp, m_vCursor_Size))
-//                 && (CursorTemp.x > -1) && (CursorTemp.y > -1)
-//                 && (CursorTemp.z > -1) && (m_Build_time_Check == false))
-//             {
-//                 m_Build_time_Check = true;
-//
-// 				if (CImGuiManager::GetInstance()->Get_NotNormal_Check() == false)
-// 				{	m_fCubesize = { VTXITV, VTXITV, VTXITV };		}
-//
-// 				else if (CImGuiManager::GetInstance()->Get_NotNormal_Check() == true)
-// 				{	CubeSize_Update();		}
-//
-//                 _vec3 CubeSize, ObjSize;
-//                 CubeSize = ObjSize = { m_fCubesize.fX, m_fCubesize.fY, m_fCubesize.fZ };
-//
-//                 //이 녀석이 Build_Cube에 해당될 경우
-//                 if (CImGuiManager::GetInstance()->Get_BuildModeCheck() == true) {
-//                     m_iTextureNum = CImGuiManager::GetInstance()->Get_CubeTexNum();
-//                     pGameObject = CBuild_Cube::Create(m_pGraphicDev, CursorTemp, m_iTextureNum, CubeSize, m_iCubeIndex);
-//
-//                     NULL_CHECK_RETURN(pGameObject, E_FAIL);
-//                     FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_CUBE, pGameObject), E_FAIL);
-//
-//                     m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
-//
-//                     CubeTemp2->vSize = CubeSize;
-//                     CubeTemp2->eOBJ_TYPE = OBJ_TYPE::BUILDING_TYPE;
-//                     CubeTemp2->uITextureNum = m_iTextureNum;
-//                     CubeTemp2->vPos = CursorTemp;
-//                     CubeTemp2->iCubeIndex = m_iCubeIndex;
-//
-//                     m_VecCubeData.push_back(CubeTemp2);
-//                     m_iCubeIndex++;
-//                 }
-//             }
-//
-// 			if ((CursorTemp.x > -1) && (CursorTemp.y > -1)
-// 				&& (CursorTemp.z > -1) && (m_Build_time_Check2 == false))
-// 			{
-//                 m_Build_time_Check2 = true;
-//
-// 				if (CImGuiManager::GetInstance()->Get_NotNormal_Check() == false)
-// 				{	m_fCubesize = { VTXITV, VTXITV, VTXITV };		}
-//
-// 				else if (CImGuiManager::GetInstance()->Get_NotNormal_Check() == true)
-// 				{	CubeSize_Update();		}
-//
-// 				_vec3 CubeSize, ObjSize;
-// 				CubeSize = ObjSize = { m_fCubesize.fX, m_fCubesize.fY, m_fCubesize.fZ };
-//                 //이 녀석이 Build_OBJ에 해당될 경우
-//                 // + 큐브Type 또는 PlaneType 라는 타입을 선택한 상황인 경우
-//                 if ((CImGuiManager::GetInstance()->Get_OBJModeCheck() == true) &&
-//                    ((CImGuiManager::GetInstance()->Get_CubeType() == true) ||
-//                     (CImGuiManager::GetInstance()->Get_PlaneType() == true) ))
-//                 {
-//                     m_iTextureNum2 = CImGuiManager::GetInstance()->Get_OBJTexNum();
-//                     OBJ_TYPE eTypeTemp = CImGuiManager::GetInstance()->Get_OBJType(); //어떤 타입의 OBJ?
-//                     OBJ_ATTRIBUTE eAttribute = CImGuiManager::GetInstance()->Get_OBJATTRIBUTE(); //어떤 속성의 OBJ?
-//                     _uint RotateCount = CImGuiManager::GetInstance()->Get_OBJ_RotateCountCW();
-//
-// 					pGameObject = CBuild_Obj::Create(m_pGraphicDev, CursorTemp, m_iTextureNum2, ObjSize, RotateCount, m_iOBJIndex, eTypeTemp, eAttribute);
-//
-// 					NULL_CHECK_RETURN(pGameObject, E_FAIL);
-// 					FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
-//
-// 					m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
-//
-//                     OBJTemp->vSize = ObjSize;
-//                     OBJTemp->eOBJ_TYPE = eTypeTemp;
-//                     OBJTemp->eOBJ_Attribute = eAttribute;
-//                     OBJTemp->uiTextureNum = m_iTextureNum2;
-//                     OBJTemp->vPos = CursorTemp;
-//                     OBJTemp->iIndex = m_iOBJIndex;
-//                     OBJTemp->iRotateCount = RotateCount;
-//                     OBJTemp->uiOBJ_HP = dynamic_cast<CBuild_Obj*>(pGameObject)->Get_OBJ_HP();
-//                     OBJTemp->eOBJ_Interaction = dynamic_cast<CBuild_Obj*>(pGameObject)->Get_OBJ_Interaction();
-//
-//                     if (eTypeTemp == OBJ_TYPE::CUBE_TYPE)
-//                     {
-//                         m_VecTempCube.clear();
-//                         m_VecTempCube = CImGuiManager::GetInstance()->Get_CubeTextureObjVector();
-//                         OBJTemp->pCubeTexture = m_VecTempCube[m_iTextureNum2 - cubeObjTextureStartIndex];
-//                     }
-//                     else if (eTypeTemp == OBJ_TYPE::PLANE_TYPE)
-//                     {
-//                         m_VecTempPlane.clear();
-//                         m_VecTempPlane = CImGuiManager::GetInstance()->Get_PlaneTextureObjVector();
-//                         OBJTemp->pBaseTexture = m_VecTempPlane[m_iTextureNum2 - planeObjTextureStartIndex];
-//                     }
-//
-//
-//                     if (eAttribute != OBJ_ATTRIBUTE::C_POINT_OBJ)
-//                     {
-//                         m_VecOBJData.push_back(OBJTemp);  // C_POINT 빼곤 다 담겨야함
-//                     }
-//
-//
+    if (false == m_BUILD_NOP_MODE) {
+
+
+        if ((Engine::Get_DIMouseState(DIM_RB)) && (CImGuiManager::GetInstance()->Get_DeleteMode_Check() == false))
+        {
+            Engine::CGameObject* pGameObject = nullptr;
+
+            if (CImGuiManager::GetInstance()->Get_BuildModeCheck() == true) {
+                CubeTemp2 = new CUBE;
+            }
+            else if (CImGuiManager::GetInstance()->Get_OBJModeCheck() == true) {
+                OBJTemp = new OBJData;
+                OBJ_C_POINT = new C_POINT;
+            }
+
+            Cursor_Update();
+            _vec3 CursorTemp = { m_vCursor_Pos->x, m_vCursor_Height, m_vCursor_Pos->z };
+
+            if ((!CheckDuplicateCube(CursorTemp, m_vCursor_Size))
+                && (CursorTemp.x > -1) && (CursorTemp.y > -1)
+                && (CursorTemp.z > -1) && (m_Build_time_Check == false))
+            {
+                m_Build_time_Check = true;
+
+				if (CImGuiManager::GetInstance()->Get_NotNormal_Check() == false)
+				{	m_fCubesize = { VTXITV, VTXITV, VTXITV };		}
+
+				else if (CImGuiManager::GetInstance()->Get_NotNormal_Check() == true)
+				{	CubeSize_Update();		}
+
+                _vec3 CubeSize, ObjSize;
+                CubeSize = ObjSize = { m_fCubesize.fX, m_fCubesize.fY, m_fCubesize.fZ };
+
+                //이 녀석이 Build_Cube에 해당될 경우
+                if (CImGuiManager::GetInstance()->Get_BuildModeCheck() == true) {
+                    m_iTextureNum = CImGuiManager::GetInstance()->Get_CubeTexNum();
+                    pGameObject = CBuild_Cube::Create(m_pGraphicDev, CursorTemp, m_iTextureNum, CubeSize, m_iCubeIndex);
+
+                    NULL_CHECK_RETURN(pGameObject, E_FAIL);
+                    FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_CUBE, pGameObject), E_FAIL);
+
+                    m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
+
+                    CubeTemp2->vSize = CubeSize;
+                    CubeTemp2->eOBJ_TYPE = OBJ_TYPE::BUILDING_TYPE;
+                    CubeTemp2->uITextureNum = m_iTextureNum;
+                    CubeTemp2->vPos = CursorTemp;
+                    CubeTemp2->iCubeIndex = m_iCubeIndex;
+
+                    m_VecCubeData.push_back(CubeTemp2);
+                    m_iCubeIndex++;
+                }
+            }
+
+			if ((CursorTemp.x > -1) && (CursorTemp.y > -1)
+				&& (CursorTemp.z > -1) && (m_Build_time_Check2 == false))
+			{
+                m_Build_time_Check2 = true;
+
+				if (CImGuiManager::GetInstance()->Get_NotNormal_Check() == false)
+				{	m_fCubesize = { VTXITV, VTXITV, VTXITV };		}
+
+				else if (CImGuiManager::GetInstance()->Get_NotNormal_Check() == true)
+				{	CubeSize_Update();		}
+
+				_vec3 CubeSize, ObjSize;
+				CubeSize = ObjSize = { m_fCubesize.fX, m_fCubesize.fY, m_fCubesize.fZ };
+                //이 녀석이 Build_OBJ에 해당될 경우
+                // + 큐브Type 또는 PlaneType 라는 타입을 선택한 상황인 경우
+                if ((CImGuiManager::GetInstance()->Get_OBJModeCheck() == true) &&
+                   ((CImGuiManager::GetInstance()->Get_CubeType() == true) ||
+                    (CImGuiManager::GetInstance()->Get_PlaneType() == true) ))
+                {
+                    m_iTextureNum2 = CImGuiManager::GetInstance()->Get_OBJTexNum();
+                    OBJ_TYPE eTypeTemp = CImGuiManager::GetInstance()->Get_OBJType(); //어떤 타입의 OBJ?
+                    OBJ_ATTRIBUTE eAttribute = CImGuiManager::GetInstance()->Get_OBJATTRIBUTE(); //어떤 속성의 OBJ?
+                    _uint RotateCount = CImGuiManager::GetInstance()->Get_OBJ_RotateCountCW();
+
+					pGameObject = CBuild_Obj::Create(m_pGraphicDev, CursorTemp, m_iTextureNum2, ObjSize, RotateCount, m_iOBJIndex, eTypeTemp, eAttribute);
+
+					NULL_CHECK_RETURN(pGameObject, E_FAIL);
+					FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
+
+					m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
+
+                    OBJTemp->vSize = ObjSize;
+                    OBJTemp->eOBJ_TYPE = eTypeTemp;
+                    OBJTemp->eOBJ_Attribute = eAttribute;
+                    OBJTemp->uiTextureNum = m_iTextureNum2;
+                    OBJTemp->vPos = CursorTemp;
+                    OBJTemp->iIndex = m_iOBJIndex;
+                    OBJTemp->iRotateCount = RotateCount;
+                    OBJTemp->uiOBJ_HP = dynamic_cast<CBuild_Obj*>(pGameObject)->Get_OBJ_HP();
+                    OBJTemp->eOBJ_Interaction = dynamic_cast<CBuild_Obj*>(pGameObject)->Get_OBJ_Interaction();
+
+                    if (eTypeTemp == OBJ_TYPE::CUBE_TYPE)
+                    {
+                        m_VecTempCube.clear();
+                        m_VecTempCube = CImGuiManager::GetInstance()->Get_CubeTextureObjVector();
+                        OBJTemp->pCubeTexture = m_VecTempCube[m_iTextureNum2 - cubeObjTextureStartIndex];
+                    }
+                    else if (eTypeTemp == OBJ_TYPE::PLANE_TYPE)
+                    {
+                        m_VecTempPlane.clear();
+                        m_VecTempPlane = CImGuiManager::GetInstance()->Get_PlaneTextureObjVector();
+                        OBJTemp->pBaseTexture = m_VecTempPlane[m_iTextureNum2 - planeObjTextureStartIndex];
+                    }
+
+
+                    if (eAttribute != OBJ_ATTRIBUTE::C_POINT_OBJ)
+                    {
+                        m_VecOBJData.push_back(OBJTemp);  // C_POINT 빼곤 다 담겨야함
+                    }
+
+
 //                     if (eAttribute == OBJ_ATTRIBUTE::TRIGGER_OBJ)
 //                     {
 //                         OBJTemp2 = new OBJData(*OBJTemp);
 //                         m_VecTrigger.push_back(OBJTemp2); //위에도 담기고 별도로 관리차원에서 여기도 담는 것
 //                     }
-// 					if (eAttribute == OBJ_ATTRIBUTE::MOVING_OBJ)
-// 					{
-// 						OBJTemp3 = new OBJData(*OBJTemp);
-// 						m_VecMoving.push_back(OBJTemp3); //상동
-// 					}
-//
-// 					if (eAttribute == OBJ_ATTRIBUTE::C_POINT_OBJ)
+					if (eAttribute == OBJ_ATTRIBUTE::MOVING_OBJ)
+					{
+						OBJTemp3 = new OBJData(*OBJTemp);
+						m_VecMoving.push_back(OBJTemp3); //상동
+					}
+
+					if (eAttribute == OBJ_ATTRIBUTE::C_POINT_OBJ)
+                    {
+                        OBJ_C_POINT->defOBJData = *OBJTemp;
+                        OBJ_C_POINT->eMonsterType = CImGuiManager::GetInstance()->Get_MonsterType();
+
+                        m_VecCreatePoint.push_back(OBJ_C_POINT); //얜 이거 따로 저장
+                    }
+
+                    m_iOBJIndex++;
+                }
+            }
+
+            if (m_Build_time_Check == true)
+            {
+                m_Build_time++;
+
+                if (m_Build_time >= 7)
+                {
+                    m_Build_time = 0;
+                    m_Build_time_Check = false;
+                }
+            }
+
+			if (m_Build_time_Check2 == true)
+			{
+                m_Build_time2++;
+
+				if (m_Build_time2 >= 7)
+				{
+                    m_Build_time2 = 0;
+                    m_Build_time_Check2 = false;
+				}
+			}
+        }
+    }
+
+
+
+        if ((Engine::Get_DIMouseState(DIM_RB)) && (CImGuiManager::GetInstance()->Get_DeleteMode_Check() == false))
+        {
+            Engine::CGameObject* pGameObject = nullptr;
+
+            if (CImGuiManager::GetInstance()->Get_BuildModeCheck() == true) {
+                CubeTemp2 = new CUBE;
+            }
+            else if (CImGuiManager::GetInstance()->Get_OBJModeCheck() == true) {
+                OBJTemp = new OBJData;
+                OBJ_C_POINT = new C_POINT;
+            }
+
+            Cursor_Update();
+            _vec3 CursorTemp = { m_vCursor_Pos->x, m_vCursor_Height, m_vCursor_Pos->z };
+
+            if ((!CheckDuplicateCube(CursorTemp, m_vCursor_Size))
+                && (CursorTemp.x > -1) && (CursorTemp.y > -1)
+                && (CursorTemp.z > -1) && (m_Build_time_Check == false))
+            {
+                m_Build_time_Check = true;
+
+				if (CImGuiManager::GetInstance()->Get_NotNormal_Check() == false)
+				{	m_fCubesize = { VTXITV, VTXITV, VTXITV };		}
+
+				else if (CImGuiManager::GetInstance()->Get_NotNormal_Check() == true)
+				{	CubeSize_Update();		}
+
+                _vec3 CubeSize, ObjSize;
+                CubeSize = ObjSize = { m_fCubesize.fX, m_fCubesize.fY, m_fCubesize.fZ };
+
+                //이 녀석이 Build_Cube에 해당될 경우
+                if (CImGuiManager::GetInstance()->Get_BuildModeCheck() == true) {
+                    m_iTextureNum = CImGuiManager::GetInstance()->Get_CubeTexNum();
+                    pGameObject = CBuild_Cube::Create(m_pGraphicDev, CursorTemp, m_iTextureNum, CubeSize, m_iCubeIndex);
+
+                    NULL_CHECK_RETURN(pGameObject, E_FAIL);
+                    FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_CUBE, pGameObject), E_FAIL);
+
+                    m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
+
+                    CubeTemp2->vSize = CubeSize;
+                    CubeTemp2->eOBJ_TYPE = OBJ_TYPE::BUILDING_TYPE;
+                    CubeTemp2->uITextureNum = m_iTextureNum;
+                    CubeTemp2->vPos = CursorTemp;
+                    CubeTemp2->iCubeIndex = m_iCubeIndex;
+
+                    m_VecCubeData.push_back(CubeTemp2);
+                    m_iCubeIndex++;
+                }
+            }
+
+			if ((CursorTemp.x > -1) && (CursorTemp.y > -1)
+				&& (CursorTemp.z > -1) && (m_Build_time_Check2 == false))
+			{
+                m_Build_time_Check2 = true;
+
+				if (CImGuiManager::GetInstance()->Get_NotNormal_Check() == false)
+				{	m_fCubesize = { VTXITV, VTXITV, VTXITV };		}
+
+				else if (CImGuiManager::GetInstance()->Get_NotNormal_Check() == true)
+				{	CubeSize_Update();		}
+
+				_vec3 CubeSize, ObjSize;
+				CubeSize = ObjSize = { m_fCubesize.fX, m_fCubesize.fY, m_fCubesize.fZ };
+                //이 녀석이 Build_OBJ에 해당될 경우
+                // + 큐브Type 또는 PlaneType 라는 타입을 선택한 상황인 경우
+                if ((CImGuiManager::GetInstance()->Get_OBJModeCheck() == true) &&
+                   ((CImGuiManager::GetInstance()->Get_CubeType() == true) ||
+                    (CImGuiManager::GetInstance()->Get_PlaneType() == true) ))
+                {
+                    m_iTextureNum2 = CImGuiManager::GetInstance()->Get_OBJTexNum();
+                    OBJ_TYPE eTypeTemp = CImGuiManager::GetInstance()->Get_OBJType(); //어떤 타입의 OBJ?
+                    OBJ_ATTRIBUTE eAttribute = CImGuiManager::GetInstance()->Get_OBJATTRIBUTE(); //어떤 속성의 OBJ?
+                    _uint RotateCount = CImGuiManager::GetInstance()->Get_OBJ_RotateCountCW();
+
+					pGameObject = CBuild_Obj::Create(m_pGraphicDev, CursorTemp, m_iTextureNum2, ObjSize, RotateCount, m_iOBJIndex, eTypeTemp, eAttribute);
+
+					NULL_CHECK_RETURN(pGameObject, E_FAIL);
+					FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
+
+					m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
+
+                    OBJTemp->vSize = ObjSize;
+                    OBJTemp->eOBJ_TYPE = eTypeTemp;
+                    OBJTemp->eOBJ_Attribute = eAttribute;
+                    OBJTemp->uiTextureNum = m_iTextureNum2;
+                    OBJTemp->vPos = CursorTemp;
+                    OBJTemp->iIndex = m_iOBJIndex;
+                    OBJTemp->iRotateCount = RotateCount;
+                    OBJTemp->uiOBJ_HP = dynamic_cast<CBuild_Obj*>(pGameObject)->Get_OBJ_HP();
+                    OBJTemp->eOBJ_Interaction = dynamic_cast<CBuild_Obj*>(pGameObject)->Get_OBJ_Interaction();
+
+                    if (eTypeTemp == OBJ_TYPE::CUBE_TYPE)
+                    {
+                        m_VecTempCube.clear();
+                        m_VecTempCube = CImGuiManager::GetInstance()->Get_CubeTextureObjVector();
+                        OBJTemp->pCubeTexture = m_VecTempCube[m_iTextureNum2 - cubeObjTextureStartIndex];
+                    }
+                    else if (eTypeTemp == OBJ_TYPE::PLANE_TYPE)
+                    {
+                        m_VecTempPlane.clear();
+                        m_VecTempPlane = CImGuiManager::GetInstance()->Get_PlaneTextureObjVector();
+                        OBJTemp->pBaseTexture = m_VecTempPlane[m_iTextureNum2 - planeObjTextureStartIndex];
+                    }
+
+
+                    if (eAttribute != OBJ_ATTRIBUTE::C_POINT_OBJ)
+                    {
+                        m_VecOBJData.push_back(OBJTemp);  // C_POINT 빼곤 다 담겨야함
+                    }
+
+
+//                     if (eAttribute == OBJ_ATTRIBUTE::TRIGGER_OBJ)
 //                     {
-//                         OBJ_C_POINT->defOBJData = *OBJTemp;
-//                         OBJ_C_POINT->eMonsterType = CImGuiManager::GetInstance()->Get_MonsterType();
-//
-//                         m_VecCreatePoint.push_back(OBJ_C_POINT); //얜 이거 따로 저장
+//                         OBJTemp2 = new OBJData(*OBJTemp);
+//                         m_VecTrigger.push_back(OBJTemp2); //위에도 담기고 별도로 관리차원에서 여기도 담는 것
 //                     }
-//
-//                     m_iOBJIndex++;
-//                 }
-//             }
-//
-//             if (m_Build_time_Check == true)
-//             {
-//                 m_Build_time++;
-//
-//                 if (m_Build_time >= 7)
-//                 {
-//                     m_Build_time = 0;
-//                     m_Build_time_Check = false;
-//                 }
-//             }
-//
-// 			if (m_Build_time_Check2 == true)
-// 			{
-//                 m_Build_time2++;
-//
-// 				if (m_Build_time2 >= 7)
-// 				{
-//                     m_Build_time2 = 0;
-//                     m_Build_time_Check2 = false;
-// 				}
-// 			}
-//         }
-//     }
-//
-// //
-// // 	if (CImGuiManager::GetInstance()->Get_BuildModeCheck() == true) {
-// // 		Safe_Delete(CubeTemp2);
-// // 	}
-// // 	else if (CImGuiManager::GetInstance()->Get_OBJModeCheck() == true) {
-// //         Safe_Delete(OBJTemp);
-// // 	}
+					if (eAttribute == OBJ_ATTRIBUTE::MOVING_OBJ)
+					{
+						OBJTemp3 = new OBJData(*OBJTemp);
+						m_VecMoving.push_back(OBJTemp3); //상동
+					}
+
+					if (eAttribute == OBJ_ATTRIBUTE::C_POINT_OBJ)
+                    {
+                        OBJ_C_POINT->defOBJData = *OBJTemp;
+                        OBJ_C_POINT->eMonsterType = CImGuiManager::GetInstance()->Get_MonsterType();
+
+                        m_VecCreatePoint.push_back(OBJ_C_POINT); //얜 이거 따로 저장
+                    }
+
+                    m_iOBJIndex++;
+                }
+            }
+
+            if (m_Build_time_Check == true)
+            {
+                m_Build_time++;
+
+                if (m_Build_time >= 7)
+                {
+                    m_Build_time = 0;
+                    m_Build_time_Check = false;
+                }
+            }
+
+			if (m_Build_time_Check2 == true)
+			{
+                m_Build_time2++;
+
+				if (m_Build_time2 >= 7)
+				{
+                    m_Build_time2 = 0;
+                    m_Build_time_Check2 = false;
+				}
+			}
+        }
+    
+// 	if (CImGuiManager::GetInstance()->Get_BuildModeCheck() == true) {
+// 		Safe_Delete(CubeTemp2);
+// 	}
+// 	else if (CImGuiManager::GetInstance()->Get_OBJModeCheck() == true) {
+//         Safe_Delete(OBJTemp);
+// 	}
      return S_OK;
 }
 
@@ -396,128 +555,128 @@ HRESULT CMapTool::Load_Cube(const TCHAR* pFilePath)
 
 HRESULT CMapTool::Load_Obj(const TCHAR* pFilePath)
 {
-// 	//파일 개방해서 받아오기
-// 	string m_strText = "OBJData";
-//
-// 	HANDLE      hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
-//
-// 	if (INVALID_HANDLE_VALUE == hFile)
-// 		return E_FAIL;
-//
-// 	DWORD   dwByte = 0;
-// 	DWORD   dwStrByte = 0;
-// 	OBJData* pOBJ = nullptr;
-//
-// 	ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
-// 	pTag = new CHAR[dwStrByte];
-//
-// 	ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
-// 	m_strText = pTag;
-//
-// 	basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
-//
-// 	//저장된 데이터대로 큐브 동적할당해서 벡터에 담기
-// 	while (true)
-// 	{
-//         pOBJ = new OBJData;
-//
-// 		ReadFile(hFile, pOBJ, sizeof(OBJData), &dwByte, nullptr);
-//
-// 		if (0 == dwByte)
-// 		{
-// 			Safe_Delete(pOBJ);
-// 			break;
-// 		}
-//         m_VecOBJData.push_back(pOBJ);
-// 	}
-// 	CloseHandle(hFile);
-//
-// 	Engine::CGameObject* pGameObject = nullptr;
-//
-// 	//벡터 내용물만큼 실제 큐브 생성해 레이어에 담기
-// 	for (auto& iter : m_VecOBJData)
-// 	{
-// 		pGameObject = CBuild_Obj::Create(m_pGraphicDev, iter->vPos, iter->uiTextureNum, iter->vSize, iter->iRotateCount, m_iOBJIndex, iter->eOBJ_TYPE, iter->eOBJ_Attribute);
-// 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-// 		FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
-//         m_iOBJIndex++;
-// 	}
-// 	m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
-//
-// 	delete[] pTag;
-// 	pTag = nullptr;
-//
-//     if (m_VecTempCube.empty())
-// 		m_VecTempCube = CImGuiManager::GetInstance()->Get_CubeTextureObjVector();
-//
-//     if (m_VecTempPlane.empty())
-// 		m_VecTempPlane = CImGuiManager::GetInstance()->Get_PlaneTextureObjVector();
-//
-// 	MSG_BOX("Load Complete.");
+	//파일 개방해서 받아오기
+	string m_strText = "OBJData";
+
+	HANDLE      hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+		return E_FAIL;
+
+	DWORD   dwByte = 0;
+	DWORD   dwStrByte = 0;
+	OBJData* pOBJ = nullptr;
+
+	ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
+	pTag = new CHAR[dwStrByte];
+
+	ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
+	m_strText = pTag;
+
+	basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
+
+	//저장된 데이터대로 큐브 동적할당해서 벡터에 담기
+	while (true)
+	{
+        pOBJ = new OBJData;
+
+		ReadFile(hFile, pOBJ, sizeof(OBJData), &dwByte, nullptr);
+
+		if (0 == dwByte)
+		{
+			Safe_Delete(pOBJ);
+			break;
+		}
+        m_VecOBJData.push_back(pOBJ);
+	}
+	CloseHandle(hFile);
+
+	Engine::CGameObject* pGameObject = nullptr;
+
+	//벡터 내용물만큼 실제 큐브 생성해 레이어에 담기
+	for (auto& iter : m_VecOBJData)
+	{
+		pGameObject = CBuild_Obj::Create(m_pGraphicDev, iter->vPos, iter->uiTextureNum, iter->vSize, iter->iRotateCount, m_iOBJIndex, iter->eOBJ_TYPE, iter->eOBJ_Attribute);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
+        m_iOBJIndex++;
+	}
+	m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
+
+	delete[] pTag;
+	pTag = nullptr;
+
+    if (m_VecTempCube.empty())
+		m_VecTempCube = CImGuiManager::GetInstance()->Get_CubeTextureObjVector();
+
+    if (m_VecTempPlane.empty())
+		m_VecTempPlane = CImGuiManager::GetInstance()->Get_PlaneTextureObjVector();
+
+	MSG_BOX("Load Complete.");
  	return S_OK;
 }
 
 HRESULT CMapTool::Load_CPoint(const TCHAR* pFilePath)
 {
-// 	//파일 개방해서 받아오기
-// 	string m_strText = "CPointData";
-//
-// 	HANDLE      hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
-//
-// 	if (INVALID_HANDLE_VALUE == hFile)
-// 		return E_FAIL;
-//
-// 	DWORD   dwByte = 0;
-// 	DWORD   dwStrByte = 0;
-//     C_POINT* pOBJ = nullptr;
-//
-// 	ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
-// 	pTag = new CHAR[dwStrByte];
-//
-// 	ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
-// 	m_strText = pTag;
-//
-// 	basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
-//
-// 	//저장된 데이터대로 동적할당해서 벡터에 담기
-// 	while (true)
-// 	{
-// 		pOBJ = new C_POINT;
-//
-// 		ReadFile(hFile, pOBJ, sizeof(C_POINT), &dwByte, nullptr);
-//
-// 		if (0 == dwByte)
-// 		{
-// 			Safe_Delete(pOBJ);
-// 			break;
-// 		}
-//         m_VecCreatePoint.push_back(pOBJ);
-// 	}
-// 	CloseHandle(hFile);
-//
-// 	Engine::CGameObject* pGameObject = nullptr;
-//
-// 	//벡터 내용물만큼 실제 생성해 레이어에 담기
-// 	for (auto& iter : m_VecCreatePoint)
-// 	{
-// 		pGameObject = CBuild_Obj::Create(m_pGraphicDev, iter->defOBJData.vPos, iter->defOBJData.uiTextureNum,
-//             iter->defOBJData.vSize, iter->defOBJData.iRotateCount, m_iOBJIndex, iter->defOBJData.eOBJ_TYPE, iter->defOBJData.eOBJ_Attribute);
-// 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-// 		FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
-// 		m_iOBJIndex++;
-// 	}
-// 	m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
-//
-// 	delete[] pTag;
-// 	pTag = nullptr;
-//
-// 	if (m_VecTempCube.empty())
-// 		m_VecTempCube = CImGuiManager::GetInstance()->Get_CubeTextureObjVector();
-//
-// 	if (m_VecTempPlane.empty())
-// 		m_VecTempPlane = CImGuiManager::GetInstance()->Get_PlaneTextureObjVector();
-//
-// 	MSG_BOX("Load Complete.");
+	//파일 개방해서 받아오기
+	string m_strText = "CPointData";
+
+	HANDLE      hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+		return E_FAIL;
+
+	DWORD   dwByte = 0;
+	DWORD   dwStrByte = 0;
+    C_POINT* pOBJ = nullptr;
+
+	ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
+	pTag = new CHAR[dwStrByte];
+
+	ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
+	m_strText = pTag;
+
+	basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
+
+	//저장된 데이터대로 동적할당해서 벡터에 담기
+	while (true)
+	{
+		pOBJ = new C_POINT;
+
+		ReadFile(hFile, pOBJ, sizeof(C_POINT), &dwByte, nullptr);
+
+		if (0 == dwByte)
+		{
+			Safe_Delete(pOBJ);
+			break;
+		}
+        m_VecCreatePoint.push_back(pOBJ);
+	}
+	CloseHandle(hFile);
+
+	Engine::CGameObject* pGameObject = nullptr;
+
+	//벡터 내용물만큼 실제 생성해 레이어에 담기
+	for (auto& iter : m_VecCreatePoint)
+	{
+		pGameObject = CBuild_Obj::Create(m_pGraphicDev, iter->defOBJData.vPos, iter->defOBJData.uiTextureNum,
+            iter->defOBJData.vSize, iter->defOBJData.iRotateCount, m_iOBJIndex, iter->defOBJData.eOBJ_TYPE, iter->defOBJData.eOBJ_Attribute);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
+		m_iOBJIndex++;
+	}
+	m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
+
+	delete[] pTag;
+	pTag = nullptr;
+
+	if (m_VecTempCube.empty())
+		m_VecTempCube = CImGuiManager::GetInstance()->Get_CubeTextureObjVector();
+
+	if (m_VecTempPlane.empty())
+		m_VecTempPlane = CImGuiManager::GetInstance()->Get_PlaneTextureObjVector();
+
+	MSG_BOX("Load Complete.");
  	return S_OK;
 }
 
@@ -533,117 +692,228 @@ HRESULT CMapTool::Delete_Map()
     // 3. (해당 시) 트리거 OBJ 벡터
     // 4. (해당 시) 무빙 OBJ 벡터
     // 5. (해당 시) CPoint OBJ 벡터
-//
-//     if (Engine::Get_DIMouseState(DIM_RB))
-//     {
-//         Cursor_Update();
-//         _vec3 CursorTemp = { m_vCursor_Pos->x, m_vCursor_Height, m_vCursor_Pos->z };
-//         _uint IndexTemp = -1;
-//
-//         if (CImGuiManager::GetInstance()->Get_BuildModeCheck() == true) {
-//
-//             for (auto iter = m_VecCubeData.begin(); iter != m_VecCubeData.end();)
-//             {
-//                 if (fabsf((*iter)->vPos.x - CursorTemp.x) < VTXITV &&
-//                     fabsf((*iter)->vPos.y - CursorTemp.y) < VTXITV &&
-//                     fabsf((*iter)->vPos.z - CursorTemp.z) < VTXITV)
-//                 {
-//                     IndexTemp = (*iter)->iCubeIndex;
-//
-//                     delete* iter;
-//                     //*iter = nullptr;
-//                     iter = m_VecCubeData.erase(iter);
-//
-//
-//                     if (IndexTemp != -1) {
-//                         auto& VectorTemp = Engine::Management()->GetInstance()->Get_Scene()->Get_ObjectList(LAYERTAG::ENVIRONMENT, OBJECTTAG::BUILD_CUBE);
-//
-//                         for (int i = 0; i < VectorTemp.size(); ++i)
-//                         {
-//                             if (IndexTemp == VectorTemp[i]->Get_iIndex())
-//                             {
-//                                 m_pLayer->Delete_GameObject(OBJECTTAG::BUILD_CUBE, VectorTemp[i], IndexTemp);
-//                                 break;
-//                             }
-//                         }
-//                     }
-//
-//                     //iter = m_VecCubeData.erase(iter);
-//                 }
-//                 else
-//                 {
-//                     ++iter;
-//                 }
-//             }
-//         }
-//
-//         if (CImGuiManager::GetInstance()->Get_OBJModeCheck() == true)
-//         {
-//             bool bOBJ_DeleteCheck = false;
-//             for (auto iter = m_VecOBJData.begin(); iter != m_VecOBJData.end();)
-//             {
-//                 if (fabsf((*iter)->vPos.x - CursorTemp.x) < VTXITV &&
-//                     fabsf((*iter)->vPos.y - CursorTemp.y) < VTXITV &&
-//                     fabsf((*iter)->vPos.z - CursorTemp.z) < VTXITV)
-//                 {
-//                     IndexTemp = (*iter)->iIndex;
-//                     bOBJ_DeleteCheck = true;
-//
-//                     delete* iter;
-//                     //*iter = nullptr;
-//                     iter = m_VecOBJData.erase(iter);
-//
-//                     if (IndexTemp != -1) {
-//                         auto& ObjVectorTemp = Engine::Management()->GetInstance()->Get_Scene()->Get_ObjectList(LAYERTAG::ENVIRONMENT, OBJECTTAG::BUILD_OBJ);
-//
-//                         for (int i = 0; i < ObjVectorTemp.size(); ++i)
-//                         {
-//                             if (IndexTemp == ObjVectorTemp[i]->Get_iIndex())
-//                             {
-//                                 m_pLayer->Delete_GameObject(OBJECTTAG::BUILD_OBJ, ObjVectorTemp[i], IndexTemp);
-//                                 break;
-//                             }
-//                         }
-//                     }
-//
-//                     //iter = m_VecOBJData.erase(iter);
-//                 }
-//                 else
-//                 {
-//                     ++iter;
-//                 }
-//             }
-//
-//             for (auto iter = m_VecCreatePoint.begin(); iter != m_VecCreatePoint.end();)
-//             {
-//                 if (fabsf((*iter)->defOBJData.vPos.x - CursorTemp.x) < VTXITV &&
-//                     fabsf((*iter)->defOBJData.vPos.y - CursorTemp.y) < VTXITV &&
-//                     fabsf((*iter)->defOBJData.vPos.z - CursorTemp.z) < VTXITV)
-//                 {
-//                     IndexTemp = (*iter)->defOBJData.iIndex;
-//
-//                     delete* iter;
-//                     iter = m_VecCreatePoint.erase(iter);
-//
-//                     if (IndexTemp != -1) {
-//                         auto& ObjVectorTemp = Engine::Management()->GetInstance()->Get_Scene()->Get_ObjectList(LAYERTAG::ENVIRONMENT, OBJECTTAG::BUILD_OBJ);
-//
-//                         for (int i = 0; i < ObjVectorTemp.size(); ++i)
-//                         {
-//                             if (IndexTemp == ObjVectorTemp[i]->Get_iIndex())
-//                             {
-//                                 m_pLayer->Delete_GameObject(OBJECTTAG::BUILD_OBJ, ObjVectorTemp[i], IndexTemp);
-//                                 break;
-//                             }
-//                         }
-//                     }
-//
-//                 }
-//             }
-//
-//
-//             if (bOBJ_DeleteCheck == true)
-//             {
+
+    if (Engine::Get_DIMouseState(DIM_RB))
+    {
+        Cursor_Update();
+        _vec3 CursorTemp = { m_vCursor_Pos->x, m_vCursor_Height, m_vCursor_Pos->z };
+        _uint IndexTemp = -1;
+
+        if (CImGuiManager::GetInstance()->Get_BuildModeCheck() == true) {
+
+            for (auto iter = m_VecCubeData.begin(); iter != m_VecCubeData.end();)
+            {
+                if (fabsf((*iter)->vPos.x - CursorTemp.x) < VTXITV &&
+                    fabsf((*iter)->vPos.y - CursorTemp.y) < VTXITV &&
+                    fabsf((*iter)->vPos.z - CursorTemp.z) < VTXITV)
+                {
+                    IndexTemp = (*iter)->iCubeIndex;
+
+                    delete* iter;
+                    //*iter = nullptr;
+                    iter = m_VecCubeData.erase(iter);
+
+
+                    if (IndexTemp != -1) {
+                        auto& VectorTemp = Engine::Management()->GetInstance()->Get_Scene()->Get_ObjectList(LAYERTAG::ENVIRONMENT, OBJECTTAG::BUILD_CUBE);
+
+                        for (int i = 0; i < VectorTemp.size(); ++i)
+                        {
+                            if (IndexTemp == VectorTemp[i]->Get_iIndex())
+                            {
+                                m_pLayer->Delete_GameObject(OBJECTTAG::BUILD_CUBE, VectorTemp[i], IndexTemp);
+                                break;
+                            }
+                        }
+                    }
+
+                    //iter = m_VecCubeData.erase(iter);
+                }
+                else
+                {
+                    ++iter;
+                }
+            }
+        }
+
+        if (CImGuiManager::GetInstance()->Get_OBJModeCheck() == true)
+        {
+            bool bOBJ_DeleteCheck = false;
+            for (auto iter = m_VecOBJData.begin(); iter != m_VecOBJData.end();)
+            {
+                if (fabsf((*iter)->vPos.x - CursorTemp.x) < VTXITV &&
+                    fabsf((*iter)->vPos.y - CursorTemp.y) < VTXITV &&
+                    fabsf((*iter)->vPos.z - CursorTemp.z) < VTXITV)
+                {
+                    IndexTemp = (*iter)->iIndex;
+                    bOBJ_DeleteCheck = true;
+
+                    delete* iter;
+                    //*iter = nullptr;
+                    iter = m_VecOBJData.erase(iter);
+
+                    if (IndexTemp != -1) {
+                        auto& ObjVectorTemp = Engine::Management()->GetInstance()->Get_Scene()->Get_ObjectList(LAYERTAG::ENVIRONMENT, OBJECTTAG::BUILD_OBJ);
+
+                        for (int i = 0; i < ObjVectorTemp.size(); ++i)
+                        {
+                            if (IndexTemp == ObjVectorTemp[i]->Get_iIndex())
+                            {
+                                m_pLayer->Delete_GameObject(OBJECTTAG::BUILD_OBJ, ObjVectorTemp[i], IndexTemp);
+                                break;
+                            }
+                        }
+                    }
+
+                    //iter = m_VecOBJData.erase(iter);
+                }
+                else
+                {
+                    ++iter;
+                }
+            }
+
+            for (auto iter = m_VecCreatePoint.begin(); iter != m_VecCreatePoint.end();)
+            {
+                if (fabsf((*iter)->defOBJData.vPos.x - CursorTemp.x) < VTXITV &&
+                    fabsf((*iter)->defOBJData.vPos.y - CursorTemp.y) < VTXITV &&
+                    fabsf((*iter)->defOBJData.vPos.z - CursorTemp.z) < VTXITV)
+                {
+                    IndexTemp = (*iter)->defOBJData.iIndex;
+
+                    delete* iter;
+                    iter = m_VecCreatePoint.erase(iter);
+
+                    if (IndexTemp != -1) {
+                        auto& ObjVectorTemp = Engine::Management()->GetInstance()->Get_Scene()->Get_ObjectList(LAYERTAG::ENVIRONMENT, OBJECTTAG::BUILD_OBJ);
+
+                        for (int i = 0; i < ObjVectorTemp.size(); ++i)
+                        {
+                            if (IndexTemp == ObjVectorTemp[i]->Get_iIndex())
+                            {
+                                m_pLayer->Delete_GameObject(OBJECTTAG::BUILD_OBJ, ObjVectorTemp[i], IndexTemp);
+                                break;
+                            }
+                        }
+                    }
+
+                }
+            }
+
+
+            if (bOBJ_DeleteCheck == true)
+            {
+
+    if (Engine::Get_DIMouseState(DIM_RB))
+    {
+        Cursor_Update();
+        _vec3 CursorTemp = { m_vCursor_Pos->x, m_vCursor_Height, m_vCursor_Pos->z };
+        _uint IndexTemp = -1;
+
+        if (CImGuiManager::GetInstance()->Get_BuildModeCheck() == true) {
+
+            for (auto iter = m_VecCubeData.begin(); iter != m_VecCubeData.end();)
+            {
+                if (fabsf((*iter)->vPos.x - CursorTemp.x) < VTXITV &&
+                    fabsf((*iter)->vPos.y - CursorTemp.y) < VTXITV &&
+                    fabsf((*iter)->vPos.z - CursorTemp.z) < VTXITV)
+                {
+                    IndexTemp = (*iter)->iCubeIndex;
+
+                    delete* iter;
+                    //*iter = nullptr;
+                    iter = m_VecCubeData.erase(iter);
+
+
+                    if (IndexTemp != -1) {
+                        auto& VectorTemp = Engine::Management()->GetInstance()->Get_Scene()->Get_ObjectList(LAYERTAG::ENVIRONMENT, OBJECTTAG::BUILD_CUBE);
+
+                        for (int i = 0; i < VectorTemp.size(); ++i)
+                        {
+                            if (IndexTemp == VectorTemp[i]->Get_iIndex())
+                            {
+                                m_pLayer->Delete_GameObject(OBJECTTAG::BUILD_CUBE, VectorTemp[i], IndexTemp);
+                                break;
+                            }
+                        }
+                    }
+
+                    //iter = m_VecCubeData.erase(iter);
+                }
+                else
+                {
+                    ++iter;
+                }
+            }
+        }
+
+        if (CImGuiManager::GetInstance()->Get_OBJModeCheck() == true)
+        {
+            bool bOBJ_DeleteCheck = false;
+            for (auto iter = m_VecOBJData.begin(); iter != m_VecOBJData.end();)
+            {
+                if (fabsf((*iter)->vPos.x - CursorTemp.x) < VTXITV &&
+                    fabsf((*iter)->vPos.y - CursorTemp.y) < VTXITV &&
+                    fabsf((*iter)->vPos.z - CursorTemp.z) < VTXITV)
+                {
+                    IndexTemp = (*iter)->iIndex;
+                    bOBJ_DeleteCheck = true;
+
+                    delete* iter;
+                    //*iter = nullptr;
+                    iter = m_VecOBJData.erase(iter);
+
+                    if (IndexTemp != -1) {
+                        auto& ObjVectorTemp = Engine::Management()->GetInstance()->Get_Scene()->Get_ObjectList(LAYERTAG::ENVIRONMENT, OBJECTTAG::BUILD_OBJ);
+
+                        for (int i = 0; i < ObjVectorTemp.size(); ++i)
+                        {
+                            if (IndexTemp == ObjVectorTemp[i]->Get_iIndex())
+                            {
+                                m_pLayer->Delete_GameObject(OBJECTTAG::BUILD_OBJ, ObjVectorTemp[i], IndexTemp);
+                                break;
+                            }
+                        }
+                    }
+
+                    //iter = m_VecOBJData.erase(iter);
+                }
+                else
+                {
+                    ++iter;
+                }
+            }
+
+            for (auto iter = m_VecCreatePoint.begin(); iter != m_VecCreatePoint.end();)
+            {
+                if (fabsf((*iter)->defOBJData.vPos.x - CursorTemp.x) < VTXITV &&
+                    fabsf((*iter)->defOBJData.vPos.y - CursorTemp.y) < VTXITV &&
+                    fabsf((*iter)->defOBJData.vPos.z - CursorTemp.z) < VTXITV)
+                {
+                    IndexTemp = (*iter)->defOBJData.iIndex;
+
+                    delete* iter;
+                    iter = m_VecCreatePoint.erase(iter);
+
+                    if (IndexTemp != -1) {
+                        auto& ObjVectorTemp = Engine::Management()->GetInstance()->Get_Scene()->Get_ObjectList(LAYERTAG::ENVIRONMENT, OBJECTTAG::BUILD_OBJ);
+
+                        for (int i = 0; i < ObjVectorTemp.size(); ++i)
+                        {
+                            if (IndexTemp == ObjVectorTemp[i]->Get_iIndex())
+                            {
+                                m_pLayer->Delete_GameObject(OBJECTTAG::BUILD_OBJ, ObjVectorTemp[i], IndexTemp);
+                                break;
+                            }
+                        }
+                    }
+
+                }
+            }
+
+
+            if (bOBJ_DeleteCheck == true)
+            {
 //                 if (!m_VecTrigger.empty())
 //                 {
 //                     for (auto& iter = m_VecTrigger.begin(); iter != m_VecTrigger.end();)
@@ -660,27 +930,48 @@ HRESULT CMapTool::Delete_Map()
 //                         }
 //                     }
 //                 }
-// 				if (!m_VecMoving.empty())
-// 				{
-// 					for (auto& iter = m_VecMoving.begin(); iter != m_VecMoving.end();)
-// 					{
-// 						if ((*iter)->iIndex == IndexTemp)
-// 						{
-// 							delete* iter;
-// 							iter = m_VecMoving.erase(iter);
-// 							bOBJ_DeleteCheck = false;
-// 						}
-// 						else
-// 						{
-// 							++iter;
-// 						}
-// 					}
-// 				}
-//             }
-//         }
-//         int i = 0;
-//     }
+				if (!m_VecMoving.empty())
+				{
+					for (auto& iter = m_VecMoving.begin(); iter != m_VecMoving.end();)
+					{
+						if ((*iter)->iIndex == IndexTemp)
+						{
+							delete* iter;
+							iter = m_VecMoving.erase(iter);
+							bOBJ_DeleteCheck = false;
+						}
+						else
+						{
+							++iter;
+						}
+					}
+				}
+            }
+        }
+        int i = 0;
+    }
      return S_OK;
+				if (!m_VecMoving.empty())
+				{
+					for (auto& iter = m_VecMoving.begin(); iter != m_VecMoving.end();)
+					{
+						if ((*iter)->iIndex == IndexTemp)
+						{
+							delete* iter;
+							iter = m_VecMoving.erase(iter);
+							bOBJ_DeleteCheck = false;
+						}
+						else
+						{
+							++iter;
+						}
+					}
+				}
+            }
+        }
+        int i = 0;
+    }
+    return S_OK;
 }
 
 bool CMapTool::CheckDuplicateCube(const _vec3& pPos, const _vec3& pSize)
