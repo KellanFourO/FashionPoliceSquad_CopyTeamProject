@@ -16,7 +16,6 @@ public:
 	//Get
 	CComponent*								Get_Component(COMPONENTID eID,OBJECTTAG eObjTag, COMPONENTTAG eComponentTag);
 	vector<CGameObject*>&					Get_ObjectList(OBJECTTAG eObjTag) { return m_mapObject[eObjTag]; }
-	vector<CGameObject*>*					Get_ObjectList2(OBJECTTAG eObjTag) { return &m_mapObject[eObjTag]; }
 	map<OBJECTTAG, vector<CGameObject*>>&	Get_mapObject() { return m_mapObject; }
 
 public:
