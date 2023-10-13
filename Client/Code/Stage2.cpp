@@ -93,9 +93,9 @@ HRESULT CStage2::Ready_LightInfo()
 
 	tLightInfo.Type = D3DLIGHT_DIRECTIONAL;
 
-	tLightInfo.Diffuse = { 1.f, 1.f, 1.f, 1.f }; // 색깔(난반사)
-	tLightInfo.Specular = { 1.f, 1.f, 1.f, 1.f }; // 정반사
-	tLightInfo.Ambient = { 1.f, 1.f, 1.f, 1.f }; //조명에 의한 환경반사
+	tLightInfo.Diffuse = { 1.f, 0.6f, 0.6f, 1.f };     // 색깔(난반사)
+	tLightInfo.Specular = { 1.f, 0.6f, 0.6f, 1.f };    // 정반사
+	tLightInfo.Ambient = { 1.f, 0.6f, 0.6f, 1.0f };    //조명에 의한 환경반사
 	tLightInfo.Direction = { 1.f, -1.f, 1.f }; //방향
 
 	FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &tLightInfo, 0), E_FAIL);

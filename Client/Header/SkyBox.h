@@ -24,13 +24,17 @@ public:
 	virtual void	LateUpdate_GameObject() override;
 	virtual void	Render_GameObject() override;
 
+	void			Render_Texture();
+
 private:
-	HRESULT					Add_Component();
+	HRESULT			Add_Component();
 
 private:
 	CCubeTex* m_pBufferCom = nullptr;
 	CTransform* m_pTransformCom = nullptr;
 	CTexture* m_pTextureCom = nullptr;
+
+	SCENETAG			m_NowScene = SCENETAG::SCENETAG_END;
 
 public:
 	static CSkyBox* Create(LPDIRECT3DDEVICE9 pGraphicDev);

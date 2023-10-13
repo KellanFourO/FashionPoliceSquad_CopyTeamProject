@@ -1295,9 +1295,6 @@
     <ClCompile Include="..\Code\MonsterBombEffect.cpp">
       <Filter>02. GameObject\06. Effect\02.MonsterBomb</Filter>
     </ClCompile>
-    <ClCompile Include="..\Header\Trigger.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\UI_HPBarFrame.cpp">
       <Filter>02. GameObject\20.UI\06. HPBar</Filter>
     </ClCompile>
