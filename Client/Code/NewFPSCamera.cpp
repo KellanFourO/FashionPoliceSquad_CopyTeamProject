@@ -43,6 +43,7 @@ HRESULT CNewFPSCamera::Ready_GameObject(const _vec3* pEye, const _vec3* pAt, con
 	m_eObjectTag = OBJECTTAG::FPSCAMERA;
 	m_eCamera_Mode = CAMERAID::CAM_FIRST;
 
+	pPlayerTransCom = Management()->Get_Player()->Get_Transform();
 	return S_OK;
 }
 
@@ -50,13 +51,11 @@ Engine::_int CNewFPSCamera::Update_GameObject(const _float& fTimeDelta)
 {
 	Check_KeyInput(fTimeDelta);
 
-	pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
-	NULL_CHECK_RETURN(pPlayerTransCom, -1);
 
 	pPlayerTransCom->Get_Info(INFO_POS, &m_vPlayerPos);
 
-// 	m_vAt = m_vPlayerPos + vLook;
-// 	m_vEye = m_vPlayerPos;
+ 	m_vAt = m_vPlayerPos + vLook;
+ 	m_vEye = m_vPlayerPos;
 
 	if (true == m_bFix)
 	{

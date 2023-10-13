@@ -21,7 +21,7 @@ public:
 	CComponent*					Get_Component(COMPONENTID eID, LAYERTAG eLayerTag, OBJECTTAG eObjTag, COMPONENTTAG eComponentTag);
 	CLayer*						Get_Layer(LAYERTAG eLayerTag) { return m_mapLayer[eLayerTag]; };
 	_bool						Get_ReadyCube() { return m_bReadyCube; }
-
+	_bool						Get_Pause() { return m_bPause;}
 	//Set
 	void						Set_Pause(_bool _bPause) { m_bPause = _bPause; };
 

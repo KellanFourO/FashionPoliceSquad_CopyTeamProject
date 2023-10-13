@@ -46,19 +46,21 @@ HRESULT CStage1Boss::Ready_GameObject()
 	INFO.MonsterState->Initialize(this);
 	INFO.fHP = 1000.f;
 	INFO.fMaxHP = 1000.f;
-
-	m_pTransformCom->Set_Pos((_vec3{ 95.f,50.f,120.f }));
-	m_pTransformCom->Set_Scale({ 10.0f,13.0f,10.0f });
 	m_pTransformCom->Translate(_vec3(0.f,1.f,0.f));
+
+	m_pTransformCom->Set_Pos((_vec3{ 92.5f,50.f,120.f }));
+	m_pTransformCom->Set_Scale({ 10.0f,13.0f,10.0f });
 
 
 
 	m_pBufferCom->SetCount(5, 5);
 	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/Monster/hugo bauss transformed1.png", 1);
 
+	m_pTransformCom->Set_Host(this);
 	m_pCollider->Set_Host(this);
-	m_pCollider->Set_Transform(m_pTransformCom);
 	m_pRigidBody->Set_Host(this);
+
+	m_pCollider->Set_Transform(m_pTransformCom);
 	m_pRigidBody->Set_Transform(m_pTransformCom);
 	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
 	return S_OK;

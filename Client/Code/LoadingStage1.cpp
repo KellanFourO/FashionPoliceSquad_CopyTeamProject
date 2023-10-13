@@ -22,7 +22,7 @@ HRESULT CLoadingStage1::Ready_Scene(SCENETAG eSceneTag)
 
 	if (eSceneTag == SCENETAG::STAGE2)
 	{
-		m_pLoading = CLoading::Create(m_pGraphicDev, CLoading::LOADING_STAGE);
+		m_pLoading = CLoading::Create(m_pGraphicDev, CLoading::LOADING_STAGE2);
 	}
 	else if (eSceneTag == SCENETAG::BOSS_STAGE)
 	{
@@ -58,9 +58,9 @@ _int CLoadingStage1::Update_Scene(const _float& fTimeDelta)
 		{
 			switch (m_pLoadingID)
 			{
-			case CLoading::LOADING_STAGE:
+			case CLoading::LOADING_STAGE2:
 			{
-				CScene* pScene = CStage::Create(m_pGraphicDev);
+				CScene* pScene = CStage2::Create(m_pGraphicDev);
 				NULL_CHECK_RETURN(pScene, E_FAIL);
 
 				pScene->Set_MainPlayer(m_pPlayer);
@@ -71,8 +71,8 @@ _int CLoadingStage1::Update_Scene(const _float& fTimeDelta)
 
 				map<SCENETAG, CScene*>		m_MapSceneTemp;
 				m_MapSceneTemp = Engine::CManagement::GetInstance()->Get_MapScene();
-				pScene->Set_SceneTag(SCENETAG::STAGE);
-				m_MapSceneTemp.emplace(SCENETAG::STAGE, pScene);
+				pScene->Set_SceneTag(SCENETAG::STAGE2);
+				m_MapSceneTemp.emplace(SCENETAG::STAGE2, pScene);
 				Engine::CManagement::GetInstance()->Set_MapScene(m_MapSceneTemp);
 				break;
 			}
@@ -96,7 +96,19 @@ _int CLoadingStage1::Update_Scene(const _float& fTimeDelta)
 			}
 			case CLoading::LOADING_LOBBY:
 			{
+				CScene* pScene = CLobbyStage::Create(m_pGraphicDev);
+				NULL_CHECK_RETURN(pScene, E_FAIL);
 
+
+				FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
+
+				map<SCENETAG, CScene*>		m_MapSceneTemp;
+				m_MapSceneTemp = Engine::CManagement::GetInstance()->Get_MapScene();
+
+				pScene->Set_SceneTag(SCENETAG::LOBBY);
+				m_MapSceneTemp.emplace(SCENETAG::LOBBY, pScene);
+
+				Engine::CManagement::GetInstance()->Set_MapScene(m_MapSceneTemp);
 				break;
 			}
 			case CLoading::LOADING_BOSS:

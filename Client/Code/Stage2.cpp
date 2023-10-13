@@ -1,27 +1,26 @@
 #include "stdafx.h"
-#include "BossStage.h"
+#include "LobbyStage.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
 #include "EventMgr.h"
 #include "ImGuiManager.h"
-#include "EventMgr.h"
 #include "DustGrey.h"
 #include <sstream>
 #include <utility>
 #include "LoadingStage1.h"
 
 #include "FootRay.h"
-CBossStage::CBossStage(LPDIRECT3DDEVICE9 pGraphicDev)
+CStage2::CStage2(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
 {
 
 }
 
-CBossStage::~CBossStage()
+CStage2::~CStage2()
 {
 }
 
-HRESULT CBossStage::Ready_Scene()
+HRESULT CStage2::Ready_Scene()
 {
 	FAILED_CHECK_RETURN(Ready_Prototype(), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_LightInfo(), E_FAIL);
@@ -37,19 +36,19 @@ HRESULT CBossStage::Ready_Scene()
 	//TODO - 승용추가 크로스헤어 추가, 기본 커서 안보이게
 	ShowCursor(FALSE);
 
-	m_eSceneTag = SCENETAG::BOSS_STAGE;
+	m_eSceneTag = SCENETAG::STAGE2;
 	return S_OK;
 }
 
-_int CBossStage::Update_Scene(const _float& fTimeDelta)
+_int CStage2::Update_Scene(const _float& fTimeDelta)
 {
 	_int	iExit = __super::Update_Scene(fTimeDelta);
-	if (m_bLateInit)
-	{
-		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::BOSS_STAGE, DIALOGTAG::ST1_BOSS_START);
-		CEventMgr::GetInstance()->OnPause(true, SCENETAG::BOSS_STAGE);
-		m_bLateInit = false;
-	}
+// 	if (m_bLateInit)
+// 	{
+// 		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::STAGE2, DIALOGTAG::ST1_BOSS_START);
+// 		CEventMgr::GetInstance()->OnPause(true, SCENETAG::STAGE2);
+// 		m_bLateInit = false;
+// 	}
 
 	//if (m_bReadyCube)
 	//{
@@ -71,7 +70,7 @@ _int CBossStage::Update_Scene(const _float& fTimeDelta)
 	return iExit;
 }
 
-void CBossStage::LateUpdate_Scene()
+void CStage2::LateUpdate_Scene()
 {
 	__super::LateUpdate_Scene();
 
@@ -79,11 +78,11 @@ void CBossStage::LateUpdate_Scene()
 	CollisionManager()->LateUpdate_Collision();
 }
 
-void CBossStage::Render_Scene()
+void CStage2::Render_Scene()
 {
 }
 
-HRESULT CBossStage::Ready_LightInfo()
+HRESULT CStage2::Ready_LightInfo()
 {
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 	//mainApp 말고 stage-Maptool 단에서 켜기
@@ -104,13 +103,13 @@ HRESULT CBossStage::Ready_LightInfo()
 	return S_OK;
 }
 
-HRESULT CBossStage::Ready_Prototype()
+HRESULT CStage2::Ready_Prototype()
 {
 	//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_UITex", CUITex::Create(m_pGraphicDev)), E_FAIL);
 	return S_OK;
 }
 
-HRESULT CBossStage::Ready_Layer_Environment(LAYERTAG eLayerTag)
+HRESULT CStage2::Ready_Layer_Environment(LAYERTAG eLayerTag)
 {
 	m_pLayer = Engine::CLayer::Create(eLayerTag);
 	NULL_CHECK_RETURN(m_pLayer, E_FAIL);
@@ -129,15 +128,15 @@ HRESULT CBossStage::Ready_Layer_Environment(LAYERTAG eLayerTag)
 
 
 
-	Load_Data(L"../Bin/Data/Map/BossStage/MapData", OBJECTTAG::BUILD_CUBE);
-	Load_Data(L"../Bin/Data/OBJ/BossStage/OBJData", OBJECTTAG::BUILD_OBJ);
+	Load_Data(L"../Bin/Data/Map/Stage2/MapData", OBJECTTAG::BUILD_CUBE);
+	Load_Data(L"../Bin/Data/OBJ/Stage2/OBJData", OBJECTTAG::BUILD_OBJ);
 
 	m_mapLayer.insert({ eLayerTag, m_pLayer });
 
 	return S_OK;
 }
 
-HRESULT CBossStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
+HRESULT CStage2::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 {
 	Engine::CLayer* pLayer = Engine::CLayer::Create(eLayerTag);
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
@@ -165,7 +164,7 @@ HRESULT CBossStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 
 		dynamic_cast<CPlayer*>(pPlayer)->Set_SceneChange(false);
 		dynamic_cast<CPlayer*>(pPlayer)->SetGun(pLayer);
-		pPlayer->Get_Transform()->Set_Pos(92.5f,10.0f,10.0f);
+		pPlayer->Get_Transform()->Set_Pos(198.5f,10.0f,249.5f);
 
 		pGameObject = CTailorAssertRifleHand::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -201,19 +200,12 @@ HRESULT CBossStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::OBJECT, pGameObject), E_FAIL);	//벨트
 	}
 
-	{
-		pGameObject = CStage1Boss::Create(m_pGraphicDev);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::BOSS, pGameObject), E_FAIL);
-	}
-	// 보스
-
 	m_mapLayer.insert({ eLayerTag, pLayer });
 
 	return S_OK;
 }
 
-HRESULT CBossStage::Ready_Layer_Camera(LAYERTAG eLayerTag)
+HRESULT CStage2::Ready_Layer_Camera(LAYERTAG eLayerTag)
 {
 	Engine::CLayer* pLayer = Engine::CLayer::Create(eLayerTag);
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
@@ -236,7 +228,7 @@ HRESULT CBossStage::Ready_Layer_Camera(LAYERTAG eLayerTag)
 	return S_OK;
 }
 
-HRESULT CBossStage::Ready_Layer_UI(LAYERTAG eLayerTag)
+HRESULT CStage2::Ready_Layer_UI(LAYERTAG eLayerTag)
 {
 	Engine::CLayer* pLayer = Engine::CLayer::Create(eLayerTag);
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
@@ -322,7 +314,7 @@ HRESULT CBossStage::Ready_Layer_UI(LAYERTAG eLayerTag)
 	return S_OK;
 }
 
-HRESULT CBossStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
+HRESULT CStage2::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 {
 	if (eTag == OBJECTTAG::BUILD_CUBE) {
 		//파일 개방해서 받아오기
@@ -438,51 +430,65 @@ HRESULT CBossStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 
 
 
-void CBossStage::Admin_KeyInput()
+void CStage2::Admin_KeyInput()
 {
 	if (Engine::Get_DIKeyState(DIK_F9) & 0x80 && m_bAdminSwitch)
 	{
-		CEventMgr::GetInstance()->OnLevelUp(m_pGraphicDev, SCENETAG::BOSS_STAGE);
-		CEventMgr::GetInstance()->OnPause(true, SCENETAG::BOSS_STAGE);
+		CEventMgr::GetInstance()->OnLevelUp(m_pGraphicDev, SCENETAG::STAGE2);
+		CEventMgr::GetInstance()->OnPause(true, SCENETAG::STAGE2);
 		m_bAdminSwitch = false;
 	}
 
 	if (Engine::Get_DIKeyState(DIK_F8) & 0x80 && m_bAdminSwitch)
 	{
-		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::BOSS_STAGE, DIALOGTAG::QUEST_1);
+		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::STAGE2, DIALOGTAG::QUEST_1);
 		m_bAdminSwitch = false;
 	}
 
-	if (Engine::Get_DIKeyState(DIK_F10) & 0x80 && m_bAdminSwitch)
-	{
-		CLoadingStage1* pScene = nullptr;
-		pScene = CLoadingStage1::Create(m_pGraphicDev, SCENETAG::STAGE2);
-
-		//CUIMgr::GetInstance()->DestroyInstance();
-		Management()->Get_Player()->Set_SceneChange(true);
-		Management()->Set_SYSceneChange(true);
-		Management()->Change_Scene(pScene);
-
-
-		m_bAdminSwitch = false;
-	}
+	//if (Engine::Get_DIKeyState(DIK_F10) & 0x80 && m_bAdminSwitch)
+	//{
+	//	Management()->Set_bSceneChange(true);
+	//
+	//	for (auto& iterLayer : m_mapLayer)
+	//	{
+	//		for (auto& iterVectorObj : iterLayer.second->Get_mapObject())
+	//		{
+	//			for (auto& iterObj : iterVectorObj.second)
+	//			{
+	//				//iterObj->Set_Dead(true);
+	//				iterObj->Free();
+	//				//Safe_Release(iterObj);
+	//			}
+	//		}
+	//	}
+	//
+	//
+	//	m_eSceneTag = SCENETAG::BOSS_STAGE;
+	//	CScene* pScene = nullptr;
+	//	pScene = CLoadingStage1::Create(m_pGraphicDev);
+	//	pScene->Set_SceneTag(SCENETAG::BOSS_STAGE);
+	//
+	//	Management()->Change_Scene(pScene);
+	//
+	//	m_bAdminSwitch = false;
+	//}
 }
 
-CBossStage* CBossStage::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CStage2* CStage2::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CBossStage* pInstance = new CBossStage(pGraphicDev);
+	CStage2* pInstance = new CStage2(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_Scene()))
 	{
 		Safe_Release(pInstance);
-		MSG_BOX("BossStage Create Failed");
+		MSG_BOX("Stage2 Create Failed");
 		return nullptr;
 	}
 
 	return pInstance;
 }
 
-void CBossStage::Free()
+void CStage2::Free()
 {
 	for (int i = 0; i < m_VecCubeData.size(); ++i)
 	{

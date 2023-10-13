@@ -619,20 +619,20 @@ void CStage::Admin_KeyInput()
 	if (Engine::Get_DIKeyState(DIK_F9) & 0x80 && m_bAdminSwitch)
 	{
 		CEventMgr::GetInstance()->OnLevelUp(m_pGraphicDev, SCENETAG::STAGE);
-		CEventMgr::GetInstance()->OnPause(true);
+		CEventMgr::GetInstance()->OnPause(true,SCENETAG::STAGE);
 		m_bAdminSwitch = false;
 	}
 
 	if (Engine::Get_DIKeyState(DIK_F8) & 0x80 && m_bAdminSwitch)
 	{
-		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::STAGE, DIALOGTAG::QUEST_1);
+		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::STAGE, DIALOGTAG::STORY_ST1_INTRO);
 		m_bAdminSwitch = false;
 	}
 
 	if (Engine::Get_DIKeyState(DIK_F10) & 0x80 && m_bAdminSwitch)
 	{
 		CLoadingStage1* pScene = nullptr;
-		pScene = CLoadingStage1::Create(m_pGraphicDev, SCENETAG::BOSS_STAGE);
+		pScene = CLoadingStage1::Create(m_pGraphicDev, SCENETAG::LOBBY);
 
 		//CUIMgr::GetInstance()->DestroyInstance();
 		Management()->Get_Player()->Set_SceneChange(true);

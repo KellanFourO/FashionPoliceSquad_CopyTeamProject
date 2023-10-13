@@ -82,11 +82,11 @@ HRESULT CPortrait::Ready_GameObject()
 	// -1 ~ 1 -> 0 ~ 2
 
 	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-des.png", 1);
-	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-des-neon.png", 2);
-	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-haley.png", 3);
-	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-deepcoat.png", 4);
-	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-bauss.png", 5);
-	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-turncoat.png", 6);
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-des-neon.png", 1);
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-haley.png", 1);
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-deepcoat.png", 1);
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-bauss.png", 1);
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-turncoat.png", 1);
 
 	return S_OK;
 }
@@ -173,5 +173,7 @@ void CPortrait::SetPortrait()
 		m_iTextureIndex = 6;
 		break;
 	}
+
+
 }
 

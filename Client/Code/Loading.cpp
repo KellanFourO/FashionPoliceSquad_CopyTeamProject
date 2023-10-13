@@ -169,6 +169,14 @@ _uint CLoading::Loading_For_Stage()
 	return 0;
 }
 
+_uint CLoading::Loading_For_Stage2()
+{
+	Set_Value(100);
+
+	m_bFinish = true;
+	return 0;
+}
+
 _uint CLoading::Loading_For_MapTool()
 {
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_TriCol", CTriCol::Create(m_pGraphicDev)), E_FAIL);
@@ -227,8 +235,13 @@ size_t CLoading::Thread_Main(void* pArg)
 		iFlag = pLoading->Loading_For_Stage();
 		break;
 
+
 	case LOADING_MAPTOOL:
 		iFlag = pLoading->Loading_For_MapTool();
+		break;
+
+	case LOADING_STAGE2:
+		iFlag = pLoading->Loading_For_Stage2();
 		break;
 
 	case LOADING_LOBBY:
