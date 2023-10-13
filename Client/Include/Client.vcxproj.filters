@@ -385,6 +385,9 @@
     <Filter Include="02. GameObject\06. Effect\02.MonsterBomb">
       <UniqueIdentifier>{e75d379d-dbc7-4308-a678-7d9f3a50b9c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\14. Trigger">
+      <UniqueIdentifier>{bfc2ca50-58ac-44ca-970e-7dd3ee356366}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02. GameObject\20.UI\06. HPBar">
       <UniqueIdentifier>{b2f3f6ed-de46-4eb5-aed9-195881bb37fc}</UniqueIdentifier>
     </Filter>
@@ -531,9 +534,6 @@
     <ClInclude Include="..\Header\Item.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\UI_CrossHair.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Monster.h">
       <Filter>02. GameObject\02. Monster</Filter>
     </ClInclude>
@@ -675,9 +675,6 @@
     <ClInclude Include="..\Header\DullSuitMonster_Chase.h">
       <Filter>02. GameObject\02. Monster\01. DullSuitMonster\99. DullSuitMonster_State\04.DullSuitMonster_Chase</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\PlayerBullet.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Player_Jump.h">
       <Filter>02. GameObject\01. Player\99. PlayerState\08. Player_Jump</Filter>
     </ClInclude>
@@ -726,12 +723,6 @@
     <ClInclude Include="..\Header\PaintShotGun_Walk.h">
       <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\04. PaintShotGun_Walk</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\PaintShotGun_Lazer.h">
-      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\05. PaintShotGun_Lazer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\PaintShotGun_Enter.h">
-      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\06. PainShotGun_Enter</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\TailorAssertRifle_Idle.h">
       <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\00. TailorAssertRifle_Idle</Filter>
     </ClInclude>
@@ -758,9 +749,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\Player_Jump.h">
       <Filter>02. GameObject\01. Player\99. PlayerState\08. Player_Jump</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\PaintShotGun_Jump.h">
-      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\07. PaintShotGun_Jump</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\MuzzlefFlash_Rifle.h">
       <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\00. MuzzleFlashRifle</Filter>
@@ -806,12 +794,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\PaintShotGun_Lazer.h">
       <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\PaintShotGun.h">
-      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\TailorAssertRifle.h">
-      <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\PaintShotGun.h">
       <Filter>헤더 파일</Filter>
@@ -902,6 +884,33 @@
     </ClInclude>
     <ClInclude Include="..\Header\Stage2.h">
       <Filter>01.Scene\05. Stage2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UIMgr.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_CrossHair.h">
+      <Filter>02. GameObject\20.UI\02. CrossHair</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Trigger.h">
+      <Filter>02. GameObject\14. Trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PaintShotGun_Lazer.h">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\05. PaintShotGun_Lazer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PaintShotGun_Enter.h">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\06. PainShotGun_Enter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PaintShotGun_Jump.h">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\07. PaintShotGun_Jump</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PaintShotGun.h">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\TailorAssertRifle.h">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\PlayerBullet.h">
+      <Filter>02. GameObject\07. Bullet\00.PlayerBullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1005,9 +1014,6 @@
       <Filter>02. GameObject\12. Build_OBJ</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Item.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\UI_CrossHair.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Monster.cpp">
@@ -1133,9 +1139,6 @@
     <ClCompile Include="..\Code\DullSuitMonster_Chase.cpp">
       <Filter>02. GameObject\02. Monster\01. DullSuitMonster\99. DullSuitMonster_State\04.DullSuitMonster_Chase</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\PlayerBullet.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\LoadingStage1.cpp">
       <Filter>01.Scene\09.LoadingStage1</Filter>
     </ClCompile>
@@ -1172,9 +1175,6 @@
     <ClCompile Include="..\Code\KickBoardMonster_Patrol.cpp">
       <Filter>02. GameObject\02. Monster\02. KickBoardMonster\99.KickBoardMonster_State\04. KickBoardMonster_Patrol</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\PaintShotGun_Idle.cpp">
-      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\00. PaintShotGun_Idle</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\PaintShotGun_Ready.cpp">
       <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\01. PaintShotGun_Ready</Filter>
     </ClCompile>
@@ -1186,12 +1186,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\PaintShotGun_Walk.cpp">
       <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\04. PaintShotGun_Walk</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\PaintShotGun_Lazer.cpp">
-      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\05. PaintShotGun_Lazer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\PaintShotGun_Enter.cpp">
-      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\06. PainShotGun_Enter</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\TailorAssertRifle_Idle.cpp">
       <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\99. TailorAssertRifleState\00. TailorAssertRifle_Idle</Filter>
@@ -1217,9 +1211,6 @@
     <ClCompile Include="..\Code\Player_Jump.cpp">
       <Filter>02. GameObject\01. Player\99. PlayerState\08. Player_Jump</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\PaintShotGun_Jump.cpp">
-      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\07. PaintShotGun_Jump</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\MuzzlefFlash_Rifle.cpp">
       <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle\00. MuzzleFlashRifle</Filter>
     </ClCompile>
@@ -1240,9 +1231,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\ShotGun_Bullet.cpp">
       <Filter>02. GameObject\07. Bullet\00.PlayerBullet\00. ShotGunBullet</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\Rifle_Bullet1.cpp">
-      <Filter>02. GameObject\07. Bullet\00.PlayerBullet</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Player_LevelUp.cpp">
       <Filter>02. GameObject\01. Player\99. PlayerState\05. Player_LevelUp</Filter>
@@ -1281,12 +1269,6 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PaintShotGun.cpp">
-      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\TailorAssertRifle.cpp">
-      <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\PaintShotGun.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\PlayerGun.cpp">
@@ -1312,6 +1294,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\MonsterBombEffect.cpp">
       <Filter>02. GameObject\06. Effect\02.MonsterBomb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Header\Trigger.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_HPBarFrame.cpp">
       <Filter>02. GameObject\20.UI\06. HPBar</Filter>
@@ -1381,6 +1366,39 @@
     </ClCompile>
     <ClCompile Include="..\Code\Stage2.cpp">
       <Filter>01.Scene\05. Stage2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UIMgr.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_CrossHair.cpp">
+      <Filter>02. GameObject\20.UI\02. CrossHair</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Trigger.cpp">
+      <Filter>02. GameObject\14. Trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PaintShotGun_Lazer.cpp">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\05. PaintShotGun_Lazer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PaintShotGun_Enter.cpp">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\06. PainShotGun_Enter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PaintShotGun_Jump.cpp">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\07. PaintShotGun_Jump</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PaintShotGun_Idle.cpp">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun\99. PaintShotGunState\00. PaintShotGun_Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PaintShotGun.cpp">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\00. PaintShotGun</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\TailorAssertRifle.cpp">
+      <Filter>02. GameObject\01. Player\03. PlayerGun\01. TailorAssertRifle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\PlayerBullet.cpp">
+      <Filter>02. GameObject\07. Bullet\00.PlayerBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Rifle_Bullet1.cpp">
+      <Filter>02. GameObject\07. Bullet\00.PlayerBullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

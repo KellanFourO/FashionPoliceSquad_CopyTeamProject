@@ -44,7 +44,7 @@ public:
 	vector<OBJData*>&	Get_VecOBJData() { return m_VecOBJData; }
 	void				Set_VecOBJData(vector<OBJData*>* pVecOBjData) { m_VecOBJData = *pVecOBjData; }
 
-	vector<OBJData*>&	Get_VecTrigger() { return m_VecTrigger; }
+// 	vector<OBJData*>&	Get_VecTrigger() { return m_VecTrigger; }
 	vector<OBJData*>&	Get_VecMoving()  { return m_VecMoving; }
 	vector<C_POINT*>&	Get_VecCreatePoint() { return m_VecCreatePoint; }
 
@@ -61,7 +61,7 @@ private:
 	vector<IDirect3DBaseTexture9*> m_VecTempPlane;
 
 	//트리거, Create Point 용 벡터 컨테이너
-	vector<OBJData*>			   m_VecTrigger;
+// 	vector<OBJData*>			   m_VecTrigger;
 	vector<OBJData*>			   m_VecMoving;
 	vector<C_POINT*>			   m_VecCreatePoint;
 
