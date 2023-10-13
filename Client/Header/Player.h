@@ -78,7 +78,6 @@ private:
 	CRcTex*			m_pBufferCom = nullptr;
 	CTexture*		m_pTextureCom = nullptr;
 	CRigidBody*		m_pRigidBody = nullptr;
-
 	Player_INFO		INFO;
 
 	_bool			m_bSceneChange = false; // 플레이어 신 넘어갈때 제어용

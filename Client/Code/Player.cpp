@@ -81,7 +81,7 @@ HRESULT CPlayer::Ready_GameObject()
 	//INFO.vPos = { 20.f,5.f,20.f };
 	INFO.fStartDir = 0.f;//생각처럼 잘 안댐...
 
-
+	//m_pbuildCubeTransformCom = dynamic_cast<CBuild_Cube*>()
 	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
 
 	//m_pTransformCom->Rotation(ROT_Y,D3DXToRadian(INFO.fStartDir));
@@ -100,12 +100,7 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 		SetGun();
 		m_bLateInit = false;
 	}
-	_vec3 stair = { 0.f,2.f,0.f };
-	if (m_bstair)
-	{
-		m_pTransformCom->m_vInfo[INFO_POS] + stair;
-		m_bstair = false;
-	}
+	
 
 	StateMachine(fTimeDelta);
 
@@ -390,10 +385,10 @@ void CPlayer::Mouse_Input(const _float& fTimeDelta)
 	{
 		m_pGun->Set_RBFire(true);
 	}
-	//else if (!(Engine::Get_DIMouseState(DIM_RB)))
-	//{
-	//	m_pGun->Set_RBFire(false);
-	//}
+	else if (!(Engine::Get_DIMouseState(DIM_RB)))
+	{
+		m_pGun->Set_RBFire(false);
+	}
 }
 
 void CPlayer::TestRopeAction(const _float& fTimeDelta)
@@ -563,8 +558,8 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 
 		_float fMinAxis = min(min(fRadiusX, fRadiusY), fRadiusZ);	// 가장 작은 값이 가장 얕게 충돌한 축. 이 축을 밀어내야 함.
 
-// 		if (vThisPos.y > vOtherPos.y)
-// 			vThisPos.y += vOtherPos.y;
+		//if (m_pTransformCom->m_vInfo[INFO_POS].y > vOtherPos.y + fThisAxis[1])
+			//m_pTransformCom->m_vInfo[INFO_POS].y = vOtherPos.y + fThisAxis[1];
 
 		if (fRadiusY == fMinAxis)
 		{
@@ -574,7 +569,7 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 				
 			if (vOtherPos.y < vThisPos.y)
 			{
-				m_bstair = true;
+				//m_bstair = true;
 				//m_IsJump = false;
 				//m_pRigidBody->UseGravity(false);
 				m_pRigidBody->Set_Force(_vec3(0.f, 0.f, 0.f));
@@ -626,19 +621,24 @@ void CPlayer::OnCollisionStay(CCollider* _pOther)
 		_float fRadiusZ = (fOtherAxis[2] + fThisAxis[2]) - fDepth;
 
 		_float fMinAxis = min(min(fRadiusX, fRadiusY), fRadiusZ);	// 가장 작은 값이 가장 얕게 충돌한 축. 이 축을 밀어내야 함.
-		//if (vThisPos.y > vOtherPos.y+fOtherAxis*0.5f)
-		//	vThisPos.y += vOtherPos.y;
+// 		if ()
+// 			m_bstair = true;
+// 		else
+// 		{
+// 			m_bstair = false;
+// 		}
 		if (fRadiusY == fMinAxis)
 		{
 			if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::MONSTER)
 				return;
 			if (vOtherPos.y < vThisPos.y)
 			{
-				m_bstair = true;
 				//m_IsJump = false;
 				//m_pRigidBody->UseGravity(false);
-				m_pRigidBody->Set_Force(_vec3(0.f, 0.f, 0.f));
+				m_pRigidBody->Set_Force(_vec3(0.f, 1.f, 0.f));
 				m_pTransformCom->Translate(_vec3(0.f, fRadiusY, 0.f));
+				
+				
 			}
 			else
 				m_pTransformCom->Translate(_vec3(0.f, -fRadiusY, 0.f));

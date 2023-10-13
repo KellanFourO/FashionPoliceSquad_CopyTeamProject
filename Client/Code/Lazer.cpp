@@ -46,7 +46,7 @@ Engine::_int CLazer::Update_GameObject(const _float& fTimeDelta)
 {
 	
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
-
+	m_pCollider->Set_Host(this);
 	if (m_bLateInit)
 	{
 		m_pPlayerTransform = dynamic_cast<CTransform*>(Engine::Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
@@ -85,10 +85,10 @@ Engine::_int CLazer::Update_GameObject(const _float& fTimeDelta)
 
 void CLazer::LateUpdate_GameObject()
 {
-	_vec3	vPos;
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-
-	__super::Compute_ViewZ(&vPos);
+	//_vec3	vPos;
+	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
+	//
+	//__super::Compute_ViewZ(&vPos);
 }
 
 void CLazer::Render_GameObject()
@@ -185,7 +185,7 @@ void CLazer::StartPosition()
 
 	m_pTransformCom->Set_Pos(vPlayerPos + vPlayerLook/4 + vGunMoveRight * m_fGunMoveRight + vGunMoveDown * m_fGunMoveDown);
 	m_pTransformCom->RotateAxis(vPlayerUp, D3DXToRadian(90));
-
+	m_pCollider->SetCenterPos(m_pTransformCom->m_vInfo[INFO_POS]);
 }
 
 void CLazer::FirePosition(const _float& fTimeDelta)
