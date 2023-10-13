@@ -10,6 +10,9 @@
 #include <sstream>
 #include <utility>
 #include "MonsterBombEffect.h"
+#include "MBulletBombEffect.h"
+#include "MBulletExplosion.h"
+
 #include "FootRay.h"
 
 #include "LoadingStage1.h"
@@ -251,8 +254,17 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		pGameObject = CMonsterBombEffect::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::EFFECT, pGameObject), E_FAIL);
+
+		pGameObject = CMBulletBombEffect::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::EFFECT, pGameObject), E_FAIL);
+
 		//ÆÄÆ¼Å¬
-		pGameObject = CDustGrey::Create(m_pGraphicDev, _vec3(50.f, 10.f, 25.f), 256);
+		pGameObject = CDustGrey::Create(m_pGraphicDev, _vec3(0.f, 0.f, 0.f), 256);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::PARTICLE, pGameObject), E_FAIL);
+
+		pGameObject = CMBulletExplosion::Create(m_pGraphicDev, _vec3(0.f, 0.f, 0.f), 256);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::PARTICLE, pGameObject), E_FAIL);
 	}
