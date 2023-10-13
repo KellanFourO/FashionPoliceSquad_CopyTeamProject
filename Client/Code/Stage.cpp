@@ -56,10 +56,10 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 	_int	iExit = __super::Update_Scene(fTimeDelta);
 
 
-	if (m_bReadyCube)
-	{
-		Octree()->Update_Octree();
-	}
+// 	if (m_bReadyCube)
+// 	{
+// 		Octree()->Update_Octree();
+// 	}
 
 	m_fAdminTick += fTimeDelta;
 	if (m_fAdminTick >= 3.f)

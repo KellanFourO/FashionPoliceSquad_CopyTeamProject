@@ -100,7 +100,12 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 		SetGun();
 		m_bLateInit = false;
 	}
-
+	_vec3 stair = { 0.f,2.f,0.f };
+	if (m_bstair)
+	{
+		m_pTransformCom->m_vInfo[INFO_POS] + stair;
+		m_bstair = false;
+	}
 
 	StateMachine(fTimeDelta);
 
@@ -569,6 +574,7 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 				
 			if (vOtherPos.y < vThisPos.y)
 			{
+				m_bstair = true;
 				//m_IsJump = false;
 				//m_pRigidBody->UseGravity(false);
 				m_pRigidBody->Set_Force(_vec3(0.f, 0.f, 0.f));
@@ -628,6 +634,7 @@ void CPlayer::OnCollisionStay(CCollider* _pOther)
 				return;
 			if (vOtherPos.y < vThisPos.y)
 			{
+				m_bstair = true;
 				//m_IsJump = false;
 				//m_pRigidBody->UseGravity(false);
 				m_pRigidBody->Set_Force(_vec3(0.f, 0.f, 0.f));

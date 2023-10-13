@@ -101,6 +101,7 @@ _int CLoadingStage1::Update_Scene(const _float& fTimeDelta)
 
 
 				FAILED_CHECK_RETURN(Engine::Set_Scene(pScene), E_FAIL);
+				FAILED_CHECK_RETURN(Engine::COctree::GetInstance()->Ready_Octree(), E_FAIL);
 
 				map<SCENETAG, CScene*>		m_MapSceneTemp;
 				m_MapSceneTemp = Engine::CManagement::GetInstance()->Get_MapScene();
