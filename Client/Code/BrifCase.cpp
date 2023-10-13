@@ -2,6 +2,10 @@
 #include "BrifCase.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
+#include "MBulletExplosion.h"
+#include "Player.h"
+#include "Monster.h"
+#include "MBulletBombEffect.h"
 
 CBrifCase::CBrifCase(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CBullet(pGraphicDev)
@@ -19,14 +23,15 @@ CBrifCase::~CBrifCase()
 
 HRESULT CBrifCase::Ready_GameObject()
 {
-
+	m_bDead = false;
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	Set_ObjectTag(OBJECTTAG::MONSTERBULLET);
 
 	m_pBufferCom->SetCount(4, 1);
 
 	m_pTransformCom->Set_Host(this);
-	m_pTransformCom->Set_Pos(m_pHostTransform->m_vInfo[INFO_POS] += m_vDir * 0.016);
+	//m_pTransformCom->Set_Pos(m_pHostTransform->m_vInfo[INFO_POS] += m_vDir * 0.016);
+	m_pTransformCom->Set_Pos(9999.f, 9999.f, 9999.f);
 	m_pTransformCom->Set_Scale(_vec3{ 2.f,2.f,2.f });
 
 	m_pCollider->Set_Host(this);
@@ -51,27 +56,42 @@ HRESULT CBrifCase::Ready_GameObject()
 
 Engine::_int CBrifCase::Update_GameObject(const _float& fTimeDelta)
 {
+	if (m_bDead)
+	{
+		CMBulletExplosion* MBExplosion = CMBulletExplosion::Create(m_pGraphicDev, m_pTransformCom->m_vInfo[INFO_POS], 64);
+		MBExplosion->Set_ObjectTag(OBJECTTAG::PARTICLE);
+		Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::PARTICLE, MBExplosion);
+		MBExplosion->Get_Transform()->Set_Pos(m_pTransformCom->m_vInfo[INFO_POS]);
 
-		Engine::Add_RenderGroup(RENDER_ALPHA, this);
-		m_pRigidBody->Update_RigidBody(fTimeDelta);
-		_int iExit = __super::Update_GameObject(fTimeDelta);
+		CMBulletBombEffect* MBulletEffect = CMBulletBombEffect::Create(m_pGraphicDev);
+		MBulletEffect->Set_ObjectTag(OBJECTTAG::EFFECT);
+		Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::EFFECT, MBulletEffect);
+		MBulletEffect->Get_Transform()->Set_Pos(m_pTransformCom->m_vInfo[INFO_POS]);
+
+		return OBJ_DEAD;
+	}
+
+	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+	m_pRigidBody->Update_RigidBody(fTimeDelta);
+
+	_int iExit = __super::Update_GameObject(fTimeDelta);
 
 
-		m_pTransformCom->Get_Info(INFO_POS, &m_vPos);
+	m_pTransformCom->Get_Info(INFO_POS, &m_vPos);
 
-		m_pTransformCom->Set_Pos(m_vPos += (m_vDir * m_fBulletSpeed)); //이동
+	m_pTransformCom->Set_Pos(m_vPos += (m_vDir * m_fBulletSpeed)); //이동
 
-		m_fAnimateTime += fTimeDelta;
+	m_fAnimateTime += fTimeDelta;
 
-		if (m_fAnimateTime >= 0.25f)
-		{
-			++m_fFrame;
+	if (m_fAnimateTime >= 0.25f)
+	{
+		++m_fFrame;
 
-			if (m_fFrame >= 4) {
-				m_fFrame = 1;
-			}
-			m_fAnimateTime = 0.f;
-		}//프레임 코드
+		if (m_fFrame >= 4) {
+			m_fFrame = 1;
+		}
+		m_fAnimateTime = 0.f;
+	}//프레임 코드
 
 
 	return iExit;
@@ -108,12 +128,12 @@ void CBrifCase::OnCollisionEnter(CCollider* _pOther)
 }
 void CBrifCase::OnCollisionStay(CCollider* _pOther)
 {
-	__super::OnCollisionStay(_pOther);
+	//__super::OnCollisionStay(_pOther);
 }
 
 void CBrifCase::OnCollisionExit(CCollider* _pOther)
 {
-	__super::OnCollisionExit(_pOther);
+	//__super::OnCollisionExit(_pOther);
 }
 
 HRESULT CBrifCase::Add_Component()

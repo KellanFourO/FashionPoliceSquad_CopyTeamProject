@@ -47,6 +47,7 @@ private:
 	_vec3			m_Cursor_Pos = {};
 	_uint			m_TextureNumber = 0;
 
+	SCENETAG		m_NowScene = SCENETAG::SCENETAG_END;
 	CUBESIZE		m_fCubeSize = { VTXITV, VTXITV, VTXITV };
 
 public:

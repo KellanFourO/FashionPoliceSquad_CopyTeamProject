@@ -135,7 +135,6 @@ namespace Engine
 		TRIGGER_NUMBER			eTrName;		//트리거 이름 열거체
 		_vec3					vSize;			//x, y, z 길이
 		_vec3					vPos;			//x, y, z 중점
-		IDirect3DCubeTexture9*  pCubeTexture;   //투명 큐브 쓸 것임
 		TRIGGER_CASE			eTrCase;		//한 번, 두 번, 반복 발동 중
 		TRIGGER_TYPE			eTrType;		//발동 시 어떤 반응을 만들어낼 것인지
 		TRIGGER_STATE			eTrSTATE;		//발동 전, 중, 후
@@ -283,7 +282,11 @@ namespace Engine
 		bool		isAlive;	//파티클이 생존한 경우 True , 소멸한 경우 False
 	}ATTRIBUTE;
 
-
+	typedef struct      Ray_Info
+	{
+		_vec3 vRayPos;
+		_vec3 vRayDir;
+	}RAY;
 
 
 }

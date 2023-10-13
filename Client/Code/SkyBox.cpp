@@ -91,11 +91,36 @@ void CSkyBox::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
-	m_pTextureCom->Render_Textrue(0);
+	Render_Texture();
 	m_pBufferCom->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+}
+
+void CSkyBox::Render_Texture()
+{
+	auto& mapSceneTemp = Engine::Management()->Get_MapScene();
+	for (auto& iter : mapSceneTemp) 
+	{ 
+		if (iter.second == Engine::Management()->Get_Scene())
+		m_NowScene = iter.first; 
+	}
+		
+	if ((m_NowScene == SCENETAG::STAGE) || (m_NowScene == SCENETAG::LOBBY))
+	{
+		m_pTextureCom->Render_Textrue(0);
+	}
+	else if (m_NowScene == SCENETAG::BOSS_STAGE)
+	{
+		m_pTextureCom->Render_Textrue(1);
+	}
+	else if (m_NowScene == SCENETAG::STAGE2)
+	{
+		m_pTextureCom->Render_Textrue(2);
+	}
+
+
 }
 
 

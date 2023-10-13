@@ -69,12 +69,7 @@ HRESULT CKickBoardMonster::Ready_GameObject()
 _int CKickBoardMonster::Update_GameObject(const _float& fTimeDelta)
 {
     __super::Update_GameObject(fTimeDelta);
-// 	if (INFO.bDead)
-// 	{
-// 		CMonsterBombEffect* MBEffect = CMonsterBombEffect::Create(m_pGraphicDev);
-// 		Management()->Get_Layer(LAYERTAG::EFFECT)->Add_GameObject(OBJECTTAG::EFFECT, MBEffect);
-// 		MBEffect->Get_Transform()->Set_Pos(m_pTransformCom->m_vInfo[INFO_POS]);
-// 	}
+
     m_pRigidBody->Update_RigidBody(fTimeDelta);
     return OBJ_NOEVENT;
 }
@@ -88,6 +83,12 @@ void CKickBoardMonster::LateUpdate_GameObject()
 		MBEffect->Set_ObjectTag(OBJECTTAG::EFFECT);
 		Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::EFFECT, MBEffect);
 		MBEffect->Get_Transform()->Set_Pos(m_pTransformCom->m_vInfo[INFO_POS]);
+
+		CDustGrey* DustParticle = CDustGrey::Create(m_pGraphicDev, m_pTransformCom->m_vInfo[INFO_POS], 256);
+		DustParticle->Set_ObjectTag(OBJECTTAG::PARTICLE);
+		Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::PARTICLE, DustParticle);
+		DustParticle->Get_Transform()->Set_Pos(m_pTransformCom->m_vInfo[INFO_POS]);
+
         INFO.MonsterState = m_pStateArray[DEAD];
         INFO.MonsterState->Initialize(this);
         INFO.bDead = false;

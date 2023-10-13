@@ -444,7 +444,7 @@ void CLobbyStage::Admin_KeyInput()
 		m_bAdminSwitch = false;
 	}
 
-	if (Engine::Get_DIKeyState(DIK_F10) & 0x80 && m_bAdminSwitch)
+	if (Engine::Get_DIKeyState(DIK_M) & 0x80 && m_bAdminSwitch)
 	{
 		CLoadingStage1* pScene = nullptr;
 		pScene = CLoadingStage1::Create(m_pGraphicDev, SCENETAG::BOSS_STAGE);

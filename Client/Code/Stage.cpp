@@ -10,6 +10,9 @@
 #include <sstream>
 #include <utility>
 #include "MonsterBombEffect.h"
+#include "MBulletBombEffect.h"
+#include "MBulletExplosion.h"
+
 #include "FootRay.h"
 
 #include "LoadingStage1.h"
@@ -55,7 +58,7 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 
 	if (m_bReadyCube)
 	{
-		//Octree()->Update_Octree();
+		Octree()->Update_Octree();
 	}
 
 	m_fAdminTick += fTimeDelta;
@@ -86,10 +89,10 @@ void CStage::LateUpdate_Scene()
 
 void CStage::Render_Scene()
 {
-	//if (m_bReadyCube)
-	//{
-	//	Octree()->Render_Octree(m_pGraphicDev);
-	//}
+	if (m_bReadyCube)
+	{
+		Octree()->Render_Octree(m_pGraphicDev);
+	}
 	//Debug
 
 }
@@ -251,8 +254,17 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		pGameObject = CMonsterBombEffect::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::EFFECT, pGameObject), E_FAIL);
+
+		pGameObject = CMBulletBombEffect::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::EFFECT, pGameObject), E_FAIL);
+
 		//ÆÄÆ¼Å¬
-		pGameObject = CDustGrey::Create(m_pGraphicDev, _vec3(50.f, 10.f, 25.f), 256);
+		pGameObject = CDustGrey::Create(m_pGraphicDev, _vec3(0.f, 0.f, 0.f), 256);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::PARTICLE, pGameObject), E_FAIL);
+
+		pGameObject = CMBulletExplosion::Create(m_pGraphicDev, _vec3(0.f, 0.f, 0.f), 256);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::PARTICLE, pGameObject), E_FAIL);
 	}
@@ -629,7 +641,7 @@ void CStage::Admin_KeyInput()
 		m_bAdminSwitch = false;
 	}
 
-	if (Engine::Get_DIKeyState(DIK_F10) & 0x80 && m_bAdminSwitch)
+	if (Engine::Get_DIKeyState(DIK_M) & 0x80 && m_bAdminSwitch)
 	{
 		CLoadingStage1* pScene = nullptr;
 		pScene = CLoadingStage1::Create(m_pGraphicDev, SCENETAG::LOBBY);

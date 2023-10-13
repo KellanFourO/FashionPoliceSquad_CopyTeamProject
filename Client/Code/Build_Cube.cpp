@@ -93,6 +93,13 @@ _int CBuild_Cube::Update_GameObject(const _float& fTimeDelta)
 
 void CBuild_Cube::LateUpdate_GameObject()
 {
+	auto& mapSceneTemp = Engine::Management()->Get_MapScene();
+	for (auto& iter : mapSceneTemp)
+	{
+		if (iter.second == Engine::Management()->Get_Scene())
+			m_NowScene = iter.first;
+	}
+
 	__super::LateUpdate_GameObject();
 }
 
@@ -120,11 +127,22 @@ HRESULT CBuild_Cube::SetUp_Meterial()
 	D3DMATERIAL9 tMtrl;
 	ZeroMemory(&tMtrl, sizeof(D3DMATERIAL9));
 
-	tMtrl.Diffuse = { 1.f, 1.f, 1.f, 1.f };
-	tMtrl.Specular = { 1.f, 1.f, 1.f, 1.f };
-	tMtrl.Ambient = { 1.f, 1.f, 1.f, 1.0f };  //마지막 값 -> 알파채널(투명도)
-	tMtrl.Emissive = { 0.1f, 0.1f, 0.1f, 0.1f };
-	tMtrl.Power = 0.f;
+	if (m_NowScene == SCENETAG::STAGE2)
+	{
+		tMtrl.Diffuse = { 1.f, 0.6f, 0.6f, 1.f };
+		tMtrl.Specular = { 1.f, 0.6f, 0.6f, 1.f };
+		tMtrl.Ambient = { 1.f, 0.6f, 0.6f, 1.0f };  //마지막 값 -> 알파채널(투명도)
+		tMtrl.Emissive = { 0.2f, 0.2f, 0.2f, 0.2f };
+		tMtrl.Power = 0.f;
+	}
+	else
+	{
+		tMtrl.Diffuse = { 1.f, 1.f, 1.f, 1.f };
+		tMtrl.Specular = { 1.f, 1.f, 1.f, 1.f };
+		tMtrl.Ambient = { 1.f, 1.f, 1.f, 1.0f };  //마지막 값 -> 알파채널(투명도)
+		tMtrl.Emissive = { 0.1f, 0.1f, 0.1f, 0.1f };
+		tMtrl.Power = 0.f;
+	}
 
 	m_pGraphicDev->SetMaterial(&tMtrl);
 
