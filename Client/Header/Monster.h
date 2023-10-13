@@ -58,7 +58,6 @@ public:
 	_float				Get_Length() { return D3DXVec3Length(&(m_pPlayerTransform->m_vInfo[INFO_POS] - m_pTransformCom->m_vInfo[INFO_POS]));}
 
 
-
 	void				Set_Info(Mob_INFO _INFO);
 	HRESULT				Set_HP();
 	void				Set_Pos(_vec3 _vPos);
@@ -87,9 +86,8 @@ public:
 protected:
 	HRESULT				Add_Component();
 
-
-
 protected:
+
 	//CRcTex*					m_pBufferCom = nullptr;
 	CSYTex*					m_pBufferCom = nullptr;
 	CTexture*				m_pTextureCom = nullptr; // 텍스쳐 컴포넌트
@@ -101,10 +99,12 @@ protected:
 	_float					m_fFrame = 0;
 	_float					m_fVerDevide = 0.f;
 	_float					m_fHorDevide = 0.f;
+	_int					m_iTextureIndex = 0;
 
 	_float					m_fAnimateTime = 0;
 	_float					m_fHitTime = 0;
 	_float					m_fAttackTime = 0;
+
 
 
 	vector<CGameObject*>	m_AttackVector;

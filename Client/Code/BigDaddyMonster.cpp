@@ -101,7 +101,13 @@ void CBigDaddyMonster::Render_GameObject()
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 
-	INFO.MonsterState->Render(this);
+	if (INFO.bHit)
+		m_iTextureIndex = 1;
+	else
+		m_iTextureIndex = 0;
+
+	m_pTextureCom->Render_Textrue(m_iTextureIndex);
+	m_pBufferCom->Render_Buffer(INFO.MonsterState->Get_CurFrame(), INFO.MonsterState->Get_Ver());
 
 }
 

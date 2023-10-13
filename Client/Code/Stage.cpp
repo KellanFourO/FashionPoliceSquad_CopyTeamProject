@@ -120,7 +120,6 @@ HRESULT CStage::Ready_LightInfo()
 
 HRESULT CStage::Ready_Prototype()
 {
-
 	return S_OK;
 }
 

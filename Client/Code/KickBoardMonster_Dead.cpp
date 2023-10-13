@@ -19,6 +19,7 @@ void CKickBoardMonster_Dead::Initialize(CMonster* _Monster)
 	m_fMinFrame = 1.0f;
 	m_fMaxFrame = 2.0f;
 	m_fCurFrame = m_fMinFrame;
+	m_iVer = 4;
 
 }
 
@@ -48,6 +49,4 @@ void CKickBoardMonster_Dead::Release(CMonster* _Monster)
 
 void CKickBoardMonster_Dead::Render(CMonster* _Monster)
 {
-	m_pHost->Get_TextureCom()->Render_Textrue(0);
-	m_pHost->Get_BufferCom()->Render_Buffer(m_fCurFrame, 4);
 }

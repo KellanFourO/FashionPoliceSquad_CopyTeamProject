@@ -17,9 +17,12 @@ void CDullSuitMonster_Idle::Initialize(CMonster* _Monster)
 {
 	m_pHost = (_Monster);
 
+
 	m_fMinFrame = 1.0f;
 	m_fMaxFrame = 1.0f;
 	m_fCurFrame = m_fMinFrame;
+
+	m_iVer = 4;
 }
 
 CMonsterState* CDullSuitMonster_Idle::Update(CMonster* Monster, const float& fDetltaTime)
@@ -32,7 +35,7 @@ CMonsterState* CDullSuitMonster_Idle::Update(CMonster* Monster, const float& fDe
 	}
 
 	return nullptr;
-	
+
 }
 
 void CDullSuitMonster_Idle::LateUpdate(CMonster* _Monster)
@@ -45,14 +48,5 @@ void CDullSuitMonster_Idle::Release(CMonster* _Monster)
 
 void CDullSuitMonster_Idle::Render(CMonster* _Monster)
 {
-	if (m_pHost->Get_Info().bHit)
-	{
-		m_pHost->Get_TextureCom()->Render_Textrue(1);
-	}
-	else
-	{
-		m_pHost->Get_TextureCom()->Render_Textrue(0);
-	}
 
-	m_pHost->Get_BufferCom()->Render_Buffer(m_fCurFrame, 4);
 }

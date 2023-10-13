@@ -189,9 +189,10 @@ void CRecognitionRange::UI_Translate()
 
 	// 25 , 22  를기준으로 뭔가를 할 수 있을까? 완전 중앙 라인으로 잡힌다.
 
-	// 몬스터의 월드위치는 {x=24.8971157 y=4.05144262 z=27.8353844 }
+	//todo 몬스터의 월드위치는 {x=24.8971157 y=4.05144262 z=27.8353844 }
 	// 새로운 방법을 강구해야 한다.
 
+	// x/2
 
 	_float fScreenX = vScreenPos.x - WINCX * 0.5f;
 	_float fScreenY = -vScreenPos.y + WINCY * 0.5f;

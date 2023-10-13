@@ -39,6 +39,7 @@ HRESULT CMonster::Ready_GameObject()
 _int CMonster::Update_GameObject(const _float& fTimeDelta)
 {
 
+
 	if (INFO.bHit == true) {
 		m_fHitTime += fTimeDelta;
 	}
@@ -63,18 +64,15 @@ _int CMonster::Update_GameObject(const _float& fTimeDelta)
 	m_pCollider->SetCenterPos(m_pTransformCom->m_vInfo[INFO_POS]);
 	m_pRigidBody->Update_RigidBody(fTimeDelta);
 
-	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
-	__super::Update_GameObject(fTimeDelta);
 
+	__super::Update_GameObject(fTimeDelta);
+	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
 	return OBJ_NOEVENT;
 }
 
 void CMonster::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
-
-	//m_pUI_HPFrame->LateUpdate_GameObject();
-	//m_pUI_HPValue->LateUpdate_GameObject();
 }
 
 void CMonster::Render_GameObject()
