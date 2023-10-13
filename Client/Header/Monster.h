@@ -4,7 +4,9 @@
 //#include "..\Header\MonsterState.h"
 
 //TODO - ½Â¿ëÃß°¡
+
 #include "UI_RecognitionRange.h"
+
 
 class CMonsterState;
 class CBossState;
@@ -111,7 +113,8 @@ protected:
 	_bool					m_bLateInit = true;
 	_bool					m_bBillBoard = true;
 	//CMyUI*					m_pUI_HPFrame = nullptr;
-	//CMyUI*					m_pUI_HPValue = nullptr;
+
+
 	CRecognitionRange*		m_pUI_Recognition = nullptr;
 	CGameObject*			m_pMonsterBullet = nullptr;
 	CTransform*				m_pPlayerTransform = nullptr;

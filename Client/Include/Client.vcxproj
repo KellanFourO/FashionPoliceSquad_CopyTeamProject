@@ -270,6 +270,7 @@
     <ClInclude Include="..\Header\BigDaddyMonster_Idle.h" />
     <ClInclude Include="..\Header\MuzzlefFlash_Rifle.h" />
     <ClInclude Include="..\Header\MuzzleFlash.h" />
+    <ClInclude Include="..\Header\UI_MonsterHPBar.h" />
     <ClInclude Include="..\Header\UI_MyCard.h" />
     <ClInclude Include="..\Header\UI_MyCardTexture.h" />
     <ClInclude Include="..\Header\UI_MyDialog.h" />
@@ -428,6 +429,7 @@
     <ClCompile Include="..\Code\BigDaddyMonster_Dead.cpp" />
     <ClCompile Include="..\Code\BigDaddyMonster_Idle.cpp" />
     <ClCompile Include="..\Code\MuzzleFlash.cpp" />
+    <ClCompile Include="..\Code\UI_MonsterHPBar.cpp" />
     <ClCompile Include="..\Code\UI_MyCard.cpp" />
     <ClCompile Include="..\Code\UI_MyCardTexture.cpp" />
     <ClCompile Include="..\Code\UI_MyDialog.cpp" />

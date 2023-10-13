@@ -912,6 +912,9 @@
     <ClInclude Include="..\Header\PlayerBullet.h">
       <Filter>02. GameObject\07. Bullet\00.PlayerBullet</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\UI_MonsterHPBar.h">
+      <Filter>02. GameObject\20.UI\06. HPBar</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1399,6 +1402,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\Rifle_Bullet1.cpp">
       <Filter>02. GameObject\07. Bullet\00.PlayerBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_MonsterHPBar.cpp">
+      <Filter>02. GameObject\20.UI\06. HPBar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

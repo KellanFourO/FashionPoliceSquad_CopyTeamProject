@@ -1,48 +1,57 @@
 #include "stdafx.h"
-#include "UI_HPBarValue.h"
+#include "UI_MonsterHPBar.h"
 
 #include "Export_Utility.h"
 #include "Export_System.h"
 
 
-CHPBarValue::CHPBarValue(LPDIRECT3DDEVICE9 pGraphicDev)
+CMonsterHPBar::CMonsterHPBar(LPDIRECT3DDEVICE9 pGraphicDev)
 	:Engine::CGameObject(pGraphicDev)
 {
 	ZeroMemory(&m_tInfo, sizeof(UIDATA));
 }
 
-CHPBarValue::CHPBarValue(const CHPBarValue& rhs)
+CMonsterHPBar::CMonsterHPBar(const CMonsterHPBar& rhs)
 	: Engine::CGameObject(rhs)
 {
 }
 
-CHPBarValue::~CHPBarValue()
+CMonsterHPBar::~CMonsterHPBar()
 {
 }
 
-HRESULT Engine::CHPBarValue::Ready_GameObject()
+HRESULT Engine::CMonsterHPBar::Ready_GameObject()
 {
-	D3DXMatrixIdentity(&m_matView);
-	D3DXMatrixOrthoLH(&m_matProj, WINCX, WINCY, 0.0f, 100.0f);
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_vPos = { 220.f, 580.f, 0.1f };
-	m_vScale = { 59.f, 4.f, 0.f };
+
+
+	m_vPos = { 1.f, 1.f, 0.1f };
+	m_vScale = { 4.f, 0.25f, 1.f };
 
 	m_pTransformCom->Set_Scale(m_vScale);
 	m_pTransformCom->Set_Pos(m_vPos);
 
 	m_pPlayer = Management()->Get_Player();
 
+
 	return S_OK;
 }
 
-Engine::_int Engine::CHPBarValue::Update_GameObject(const _float& fTimeDelta)
+Engine::_int Engine::CMonsterHPBar::Update_GameObject(const _float& fTimeDelta)
 {
-	Engine::Add_RenderGroup(RENDER_UI, this);
+	if (m_bLateInit)
+	{
+		m_pCamera = dynamic_cast<CNewFPSCamera*>(Management()->Get_ObjectList(LAYERTAG::CAMERA,OBJECTTAG::FPSCAMERA).back());
+		m_bLateInit = false;
+	}
 
-	_float fMaxHp = m_pPlayer->Get_INFO()->fMaxHP;
-	_float fCurHp = m_pPlayer->Get_INFO()->fHP;
+
+	Engine::Add_RenderGroup(RENDER_UI, this);
+	_int iExit = __super::Update_GameObject(fTimeDelta);
+
+	_float fMaxHp = m_pMonster->Get_Info().fMaxHP;
+	_float fCurHp = m_pMonster->Get_Info().fHP;
 
 	_float fRatio = fCurHp / fMaxHp;
 	_float fOrigin = m_vScale.x;
@@ -50,32 +59,35 @@ Engine::_int Engine::CHPBarValue::Update_GameObject(const _float& fTimeDelta)
 
 	_float fResult = fOrigin - fSecond;
 
-	m_pBufferCom->SetRatio(fRatio);
+	_vec3 vUItoPlayerDir;
+
+	vUItoPlayerDir = m_pPlayer->Get_Transform()->m_vInfo[INFO_POS] - m_pTransformCom->m_vInfo[INFO_POS];
+	D3DXVec3Normalize(&vUItoPlayerDir, &vUItoPlayerDir);
+	_float fAngle = atan2f(vUItoPlayerDir.x, vUItoPlayerDir.z);
+	m_pTransformCom->Set_Rotate(ROT_Y, fAngle + D3DX_PI);
 
 	m_pTransformCom->m_vScale.x = m_vScale.x * fRatio;
 	m_pTransformCom->m_vScale.y = m_vScale.y;
-	m_fX = m_vPos.x - fResult;
-	m_fY = m_vPos.y;
-	m_pTransformCom->m_vInfo[INFO_POS].x = m_fX - WINCX * 0.5f;
-	m_pTransformCom->m_vInfo[INFO_POS].y = -m_fY + WINCY * 0.5f;
+	m_pTransformCom->m_vScale.z = m_vScale.z;
 
-	_int iExit = __super::Update_GameObject(fTimeDelta);
-
+	m_pTransformCom->m_vInfo[INFO_POS].x = m_pMonster->Get_Transform()->m_vInfo[INFO_POS].x + fResult;
+	m_pTransformCom->m_vInfo[INFO_POS].y = m_pMonster->Get_Transform()->m_vInfo[INFO_POS].y + 5.f;
+	m_pTransformCom->m_vInfo[INFO_POS].z = m_pMonster->Get_Transform()->m_vInfo[INFO_POS].z;
 
 	return 0;
 }
 
-void Engine::CHPBarValue::LateUpdate_GameObject()
+void Engine::CMonsterHPBar::LateUpdate_GameObject()
 {
 	CGameObject::LateUpdate_GameObject();
 }
 
-void CHPBarValue::Render_GameObject()
+void CMonsterHPBar::Render_GameObject()
 {
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
 
+	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_pCamera->Get_View());
+	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_pCamera->Get_Proj());
 
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 
@@ -84,10 +96,8 @@ void CHPBarValue::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
 
-
 	m_pTextureCom->Render_Textrue();
 	m_pBufferCom->Render_Buffer();
-
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
@@ -95,7 +105,7 @@ void CHPBarValue::Render_GameObject()
 
 }
 
-HRESULT Engine::CHPBarValue::Add_Component()
+HRESULT Engine::CMonsterHPBar::Add_Component()
 {
 	CComponent* pComponent = nullptr;
 
@@ -107,7 +117,7 @@ HRESULT Engine::CHPBarValue::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].emplace(COMPONENTTAG::TRANSFORM, pComponent);
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_HPValueTexture"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_MonsterHPBarTexture"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
 
@@ -116,21 +126,21 @@ HRESULT Engine::CHPBarValue::Add_Component()
 }
 
 
-CHPBarValue* CHPBarValue::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CMonsterHPBar* CMonsterHPBar::Create(LPDIRECT3DDEVICE9 pGraphicDev, CMonster* _pMonster)
 {
-	CHPBarValue* pInstance = new CHPBarValue(pGraphicDev);
-
+	CMonsterHPBar* pInstance = new CMonsterHPBar(pGraphicDev);
+	pInstance->m_pMonster = _pMonster;
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
 		Safe_Release(pInstance);
 
-		MSG_BOX("HPBar Create Failed");
+		MSG_BOX("MonsterHPBar Create Failed");
 		return nullptr;
 	}
 	return pInstance;
 }
 
-void Engine::CHPBarValue::Free()
+void Engine::CMonsterHPBar::Free()
 {
 	__super::Free();
 }

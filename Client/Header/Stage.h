@@ -116,7 +116,6 @@ private:
 
 	/////////////////////승용 함수, 변수/////////////////////////////////
 public:
-	HRESULT				Load_UI();
 	void				Admin_KeyInput();
 
 

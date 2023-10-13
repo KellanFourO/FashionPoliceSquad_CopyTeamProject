@@ -4,7 +4,7 @@
 #include "Monster.h"
 #include "BrifCase.h"
 #include "Player.h"
-
+#include "UI_MonsterHPBar.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
 
@@ -29,12 +29,7 @@ HRESULT CMonster::Ready_GameObject()
 {
 	Set_ObjectTag(OBJECTTAG::MONSTER);
 
-	// TODO - 승용 추가
-	//if (Set_HP() == E_FAIL)
-	//{
-	//	MSG_BOX("승용 몬스터 HP 에러");
-	//}
-	// TODO - 승용 추가 종료
+
 
 
 
@@ -218,6 +213,13 @@ void CMonster::Init_PlayerTransform()
 	{
 		m_pPlayerTransform = dynamic_cast<CTransform*>(Management()->Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
 		m_bLateInit = false;
+
+		// TODO - 승용 추가
+		if (Set_HP() == E_FAIL)
+		{
+			MSG_BOX("승용 몬스터 HP 에러");
+		}
+		// TODO - 승용 추가 종료
 	}
 }
 
@@ -281,24 +283,12 @@ void CMonster::StateMachine(const _float& fTimeDelta)
 
 HRESULT CMonster::Set_HP()
 {
-	//m_pUI_HPFrame = CUIMgr::GetInstance()->Get_UI_Clone(L"HP_Monster.png");
-	//m_pUI_HPValue = CUIMgr::GetInstance()->Get_UI_Clone(L"VALUE_Monster.png");
-	//
-	////m_pUI_Recognition = CRecognitionRange::Create(m_pGraphicDev, this);
-	//
-	//m_pUI_HPFrame->Set_Target(this);
-	//m_pUI_HPValue->Set_Target(this);
-	//
-	//_float fRatio = 5.f;
-	//_float fFrame = 5.1f;
-	//m_pUI_HPFrame->Set_ScaleRatio(fFrame);
-	//m_pUI_HPValue->Set_ScaleRatio(fRatio);
-
-
-	int i = 0;
-
-	//if (!m_pUI_HPValue || !m_pUI_HPFrame)
-	//	return E_FAIL;
+	CMonsterHPBar* pHpBar = CMonsterHPBar::Create(m_pGraphicDev,this);
+	//pHpBar->Set_ObjectTag(OBJECTTAG::UI);
+	if(pHpBar)
+	Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::UI, pHpBar);
+	else
+	return E_FAIL;
 
 	return S_OK;
 }

@@ -137,6 +137,9 @@ _uint CLoading::Loading_For_Stage()
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_HPFrameTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HP_BAR/HP_Frame.png")), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_HPValueTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HP_BAR/VALUE_Player.png")), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_HPMarkTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HP_BAR/Hp_Mark.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_MonsterHPBarTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HP_BAR/VALUE_Monster1.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_MonsterHPFrameTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HP_BAR/HP_Monster.png")), E_FAIL);
+
 
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ShieldFrameTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HP_BAR/HP_Shield.png")), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ShieldValueTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HP_BAR/UI_49.png")), E_FAIL);
