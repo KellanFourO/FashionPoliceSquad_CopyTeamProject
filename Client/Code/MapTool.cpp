@@ -58,16 +58,16 @@ _int CMapTool::Update_Scene(const _float& fTimeDelta)
         Load_Cube(L"../Bin/Data/Map/MapData");
         CImGuiManager::GetInstance()->Set_Load_Check();
     }
-	if (CImGuiManager::GetInstance()->Get_OBJLoad_Check() == true)
-	{
-		Load_Obj(L"../Bin/Data/OBJ/OBJData");
-		CImGuiManager::GetInstance()->Set_OBJLoad_Check();
-	}
-	if (CImGuiManager::GetInstance()->Get_CPOINT_Load_Check() == true)
-	{
-		Load_CPoint(L"../Bin/Data/CPoint/CPointData");
-		CImGuiManager::GetInstance()->Set_CPOINT_Load_Check();
-	}
+    else if (CImGuiManager::GetInstance()->Get_OBJLoad_Check() == true)
+    {
+        Load_Obj(L"../Bin/Data/OBJ/OBJData");
+        CImGuiManager::GetInstance()->Set_OBJLoad_Check();
+    }
+    else if (CImGuiManager::GetInstance()->Get_CPOINT_Load_Check() == true)
+    {
+        Load_CPoint(L"../Bin/Data/CPoint/CPointData");
+        CImGuiManager::GetInstance()->Set_CPOINT_Load_Check();
+    }
 
     return iExit;
 }
@@ -181,11 +181,15 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
             {
                 m_Build_time_Check = true;
 
-				if (CImGuiManager::GetInstance()->Get_NotNormal_Check() == false)
-				{	m_fCubesize = { VTXITV, VTXITV, VTXITV };		}
+                if (CImGuiManager::GetInstance()->Get_NotNormal_Check() == false)
+                {
+                    m_fCubesize = { VTXITV, VTXITV, VTXITV };
+                }
 
-				else if (CImGuiManager::GetInstance()->Get_NotNormal_Check() == true)
-				{	CubeSize_Update();		}
+                else if (CImGuiManager::GetInstance()->Get_NotNormal_Check() == true)
+                {
+                    CubeSize_Update();
+                }
 
                 _vec3 CubeSize, ObjSize;
                 CubeSize = ObjSize = { m_fCubesize.fX, m_fCubesize.fY, m_fCubesize.fZ };
@@ -211,36 +215,40 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
                 }
             }
 
-			if ((CursorTemp.x > -1) && (CursorTemp.y > -1)
-				&& (CursorTemp.z > -1) && (m_Build_time_Check2 == false))
-			{
+            if ((CursorTemp.x > -1) && (CursorTemp.y > -1)
+                && (CursorTemp.z > -1) && (m_Build_time_Check2 == false))
+            {
                 m_Build_time_Check2 = true;
 
-				if (CImGuiManager::GetInstance()->Get_NotNormal_Check() == false)
-				{	m_fCubesize = { VTXITV, VTXITV, VTXITV };		}
+                if (CImGuiManager::GetInstance()->Get_NotNormal_Check() == false)
+                {
+                    m_fCubesize = { VTXITV, VTXITV, VTXITV };
+                }
 
-				else if (CImGuiManager::GetInstance()->Get_NotNormal_Check() == true)
-				{	CubeSize_Update();		}
+                else if (CImGuiManager::GetInstance()->Get_NotNormal_Check() == true)
+                {
+                    CubeSize_Update();
+                }
 
-				_vec3 CubeSize, ObjSize;
-				CubeSize = ObjSize = { m_fCubesize.fX, m_fCubesize.fY, m_fCubesize.fZ };
+                _vec3 CubeSize, ObjSize;
+                CubeSize = ObjSize = { m_fCubesize.fX, m_fCubesize.fY, m_fCubesize.fZ };
                 //이 녀석이 Build_OBJ에 해당될 경우
                 // + 큐브Type 또는 PlaneType 라는 타입을 선택한 상황인 경우
                 if ((CImGuiManager::GetInstance()->Get_OBJModeCheck() == true) &&
-                   ((CImGuiManager::GetInstance()->Get_CubeType() == true) ||
-                    (CImGuiManager::GetInstance()->Get_PlaneType() == true) ))
+                    ((CImGuiManager::GetInstance()->Get_CubeType() == true) ||
+                        (CImGuiManager::GetInstance()->Get_PlaneType() == true)))
                 {
                     m_iTextureNum2 = CImGuiManager::GetInstance()->Get_OBJTexNum();
                     OBJ_TYPE eTypeTemp = CImGuiManager::GetInstance()->Get_OBJType(); //어떤 타입의 OBJ?
                     OBJ_ATTRIBUTE eAttribute = CImGuiManager::GetInstance()->Get_OBJATTRIBUTE(); //어떤 속성의 OBJ?
                     _uint RotateCount = CImGuiManager::GetInstance()->Get_OBJ_RotateCountCW();
 
-					pGameObject = CBuild_Obj::Create(m_pGraphicDev, CursorTemp, m_iTextureNum2, ObjSize, RotateCount, m_iOBJIndex, eTypeTemp, eAttribute);
+                    pGameObject = CBuild_Obj::Create(m_pGraphicDev, CursorTemp, m_iTextureNum2, ObjSize, RotateCount, m_iOBJIndex, eTypeTemp, eAttribute);
 
-					NULL_CHECK_RETURN(pGameObject, E_FAIL);
-					FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
+                    NULL_CHECK_RETURN(pGameObject, E_FAIL);
+                    FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
 
-					m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
+                    m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
 
                     OBJTemp->vSize = ObjSize;
                     OBJTemp->eOBJ_TYPE = eTypeTemp;
@@ -277,13 +285,13 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
 //                         OBJTemp2 = new OBJData(*OBJTemp);
 //                         m_VecTrigger.push_back(OBJTemp2); //위에도 담기고 별도로 관리차원에서 여기도 담는 것
 //                     }
-					if (eAttribute == OBJ_ATTRIBUTE::MOVING_OBJ)
-					{
-						OBJTemp3 = new OBJData(*OBJTemp);
-						m_VecMoving.push_back(OBJTemp3); //상동
-					}
+                    if (eAttribute == OBJ_ATTRIBUTE::MOVING_OBJ)
+                    {
+                        OBJTemp3 = new OBJData(*OBJTemp);
+                        m_VecMoving.push_back(OBJTemp3); //상동
+                    }
 
-					if (eAttribute == OBJ_ATTRIBUTE::C_POINT_OBJ)
+                    if (eAttribute == OBJ_ATTRIBUTE::C_POINT_OBJ)
                     {
                         OBJ_C_POINT->defOBJData = *OBJTemp;
                         OBJ_C_POINT->eMonsterType = CImGuiManager::GetInstance()->Get_MonsterType();
@@ -306,26 +314,26 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
                 }
             }
 
-			if (m_Build_time_Check2 == true)
-			{
+            if (m_Build_time_Check2 == true)
+            {
                 m_Build_time2++;
 
-				if (m_Build_time2 >= 7)
-				{
+                if (m_Build_time2 >= 7)
+                {
                     m_Build_time2 = 0;
                     m_Build_time_Check2 = false;
-				}
-			}
+                }
+            }
         }
     }
 
-//
-// 	if (CImGuiManager::GetInstance()->Get_BuildModeCheck() == true) {
-// 		Safe_Delete(CubeTemp2);
-// 	}
-// 	else if (CImGuiManager::GetInstance()->Get_OBJModeCheck() == true) {
-//         Safe_Delete(OBJTemp);
-// 	}
+    //
+    // 	if (CImGuiManager::GetInstance()->Get_BuildModeCheck() == true) {
+    // 		Safe_Delete(CubeTemp2);
+    // 	}
+    // 	else if (CImGuiManager::GetInstance()->Get_OBJModeCheck() == true) {
+    //         Safe_Delete(OBJTemp);
+    // 	}
     return S_OK;
 }
 
@@ -396,129 +404,129 @@ HRESULT CMapTool::Load_Cube(const TCHAR* pFilePath)
 
 HRESULT CMapTool::Load_Obj(const TCHAR* pFilePath)
 {
-	//파일 개방해서 받아오기
-	string m_strText = "OBJData";
+    //파일 개방해서 받아오기
+    string m_strText = "OBJData";
 
-	HANDLE      hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+    HANDLE      hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
 
-	if (INVALID_HANDLE_VALUE == hFile)
-		return E_FAIL;
+    if (INVALID_HANDLE_VALUE == hFile)
+        return E_FAIL;
 
-	DWORD   dwByte = 0;
-	DWORD   dwStrByte = 0;
-	OBJData* pOBJ = nullptr;
+    DWORD   dwByte = 0;
+    DWORD   dwStrByte = 0;
+    OBJData* pOBJ = nullptr;
 
-	ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
-	pTag = new CHAR[dwStrByte];
+    ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
+    pTag = new CHAR[dwStrByte];
 
-	ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
-	m_strText = pTag;
+    ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
+    m_strText = pTag;
 
-	basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
+    basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
 
-	//저장된 데이터대로 큐브 동적할당해서 벡터에 담기
-	while (true)
-	{
+    //저장된 데이터대로 큐브 동적할당해서 벡터에 담기
+    while (true)
+    {
         pOBJ = new OBJData;
 
-		ReadFile(hFile, pOBJ, sizeof(OBJData), &dwByte, nullptr);
+        ReadFile(hFile, pOBJ, sizeof(OBJData), &dwByte, nullptr);
 
-		if (0 == dwByte)
-		{
-			Safe_Delete(pOBJ);
-			break;
-		}
+        if (0 == dwByte)
+        {
+            Safe_Delete(pOBJ);
+            break;
+        }
         m_VecOBJData.push_back(pOBJ);
-	}
-	CloseHandle(hFile);
+    }
+    CloseHandle(hFile);
 
-	Engine::CGameObject* pGameObject = nullptr;
+    Engine::CGameObject* pGameObject = nullptr;
 
-	//벡터 내용물만큼 실제 큐브 생성해 레이어에 담기
-	for (auto& iter : m_VecOBJData)
-	{
-		pGameObject = CBuild_Obj::Create(m_pGraphicDev, iter->vPos, iter->uiTextureNum, iter->vSize, iter->iRotateCount, m_iOBJIndex, iter->eOBJ_TYPE, iter->eOBJ_Attribute);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
+    //벡터 내용물만큼 실제 큐브 생성해 레이어에 담기
+    for (auto& iter : m_VecOBJData)
+    {
+        pGameObject = CBuild_Obj::Create(m_pGraphicDev, iter->vPos, iter->uiTextureNum, iter->vSize, iter->iRotateCount, m_iOBJIndex, iter->eOBJ_TYPE, iter->eOBJ_Attribute);
+        NULL_CHECK_RETURN(pGameObject, E_FAIL);
+        FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
         m_iOBJIndex++;
-	}
-	m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
+    }
+    m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
 
-	delete[] pTag;
-	pTag = nullptr;
+    delete[] pTag;
+    pTag = nullptr;
 
     if (m_VecTempCube.empty())
-		m_VecTempCube = CImGuiManager::GetInstance()->Get_CubeTextureObjVector();
+        m_VecTempCube = CImGuiManager::GetInstance()->Get_CubeTextureObjVector();
 
     if (m_VecTempPlane.empty())
-		m_VecTempPlane = CImGuiManager::GetInstance()->Get_PlaneTextureObjVector();
+        m_VecTempPlane = CImGuiManager::GetInstance()->Get_PlaneTextureObjVector();
 
-	MSG_BOX("Load Complete.");
-	return S_OK;
+    MSG_BOX("Load Complete.");
+    return S_OK;
 }
 
 HRESULT CMapTool::Load_CPoint(const TCHAR* pFilePath)
 {
-	//파일 개방해서 받아오기
-	string m_strText = "CPointData";
+    //파일 개방해서 받아오기
+    string m_strText = "CPointData";
 
-	HANDLE      hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+    HANDLE      hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
 
-	if (INVALID_HANDLE_VALUE == hFile)
-		return E_FAIL;
+    if (INVALID_HANDLE_VALUE == hFile)
+        return E_FAIL;
 
-	DWORD   dwByte = 0;
-	DWORD   dwStrByte = 0;
+    DWORD   dwByte = 0;
+    DWORD   dwStrByte = 0;
     C_POINT* pOBJ = nullptr;
 
-	ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
-	pTag = new CHAR[dwStrByte];
+    ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
+    pTag = new CHAR[dwStrByte];
 
-	ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
-	m_strText = pTag;
+    ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
+    m_strText = pTag;
 
-	basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
+    basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
 
-	//저장된 데이터대로 동적할당해서 벡터에 담기
-	while (true)
-	{
-		pOBJ = new C_POINT;
+    //저장된 데이터대로 동적할당해서 벡터에 담기
+    while (true)
+    {
+        pOBJ = new C_POINT;
 
-		ReadFile(hFile, pOBJ, sizeof(C_POINT), &dwByte, nullptr);
+        ReadFile(hFile, pOBJ, sizeof(C_POINT), &dwByte, nullptr);
 
-		if (0 == dwByte)
-		{
-			Safe_Delete(pOBJ);
-			break;
-		}
+        if (0 == dwByte)
+        {
+            Safe_Delete(pOBJ);
+            break;
+        }
         m_VecCreatePoint.push_back(pOBJ);
-	}
-	CloseHandle(hFile);
+    }
+    CloseHandle(hFile);
 
-	Engine::CGameObject* pGameObject = nullptr;
+    Engine::CGameObject* pGameObject = nullptr;
 
-	//벡터 내용물만큼 실제 생성해 레이어에 담기
-	for (auto& iter : m_VecCreatePoint)
-	{
-		pGameObject = CBuild_Obj::Create(m_pGraphicDev, iter->defOBJData.vPos, iter->defOBJData.uiTextureNum,
+    //벡터 내용물만큼 실제 생성해 레이어에 담기
+    for (auto& iter : m_VecCreatePoint)
+    {
+        pGameObject = CBuild_Obj::Create(m_pGraphicDev, iter->defOBJData.vPos, iter->defOBJData.uiTextureNum,
             iter->defOBJData.vSize, iter->defOBJData.iRotateCount, m_iOBJIndex, iter->defOBJData.eOBJ_TYPE, iter->defOBJData.eOBJ_Attribute);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
-		m_iOBJIndex++;
-	}
-	m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
+        NULL_CHECK_RETURN(pGameObject, E_FAIL);
+        FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
+        m_iOBJIndex++;
+    }
+    m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
 
-	delete[] pTag;
-	pTag = nullptr;
+    delete[] pTag;
+    pTag = nullptr;
 
-	if (m_VecTempCube.empty())
-		m_VecTempCube = CImGuiManager::GetInstance()->Get_CubeTextureObjVector();
+    if (m_VecTempCube.empty())
+        m_VecTempCube = CImGuiManager::GetInstance()->Get_CubeTextureObjVector();
 
-	if (m_VecTempPlane.empty())
-		m_VecTempPlane = CImGuiManager::GetInstance()->Get_PlaneTextureObjVector();
+    if (m_VecTempPlane.empty())
+        m_VecTempPlane = CImGuiManager::GetInstance()->Get_PlaneTextureObjVector();
 
-	MSG_BOX("Load Complete.");
-	return S_OK;
+    MSG_BOX("Load Complete.");
+    return S_OK;
 }
 
 
@@ -644,38 +652,38 @@ HRESULT CMapTool::Delete_Map()
 
             if (bOBJ_DeleteCheck == true)
             {
-//                 if (!m_VecTrigger.empty())
-//                 {
-//                     for (auto& iter = m_VecTrigger.begin(); iter != m_VecTrigger.end();)
-//                     {
-//                         if ((*iter)->iIndex == IndexTemp)
-//                         {
-//                             delete* iter;
-//                             iter = m_VecTrigger.erase(iter);
-//                             bOBJ_DeleteCheck = false;
-//                         }
-//                         else
-//                         {
-//                             ++iter;
-//                         }
-//                     }
-//                 }
-				if (!m_VecMoving.empty())
-				{
-					for (auto& iter = m_VecMoving.begin(); iter != m_VecMoving.end();)
-					{
-						if ((*iter)->iIndex == IndexTemp)
-						{
-							delete* iter;
-							iter = m_VecMoving.erase(iter);
-							bOBJ_DeleteCheck = false;
-						}
-						else
-						{
-							++iter;
-						}
-					}
-				}
+                //                 if (!m_VecTrigger.empty())
+                //                 {
+                //                     for (auto& iter = m_VecTrigger.begin(); iter != m_VecTrigger.end();)
+                //                     {
+                //                         if ((*iter)->iIndex == IndexTemp)
+                //                         {
+                //                             delete* iter;
+                //                             iter = m_VecTrigger.erase(iter);
+                //                             bOBJ_DeleteCheck = false;
+                //                         }
+                //                         else
+                //                         {
+                //                             ++iter;
+                //                         }
+                //                     }
+                //                 }
+                if (!m_VecMoving.empty())
+                {
+                    for (auto& iter = m_VecMoving.begin(); iter != m_VecMoving.end();)
+                    {
+                        if ((*iter)->iIndex == IndexTemp)
+                        {
+                            delete* iter;
+                            iter = m_VecMoving.erase(iter);
+                            bOBJ_DeleteCheck = false;
+                        }
+                        else
+                        {
+                            ++iter;
+                        }
+                    }
+                }
             }
         }
         int i = 0;
