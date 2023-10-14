@@ -34,10 +34,9 @@ private:
 	HRESULT				Build_Map();
 	HRESULT				Delete_Map();
 
-	HRESULT				Load_Cube(const TCHAR* pFilePath);
-	HRESULT				Load_Obj(const TCHAR* pFilePath);
-	HRESULT				Load_CPoint(const TCHAR* pFilePath);
-	HRESULT				Load_Trigger(const TCHAR* pFilePath);
+	HRESULT				Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag);
+	HRESULT				Load_Data_C_T(const TCHAR* pFilePath, OBJECTTAG eTag);
+
 	bool				CheckDuplicateCube(const _vec3& pPos, const _vec3& pSize);
 
 public:
@@ -50,7 +49,7 @@ public:
 	vector<TRIGGER*>&	Get_VecTrigger() { return m_TriggerData; }
 	void				Set_VecTrigger(vector<TRIGGER*>* pVecTRData) { m_TriggerData = *pVecTRData; }
 
-	vector<OBJData*>&	Get_VecMoving()  { return m_VecMoving; }
+	vector<OBJData*>&	Get_VecLight()  { return m_VecLight; }
 	vector<C_POINT*>&	Get_VecCreatePoint() { return m_VecCreatePoint; }
 
 	void				Cursor_Update();
@@ -65,9 +64,10 @@ private:
 	vector<IDirect3DCubeTexture9*> m_VecTempCube;
 	vector<IDirect3DBaseTexture9*> m_VecTempPlane;
 
-	//트리거, Create Point 용 벡터 컨테이너
-	vector<OBJData*>			   m_VecMoving;
+	//Create Point 용 벡터 컨테이너
 	vector<C_POINT*>			   m_VecCreatePoint;
+	// 조명 
+	vector<OBJData*>			   m_VecLight;
 
 	CLayer*				m_pLayer				= nullptr;
 	CLayer*				m_pGLayer				= nullptr;

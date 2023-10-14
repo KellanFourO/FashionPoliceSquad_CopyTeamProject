@@ -101,7 +101,7 @@ HRESULT CStage::Ready_LightInfo()
 {
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 	//mainApp 말고 stage-Maptool 단에서 켜기
-	m_pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, TRUE);
+	//m_pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, TRUE);
 
 	D3DLIGHT9 tLightInfo;
 	ZeroMemory(&tLightInfo, sizeof(D3DLIGHT9));
@@ -143,7 +143,7 @@ HRESULT CStage::Ready_Layer_Environment(LAYERTAG eLayerTag)
 
 	Load_Data(L"../Bin/Data/Map/MapData", OBJECTTAG::BUILD_CUBE);		// 큐브텍스
 	Load_Data(L"../Bin/Data/OBJ/OBJData", OBJECTTAG::BUILD_OBJ);		//TODO 얘는 섞여있다 큐브텍스랑 rcTEXT
-	Load_Data_C(L"../Bin/Data/CPoint/CPointData", OBJECTTAG::BUILD_OBJ); //TODO 큐브텍스
+	//Load_Data_C_T(L"../Bin/Data/CPoint/CPointData", OBJECTTAG::BUILD_OBJ); //TODO
 	
 	m_mapLayer.insert({ eLayerTag, m_pLayer });
 
@@ -269,10 +269,10 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::PARTICLE, pGameObject), E_FAIL);
 	}
 
+	//Load_Data_C_T(L"../Bin/Data/Trigger/TriggerData", OBJECTTAG::TRIGGER); //TODO 트리거
+
 	m_mapLayer.insert({ eLayerTag, pLayer });
 
-	Load_Data_T(L"../Bin/Data/Trigger/TriggerData", OBJECTTAG::TRIGGER); //TODO 트리거
-	
 	return S_OK;
 }
 
@@ -377,6 +377,7 @@ HRESULT CStage::Ready_Layer_UI(LAYERTAG eLayerTag)
 
 
 
+
 	m_mapLayer.insert({ eLayerTag, pLayer });
 
 	//승용
@@ -397,28 +398,25 @@ HRESULT CStage::Ready_Layer_UI(LAYERTAG eLayerTag)
 
 HRESULT CStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 {
+	HANDLE		hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+	if (INVALID_HANDLE_VALUE == hFile) { return E_FAIL; }
+
+	DWORD   dwByte = 0;
+	DWORD   dwStrByte = 0;
+	CHAR* pTag = new CHAR[dwStrByte];
+
+
 	if (eTag == OBJECTTAG::BUILD_CUBE) {
-		//파일 개방해서 받아오기
 		string m_strText = "MapData";
-		HANDLE		hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
-
-		if (INVALID_HANDLE_VALUE == hFile)
-			return E_FAIL;
-
-		DWORD   dwByte = 0;
-		DWORD   dwStrByte = 0;
 		CUBE* pCube = nullptr;
 
 		ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
-		CHAR* pTag = new CHAR[dwStrByte];
-
 		ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
 		m_strText = pTag;
 
 		basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
 		const _tchar* aa = converted.c_str();
 
-		//저장된 데이터대로 큐브 동적할당해서 벡터에 담기
 		while (true)
 		{
 			pCube = new CUBE;
@@ -436,7 +434,6 @@ HRESULT CStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 
 		Engine::CGameObject* pGameObject = nullptr;
 
-		//벡터 내용물만큼 실제 큐브 생성해 레이어에 담기
 		for (auto& iter : m_VecCubeData)
 		{
 			pGameObject = CBuild_Cube::Create(m_pGraphicDev, iter->vPos, iter->uITextureNum, iter->vSize, m_iCubeIndex);
@@ -446,34 +443,21 @@ HRESULT CStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 			m_iCubeIndex++;
 
 		}
-		m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
-
-		delete[] pTag;
-		pTag = nullptr;
+		m_mapLayer.emplace(LAYERTAG::ENVIRONMENT, m_pLayer);
 	}
 
+	OBJData* LightTemp = nullptr;
+
 	if (eTag == OBJECTTAG::BUILD_OBJ) {
-		//파일 개방해서 받아오기
 		string m_strText = "OBJData";
-
-		HANDLE      hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
-
-		if (INVALID_HANDLE_VALUE == hFile)
-			return E_FAIL;
-
-		DWORD   dwByte = 0;
-		DWORD   dwStrByte = 0;
 		OBJData* pOBJ = nullptr;
 
 		ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
-		CHAR* pTag = new CHAR[dwStrByte];
-
 		ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
 		m_strText = pTag;
 
 		basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
 
-		//저장된 데이터대로 OBJ 동적할당해서 벡터에 담기
 		while (true)
 		{
 			pOBJ = new OBJData;
@@ -491,137 +475,124 @@ HRESULT CStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 
 		Engine::CGameObject* pGameObject = nullptr;
 
-		//벡터 내용물만큼 실제 OBJ 생성해 레이어에 담기
 		for (auto& iter : m_VecOBJData)
 		{
 			pGameObject = CBuild_Obj::Create(m_pGraphicDev, iter->vPos, iter->uiTextureNum, iter->vSize, iter->iRotateCount, m_iOBJIndex, iter->eOBJ_TYPE, iter->eOBJ_Attribute);
 			NULL_CHECK_RETURN(pGameObject, E_FAIL);
 			FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
+
+			if (iter->eOBJ_Attribute == OBJ_ATTRIBUTE::LIGHT_OBJ)
+			{
+				OBJData* LightTemp = new OBJData;
+				LightTemp = iter;
+				m_VecLight.push_back(LightTemp);
+			}
+
 			m_iOBJIndex++;
 		}
-		m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
-
-		delete[] pTag;
-		pTag = nullptr;
+		m_mapLayer.emplace(LAYERTAG::ENVIRONMENT, m_pLayer);
 	}
+
+	delete[] pTag;
+	pTag = nullptr;
+
+	delete LightTemp;
+	LightTemp = nullptr;
 
 	return S_OK;
 }
 
-HRESULT CStage::Load_Data_C(const TCHAR* pFilePath, OBJECTTAG eTag)
-{
-	//파일 개방해서 받아오기
-	string m_strText = "CPointData";
 
+HRESULT CStage::Load_Data_C_T(const TCHAR* pFilePath, OBJECTTAG eTag)
+{
 	HANDLE      hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
 
-	if (INVALID_HANDLE_VALUE == hFile)
-		return E_FAIL;
+	if (INVALID_HANDLE_VALUE == hFile) { return E_FAIL; }
 
 	DWORD   dwByte = 0;
 	DWORD   dwStrByte = 0;
-	C_POINT* pOBJ = nullptr;
-
-	ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
 	CHAR* pTag = new CHAR[dwStrByte];
 
-	ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
-	m_strText = pTag;
 
-	basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
+	if (eTag == OBJECTTAG::BUILD_OBJ) {
+		string m_strText = "CPointData";
 
-	//저장된 데이터대로 동적할당해서 벡터에 담기
-	while (true)
-	{
-		pOBJ = new C_POINT;
+		C_POINT* pOBJ = nullptr;
 
-		ReadFile(hFile, pOBJ, sizeof(C_POINT), &dwByte, nullptr);
+		ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
+		ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
+		m_strText = pTag;
 
-		if (0 == dwByte)
+		basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
+
+		while (true)
 		{
-			Safe_Delete(pOBJ);
-			break;
+			pOBJ = new C_POINT;
+			ReadFile(hFile, pOBJ, sizeof(C_POINT), &dwByte, nullptr);
+
+			if (0 == dwByte)
+			{
+				Safe_Delete(pOBJ);
+				break;
+			}
+			m_VecCreatePoint.push_back(pOBJ);
 		}
-		m_VecCreatePoint.push_back(pOBJ);
+		CloseHandle(hFile);
+
+		Engine::CGameObject* pGameObject = nullptr;
+
+		for (auto& iter : m_VecCreatePoint)
+		{
+			pGameObject = CBuild_Obj::Create(m_pGraphicDev, iter->defOBJData.vPos, iter->defOBJData.uiTextureNum,
+				iter->defOBJData.vSize, iter->defOBJData.iRotateCount, m_iOBJIndex, iter->defOBJData.eOBJ_TYPE, iter->defOBJData.eOBJ_Attribute);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
+			m_iOBJIndex++;
+		}
+		m_mapLayer.emplace( LAYERTAG::ENVIRONMENT, m_pLayer );
 	}
-	CloseHandle(hFile);
+	if (eTag == OBJECTTAG::TRIGGER) {
+		string m_strText = "TriggerData";
+		TRIGGER* pTR = nullptr;
 
-	Engine::CGameObject* pGameObject = nullptr;
+		ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
+		ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
+		m_strText = pTag;
 
-	//벡터 내용물만큼 실제 생성해 레이어에 담기
-	for (auto& iter : m_VecCreatePoint)
-	{
-		pGameObject = CBuild_Obj::Create(m_pGraphicDev, iter->defOBJData.vPos, iter->defOBJData.uiTextureNum,
-			iter->defOBJData.vSize, iter->defOBJData.iRotateCount, m_iOBJIndex, iter->defOBJData.eOBJ_TYPE, iter->defOBJData.eOBJ_Attribute);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
-		m_iOBJIndex++;
+		basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
+
+		while (true)
+		{
+			pTR = new TRIGGER;
+
+			ReadFile(hFile, pTR, sizeof(TRIGGER), &dwByte, nullptr);
+
+			if (0 == dwByte)
+			{
+				Safe_Delete(pTR);
+				break;
+			}
+
+			m_TriggerDataTemp.push_back(pTR);
+		}
+		CloseHandle(hFile);
+
+		Engine::CGameObject* pGameObject = nullptr;
+
+		for (auto& iter : m_TriggerDataTemp)
+		{
+			pGameObject = CTrigger::Create(m_pGraphicDev, iter->vPos, iter->iIndex, iter->vSize, iter->eTrCase, iter->eTrType, iter->eTrName);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::TRIGGER, pGameObject), E_FAIL);
+		}
+		m_mapLayer.emplace(LAYERTAG::GAMELOGIC, m_pGLayer);
 	}
-	m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
-
 
 	delete[] pTag;
 	pTag = nullptr;
 
 	return S_OK;
 }
-
-HRESULT CStage::Load_Data_T(const TCHAR* pFilePath, OBJECTTAG eTag)
-{
-	//파일 개방해서 받아오기
-	string m_strText = "TriggerData";
-
-	HANDLE      hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
-
-	if (INVALID_HANDLE_VALUE == hFile)
-		return E_FAIL;
-
-	DWORD   dwByte = 0;
-	DWORD   dwStrByte = 0;
-	TRIGGER* pTR = nullptr;
-
-	ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
-	char* pTag = new CHAR[dwStrByte];
-
-	ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
-	m_strText = pTag;
-
-	basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
-
-	//저장된 데이터대로 동적할당해서 벡터에 담기
-	while (true)
-	{
-		pTR = new TRIGGER;
-
-		ReadFile(hFile, pTR, sizeof(TRIGGER), &dwByte, nullptr);
-
-		if (0 == dwByte)
-		{
-			Safe_Delete(pTR);
-			break;
-		}
-
-		m_TriggerDataTemp.push_back(pTR);
-	}
-	CloseHandle(hFile);
-
-	Engine::CGameObject* pGameObject = nullptr;
-
-	//벡터 내용물만큼 실제 생성해 레이어에 담기
-	for (auto& iter : m_TriggerDataTemp)
-	{
-		pGameObject = CTrigger::Create(m_pGraphicDev, iter->vPos, iter->iIndex, iter->vSize, iter->eTrCase, iter->eTrType, iter->eTrName);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::TRIGGER, pGameObject), E_FAIL);
-	}
-	m_mapLayer.emplace(LAYERTAG::GAMELOGIC, m_pGLayer);
-
-	delete[] pTag;
-	pTag = nullptr;
-
-	return S_OK;
-}
-
 
 // HRESULT CStage::Load_UI()
 // {
@@ -754,6 +725,6 @@ void CStage::Free()
 
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
-	m_pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, FALSE);
+	//m_pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, FALSE);
 	__super::Free();
 }

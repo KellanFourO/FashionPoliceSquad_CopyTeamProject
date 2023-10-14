@@ -86,7 +86,8 @@ private:
 	HRESULT				Ready_Layer_UI(LAYERTAG eLayerTag);
 
 private:
-	CLayer* m_pLayer = nullptr;
+	CLayer* m_pLayer = nullptr;  //Environment
+	CLayer* m_pGLayer = nullptr; //GameLogic
 	_bool	m_bLateInit = true;
 
 	//////////////////////유진 함수, 변수////////////////////////
@@ -98,6 +99,8 @@ public:
 	void				Set_VecOBJData(vector<OBJData*> pVecOBjData) { m_VecOBJData = pVecOBjData; }
 
 	virtual HRESULT		Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag);
+	HRESULT				Load_Data_C_T(const TCHAR* pFilePath, OBJECTTAG eTag);
+
 
 	vector<IDirect3DCubeTexture9*>& Get_VecTempCube() { return m_VecTempCube; }
 	vector<IDirect3DBaseTexture9*>& Get_VecTempPlane() { return m_VecTempPlane; }
@@ -106,6 +109,9 @@ private:
 	//BuildOBJ내에서 텍스쳐넘버 구분용으로 씀
 	vector<IDirect3DCubeTexture9*>	m_VecTempCube;
 	vector<IDirect3DBaseTexture9*>	m_VecTempPlane;
+
+	vector<C_POINT*>			    m_VecCreatePoint;
+	vector<TRIGGER*>			    m_TriggerDataTemp;
 
 	vector<OBJData*>				m_VecOBJData;
 	_uint							m_iOBJIndex = 0;
