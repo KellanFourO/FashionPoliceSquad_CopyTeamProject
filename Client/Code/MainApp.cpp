@@ -139,7 +139,7 @@ void CMainApp::Free()
 {
 
 	CEventMgr::GetInstance()->DestroyInstance();
-	//CImGuiManager::GetInstance()->DestroyInstance();
+	CImGuiManager::GetInstance()->DestroyInstance();
 
 	Safe_Release(m_pGraphicDev);
 	Safe_Release(m_pDeviceClass);

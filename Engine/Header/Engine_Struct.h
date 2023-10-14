@@ -135,6 +135,7 @@ namespace Engine
 		TRIGGER_NUMBER			eTrName;		//트리거 이름 열거체
 		_vec3					vSize;			//x, y, z 길이
 		_vec3					vPos;			//x, y, z 중점
+		_uint					iIndex;			
 		TRIGGER_CASE			eTrCase;		//한 번, 두 번, 반복 발동 중
 		TRIGGER_TYPE			eTrType;		//발동 시 어떤 반응을 만들어낼 것인지
 		TRIGGER_STATE			eTrSTATE;		//발동 전, 중, 후

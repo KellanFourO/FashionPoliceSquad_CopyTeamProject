@@ -610,7 +610,7 @@ HRESULT CStage::Load_Data_T(const TCHAR* pFilePath, OBJECTTAG eTag)
 	//벡터 내용물만큼 실제 생성해 레이어에 담기
 	for (auto& iter : m_TriggerDataTemp)
 	{
-		pGameObject = CTrigger::Create(m_pGraphicDev, iter->vPos, iter->vSize, iter->eTrCase, iter->eTrType, iter->eTrName);
+		pGameObject = CTrigger::Create(m_pGraphicDev, iter->vPos, iter->iIndex, iter->vSize, iter->eTrCase, iter->eTrType, iter->eTrName);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::TRIGGER, pGameObject), E_FAIL);
 	}

@@ -304,7 +304,9 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 						ImGui::RadioButton(u8"무빙 OBJ", &m_forObjAttribute, 6);
 						ImGui::SameLine();
 						ImGui::Text(TextNow2);
+						ImGui::RadioButton(u8"계단 OBJ", &m_forObjAttribute, 8);
 						ImGui::RadioButton(u8"단순 장식OBJ", &m_forObjAttribute, 7);
+
 
 						switch (m_forObjAttribute)
 						{
@@ -332,6 +334,10 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 						case 7:
 							m_eOBJ_Attribute = OBJ_ATTRIBUTE::MOVING_OBJ;
 							break;
+						case 8:
+							m_eOBJ_Attribute = OBJ_ATTRIBUTE::STAIR_OBJ;
+							break;
+
 
 						default:
 							m_eOBJ_Attribute = OBJ_ATTRIBUTE::NONE_OBJ;

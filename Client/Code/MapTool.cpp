@@ -140,7 +140,7 @@ HRESULT CMapTool::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 	Engine::CGameObject* pGameObject = nullptr;
 
 	// Trigger
-    Load_Trigger(L"../Bin/Data/Trigger/TriggerData");
+    //Load_Trigger(L"../Bin/Data/Trigger/TriggerData");
 
 	m_mapLayer.emplace(eLayerTag, pLayer);
 
@@ -248,7 +248,7 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
                     TRIGGER_TYPE		m_eTRType = CImGuiManager::GetInstance()->Get_ImGuiTriggerType();
 					TRIGGER_NUMBER		m_eTrName = CImGuiManager::GetInstance()->Get_ImGuiTriggerNumber();
 
-					pGameObject = CTrigger::Create(m_pGraphicDev, CursorTemp, CubeSize, m_eTRCase, m_eTRType, m_eTrName);
+					pGameObject = CTrigger::Create(m_pGraphicDev, CursorTemp, m_iTriggerIndex, CubeSize, m_eTRCase, m_eTRType, m_eTrName);
 
 					NULL_CHECK_RETURN(pGameObject, E_FAIL);
 					FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::TRIGGER, pGameObject), E_FAIL);
@@ -258,12 +258,14 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
                     TriggerTemp->eTrName = m_eTrName;
                     TriggerTemp->vSize = CubeSize;
                     TriggerTemp->vPos = CursorTemp;
+                    TriggerTemp->iIndex = m_iTriggerIndex;
                     TriggerTemp->eTrCase = m_eTRCase;
                     TriggerTemp->eTrType = m_eTRType;
                     TriggerTemp->eTrSTATE = TRIGGER_STATE::TR_BEFORE;
 
                     m_TriggerData.push_back(TriggerTemp);
                     CImGuiManager::GetInstance()->Set_TriggerReady_Check();
+                    ++m_iTriggerIndex;
 				}
             }
 
@@ -624,7 +626,7 @@ HRESULT CMapTool::Load_Trigger(const TCHAR* pFilePath)
 	//벡터 내용물만큼 실제 큐브 생성해 레이어에 담기
 	for (auto& iter : m_TriggerData)
 	{
-		pGameObject = CTrigger::Create(m_pGraphicDev, iter->vPos, iter->vSize, iter->eTrCase, iter->eTrType, iter->eTrName);
+		pGameObject = CTrigger::Create(m_pGraphicDev, iter->vPos, iter->iIndex, iter->vSize, iter->eTrCase, iter->eTrType, iter->eTrName);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::TRIGGER, pGameObject), E_FAIL);
 	}
@@ -679,6 +681,43 @@ HRESULT CMapTool::Delete_Map()
                             if (IndexTemp == VectorTemp[i]->Get_iIndex())
                             {
                                 m_pLayer->Delete_GameObject(OBJECTTAG::BUILD_CUBE, VectorTemp[i], IndexTemp);
+                                break;
+                            }
+                        }
+                    }
+
+                    //iter = m_VecCubeData.erase(iter);
+                }
+                else
+                {
+                    ++iter;
+                }
+            }
+        }
+
+        if (CImGuiManager::GetInstance()->Get_TriggerMode_Check() == true) {
+
+            for (auto iter = m_TriggerData.begin(); iter != m_TriggerData.end();)
+            {
+                if (fabsf((*iter)->vPos.x - CursorTemp.x) < VTXITV &&
+                    fabsf((*iter)->vPos.y - CursorTemp.y) < VTXITV &&
+                    fabsf((*iter)->vPos.z - CursorTemp.z) < VTXITV)
+                {
+                    IndexTemp = (*iter)->iIndex;
+
+                    delete* iter;
+                    //*iter = nullptr;
+                    iter = m_TriggerData.erase(iter);
+
+
+                    if (IndexTemp != -1) {
+                        auto& VectorTemp = Engine::Management()->GetInstance()->Get_Scene()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::TRIGGER);
+
+                        for (int i = 0; i < VectorTemp.size(); ++i)
+                        {
+                            if (IndexTemp == VectorTemp[i]->Get_iIndex())
+                            {
+                                m_pLayer->Delete_GameObject(OBJECTTAG::TRIGGER, VectorTemp[i], IndexTemp);
                                 break;
                             }
                         }
@@ -760,22 +799,6 @@ HRESULT CMapTool::Delete_Map()
 
             if (bOBJ_DeleteCheck == true)
             {
-                //                 if (!m_VecTrigger.empty())
-                //                 {
-                //                     for (auto& iter = m_VecTrigger.begin(); iter != m_VecTrigger.end();)
-                //                     {
-                //                         if ((*iter)->iIndex == IndexTemp)
-                //                         {
-                //                             delete* iter;
-                //                             iter = m_VecTrigger.erase(iter);
-                //                             bOBJ_DeleteCheck = false;
-                //                         }
-                //                         else
-                //                         {
-                //                             ++iter;
-                //                         }
-                //                     }
-                //                 }
                 if (!m_VecMoving.empty())
                 {
                     for (auto& iter = m_VecMoving.begin(); iter != m_VecMoving.end();)

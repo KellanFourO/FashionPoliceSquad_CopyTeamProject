@@ -91,14 +91,15 @@ void CTrigger::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
 
-CTrigger* CTrigger::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 pMouse_Pos, _vec3 Size,
-	TRIGGER_CASE eCase, TRIGGER_TYPE eType, TRIGGER_NUMBER eTrName)
+CTrigger* CTrigger::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 pMouse_Pos, _uint iIndex, 
+	_vec3 Size, TRIGGER_CASE eCase, TRIGGER_TYPE eType, TRIGGER_NUMBER eTrName)
 {
 	CTrigger* pInstance = new CTrigger(pGraphicDev);
 
 	pInstance->Set_TR_CASE(eCase);
 	pInstance->Set_TR_TYPE(eType);
 	pInstance->Set_TR_NUMBER(eTrName);
+	pInstance->Set_IndexNumber(iIndex);
 
 	if (FAILED(pInstance->Ready_GameObject(pMouse_Pos, Size)))
 	{
