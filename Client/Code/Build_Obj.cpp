@@ -143,7 +143,7 @@ _int CBuild_Obj::Update_GameObject(const _float& fTimeDelta)
 		Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
 
 
-		if (m_eAttribute == OBJ_ATTRIBUTE::BILL_OBJ)
+		if (m_eAttribute == OBJ_ATTRIBUTE::BILL_OBJ || m_eAttribute == OBJ_ATTRIBUTE::LIGHT_OBJ)
 	 	{
 			Init_PlayerTransform();
 			if (m_pPlayerTransform && m_bBillBoard)

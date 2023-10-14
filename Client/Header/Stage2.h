@@ -68,11 +68,14 @@ private:
 	HRESULT				Ready_Layer_UI(LAYERTAG eLayerTag);
 
 	HRESULT				Add_Light();
+	HRESULT				Light_OnOff_Check();
 
 private:
 	CLayer*				m_pLayer = nullptr;  //Environment
 	CLayer*				m_pGLayer = nullptr; //GameLogic
 	
+	CGameObject*		m_pPlayer = nullptr;
+	CTransform* m_pPlayerTransform = nullptr;
 	_bool				m_bLateInit = true;
 
 	//////////////////////유진 함수, 변수////////////////////////
@@ -91,6 +94,8 @@ public:
 	vector<IDirect3DBaseTexture9*>& Get_VecTempPlane() { return m_VecTempPlane; }
 
 private:
+	OBJData*						m_Starting_Point = nullptr;
+
 	//BuildOBJ내에서 텍스쳐넘버 구분용으로 씀
 	vector<IDirect3DCubeTexture9*>	m_VecTempCube;
 	vector<IDirect3DBaseTexture9*>	m_VecTempPlane;

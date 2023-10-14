@@ -272,9 +272,9 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
             }
 
             //지금은 중복 검사하는 쪽으로 설정, 중복 불가하게 하고 싶으면 첫 줄 주석
-            if ((!CheckDuplicateCube(CursorTemp, m_vCursor_Size) &&                
+            if (/*(!CheckDuplicateCube(CursorTemp, m_vCursor_Size) &&   */             
                 (CursorTemp.x > -1) && (CursorTemp.y > -1)
-                && (CursorTemp.z > -1) && (m_Build_time_Check2 == false)))
+                && (CursorTemp.z > -1) && (m_Build_time_Check2 == false))
             {
                 m_Build_time_Check2 = true;
 

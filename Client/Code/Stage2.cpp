@@ -65,7 +65,7 @@ _int CStage2::Update_Scene(const _float& fTimeDelta)
 	}
 
 
-
+	Light_OnOff_Check();
 
 
 	Admin_KeyInput();
@@ -75,7 +75,6 @@ _int CStage2::Update_Scene(const _float& fTimeDelta)
 void CStage2::LateUpdate_Scene()
 {
 	__super::LateUpdate_Scene();
-
 
 	CollisionManager()->LateUpdate_Collision();
 }
@@ -145,11 +144,11 @@ HRESULT CStage2::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 
 	{
 		// Player
-		CGameObject* pPlayer = pGameObject = Management()->Get_Player();
+		m_pPlayer = pGameObject = Management()->Get_Player();
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER, pGameObject), E_FAIL);	//플레이어
 
-		dynamic_cast<CPlayer*>(pPlayer)->ClearGunList();
+		dynamic_cast<CPlayer*>(m_pPlayer)->ClearGunList();
 
 
 		pGameObject = Management()->Get_ShotGun();
@@ -165,15 +164,29 @@ HRESULT CStage2::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_HAND, pGameObject), E_FAIL);
 
-		dynamic_cast<CPlayer*>(pPlayer)->Set_SceneChange(false);
-		dynamic_cast<CPlayer*>(pPlayer)->SetGun(pLayer);
-		pPlayer->Get_Transform()->Set_Pos(198.5f,10.0f,249.5f);
+		dynamic_cast<CPlayer*>(m_pPlayer)->Set_SceneChange(false);
+		dynamic_cast<CPlayer*>(m_pPlayer)->SetGun(pLayer);
+		
+		_vec3 vPlayerPos, vPlayerLook;
+		m_pPlayer->Get_Transform()->Set_Pos(198.5f,12.0f,249.5f);
+		vPlayerPos = { 198.5f, 12.0f, 249.5f };
+		
+		if (m_Starting_Point != nullptr) {
+			vPlayerLook = m_Starting_Point->vPos - vPlayerPos;
+			D3DXVec3Normalize(&vPlayerLook, &vPlayerLook);
+			m_pPlayer->Get_Transform()->Set_Look(vPlayerLook);
+			int i = 0;
+		}
+
+//  		vPlayerLook = {0.f, 1.f, 0.f};
+//  		m_pPlayer->Get_Transform()->Set_Look(vPlayerLook);
+// 		int i = 0;
 
 		//FootRay
 		pGameObject = CFootRay::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::RAY, pGameObject), E_FAIL);
-		dynamic_cast<CFootRay*>(pGameObject)->Set_Host(pPlayer);
+		dynamic_cast<CFootRay*>(pGameObject)->Set_Host(m_pPlayer);
 
 		//
 		//pGameObject = CRay::Create(m_pGraphicDev);
@@ -214,7 +227,6 @@ HRESULT CStage2::Ready_Layer_Camera(LAYERTAG eLayerTag)
 	pGameObject = Management()->Get_Camera();
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::FPSCAMERA, pGameObject), E_FAIL);
-
 
 
 	m_mapLayer.insert({ eLayerTag, pLayer });
@@ -321,24 +333,99 @@ HRESULT CStage2::Add_Light()
 
 			tLightInfoo[i].Type = D3DLIGHT_POINT;
 
-			tLightInfoo[i].Diffuse = { 1.f, 0.5f, 0.3f, 0.4f };     // 색깔(난반사)
-			tLightInfoo[i].Specular = { 1.f, 0.5f, 0.3f, 0.4f };    // 정반사
-			tLightInfoo[i].Ambient = { 1.f, 0.5f, 0.3f, 0.4f };    // 환경반사
+			tLightInfoo[i].Diffuse = { 0.8f, 0.5f, 0.3f, 0.4f };     // 색깔(난반사)
+			tLightInfoo[i].Specular = { 0.8f, 0.5f, 0.3f, 0.4f };    // 정반사
+			tLightInfoo[i].Ambient = { 0.8f, 0.5f, 0.3f, 0.4f };    // 환경반사
 
 			_vec3 Height = { 0.f, 5.f, 0.f };
-			_float Distance = 50.f;
+			_float Distance = 30.f;
 
 			tLightInfoo[i].Position = (m_VecLight[i]->vPos) + Height;
 			tLightInfoo[i].Range = Distance;
 			tLightInfoo[i].Falloff = 1;  //거리 감쇄 - 선형 감소
 
 			FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &tLightInfoo[i], i + 1), E_FAIL);
-			// 0은 전역조명이라서 없애버리면 안 됨
+			// 0은 전역(방향성)조명이라서 없애버리면 안 됨
 		}
 
 		delete[] tLightInfoo;
 		tLightInfoo = nullptr;
 	}
+
+	return S_OK;
+}
+
+HRESULT CStage2::Light_OnOff_Check()
+{
+	const _float stdDistance = 300.f; // 기준 거리
+	const _float stdFov = D3DXToRadian(60.f); // 기준 시야각
+
+	_vec3 vPlayerPos, vPlayerLook, vtoLight;
+	m_pPlayer->Get_Transform()->Get_Info(INFO_POS, &vPlayerPos);
+	m_pPlayer->Get_Transform()->Get_Info(INFO_LOOK, &vPlayerLook);
+
+	_float LightDistance = 0.f;
+
+	vector<OBJData*> SortLight;
+
+	for (int i = 0; i != m_VecLight.size(); ++i)		
+	{
+		vtoLight = m_VecLight[i]->vPos - vPlayerPos;
+		LightDistance = D3DXVec3Length(&vtoLight);
+
+		if (LightDistance <= stdDistance) { //거리가 기준보다 멀지 않고
+
+			vtoLight = m_VecLight[i]->vPos - vPlayerPos;
+			D3DXVec3Normalize(&vtoLight, &vtoLight);
+
+			_float DotResult = D3DXVec3Dot(&vPlayerLook, &vtoLight);
+			_float fAngle = D3DXToRadian(acos(DotResult));
+
+			if (!(fAngle < stdFov)) //시야각 안에 있으면
+			{
+				SortLight.push_back(m_VecLight[i]);
+			}		
+		}
+	}
+
+	while (SortLight.size() > 8) {
+		
+		_float maxDistance = -1.f;
+		int maxIndex = -1;
+
+		for (int i = 0; i < SortLight.size(); ++i) {
+
+			_vec3 vtoLight = SortLight[i]->vPos - vPlayerPos;
+			_float distance = D3DXVec3Length(&vtoLight);
+			
+			if (distance > maxDistance) {
+			
+				maxDistance = distance;
+				maxIndex = i;
+			}
+		}
+		if (maxIndex != -1) {
+			SortLight.erase(SortLight.begin() + maxIndex);
+		}
+	}
+
+	if (SortLight.size() <= 8)
+	{
+		for (int i = 0; i < m_VecLight.size(); ++i) {
+			
+			bool lightEnabled = false;
+
+			for (int j = 0; j < SortLight.size(); ++j) {
+			
+				if (m_VecLight[i]->iIndex == SortLight[j]->iIndex) {
+					lightEnabled = true;
+					break;
+				}
+			}
+			m_pGraphicDev->LightEnable(i + 1, lightEnabled);
+		}
+	}
+	m_pGraphicDev->LightEnable(0, TRUE); // 전역은 무조건 활성화
 
 	return S_OK;
 }
@@ -434,6 +521,13 @@ HRESULT CStage2::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 				OBJData* LightTemp = new OBJData;
 				LightTemp = iter;
 				m_VecLight.push_back(LightTemp);
+			}
+
+			if (iter->eOBJ_Attribute == OBJ_ATTRIBUTE::STD_OBJ)
+			{
+				OBJData* STDTemp = new OBJData;
+				STDTemp = iter;
+				m_Starting_Point = STDTemp;
 			}
 
 			m_iOBJIndex++;
@@ -557,34 +651,6 @@ void CStage2::Admin_KeyInput()
 		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::STAGE2, DIALOGTAG::QUEST_1);
 		m_bAdminSwitch = false;
 	}
-
-	//if (Engine::Get_DIKeyState(DIK_F10) & 0x80 && m_bAdminSwitch)
-	//{
-	//	Management()->Set_bSceneChange(true);
-	//
-	//	for (auto& iterLayer : m_mapLayer)
-	//	{
-	//		for (auto& iterVectorObj : iterLayer.second->Get_mapObject())
-	//		{
-	//			for (auto& iterObj : iterVectorObj.second)
-	//			{
-	//				//iterObj->Set_Dead(true);
-	//				iterObj->Free();
-	//				//Safe_Release(iterObj);
-	//			}
-	//		}
-	//	}
-	//
-	//
-	//	m_eSceneTag = SCENETAG::BOSS_STAGE;
-	//	CScene* pScene = nullptr;
-	//	pScene = CLoadingStage1::Create(m_pGraphicDev);
-	//	pScene->Set_SceneTag(SCENETAG::BOSS_STAGE);
-	//
-	//	Management()->Change_Scene(pScene);
-	//
-	//	m_bAdminSwitch = false;
-	//}
 }
 
 CStage2* CStage2::Create(LPDIRECT3DDEVICE9 pGraphicDev)
