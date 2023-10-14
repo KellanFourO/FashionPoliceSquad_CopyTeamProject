@@ -192,6 +192,13 @@ HRESULT CStage2::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		//pGameObject = CRay::Create(m_pGraphicDev);
 		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::RAY, pGameObject), E_FAIL);
+		//pGameObject = CBigDaddyMonster::Create(m_pGraphicDev);
+		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+
+		//pGameObject = CStage1Boss::Create(m_pGraphicDev);
+		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::BOSS, pGameObject), E_FAIL);
 
 
 		pGameObject = Management()->Get_ShotGunFlash();

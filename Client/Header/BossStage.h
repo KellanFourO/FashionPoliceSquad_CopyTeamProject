@@ -124,6 +124,7 @@ private:
 	SORTTEX* m_defSortTex = nullptr; //텍스쳐 정렬용
 	vector<SORTTEX*>				m_pTexForSort;			//텍스쳐 정렬용
 
+	CStage1Boss*					m_pBoss = nullptr;
 public:
 	void				Admin_KeyInput();
 

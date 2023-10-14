@@ -47,8 +47,6 @@ HRESULT CPlayer::Ready_GameObject()
 	m_pRigidBody->Set_Host(this);
 	m_pRigidBody->Set_Transform(m_pTransformCom);
 
-
-
 	m_fJumpTick = 10.f;
 	m_fJumpCount = 0.f;
 
@@ -385,10 +383,10 @@ void CPlayer::Mouse_Input(const _float& fTimeDelta)
 	{
 		m_pGun->Set_RBFire(true);
 	}
-	//else if (!(Engine::Get_DIMouseState(DIM_RB)))
-	//{
-	//	m_pGun->Set_RBFire(false);
-	//}
+	else if (!(Engine::Get_DIMouseState(DIM_RB)))
+	{
+		m_pGun->Set_RBFire(false);
+	}
 }
 
 void CPlayer::TestRopeAction(const _float& fTimeDelta)
@@ -588,8 +586,8 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 		{
 			if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::MONSTER)
 				return;
-		
-				
+
+
 			if (vOtherPos.y < vThisPos.y)
 			{
 				//m_IsJump = false;

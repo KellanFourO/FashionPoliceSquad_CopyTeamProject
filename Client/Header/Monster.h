@@ -56,9 +56,9 @@ public:
 	CGameObject*		Get_MonsterBullet() { return m_pMonsterBullet;}
 	_float				Get_Speed() { return m_fSpeed; }
 	_float				Get_Length() { return D3DXVec3Length(&(m_pPlayerTransform->m_vInfo[INFO_POS] - m_pTransformCom->m_vInfo[INFO_POS]));}
+	_bool				Get_Start() { return m_bStart; }
 
-
-
+	void				Set_Start(_bool _bStart) { m_bStart = _bStart; }
 	void				Set_Info(Mob_INFO _INFO);
 	HRESULT				Set_HP();
 	void				Set_Pos(_vec3 _vPos);
@@ -87,10 +87,10 @@ public:
 protected:
 	HRESULT				Add_Component();
 
-
-
 protected:
+
 	//CRcTex*					m_pBufferCom = nullptr;
+	_bool					m_bStart = false;
 	CSYTex*					m_pBufferCom = nullptr;
 	CTexture*				m_pTextureCom = nullptr; // 텍스쳐 컴포넌트
 	CCalculator*			m_pCalculatorCom = nullptr; // 계산 컴포넌트
@@ -101,10 +101,12 @@ protected:
 	_float					m_fFrame = 0;
 	_float					m_fVerDevide = 0.f;
 	_float					m_fHorDevide = 0.f;
+	_int					m_iTextureIndex = 0;
 
 	_float					m_fAnimateTime = 0;
 	_float					m_fHitTime = 0;
 	_float					m_fAttackTime = 0;
+
 
 
 	vector<CGameObject*>	m_AttackVector;

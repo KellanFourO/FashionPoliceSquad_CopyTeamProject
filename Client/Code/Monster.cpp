@@ -12,8 +12,15 @@
 
 
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev)
-	:Engine::CGameObject(pGraphicDev)
+	:Engine::CGameObject(pGraphicDev),
+	m_bStart(false),m_bLateInit(true),m_bBillBoard(true),m_iTextureIndex(0),
+	m_pBufferCom(nullptr), m_pTextureCom(nullptr), m_pCalculatorCom(nullptr), m_pRigidBody(nullptr),
+	m_fFrame(0.f), m_fVerDevide(0.f), m_fHorDevide(0.f),m_fAnimateTime(0.f),m_fHitTime(0.f),m_fAttackTime(0.f),
+	m_pUI_Recognition(nullptr),m_pMonsterBullet(nullptr),m_pPlayerTransform(nullptr),
+	m_fDectedRange(15.f),m_fAttackRange(1.f),m_fSpeed(8.f)
 {
+	ZeroMemory(&INFO, sizeof(INFO));
+
 }
 
 CMonster::CMonster(CMonster& rhs)
@@ -29,15 +36,12 @@ HRESULT CMonster::Ready_GameObject()
 {
 	Set_ObjectTag(OBJECTTAG::MONSTER);
 
-
-
-
-
 	return S_OK;
 }
 
 _int CMonster::Update_GameObject(const _float& fTimeDelta)
 {
+
 
 	if (INFO.bHit == true) {
 		m_fHitTime += fTimeDelta;
@@ -63,18 +67,15 @@ _int CMonster::Update_GameObject(const _float& fTimeDelta)
 	m_pCollider->SetCenterPos(m_pTransformCom->m_vInfo[INFO_POS]);
 	m_pRigidBody->Update_RigidBody(fTimeDelta);
 
-	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
-	__super::Update_GameObject(fTimeDelta);
 
+	__super::Update_GameObject(fTimeDelta);
+	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
 	return OBJ_NOEVENT;
 }
 
 void CMonster::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
-
-	//m_pUI_HPFrame->LateUpdate_GameObject();
-	//m_pUI_HPValue->LateUpdate_GameObject();
 }
 
 void CMonster::Render_GameObject()
@@ -274,10 +275,12 @@ _bool CMonster::ChaseCatch()
 
 void CMonster::StateMachine(const _float& fTimeDelta)
 {
-	CMonsterState* State = INFO.MonsterState->Update(this, fTimeDelta);
+	CMonsterState* State = nullptr;
+	State = INFO.MonsterState->Update(this, fTimeDelta);
 	if (State != nullptr) {
+		INFO.MonsterState->Release(this);
 		INFO.MonsterState = State;
-		INFO.MonsterState->Initialize(this);
+	 	INFO.MonsterState->Initialize(this);
 	}
 }
 

@@ -44,41 +44,44 @@ HRESULT CStage1Boss::Ready_GameObject()
 
 	INFO.MonsterState = m_pStateArray[IDLE];
 	INFO.MonsterState->Initialize(this);
-	INFO.fHP = 1000.f;
-	INFO.fMaxHP = 1000.f;
-	m_pTransformCom->Translate(_vec3(0.f,1.f,0.f));
+	INFO.fHP = 3000.f;
+	INFO.fMaxHP = 5000.f;
+	m_fSpeed = 100.f;
+	m_fDectedRange = 150.f;
+	m_fAttackRange = 70.f;
 
-	m_pTransformCom->Set_Pos((_vec3{ 92.5f,50.f,120.f }));
-	m_pTransformCom->Set_Scale({ 10.0f,13.0f,10.0f });
-
-
+	m_pTransformCom->Set_Pos((_vec3{ 92.5f,25.f,135.f }));
+	m_pTransformCom->Set_Scale({ 20.0f,20.0f,20.0f });
 
 	m_pBufferCom->SetCount(5, 5);
+
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/Monster/boss 1 - hugo bauss sprite1_Hit.png", 1);
 	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/Monster/hugo bauss transformed1.png", 1);
 
-	m_pTransformCom->Set_Host(this);
-	m_pCollider->Set_Host(this);
-	m_pRigidBody->Set_Host(this);
 
+	m_pCollider->Set_Host(this);
 	m_pCollider->Set_Transform(m_pTransformCom);
+	m_pRigidBody->Set_Host(this);
 	m_pRigidBody->Set_Transform(m_pTransformCom);
 	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
+
+
+	m_pMonsterBullet = nullptr;
 	return S_OK;
 }
 
 _int CStage1Boss::Update_GameObject(const _float& fTimeDelta)
 {
-	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
-	__super::Update_GameObject(fTimeDelta);
 
-	m_pRigidBody->Update_RigidBody(fTimeDelta);
+
+	__super::Update_GameObject(fTimeDelta);
+	PhaseChange();
 
 	return OBJ_NOEVENT;
 }
 
 void CStage1Boss::LateUpdate_GameObject()
 {
-	__super::LateUpdate_GameObject();
 
 	// »ç¸ÁÆÇÁ¤
 	if (INFO.bDead) {
@@ -86,23 +89,26 @@ void CStage1Boss::LateUpdate_GameObject()
 		MBEffect->Set_ObjectTag(OBJECTTAG::EFFECT);
 		Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::EFFECT, MBEffect);
 		MBEffect->Get_Transform()->Set_Pos(m_pTransformCom->m_vInfo[INFO_POS]);
+		INFO.MonsterState->Release(this);
 		INFO.MonsterState = m_pStateArray[DEAD];
 		INFO.MonsterState->Initialize(this);
 		INFO.bDead = false;
 	}   // »ç¸ÁÆÇÁ¤
-
-	_vec3	vPos;
-	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	__super::Compute_ViewZ(&vPos);
-
+	__super::LateUpdate_GameObject();
 }
 
 void CStage1Boss::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 
-	INFO.MonsterState->Render(this);
+//	m_pCollider->Render_Collider();
+	if (INFO.bHit)
+		m_iTextureIndex = 1;
+	else
+		m_iTextureIndex = 0;
 
+	m_pTextureCom->Render_Textrue(m_iTextureIndex);
+	m_pBufferCom->Render_Buffer(INFO.MonsterState->Get_CurFrame(), INFO.MonsterState->Get_Ver());
 }
 
 void CStage1Boss::OnCollisionEnter(CCollider* _pOther)
@@ -121,7 +127,7 @@ void CStage1Boss::OnCollisionStay(CCollider* _pOther)
 
 void CStage1Boss::OnCollisionExit(CCollider* _pOther)
 {
-	__super::OnCollisionStay(_pOther);
+	__super::OnCollisionExit(_pOther);
 }
 
 HRESULT CStage1Boss::Add_Component()
@@ -158,6 +164,21 @@ HRESULT CStage1Boss::Add_Component()
 	return S_OK;
 }
 
+void CStage1Boss::PhaseChange()
+{
+	_float fRatio = INFO.fHP / INFO.fMaxHP;
+
+	if (fRatio < 0.6 && fRatio > 0.3)
+	{
+		dynamic_cast<CStage1BossState*>(INFO.MonsterState)->m_ePhase = BOSSPHASE::PHASE_2;
+	}
+	else if (fRatio < 0.3)
+	{
+		dynamic_cast<CStage1BossState*>(INFO.MonsterState)->m_ePhase = BOSSPHASE::PHASE_3;
+	}
+
+}
+
 
 
 void CStage1Boss::ReadyState()
@@ -170,23 +191,6 @@ void CStage1Boss::ReadyState()
 	m_pStateArray[SPAWN] = new CStage1Boss_MonsterSpawn;
 	m_pStateArray[DEAD] = new CStage1Boss_Dead;
 }
-
-
-void CStage1Boss::Chase_Target(_float fTimeDelta, _float _fSpeed)
-{
-
-	_vec3 vPlayerPos, vMyPos, vPlayerPos_Rel;
-	_float fSpeed;
-
-	m_pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);
-	m_pTransformCom->Get_Info(INFO_POS, &vMyPos);
-	D3DXVec3Normalize(&_vec3(vPlayerPos - vMyPos), &vPlayerPos_Rel);
-
-	fSpeed = _fSpeed;
-
-	m_pTransformCom->Chase_Target(&vPlayerPos, fTimeDelta, fSpeed);
-}
-
 
 CStage1Boss* CStage1Boss::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {

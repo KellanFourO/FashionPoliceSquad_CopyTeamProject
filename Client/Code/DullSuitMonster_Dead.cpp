@@ -20,6 +20,7 @@ void CDullSuitMonster_Dead::Initialize(CMonster* _Monster)
 	m_fMaxFrame = 2.0f;
 	m_fCurFrame = m_fMinFrame;
 
+	m_iVer = 3;
 }
 
 CMonsterState* CDullSuitMonster_Dead::Update(CMonster* Monster, const float& fDetltaTime)
@@ -48,8 +49,4 @@ void CDullSuitMonster_Dead::Release(CMonster* _Monster)
 
 void CDullSuitMonster_Dead::Render(CMonster* _Monster)
 {
-
-	m_pHost->Get_TextureCom()->Render_Textrue(0);
-	m_pHost->Get_BufferCom()->Render_Buffer(m_fCurFrame, 3);
-
 }
