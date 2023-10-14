@@ -45,7 +45,9 @@ HRESULT CBigDaddyMonster::Ready_GameObject()
 	m_fAttackRange = 100.f; //! 공격 범위
 
 	m_pTransformCom->Set_Scale({ 5.0f,5.0f,5.0f });
-	Set_Pos((_vec3{ 120.f,4.f,28.f }));
+
+	//Set_Pos((_vec3{ 120.f,4.f,28.f }));
+	m_pTransformCom->Set_Pos((_vec3{ 198.5f,10.0f,235.5f }));
 
 	m_pBufferCom->SetCount(4, 4);
 	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/Monster/loose-suit-spritesheet_hit.png", 1);
@@ -69,7 +71,6 @@ _int CBigDaddyMonster::Update_GameObject(const _float& fTimeDelta)
 	__super::Update_GameObject(fTimeDelta);
 
 	//m_pUI_Recognition->Update_GameObject(fTimeDelta);
-	m_pRigidBody->Update_RigidBody(fTimeDelta);
 	return OBJ_NOEVENT;
 }
 
@@ -140,6 +141,7 @@ void CBigDaddyMonster::OnCollisionStay(CCollider* _pOther)
 
 void CBigDaddyMonster::OnCollisionExit(CCollider* _pOther)
 {
+	__super::OnCollisionStay(_pOther);
 }
 
 HRESULT CBigDaddyMonster::Add_Component()

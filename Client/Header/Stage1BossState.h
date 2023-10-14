@@ -1,6 +1,6 @@
 #pragma once
 #include "MonsterState.h"
-#include "Stage1Boss.h"
+
 class CStage1BossState : public CMonsterState
 {
 public:
@@ -14,8 +14,7 @@ public:
 	virtual void Release(CMonster* _Monster) {};
 	virtual void Render(CMonster* _Monster) {};
 
-protected:
-	CStage1Boss*		m_pHost;
+public:
 	BOSSPHASE			m_ePhase = BOSSPHASE::PHASE_1;
 
 };

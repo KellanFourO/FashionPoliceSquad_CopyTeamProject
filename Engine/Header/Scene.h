@@ -51,8 +51,8 @@ protected:
 
 	_bool						m_bReadyCube = false;
 	_bool						m_bPause = false;
-	SCENETAG					m_eSceneTag;
-	CPlayer*					m_pPlayer;
+	SCENETAG					m_eSceneTag = SCENETAG::SCENETAG_END;
+	CPlayer*					m_pPlayer = nullptr;
 
 public:
 	virtual void	Free();

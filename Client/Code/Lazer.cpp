@@ -44,7 +44,7 @@ HRESULT CLazer::Ready_GameObject()
 
 Engine::_int CLazer::Update_GameObject(const _float& fTimeDelta)
 {
-	
+
 	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 
 	if (m_bLateInit)

@@ -22,13 +22,10 @@ private:
 	void				LoadBullet();
 
 private:
-	_bool					m_bChange = false;
-	_int					m_iMultiThrowStart = 2;
-	_int					m_iMultiThrowEnd = 3;
-
 	_float					m_fTick = 0.f;
 
 	_float					m_fThrowSpeed;
+	_float					m_fBulletSpeed;
 
 	_int					m_iBulletCount;
 	_int					m_iThrowCount;
@@ -38,5 +35,5 @@ private:
 
 	_bool					m_bThrow = false;
 
-	THROWSTATE			m_eThrowstate = THROWREADY;
+	THROWSTATE				m_eThrowstate = THROWREADY;
 };

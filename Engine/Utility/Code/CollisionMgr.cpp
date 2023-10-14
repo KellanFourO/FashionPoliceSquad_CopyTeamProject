@@ -44,7 +44,7 @@ void CollisionMgr::LateUpdate_Collision()
 	CheckCollisionStaticOBJ(OBJECTTAG::MONSTERBULLET);
 	CheckCollisionStaticOBJ(OBJECTTAG::PLAYERBULLET);
 	CheckCollisionStaticOBJ(OBJECTTAG::RAY);
-	
+
 	//dynamic Object
 	for (UINT iRow = 0; iRow < (UINT)OBJECTTAG::OBJECT_END; ++iRow)
 		for (UINT iCol = iRow; iCol < (UINT)OBJECTTAG::OBJECT_END; ++iCol)
@@ -119,9 +119,6 @@ void CollisionMgr::CheckCollisionByType(OBJECTTAG _eObjectLeft, OBJECTTAG _eObje
 		for (auto& iterR : vecRight)
 		{
 
-		if(iterR->Get_ObjectTag() == OBJECTTAG::MONSTER)
-			int i = 0;
-
 			if (nullptr == iterR->Get_Collider() || iterL == iterR)
 				continue;
 
@@ -164,8 +161,6 @@ void CollisionMgr::CheckCollisionByType(OBJECTTAG _eObjectLeft, OBJECTTAG _eObje
 				}
 				else
 				{	// 이전에는 충돌 x	// 근데 둘 중 하나 삭제 예정이면 충돌하지 않은 것으로 취급
-					if (pRightCol->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYERBULLET || pLeftCol->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYERBULLET)
-						int i = 0;
 					if (!iterL->IsDead() && !iterR->IsDead())
 					{
 

@@ -12,8 +12,15 @@
 
 
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev)
-	:Engine::CGameObject(pGraphicDev)
+	:Engine::CGameObject(pGraphicDev),
+	m_bStart(false),m_bLateInit(true),m_bBillBoard(true),m_iTextureIndex(0),
+	m_pBufferCom(nullptr), m_pTextureCom(nullptr), m_pCalculatorCom(nullptr), m_pRigidBody(nullptr),
+	m_fFrame(0.f), m_fVerDevide(0.f), m_fHorDevide(0.f),m_fAnimateTime(0.f),m_fHitTime(0.f),m_fAttackTime(0.f),
+	m_pUI_Recognition(nullptr),m_pMonsterBullet(nullptr),m_pPlayerTransform(nullptr),
+	m_fDectedRange(15.f),m_fAttackRange(1.f),m_fSpeed(8.f)
 {
+	ZeroMemory(&INFO, sizeof(INFO));
+
 }
 
 CMonster::CMonster(CMonster& rhs)
@@ -268,10 +275,12 @@ _bool CMonster::ChaseCatch()
 
 void CMonster::StateMachine(const _float& fTimeDelta)
 {
-	CMonsterState* State = INFO.MonsterState->Update(this, fTimeDelta);
+	CMonsterState* State = nullptr;
+	State = INFO.MonsterState->Update(this, fTimeDelta);
 	if (State != nullptr) {
+		INFO.MonsterState->Release(this);
 		INFO.MonsterState = State;
-		INFO.MonsterState->Initialize(this);
+	 	INFO.MonsterState->Initialize(this);
 	}
 }
 

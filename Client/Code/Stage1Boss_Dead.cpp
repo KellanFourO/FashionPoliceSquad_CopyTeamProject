@@ -14,7 +14,7 @@ CStage1Boss_Dead::~CStage1Boss_Dead()
 
 void CStage1Boss_Dead::Initialize(CMonster* _Monster)
 {
-	m_pHost = dynamic_cast<CStage1Boss*>(_Monster);
+	m_pHost = (_Monster);
 
 }
 
@@ -34,5 +34,5 @@ void CStage1Boss_Dead::Release(CMonster* _Monster)
 
 void CStage1Boss_Dead::Render(CMonster* _Monster)
 {
-	m_pHost->Get_TextureCom()->Render_Textrue(1);
+
 }

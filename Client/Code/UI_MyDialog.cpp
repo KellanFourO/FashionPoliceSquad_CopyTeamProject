@@ -66,7 +66,7 @@ Engine::_int Engine::CMyDialog::Update_GameObject(const _float& fTimeDelta)
 
 
 
-	if (m_fNextTick >= 2.5f)
+	if (m_fNextTick >= 0.5f)
 	{
 		m_bTick = true;
 		m_fNextTick = 0.f;

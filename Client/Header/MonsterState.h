@@ -4,6 +4,7 @@
 #include "BigDaddyMonster.h"
 #include "DullSuitMonster.h"
 #include "KickBoardMonster.h"
+#include "Stage1Boss.h"
 
 class CMonsterState {
 public:
@@ -23,9 +24,9 @@ public:
 	_int	Get_Ver() { return m_iVer; }
 	_int	Get_TextureIndex() { return m_iTextureIndex; }
 
-	CMonster*		m_pHost;
+	CMonster*		m_pHost = nullptr;
 	_float			m_fBehaviorTime = 0.f; // 행동 줄 시간
-	_vec3			vPrePos;
+	_vec3			vPrePos = { 0.f,0.f,0.f};
 	_float			m_fCurFrame = 0.f;
 	_float			m_fMinFrame = 1.f;
 	_float			m_fMaxFrame = 1.f;

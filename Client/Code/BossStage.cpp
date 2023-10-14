@@ -47,15 +47,15 @@ HRESULT CBossStage::Ready_Scene()
 _int CBossStage::Update_Scene(const _float& fTimeDelta)
 {
 	_int	iExit = __super::Update_Scene(fTimeDelta);
-	if (m_bLateInit)
-	{
-		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::BOSS_STAGE, DIALOGTAG::ST1_BOSS_START);
-		CEventMgr::GetInstance()->OnPause(true, SCENETAG::BOSS_STAGE);
-		m_bLateInit = false;
-	}
+ 	if (m_bLateInit)
+ 	{
+ 		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::BOSS_STAGE, DIALOGTAG::ST1_BOSS_START);
+ 		CEventMgr::GetInstance()->OnPause(true, SCENETAG::BOSS_STAGE);
+ 		m_bLateInit = false;
+ 	}
 
 
-	if (Management()->Get_Scene()->Get_Pause())
+	if (!Management()->Get_Scene()->Get_Pause())
 	{
 		m_pBoss->Set_Start(true);
 	}
@@ -71,10 +71,6 @@ _int CBossStage::Update_Scene(const _float& fTimeDelta)
 		m_bAdminSwitch = true;
 		m_fAdminTick = 0.F;
 	}
-
-
-
-
 
 	Admin_KeyInput();
 	return iExit;
@@ -208,15 +204,15 @@ HRESULT CBossStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		pGameObject = Management()->Get_Belt();
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::OBJECT, pGameObject), E_FAIL);	//벨트
-	}
 
-	{
 		pGameObject = CStage1Boss::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::BOSS, pGameObject), E_FAIL);
 
 		m_pBoss = dynamic_cast<CStage1Boss*>(pGameObject);
+
 	}
+
 
 	//이펙트 파티클
 	{

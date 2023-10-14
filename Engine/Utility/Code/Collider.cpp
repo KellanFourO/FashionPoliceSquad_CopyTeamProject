@@ -51,20 +51,20 @@ void CCollider::Render_Collider()
  		m_pGraphicDev->SetFVF(VTXCOL::FVF_COL);
  		m_pGraphicDev->SetIndices(m_pIB);
 
- 			//m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+ 			m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 
  		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
  		m_pGraphicDev->SetTexture(0, NULL);  //유진 추가 : 콜라이더 와이어프레임 선 색깔 고정
 
- 			//_matrix matCollider, matrixPre;  //월드 이미 Transform 에서 받아옴
- 			//D3DXMatrixIdentity(&matCollider);
-
- 		//// Fixing Bounding Box
- 		//for (_int i = 0; i < 3; ++i)
- 		//	::CopyMemory(&matCollider.m[i], &m_vAxisDir[i], sizeof(_vec3));
- 		//::CopyMemory(&matCollider.m[3], &m_vCenterPos, sizeof(_vec3));
-
- 			//m_pGraphicDev->SetTransform(D3DTS_WORLD, &matCollider);
+		//	_matrix matCollider, matrixPre;  //월드 이미 Transform 에서 받아옴
+		//	D3DXMatrixIdentity(&matCollider);
+		//
+		//// Fixing Bounding Box
+		//for (_int i = 0; i < 3; ++i)
+		//	::CopyMemory(&matCollider.m[i], &m_vAxisDir[i], sizeof(_vec3));
+		//::CopyMemory(&matCollider.m[3], &m_vCenterPos, sizeof(_vec3));
+		//
+		//	m_pGraphicDev->SetTransform(D3DTS_WORLD, &matCollider);
 
  		m_pGraphicDev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 8, 0, 12);
  		m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);

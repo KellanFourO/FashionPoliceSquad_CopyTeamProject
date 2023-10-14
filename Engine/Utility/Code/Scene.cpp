@@ -4,8 +4,11 @@
 #include "../Client/Header/NewFPSCamera.h"
 
 CScene::CScene(LPDIRECT3DDEVICE9 pGraphicDev)
-	: m_pGraphicDev(pGraphicDev)
+	: m_pGraphicDev(pGraphicDev),
+	  m_eSceneTag(SCENETAG::SCENETAG_END),
+	  m_bPause(false),m_bReadyCube(false),m_pPlayer(nullptr)
 {
+
 	m_pGraphicDev->AddRef();
 }
 
@@ -55,8 +58,14 @@ _int CScene::Update_Scene(const _float& fTimeDelta)
 				{
 					for (int i = 0; i < Objiter.second.size(); ++i)
 					{
+						if (Objiter.second[i]->Get_ObjectTag() == OBJECTTAG::BOSS)
+						{
+							Objiter.second[i]->Update_GameObject(fTimeDelta);
+							Objiter.second[i]->LateUpdate_GameObject();
+						}
 
-							Renderer()->Add_RenderGroup(RENDER_ALPHA, Objiter.second[i]);
+
+						Renderer()->Add_RenderGroup(RENDER_ALPHATEST, Objiter.second[i]);
 						Objiter.second[i]->Render_GameObject();
 					}
 				}
