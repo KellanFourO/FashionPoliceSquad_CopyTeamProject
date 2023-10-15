@@ -29,6 +29,7 @@ public:
 	void			Set_TR_CASE(TRIGGER_CASE eCase) { m_eTRCase = eCase; }
 	void			Set_TR_TYPE(TRIGGER_TYPE eType) { m_eTRType = eType; }
 	void			Set_TR_NUMBER(TRIGGER_NUMBER eName) { m_eTrName = eName; }
+	void			Set_IndexNumber(_uint iIndex) { m_iIndex = iIndex; }
 
 protected:
 	virtual HRESULT	Add_Component();
@@ -37,18 +38,19 @@ protected:
 private:
 	SCENETAG			m_NowScene = SCENETAG::SCENETAG_END;
 
-	CCubeTex* m_pBufferCubeCom = nullptr;
-	CTransform* m_pTransformCom = nullptr;
-	CCalculator* m_pCalculatorCom = nullptr;
-	CTransform* m_pPlayerTransform = nullptr;
+	CCubeTex*			m_pBufferCubeCom = nullptr;
+	CTransform*			m_pTransformCom = nullptr;
+	CCalculator*		m_pCalculatorCom = nullptr;
+	CTransform*			m_pPlayerTransform = nullptr;
 
+	_uint				m_iIndex;
 	TRIGGER_CASE		m_eTRCase = TRIGGER_CASE::TR_CASE_END;
 	TRIGGER_TYPE		m_eTRType = TRIGGER_TYPE::TR_TYPE_END;
 	TRIGGER_NUMBER		m_eTrName = TRIGGER_NUMBER::TR_END;
 
 
 public:
-	static  CTrigger* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 pMouse_Pos,
+	static  CTrigger* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 pMouse_Pos, _uint iIndex,
 		_vec3 Size, TRIGGER_CASE eCase, TRIGGER_TYPE eType, TRIGGER_NUMBER eTrName);
 
 private:

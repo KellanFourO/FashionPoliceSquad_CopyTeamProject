@@ -86,7 +86,8 @@ private:
 	HRESULT				Ready_Layer_UI(LAYERTAG eLayerTag);
 
 private:
-	CLayer*				m_pLayer = nullptr;
+	CLayer*				m_pLayer = nullptr;  //Environment
+	CLayer*				m_pGLayer = nullptr; //GameLogic
 
 	//////////////////////유진 함수, 변수////////////////////////
 public:
@@ -97,13 +98,16 @@ public:
 	void				Set_VecOBJData(vector<OBJData*> pVecOBjData) { m_VecOBJData = pVecOBjData; }
 
 	virtual HRESULT		Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag);
-	HRESULT				Load_Data_C(const TCHAR* pFilePath, OBJECTTAG eTag);
+	HRESULT				Load_Data_C_T(const TCHAR* pFilePath, OBJECTTAG eTag);
 
 private:
 	vector<C_POINT*>			    m_VecCreatePoint;
+	vector<TRIGGER*>			    m_TriggerDataTemp;
 
 	vector<OBJData*>				m_VecOBJData;
 	_uint							m_iOBJIndex = 0;
+
+	vector<OBJData*>				m_VecLight;
 
 	vector<CUBE*>					m_VecCubeData;
 	_uint							m_iCubeIndex = 0;

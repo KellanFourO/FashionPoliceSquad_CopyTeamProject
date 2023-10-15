@@ -63,16 +63,16 @@ _int CMapCursor::Update_GameObject(const _float& fTimedelta)
 
 	Key_Input(fTimedelta, MapCursor_At_Tool());
 
-	//if (true == CImGuiManager::GetInstance()->Get_NotNormal_Check())
-	//{
-	//	m_fCubesize.fX = CImGuiManager::GetInstance()->Get_CubeSize().fX;
-	//	m_fCubesize.fY = CImGuiManager::GetInstance()->Get_CubeSize().fY;
-	//	m_fCubesize.fZ = CImGuiManager::GetInstance()->Get_CubeSize().fZ;
-	//}
-	//if (false == CImGuiManager::GetInstance()->Get_NotNormal_Check())
-	//{
-	//	m_pTransformCom->m_vScale = { VTXITV, VTXITV, VTXITV };
-	//}
+	if (true == CImGuiManager::GetInstance()->Get_NotNormal_Check())
+	{
+		m_fCubesize.fX = CImGuiManager::GetInstance()->Get_CubeSize().fX;
+		m_fCubesize.fY = CImGuiManager::GetInstance()->Get_CubeSize().fY;
+		m_fCubesize.fZ = CImGuiManager::GetInstance()->Get_CubeSize().fZ;
+	}
+	if (false == CImGuiManager::GetInstance()->Get_NotNormal_Check())
+	{
+		m_pTransformCom->m_vScale = { VTXITV, VTXITV, VTXITV };
+	}
 	__super::Update_GameObject(fTimedelta);
 	return 0;
 }
@@ -106,32 +106,31 @@ HRESULT CMapCursor::Key_Input(const _float& fTimeDelta, _vec3 pMouse_Pos)
 
 _vec3 CMapCursor::MapCursor_At_Tool()
 {
-// 	_vec3		vPos;
-// 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
-//
-// 	CWireTex* pWireCom = dynamic_cast<CWireTex*>(Engine::Get_Component(ID_STATIC, LAYERTAG::ENVIRONMENT, OBJECTTAG::WIREFRAME, COMPONENTTAG::BUFFER));
-// 	NULL_CHECK_RETURN(pWireCom, _vec3());
-//
-// 	CTransform* pWireTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(ID_STATIC, LAYERTAG::ENVIRONMENT, OBJECTTAG::WIREFRAME, COMPONENTTAG::TRANSFORM));
-// 	NULL_CHECK_RETURN(pWireTransCom, _vec3());
-//
-// 	vPos = m_pCalculatorCom->MapCursor_From_Mouse(g_hWnd, pWireCom, pWireTransCom);
-// 	vPos.y = CImGuiManager::GetInstance()->Get_CubeHeightLevel();
-//
-// 	if (false == CImGuiManager::GetInstance()->Get_OBJModeCheck())
-// 	{
-// 		//뚝뚝 끊기는 효과 : 오브젝트 모드에선 비해당
-// 		int temp1 = (int)vPos.x / VTXWITV;
-// 		int temp2 = (int)vPos.y / VTXWITV;
-// 		int temp3 = (int)vPos.z / VTXWITV;
-// 		vPos.x = (float)temp1 * VTXWITV + (VTXWITV * 0.5f);
-// 		vPos.y = (float)temp2 * VTXWITV;
-// 		vPos.z = (float)temp3 * VTXWITV + (VTXWITV * 0.5f);
-// 	}
-//
-//
-// 	m_pTransformCom->Set_Pos(vPos.x, vPos.y, vPos.z);
-_vec3 vPos;
+ 	_vec3		vPos;
+ 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+ 	CWireTex* pWireCom = dynamic_cast<CWireTex*>(Engine::Get_Component(ID_STATIC, LAYERTAG::ENVIRONMENT, OBJECTTAG::WIREFRAME, COMPONENTTAG::BUFFER));
+ 	NULL_CHECK_RETURN(pWireCom, _vec3());
+
+ 	CTransform* pWireTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(ID_STATIC, LAYERTAG::ENVIRONMENT, OBJECTTAG::WIREFRAME, COMPONENTTAG::TRANSFORM));
+ 	NULL_CHECK_RETURN(pWireTransCom, _vec3());
+
+ 	vPos = m_pCalculatorCom->MapCursor_From_Mouse(g_hWnd, pWireCom, pWireTransCom);
+ 	vPos.y = CImGuiManager::GetInstance()->Get_CubeHeightLevel();
+
+ 	if (false == CImGuiManager::GetInstance()->Get_OBJModeCheck())
+ 	{
+ 		//뚝뚝 끊기는 효과 : 오브젝트 모드에선 비해당
+ 		int temp1 = (int)vPos.x / VTXWITV;
+ 		int temp2 = (int)vPos.y / VTXWITV;
+ 		int temp3 = (int)vPos.z / VTXWITV;
+ 		vPos.x = (float)temp1 * VTXWITV + (VTXWITV * 0.5f);
+ 		vPos.y = (float)temp2 * VTXWITV;
+ 		vPos.z = (float)temp3 * VTXWITV + (VTXWITV * 0.5f);
+ 	}
+
+
+ 	m_pTransformCom->Set_Pos(vPos.x, vPos.y, vPos.z);
 	return vPos;
 }
 

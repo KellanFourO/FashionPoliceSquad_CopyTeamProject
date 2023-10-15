@@ -19,6 +19,7 @@ CollisionMgr::CollisionMgr()
 	CheckGroup(OBJECTTAG::BOSS, OBJECTTAG::PLAYERBULLET);
 	CheckGroup(OBJECTTAG::RAY, OBJECTTAG::BUILD_OBJ);
 	CheckGroup(OBJECTTAG::RAY, OBJECTTAG::MONSTER);
+	CheckGroup(OBJECTTAG::PLAYER, OBJECTTAG::TRIGGER); //유진 추가
 
 }
 
@@ -130,7 +131,6 @@ void CollisionMgr::CheckCollisionByType(OBJECTTAG _eObjectLeft, OBJECTTAG _eObje
 
 			COLLIDER_ID ID;
 			ID.Left_id = pLeftCol->GetID();
-
 
 			ID.Right_id = pRightCol->GetID();
 

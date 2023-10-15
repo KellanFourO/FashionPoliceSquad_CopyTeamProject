@@ -537,7 +537,8 @@ void CPlayer::StateMachine(_float _fTimeDelta)
 
 void CPlayer::OnCollisionEnter(CCollider* _pOther)
 {
-	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE || _pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ)
+	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE || _pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ
+		|| _pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::TRIGGER	)
 	{
 		_vec3	vOtherPos = _pOther->GetCenterPos();
 		_float* fOtherAxis = _pOther->GetAxisLen();
@@ -556,8 +557,30 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 
 		_float fMinAxis = min(min(fRadiusX, fRadiusY), fRadiusZ);	// 가장 작은 값이 가장 얕게 충돌한 축. 이 축을 밀어내야 함.
 
-// 		if (vThisPos.y > vOtherPos.y)
-// 			vThisPos.y += vOtherPos.y;
+
+		//테스트
+// 		int testtemp = 0;
+// 
+// 		if (vThisPos.y > vOtherPos.y) 
+// 		{ testtemp = 1; }
+// 
+// 		if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ)
+// 		{
+// 			testtemp = 2;
+// 		}
+// 		if (_pOther->Get_OBJAttribute() == OBJ_ATTRIBUTE::STAIR_OBJ)
+// 		{
+// 			testtemp = 3;
+// 		}
+
+		//계단타기
+		if ((vThisPos.y > vOtherPos.y) &&
+			(_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ) &&
+			_pOther->Get_OBJAttribute() == OBJ_ATTRIBUTE::STAIR_OBJ)
+		{
+			//vThisPos.y += vOtherPos.y;
+			m_pTransformCom->Translate(_vec3(0.f, fRadiusY, 0.f));
+		}
 
 		if (fRadiusY == fMinAxis)
 		{
@@ -600,7 +623,8 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 void CPlayer::OnCollisionStay(CCollider* _pOther)
 {
 
-	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE|| _pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ)
+	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE|| _pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ
+		|| _pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::TRIGGER )
 	{
 		_vec3	vOtherPos = _pOther->GetCenterPos();
 		_float* fOtherAxis = _pOther->GetAxisLen();
