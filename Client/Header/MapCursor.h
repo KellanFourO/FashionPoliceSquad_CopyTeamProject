@@ -31,6 +31,7 @@ public:
 
 private:
 	HRESULT			Add_Component();
+	HRESULT			Update_ImGui();
 
 private:
 	HRESULT	Key_Input(const _float& fTimeDelta, _vec3 pMouse_Pos);

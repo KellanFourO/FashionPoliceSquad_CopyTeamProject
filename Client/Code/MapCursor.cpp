@@ -63,6 +63,14 @@ _int CMapCursor::Update_GameObject(const _float& fTimedelta)
 
 	Key_Input(fTimedelta, MapCursor_At_Tool());
 
+	Update_ImGui();
+
+	__super::Update_GameObject(fTimedelta);
+	return 0;
+}
+
+HRESULT CMapCursor::Update_ImGui()
+{
 	if (true == CImGuiManager::GetInstance()->Get_NotNormal_Check())
 	{
 		m_fCubesize.fX = CImGuiManager::GetInstance()->Get_CubeSize().fX;
@@ -73,8 +81,11 @@ _int CMapCursor::Update_GameObject(const _float& fTimedelta)
 	{
 		m_pTransformCom->m_vScale = { VTXITV, VTXITV, VTXITV };
 	}
-	__super::Update_GameObject(fTimedelta);
-	return 0;
+
+	_float pRotate = CImGuiManager::GetInstance()->Get_OBJ_RotateCountCW();
+	m_pTransformCom->Set_Rotate(ROT_Y, D3DXToRadian(pRotate * 45.f));
+
+	return S_OK;
 }
 
 void CMapCursor::LateUpdate_GameObject()

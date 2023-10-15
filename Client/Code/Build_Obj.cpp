@@ -180,7 +180,9 @@ void CBuild_Obj::Render_GameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	
-	if ((m_eAttribute == OBJ_ATTRIBUTE::C_POINT_OBJ)|| (m_eAttribute == OBJ_ATTRIBUTE::STAIR_OBJ))
+	if ((m_eAttribute == OBJ_ATTRIBUTE::C_POINT_OBJ)
+		|| (m_eAttribute == OBJ_ATTRIBUTE::STAIR_OBJ)
+		|| (m_eAttribute == OBJ_ATTRIBUTE::ForPaint_OBJ))
 	{	m_pCollider->Render_Collider(); }
 
 	//m_pCollider->Render_Collider(); //
@@ -195,15 +197,22 @@ void CBuild_Obj::Render_GameObject()
 
 void CBuild_Obj::Render_Texture()
 {
-	if (m_eOBJ_Type == OBJ_TYPE::CUBE_TYPE)
+	if (m_eAttribute != OBJ_ATTRIBUTE::C_POINT_OBJ)
 	{
-		m_pTextureCom->Render_ObjCubeTex(m_TextureNumber);
-		m_pBufferCubeCom->Render_Buffer();
+		if (m_eOBJ_Type == OBJ_TYPE::CUBE_TYPE)
+		{
+			m_pTextureCom->Render_ObjCubeTex(m_TextureNumber);
+			m_pBufferCubeCom->Render_Buffer();
+		}
+		else if (m_eOBJ_Type == OBJ_TYPE::PLANE_TYPE)
+		{
+			m_pTextureCom->Render_ObjPlaneTex(m_TextureNumber);
+			m_pBufferRcCom->Render_Buffer();
+		}
 	}
-	else if (m_eOBJ_Type == OBJ_TYPE::PLANE_TYPE)
+	else if (m_eAttribute == OBJ_ATTRIBUTE::C_POINT_OBJ)
 	{
-		m_pTextureCom->Render_ObjPlaneTex(m_TextureNumber);
-		m_pBufferRcCom->Render_Buffer();
+		m_pBufferCubeCom->Render_Buffer();
 	}
 }
 

@@ -38,7 +38,7 @@ HRESULT CStage::Ready_Scene()
 
 	FAILED_CHECK_RETURN(Ready_Layer_UI(LAYERTAG::UI), E_FAIL);
 
-
+	Load_Data_C_T(L"../Bin/Data/CPoint/CPointData", OBJECTTAG::BUILD_OBJ); //TODO
 
 	srand(GetTickCount64());
 
@@ -267,7 +267,6 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::PARTICLE, pGameObject), E_FAIL);
 	}
 
-	//Load_Data_C_T(L"../Bin/Data/Trigger/TriggerData", OBJECTTAG::TRIGGER); //TODO Æ®¸®°Å
 
 	m_mapLayer.insert({ eLayerTag, pLayer });
 
@@ -500,31 +499,40 @@ HRESULT CStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 	return S_OK;
 }
 
-
 HRESULT CStage::Load_Data_C_T(const TCHAR* pFilePath, OBJECTTAG eTag)
 {
-	HANDLE      hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
-
+	HANDLE hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
 	if (INVALID_HANDLE_VALUE == hFile) { return E_FAIL; }
 
-	DWORD   dwByte = 0;
-	DWORD   dwStrByte = 0;
-	CHAR* pTag = new CHAR[dwStrByte];
+	DWORD dwByte = 0;
+	DWORD dwStrByte = 0;
 
+	string expectedTag;
+
+	CGameObject* pGameObject = nullptr;
+	CLayer* targetLayer = nullptr;
+
+	C_POINT* pOBJ = nullptr;
+	TRIGGER* pTR = nullptr;
 
 	if (eTag == OBJECTTAG::BUILD_OBJ) {
-		string m_strText = "CPointData";
+		expectedTag = "CPointData";
+		targetLayer = m_pLayer;
+	}
+	else if (eTag == OBJECTTAG::TRIGGER) {
+		expectedTag = "TriggerData";
+		targetLayer = m_pGLayer;
+	}
 
-		C_POINT* pOBJ = nullptr;
+	ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
+	CHAR* pTag = new CHAR[dwStrByte];
 
-		ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
-		ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
-		m_strText = pTag;
+	ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
+	string m_strText(pTag);
 
-		basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
-
-		while (true)
-		{
+	while (true)
+	{
+		if (eTag == OBJECTTAG::BUILD_OBJ) {
 			pOBJ = new C_POINT;
 			ReadFile(hFile, pOBJ, sizeof(C_POINT), &dwByte, nullptr);
 
@@ -535,34 +543,8 @@ HRESULT CStage::Load_Data_C_T(const TCHAR* pFilePath, OBJECTTAG eTag)
 			}
 			m_VecCreatePoint.push_back(pOBJ);
 		}
-		CloseHandle(hFile);
-
-		Engine::CGameObject* pGameObject = nullptr;
-
-		for (auto& iter : m_VecCreatePoint)
-		{
-			pGameObject = CBuild_Obj::Create(m_pGraphicDev, iter->defOBJData.vPos, iter->defOBJData.uiTextureNum,
-				iter->defOBJData.vSize, iter->defOBJData.iRotateCount, m_iOBJIndex, iter->defOBJData.eOBJ_TYPE, iter->defOBJData.eOBJ_Attribute);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
-			m_iOBJIndex++;
-		}
-		m_mapLayer.emplace( LAYERTAG::ENVIRONMENT, m_pLayer );
-	}
-	if (eTag == OBJECTTAG::TRIGGER) {
-		string m_strText = "TriggerData";
-		TRIGGER* pTR = nullptr;
-
-		ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
-		ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
-		m_strText = pTag;
-
-		basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
-
-		while (true)
-		{
-			pTR = new TRIGGER;
-
+		else if (eTag == OBJECTTAG::TRIGGER) {
+			TRIGGER* pTR = new TRIGGER;
 			ReadFile(hFile, pTR, sizeof(TRIGGER), &dwByte, nullptr);
 
 			if (0 == dwByte)
@@ -570,27 +552,47 @@ HRESULT CStage::Load_Data_C_T(const TCHAR* pFilePath, OBJECTTAG eTag)
 				Safe_Delete(pTR);
 				break;
 			}
-
 			m_TriggerDataTemp.push_back(pTR);
 		}
-		CloseHandle(hFile);
+	}
 
-		Engine::CGameObject* pGameObject = nullptr;
+	CloseHandle(hFile);
 
-		for (auto& iter : m_TriggerDataTemp)
-		{
-			pGameObject = CTrigger::Create(m_pGraphicDev, iter->vPos, iter->iIndex, iter->vSize, iter->eTrCase, iter->eTrType, iter->eTrName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::TRIGGER, pGameObject), E_FAIL);
+	for (auto& data : m_VecCreatePoint) {
+		C_POINT* pOBJ = static_cast<C_POINT*>(data);
+		pGameObject = CBuild_Obj::Create(m_pGraphicDev, pOBJ->defOBJData.vPos, pOBJ->defOBJData.uiTextureNum,
+		pOBJ->defOBJData.vSize, pOBJ->defOBJData.iRotateCount, m_iOBJIndex, pOBJ->defOBJData.eOBJ_TYPE, pOBJ->defOBJData.eOBJ_Attribute);
+				
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(targetLayer->Add_GameObject(eTag, pGameObject), E_FAIL);
+
+		if (eTag == OBJECTTAG::BUILD_OBJ) {
+			m_iOBJIndex++;
 		}
-		m_mapLayer.emplace(LAYERTAG::GAMELOGIC, m_pGLayer);
+	}
+	for (auto data : m_TriggerDataTemp)
+	{
+		TRIGGER* pTR = static_cast<TRIGGER*>(data);
+		pGameObject = CTrigger::Create(m_pGraphicDev, pTR->vPos, pTR->iIndex, pTR->vSize, pTR->eTrCase, pTR->eTrType, pTR->eTrName);
+
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(targetLayer->Add_GameObject(eTag, pGameObject), E_FAIL);
+
 	}
 
 	delete[] pTag;
 	pTag = nullptr;
 
+	if (eTag == OBJECTTAG::BUILD_OBJ) {
+		m_mapLayer.emplace(LAYERTAG::ENVIRONMENT, m_pLayer);
+	}
+	else if (eTag == OBJECTTAG::TRIGGER) {
+		m_mapLayer.emplace(LAYERTAG::GAMELOGIC, m_pGLayer);
+	}
 	return S_OK;
 }
+
+
 
 // HRESULT CStage::Load_UI()
 // {

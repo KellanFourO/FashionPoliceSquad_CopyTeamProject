@@ -421,7 +421,14 @@
     <Filter Include="02. GameObject\01. Player\97.RAY">
       <UniqueIdentifier>{21d9c14e-a73f-4850-af67-26cddf3fb4bf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\06. Effect\04.JumpSmoke">
+
+    <Filter Include="04. Manager\11. FileMgr">
+      <UniqueIdentifier>{e1e5f8db-e95d-42e8-92df-702289fe9c15}</UniqueIdentifier>
+	</Filter>
+    <Filter Include="02. GameObject\01. Player\98.FootRay\00.Ray">
+      <UniqueIdentifier>{b9f3910d-5ddb-4403-9ea9-3a45d98e388c}</UniqueIdentifier>
+	</Filter>
+	<Filter Include="02. GameObject\06. Effect\04.JumpSmoke">
       <UniqueIdentifier>{20ed10b5-ed4c-41aa-9d8b-31b84071e0ff}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\06. Effect\00.Particle\02. ShockWave">
@@ -933,7 +940,13 @@
     <ClInclude Include="..\Header\MBulletExplosion.h">
       <Filter>02. GameObject\06. Effect\03.MBulletExplosion</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\ShockWave.h">
+    <ClInclude Include="..\Header\FileMgr.h">
+      <Filter>04. Manager\11. FileMgr</Filter>
+	</ClInclude>
+    <ClInclude Include="..\Header\Ray.h">
+      <Filter>02. GameObject\01. Player\98.FootRay\00.Ray</Filter>
+	</ClInclude>
+	<ClInclude Include="..\Header\ShockWave.h">
       <Filter>02. GameObject\06. Effect\00.Particle\02. ShockWave</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Ray.h">
@@ -1436,7 +1449,13 @@
     <ClCompile Include="..\Code\MBulletExplosion.cpp">
       <Filter>02. GameObject\06. Effect\03.MBulletExplosion</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\ShockWave.cpp">
+    <ClCompile Include="..\Code\FileMgr.cpp">
+      <Filter>04. Manager\11. FileMgr</Filter>
+	</ClCompile>
+    <ClCompile Include="..\Code\Ray.cpp">
+      <Filter>02. GameObject\01. Player\98.FootRay\00.Ray</Filter>
+	</ClCompile>
+	<ClCompile Include="..\Code\ShockWave.cpp">
       <Filter>02. GameObject\06. Effect\00.Particle\02. ShockWave</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Ray.cpp">

@@ -30,6 +30,9 @@ HRESULT CLobbyStage::Ready_Scene()
 
 	FAILED_CHECK_RETURN(Ready_Layer_UI(LAYERTAG::UI), E_FAIL);
 
+	Load_Data_C_T(L"../Bin/Data/Trigger/TriggerData", OBJECTTAG::TRIGGER); //TODO 트리거
+
+
 	srand(GetTickCount64());
 
 	//TODO - 승용추가 크로스헤어 추가, 기본 커서 안보이게
