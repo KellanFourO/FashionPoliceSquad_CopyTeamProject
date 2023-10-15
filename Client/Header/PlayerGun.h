@@ -75,7 +75,7 @@ public:
 		++m_iColorIndex;
 		if (m_iColorIndex > 8)
 			m_iColorIndex = 1;
-		m_pColorTag =(COLORTAG)m_iColorIndex;//색깔 인덱스말고 태그도 같이 넣어줘라
+		m_pColorTag =(COLORTAG)(m_iColorIndex-1);//색깔 인덱스말고 태그도 같이 넣어줘라
 	}
 
 protected:

@@ -23,6 +23,7 @@ public:
 	void  CheckGroup(OBJECTTAG _eLeft, OBJECTTAG _eRight);
 	//초기화
 	void  Reset();
+	bool CollisionRayToCube(CCollider* pCRay, CCollider* pCBox, _vec3 vRayDest);
 
 private:
 	map<ULONGLONG, bool> m_mapColInfo;
@@ -33,7 +34,10 @@ private:
 	//정적 물체와 충돌
 	void CheckCollisionStatic(OBJECTTAG _eObjectLeft);
 	void CheckCollisionStaticOBJ(OBJECTTAG _eObjectLeft);
-
+private:
+	_vec3 m_vRayDir;
+	_vec3 m_fDist;
+	_vec3 m_DestOriginLen;
 private:
 	virtual void Free();
 };

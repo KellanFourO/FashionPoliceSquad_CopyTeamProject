@@ -32,7 +32,7 @@ private:
 	_float				m_fAgainTime = 2;
 	_float				m_fJumpSpeed = 100.f;
 
-
+	_bool				m_bEffect= true;
 	_bool				m_bJump = false;
 	JUMPSTATE			m_eJumpState = JUMP_READY;
 

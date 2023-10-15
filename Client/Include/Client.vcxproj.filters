@@ -202,9 +202,6 @@
     <Filter Include="02. GameObject\02. Monster\03. Smoker">
       <UniqueIdentifier>{39dcff9d-080e-46cd-a4d5-0dfe77ae68ce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\06. Effect\00.Particle\02.JumpSmoke">
-      <UniqueIdentifier>{20ed10b5-ed4c-41aa-9d8b-31b84071e0ff}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\02. Monster\01. DullSuitMonster">
       <UniqueIdentifier>{9681e598-cfc7-4b20-9efa-6f2bbbbede41}</UniqueIdentifier>
     </Filter>
@@ -426,6 +423,15 @@
     </Filter>
     <Filter Include="04. Manager\11. FileMgr">
       <UniqueIdentifier>{e1e5f8db-e95d-42e8-92df-702289fe9c15}</UniqueIdentifier>
+	</Filter>
+    <Filter Include="02. GameObject\01. Player\98.FootRay\00.Ray">
+      <UniqueIdentifier>{b9f3910d-5ddb-4403-9ea9-3a45d98e388c}</UniqueIdentifier>
+	</Filter>
+	<Filter Include="02. GameObject\06. Effect\04.JumpSmoke">
+      <UniqueIdentifier>{20ed10b5-ed4c-41aa-9d8b-31b84071e0ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\06. Effect\00.Particle\02. ShockWave">
+      <UniqueIdentifier>{abe17bfb-ee99-461c-94d8-8e5918b97001}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -678,8 +684,8 @@
     <ClInclude Include="..\Header\Bullet_GoldBar.h">
       <Filter>02. GameObject\07. Bullet\02.BossBullet\00.GoldBar</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\JumpSmoke.h">
-      <Filter>02. GameObject\06. Effect\00.Particle\02.JumpSmoke</Filter>
+    <ClInclude Include="..\Header\JumpShockWaveEffect.h">
+      <Filter>02. GameObject\06. Effect\04.JumpSmoke</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BigDaddyMonster_Attack.h">
       <Filter>02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State\03. BigDaddyMonster_Attack</Filter>
@@ -935,6 +941,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\FileMgr.h">
       <Filter>04. Manager\11. FileMgr</Filter>
+	</ClInclude>
+    <ClInclude Include="..\Header\Ray.h">
+      <Filter>02. GameObject\01. Player\98.FootRay\00.Ray</Filter>
+	</ClInclude>
+	<ClInclude Include="..\Header\ShockWave.h">
+      <Filter>02. GameObject\06. Effect\00.Particle\02. ShockWave</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1151,8 +1163,8 @@
     <ClCompile Include="..\Code\Bullet_GoldBar.cpp">
       <Filter>02. GameObject\07. Bullet\02.BossBullet\00.GoldBar</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\JumpSmoke.cpp">
-      <Filter>02. GameObject\06. Effect\00.Particle\02.JumpSmoke</Filter>
+    <ClCompile Include="..\Code\JumpShockWaveEffect.cpp">
+      <Filter>02. GameObject\06. Effect\04.JumpSmoke</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BigDaddyMonster_Chase.cpp">
       <Filter>02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State\02. BigDaddyMonster_Chase</Filter>
@@ -1432,6 +1444,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\FileMgr.cpp">
       <Filter>04. Manager\11. FileMgr</Filter>
+	</ClCompile>
+    <ClCompile Include="..\Code\Ray.cpp">
+      <Filter>02. GameObject\01. Player\98.FootRay\00.Ray</Filter>
+	</ClCompile>
+	<ClCompile Include="..\Code\ShockWave.cpp">
+      <Filter>02. GameObject\06. Effect\00.Particle\02. ShockWave</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

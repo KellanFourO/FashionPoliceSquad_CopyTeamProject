@@ -68,6 +68,7 @@ _uint CLoading::Loading_For_Stage()
 	//Effect
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_MonsterBombEffectTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/MonsterBomb/MonsterBomb%d.png", 15)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_MBulletBombEffectTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Explosion5/%d.dds", 87)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_JumpShockWaveEffectTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/SY/JumpShockWave/JumpShockWave%d.png", 9)), E_FAIL);
 	Set_Value(3);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Player", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player0.png")), E_FAIL);
 	Set_Value(3);

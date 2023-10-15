@@ -515,16 +515,22 @@ HRESULT CLobbyStage::Load_Data_C_T(const TCHAR* pFilePath, OBJECTTAG eTag)
 
 void CLobbyStage::Admin_KeyInput()
 {
+	if (Engine::Get_DIKeyState(DIK_F4) & 0x80 && m_bAdminSwitch)
+	{
+		CEventMgr::GetInstance()->OnLevelUp(m_pGraphicDev, SCENETAG::LOBBY);
+		CEventMgr::GetInstance()->OnPause(true, SCENETAG::LOBBY);
+		m_bAdminSwitch = false;
+	}
+
 	if (Engine::Get_DIKeyState(DIK_F9) & 0x80 && m_bAdminSwitch)
 	{
-		CEventMgr::GetInstance()->OnLevelUp(m_pGraphicDev, SCENETAG::BOSS_STAGE);
-		CEventMgr::GetInstance()->OnPause(true, SCENETAG::BOSS_STAGE);
+		CEventMgr::GetInstance()->OnPause(false, SCENETAG::LOBBY);
 		m_bAdminSwitch = false;
 	}
 
 	if (Engine::Get_DIKeyState(DIK_F8) & 0x80 && m_bAdminSwitch)
 	{
-		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::BOSS_STAGE, DIALOGTAG::QUEST_1);
+		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::LOBBY, DIALOGTAG::QUEST_1);
 		m_bAdminSwitch = false;
 	}
 

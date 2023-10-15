@@ -52,14 +52,13 @@ HRESULT CStage::Ready_Scene()
 
 _int CStage::Update_Scene(const _float& fTimeDelta)
 {
-
 	_int	iExit = __super::Update_Scene(fTimeDelta);
 
 
-	if (m_bReadyCube)
-	{
-		Octree()->Update_Octree();
-	}
+// 	if (m_bReadyCube)
+// 	{
+// 		Octree()->Update_Octree();
+// 	}
 
 	m_fAdminTick += fTimeDelta;
 	if (m_fAdminTick >= 3.f)
@@ -75,11 +74,7 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 void CStage::LateUpdate_Scene()
 {
 	__super::LateUpdate_Scene();
-
-
 	CollisionManager()->LateUpdate_Collision();
-
-
 
 	Admin_KeyInput();
 
@@ -176,10 +171,10 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_HAND, pGameObject), E_FAIL);
 
 		//FootRay
-		pGameObject = CFootRay::Create(m_pGraphicDev);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::RAY, pGameObject), E_FAIL);
-		dynamic_cast<CFootRay*>(pGameObject)->Set_Host(pPlayer);
+		//pGameObject = CFootRay::Create(m_pGraphicDev);
+		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::RAY, pGameObject), E_FAIL);
+		//dynamic_cast<CFootRay*>(pGameObject)->Set_Host(pPlayer);
 
 		pGameObject = Management()->Get_ShotGunFlash();
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -663,10 +658,21 @@ HRESULT CStage::Load_Data_C_T(const TCHAR* pFilePath, OBJECTTAG eTag)
 
 void CStage::Admin_KeyInput()
 {
-	if (Engine::Get_DIKeyState(DIK_F9) & 0x80 && m_bAdminSwitch)
+	if (Engine::Get_DIKeyState(DIK_F4) & 0x80 && m_bAdminSwitch)
 	{
 		CEventMgr::GetInstance()->OnLevelUp(m_pGraphicDev, SCENETAG::STAGE);
 		CEventMgr::GetInstance()->OnPause(true,SCENETAG::STAGE);
+		m_bAdminSwitch = false;
+	}
+	if (Engine::Get_DIKeyState(DIK_F9) & 0x80 && m_bAdminSwitch)
+	{
+		CEventMgr::GetInstance()->OnPause(false, SCENETAG::STAGE);
+		m_bAdminSwitch = false;
+	}
+
+	if (Engine::Get_DIKeyState(DIK_F9) & 0x80 && m_bAdminSwitch)
+	{
+		CEventMgr::GetInstance()->OnPause(false, SCENETAG::STAGE);
 		m_bAdminSwitch = false;
 	}
 

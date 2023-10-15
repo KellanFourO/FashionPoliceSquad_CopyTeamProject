@@ -3,6 +3,8 @@
 #include "Base.h"
 #include "Bullet.h"
 #include "Engine_Define.h"
+#include "PaintBulletTrace.h"
+
 BEGIN(Engine)
 
 class CSYTex;
@@ -39,8 +41,7 @@ private:
 
 private:
 	CSYTex*			m_pBufferCom = nullptr; // 텍스처를 그리기위한 버퍼 컴포넌트
-	CTexture*		m_pTextureCom = nullptr; // 텍스쳐 컴포넌트
-	CTexture*		m_pPaintBulletTrace = nullptr;//총알 탄흔 컴포넌트
+	//CTexture*		m_pPaintBulletTrace = nullptr;//총알 탄흔 컴포넌트
 private:
 	_vec3			m_vDir, m_vPos;
 
@@ -52,6 +53,7 @@ private:
 	_vec3			m_vShotDir;
 	_vec3			m_vStartPos;
 
+	CPaintBulletTrace*    m_pTrace = nullptr; // 페인트 총알 흔적
 	D3DXCOLOR		m_FilterColor; // 필터 색상
 	_float			m_fBulletMoveRight, m_fBulletMoveDown, m_fBulletSpeed; // 랜덤으로 생성좌표를 이동시키기 위한 변수
 

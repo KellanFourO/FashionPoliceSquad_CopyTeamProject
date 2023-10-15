@@ -36,19 +36,20 @@
 #include <io.h>
 #pragma warning(disable : 4251)
 
-// #ifdef _DEBUG
+//#ifdef _DEBUG
 //
-// #define _CRTDBG_MAP_ALLOC
-// #include <stdlib.h>
-// #include <crtdbg.h>
+//#define _CRTDBG_MAP_ALLOC
+//#include <stdlib.h>
+//#include <crtdbg.h>
 //
-// #ifndef DBG_NEW
+//#ifndef DBG_NEW
 //
-// #define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
-// #define new DBG_NEW
+//#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+//#define new DBG_NEW
 //
-// #endif
-// #endif
+//#endif
+//#endif
+
 
 using namespace std;
 using namespace Engine;

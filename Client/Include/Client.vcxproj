@@ -226,6 +226,7 @@
     <ClInclude Include="..\Header\Bullet_GoldBar.h" />
     <ClInclude Include="..\Header\FileMgr.h" />
     <ClInclude Include="..\Header\LobbyStage.h" />
+    <ClInclude Include="..\Header\ShockWave.h" />
     <ClInclude Include="..\Header\Stage2.h" />
     <ClInclude Include="..\Header\MBulletBombEffect.h" />
     <ClInclude Include="..\Header\MBulletExplosion.h" />
@@ -246,7 +247,7 @@
     <ClInclude Include="..\Header\ImGuiManager.h" />
     <ClInclude Include="..\Header\FPSCamera.h" />
     <ClInclude Include="..\Header\Item.h" />
-    <ClInclude Include="..\Header\JumpSmoke.h" />
+    <ClInclude Include="..\Header\JumpShockWaveEffect.h" />
     <ClInclude Include="..\Header\KickBoardMonster.h" />
     <ClInclude Include="..\Header\KickBoardMonsterState.h" />
     <ClInclude Include="..\Header\KickBoardMonster_Attack.h" />
@@ -369,6 +370,7 @@
     <ClCompile Include="..\Code\FileMgr.cpp" />
     <ClCompile Include="..\Code\MBulletBombEffect.cpp" />
     <ClCompile Include="..\Code\MBulletExplosion.cpp" />
+    <ClCompile Include="..\Code\ShockWave.cpp" />
     <ClCompile Include="..\Code\Trigger.cpp" />
     <ClCompile Include="..\Code\DullSuitMonster_Attack.cpp" />
     <ClCompile Include="..\Code\DullSuitMonster.cpp" />
@@ -387,7 +389,7 @@
     <ClCompile Include="..\Code\DustGrey.cpp" />
     <ClCompile Include="..\Code\FootRay.cpp" />
     <ClCompile Include="..\Code\EventMgr.cpp" />
-    <ClCompile Include="..\Code\JumpSmoke.cpp" />
+    <ClCompile Include="..\Code\JumpShockWaveEffect.cpp" />
     <ClCompile Include="..\Code\KickBoardMonster.cpp" />
     <ClCompile Include="..\Code\KickBoardMonster_Attack.cpp" />
     <ClCompile Include="..\Code\KickBoardMonster_Chase.cpp" />

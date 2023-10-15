@@ -1,7 +1,8 @@
 #include "Export_Utility.h"
 #include "../../Header/CollisionMgr.h"
 
-
+#define CMP(x, y) \
+      (fabsf(x - y) <= FLT_EPSILON * fmaxf(1.0f, fmaxf(fabsf(x), fabsf(y))))
 IMPLEMENT_SINGLETON(CollisionMgr)
 
 CollisionMgr::CollisionMgr()
@@ -19,6 +20,11 @@ CollisionMgr::CollisionMgr()
 	CheckGroup(OBJECTTAG::BOSS, OBJECTTAG::PLAYERBULLET);
 	CheckGroup(OBJECTTAG::RAY, OBJECTTAG::BUILD_OBJ);
 	CheckGroup(OBJECTTAG::RAY, OBJECTTAG::MONSTER);
+	CheckGroup(OBJECTTAG::PLAYER_LAZER, OBJECTTAG::MONSTER);
+	CheckGroup(OBJECTTAG::PLAYER_LAZER, OBJECTTAG::BOSS);
+	CheckGroup(OBJECTTAG::RAY_LASER, OBJECTTAG::MONSTER);
+	CheckGroup(OBJECTTAG::RAY_LASER, OBJECTTAG::BOSS);
+	
 	CheckGroup(OBJECTTAG::PLAYER, OBJECTTAG::TRIGGER); //유진 추가
 
 }
@@ -35,9 +41,11 @@ void CollisionMgr::LateUpdate_Collision()
 	CheckCollisionStatic(OBJECTTAG::BOSS);
 	CheckCollisionStatic(OBJECTTAG::MONSTERBULLET);
 	CheckCollisionStatic(OBJECTTAG::PLAYERBULLET);
+
 	//CheckCollisionStatic(OBJECTTAG::ITEM);
 	CheckCollisionStatic(OBJECTTAG::RAY);
-
+	CheckCollisionStatic(OBJECTTAG::RAY);
+	CheckCollisionStatic(OBJECTTAG::RAY_LASER);
 	//static OBj
 	CheckCollisionStaticOBJ(OBJECTTAG::PLAYER);
 	CheckCollisionStaticOBJ(OBJECTTAG::MONSTER);
@@ -45,6 +53,11 @@ void CollisionMgr::LateUpdate_Collision()
 	CheckCollisionStaticOBJ(OBJECTTAG::MONSTERBULLET);
 	CheckCollisionStaticOBJ(OBJECTTAG::PLAYERBULLET);
 	CheckCollisionStaticOBJ(OBJECTTAG::RAY);
+	CheckCollisionStaticOBJ(OBJECTTAG::PLAYER_LAZER);
+	CheckCollisionStaticOBJ(OBJECTTAG::RAY_LASER);
+	
+	//Ray
+
 
 	//dynamic Object
 	for (UINT iRow = 0; iRow < (UINT)OBJECTTAG::OBJECT_END; ++iRow)
@@ -56,7 +69,6 @@ void CollisionMgr::LateUpdate_Collision()
 
 void CollisionMgr::CheckGroup(OBJECTTAG _eLeft, OBJECTTAG _eRight)
 {
-
 
 	_uint iRow = (_uint)_eLeft;
 	_uint iCol = (_uint)_eRight;
@@ -122,7 +134,6 @@ void CollisionMgr::CheckCollisionByType(OBJECTTAG _eObjectLeft, OBJECTTAG _eObje
 
 			if (nullptr == iterR->Get_Collider() || iterL == iterR)
 				continue;
-
 
 			CCollider* pLeftCol = iterL->Get_Collider();
 			static_cast<CCollider*>(iterL->Get_Component(ID_DYNAMIC,COMPONENTTAG::COLLIDER));
@@ -208,7 +219,6 @@ void CollisionMgr::CheckCollisionStatic(OBJECTTAG _eObjectLeft)
 	{
 		if (nullptr == iterL->Get_Collider())
 			continue;
-
 
 		_vec3 vHostPos = dynamic_cast<CTransform*>(iterL->Get_Component(ID_DYNAMIC, COMPONENTTAG::TRANSFORM))->m_vInfo[INFO_POS];
 		COctreeNode* pParentNode = Octree()->GetParentNodeByPos(vHostPos, Engine::Octree()->GetOctreeRoot());
@@ -383,4 +393,75 @@ void CollisionMgr::CheckCollisionStaticOBJ(OBJECTTAG _eObjectLeft)
 void CollisionMgr::Free()
 {
 
+}
+bool CollisionMgr::CollisionRayToCube(CCollider* pCRay, CCollider* pCBox, _vec3 vRayDest)
+{
+
+	//pcRay가 출발 vRayDest가 도착
+	_vec3 vRayOrigin = pCRay->GetCenterPos();
+
+	m_vRayDir = vRayDest - vRayOrigin;
+	D3DXVec3Normalize(&m_vRayDir, &m_vRayDir);
+
+	_vec3 vRayToCenter = pCBox->GetCenterPos() - vRayOrigin;
+
+	_vec3 vColliderDir[3] = { pCBox->GetAxisDir()[0], pCBox->GetAxisDir()[1], pCBox->GetAxisDir()[2] };
+
+	_vec3 vAxisDotToRD = { D3DXVec3Dot(&(vColliderDir[0]), &m_vRayDir),
+					   D3DXVec3Dot(&(vColliderDir[1]), &m_vRayDir),
+					   D3DXVec3Dot(&(vColliderDir[2]), &m_vRayDir) };
+
+	_vec3 vAxisDotToRTC = { D3DXVec3Dot(&(vColliderDir[0]), &vRayToCenter),
+					   D3DXVec3Dot(&(vColliderDir[1]), &vRayToCenter),
+					   D3DXVec3Dot(&(vColliderDir[2]), &vRayToCenter) };
+
+	float Temp[6] = {};
+
+	// 각 축에 대한 반복문
+	for (int i = 0; i < 3; ++i)
+	{
+		// 광선과 슬랩이 평행한 경우
+		if (CMP(vAxisDotToRD[i], 0))
+		{
+			// 광선과 슬랩이 평행한 경우
+			if (-vAxisDotToRTC[i] - pCBox->GetAxisLen()[i] > 0 || -vAxisDotToRTC.x + pCBox->GetAxisLen()[i] < 0)
+			{
+				return false; // 슬랩 밖에 있는 경우 조기 종료
+			}
+			vAxisDotToRD[i] = 0.00001f; // 0으로 나누는 것을 방지하기 위한 작은 값
+		}
+
+		// 축에 대한 최소 및 최대값 계산
+		Temp[i * 2 + 0] = (vAxisDotToRTC[i] + pCBox->GetAxisLen()[i]) / vAxisDotToRD[i]; // tmin[x, y, z]
+		Temp[i * 2 + 1] = (vAxisDotToRTC[i] - pCBox->GetAxisLen()[i]) / vAxisDotToRD[i]; // tmax[x, y, z]
+	}
+
+	// 광선이 AABB와 교차하는지 여부를 확인하기 위해 'tmin' 및 'tmax' 값 계산
+	float tmin = fmaxf(fmaxf(fminf(Temp[0], Temp[1]), fminf(Temp[2], Temp[3])), fminf(Temp[4], Temp[5]));
+	float tmax = fminf(fminf(fmaxf(Temp[0], Temp[1]), fmaxf(Temp[2], Temp[3])), fmaxf(Temp[4], Temp[5]));
+
+
+	// 'tmax'가 0보다 작으면 광선은 AABB와 교차하지만 AABB 전체가 광선의 원점 뒤에 있음
+	if (tmax < 0) {
+		return false;
+	}
+
+	// 'tmin'이 'tmax'보다 크면 광선은 AABB와 교차하지 않음
+	if (tmin > tmax) {
+		return false;
+	}
+
+	// 'tmin'이 0보다 작으면 'tmax'가 더 가까운 교차 지점을 나타냄
+	float t_result = tmin;
+	if (tmin < 0.0f) {
+		t_result = tmax;
+	}
+	//이것도 바꿔야 됨 
+	m_fDist = (m_vRayDir * t_result);
+	m_DestOriginLen = vRayDest - vRayOrigin;
+	_float fDist = D3DXVec3Length(&(m_fDist));
+	if (fDist < D3DXVec3Length(&(m_DestOriginLen)))
+		return true;
+	else
+		return false;
 }
