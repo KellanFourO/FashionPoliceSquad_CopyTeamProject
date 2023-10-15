@@ -41,7 +41,6 @@ public:
 	void			FirePosition(const _float& fTimeDelta);
 	void			SearchRangeTarget();
 
-
 private:
 	void			Mouse_Input();
 
