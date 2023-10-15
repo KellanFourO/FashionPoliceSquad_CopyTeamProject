@@ -138,7 +138,7 @@ HRESULT CStage::Ready_Layer_Environment(LAYERTAG eLayerTag)
 	Load_Data(L"../Bin/Data/Map/MapData", OBJECTTAG::BUILD_CUBE);		// 큐브텍스
 	Load_Data(L"../Bin/Data/OBJ/OBJData", OBJECTTAG::BUILD_OBJ);		//TODO 얘는 섞여있다 큐브텍스랑 rcTEXT
 	//Load_Data_C_T(L"../Bin/Data/CPoint/CPointData", OBJECTTAG::BUILD_OBJ); //TODO
-	
+
 	m_mapLayer.insert({ eLayerTag, m_pLayer });
 
 	return S_OK;

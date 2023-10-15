@@ -41,7 +41,7 @@ _int CBullet::Update_GameObject(const _float& fTimeDelta)
 		m_bLateInit = false;
 	}
 
-	if (m_bShot && m_eObjectTag !=OBJECTTAG::PLAYER_LAZER && !m_bDead)
+	if (m_bShot && m_eObjectTag != OBJECTTAG::PLAYER_LAZER && !m_bDead)
 	{
 		_vec3 vPlayerPos, vMyPos, vLook;
 
@@ -57,7 +57,7 @@ _int CBullet::Update_GameObject(const _float& fTimeDelta)
 		m_pTransformCom->Move_Pos(&m_vShotDir, fTimeDelta, m_fSpeed);
 	}
 
-
+	if(m_eObjectTag != OBJECTTAG::PLAYER_LAZER)
 	m_pCollider->SetCenterPos(m_pTransformCom->m_vInfo[INFO_POS]);
 
 	if (m_bDead)
@@ -99,8 +99,11 @@ void CBullet::OnCollisionEnter(CCollider* _pOther)
 	// && m_eHitType == _pOther->Get_Host()->Get_HitType()f
 	else if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::MONSTER)
 	{
+		if (m_eBulletType == _pOther->Get_Host()->Get_HitType())
+		{
+			dynamic_cast<CMonster*>(_pOther->Get_Host())->Attacked(m_fDmg);
+		}
 		//TODO 몬스터 총알 오브젝트 풀링 할거면 여기서
-		dynamic_cast<CMonster*>(_pOther->Get_Host())->Attacked(m_fDmg);
 		m_bDead = true;
 	}
 
@@ -122,23 +125,6 @@ void CBullet::OnCollisionEnter(CCollider* _pOther)
 
 void CBullet::OnCollisionStay(CCollider* _pOther)
 {
-	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE)
-	{
-		m_bDead = true;
-	}
-	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYER)
-	{
-		dynamic_cast<CPlayer*>(_pOther->Get_Host())->Attacked(m_fDmg);
-		//TODO 플레이어 총알 오브젝트 풀링 할거면 여기서
-	}
-	// && m_eHitType == _pOther->Get_Host()->Get_HitType()f
-	else if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::MONSTER)
-	{
-		//TODO 몬스터 총알 오브젝트 풀링 할거면 여기서
-		dynamic_cast<CMonster*>(_pOther->Get_Host())->Attacked(m_fDmg);
-	}
-	else
-		return;
 }
 
 void CBullet::OnCollisionExit(CCollider* _pOther)

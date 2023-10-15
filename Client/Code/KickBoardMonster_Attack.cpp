@@ -36,8 +36,10 @@ CMonsterState* CKickBoardMonster_Attack::Update(CMonster* Monster, const float& 
 	case CKickBoardMonster_Attack::READY:
 	{
 		m_fTick += fDetltaTime;
+		m_pHost->Chase_Target(fDetltaTime);
 
-		if (m_fTick > 1.f)
+
+		if (m_pHost->ChaseCatch())
 		{
 			++m_fCurFrame;
 			m_eAttack = JUMP;
@@ -49,28 +51,22 @@ CMonsterState* CKickBoardMonster_Attack::Update(CMonster* Monster, const float& 
 	case CKickBoardMonster_Attack::JUMP:
 	{
 		m_fTick += fDetltaTime;
-		m_pHost->Chase_Target(fDetltaTime);
-		if (m_fTick >= 1.f)
+		_vec3 vHostPos = m_pHost->Get_Transform()->m_vInfo[INFO_POS];
+		_vec3 vPlayerPos = Management()->Get_Player()->Get_Transform()->m_vInfo[INFO_POS];
+		_vec3 vDir = vPlayerPos - vHostPos;
+		D3DXVec3Normalize(&vDir, &vDir);
+
+		if (m_bJump)
 		{
-
-			++m_fCurFrame;
-
+			m_pHost->Get_RigidBodyCom()->Set_Force(_vec3{ vDir.x * 20,45.f,vDir.z });
+			m_bJump = false;
 			m_eAttack = JUMPEND;
-			m_fTick = 0.f;
 		}
 		break;
 	}
 
 	case CKickBoardMonster_Attack::JUMPEND:
 	{
-		if (m_bJump)
-		{
-
-
-
-			m_pHost->Get_RigidBodyCom()->Set_Force(_vec3{ -m_pHost->Get_Length(),40.f,0.f });
-			m_bJump = false;
-		}
 		m_fTick += fDetltaTime;
 
 		if (m_fTick >= 1.f)
@@ -81,12 +77,7 @@ CMonsterState* CKickBoardMonster_Attack::Update(CMonster* Monster, const float& 
 				return dynamic_cast<CKickBoardMonster*>(m_pHost)->Get_State(1);
 			}
 
-			//TODO 공격 후 패트롤 상태로 변경
-// 			else
-// 			{
-// 				return dynamic_cast<CKickBoardMonster*>(m_pHost)->Get_State(3);
-// 			}
-			m_fCurFrame = 2;
+			m_fCurFrame = 3;
 			m_eAttack = READY;
 			m_bJump = true;
 			m_fTick = 0.f;

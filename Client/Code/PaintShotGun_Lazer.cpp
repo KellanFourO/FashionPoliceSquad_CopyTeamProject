@@ -26,16 +26,17 @@ CPlayerGunState* CPaintShotGun_Lazer::Update(CPlayerGun* ShotGun, const float& f
 {
     m_fBehaviorTime += fTimeDelta;
 
-    if (!m_pHost->Get_RBFire())
+    if (m_pHost->Get_RBFire())
     {
-        dynamic_cast<CPaintShotGun*>(m_pHost)->Set_BoolLazer(false);
-        dynamic_cast<CPaintShotGun*>(m_pHost)->Get_Lazer()->Set_Fire(false);
-        return dynamic_cast<CPaintShotGun*>(m_pHost)->Get_State(0);
+        dynamic_cast<CPaintShotGun*>(m_pHost)->Set_BoolLazer(true);
+        dynamic_cast<CPaintShotGun*>(m_pHost)->Get_Lazer()->Set_Fire(true);
     }
     else
     {
-        dynamic_cast<CPaintShotGun*>(m_pHost)->Get_Lazer()->Set_Fire(true);
+        dynamic_cast<CPaintShotGun*>(m_pHost)->Set_BoolLazer(false);
+        dynamic_cast<CPaintShotGun*>(m_pHost)->Get_Lazer()->Set_Fire(false);
         dynamic_cast<CPaintShotGun*>(m_pHost)->Get_Lazer()->Fire(m_pHost->Get_ShotPos(),m_pHost->Get_HostTransform()->m_vInfo[INFO_LOOK]);
+        return dynamic_cast<CPaintShotGun*>(m_pHost)->Get_State(0);
     }
 
 

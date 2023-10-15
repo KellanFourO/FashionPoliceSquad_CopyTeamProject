@@ -55,7 +55,7 @@ void CCollider::Render_Collider()
 
  	m_pGraphicDev->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
  	m_pGraphicDev->SetTexture(0, NULL);  //유진 추가 : 콜라이더 와이어프레임 선 색깔 고정
- 	
+
  		//m_pGraphicDev->SetTransform(D3DTS_WORLD, &matCollider);
 		//	_matrix matCollider, matrixPre;  //월드 이미 Transform 에서 받아옴
 		//	D3DXMatrixIdentity(&matCollider);

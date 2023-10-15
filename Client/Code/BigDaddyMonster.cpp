@@ -41,6 +41,7 @@ HRESULT CBigDaddyMonster::Ready_GameObject()
 	INFO.fHP = 100.f;
 	INFO.fMaxHP = 100.f;
 
+
 	m_fDectedRange = 150.f; //! 탐색 범위
 	m_fAttackRange = 100.f; //! 공격 범위
 
