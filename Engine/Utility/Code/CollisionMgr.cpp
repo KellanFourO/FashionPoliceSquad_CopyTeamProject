@@ -25,7 +25,7 @@ CollisionMgr::CollisionMgr()
 	CheckGroup(OBJECTTAG::RAY_LASER, OBJECTTAG::MONSTER);
 	CheckGroup(OBJECTTAG::RAY_LASER, OBJECTTAG::BOSS);
 	
-	CheckGroup(OBJECTTAG::PLAYER, OBJECTTAG::TRIGGER); //유진 추가
+	CheckGroup(OBJECTTAG::PLAYER, OBJECTTAG::O_TRIGGER); //유진 추가
 
 }
 

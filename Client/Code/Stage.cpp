@@ -518,7 +518,7 @@ HRESULT CStage::Load_Data_C_T(const TCHAR* pFilePath, OBJECTTAG eTag)
 		expectedTag = "CPointData";
 		targetLayer = m_pLayer;
 	}
-	else if (eTag == OBJECTTAG::TRIGGER) {
+	else if (eTag == OBJECTTAG::O_TRIGGER) {
 		expectedTag = "TriggerData";
 		targetLayer = m_pGLayer;
 	}
@@ -542,7 +542,7 @@ HRESULT CStage::Load_Data_C_T(const TCHAR* pFilePath, OBJECTTAG eTag)
 			}
 			m_VecCreatePoint.push_back(pOBJ);
 		}
-		else if (eTag == OBJECTTAG::TRIGGER) {
+		else if (eTag == OBJECTTAG::O_TRIGGER) {
 			TRIGGER* pTR = new TRIGGER;
 			ReadFile(hFile, pTR, sizeof(TRIGGER), &dwByte, nullptr);
 
@@ -585,7 +585,7 @@ HRESULT CStage::Load_Data_C_T(const TCHAR* pFilePath, OBJECTTAG eTag)
 	if (eTag == OBJECTTAG::BUILD_OBJ) {
 		m_mapLayer.emplace(LAYERTAG::ENVIRONMENT, m_pLayer);
 	}
-	else if (eTag == OBJECTTAG::TRIGGER) {
+	else if (eTag == OBJECTTAG::O_TRIGGER) {
 		m_mapLayer.emplace(LAYERTAG::GAMELOGIC, m_pGLayer);
 	}
 	return S_OK;

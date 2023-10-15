@@ -537,8 +537,10 @@ void CPlayer::StateMachine(_float _fTimeDelta)
 
 void CPlayer::OnCollisionEnter(CCollider* _pOther)
 {
-	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE || _pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ
-		|| _pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::TRIGGER	)
+	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE || 
+		(_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ && 
+			_pOther->Get_OBJAttribute() != OBJ_ATTRIBUTE::ForPaint_OBJ)
+		|| _pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::O_TRIGGER )
 	{
 		_vec3	vOtherPos = _pOther->GetCenterPos();
 		_float* fOtherAxis = _pOther->GetAxisLen();
@@ -623,8 +625,10 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 void CPlayer::OnCollisionStay(CCollider* _pOther)
 {
 
-	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE|| _pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ
-		|| _pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::TRIGGER )
+	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE|| 
+		(_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ &&
+			_pOther->Get_OBJAttribute() != OBJ_ATTRIBUTE::ForPaint_OBJ)
+		|| _pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::O_TRIGGER )
 	{
 		_vec3	vOtherPos = _pOther->GetCenterPos();
 		_float* fOtherAxis = _pOther->GetAxisLen();

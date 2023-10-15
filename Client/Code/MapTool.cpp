@@ -72,7 +72,7 @@ _int CMapTool::Update_Scene(const _float& fTimeDelta)
     }
     else if (CImGuiManager::GetInstance()->Get_TriggerLoad_Check() == true)
     {
-        Load_Data_C_T(L"../Bin/Data/Trigger/TriggerData", OBJECTTAG::TRIGGER);
+        Load_Data_C_T(L"../Bin/Data/Trigger/TriggerData", OBJECTTAG::O_TRIGGER);
         CImGuiManager::GetInstance()->Set_TriggerLoad_Check();
     }
 
@@ -253,7 +253,7 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
 					pGameObject = CTrigger::Create(m_pGraphicDev, CursorTemp, m_iTriggerIndex, CubeSize, m_eTRCase, m_eTRType, m_eTrName);
 
 					NULL_CHECK_RETURN(pGameObject, E_FAIL);
-					FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::TRIGGER, pGameObject), E_FAIL);
+					FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::O_TRIGGER, pGameObject), E_FAIL);
 
                     m_mapLayer.emplace( LAYERTAG::GAMELOGIC, m_pGLayer);
 
@@ -548,7 +548,7 @@ HRESULT CMapTool::Load_Data_C_T(const TCHAR* pFilePath, OBJECTTAG eTag)
 		m_mapLayer.emplace(LAYERTAG::ENVIRONMENT, m_pLayer);
 	}
 
-	if (eTag == OBJECTTAG::TRIGGER) {
+	if (eTag == OBJECTTAG::O_TRIGGER) {
 		string m_strText = "TriggerData";
 		TRIGGER* pTR = nullptr;
 
@@ -580,7 +580,7 @@ HRESULT CMapTool::Load_Data_C_T(const TCHAR* pFilePath, OBJECTTAG eTag)
 		{
 			pGameObject = CTrigger::Create(m_pGraphicDev, iter->vPos, iter->iIndex, iter->vSize, iter->eTrCase, iter->eTrType, iter->eTrName);
 			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::TRIGGER, pGameObject), E_FAIL);
+			FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::O_TRIGGER, pGameObject), E_FAIL);
 		}
 		m_mapLayer.emplace(LAYERTAG::GAMELOGIC, m_pGLayer);
 	}
@@ -662,13 +662,13 @@ HRESULT CMapTool::Delete_Map()
 
 
                     if (IndexTemp != -1) {
-                        auto& VectorTemp = Engine::Management()->GetInstance()->Get_Scene()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::TRIGGER);
+                        auto& VectorTemp = Engine::Management()->GetInstance()->Get_Scene()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::O_TRIGGER);
 
                         for (int i = 0; i < VectorTemp.size(); ++i)
                         {
                             if (IndexTemp == VectorTemp[i]->Get_iIndex())
                             {
-                                m_pLayer->Delete_GameObject(OBJECTTAG::TRIGGER, VectorTemp[i], IndexTemp);
+                                m_pLayer->Delete_GameObject(OBJECTTAG::O_TRIGGER, VectorTemp[i], IndexTemp);
                                 break;
                             }
                         }

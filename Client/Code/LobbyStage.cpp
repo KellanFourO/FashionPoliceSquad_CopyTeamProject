@@ -30,7 +30,7 @@ HRESULT CLobbyStage::Ready_Scene()
 
 	FAILED_CHECK_RETURN(Ready_Layer_UI(LAYERTAG::UI), E_FAIL);
 
-	Load_Data_C_T(L"../Bin/Data/Trigger/TriggerData", OBJECTTAG::TRIGGER); //TODO 트리거
+	Load_Data_C_T(L"../Bin/Data/Trigger/TriggerData", OBJECTTAG::O_TRIGGER); //TODO 트리거
 
 
 	srand(GetTickCount64());
@@ -468,7 +468,7 @@ HRESULT CLobbyStage::Load_Data_C_T(const TCHAR* pFilePath, OBJECTTAG eTag)
 		}
 		m_mapLayer.emplace(LAYERTAG::ENVIRONMENT, m_pLayer);
 	}
-	if (eTag == OBJECTTAG::TRIGGER) {
+	if (eTag == OBJECTTAG::O_TRIGGER) {
 		string m_strText = "TriggerData";
 		TRIGGER* pTR = nullptr;
 
@@ -500,7 +500,7 @@ HRESULT CLobbyStage::Load_Data_C_T(const TCHAR* pFilePath, OBJECTTAG eTag)
 		{
 			pGameObject = CTrigger::Create(m_pGraphicDev, iter->vPos, iter->iIndex, iter->vSize, iter->eTrCase, iter->eTrType, iter->eTrName);
 			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::TRIGGER, pGameObject), E_FAIL);
+			FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::O_TRIGGER, pGameObject), E_FAIL);
 		}
 		m_mapLayer.emplace(LAYERTAG::GAMELOGIC, m_pGLayer);
 	}
