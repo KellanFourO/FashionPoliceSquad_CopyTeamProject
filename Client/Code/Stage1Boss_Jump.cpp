@@ -4,7 +4,8 @@
 #include "Texture.h"
 #include "RigidBody.h"
 #include <random>
-
+#include "JumpShockWaveEffect.h"
+#include "Export_Utility.h"
 CStage1Boss_Jump::CStage1Boss_Jump()
 {
 
@@ -120,6 +121,15 @@ CMonsterState* CStage1Boss_Jump::Update(CMonster* Monster, const float& fDetltaT
 		{
 			m_fTick += fDetltaTime;
 
+			if (m_bEffect)
+			{
+				_vec3 vHostPos = m_pHost->Get_Transform()->m_vInfo[INFO_POS];
+				_vec3 vCreatePos = {vHostPos.x, vHostPos.y - 20.f, vHostPos.z};
+				CGameObject* pShockWave = CJumpShockWaveEffect::Create(m_pHost->Get_GraphicDev(), vCreatePos);
+				Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::EFFECT,pShockWave);
+				m_bEffect = false;
+			}
+
 			if (m_fTick > m_fAgainTime)
 			{
 				random_device rd;
@@ -128,7 +138,6 @@ CMonsterState* CStage1Boss_Jump::Update(CMonster* Monster, const float& fDetltaT
 				uniform_int_distribution<int> distribution(2, 3); // 랜덤 시작 부터 마지막
 
 				int iRandomValue = distribution(gen);
-
 				//return dynamic_cast<CStage1Boss*>(m_pHost)->Get_State(2);
 				return dynamic_cast<CStage1Boss*>(m_pHost)->Get_State(iRandomValue);
 				m_fTick = 0;
@@ -147,6 +156,7 @@ void CStage1Boss_Jump::LateUpdate(CMonster* _Monster)
 
 void CStage1Boss_Jump::Release(CMonster* _Monster)
 {
+	m_bEffect = true;
 }
 
 void CStage1Boss_Jump::Render(CMonster* _Monster)

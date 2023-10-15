@@ -33,10 +33,7 @@ _int CBullet::Update_GameObject(const _float& fTimeDelta)
 	if(m_eObjectTag != OBJECTTAG::PLAYER_LAZER)
 	Destroy(fTimeDelta);
 
-	if (m_bDead)
-	{
-		return OBJ_DEAD;
-	}
+
 
 	if (m_bLateInit)
 	{
@@ -44,7 +41,7 @@ _int CBullet::Update_GameObject(const _float& fTimeDelta)
 		m_bLateInit = false;
 	}
 
-	if (m_bShot && m_eObjectTag !=OBJECTTAG::PLAYER_LAZER)
+	if (m_bShot && m_eObjectTag !=OBJECTTAG::PLAYER_LAZER && !m_bDead)
 	{
 		_vec3 vPlayerPos, vMyPos, vLook;
 
@@ -63,6 +60,10 @@ _int CBullet::Update_GameObject(const _float& fTimeDelta)
 
 	m_pCollider->SetCenterPos(m_pTransformCom->m_vInfo[INFO_POS]);
 
+	if (m_bDead)
+	{
+		return OBJ_DEAD;
+	}
 
 	return iExit;
 }
@@ -70,6 +71,7 @@ _int CBullet::Update_GameObject(const _float& fTimeDelta)
 void CBullet::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
+
 }
 
 void CBullet::Render_GameObject()
@@ -111,6 +113,7 @@ void CBullet::OnCollisionEnter(CCollider* _pOther)
 
 	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE)
 	{
+
 		m_bDead = true;
 	}
 	else

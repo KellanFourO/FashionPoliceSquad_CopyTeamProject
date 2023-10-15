@@ -202,9 +202,6 @@
     <Filter Include="02. GameObject\02. Monster\03. Smoker">
       <UniqueIdentifier>{39dcff9d-080e-46cd-a4d5-0dfe77ae68ce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\06. Effect\00.Particle\02.JumpSmoke">
-      <UniqueIdentifier>{20ed10b5-ed4c-41aa-9d8b-31b84071e0ff}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\02. Monster\01. DullSuitMonster">
       <UniqueIdentifier>{9681e598-cfc7-4b20-9efa-6f2bbbbede41}</UniqueIdentifier>
     </Filter>
@@ -414,8 +411,8 @@
     </Filter>
     <Filter Include="01.Scene\05. Stage2">
       <UniqueIdentifier>{1711dd9d-49b7-4cf7-a461-269df59dfedb}</UniqueIdentifier>
-	</Filter>
-	<Filter Include="02. GameObject\06. Effect\00.Particle\03.MBulletExplosion">
+    </Filter>
+    <Filter Include="02. GameObject\06. Effect\00.Particle\03.MBulletExplosion">
       <UniqueIdentifier>{40eb4edb-d36c-43a6-8cf3-715153290fb0}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\06. Effect\03.MBulletExplosion">
@@ -423,6 +420,12 @@
     </Filter>
     <Filter Include="02. GameObject\01. Player\97.RAY">
       <UniqueIdentifier>{21d9c14e-a73f-4850-af67-26cddf3fb4bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\06. Effect\04.JumpSmoke">
+      <UniqueIdentifier>{20ed10b5-ed4c-41aa-9d8b-31b84071e0ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\06. Effect\00.Particle\02. ShockWave">
+      <UniqueIdentifier>{abe17bfb-ee99-461c-94d8-8e5918b97001}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -675,8 +678,8 @@
     <ClInclude Include="..\Header\Bullet_GoldBar.h">
       <Filter>02. GameObject\07. Bullet\02.BossBullet\00.GoldBar</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\JumpSmoke.h">
-      <Filter>02. GameObject\06. Effect\00.Particle\02.JumpSmoke</Filter>
+    <ClInclude Include="..\Header\JumpShockWaveEffect.h">
+      <Filter>02. GameObject\06. Effect\04.JumpSmoke</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BigDaddyMonster_Attack.h">
       <Filter>02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State\03. BigDaddyMonster_Attack</Filter>
@@ -921,7 +924,6 @@
     <ClInclude Include="..\Header\PlayerBullet.h">
       <Filter>02. GameObject\07. Bullet\00.PlayerBullet</Filter>
     </ClInclude>
-
     <ClInclude Include="..\Header\UI_MonsterHPBar.h">
       <Filter>02. GameObject\20.UI\06. HPBar</Filter>
     </ClInclude>
@@ -930,6 +932,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\MBulletExplosion.h">
       <Filter>02. GameObject\06. Effect\03.MBulletExplosion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ShockWave.h">
+      <Filter>02. GameObject\06. Effect\00.Particle\02. ShockWave</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1146,8 +1151,8 @@
     <ClCompile Include="..\Code\Bullet_GoldBar.cpp">
       <Filter>02. GameObject\07. Bullet\02.BossBullet\00.GoldBar</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\JumpSmoke.cpp">
-      <Filter>02. GameObject\06. Effect\00.Particle\02.JumpSmoke</Filter>
+    <ClCompile Include="..\Code\JumpShockWaveEffect.cpp">
+      <Filter>02. GameObject\06. Effect\04.JumpSmoke</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\BigDaddyMonster_Chase.cpp">
       <Filter>02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State\02. BigDaddyMonster_Chase</Filter>
@@ -1416,7 +1421,6 @@
     <ClCompile Include="..\Code\Rifle_Bullet1.cpp">
       <Filter>02. GameObject\07. Bullet\00.PlayerBullet</Filter>
     </ClCompile>
-
     <ClCompile Include="..\Code\UI_MonsterHPBar.cpp">
       <Filter>02. GameObject\20.UI\06. HPBar</Filter>
     </ClCompile>
@@ -1425,6 +1429,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\MBulletExplosion.cpp">
       <Filter>02. GameObject\06. Effect\03.MBulletExplosion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ShockWave.cpp">
+      <Filter>02. GameObject\06. Effect\00.Particle\02. ShockWave</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

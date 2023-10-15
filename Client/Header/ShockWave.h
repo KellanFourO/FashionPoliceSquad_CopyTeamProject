@@ -10,19 +10,18 @@ BEGIN(Engine)
 class CTransform;
 
 END
-class CJumpSmoke : public CPSystem
+class CShockWave : public CPSystem
 {
 private:
-	explicit CJumpSmoke(LPDIRECT3DDEVICE9 pGraphicDev);
-	virtual ~CJumpSmoke();
+	explicit CShockWave(LPDIRECT3DDEVICE9 pGraphicDev);
+	virtual ~CShockWave();
 public:
 	HRESULT							Ready_GameObject(_vec3 vOriginPos, _int numParticles);
 	_int							Update_GameObject(const _float& fTimeDelta);
 	void							LateUpdate_GameObject(void);
 	void							Render_GameObject();
-
-	static CJumpSmoke*				Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vOriginPos, int numParticles);
-
+public:
+	static CShockWave*				Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vOriginPos, int numParticles);
 private:
 	virtual void					ResetParticle(Attribute* attribute);
 	HRESULT							Add_Component();

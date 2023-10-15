@@ -456,10 +456,16 @@ HRESULT CBossStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 
 void CBossStage::Admin_KeyInput()
 {
-	if (Engine::Get_DIKeyState(DIK_F9) & 0x80 && m_bAdminSwitch)
+	if (Engine::Get_DIKeyState(DIK_F4) & 0x80 && m_bAdminSwitch)
 	{
 		CEventMgr::GetInstance()->OnLevelUp(m_pGraphicDev, SCENETAG::BOSS_STAGE);
 		CEventMgr::GetInstance()->OnPause(true, SCENETAG::BOSS_STAGE);
+		m_bAdminSwitch = false;
+	}
+
+	if (Engine::Get_DIKeyState(DIK_F9) & 0x80 && m_bAdminSwitch)
+	{
+		CEventMgr::GetInstance()->OnPause(false, SCENETAG::BOSS_STAGE);
 		m_bAdminSwitch = false;
 	}
 

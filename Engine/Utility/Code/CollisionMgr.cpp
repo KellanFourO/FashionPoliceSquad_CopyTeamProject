@@ -34,6 +34,7 @@ void CollisionMgr::LateUpdate_Collision()
 	CheckCollisionStatic(OBJECTTAG::BOSS);
 	CheckCollisionStatic(OBJECTTAG::MONSTERBULLET);
 	CheckCollisionStatic(OBJECTTAG::PLAYERBULLET);
+
 	//CheckCollisionStatic(OBJECTTAG::ITEM);
 	CheckCollisionStatic(OBJECTTAG::RAY);
 
@@ -55,7 +56,6 @@ void CollisionMgr::LateUpdate_Collision()
 
 void CollisionMgr::CheckGroup(OBJECTTAG _eLeft, OBJECTTAG _eRight)
 {
-
 
 	_uint iRow = (_uint)_eLeft;
 	_uint iCol = (_uint)_eRight;
@@ -208,7 +208,6 @@ void CollisionMgr::CheckCollisionStatic(OBJECTTAG _eObjectLeft)
 	{
 		if (nullptr == iterL->Get_Collider())
 			continue;
-
 
 		_vec3 vHostPos = dynamic_cast<CTransform*>(iterL->Get_Component(ID_DYNAMIC, COMPONENTTAG::TRANSFORM))->m_vInfo[INFO_POS];
 		COctreeNode* pParentNode = Octree()->GetParentNodeByPos(vHostPos, Engine::Octree()->GetOctreeRoot());

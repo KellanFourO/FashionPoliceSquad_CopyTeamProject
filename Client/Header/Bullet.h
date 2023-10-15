@@ -8,6 +8,7 @@ class CRcTex;
 class CTexture;
 class CTransform;
 class CCollider;
+class CRigidBody;
 END
 
 class CBullet : public Engine::CGameObject
@@ -62,6 +63,7 @@ protected:
 	CRcTex*			m_pBufferCom = nullptr;
 	CTexture*		m_pTextureCom = nullptr;
 	CTransform*		m_pPlayerTransformCom = nullptr;
+	CRigidBody*		m_pRigidBody = nullptr;
 
 
 protected:
