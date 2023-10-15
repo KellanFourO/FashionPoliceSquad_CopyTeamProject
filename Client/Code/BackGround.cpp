@@ -114,5 +114,7 @@ HRESULT CBackGround::Add_Component()
 
 void CBackGround::Free()
 {
+
+
 	__super::Free();
 }

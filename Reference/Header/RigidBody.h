@@ -18,6 +18,8 @@ public:
 	void	Set_Force(_vec3 _vForce) { m_vNetPower = _vForce; }
 	void	Add_Force(_vec3 _vForce) { m_vNetPower += _vForce; }
 
+	void	Set_Heavy(_float _Heavy) { m_fHeavy = _Heavy;}
+
 	void	IsKinematic(_bool _bKinematic) { m_IsKinematic = _bKinematic; }
 	void	UseGravity(_bool _bGravity) { m_UseGravity = _bGravity; }
 	void	UseGravity(_bool _bGravity, _float _fHeavy) { m_UseGravity = _bGravity; m_fHeavy = _fHeavy; }

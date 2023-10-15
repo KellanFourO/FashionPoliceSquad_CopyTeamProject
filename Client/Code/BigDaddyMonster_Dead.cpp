@@ -19,7 +19,7 @@ void CBigDaddyMonster_Dead::Initialize(CMonster* _Monster)
 	m_fMinFrame = 1.f;
 	m_fMaxFrame = 4.f;
 	m_fCurFrame = m_fMinFrame;
-
+	m_iVer = 4;
 
 }
 
@@ -49,6 +49,4 @@ void CBigDaddyMonster_Dead::LateUpdate(CMonster* _Monster)
 
 void CBigDaddyMonster_Dead::Render(CMonster* _Monster)
 {
-	m_pHost->Get_TextureCom()->Render_Textrue(0);
-	m_pHost->Get_BufferCom()->Render_Buffer(m_fCurFrame, 4);
 }

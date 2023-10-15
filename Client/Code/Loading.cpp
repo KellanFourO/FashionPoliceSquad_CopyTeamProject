@@ -3,6 +3,14 @@
 #include "Export_Utility.h"
 #include "ImGuiManager.h"
 #include "Player.h"
+#include "NewFPSCamera.h"
+#include "PaintShotGun.h"
+#include "TailorAssertRifle.h"
+#include "TailorAssertRifleHand.h"
+#include "Belt.h"
+#include "MuzzlefFlash_Rifle.h"
+#include "MuzzleFlash.h"
+#include "Lazer.h"
 
 CLoading::CLoading(LPDIRECT3DDEVICE9 pGraphicDev)
 	: m_pGraphicDev(pGraphicDev)
@@ -60,6 +68,7 @@ _uint CLoading::Loading_For_Stage()
 	//Effect
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_MonsterBombEffectTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/MonsterBomb/MonsterBomb%d.png", 15)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_MBulletBombEffectTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Explosion5/%d.dds", 87)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_JumpShockWaveEffectTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/SY/JumpShockWave/JumpShockWave%d.png", 9)), E_FAIL);
 	Set_Value(3);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Player", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player0.png")), E_FAIL);
 	Set_Value(3);
@@ -138,6 +147,9 @@ _uint CLoading::Loading_For_Stage()
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_HPFrameTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HP_BAR/HP_Frame.png")), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_HPValueTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HP_BAR/VALUE_Player.png")), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_HPMarkTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HP_BAR/Hp_Mark.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_MonsterHPBarTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HP_BAR/VALUE_Monster1.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_MonsterHPFrameTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HP_BAR/HP_Monster.png")), E_FAIL);
+
 
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ShieldFrameTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HP_BAR/HP_Shield.png")), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ShieldValueTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HP_BAR/UI_49.png")), E_FAIL);
@@ -161,6 +173,36 @@ _uint CLoading::Loading_For_Stage()
 
 		CPlayer* pPlayer = CPlayer::Create(m_pGraphicDev);
 		Management()->Set_Player(pPlayer);
+
+		CNewFPSCamera* pCamera = CNewFPSCamera::Create(m_pGraphicDev,
+			&_vec3(0.f, 10.f, -10.f),
+			&_vec3(0.f, 0.f, 1.f),
+			&_vec3(0.f, 1.f, 0.f));
+
+		Management()->Set_Camera(pCamera);
+
+		CTailorAssertRifle* pRifle = CTailorAssertRifle::Create(m_pGraphicDev,pPlayer);
+		CPaintShotGun* pShotgun = CPaintShotGun::Create(m_pGraphicDev,pPlayer);
+
+		Management()->Set_Rifle(pRifle);
+		Management()->Set_ShotGun(pShotgun);
+
+		CTailorAssertRifleHand* pHand = CTailorAssertRifleHand::Create(m_pGraphicDev);
+		Management()->Set_RifleHand(pHand);
+
+		CBelt* pBelt = CBelt::Create(m_pGraphicDev);
+		Management()->Set_Belt(pBelt);
+
+
+		CMuzzleFlash_Rifle* pRifleFlash = CMuzzleFlash_Rifle::Create(m_pGraphicDev);
+		CMuzzleFlash* pShotGunFlash = CMuzzleFlash::Create(m_pGraphicDev);
+
+		Management()->Set_ShotGunFlash(pShotGunFlash);
+		Management()->Set_RifleFlash(pRifleFlash);
+
+		CLazer*	pLazer = CLazer::Create(m_pGraphicDev);
+
+		Management()->Set_Lazer(pLazer);
 
 		Set_Value(4);
 

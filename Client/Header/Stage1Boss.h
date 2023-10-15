@@ -4,8 +4,6 @@
 
 
 class CMonsterState;
-
-
 BEGIN(Engine)
 
 class CSYTex;
@@ -41,19 +39,10 @@ public:
 
 public:
 	CMonsterState*		Get_State(_int _index) { return m_pStateArray[_index]; }
-	void				Chase_Target(_float fTimeDelta, _float _fSpeed); // 몬스터 이동 코드
 
 private:
 	HRESULT				Add_Component();
-
-
-public:
-	int					m_iIdleStart = 2;
-	int					m_iIdleEnd = 3;
-	_float				m_fTick = 0.f;
-	_bool				m_bStart = false;
-	CTransform*			m_pPlayerTransform;
-	_bool				m_bLateInit = true;
+	void				PhaseChange();
 
 private:
 	CMonsterState*			m_pStateArray[STAGE1_BOSSSTATE_END];

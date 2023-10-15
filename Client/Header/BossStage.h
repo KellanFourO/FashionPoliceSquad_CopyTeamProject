@@ -34,17 +34,35 @@
 
 
 //TODO 승용
+#include "UI_CardList.h"
+#include "UICamera.h"
 #include "UI_MyDialog.h"
 #include "UI_Portrait.h"
-
-#include "UI_CardList.h"
 #include "UI_CrossHair.h"
+#include "UI_MissionObjective.h"
+
+#include "UI_Berserk.h"
+#include "UI_BerserkFrame.h"
+
+#include "UI_HPBarValue.h"
+#include "UI_HPBarFrame.h"
+#include "UI_HPMark.h"
+
+#include "UI_ShieldFrame.h"
+#include "UI_ShieldValue.h"
+#include "UI_ShieldMark.h"
+
+#include "UI_PlayerFace.h"
+#include "UI_Hat.h"
+
+#include "UI_BulletInfoCount.h"
+#include "UI_BulletInfoName.h"
+
+#include "UI_WeaponInfo.h"
 
 #include "PaintShotGun.h"
 #include "TailorAssertRifle.h"
 #include "TailorAssertRifleHand.h"
-
-#include "UI_MissionObjective.h"
 
 
 class CBossStage : public Engine::CScene
@@ -68,7 +86,8 @@ private:
 	HRESULT				Ready_Layer_UI(LAYERTAG eLayerTag);
 
 private:
-	CLayer* m_pLayer = nullptr;
+	CLayer* m_pLayer = nullptr;  //Environment
+	CLayer* m_pGLayer = nullptr; //GameLogic
 	_bool	m_bLateInit = true;
 
 	//////////////////////유진 함수, 변수////////////////////////
@@ -80,6 +99,8 @@ public:
 	void				Set_VecOBJData(vector<OBJData*> pVecOBjData) { m_VecOBJData = pVecOBjData; }
 
 	virtual HRESULT		Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag);
+	HRESULT				Load_Data_C_T(const TCHAR* pFilePath, OBJECTTAG eTag);
+
 
 	vector<IDirect3DCubeTexture9*>& Get_VecTempCube() { return m_VecTempCube; }
 	vector<IDirect3DBaseTexture9*>& Get_VecTempPlane() { return m_VecTempPlane; }
@@ -88,6 +109,9 @@ private:
 	//BuildOBJ내에서 텍스쳐넘버 구분용으로 씀
 	vector<IDirect3DCubeTexture9*>	m_VecTempCube;
 	vector<IDirect3DBaseTexture9*>	m_VecTempPlane;
+
+	vector<C_POINT*>			    m_VecCreatePoint;
+	vector<TRIGGER*>			    m_TriggerDataTemp;
 
 	vector<OBJData*>				m_VecOBJData;
 	_uint							m_iOBJIndex = 0;
@@ -100,6 +124,7 @@ private:
 	SORTTEX* m_defSortTex = nullptr; //텍스쳐 정렬용
 	vector<SORTTEX*>				m_pTexForSort;			//텍스쳐 정렬용
 
+	CStage1Boss*					m_pBoss = nullptr;
 public:
 	void				Admin_KeyInput();
 

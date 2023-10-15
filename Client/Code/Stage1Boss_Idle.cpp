@@ -15,7 +15,12 @@ CStage1Boss_Idle::~CStage1Boss_Idle()
 
 void CStage1Boss_Idle::Initialize(CMonster* _Monster)
 {
-	m_pHost = dynamic_cast<CStage1Boss*>(_Monster);
+	m_pHost = (_Monster);
+
+	m_fMinFrame = 2.f;
+	m_fMaxFrame = 3.f;
+	m_fCurFrame = m_fMinFrame;
+	m_iVer = 5;
 }
 
 CMonsterState* CStage1Boss_Idle::Update(CMonster* Monster, const float& fDetltaTime)
@@ -23,30 +28,22 @@ CMonsterState* CStage1Boss_Idle::Update(CMonster* Monster, const float& fDetltaT
 
 	m_fTick += fDetltaTime;
 
-
-	if (m_fTestTick >= 5)
+	if (m_fTick >= 0.5f)
 	{
-		m_bStart = true;
+		++m_fCurFrame;
+		m_fTick = 0.f;
 	}
 
-	if (m_fTick >= 1)
+	if (m_fCurFrame > m_fMaxFrame)
 	{
-		m_iIdleStart++;
-		m_fTick = 0;
-
-		if (m_iIdleStart > m_iIdleEnd)
-		{
-			m_iIdleStart = 2;
-
-			m_fTestTick++;
-		}
+		m_fCurFrame = m_fMinFrame;
 	}
 
-	if (m_bStart)
+	if (m_pHost->Get_Start() && m_fCurFrame == m_fMinFrame)
 	{
 		//TODO 여기서 시작 점프 상태로 변경
 
-		return m_pHost->Get_State(1);
+		return dynamic_cast<CStage1Boss*>(m_pHost)->Get_State(1);
 	}
 
 	return nullptr;
@@ -62,6 +59,5 @@ void CStage1Boss_Idle::Release(CMonster* _Monster)
 
 void CStage1Boss_Idle::Render(CMonster* _Monster)
 {
-	m_pHost->Get_TextureCom()->Render_Textrue(0);
-	m_pHost->Get_BufferCom()->Render_Buffer(m_iIdleStart, 5);
+
 }

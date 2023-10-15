@@ -123,7 +123,8 @@ HRESULT CBuild_Obj::Ready_GameObject(_uint pRotate, _vec3 pMouse_Pos, _vec3 Size
 	}
 
 	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], m_pTransformCom->m_vScale);
-	
+	m_pCollider->Set_OBJAttribute(m_eAttribute);
+
 	// billboard 용
 	m_pPlayerTransform = dynamic_cast<CTransform*>(Management()->Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
 
@@ -142,7 +143,7 @@ _int CBuild_Obj::Update_GameObject(const _float& fTimeDelta)
 		Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
 
 
-		if (m_eAttribute == OBJ_ATTRIBUTE::BILL_OBJ)
+		if (m_eAttribute == OBJ_ATTRIBUTE::BILL_OBJ || m_eAttribute == OBJ_ATTRIBUTE::LIGHT_OBJ)
 	 	{
 			Init_PlayerTransform();
 			if (m_pPlayerTransform && m_bBillBoard)
@@ -150,14 +151,6 @@ _int CBuild_Obj::Update_GameObject(const _float& fTimeDelta)
 				BillBoard();
 			}
 		}
-// 		if (m_eAttribute == OBJ_ATTRIBUTE::INTER_OBJ)
-// 		{
-// 			Init_PlayerTransform();
-// 			if (m_pPlayerTransform && m_bBillBoard)
-// 			{
-// 				BillBoard_X();
-// 			}
-// 		}
 	}
 
 	m_pCollider->Set_Host(this);
@@ -187,7 +180,7 @@ void CBuild_Obj::Render_GameObject()
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	
-	if (m_eAttribute == OBJ_ATTRIBUTE::C_POINT_OBJ)
+	if ((m_eAttribute == OBJ_ATTRIBUTE::C_POINT_OBJ)|| (m_eAttribute == OBJ_ATTRIBUTE::STAIR_OBJ))
 	{	m_pCollider->Render_Collider(); }
 
 	//m_pCollider->Render_Collider(); //
@@ -221,10 +214,10 @@ HRESULT CBuild_Obj::SetUp_Meterial()
 
 	if (m_NowScene == SCENETAG::STAGE2)
 	{
-		tMtrl.Diffuse = { 1.f, 0.6f, 0.6f, 1.f };
-		tMtrl.Specular = { 1.f, 0.6f, 0.6f, 1.f };
-		tMtrl.Ambient = { 1.f, 0.6f, 0.6f, 1.0f };  //마지막 값 -> 알파채널(투명도)
-		tMtrl.Emissive = { 0.2f, 0.2f, 0.2f, 0.2f };
+		tMtrl.Diffuse = { 0.8f, 0.6f, 0.4f, 1.f };
+		tMtrl.Specular = { 0.8f, 0.6f, 0.4f, 1.f };
+		tMtrl.Ambient = { 0.8f, 0.6f, 0.4f, 1.0f };  //마지막 값 -> 알파채널(투명도)
+		tMtrl.Emissive = { 0.05f, 0.05f, 0.05f, 0.05f };
 		tMtrl.Power = 0.f;
 	}
 	else

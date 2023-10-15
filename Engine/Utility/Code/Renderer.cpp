@@ -56,13 +56,13 @@ void CRenderer::Render_Priority(LPDIRECT3DDEVICE9& pGraphicDev)
 void CRenderer::Render_NonAlpha(LPDIRECT3DDEVICE9& pGraphicDev)
 {
 	pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
-
+/*	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);*/
 	pGraphicDev->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 	pGraphicDev->SetRenderState(D3DRS_ALPHAREF, 200);
 
 	for (auto& iter : m_RenderGroup[RENDER_NONALPHA])
 		iter->Render_GameObject();
-
+// 	pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, false);
 	pGraphicDev->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 }
 

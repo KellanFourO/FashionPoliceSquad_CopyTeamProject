@@ -108,7 +108,7 @@ void CBuild_Cube::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 
-	//m_pCollider->Render_Collider(); //
+	m_pCollider->Render_Collider(); //
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 
@@ -129,10 +129,10 @@ HRESULT CBuild_Cube::SetUp_Meterial()
 
 	if (m_NowScene == SCENETAG::STAGE2)
 	{
-		tMtrl.Diffuse = { 1.f, 0.6f, 0.6f, 1.f };
-		tMtrl.Specular = { 1.f, 0.6f, 0.6f, 1.f };
-		tMtrl.Ambient = { 1.f, 0.6f, 0.6f, 1.0f };  //마지막 값 -> 알파채널(투명도)
-		tMtrl.Emissive = { 0.2f, 0.2f, 0.2f, 0.2f };
+		tMtrl.Diffuse = { 0.8f, 0.6f, 0.4f, 1.f };
+		tMtrl.Specular = { 0.8f, 0.6f, 0.4f, 1.f };
+		tMtrl.Ambient = { 0.8f, 0.6f, 0.4f, 1.0f };  //마지막 값 -> 알파채널(투명도)
+		tMtrl.Emissive = { 0.05f, 0.05f, 0.05f, 0.05f };
 		tMtrl.Power = 0.f;
 	}
 	else

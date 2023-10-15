@@ -25,7 +25,7 @@ void CKickBoardMonster_Chase::Initialize(CMonster* _Monster)
 	m_fMinFrame = 1.0f;
 	m_fMaxFrame = 2.0f;
 	m_fCurFrame = m_fMinFrame;
-
+	m_iVer = 2;
 }
 
 CMonsterState* CKickBoardMonster_Chase::Update(CMonster* Monster, const float& fDetltaTime)
@@ -69,14 +69,5 @@ void CKickBoardMonster_Chase::LateUpdate(CMonster* _Monster)
 
 void CKickBoardMonster_Chase::Render(CMonster* _Monster)
 {
-	if (m_pHost->Get_Info().bHit)
-	{
-		m_pHost->Get_TextureCom()->Render_Textrue(1);
-	}
-	else
-	{
-		m_pHost->Get_TextureCom()->Render_Textrue(0);
-	}
 
-	m_pHost->Get_BufferCom()->Render_Buffer(m_fCurFrame, 2);
 }

@@ -25,6 +25,7 @@ CollisionMgr::CollisionMgr()
 	CheckGroup(OBJECTTAG::RAY_LASER, OBJECTTAG::MONSTER);
 	CheckGroup(OBJECTTAG::RAY_LASER, OBJECTTAG::BOSS);
 	
+	CheckGroup(OBJECTTAG::PLAYER, OBJECTTAG::TRIGGER); //유진 추가
 
 }
 
@@ -40,6 +41,7 @@ void CollisionMgr::LateUpdate_Collision()
 	CheckCollisionStatic(OBJECTTAG::BOSS);
 	CheckCollisionStatic(OBJECTTAG::MONSTERBULLET);
 	CheckCollisionStatic(OBJECTTAG::PLAYERBULLET);
+
 	//CheckCollisionStatic(OBJECTTAG::ITEM);
 	CheckCollisionStatic(OBJECTTAG::RAY);
 	CheckCollisionStatic(OBJECTTAG::RAY);
@@ -56,7 +58,7 @@ void CollisionMgr::LateUpdate_Collision()
 	
 	//Ray
 
-	
+
 	//dynamic Object
 	for (UINT iRow = 0; iRow < (UINT)OBJECTTAG::OBJECT_END; ++iRow)
 		for (UINT iCol = iRow; iCol < (UINT)OBJECTTAG::OBJECT_END; ++iCol)
@@ -67,7 +69,6 @@ void CollisionMgr::LateUpdate_Collision()
 
 void CollisionMgr::CheckGroup(OBJECTTAG _eLeft, OBJECTTAG _eRight)
 {
-
 
 	_uint iRow = (_uint)_eLeft;
 	_uint iCol = (_uint)_eRight;
@@ -130,6 +131,7 @@ void CollisionMgr::CheckCollisionByType(OBJECTTAG _eObjectLeft, OBJECTTAG _eObje
 		//for (auto& iterR = vecRight.begin(); iterR != vecRight.end(); ++iterR)
 		for (auto& iterR : vecRight)
 		{
+
 			if (nullptr == iterR->Get_Collider() || iterL == iterR)
 				continue;
 
@@ -170,8 +172,6 @@ void CollisionMgr::CheckCollisionByType(OBJECTTAG _eObjectLeft, OBJECTTAG _eObje
 				}
 				else
 				{	// 이전에는 충돌 x	// 근데 둘 중 하나 삭제 예정이면 충돌하지 않은 것으로 취급
-					if (pRightCol->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYERBULLET || pLeftCol->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYERBULLET)
-						int i = 0;
 					if (!iterL->IsDead() && !iterR->IsDead())
 					{
 
@@ -219,7 +219,6 @@ void CollisionMgr::CheckCollisionStatic(OBJECTTAG _eObjectLeft)
 	{
 		if (nullptr == iterL->Get_Collider())
 			continue;
-
 
 		_vec3 vHostPos = dynamic_cast<CTransform*>(iterL->Get_Component(ID_DYNAMIC, COMPONENTTAG::TRANSFORM))->m_vInfo[INFO_POS];
 		COctreeNode* pParentNode = Octree()->GetParentNodeByPos(vHostPos, Engine::Octree()->GetOctreeRoot());

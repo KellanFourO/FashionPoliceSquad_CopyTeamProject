@@ -30,7 +30,7 @@ public:
 	void	Shot(_vec3 _StartPos);
 
 public:
-	static CBullet_GoldBar* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vTargetDir);
+	static CBullet_GoldBar* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vTargetDir, _float fSpeed);
 
 private:
 	CRcTex*			m_pBufferCom = nullptr; // 텍스처를 그리기위한 버퍼 컴포넌트

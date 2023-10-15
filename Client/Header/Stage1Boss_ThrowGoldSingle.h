@@ -27,11 +27,16 @@ private:
 
 	_float					m_fTick = 0.f;
 
-	_float					m_fThrowSpeed;
 
+	_float					m_fThrowSpeed;
+	_float					m_fBulletSpeed;
 	_int					m_iBulletCount;
 	_int					m_iThrowCount;
+
 	_int					m_iCountTick;
+
+
+
 
 	_vec3					m_vTargetDir;
 

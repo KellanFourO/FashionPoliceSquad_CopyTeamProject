@@ -27,12 +27,7 @@ CComponent* Engine::CManagement::Get_Component(COMPONENTID eID, LAYERTAG eLayerT
 
 HRESULT CManagement::Set_Scene(CScene* pScene)
 {
-	if (m_bSYSceneChange)
-	{
-		m_pPlayer->AddRef();
-		m_pPlayer->ClearGunList();
-		m_bSYSceneChange = false;
-	}
+
 
 	Renderer()->Clear_RenderGroup();
 	Safe_Release(m_pScene);
@@ -48,7 +43,19 @@ HRESULT CManagement::Change_Scene(CScene* pScene)
 	if (m_bSYSceneChange)
 	{
 		m_pPlayer->AddRef();
-		m_pPlayer->ClearGunList();
+
+		m_pCamera->AddRef();
+
+		m_pShotGun->AddRef();
+		m_pRifle->AddRef();
+		m_pRifleHand->AddRef();
+		m_pBelt->AddRef();
+
+		m_pRifleFlash->AddRef();
+		m_pShotGunFlash->AddRef();
+
+		m_pLazer->AddRef();
+
 		m_bSYSceneChange = false;
 	}
 	m_bSceneChange = true;

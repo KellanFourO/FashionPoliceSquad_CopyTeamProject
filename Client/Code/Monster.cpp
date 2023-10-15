@@ -4,7 +4,7 @@
 #include "Monster.h"
 #include "BrifCase.h"
 #include "Player.h"
-
+#include "UI_MonsterHPBar.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
 
@@ -12,8 +12,15 @@
 
 
 CMonster::CMonster(LPDIRECT3DDEVICE9 pGraphicDev)
-	:Engine::CGameObject(pGraphicDev)
+	:Engine::CGameObject(pGraphicDev),
+	m_bStart(false),m_bLateInit(true),m_bBillBoard(true),m_iTextureIndex(0),
+	m_pBufferCom(nullptr), m_pTextureCom(nullptr), m_pCalculatorCom(nullptr), m_pRigidBody(nullptr),
+	m_fFrame(0.f), m_fVerDevide(0.f), m_fHorDevide(0.f),m_fAnimateTime(0.f),m_fHitTime(0.f),m_fAttackTime(0.f),
+	m_pUI_Recognition(nullptr),m_pMonsterBullet(nullptr),m_pPlayerTransform(nullptr),
+	m_fDectedRange(15.f),m_fAttackRange(1.f),m_fSpeed(8.f)
 {
+	ZeroMemory(&INFO, sizeof(INFO));
+
 }
 
 CMonster::CMonster(CMonster& rhs)
@@ -29,20 +36,12 @@ HRESULT CMonster::Ready_GameObject()
 {
 	Set_ObjectTag(OBJECTTAG::MONSTER);
 
-	// TODO - 승용 추가
-	//if (Set_HP() == E_FAIL)
-	//{
-	//	MSG_BOX("승용 몬스터 HP 에러");
-	//}
-	// TODO - 승용 추가 종료
-
-
-
 	return S_OK;
 }
 
 _int CMonster::Update_GameObject(const _float& fTimeDelta)
 {
+
 
 	if (INFO.bHit == true) {
 		m_fHitTime += fTimeDelta;
@@ -68,18 +67,15 @@ _int CMonster::Update_GameObject(const _float& fTimeDelta)
 	m_pCollider->SetCenterPos(m_pTransformCom->m_vInfo[INFO_POS]);
 	m_pRigidBody->Update_RigidBody(fTimeDelta);
 
-	Engine::Add_RenderGroup(RENDER_NONALPHA, this);
-	__super::Update_GameObject(fTimeDelta);
 
+	__super::Update_GameObject(fTimeDelta);
+	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
 	return OBJ_NOEVENT;
 }
 
 void CMonster::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
-
-	//m_pUI_HPFrame->LateUpdate_GameObject();
-	//m_pUI_HPValue->LateUpdate_GameObject();
 }
 
 void CMonster::Render_GameObject()
@@ -218,6 +214,13 @@ void CMonster::Init_PlayerTransform()
 	{
 		m_pPlayerTransform = dynamic_cast<CTransform*>(Management()->Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
 		m_bLateInit = false;
+
+		// TODO - 승용 추가
+		if (Set_HP() == E_FAIL)
+		{
+			MSG_BOX("승용 몬스터 HP 에러");
+		}
+		// TODO - 승용 추가 종료
 	}
 }
 
@@ -272,33 +275,23 @@ _bool CMonster::ChaseCatch()
 
 void CMonster::StateMachine(const _float& fTimeDelta)
 {
-	CMonsterState* State = INFO.MonsterState->Update(this, fTimeDelta);
+	CMonsterState* State = nullptr;
+	State = INFO.MonsterState->Update(this, fTimeDelta);
 	if (State != nullptr) {
+		INFO.MonsterState->Release(this);
 		INFO.MonsterState = State;
-		INFO.MonsterState->Initialize(this);
+	 	INFO.MonsterState->Initialize(this);
 	}
 }
 
 HRESULT CMonster::Set_HP()
 {
-	//m_pUI_HPFrame = CUIMgr::GetInstance()->Get_UI_Clone(L"HP_Monster.png");
-	//m_pUI_HPValue = CUIMgr::GetInstance()->Get_UI_Clone(L"VALUE_Monster.png");
-	//
-	////m_pUI_Recognition = CRecognitionRange::Create(m_pGraphicDev, this);
-	//
-	//m_pUI_HPFrame->Set_Target(this);
-	//m_pUI_HPValue->Set_Target(this);
-	//
-	//_float fRatio = 5.f;
-	//_float fFrame = 5.1f;
-	//m_pUI_HPFrame->Set_ScaleRatio(fFrame);
-	//m_pUI_HPValue->Set_ScaleRatio(fRatio);
-
-
-	int i = 0;
-
-	//if (!m_pUI_HPValue || !m_pUI_HPFrame)
-	//	return E_FAIL;
+	CMonsterHPBar* pHpBar = CMonsterHPBar::Create(m_pGraphicDev,this);
+	//pHpBar->Set_ObjectTag(OBJECTTAG::UI);
+	if(pHpBar)
+	Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::UI, pHpBar);
+	else
+	return E_FAIL;
 
 	return S_OK;
 }

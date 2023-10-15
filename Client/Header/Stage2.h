@@ -67,12 +67,20 @@ private:
 	HRESULT				Ready_Layer_Camera(LAYERTAG eLayerTag);
 	HRESULT				Ready_Layer_UI(LAYERTAG eLayerTag);
 
+	HRESULT				Add_Light();
+	HRESULT				Light_OnOff_Check();
+
 private:
-	CLayer*				m_pLayer = nullptr;
+	CLayer*				m_pLayer = nullptr;  //Environment
+	CLayer*				m_pGLayer = nullptr; //GameLogic
+	
+	CGameObject*		m_pPlayer = nullptr;
+	CTransform* m_pPlayerTransform = nullptr;
 	_bool				m_bLateInit = true;
 
 	//////////////////////유진 함수, 변수////////////////////////
 public:
+
 	vector<CUBE*>&		Get_VecCubeData() { return m_VecCubeData; }
 	void				Set_VecCubeData(vector<CUBE*> pVecCubeData) { m_VecCubeData = pVecCubeData; }
 
@@ -80,11 +88,14 @@ public:
 	void				Set_VecOBJData(vector<OBJData*> pVecOBjData) { m_VecOBJData = pVecOBjData; }
 
 	virtual HRESULT		Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag);
+	HRESULT				Load_Data_C_T(const TCHAR* pFilePath, OBJECTTAG eTag);
 
 	vector<IDirect3DCubeTexture9*>& Get_VecTempCube() { return m_VecTempCube; }
 	vector<IDirect3DBaseTexture9*>& Get_VecTempPlane() { return m_VecTempPlane; }
 
 private:
+	OBJData*						m_Starting_Point = nullptr;
+
 	//BuildOBJ내에서 텍스쳐넘버 구분용으로 씀
 	vector<IDirect3DCubeTexture9*>	m_VecTempCube;
 	vector<IDirect3DBaseTexture9*>	m_VecTempPlane;
@@ -94,6 +105,11 @@ private:
 
 	vector<CUBE*>					m_VecCubeData;
 	_uint							m_iCubeIndex = 0;
+
+	vector<OBJData*>				m_VecLight;
+
+	vector<C_POINT*>			    m_VecCreatePoint;
+	vector<TRIGGER*>			    m_TriggerDataTemp;
 
 	SORTCUBE*						m_defSortCube = nullptr;//큐브 정렬용
 	vector<SORTCUBE*>				m_pCubeForSort;			//큐브 정렬용

@@ -60,7 +60,7 @@ Engine::_int CBullet_GoldBar::Update_GameObject(const _float& fTimeDelta)
 		if(m_bDead)
 		return OBJ_DEAD;
 		//m_pTransformCom->Set_Rotate(ROT_Y, fTimeDelta + D3DX_PI);
-		m_pTransformCom->Move_Pos(&m_vTargetDir, fTimeDelta, 50.f);
+		m_pTransformCom->Move_Pos(&m_vTargetDir, fTimeDelta, m_fSpeed);
 
 		_vec3 vPlayerPos, vPlayerPos_Rel;
 		m_pPlayerTransformCom->Get_Info(INFO_POS, &vPlayerPos);
@@ -160,11 +160,12 @@ void CBullet_GoldBar::Shot(_vec3 _StartPos)
 
 
 
-CBullet_GoldBar* CBullet_GoldBar::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vTargetDir)
+CBullet_GoldBar* CBullet_GoldBar::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vTargetDir, _float fSpeed)
 {
+
 	CBullet_GoldBar* pInstance = new CBullet_GoldBar(pGraphicDev);
 	pInstance->m_vTargetDir = vTargetDir;
-
+	pInstance->m_fSpeed = fSpeed;
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
 		Safe_Release(pInstance);

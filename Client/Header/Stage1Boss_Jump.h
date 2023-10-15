@@ -19,16 +19,24 @@ private:
 
 
 private:
+
 	_bool				m_bChange = false;
 	int					m_iJumpStart = 2;
 	int					m_iJumpEnd = 4;
 
+	_vec3				vJumpPoint[4];
+
 	_float				m_fTick = 0.f;
 	_float				m_fJumpStaytime = 1.65f;
+	_float				m_fJumpMoveTime = 1.2f;
 	_float				m_fAgainTime = 2;
+	_float				m_fJumpSpeed = 100.f;
 
+	_bool				m_bEffect= true;
 	_bool				m_bJump = false;
 	JUMPSTATE			m_eJumpState = JUMP_READY;
+
+	_int				m_iRandomIndex = 0;
 
 
 	_float				m_fShockRadius = 128.f;
