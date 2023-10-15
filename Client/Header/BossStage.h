@@ -99,8 +99,8 @@ public:
 	void				Set_VecOBJData(vector<OBJData*> pVecOBjData) { m_VecOBJData = pVecOBjData; }
 
 	virtual HRESULT		Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag);
-	HRESULT				Load_Data_C_T(const TCHAR* pFilePath, OBJECTTAG eTag);
-
+	HRESULT				Load_Data_C(const TCHAR* pFilePath, OBJECTTAG eTag);
+	HRESULT				Load_Data_T(const TCHAR* pFilePath, OBJECTTAG eTag);
 
 	vector<IDirect3DCubeTexture9*>& Get_VecTempCube() { return m_VecTempCube; }
 	vector<IDirect3DBaseTexture9*>& Get_VecTempPlane() { return m_VecTempPlane; }
