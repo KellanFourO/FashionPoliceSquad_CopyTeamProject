@@ -14,6 +14,6 @@ public:
 	virtual void Render(CMonster* _Monster) override;
 
 
-
+	_float m_fTick;
 	_float m_fSpeed;
 };

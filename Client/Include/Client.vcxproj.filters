@@ -421,6 +421,7 @@
     <Filter Include="02. GameObject\01. Player\97.RAY">
       <UniqueIdentifier>{21d9c14e-a73f-4850-af67-26cddf3fb4bf}</UniqueIdentifier>
     </Filter>
+
     <Filter Include="04. Manager\11. FileMgr">
       <UniqueIdentifier>{e1e5f8db-e95d-42e8-92df-702289fe9c15}</UniqueIdentifier>
     </Filter>
@@ -950,6 +951,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\MiniGame.h">
       <Filter>헤더 파일</Filter>
+	</ClInclude>
+    <ClInclude Include="..\Header\Ray.h">
+      <Filter>02. GameObject\01. Player\97.RAY</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\SYRay.h">
+      <Filter>02. GameObject\01. Player\97.RAY</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1453,6 +1460,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\MiniGame.cpp">
       <Filter>소스 파일</Filter>
+	</ClCompile>
+	<ClCompile Include="..\Code\Ray.cpp">
+      <Filter>02. GameObject\01. Player\97.RAY</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SYRay.cpp">
+      <Filter>02. GameObject\01. Player\97.RAY</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

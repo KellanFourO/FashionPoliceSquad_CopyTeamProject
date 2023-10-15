@@ -2,6 +2,8 @@
 
 #include "Base.h"
 #include "Bullet.h"
+#include "SYRay.h"
+
 class CPaintShotGun;
 
 BEGIN(Engine)
@@ -73,6 +75,9 @@ private:
 	_float			m_fAnimateTime,m_fFrame,m_fTestTime;
 
 	_matrix			m_Mat_Axis;
+
+	RAY				m_tRay;
+	CSYRay*			m_pRay;
 
 private:
 	CPaintShotGun*	m_pShotGun = nullptr;
