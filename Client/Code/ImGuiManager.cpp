@@ -286,7 +286,7 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 						ImGui::Checkbox("Delete Mode", &m_bDelete_Mode_Check);
 
 						char TextNow2[MAX_PATH];
-						sprintf_s(TextNow2, u8" : 언젠가 움직일지도 모르는 큐브");
+						sprintf_s(TextNow2, u8" : 움직일지도 모르는 큐브");
 
 						ImGui::NewLine();
 
@@ -300,6 +300,7 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 						ImGui::Text(TextNow2);
 						ImGui::RadioButton(u8"계단 OBJ", &m_forObjAttribute, 8);
  						ImGui::RadioButton(u8"기준 OBJ", &m_forObjAttribute, 4); 
+						ImGui::RadioButton(u8"페인트용 OBJ", &m_forObjAttribute, 9);
 						ImGui::RadioButton(u8"단순 장식OBJ", &m_forObjAttribute, 7);
 
 
@@ -332,8 +333,9 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 						case 8:
 							m_eOBJ_Attribute = OBJ_ATTRIBUTE::STAIR_OBJ;
 							break;
-
-
+						case 9:
+							m_eOBJ_Attribute = OBJ_ATTRIBUTE::ForPaint_OBJ;
+							break;
 						default:
 							m_eOBJ_Attribute = OBJ_ATTRIBUTE::NONE_OBJ;
 							break;
@@ -589,37 +591,6 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 							m_eTR_NUM = TRIGGER_NUMBER::TR4;	break;
 						case 5:
 							m_eTR_NUM = TRIGGER_NUMBER::TR5;	break;
-						case 6:
-							m_eTR_NUM = TRIGGER_NUMBER::TR6;	break;
-						case 7:
-							m_eTR_NUM = TRIGGER_NUMBER::TR7;	break;
-						case 8:
-							m_eTR_NUM = TRIGGER_NUMBER::TR8;	break;
-						case 9:
-							m_eTR_NUM = TRIGGER_NUMBER::TR9;	break;
-						case 10:
-							m_eTR_NUM = TRIGGER_NUMBER::TR10;	break;
-						case 11:
-							m_eTR_NUM = TRIGGER_NUMBER::TR11;	break;
-						case 12:
-							m_eTR_NUM = TRIGGER_NUMBER::TR12;	break;
-						case 13:
-							m_eTR_NUM = TRIGGER_NUMBER::TR13;	break;
-						case 14:
-							m_eTR_NUM = TRIGGER_NUMBER::TR14;	break;
-						case 15:
-							m_eTR_NUM = TRIGGER_NUMBER::TR15;	break;
-						case 16:
-							m_eTR_NUM = TRIGGER_NUMBER::TR16;	break;
-						case 17:
-							m_eTR_NUM = TRIGGER_NUMBER::TR17;	break;
-						case 18:
-							m_eTR_NUM = TRIGGER_NUMBER::TR18;	break;
-						case 19:
-							m_eTR_NUM = TRIGGER_NUMBER::TR19;	break;
-						case 20:
-							m_eTR_NUM = TRIGGER_NUMBER::TR20;	break;
-
 						default:
 							m_eTR_NUM = TRIGGER_NUMBER::TR_END;
 							break;

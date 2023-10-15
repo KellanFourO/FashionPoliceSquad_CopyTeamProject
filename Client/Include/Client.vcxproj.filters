@@ -414,8 +414,8 @@
     </Filter>
     <Filter Include="01.Scene\05. Stage2">
       <UniqueIdentifier>{1711dd9d-49b7-4cf7-a461-269df59dfedb}</UniqueIdentifier>
-	</Filter>
-	<Filter Include="02. GameObject\06. Effect\00.Particle\03.MBulletExplosion">
+    </Filter>
+    <Filter Include="02. GameObject\06. Effect\00.Particle\03.MBulletExplosion">
       <UniqueIdentifier>{40eb4edb-d36c-43a6-8cf3-715153290fb0}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\06. Effect\03.MBulletExplosion">
@@ -423,6 +423,9 @@
     </Filter>
     <Filter Include="02. GameObject\01. Player\97.RAY">
       <UniqueIdentifier>{21d9c14e-a73f-4850-af67-26cddf3fb4bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Manager\11. FileMgr">
+      <UniqueIdentifier>{e1e5f8db-e95d-42e8-92df-702289fe9c15}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -921,7 +924,6 @@
     <ClInclude Include="..\Header\PlayerBullet.h">
       <Filter>02. GameObject\07. Bullet\00.PlayerBullet</Filter>
     </ClInclude>
-
     <ClInclude Include="..\Header\UI_MonsterHPBar.h">
       <Filter>02. GameObject\20.UI\06. HPBar</Filter>
     </ClInclude>
@@ -930,6 +932,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\MBulletExplosion.h">
       <Filter>02. GameObject\06. Effect\03.MBulletExplosion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\FileMgr.h">
+      <Filter>04. Manager\11. FileMgr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1416,7 +1421,6 @@
     <ClCompile Include="..\Code\Rifle_Bullet1.cpp">
       <Filter>02. GameObject\07. Bullet\00.PlayerBullet</Filter>
     </ClCompile>
-
     <ClCompile Include="..\Code\UI_MonsterHPBar.cpp">
       <Filter>02. GameObject\20.UI\06. HPBar</Filter>
     </ClCompile>
@@ -1425,6 +1429,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\MBulletExplosion.cpp">
       <Filter>02. GameObject\06. Effect\03.MBulletExplosion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\FileMgr.cpp">
+      <Filter>04. Manager\11. FileMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
