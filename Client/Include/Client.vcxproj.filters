@@ -414,8 +414,8 @@
     </Filter>
     <Filter Include="01.Scene\05. Stage2">
       <UniqueIdentifier>{1711dd9d-49b7-4cf7-a461-269df59dfedb}</UniqueIdentifier>
-	</Filter>
-	<Filter Include="02. GameObject\06. Effect\00.Particle\03.MBulletExplosion">
+    </Filter>
+    <Filter Include="02. GameObject\06. Effect\00.Particle\03.MBulletExplosion">
       <UniqueIdentifier>{40eb4edb-d36c-43a6-8cf3-715153290fb0}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\06. Effect\03.MBulletExplosion">
@@ -423,6 +423,9 @@
     </Filter>
     <Filter Include="02. GameObject\01. Player\97.RAY">
       <UniqueIdentifier>{21d9c14e-a73f-4850-af67-26cddf3fb4bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\98.FootRay\00.Ray">
+      <UniqueIdentifier>{b9f3910d-5ddb-4403-9ea9-3a45d98e388c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -927,6 +930,9 @@
     <ClInclude Include="..\Header\MBulletExplosion.h">
       <Filter>02. GameObject\06. Effect\03.MBulletExplosion</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Ray.h">
+      <Filter>02. GameObject\01. Player\98.FootRay\00.Ray</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1417,6 +1423,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\MBulletExplosion.cpp">
       <Filter>02. GameObject\06. Effect\03.MBulletExplosion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Ray.cpp">
+      <Filter>02. GameObject\01. Player\98.FootRay\00.Ray</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

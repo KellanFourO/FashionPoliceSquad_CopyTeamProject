@@ -53,7 +53,7 @@ Engine::_int CLazer::Update_GameObject(const _float& fTimeDelta)
 		m_pShotGun = dynamic_cast<CPaintShotGun*>(Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER_GUN).front());
 		m_bLateInit = false;
 	}
-
+	
 	m_fAnimateTime += fTimeDelta;
 
 	if (m_fAnimateTime > 0.04f)
@@ -69,7 +69,10 @@ Engine::_int CLazer::Update_GameObject(const _float& fTimeDelta)
 			m_pTransformCom->Set_Scale(_vec3(40.f, m_fTestTime, 1.f));
 		}
 	}
-
+	_vec3 vStart = m_pTransformCom->m_vInfo[INFO_POS];
+	_vec3 vDir = m_pTransformCom->m_vInfo[INFO_LOOK];
+	_vec3 vHitPoint;
+	
 	StartPosition();
 	FirePosition(fTimeDelta);
 
@@ -85,6 +88,8 @@ Engine::_int CLazer::Update_GameObject(const _float& fTimeDelta)
 
 void CLazer::LateUpdate_GameObject()
 {
+	
+
 	_vec3	vPos;
 	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 
@@ -93,9 +98,9 @@ void CLazer::LateUpdate_GameObject()
 
 void CLazer::Render_GameObject()
 {
+	m_pCollider->Render_Collider();
 	if (m_bFire)
 	{
-		m_pCollider->Render_Collider();
 		m_pGraphicDev->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
 
 		D3DCOLORVALUE Difuse = { 1.f, 0.f, 0.f, 1.f };
@@ -115,6 +120,17 @@ void CLazer::Render_GameObject()
 
 void CLazer::OnCollisionEnter(CCollider* _pOther)
 {
+	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE ||
+		_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ ||
+		_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::MONSTER ||
+		_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BOSS)
+	{
+		_vec3 vHitPoint = _pOther->GetCenterPos();//충돌 지점 계산 
+
+		_float fDistanceToHit = D3DXVec3Length(&(vHitPoint - m_pTransformCom->m_vInfo[INFO_POS]));
+		m_pTransformCom->Set_Scale(_vec3(0.1f, 0.1f, fDistanceToHit));
+		
+	}
 	__super::OnCollisionEnter(_pOther);
 }
 
@@ -194,25 +210,27 @@ void CLazer::FirePosition(const _float& fTimeDelta)
 
 void CLazer::SearchRangeTarget()
 {
-	auto& ObjectList = Management()->Get_ObjectList(LAYERTAG::GAMELOGIC,OBJECTTAG::MONSTER);
-
-	for (auto iter : ObjectList)
-	{
-		_vec3 vMonsterPos;
-		iter->Get_Transform()->Get_Info(INFO_POS, &vMonsterPos);
-
-		_float fDistance = D3DXVec3Length(&(vMonsterPos - m_pTransformCom->m_vInfo[INFO_POS]));
-
-		if (fDistance < m_fRange)
-		{
-
-		}
-
-
-	}
+// 	auto& ObjectList = Management()->Get_ObjectList(LAYERTAG::GAMELOGIC,OBJECTTAG::MONSTER);
+// 
+// 	for (auto iter : ObjectList)
+// 	{
+// 		_vec3 vMonsterPos;
+// 		iter->Get_Transform()->Get_Info(INFO_POS, &vMonsterPos);
+// 
+// 		_float fDistance = D3DXVec3Length(&(vMonsterPos - m_pTransformCom->m_vInfo[INFO_POS]));
+// 
+// 		if (fDistance < m_fRange)
+// 		{
+// 
+// 		}
+// 
+// 
+// 	}
 
 
 }
+
+
 
 void CLazer::Mouse_Input()
 {
