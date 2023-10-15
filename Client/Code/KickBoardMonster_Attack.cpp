@@ -58,8 +58,12 @@ CMonsterState* CKickBoardMonster_Attack::Update(CMonster* Monster, const float& 
 
 		if (m_bJump)
 		{
-			m_pHost->Get_RigidBodyCom()->Set_Force(_vec3{ vDir.x * 20,45.f,vDir.z });
+			m_pHost->Get_RigidBodyCom()->Set_Force(_vec3{ vDir.x * 50,45.f,vDir.z * 50 });
 			m_bJump = false;
+		}
+
+		if (m_fTick > 0.5f)
+		{
 			m_eAttack = JUMPEND;
 		}
 		break;
