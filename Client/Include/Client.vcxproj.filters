@@ -423,12 +423,15 @@
     </Filter>
     <Filter Include="02. GameObject\01. Player\98.FootRay\00.Ray">
       <UniqueIdentifier>{b9f3910d-5ddb-4403-9ea9-3a45d98e388c}</UniqueIdentifier>
-	</Filter>
-	<Filter Include="02. GameObject\06. Effect\04.JumpSmoke">
+    </Filter>
+    <Filter Include="02. GameObject\06. Effect\04.JumpSmoke">
       <UniqueIdentifier>{20ed10b5-ed4c-41aa-9d8b-31b84071e0ff}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\06. Effect\00.Particle\02. ShockWave">
       <UniqueIdentifier>{abe17bfb-ee99-461c-94d8-8e5918b97001}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\06. Effect\05.JumpSmoke2">
+      <UniqueIdentifier>{2fdb7c04-124e-428c-a76b-4f72b53eb167}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -936,11 +939,11 @@
     <ClInclude Include="..\Header\MBulletExplosion.h">
       <Filter>02. GameObject\06. Effect\03.MBulletExplosion</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Ray.h">
-      <Filter>02. GameObject\01. Player\98.FootRay\00.Ray</Filter>
-	</ClInclude>
-	<ClInclude Include="..\Header\ShockWave.h">
+    <ClInclude Include="..\Header\ShockWave.h">
       <Filter>02. GameObject\06. Effect\00.Particle\02. ShockWave</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\JumpShockWaveEffect2.h">
+      <Filter>02. GameObject\06. Effect\05.JumpSmoke2</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1436,11 +1439,11 @@
     <ClCompile Include="..\Code\MBulletExplosion.cpp">
       <Filter>02. GameObject\06. Effect\03.MBulletExplosion</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Ray.cpp">
-      <Filter>02. GameObject\01. Player\98.FootRay\00.Ray</Filter>
-	</ClCompile>
-	<ClCompile Include="..\Code\ShockWave.cpp">
+    <ClCompile Include="..\Code\ShockWave.cpp">
       <Filter>02. GameObject\06. Effect\00.Particle\02. ShockWave</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\JumpShockWaveEffect2.cpp">
+      <Filter>02. GameObject\06. Effect\05.JumpSmoke2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

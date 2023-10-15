@@ -224,6 +224,7 @@
     <ClInclude Include="..\Header\Build_Cube.h" />
     <ClInclude Include="..\Header\BigDaddyMonsterState.h" />
     <ClInclude Include="..\Header\Bullet_GoldBar.h" />
+    <ClInclude Include="..\Header\JumpShockWaveEffect2.h" />
     <ClInclude Include="..\Header\LobbyStage.h" />
     <ClInclude Include="..\Header\ShockWave.h" />
     <ClInclude Include="..\Header\Stage2.h" />
@@ -366,6 +367,7 @@
     <ClCompile Include="..\Code\BrifCase_2.cpp" />
     <ClCompile Include="..\Code\BigDaddyMonster.cpp" />
     <ClCompile Include="..\Code\Bullet.cpp" />
+    <ClCompile Include="..\Code\JumpShockWaveEffect2.cpp" />
     <ClCompile Include="..\Code\MBulletBombEffect.cpp" />
     <ClCompile Include="..\Code\MBulletExplosion.cpp" />
     <ClCompile Include="..\Code\ShockWave.cpp" />

@@ -456,7 +456,6 @@ bool CollisionMgr::CollisionRayToCube(CCollider* pCRay, CCollider* pCBox, _vec3 
 	if (tmin < 0.0f) {
 		t_result = tmax;
 	}
-	//ÀÌ°Íµµ ¹Ù²ã¾ß µÊ 
 	m_fDist = (m_vRayDir * t_result);
 	m_DestOriginLen = vRayDest - vRayOrigin;
 	_float fDist = D3DXVec3Length(&(m_fDist));
