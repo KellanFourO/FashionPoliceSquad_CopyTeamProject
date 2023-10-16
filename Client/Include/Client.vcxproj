@@ -224,11 +224,8 @@
     <ClInclude Include="..\Header\Build_Cube.h" />
     <ClInclude Include="..\Header\BigDaddyMonsterState.h" />
     <ClInclude Include="..\Header\Bullet_GoldBar.h" />
-<<<<<<< HEAD
     <ClInclude Include="..\Header\JumpShockWaveEffect2.h" />
-=======
     <ClInclude Include="..\Header\FileMgr.h" />
->>>>>>> 류승룡기모띠
     <ClInclude Include="..\Header\LobbyStage.h" />
     <ClInclude Include="..\Header\MiniGame.h" />
     <ClInclude Include="..\Header\ShockWave.h" />
@@ -374,17 +371,13 @@
     <ClCompile Include="..\Code\BrifCase_2.cpp" />
     <ClCompile Include="..\Code\BigDaddyMonster.cpp" />
     <ClCompile Include="..\Code\Bullet.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="..\Code\JumpShockWaveEffect2.cpp" />
-=======
     <ClCompile Include="..\Code\FileMgr.cpp" />
->>>>>>> 류승룡기모띠
     <ClCompile Include="..\Code\MBulletBombEffect.cpp" />
     <ClCompile Include="..\Code\MBulletExplosion.cpp" />
     <ClCompile Include="..\Code\MiniGame.cpp" />
     <ClCompile Include="..\Code\Ray.cpp" />
     <ClCompile Include="..\Code\ShockWave.cpp" />
-    <ClCompile Include="..\Code\SYRay.cpp" />
     <ClCompile Include="..\Code\Trigger.cpp" />
     <ClCompile Include="..\Code\DullSuitMonster_Attack.cpp" />
     <ClCompile Include="..\Code\DullSuitMonster.cpp" />

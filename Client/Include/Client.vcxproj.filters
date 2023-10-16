@@ -433,10 +433,9 @@
     <Filter Include="02. GameObject\06. Effect\00.Particle\02. ShockWave">
       <UniqueIdentifier>{abe17bfb-ee99-461c-94d8-8e5918b97001}</UniqueIdentifier>
     </Filter>
-<<<<<<< HEAD
     <Filter Include="02. GameObject\06. Effect\05.JumpSmoke2">
       <UniqueIdentifier>{2fdb7c04-124e-428c-a76b-4f72b53eb167}</UniqueIdentifier>
-=======
+    </Filter>
     <Filter Include="02. GameObject\15. MiniGame">
       <UniqueIdentifier>{e546e874-21d8-46c5-997a-303e628cb41a}</UniqueIdentifier>
     </Filter>
@@ -451,7 +450,6 @@
     </Filter>
     <Filter Include="02. GameObject\20.UI\01. MyDialog\01. NameTag">
       <UniqueIdentifier>{48b541d7-806e-4358-8db6-ba0ec926b6c8}</UniqueIdentifier>
->>>>>>> 류승룡기모띠
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -938,13 +936,12 @@
     <ClInclude Include="..\Header\MBulletExplosion.h">
       <Filter>02. GameObject\06. Effect\03.MBulletExplosion</Filter>
     </ClInclude>
-<<<<<<< HEAD
     <ClInclude Include="..\Header\ShockWave.h">
       <Filter>02. GameObject\06. Effect\00.Particle\02. ShockWave</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\JumpShockWaveEffect2.h">
       <Filter>02. GameObject\06. Effect\05.JumpSmoke2</Filter>
-=======
+    </ClInclude>
     <ClInclude Include="..\Header\FileMgr.h">
       <Filter>04. Manager\11. FileMgr</Filter>
     </ClInclude>
@@ -980,7 +977,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\UI_NameTag.h">
       <Filter>02. GameObject\20.UI\01. MyDialog\01. NameTag</Filter>
->>>>>>> 류승룡기모띠
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1455,13 +1451,12 @@
     <ClCompile Include="..\Code\MBulletExplosion.cpp">
       <Filter>02. GameObject\06. Effect\03.MBulletExplosion</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="..\Code\ShockWave.cpp">
       <Filter>02. GameObject\06. Effect\00.Particle\02. ShockWave</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\JumpShockWaveEffect2.cpp">
       <Filter>02. GameObject\06. Effect\05.JumpSmoke2</Filter>
-=======
+    </ClCompile>
     <ClCompile Include="..\Code\FileMgr.cpp">
       <Filter>04. Manager\11. FileMgr</Filter>
     </ClCompile>
@@ -1472,9 +1467,6 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Ray.cpp">
-      <Filter>02. GameObject\01. Player\97.RAY</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\SYRay.cpp">
       <Filter>02. GameObject\01. Player\97.RAY</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_MyCardTexture.cpp">
@@ -1503,7 +1495,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\UI_NameTag.cpp">
       <Filter>02. GameObject\20.UI\01. MyDialog\01. NameTag</Filter>
->>>>>>> 류승룡기모띠
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
