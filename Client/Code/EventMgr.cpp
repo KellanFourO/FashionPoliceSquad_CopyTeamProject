@@ -85,9 +85,7 @@ void CEventMgr::OnMiniGame_Quiz(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTa
 void CEventMgr::OffMiniGame_Arrow(SCENETAG eSceneTag)
 {
 	Set_MiniGameClearCheck(0, TRUE);
-	OnPause(FALSE, SCENETAG::LOBBY);
-	
-	Management()->Get_One_Scene(eSceneTag)->Get_Layer(LAYERTAG::MINIGAME)->Delete_GameObject(OBJECTTAG::MINIGAME, pGame_Arrow, pGame_Arrow->m_iIndex);
+	OnPause(FALSE, SCENETAG::LOBBY);	
 }
 void CEventMgr::OffMiniGame_KickBoard(SCENETAG eSceneTag)
 {

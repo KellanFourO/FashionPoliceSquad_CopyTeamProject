@@ -33,6 +33,7 @@ HRESULT CLobbyStage::Ready_Scene()
 
 	Load_Data_T(L"../Bin/Data/Trigger/TriggerData", OBJECTTAG::O_TRIGGER); //TODO Æ®¸®°Å
 
+	Add_Light();
 
 	srand(GetTickCount64());
 

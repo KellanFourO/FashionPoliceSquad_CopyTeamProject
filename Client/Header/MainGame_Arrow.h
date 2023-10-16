@@ -38,10 +38,18 @@ private:
 
 	_matrix					m_matProj, m_matView;
 
-	CMini_Arrow*			m_pArrow = nullptr;
+	_int					m_ArrowCount = 30;
+
+	//CMini_Arrow*			m_pArrow = nullptr;
 	CMini_StateIcon*		m_pStateIcon = nullptr;
 	CMini_Cursor*			m_pCursor = nullptr;
 	CMini_TimeBar*			m_pTimeBar = nullptr;
+
+	vector<CMini_Arrow*>		m_pVecArrow;
+
+
+
+	_bool					m_ClearCheck = false;
 
 
 public:

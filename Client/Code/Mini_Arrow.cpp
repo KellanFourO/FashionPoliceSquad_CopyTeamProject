@@ -34,24 +34,64 @@ HRESULT CMini_Arrow::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::BUFFER, pComponent);
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Mini_Player_Texture"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Mini_Arrow_Texture"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
 
 	return S_OK;
 }
 
-HRESULT CMini_Arrow::Ready_GameObject()
+void CMini_Arrow::Set_Rand_ArrowType(int iRandomNumber)
+{
+	m_iTextureIndex = iRandomNumber;
+
+	switch (iRandomNumber)
+	{
+	case 0:
+		m_eArrowType = MINIGAME_ARROW_TYPE::UP;
+		break;
+
+	case 1:
+		m_eArrowType = MINIGAME_ARROW_TYPE::DOWN;
+		break;
+
+	case 2:
+		m_eArrowType = MINIGAME_ARROW_TYPE::LEFT;
+		break;
+
+	case 3:
+		m_eArrowType = MINIGAME_ARROW_TYPE::RIGHT;
+		break;
+
+	default:
+		break;
+	}
+}
+
+HRESULT CMini_Arrow::Ready_GameObject(int iRandomNumber)
 {
 	D3DXMatrixIdentity(&m_ViewMatrix);
 	D3DXMatrixOrthoLH(&m_ProjMatrix, WINCX, WINCY, 0.0f, 100.f);
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	_vec3 vPos, vScale;
-	_float fMultiply = 0.2f;
+	Set_Rand_ArrowType(iRandomNumber);
 
-	vPos = { 150.f, 50.f, 0.f };
-	vScale = { 283.f * fMultiply, 251.f * fMultiply, 1.f };
+	_vec3 vPos, vScale;
+	_float fMultiply = 1.f;
+
+	_float StdSize = 20.f;
+	_float StdDistance = 20.f;
+
+	if (m_iArrowIndex < 10) { //0~9
+		vPos = { 200.f + (m_iArrowIndex * (StdSize+ StdDistance)), 120.f, 0.f };
+	}
+	else if ((m_iArrowIndex >= 10) && (m_iArrowIndex < 20)) { //10~19
+		vPos = { 600.f, 120.f + ((m_iArrowIndex - 10) * (StdSize + StdDistance)), 0.f };
+	}
+	else if ((m_iArrowIndex >= 20) && (m_iArrowIndex < 30)) { //20~29
+		vPos = { 600.f - ((m_iArrowIndex - (20 - 1)) * (StdSize + StdDistance)), 480.f, 0.f };
+	}
+	vScale = { StdSize * fMultiply, StdSize * fMultiply, 1.f };
 
 	vPos.x = vPos.x - WINCX * 0.5f;
 	vPos.y = -vPos.y + WINCY * 0.5f;
@@ -61,7 +101,6 @@ HRESULT CMini_Arrow::Ready_GameObject()
 
 	// -1 ~ 1 -> 0 ~ 2
 
-	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/MiniGame/3_KickBoard/portrait-notneon_des", 1);
 	return S_OK;
 }
 
@@ -104,11 +143,13 @@ void CMini_Arrow::Render_GameObject()
 
 
 
-CMini_Arrow* CMini_Arrow::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CMini_Arrow* CMini_Arrow::Create(LPDIRECT3DDEVICE9 pGraphicDev, _int iIndex, _int iRandomNumber)
 {
 	CMini_Arrow* pInstance = new CMini_Arrow(pGraphicDev);
+	pInstance->Set_ArrowIndex(iIndex);
 
-	if (FAILED(pInstance->Ready_GameObject()))
+
+	if (FAILED(pInstance->Ready_GameObject(iRandomNumber)))
 	{
 		Safe_Release(pInstance);
 

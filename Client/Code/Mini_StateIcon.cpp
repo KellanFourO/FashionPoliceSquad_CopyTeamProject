@@ -1,6 +1,7 @@
 
 #include "stdafx.h"
 #include "Mini_StateIcon.h"
+#include "EventMgr.h"
 
 #include "Export_System.h"
 #include "Export_Utility.h"
@@ -34,11 +35,38 @@ HRESULT CMini_StateIcon::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::BUFFER, pComponent);
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Mini_Player_Texture"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Mini_StateIcon_Texture"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
 
 	return S_OK;
+}
+
+HRESULT CMini_StateIcon::Change_State()
+{
+	if (m_TimingCheck < 100)
+	{
+		m_iTextureIndex = 0;
+	}
+	else if ((m_TimingCheck >= 100) && (m_TimingCheck < 200))
+	{
+		m_iTextureIndex = 1;
+	}
+	else if ((m_TimingCheck >= 200) && (m_TimingCheck < 300))
+	{
+		m_iTextureIndex = 2;
+	}
+	else if ((m_TimingCheck >= 300) && (m_TimingCheck < 400))
+	{
+		m_iTextureIndex = 3;
+	}
+	else if (m_TimingCheck >= 400)
+	{
+		m_TimingCheck = 0;
+	}
+
+	m_TimingCheck++;
+	return E_NOTIMPL;
 }
 
 HRESULT CMini_StateIcon::Ready_GameObject()
@@ -48,10 +76,10 @@ HRESULT CMini_StateIcon::Ready_GameObject()
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	_vec3 vPos, vScale;
-	_float fMultiply = 0.2f;
+	_float fMultiply = 1.f;
 
-	vPos = { 150.f, 50.f, 0.f };
-	vScale = { 283.f * fMultiply, 251.f * fMultiply, 1.f };
+	vPos = { 400.f, 300.f, 0.f };
+	vScale = { 150.f * fMultiply, 150.f * fMultiply, 1.f };
 
 	vPos.x = vPos.x - WINCX * 0.5f;
 	vPos.y = -vPos.y + WINCY * 0.5f;
@@ -61,7 +89,7 @@ HRESULT CMini_StateIcon::Ready_GameObject()
 
 	// -1 ~ 1 -> 0 ~ 2
 
-	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/MiniGame/3_KickBoard/portrait-notneon_des", 1);
+	//m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/MiniGame/1_Arrow/Des_%d.png", 4);
 	return S_OK;
 }
 
@@ -70,9 +98,12 @@ HRESULT CMini_StateIcon::Ready_GameObject()
 
 _int CMini_StateIcon::Update_GameObject(const _float& fTimeDelta)
 {
+
+	Change_State();
+
 	Engine::Add_RenderGroup(RENDER_UI, this);
 	int iExit = __super::Update_GameObject(fTimeDelta);
-
+	
 	return 0;
 }
 
@@ -100,6 +131,7 @@ void CMini_StateIcon::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+
 }
 
 
