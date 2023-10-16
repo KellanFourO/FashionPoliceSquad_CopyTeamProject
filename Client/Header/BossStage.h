@@ -59,6 +59,8 @@
 #include "UI_BulletInfoName.h"
 
 #include "UI_WeaponInfo.h"
+#include "UI_BossHPFrame.h"
+#include "UI_BossHPValue.h"
 
 #include "PaintShotGun.h"
 #include "TailorAssertRifle.h"
@@ -89,18 +91,19 @@ private:
 	CLayer* m_pLayer = nullptr;  //Environment
 	CLayer* m_pGLayer = nullptr; //GameLogic
 	_bool	m_bLateInit = true;
+	_bool	m_bOneCreate = true;
 
 	//////////////////////유진 함수, 변수////////////////////////
 public:
-	vector<CUBE*>& Get_VecCubeData() { return m_VecCubeData; }
+	vector<CUBE*>&		Get_VecCubeData() { return m_VecCubeData; }
 	void				Set_VecCubeData(vector<CUBE*> pVecCubeData) { m_VecCubeData = pVecCubeData; }
 
-	vector<OBJData*>& Get_VecOBJData() { return m_VecOBJData; }
+	vector<OBJData*>&	Get_VecOBJData() { return m_VecOBJData; }
 	void				Set_VecOBJData(vector<OBJData*> pVecOBjData) { m_VecOBJData = pVecOBjData; }
 
 	virtual HRESULT		Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag);
-	HRESULT				Load_Data_C_T(const TCHAR* pFilePath, OBJECTTAG eTag);
-
+	HRESULT				Load_Data_C(const TCHAR* pFilePath, OBJECTTAG eTag);
+	HRESULT				Load_Data_T(const TCHAR* pFilePath, OBJECTTAG eTag);
 
 	vector<IDirect3DCubeTexture9*>& Get_VecTempCube() { return m_VecTempCube; }
 	vector<IDirect3DBaseTexture9*>& Get_VecTempPlane() { return m_VecTempPlane; }
@@ -125,6 +128,7 @@ private:
 	vector<SORTTEX*>				m_pTexForSort;			//텍스쳐 정렬용
 
 	CStage1Boss*					m_pBoss = nullptr;
+	CMissionObjective*				m_pMission = nullptr;
 public:
 	void				Admin_KeyInput();
 

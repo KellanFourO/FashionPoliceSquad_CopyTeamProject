@@ -33,7 +33,7 @@ inline HRESULT		Ready_Font(LPDIRECT3DDEVICE9 pGraphicDev,
 inline void		Render_Font(const _tchar* pFontTag,
 	const _tchar* pString,
 	const _vec2* pPos,
-	D3DXCOLOR Color);
+	D3DXCOLOR Color, _int iMaxWidth, _bool bAnimation);
 
 // InputDev
 inline _byte			Get_DIKeyState(_ubyte byKeyID);

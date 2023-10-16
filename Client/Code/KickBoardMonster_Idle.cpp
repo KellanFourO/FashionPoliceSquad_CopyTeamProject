@@ -27,10 +27,20 @@ void CKickBoardMonster_Idle::Initialize(CMonster* _Monster)
 
 CMonsterState* CKickBoardMonster_Idle::Update(CMonster* Monster, const float& fDetltaTime)
 {
+
 	if (m_pHost->Detect() || m_pHost->Get_Info().bHit)
 	{
+		m_iVer = 2;
+		m_fCurFrame = 5;
+
+		m_fTick += fDetltaTime;
+
+		if (m_fTick > 1.25f)
+		{
+			return dynamic_cast<CKickBoardMonster*>(m_pHost)->Get_State(1);
+		}
+
 		//TODO 플레이어가 일정범위 안에 들어오거나 피격시 추격. Chase 상태로 변경
-		return dynamic_cast<CKickBoardMonster*>(m_pHost)->Get_State(1);
 	}
 
 	return nullptr;

@@ -30,6 +30,9 @@ HRESULT CLobbyStage::Ready_Scene()
 
 	FAILED_CHECK_RETURN(Ready_Layer_UI(LAYERTAG::UI), E_FAIL);
 
+	Load_Data_T(L"../Bin/Data/Trigger/TriggerData", OBJECTTAG::O_TRIGGER); //TODO 트리거
+
+
 	srand(GetTickCount64());
 
 	//TODO - 승용추가 크로스헤어 추가, 기본 커서 안보이게
@@ -63,7 +66,7 @@ _int CLobbyStage::Update_Scene(const _float& fTimeDelta)
 
 
 
-
+	Light_OnOff_Check();
 
 	Admin_KeyInput();
 	return iExit;
@@ -101,6 +104,117 @@ HRESULT CLobbyStage::Ready_LightInfo()
 
 	return S_OK;
 }
+
+
+HRESULT CLobbyStage::Add_Light()
+{
+	if (!m_VecLight.empty()) {
+		const int LightNum = m_VecLight.size();
+		D3DLIGHT9* tLightInfoo = new D3DLIGHT9[LightNum];
+
+		for (int i = 0; i != LightNum; ++i)
+		{
+			ZeroMemory(&tLightInfoo[i], sizeof(D3DLIGHT9));
+
+			tLightInfoo[i].Type = D3DLIGHT_POINT;
+
+			tLightInfoo[i].Diffuse = { 1.f, 1.f, 1.f, 0.4f };     // 색깔(난반사)
+			tLightInfoo[i].Specular = { 1.f, 1.f, 1.f, 0.4f };    // 정반사
+			tLightInfoo[i].Ambient = { 1.f, 1.f, 1.f, 0.4f };    // 환경반사
+
+			_vec3 Height = { 0.f, 0.f, 0.f };
+			_float Distance = 20.f;
+
+			tLightInfoo[i].Position = (m_VecLight[i]->vPos) + Height;
+			tLightInfoo[i].Range = Distance;
+			tLightInfoo[i].Falloff = 1;  //거리 감쇄 - 선형 감소
+
+			FAILED_CHECK_RETURN(Engine::Ready_Light(m_pGraphicDev, &tLightInfoo[i], i + 1), E_FAIL);
+			// 0은 전역(방향성)조명이라서 없애버리면 안 됨
+		}
+
+		delete[] tLightInfoo;
+		tLightInfoo = nullptr;
+	}
+
+	return S_OK;
+}
+
+HRESULT CLobbyStage::Light_OnOff_Check()
+{
+	const _float stdDistance = 300.f; // 기준 거리
+	const _float stdFov = D3DXToRadian(60.f); // 기준 시야각
+
+	_vec3 vPlayerPos, vPlayerLook, vtoLight;
+	m_pPlayer->Get_Transform()->Get_Info(INFO_POS, &vPlayerPos);
+	m_pPlayer->Get_Transform()->Get_Info(INFO_LOOK, &vPlayerLook);
+
+	_float LightDistance = 0.f;
+
+	vector<OBJData*> SortLight;
+
+	for (int i = 0; i != m_VecLight.size(); ++i)
+	{
+		vtoLight = m_VecLight[i]->vPos - vPlayerPos;
+		LightDistance = D3DXVec3Length(&vtoLight);
+
+		if (LightDistance <= stdDistance) { //거리가 기준보다 멀지 않고
+
+			vtoLight = m_VecLight[i]->vPos - vPlayerPos;
+			D3DXVec3Normalize(&vtoLight, &vtoLight);
+
+			_float DotResult = D3DXVec3Dot(&vPlayerLook, &vtoLight);
+			_float fAngle = D3DXToRadian(acos(DotResult));
+
+			if (!(fAngle < stdFov)) //시야각 안에 있으면
+			{
+				SortLight.push_back(m_VecLight[i]);
+			}
+		}
+	}
+
+	while (SortLight.size() > 8) {
+
+		_float maxDistance = -1.f;
+		int maxIndex = -1;
+
+		for (int i = 0; i < SortLight.size(); ++i) {
+
+			_vec3 vtoLight = SortLight[i]->vPos - vPlayerPos;
+			_float distance = D3DXVec3Length(&vtoLight);
+
+			if (distance > maxDistance) {
+
+				maxDistance = distance;
+				maxIndex = i;
+			}
+		}
+		if (maxIndex != -1) {
+			SortLight.erase(SortLight.begin() + maxIndex);
+		}
+	}
+
+	if (SortLight.size() <= 8)
+	{
+		for (int i = 0; i < m_VecLight.size(); ++i) {
+
+			bool lightEnabled = false;
+
+			for (int j = 0; j < SortLight.size(); ++j) {
+
+				if (m_VecLight[i]->iIndex == SortLight[j]->iIndex) {
+					lightEnabled = true;
+					break;
+				}
+			}
+			m_pGraphicDev->LightEnable(i + 1, lightEnabled);
+		}
+	}
+	m_pGraphicDev->LightEnable(0, TRUE); // 전역은 무조건 활성화
+
+	return S_OK;
+}
+
 
 HRESULT CLobbyStage::Ready_Prototype()
 {
@@ -144,7 +258,7 @@ HRESULT CLobbyStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 
 	{
 		// Player
-		CGameObject* pPlayer = pGameObject = Management()->Get_Player();
+		CGameObject* pPlayer = m_pPlayer = pGameObject = Management()->Get_Player();
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER, pGameObject), E_FAIL);	//플레이어
 
@@ -361,6 +475,7 @@ HRESULT CLobbyStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 	}
 
 	OBJData* LightTemp = nullptr;
+	OBJData* MovingTemp = nullptr;
 
 	if (eTag == OBJECTTAG::BUILD_OBJ) {
 		string m_strText = "OBJData";
@@ -397,9 +512,15 @@ HRESULT CLobbyStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 
 			if (iter->eOBJ_Attribute == OBJ_ATTRIBUTE::LIGHT_OBJ)
 			{
-				OBJData* LightTemp = new OBJData;
+				LightTemp = new OBJData;
 				LightTemp = iter;
 				m_VecLight.push_back(LightTemp);
+			}
+			if (iter->eOBJ_Attribute == OBJ_ATTRIBUTE::MOVING_OBJ)
+			{
+				MovingTemp = new OBJData;
+				MovingTemp = iter;
+				m_VecMoving.push_back(MovingTemp);
 			}
 
 			m_iOBJIndex++;
@@ -407,100 +528,131 @@ HRESULT CLobbyStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 		m_mapLayer.emplace(LAYERTAG::ENVIRONMENT, m_pLayer);
 	}
 
-	delete[] pTag;
-	pTag = nullptr;
+	if (pTag != nullptr) {
+		delete[] pTag;
+		pTag = nullptr;
+	}
 
-	delete LightTemp;
-	LightTemp = nullptr;
+	if (LightTemp != nullptr) {
+		delete LightTemp;
+		LightTemp = nullptr;
+	}
 
+	if (MovingTemp != nullptr) {
+		delete MovingTemp;
+		MovingTemp = nullptr;
+	}
 	return S_OK;
 }
 
 
-HRESULT CLobbyStage::Load_Data_C_T(const TCHAR* pFilePath, OBJECTTAG eTag)
+HRESULT CLobbyStage::Load_Data_C(const TCHAR* pFilePath, OBJECTTAG eTag)
 {
+	//파일 개방해서 받아오기
+	string m_strText = "CPointData";
+
 	HANDLE      hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
 
-	if (INVALID_HANDLE_VALUE == hFile) { return E_FAIL; }
+	if (INVALID_HANDLE_VALUE == hFile)
+		return E_FAIL;
 
 	DWORD   dwByte = 0;
 	DWORD   dwStrByte = 0;
+	C_POINT* pOBJ = nullptr;
+
+	ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
 	CHAR* pTag = new CHAR[dwStrByte];
 
+	ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
+	m_strText = pTag;
 
-	if (eTag == OBJECTTAG::BUILD_OBJ) {
-		string m_strText = "CPointData";
+	basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
 
-		C_POINT* pOBJ = nullptr;
+	//저장된 데이터대로 동적할당해서 벡터에 담기
+	while (true)
+	{
+		pOBJ = new C_POINT;
 
-		ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
-		ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
-		m_strText = pTag;
+		ReadFile(hFile, pOBJ, sizeof(C_POINT), &dwByte, nullptr);
 
-		basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
-
-		while (true)
+		if (0 == dwByte)
 		{
-			pOBJ = new C_POINT;
-			ReadFile(hFile, pOBJ, sizeof(C_POINT), &dwByte, nullptr);
-
-			if (0 == dwByte)
-			{
-				Safe_Delete(pOBJ);
-				break;
-			}
-			m_VecCreatePoint.push_back(pOBJ);
+			Safe_Delete(pOBJ);
+			break;
 		}
-		CloseHandle(hFile);
-
-		Engine::CGameObject* pGameObject = nullptr;
-
-		for (auto& iter : m_VecCreatePoint)
-		{
-			pGameObject = CBuild_Obj::Create(m_pGraphicDev, iter->defOBJData.vPos, iter->defOBJData.uiTextureNum,
-				iter->defOBJData.vSize, iter->defOBJData.iRotateCount, m_iOBJIndex, iter->defOBJData.eOBJ_TYPE, iter->defOBJData.eOBJ_Attribute);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
-			m_iOBJIndex++;
-		}
-		m_mapLayer.emplace(LAYERTAG::ENVIRONMENT, m_pLayer);
+		m_VecCreatePoint.push_back(pOBJ);
 	}
-	if (eTag == OBJECTTAG::TRIGGER) {
-		string m_strText = "TriggerData";
-		TRIGGER* pTR = nullptr;
+	CloseHandle(hFile);
 
-		ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
-		ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
-		m_strText = pTag;
+	Engine::CGameObject* pGameObject = nullptr;
 
-		basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
-
-		while (true)
-		{
-			pTR = new TRIGGER;
-
-			ReadFile(hFile, pTR, sizeof(TRIGGER), &dwByte, nullptr);
-
-			if (0 == dwByte)
-			{
-				Safe_Delete(pTR);
-				break;
-			}
-
-			m_TriggerDataTemp.push_back(pTR);
-		}
-		CloseHandle(hFile);
-
-		Engine::CGameObject* pGameObject = nullptr;
-
-		for (auto& iter : m_TriggerDataTemp)
-		{
-			pGameObject = CTrigger::Create(m_pGraphicDev, iter->vPos, iter->iIndex, iter->vSize, iter->eTrCase, iter->eTrType, iter->eTrName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::TRIGGER, pGameObject), E_FAIL);
-		}
-		m_mapLayer.emplace(LAYERTAG::GAMELOGIC, m_pGLayer);
+	//벡터 내용물만큼 실제 생성해 레이어에 담기
+	for (auto& iter : m_VecCreatePoint)
+	{
+		pGameObject = CBuild_Obj::Create(m_pGraphicDev, iter->defOBJData.vPos, iter->defOBJData.uiTextureNum,
+			iter->defOBJData.vSize, iter->defOBJData.iRotateCount, m_iOBJIndex, iter->defOBJData.eOBJ_TYPE, iter->defOBJData.eOBJ_Attribute);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
+		m_iOBJIndex++;
 	}
+	m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
+
+
+	delete[] pTag;
+	pTag = nullptr;
+
+	return S_OK;
+}
+
+HRESULT CLobbyStage::Load_Data_T(const TCHAR* pFilePath, OBJECTTAG eTag)
+{
+	//파일 개방해서 받아오기
+	string m_strText = "TriggerData";
+
+	HANDLE      hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+		return E_FAIL;
+
+	DWORD   dwByte = 0;
+	DWORD   dwStrByte = 0;
+	TRIGGER* pTR = nullptr;
+
+	ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
+	char* pTag = new CHAR[dwStrByte];
+
+	ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
+	m_strText = pTag;
+
+	basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
+
+	//저장된 데이터대로 동적할당해서 벡터에 담기
+	while (true)
+	{
+		pTR = new TRIGGER;
+
+		ReadFile(hFile, pTR, sizeof(TRIGGER), &dwByte, nullptr);
+
+		if (0 == dwByte)
+		{
+			Safe_Delete(pTR);
+			break;
+		}
+
+		m_TriggerDataTemp.push_back(pTR);
+	}
+	CloseHandle(hFile);
+
+	Engine::CGameObject* pGameObject = nullptr;
+
+	//벡터 내용물만큼 실제 생성해 레이어에 담기
+	for (auto& iter : m_TriggerDataTemp)
+	{
+		pGameObject = CTrigger::Create(m_pGraphicDev, iter->vPos, iter->iIndex, iter->vSize, iter->eTrCase, iter->eTrType, iter->eTrName);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::O_TRIGGER, pGameObject), E_FAIL);
+	}
+	m_mapLayer.emplace(LAYERTAG::GAMELOGIC, m_pGLayer);
 
 	delete[] pTag;
 	pTag = nullptr;
@@ -544,6 +696,13 @@ void CLobbyStage::Admin_KeyInput()
 
 		m_bAdminSwitch = false;
 	}
+
+	_bool CheckTemp = dynamic_cast<CPlayer*>(m_pPlayer)->Get_TriggerCheck();
+	if (Engine::Get_DIKeyState(DIK_F) & 0x80 && (CheckTemp == true))
+	{
+		
+
+	}
 }
 
 CLobbyStage* CLobbyStage::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -568,11 +727,11 @@ void CLobbyStage::Free()
 	}
 	m_VecCubeData.clear();
 
-	for (int i = 0; i < m_VecOBJData.size(); ++i)
-	{
-		Safe_Delete(m_VecOBJData[i]);
-	}
-	m_VecOBJData.clear();
+// 	for (int i = 0; i < m_VecOBJData.size(); ++i)
+// 	{
+// 		Safe_Delete(m_VecOBJData[i]);
+// 	}
+// 	m_VecOBJData.clear();
 
 	//for (int i = 0; i < m_VecCreatePoint.size(); ++i)
 	//{

@@ -49,7 +49,7 @@ HRESULT CTrigger::Add_Component()
 HRESULT CTrigger::Ready_GameObject(_vec3 pMouse_Pos, _vec3 Size)
 {
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
-	Set_ObjectTag(OBJECTTAG::TRIGGER);
+	Set_ObjectTag(OBJECTTAG::O_TRIGGER);
 
 	m_pCollider->Set_Host(this);
 	m_pCollider->Set_Transform(m_pTransformCom);

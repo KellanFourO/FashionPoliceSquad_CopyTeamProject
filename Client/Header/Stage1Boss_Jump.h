@@ -37,6 +37,7 @@ private:
 	JUMPSTATE			m_eJumpState = JUMP_READY;
 
 	_int				m_iRandomIndex = 0;
+	_int				m_iEnvIndex = 0;
 
 
 	_float				m_fShockRadius = 128.f;

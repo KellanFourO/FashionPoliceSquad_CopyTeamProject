@@ -19,12 +19,15 @@ public:
 
 	void			Render_Font(const _tchar* pString,
 		const _vec2* pPos,
-		D3DXCOLOR Color);
+		D3DXCOLOR Color,_int maxWidth, _float _fTextSpeed, _bool _bAnimation);
 
 private:
 	LPDIRECT3DDEVICE9			m_pGraphicDev;
 	LPD3DXSPRITE				m_pSprite;
 	LPD3DXFONT					m_pFont;
+	_float						m_fTextSpeed;
+	_float						m_fFrame;
+	UINT						m_nTextIndex;
 
 public:
 	static CMyFont* Create(LPDIRECT3DDEVICE9 pGraphicDev,

@@ -36,6 +36,8 @@ HRESULT CBossStage::Ready_Scene()
 
 	FAILED_CHECK_RETURN(Ready_Layer_UI(LAYERTAG::UI), E_FAIL);
 
+	Load_Data_C(L"../Bin/Data/CPoint/CPointData", OBJECTTAG::BUILD_OBJ); //TODO
+
 	srand(GetTickCount64());
 
 	//TODO - 승용추가 크로스헤어 추가, 기본 커서 안보이게
@@ -55,12 +57,33 @@ _int CBossStage::Update_Scene(const _float& fTimeDelta)
  		m_bLateInit = false;
  	}
 
-
 	if (!Management()->Get_Scene()->Get_Pause())
 	{
 		m_pBoss->Set_Start(true);
+		m_pMission->Set_Render(false);
+
+		CGameObject* pGameObject = nullptr;
+		CLayer* pLayer = nullptr;
+
+		pLayer = Management()->Get_Layer(LAYERTAG::UI);
+
+		if (m_bOneCreate)
+		{
+			pGameObject = CBossHPFrame::Create(m_pGraphicDev);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+			pGameObject = CBossHPValue::Create(m_pGraphicDev);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+			m_bOneCreate = false;
+		}
+
 	}
 
+	if(m_pBoss->Get_Info().bDead)
+		m_pMission->Set_Render(true);
 	//if (m_bReadyCube)
 	//{
 	//	Octree()->Update_Octree();
@@ -270,9 +293,9 @@ HRESULT CBossStage::Ready_Layer_UI(LAYERTAG eLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::CROSSHAIR, pGameObject), E_FAIL);
 
-	pGameObject = CMissionObjective::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MISSION, pGameObject), E_FAIL);
+	m_pMission = CMissionObjective::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(m_pMission, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MISSION, m_pMission), E_FAIL);
 
 	pGameObject = CHPBarFrame::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -325,6 +348,8 @@ HRESULT CBossStage::Ready_Layer_UI(LAYERTAG eLayerTag)
 	pGameObject = CWeaponInfo::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+
 
 	m_mapLayer.insert({ eLayerTag, pLayer });
 
@@ -445,90 +470,113 @@ HRESULT CBossStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 }
 
 
-HRESULT CBossStage::Load_Data_C_T(const TCHAR* pFilePath, OBJECTTAG eTag)
+HRESULT CBossStage::Load_Data_C(const TCHAR* pFilePath, OBJECTTAG eTag)
 {
+	//파일 개방해서 받아오기
+	string m_strText = "CPointData";
+
 	HANDLE      hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
 
-	if (INVALID_HANDLE_VALUE == hFile) { return E_FAIL; }
+	if (INVALID_HANDLE_VALUE == hFile)
+		return E_FAIL;
 
 	DWORD   dwByte = 0;
 	DWORD   dwStrByte = 0;
+	C_POINT* pOBJ = nullptr;
+
+	ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
 	CHAR* pTag = new CHAR[dwStrByte];
 
+	ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
+	m_strText = pTag;
 
-	if (eTag == OBJECTTAG::BUILD_OBJ) {
-		string m_strText = "CPointData";
+	basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
 
-		C_POINT* pOBJ = nullptr;
+	//저장된 데이터대로 동적할당해서 벡터에 담기
+	while (true)
+	{
+		pOBJ = new C_POINT;
 
-		ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
-		ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
-		m_strText = pTag;
+		ReadFile(hFile, pOBJ, sizeof(C_POINT), &dwByte, nullptr);
 
-		basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
-
-		while (true)
+		if (0 == dwByte)
 		{
-			pOBJ = new C_POINT;
-			ReadFile(hFile, pOBJ, sizeof(C_POINT), &dwByte, nullptr);
-
-			if (0 == dwByte)
-			{
-				Safe_Delete(pOBJ);
-				break;
-			}
-			m_VecCreatePoint.push_back(pOBJ);
+			Safe_Delete(pOBJ);
+			break;
 		}
-		CloseHandle(hFile);
-
-		Engine::CGameObject* pGameObject = nullptr;
-
-		for (auto& iter : m_VecCreatePoint)
-		{
-			pGameObject = CBuild_Obj::Create(m_pGraphicDev, iter->defOBJData.vPos, iter->defOBJData.uiTextureNum,
-				iter->defOBJData.vSize, iter->defOBJData.iRotateCount, m_iOBJIndex, iter->defOBJData.eOBJ_TYPE, iter->defOBJData.eOBJ_Attribute);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
-			m_iOBJIndex++;
-		}
-		m_mapLayer.emplace(LAYERTAG::ENVIRONMENT, m_pLayer);
+		m_VecCreatePoint.push_back(pOBJ);
 	}
-	if (eTag == OBJECTTAG::TRIGGER) {
-		string m_strText = "TriggerData";
-		TRIGGER* pTR = nullptr;
+	CloseHandle(hFile);
 
-		ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
-		ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
-		m_strText = pTag;
+	Engine::CGameObject* pGameObject = nullptr;
 
-		basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
-
-		while (true)
-		{
-			pTR = new TRIGGER;
-
-			ReadFile(hFile, pTR, sizeof(TRIGGER), &dwByte, nullptr);
-
-			if (0 == dwByte)
-			{
-				Safe_Delete(pTR);
-				break;
-			}
-
-			m_TriggerDataTemp.push_back(pTR);
-		}
-		CloseHandle(hFile);
-
-		Engine::CGameObject* pGameObject = nullptr;
-
-		for (auto& iter : m_TriggerDataTemp)
-		{
-			pGameObject = CTrigger::Create(m_pGraphicDev, iter->vPos, iter->iIndex, iter->vSize, iter->eTrCase, iter->eTrType, iter->eTrName);
-			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-			FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::TRIGGER, pGameObject), E_FAIL);
-		}
-		m_mapLayer.emplace(LAYERTAG::GAMELOGIC, m_pGLayer);
+	//벡터 내용물만큼 실제 생성해 레이어에 담기
+	for (auto& iter : m_VecCreatePoint)
+	{
+		pGameObject = CBuild_Obj::Create(m_pGraphicDev, iter->defOBJData.vPos, iter->defOBJData.uiTextureNum,
+			iter->defOBJData.vSize, iter->defOBJData.iRotateCount, m_iOBJIndex, iter->defOBJData.eOBJ_TYPE, iter->defOBJData.eOBJ_Attribute);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::BUILD_OBJ, pGameObject), E_FAIL);
+		m_iOBJIndex++;
 	}
+	m_mapLayer.insert({ LAYERTAG::ENVIRONMENT, m_pLayer });
+
+
+	delete[] pTag;
+	pTag = nullptr;
+
+	return S_OK;
+}
+
+HRESULT CBossStage::Load_Data_T(const TCHAR* pFilePath, OBJECTTAG eTag)
+{
+	//파일 개방해서 받아오기
+	string m_strText = "TriggerData";
+
+	HANDLE      hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
+
+	if (INVALID_HANDLE_VALUE == hFile)
+		return E_FAIL;
+
+	DWORD   dwByte = 0;
+	DWORD   dwStrByte = 0;
+	TRIGGER* pTR = nullptr;
+
+	ReadFile(hFile, &dwStrByte, sizeof(DWORD), &dwByte, nullptr);
+	char* pTag = new CHAR[dwStrByte];
+
+	ReadFile(hFile, pTag, dwStrByte, &dwByte, nullptr);
+	m_strText = pTag;
+
+	basic_string<TCHAR> converted(m_strText.begin(), m_strText.end());
+
+	//저장된 데이터대로 동적할당해서 벡터에 담기
+	while (true)
+	{
+		pTR = new TRIGGER;
+
+		ReadFile(hFile, pTR, sizeof(TRIGGER), &dwByte, nullptr);
+
+		if (0 == dwByte)
+		{
+			Safe_Delete(pTR);
+			break;
+		}
+
+		m_TriggerDataTemp.push_back(pTR);
+	}
+	CloseHandle(hFile);
+
+	Engine::CGameObject* pGameObject = nullptr;
+
+	//벡터 내용물만큼 실제 생성해 레이어에 담기
+	for (auto& iter : m_TriggerDataTemp)
+	{
+		pGameObject = CTrigger::Create(m_pGraphicDev, iter->vPos, iter->iIndex, iter->vSize, iter->eTrCase, iter->eTrType, iter->eTrName);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::O_TRIGGER, pGameObject), E_FAIL);
+	}
+	m_mapLayer.emplace(LAYERTAG::GAMELOGIC, m_pGLayer);
 
 	delete[] pTag;
 	pTag = nullptr;

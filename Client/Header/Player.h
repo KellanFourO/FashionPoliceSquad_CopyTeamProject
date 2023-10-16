@@ -73,6 +73,8 @@ public:
 	void			Level_Check();					// 경험치 확인해서 기준 달성 되어있으면 레벨업
 	//CGameObject*		Get_Inventory() { return m_Inventory; }
 
+	_bool			Get_TriggerCheck() { return m_bTriggerCheck; } //유진 추가
+	void			Set_TriggerCheck() { m_bTriggerCheck = !m_bTriggerCheck; }
 
 private:
 	CRcTex*			m_pBufferCom = nullptr;
@@ -97,9 +99,10 @@ private:
 
 	_vec3			m_vMoveDir;
 
-
 	CPlayerGun*		m_pGun = nullptr; // 장비중인 총
 
+	_bool			m_bTriggerCheck = false; //유진 추가 트리거충돌감지용
+	_uint			m_iTriggerTime = 0;
 
 	vector<CPlayerGun*> m_vecPlayerGun;
 

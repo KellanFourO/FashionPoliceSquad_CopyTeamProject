@@ -537,9 +537,12 @@ void CPlayer::StateMachine(_float _fTimeDelta)
 
 void CPlayer::OnCollisionEnter(CCollider* _pOther)
 {
-	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE || _pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ
-		|| _pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::TRIGGER	)
+	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE || 
+		(_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ && 
+			_pOther->Get_OBJAttribute() != OBJ_ATTRIBUTE::ForPaint_OBJ)
+		|| _pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::O_TRIGGER )
 	{
+
 		_vec3	vOtherPos = _pOther->GetCenterPos();
 		_float* fOtherAxis = _pOther->GetAxisLen();
 
@@ -616,6 +619,21 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 				m_pTransformCom->Translate(_vec3(-fRadiusX, 0.f, 0.f));
 		}
 		m_bJump = false;
+
+
+		if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::O_TRIGGER)
+		{
+			m_bTriggerCheck = true;
+		}
+		if (m_bTriggerCheck)
+		{
+			m_iTriggerTime++;
+		}
+		if (m_iTriggerTime > 5000)
+		{
+			m_bTriggerCheck = false;
+			m_iTriggerTime = 0;
+		}
 	}
 
 }
@@ -623,9 +641,12 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 void CPlayer::OnCollisionStay(CCollider* _pOther)
 {
 
-	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE|| _pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ
-		|| _pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::TRIGGER )
+	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE|| 
+		(_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ &&
+			_pOther->Get_OBJAttribute() != OBJ_ATTRIBUTE::ForPaint_OBJ)
+		|| _pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::O_TRIGGER )
 	{
+
 		_vec3	vOtherPos = _pOther->GetCenterPos();
 		_float* fOtherAxis = _pOther->GetAxisLen();
 
@@ -672,6 +693,21 @@ void CPlayer::OnCollisionStay(CCollider* _pOther)
 			else
 				m_pTransformCom->Translate(_vec3(-fRadiusX, 0.f, 0.f));
 		}
+
+		if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::O_TRIGGER)
+		{
+			m_bTriggerCheck = true;
+		}
+		if (m_bTriggerCheck)
+		{
+			m_iTriggerTime++;
+		}
+		if (m_iTriggerTime > 5000)
+		{
+			m_bTriggerCheck = false;
+			m_iTriggerTime = 0;
+		}
+
 	}
 }
 

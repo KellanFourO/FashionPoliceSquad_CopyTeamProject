@@ -40,14 +40,14 @@ int CMainApp::Update_MainApp(const _float& fTimeDelta)
 	if (GetAsyncKeyState(VK_F5) & 0x8000)
 	{
 
-	//	CImGuiManager::GetInstance()->Set_Switch(true);//
+		//CImGuiManager::GetInstance()->Set_Switch(true);//
 
 	}
 
 	if (GetAsyncKeyState(VK_F6) & 0x8000)
 	{
 
-	//	CImGuiManager::GetInstance()->Set_Switch(false);//
+		//CImGuiManager::GetInstance()->Set_Switch(false);//
 	}
 
 	//CImGuiManager::GetInstance()->Update_ImGui(fTimeDelta);//
@@ -69,7 +69,7 @@ void CMainApp::LateUpdate_MainApp()
 void CMainApp::Render_MainApp()
 {
 	Engine::Render_Begin(D3DXCOLOR(0.f, 0.f, 1.f, 1.f));
-	Engine::Render_Font(L"UI_FONT", to_wstring(m_fFPS).c_str(), &_vec2(500, 20), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+	Engine::Render_Font(L"UI_FONT", to_wstring(m_fFPS).c_str(), &_vec2(500, 20), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),20, false);
 	Engine::Render_Scene(m_pGraphicDev);
 
 
@@ -116,6 +116,7 @@ HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"UI_FONT", L"../Bin/Font/Montserrat-Bold.ttf", 27, 27, FW_REGULAR), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"DIALOG_FONT", L"../Bin/Font/Montserrat-Bold.ttf", 11, 13, FW_REGULAR), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"MISSION_FONT", L"../Bin/Font/Montserrat-Bold.ttf", 11, 13, FW_BOLD), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"TEST_FONT", L"../Bin/Font/Montserrat-Bold.ttf", 11, 13, FW_BOLD), E_FAIL);
 
 	return S_OK;
 }

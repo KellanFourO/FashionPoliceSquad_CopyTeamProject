@@ -52,7 +52,7 @@ HRESULT CStage1Boss::Ready_GameObject()
 	m_fAttackRange = 70.f;
 
 	m_pTransformCom->Set_Pos((_vec3{ 92.5f,25.f,135.f }));
-	m_pTransformCom->Set_Scale({ 20.0f,20.0f,20.0f });
+	m_pTransformCom->Set_Scale({ 15.0f,15.0f,15.0f });
 
 	m_pBufferCom->SetCount(5, 5);
 

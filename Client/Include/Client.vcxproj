@@ -224,14 +224,21 @@
     <ClInclude Include="..\Header\Build_Cube.h" />
     <ClInclude Include="..\Header\BigDaddyMonsterState.h" />
     <ClInclude Include="..\Header\Bullet_GoldBar.h" />
+<<<<<<< HEAD
     <ClInclude Include="..\Header\JumpShockWaveEffect2.h" />
+=======
+    <ClInclude Include="..\Header\FileMgr.h" />
+>>>>>>> 류승룡기모띠
     <ClInclude Include="..\Header\LobbyStage.h" />
+    <ClInclude Include="..\Header\MiniGame.h" />
     <ClInclude Include="..\Header\ShockWave.h" />
     <ClInclude Include="..\Header\Stage2.h" />
     <ClInclude Include="..\Header\MBulletBombEffect.h" />
     <ClInclude Include="..\Header\MBulletExplosion.h" />
     <ClInclude Include="..\Header\UI_Berserk.h" />
     <ClInclude Include="..\Header\UI_BerserkFrame.h" />
+    <ClInclude Include="..\Header\UI_BossHPFrame.h" />
+    <ClInclude Include="..\Header\UI_BossHPValue.h" />
     <ClInclude Include="..\Header\UI_BulletInfoCount.h" />
     <ClInclude Include="..\Header\UI_BulletInfoName.h" />
     <ClInclude Include="..\Header\UI_CardList.h" />
@@ -302,6 +309,7 @@
     <ClInclude Include="..\Header\Player_Left.h" />
     <ClInclude Include="..\Header\Player_LevelUp.h" />
     <ClInclude Include="..\Header\Player_Right.h" />
+    <ClInclude Include="..\Header\UI_NameTag.h" />
     <ClInclude Include="..\Header\UI_PlayerFace.h" />
     <ClInclude Include="..\Header\UI_Portrait.h" />
     <ClInclude Include="..\Header\ProgressFrame.h" />
@@ -330,7 +338,6 @@
     <ClInclude Include="..\Header\Terrain.h" />
     <ClInclude Include="..\Header\Title.h" />
     <ClInclude Include="..\Header\Trigger.h" />
-    <ClInclude Include="..\Header\UIMgr.h" />
     <ClInclude Include="..\Header\UI_ShieldFrame.h" />
     <ClInclude Include="..\Header\UI_ShieldMark.h" />
     <ClInclude Include="..\Header\UI_ShieldValue.h" />
@@ -367,10 +374,17 @@
     <ClCompile Include="..\Code\BrifCase_2.cpp" />
     <ClCompile Include="..\Code\BigDaddyMonster.cpp" />
     <ClCompile Include="..\Code\Bullet.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="..\Code\JumpShockWaveEffect2.cpp" />
+=======
+    <ClCompile Include="..\Code\FileMgr.cpp" />
+>>>>>>> 류승룡기모띠
     <ClCompile Include="..\Code\MBulletBombEffect.cpp" />
     <ClCompile Include="..\Code\MBulletExplosion.cpp" />
+    <ClCompile Include="..\Code\MiniGame.cpp" />
+    <ClCompile Include="..\Code\Ray.cpp" />
     <ClCompile Include="..\Code\ShockWave.cpp" />
+    <ClCompile Include="..\Code\SYRay.cpp" />
     <ClCompile Include="..\Code\Trigger.cpp" />
     <ClCompile Include="..\Code\DullSuitMonster_Attack.cpp" />
     <ClCompile Include="..\Code\DullSuitMonster.cpp" />
@@ -383,6 +397,8 @@
     <ClCompile Include="..\Code\Stage2.cpp" />
     <ClCompile Include="..\Code\UI_Berserk.cpp" />
     <ClCompile Include="..\Code\UI_BerserkFrame.cpp" />
+    <ClCompile Include="..\Code\UI_BossHPFrame.cpp" />
+    <ClCompile Include="..\Code\UI_BossHPValue.cpp" />
     <ClCompile Include="..\Code\UI_BulletInfoCount.cpp" />
     <ClCompile Include="..\Code\UI_BulletInfoName.cpp" />
     <ClCompile Include="..\Code\UI_CardList.cpp" />
@@ -451,6 +467,7 @@
     <ClCompile Include="..\Code\Player_Left.cpp" />
     <ClCompile Include="..\Code\Player_LevelUp.cpp" />
     <ClCompile Include="..\Code\Player_Right.cpp" />
+    <ClCompile Include="..\Code\UI_NameTag.cpp" />
     <ClCompile Include="..\Code\UI_PlayerFace.cpp" />
     <ClCompile Include="..\Code\UI_Portrait.cpp" />
     <ClCompile Include="..\Code\ProgressFrame.cpp" />
@@ -477,7 +494,6 @@
     <ClCompile Include="..\Code\TailorAssertRifle_Walk.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="..\Code\Title.cpp" />
-    <ClCompile Include="..\Code\UIMgr.cpp" />
     <ClCompile Include="..\Code\UI_ShieldFrame.cpp" />
     <ClCompile Include="..\Code\UI_ShieldMark.cpp" />
     <ClCompile Include="..\Code\UI_ShieldValue.cpp" />

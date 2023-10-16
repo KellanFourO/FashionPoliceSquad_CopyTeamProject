@@ -27,7 +27,11 @@ public:
 	BULLETTYPE							Get_HitType() { return m_eHitType; }
 	_bool								Get_Dead() { return m_IsDead;}
 	_float								Get_Angle() { return m_fAngle; }
+	_bool								Get_bRay() { return m_bRay;}
+
+
 	// Set
+	void								Set_bRay(_bool _bRay) {m_bRay = _bRay;}
 	void								Set_ObjectTag(OBJECTTAG _eTag) { m_eObjectTag = _eTag; }
 	void								Set_Dead(_bool _IsDead) { m_IsDead = _IsDead; }
 	void								Set_Pause(_bool _bPause) { m_bPause = _bPause; }
@@ -61,6 +65,8 @@ protected:
 
 	_bool								m_bPause = false;
 	_float								m_fAngle = 0.f;
+	_bool								m_bRay = false; // 레이캐스트용
+
 	_vec3								m_vCamPos = {0.f,0.f,0.f};
 public:
 	_uint								m_iIndex = 100;

@@ -25,13 +25,14 @@ public:
 	void		Render_Font(const _tchar* pFontTag,
 		const _tchar* pString,
 		const _vec2* pPos,
-		D3DXCOLOR Color);
+		D3DXCOLOR Color, _int maxWidth, _bool bAnimation);
 
 private:
 	CMyFont* Find_Font(const _tchar* pFontTag);
 
 private:
 	map<const _tchar*, CMyFont*>			m_mapFont;
+	_float									m_fTextSpeed = 0.05f;
 
 private:
 	virtual void	Free();

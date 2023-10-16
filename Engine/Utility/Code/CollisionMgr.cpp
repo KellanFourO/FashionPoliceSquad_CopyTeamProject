@@ -25,7 +25,7 @@ CollisionMgr::CollisionMgr()
 	CheckGroup(OBJECTTAG::RAY_LASER, OBJECTTAG::MONSTER);
 	CheckGroup(OBJECTTAG::RAY_LASER, OBJECTTAG::BOSS);
 	
-	CheckGroup(OBJECTTAG::PLAYER, OBJECTTAG::TRIGGER); //유진 추가
+	CheckGroup(OBJECTTAG::PLAYER, OBJECTTAG::O_TRIGGER); //유진 추가
 
 }
 
@@ -55,7 +55,7 @@ void CollisionMgr::LateUpdate_Collision()
 	CheckCollisionStaticOBJ(OBJECTTAG::RAY);
 	CheckCollisionStaticOBJ(OBJECTTAG::PLAYER_LAZER);
 	CheckCollisionStaticOBJ(OBJECTTAG::RAY_LASER);
-	
+
 	//Ray
 
 
@@ -399,6 +399,7 @@ bool CollisionMgr::CollisionRayToCube(CCollider* pCRay, CCollider* pCBox, _vec3 
 
 	//pcRay가 출발 vRayDest가 도착
 	_vec3 vRayOrigin = pCRay->GetCenterPos();
+	//vRayOrigin = 레이가 가진 콜라이더의 시작위치
 
 	m_vRayDir = vRayDest - vRayOrigin;
 	D3DXVec3Normalize(&m_vRayDir, &m_vRayDir);
@@ -456,6 +457,7 @@ bool CollisionMgr::CollisionRayToCube(CCollider* pCRay, CCollider* pCBox, _vec3 
 	if (tmin < 0.0f) {
 		t_result = tmax;
 	}
+	//이것도 바꿔야 됨
 	m_fDist = (m_vRayDir * t_result);
 	m_DestOriginLen = vRayDest - vRayOrigin;
 	_float fDist = D3DXVec3Length(&(m_fDist));

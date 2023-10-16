@@ -26,7 +26,7 @@ HRESULT CBrifCase::Ready_GameObject()
 	m_bDead = false;
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	Set_ObjectTag(OBJECTTAG::MONSTERBULLET);
-
+	m_fDmg = 10.f;
 	m_pBufferCom->SetCount(4, 1);
 
 	m_pTransformCom->Set_Host(this);
@@ -128,12 +128,12 @@ void CBrifCase::OnCollisionEnter(CCollider* _pOther)
 }
 void CBrifCase::OnCollisionStay(CCollider* _pOther)
 {
-	//__super::OnCollisionStay(_pOther);
+	__super::OnCollisionStay(_pOther);
 }
 
 void CBrifCase::OnCollisionExit(CCollider* _pOther)
 {
-	//__super::OnCollisionExit(_pOther);
+	__super::OnCollisionExit(_pOther);
 }
 
 HRESULT CBrifCase::Add_Component()
