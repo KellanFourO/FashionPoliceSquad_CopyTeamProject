@@ -948,9 +948,6 @@
     <ClInclude Include="..\Header\ShockWave.h">
       <Filter>02. GameObject\06. Effect\00.Particle\02. ShockWave</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\MiniGame.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\UI_MyCardTexture.h">
       <Filter>02. GameObject\20.UI\03. MyCard\00. MyCardTexture</Filter>
     </ClInclude>
@@ -977,6 +974,9 @@
     </ClInclude>
     <ClInclude Include="..\Header\UI_NameTag.h">
       <Filter>02. GameObject\20.UI\01. MyDialog\01. NameTag</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MiniGame.h">
+      <Filter>02. GameObject\15. MiniGame</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1463,9 +1463,6 @@
     <ClCompile Include="..\Code\ShockWave.cpp">
       <Filter>02. GameObject\06. Effect\00.Particle\02. ShockWave</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\MiniGame.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Ray.cpp">
       <Filter>02. GameObject\01. Player\97.RAY</Filter>
     </ClCompile>
@@ -1495,6 +1492,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\UI_NameTag.cpp">
       <Filter>02. GameObject\20.UI\01. MyDialog\01. NameTag</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MiniGame.cpp">
+      <Filter>02. GameObject\15. MiniGame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

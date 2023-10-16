@@ -12,6 +12,7 @@
 #include "MonsterState.h"
 #include "DustGrey.h"
 
+
 CKickBoardMonster::CKickBoardMonster(LPDIRECT3DDEVICE9 pGraphicDev)
     :CMonster(pGraphicDev)
 {

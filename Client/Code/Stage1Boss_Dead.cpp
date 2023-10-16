@@ -15,11 +15,28 @@ CStage1Boss_Dead::~CStage1Boss_Dead()
 void CStage1Boss_Dead::Initialize(CMonster* _Monster)
 {
 	m_pHost = (_Monster);
+	m_iVer = 1;
+
+	m_fMinFrame = 1;
+	m_fMaxFrame = 5;
+	m_fCurFrame = m_fMinFrame;
 
 }
 
 CMonsterState* CStage1Boss_Dead::Update(CMonster* Monster, const float& fDetltaTime)
 {
+	m_fTick += fDetltaTime;
+
+	if (m_fTick > 0.5f)
+	{
+		++m_fCurFrame;
+
+		m_fTick = 0;
+	}
+
+	if(m_fCurFrame > m_fMaxFrame)
+		m_fCurFrame = m_fMinFrame;
+
 
 	return nullptr;
 }

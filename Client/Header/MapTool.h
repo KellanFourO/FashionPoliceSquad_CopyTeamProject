@@ -35,7 +35,9 @@ private:
 	HRESULT				Delete_Map();
 
 	HRESULT				Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag);
-	HRESULT				Load_Data_C_T(const TCHAR* pFilePath, OBJECTTAG eTag);
+	HRESULT				Load_Data_C(const TCHAR* pFilePath, OBJECTTAG eTag);
+	HRESULT				Load_Data_T(const TCHAR* pFilePath, OBJECTTAG eTag);
+
 
 	bool				CheckDuplicateCube(const _vec3& pPos, const _vec3& pSize);
 

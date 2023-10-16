@@ -55,6 +55,24 @@ void CEventMgr::OnPause(_bool bPause, SCENETAG eSceneTag)
 	}
 }
 
+void CEventMgr::OnMiniGame_Arrow(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag)
+{
+	m_bMiniGame_ClearCheck[0] = true;
+	//OnPause(FALSE, SCENETAG::LOBBY);
+}
+
+void CEventMgr::OnMiniGame_KickBoard(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag)
+{
+	m_bMiniGame_ClearCheck[1] = true;
+	//OnPause(FALSE, SCENETAG::LOBBY);
+}
+
+void CEventMgr::OnMiniGame_Quiz(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag)
+{
+	m_bMiniGame_ClearCheck[2] = true;
+	//OnPause(FALSE, SCENETAG::LOBBY);
+}
+
 
 
 
