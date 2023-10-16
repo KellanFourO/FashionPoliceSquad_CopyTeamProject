@@ -41,6 +41,7 @@ public:
 	void			Set_OBJ_TYPE(OBJ_TYPE eType) { m_eOBJ_Type = eType; }
 	
 	void			Set_OBJ_ATTRIBUTE(OBJ_ATTRIBUTE eAttri) { m_eAttribute = eAttri; }
+
 	OBJ_ATTRIBUTE	Get_OBJ_ATTRIBUTE() { return m_eAttribute; }
 
 	void			Set_Cursor_Pos(_vec3& pPos) { m_Cursor_Pos = pPos; }
