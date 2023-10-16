@@ -81,37 +81,21 @@ HRESULT CPortrait::Ready_GameObject()
 
 	// -1 ~ 1 -> 0 ~ 2
 
-	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-des.png", 1);
-	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-des-neon.png", 1);
-	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-haley.png", 1);
-	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-deepcoat.png", 1);
-	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-bauss.png", 1);
-	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-turncoat.png", 1);
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-des-neon.png", 1);	//1
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-haley.png", 1);		//2
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-deepcoat.png", 1);	//3
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-bauss.png", 1);		//4
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-turncoat.png", 1);	//5
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-des-dull.png", 1);	//6
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-mystery.png", 1);	//7
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-phone.png", 1);		//8
+
 
 	return S_OK;
 }
 
 Engine::_int CPortrait::Update_GameObject(const _float& fTimeDelta)
 {
-	if (m_ePortrait != PORTRAITTAG::PORT_DES && m_ePortrait != PORTRAITTAG::PORT_DESNEON)
-	{
-		_vec3 vPos;
-		vPos = { 600.f, 50.f, 0.f };
-		vPos.x = vPos.x - WINCX * 0.5f;
-		vPos.y = -vPos.y + WINCY * 0.5f;
-
-		m_pTransformCom->Set_Pos(vPos);
-	}
-	else
-	{
-		_vec3 vPos;
-		vPos = { 150.f, 50.f, 0.f };
-
-		vPos.x = vPos.x - WINCX * 0.5f;
-		vPos.y = -vPos.y + WINCY * 0.5f;
-
-		m_pTransformCom->Set_Pos(vPos);
-	}
 
 	Engine::Add_RenderGroup(RENDER_UI, this);
 	int iExit = __super::Update_GameObject(fTimeDelta);
@@ -155,22 +139,31 @@ void CPortrait::SetPortrait()
 	switch (m_ePortrait)
 	{
 	case Engine::PORTRAITTAG::PORT_DES:
-		m_iTextureIndex = 1;
+		m_iTextureIndex = 0;
 		break;
 	case Engine::PORTRAITTAG::PORT_DESNEON:
-		m_iTextureIndex = 2;
+		m_iTextureIndex = 1;
 		break;
 	case Engine::PORTRAITTAG::PORT_HALEY:
-		m_iTextureIndex = 3;
+		m_iTextureIndex = 2;
 		break;
 	case Engine::PORTRAITTAG::PORT_DEEPCOAT:
-		m_iTextureIndex = 4;
+		m_iTextureIndex = 3;
 		break;
 	case Engine::PORTRAITTAG::PORT_BAUSS:
-		m_iTextureIndex = 5;
+		m_iTextureIndex = 4;
 		break;
 	case Engine::PORTRAITTAG::PORT_TURNCOAT:
+		m_iTextureIndex = 5;
+		break;
+	case Engine::PORTRAITTAG::PORT_DESDULL:
 		m_iTextureIndex = 6;
+		break;
+	case Engine::PORTRAITTAG::PORT_MYSTERY:
+		m_iTextureIndex = 7;
+		break;
+	case Engine::PORTRAITTAG::PORT_PHONE:
+		m_iTextureIndex = 8;
 		break;
 	}
 

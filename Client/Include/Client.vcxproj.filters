@@ -421,7 +421,6 @@
     <Filter Include="02. GameObject\01. Player\97.RAY">
       <UniqueIdentifier>{21d9c14e-a73f-4850-af67-26cddf3fb4bf}</UniqueIdentifier>
     </Filter>
-
     <Filter Include="04. Manager\11. FileMgr">
       <UniqueIdentifier>{e1e5f8db-e95d-42e8-92df-702289fe9c15}</UniqueIdentifier>
     </Filter>
@@ -597,12 +596,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\DullSuitMonster_Idle.h">
       <Filter>02. GameObject\02. Monster\01. DullSuitMonster\99. DullSuitMonster_State\01.DullSuitMonster_Idle</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\UI_MyCard.h">
-      <Filter>02. GameObject\20.UI\01. MyDialog\00. Portrait</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\UI_MyCardTexture.h">
-      <Filter>02. GameObject\20.UI\01. MyDialog\00. Portrait</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BigDaddyMonster_Idle.h">
       <Filter>02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State\01. BigDaddyMonster_Idle</Filter>
@@ -907,9 +900,6 @@
     <ClInclude Include="..\Header\Stage2.h">
       <Filter>01.Scene\05. Stage2</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\UIMgr.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\UI_CrossHair.h">
       <Filter>02. GameObject\20.UI\02. CrossHair</Filter>
     </ClInclude>
@@ -951,12 +941,12 @@
     </ClInclude>
     <ClInclude Include="..\Header\MiniGame.h">
       <Filter>헤더 파일</Filter>
-	</ClInclude>
-    <ClInclude Include="..\Header\Ray.h">
-      <Filter>02. GameObject\01. Player\97.RAY</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\SYRay.h">
-      <Filter>02. GameObject\01. Player\97.RAY</Filter>
+    <ClInclude Include="..\Header\UI_MyCardTexture.h">
+      <Filter>02. GameObject\20.UI\03. MyCard\00. MyCardTexture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_MyCard.h">
+      <Filter>02. GameObject\20.UI\03. MyCard</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1094,12 +1084,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\DullSuitMonster_Idle.cpp">
       <Filter>02. GameObject\02. Monster\01. DullSuitMonster\99. DullSuitMonster_State\01.DullSuitMonster_Idle</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\UI_MyCard.cpp">
-      <Filter>02. GameObject\20.UI\01. MyDialog\00. Portrait</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\UI_MyCardTexture.cpp">
-      <Filter>02. GameObject\20.UI\01. MyDialog\00. Portrait</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\DullSuitMonster_Attack.cpp">
       <Filter>02. GameObject\02. Monster\01. DullSuitMonster\99. DullSuitMonster_State\02.DullSuitMonster_Attack</Filter>
@@ -1410,9 +1394,6 @@
     <ClCompile Include="..\Code\Stage2.cpp">
       <Filter>01.Scene\05. Stage2</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\UIMgr.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\UI_CrossHair.cpp">
       <Filter>02. GameObject\20.UI\02. CrossHair</Filter>
     </ClCompile>
@@ -1460,12 +1441,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\MiniGame.cpp">
       <Filter>소스 파일</Filter>
-	</ClCompile>
-	<ClCompile Include="..\Code\Ray.cpp">
+    </ClCompile>
+    <ClCompile Include="..\Code\Ray.cpp">
       <Filter>02. GameObject\01. Player\97.RAY</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SYRay.cpp">
       <Filter>02. GameObject\01. Player\97.RAY</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_MyCardTexture.cpp">
+      <Filter>02. GameObject\20.UI\03. MyCard\00. MyCardTexture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_MyCard.cpp">
+      <Filter>02. GameObject\20.UI\03. MyCard</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

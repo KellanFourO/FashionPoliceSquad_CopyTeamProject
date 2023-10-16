@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "UI_Portrait.h"
-
+#include "UI_MissionObjective.h"
 
 // TODO Á¤½Â¿ë ÀÛ¼º
 
@@ -49,8 +49,11 @@ private:
 	_float							m_fX, m_fY, m_fSizeX, m_fSizeY;
 
 	_bool							m_bDialog;
+	_bool							m_bLateInit = true;
 	DIALOGTAG						m_eDialog;
 
+
+	CMissionObjective*				m_pMission = nullptr;
 	CPortrait*						m_pPortrait = nullptr;
 	list<PORTRAITTAG>				m_PortraitList;
 	list<wstring>					m_TextList;

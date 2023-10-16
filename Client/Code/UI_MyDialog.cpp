@@ -60,13 +60,17 @@ Engine::_int Engine::CMyDialog::Update_GameObject(const _float& fTimeDelta)
 	Engine::Add_RenderGroup(RENDER_UI, this);
 	_int iExit = __super::Update_GameObject(fTimeDelta);
 
-
+	if (m_bLateInit)
+	{
+		m_pMission = dynamic_cast<CMissionObjective*>(Management()->Get_ObjectList(LAYERTAG::UI, OBJECTTAG::MISSION).back());
+		m_bLateInit = false;
+	}
 
 	m_fNextTick += fTimeDelta;
 
 
 
-	if (m_fNextTick >= 0.5f)
+	if (m_fNextTick >= 1.5f)
 	{
 		m_bTick = true;
 		m_fNextTick = 0.f;
@@ -107,8 +111,10 @@ void CMyDialog::Render_GameObject()
 	//
 	//vPos.x = vPos.x - WINCX * 0.5f;
 	//vPos.y = -vPos.y + WINCY * 0.5f;
-	if(m_TextList.size() != 0)
-	Engine::Render_Font(L"DIALOG_FONT", m_TextList.front().c_str(), &_vec2(250, 40), D3DXCOLOR(D3DCOLOR_ARGB(255, 255, 255, 255)));
+	if (m_TextList.size() != 0)
+	{
+			Engine::Render_Font(L"TEST_FONT", m_TextList.front().c_str(), &_vec2(250, 40), D3DXCOLOR(D3DCOLOR_ARGB(255, 255, 255, 255)), 20, true);
+	}
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
@@ -186,11 +192,25 @@ void CMyDialog::KeyInput()
 
 			if (m_PortraitList.size() == 0 || m_TextList.size() == 0)
 			{
-				if (m_eDialog == DIALOGTAG::QUEST_1 || m_eDialog == DIALOGTAG::QUEST_2)
+				switch (m_eDialog)
 				{
-					CMissionObjective* pMission = dynamic_cast<CMissionObjective*>(Management()->Get_ObjectList(LAYERTAG::UI, OBJECTTAG::MISSION).back());
-					pMission->Set_Title(L"QUEST_1");
-					pMission->Set_Objective(L"SR 팀과제를 완료하라");
+				case Engine::DIALOGTAG::STORY_ST1_INTRO:
+				m_pMission->Set_Title(L"QUEST");
+				m_pMission->Set_Objective(L"JS 아카데미의\n범죄자들을 소탕하라");
+					break;
+				case Engine::DIALOGTAG::STORY_ST1_DEVELOP:
+					break;
+				case Engine::DIALOGTAG::STORY_ST1_TURN:
+					break;
+				case Engine::DIALOGTAG::STORY_ST1_CONCLU:
+					break;
+				case Engine::DIALOGTAG::QUEST_1:
+					break;
+				case Engine::DIALOGTAG::QUEST_2:
+					break;
+				case Engine::DIALOGTAG::ST1_BOSS_START:
+					break;
+
 				}
 
 				if (Management()->Get_Scene()->Get_Pause())

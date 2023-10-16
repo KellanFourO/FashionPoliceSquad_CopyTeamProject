@@ -51,9 +51,9 @@ HRESULT		Ready_Font(LPDIRECT3DDEVICE9 pGraphicDev,
 void		Render_Font(const _tchar* pFontTag,
 	const _tchar* pString,
 	const _vec2* pPos,
-	D3DXCOLOR Color)
+	D3DXCOLOR Color, _int maxWidth, _bool bAnimation)
 {
-	CFontMgr::GetInstance()->Render_Font(pFontTag, pString, pPos, Color);
+	CFontMgr::GetInstance()->Render_Font(pFontTag, pString, pPos, Color,maxWidth, bAnimation);
 }
 
 // InputDev
