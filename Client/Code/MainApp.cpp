@@ -5,6 +5,7 @@
 #include "ImGuiManager.h"
 #include "FontMgr.h"
 #include "EventMgr.h"
+#include "SoundMgr.h"
 
 CMainApp::CMainApp()
 	: m_pDeviceClass(nullptr), m_pGraphicDev(nullptr), m_pManagementClass(nullptr)
@@ -140,6 +141,7 @@ void CMainApp::Free()
 {
 
 	CEventMgr::GetInstance()->DestroyInstance();
+	CSoundMgr::GetInstance()->DestroyInstance();
 	CImGuiManager::GetInstance()->DestroyInstance();
 
 	Safe_Release(m_pGraphicDev);
