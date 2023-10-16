@@ -3,6 +3,7 @@
 #include "Base.h"
 #include "UI_CardList.h"
 #include "UI_MyDialog.h"
+#include "MainGame_Arrow.h"
 
 BEGIN(Engine)
 
@@ -27,11 +28,15 @@ public:
 	void	OnMiniGame_KickBoard(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag);
 	void	OnMiniGame_Quiz(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag);
 
+	void	OffMiniGame_Arrow(SCENETAG eSceneTag);
+	void	OffMiniGame_KickBoard(SCENETAG eSceneTag);
+	void	OffMiniGame_Quiz(SCENETAG eSceneTag);
+
 	_bool	Get_MiniGameMode() { return m_bMiniGame_Mode; }
 	void	Set_MiniGameMode() { m_bMiniGame_Mode == true; }
 
 	_bool	Get_MiniGameReadyCheck(_uint iNumber) { return m_bMiniGame_ReadyCheck[iNumber]; }
-	void	Set_MiniGameReadyCheck(_uint iNumber, _bool _TrueOrFalse) { m_bMiniGame_ReadyCheck[iNumber] = _TrueOrFalse; }
+	void	Set_MiniGameReadyCheck(_uint iNumber, _bool _TrueOrFalse) {	m_bMiniGame_ReadyCheck[iNumber] = _TrueOrFalse;  }
 
 	_bool	Get_MiniGameClearCheck(_uint iNumber) { return m_bMiniGame_ClearCheck[iNumber]; }
 	void	Set_MiniGameClearCheck(_uint iNumber, _bool _TrueOrFalse) { m_bMiniGame_ClearCheck[iNumber] = _TrueOrFalse; }
@@ -41,6 +46,8 @@ private:
 	_bool m_bMiniGame_Mode;
 	_bool m_bMiniGame_ReadyCheck[3] = { true, false, false };
 	_bool m_bMiniGame_ClearCheck[3] = { false, false, false };
+
+	CMainGame_Arrow* pGame_Arrow = nullptr;
 
 
 private:

@@ -228,6 +228,12 @@
     <ClInclude Include="..\Header\FileMgr.h" />
     <ClInclude Include="..\Header\LobbyStage.h" />
     <ClInclude Include="..\Header\MiniGame.h" />
+    <ClInclude Include="..\Header\MainGame_Arrow.h" />
+    <ClInclude Include="..\Header\Mini_Arrow.h" />
+    <ClInclude Include="..\Header\Mini_Cursor.h" />
+    <ClInclude Include="..\Header\Mini_Player.h" />
+    <ClInclude Include="..\Header\Mini_StateIcon.h" />
+    <ClInclude Include="..\Header\Mini_TimeBar.h" />
     <ClInclude Include="..\Header\ShockWave.h" />
     <ClInclude Include="..\Header\Stage2.h" />
     <ClInclude Include="..\Header\MBulletBombEffect.h" />
@@ -376,6 +382,12 @@
     <ClCompile Include="..\Code\MBulletBombEffect.cpp" />
     <ClCompile Include="..\Code\MBulletExplosion.cpp" />
     <ClCompile Include="..\Code\MiniGame.cpp" />
+    <ClCompile Include="..\Code\MainGame_Arrow.cpp" />
+    <ClCompile Include="..\Code\Mini_Arrow.cpp" />
+    <ClCompile Include="..\Code\Mini_Cursor.cpp" />
+    <ClCompile Include="..\Code\Mini_Player.cpp" />
+    <ClCompile Include="..\Code\Mini_StateIcon.cpp" />
+    <ClCompile Include="..\Code\Mini_TimeBar.cpp" />
     <ClCompile Include="..\Code\Ray.cpp" />
     <ClCompile Include="..\Code\ShockWave.cpp" />
     <ClCompile Include="..\Code\Trigger.cpp" />

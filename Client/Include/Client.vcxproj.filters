@@ -451,6 +451,30 @@
     <Filter Include="02. GameObject\20.UI\01. MyDialog\01. NameTag">
       <UniqueIdentifier>{48b541d7-806e-4358-8db6-ba0ec926b6c8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\1. ARROW">
+      <UniqueIdentifier>{eed656fd-9f68-4f33-b117-a86c89f71640}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\2. KICKBOARD">
+      <UniqueIdentifier>{2d782397-8816-45d3-8a45-48bfd5cf7f38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\3. QUIZ">
+      <UniqueIdentifier>{f0306f9a-d1d8-4b45-8bcd-5ed8b67f0f50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\2. KICKBOARD\1.Mini_Player">
+      <UniqueIdentifier>{df83158b-c16d-46e4-83ef-511bda786c74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\1. ARROW\1.Mini_Arrow">
+      <UniqueIdentifier>{7a815779-c32e-4be7-86fa-709c1054e7aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\1. ARROW\2.Mini_StateIcon">
+      <UniqueIdentifier>{387bc6ca-d2aa-4891-8fb0-1c7c639e9d70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\1. ARROW\3.Mini_Cursor">
+      <UniqueIdentifier>{1d8cbdcb-ea65-4693-8fd5-13ddb811690f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\1. ARROW\4.Mini_TimeBar">
+      <UniqueIdentifier>{2b2f9e73-e460-40db-90f4-c38169cd4ade}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -978,6 +1002,24 @@
     <ClInclude Include="..\Header\MiniGame.h">
       <Filter>02. GameObject\15. MiniGame</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\MainGame_Arrow.h">
+      <Filter>02. GameObject\15. MiniGame\1. ARROW</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Mini_Player.h">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\1.Mini_Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Mini_Arrow.h">
+      <Filter>02. GameObject\15. MiniGame\1. ARROW\1.Mini_Arrow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Mini_StateIcon.h">
+      <Filter>02. GameObject\15. MiniGame\1. ARROW\2.Mini_StateIcon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Mini_TimeBar.h">
+      <Filter>02. GameObject\15. MiniGame\1. ARROW\4.Mini_TimeBar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Mini_Cursor.h">
+      <Filter>02. GameObject\15. MiniGame\1. ARROW\3.Mini_Cursor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1495,6 +1537,24 @@
     </ClCompile>
     <ClCompile Include="..\Code\MiniGame.cpp">
       <Filter>02. GameObject\15. MiniGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MainGame_Arrow.cpp">
+      <Filter>02. GameObject\15. MiniGame\1. ARROW</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mini_Player.cpp">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\1.Mini_Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mini_Arrow.cpp">
+      <Filter>02. GameObject\15. MiniGame\1. ARROW\1.Mini_Arrow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mini_StateIcon.cpp">
+      <Filter>02. GameObject\15. MiniGame\1. ARROW\2.Mini_StateIcon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mini_Cursor.cpp">
+      <Filter>02. GameObject\15. MiniGame\1. ARROW\3.Mini_Cursor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mini_TimeBar.cpp">
+      <Filter>02. GameObject\15. MiniGame\1. ARROW\4.Mini_TimeBar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

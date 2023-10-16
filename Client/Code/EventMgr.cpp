@@ -57,8 +57,14 @@ void CEventMgr::OnPause(_bool bPause, SCENETAG eSceneTag)
 
 void CEventMgr::OnMiniGame_Arrow(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag)
 {
-	m_bMiniGame_ClearCheck[0] = true;
-	//OnPause(FALSE, SCENETAG::LOBBY);
+	vector<CGameObject*> TempVector = Management()->Get_One_Scene(eSceneTag)->Get_Layer(LAYERTAG::MINIGAME)->Get_ObjectList(OBJECTTAG::MINIGAME);
+	TempVector.clear();
+
+	pGame_Arrow = Engine::CMainGame_Arrow::Create(pGraphicDev);
+
+	OnPause(TRUE, SCENETAG::LOBBY);
+	
+	Management()->Get_One_Scene(eSceneTag)->Get_Layer(LAYERTAG::MINIGAME)->Add_GameObject(OBJECTTAG::MINIGAME, pGame_Arrow);
 }
 
 void CEventMgr::OnMiniGame_KickBoard(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag)
@@ -71,6 +77,25 @@ void CEventMgr::OnMiniGame_Quiz(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTa
 {
 	m_bMiniGame_ClearCheck[2] = true;
 	//OnPause(FALSE, SCENETAG::LOBBY);
+}
+
+
+
+
+void CEventMgr::OffMiniGame_Arrow(SCENETAG eSceneTag)
+{
+	Set_MiniGameClearCheck(0, TRUE);
+	OnPause(FALSE, SCENETAG::LOBBY);
+	
+	Management()->Get_One_Scene(eSceneTag)->Get_Layer(LAYERTAG::MINIGAME)->Delete_GameObject(OBJECTTAG::MINIGAME, pGame_Arrow, pGame_Arrow->m_iIndex);
+}
+void CEventMgr::OffMiniGame_KickBoard(SCENETAG eSceneTag)
+{
+
+}
+void CEventMgr::OffMiniGame_Quiz(SCENETAG eSceneTag)
+{
+
 }
 
 

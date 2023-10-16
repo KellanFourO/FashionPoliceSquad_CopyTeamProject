@@ -66,6 +66,7 @@ private:
 	HRESULT				Ready_Layer_GameLogic(LAYERTAG eLayerTag);
 	HRESULT				Ready_Layer_Camera(LAYERTAG eLayerTag);
 	HRESULT				Ready_Layer_UI(LAYERTAG eLayerTag);
+	HRESULT				Ready_Layer_MINIGAME(LAYERTAG eLayerTag);
 
 	HRESULT				Add_Light();
 	HRESULT				Light_OnOff_Check();
