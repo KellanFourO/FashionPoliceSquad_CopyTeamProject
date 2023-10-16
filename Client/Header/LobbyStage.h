@@ -70,6 +70,8 @@ private:
 	HRESULT				Add_Light();
 	HRESULT				Light_OnOff_Check();
 
+	HRESULT				Moving_Wall();
+
 private:
 	CLayer* m_pLayer = nullptr;  //Environment
 	CLayer* m_pGLayer = nullptr; //GameLogic
@@ -105,6 +107,11 @@ private:
 
 	vector<OBJData*>				m_VecLight;
 	vector<OBJData*>				m_VecMoving;
+
+	_float							MovingIndextemp;
+	_bool							MovingCheck = false;
+	_float							MovingIndextemp2;
+	_bool							MovingCheck2 = false;
 
 	vector<CUBE*>					m_VecCubeData;
 	_uint							m_iCubeIndex = 0;

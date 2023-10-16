@@ -21,9 +21,26 @@ public:
 	void	OnDialog(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag, DIALOGTAG eDialogTag); // 다이얼로그 생성
 	void	OnPause(_bool bPause, SCENETAG eSceneTag);
 
+
+	//유진 추가
 	void	OnMiniGame_Arrow(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag);
 	void	OnMiniGame_KickBoard(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag);
+	void	OnMiniGame_Quiz(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag);
 
+	_bool	Get_MiniGameMode() { return m_bMiniGame_Mode; }
+	void	Set_MiniGameMode() { m_bMiniGame_Mode == true; }
+
+	_bool	Get_MiniGameReadyCheck(_uint iNumber) { return m_bMiniGame_ReadyCheck[iNumber]; }
+	void	Set_MiniGameReadyCheck(_uint iNumber, _bool _TrueOrFalse) { m_bMiniGame_ReadyCheck[iNumber] = _TrueOrFalse; }
+
+	_bool	Get_MiniGameClearCheck(_uint iNumber) { return m_bMiniGame_ClearCheck[iNumber]; }
+	void	Set_MiniGameClearCheck(_uint iNumber, _bool _TrueOrFalse) { m_bMiniGame_ClearCheck[iNumber] = _TrueOrFalse; }
+
+
+private:
+	_bool m_bMiniGame_Mode;
+	_bool m_bMiniGame_ReadyCheck[3] = { true, false, false };
+	_bool m_bMiniGame_ClearCheck[3] = { false, false, false };
 
 
 private:

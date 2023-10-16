@@ -79,10 +79,18 @@ HRESULT CBuild_Obj::Add_Component()
 		m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
 	}
 
-	pComponent = m_pCollider = dynamic_cast<CCollider*>(Engine::ProtoMgr()->Clone_Proto(L"Proto_Collider"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::COLLIDER, pComponent);
+	if (m_eAttribute == OBJ_ATTRIBUTE::STD_OBJ)
+	{
+		pComponent = m_pCollider = dynamic_cast<CCollider*>(Engine::ProtoMgr()->Clone_Proto(L"Proto_Collider"));
+		NULL_CHECK_RETURN(pComponent, E_FAIL);
+		m_mapComponent[ID_DYNAMIC].emplace(COMPONENTTAG::COLLIDER, pComponent);
 
+	}
+	else {
+		pComponent = m_pCollider = dynamic_cast<CCollider*>(Engine::ProtoMgr()->Clone_Proto(L"Proto_Collider"));
+		NULL_CHECK_RETURN(pComponent, E_FAIL);
+		m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::COLLIDER, pComponent);
+	}
 	return S_OK;
 
 

@@ -421,7 +421,6 @@
     <Filter Include="02. GameObject\01. Player\97.RAY">
       <UniqueIdentifier>{21d9c14e-a73f-4850-af67-26cddf3fb4bf}</UniqueIdentifier>
     </Filter>
-
     <Filter Include="04. Manager\11. FileMgr">
       <UniqueIdentifier>{e1e5f8db-e95d-42e8-92df-702289fe9c15}</UniqueIdentifier>
     </Filter>
@@ -436,6 +435,15 @@
     </Filter>
     <Filter Include="02. GameObject\15. MiniGame">
       <UniqueIdentifier>{e546e874-21d8-46c5-997a-303e628cb41a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\10. MiniGame_Arrow">
+      <UniqueIdentifier>{4ac3dc4f-d5fd-4377-8e40-93e99122e416}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\11. MiniGame_KickBoard">
+      <UniqueIdentifier>{67164806-dd78-4469-88dc-3885b751fc6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\12. MiniGame_Quiz">
+      <UniqueIdentifier>{094092c4-c1cb-4a7c-aba6-31715e8228fd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -950,13 +958,7 @@
       <Filter>02. GameObject\06. Effect\00.Particle\02. ShockWave</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\MiniGame.h">
-      <Filter>헤더 파일</Filter>
-	</ClInclude>
-    <ClInclude Include="..\Header\Ray.h">
-      <Filter>02. GameObject\01. Player\97.RAY</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\SYRay.h">
-      <Filter>02. GameObject\01. Player\97.RAY</Filter>
+      <Filter>02. GameObject\15. MiniGame</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1458,14 +1460,14 @@
     <ClCompile Include="..\Code\ShockWave.cpp">
       <Filter>02. GameObject\06. Effect\00.Particle\02. ShockWave</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\MiniGame.cpp">
-      <Filter>소스 파일</Filter>
-	</ClCompile>
-	<ClCompile Include="..\Code\Ray.cpp">
+    <ClCompile Include="..\Code\Ray.cpp">
       <Filter>02. GameObject\01. Player\97.RAY</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\SYRay.cpp">
       <Filter>02. GameObject\01. Player\97.RAY</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MiniGame.cpp">
+      <Filter>02. GameObject\15. MiniGame</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

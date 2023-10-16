@@ -30,6 +30,7 @@ public:
 	virtual void	Render_GameObject() override;
 
 	void			Render_Texture();
+	CTransform*&	Get_TransformCom() { return m_pTransformCom; }
 
 	void			Init_PlayerTransform();
 	void			Set_BillBoard(_bool _BillCheck) { m_bBillBoard = _BillCheck; }
@@ -45,6 +46,8 @@ public:
 	void			Set_Cursor_Pos(_vec3& pPos) { m_Cursor_Pos = pPos; }
 	void			Set_OBJIndex(_uint pIndex) { m_iIndex = pIndex; }
 	_uint			Get_OBJIndex() { return m_iIndex; }
+
+	_vec3			Get_myOBJPos() { return m_myObjPos; }
 
 	int				Get_OBJ_HP() { return m_iHp; }
 	OBJ_INTERACTION Get_OBJ_Interaction() { return m_eInteraction; }
@@ -91,7 +94,6 @@ private:
 
 	//속성이 파괴일 때 사용
 	int					m_iHp;
-
 	CUBESIZE			m_fCubeSize;
 
 public:

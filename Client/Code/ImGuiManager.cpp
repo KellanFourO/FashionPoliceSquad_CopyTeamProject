@@ -284,10 +284,6 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 
 						ImGui::NewLine();
 						ImGui::Checkbox("Delete Mode", &m_bDelete_Mode_Check);
-
-						char TextNow2[MAX_PATH];
-						sprintf_s(TextNow2, u8" : 움직일지도 모르는 큐브");
-
 						ImGui::NewLine();
 
 						ImGui::RadioButton(u8"파괴OBJ", &m_forObjAttribute, 0);
@@ -296,8 +292,6 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 						ImGui::RadioButton(u8"빌보드OBJ", &m_forObjAttribute, 3);
 						ImGui::RadioButton(u8"C_Point OBJ", &m_forObjAttribute, 5);
 						ImGui::RadioButton(u8"무빙 OBJ", &m_forObjAttribute, 6);
-						ImGui::SameLine();
-						ImGui::Text(TextNow2);
 						ImGui::RadioButton(u8"계단 OBJ", &m_forObjAttribute, 8);
  						ImGui::RadioButton(u8"기준 OBJ", &m_forObjAttribute, 4); 
 						ImGui::RadioButton(u8"페인트용 OBJ", &m_forObjAttribute, 9);
