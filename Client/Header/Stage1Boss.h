@@ -37,8 +37,12 @@ public:
 	virtual void		OnCollisionStay(CCollider* _pOther);
 	virtual void		OnCollisionExit(CCollider* _pOther);
 
+
 public:
 	CMonsterState*		Get_State(_int _index) { return m_pStateArray[_index]; }
+	_int				Get_OriginIndex() { return m_iOriginIndex;}
+
+	void				Set_OriginIndex(_int _index) { m_iOriginIndex = _index;}
 
 private:
 	HRESULT				Add_Component();
@@ -46,9 +50,10 @@ private:
 
 private:
 	CMonsterState*			m_pStateArray[STAGE1_BOSSSTATE_END];
+	_int					m_iOriginIndex = 0;
 
 public:
-	static CStage1Boss* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CStage1Boss*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void Free();

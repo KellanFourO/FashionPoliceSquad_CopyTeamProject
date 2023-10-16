@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "UI_Portrait.h"
 #include "UI_MissionObjective.h"
+#include "UI_NameTag.h"
 
 // TODO Á¤½Â¿ë ÀÛ¼º
 
@@ -29,9 +30,6 @@ public:
 	// Get
 	DIALOGDATA*					Get_Info() { return m_pDialogInfo; }
 
-	// Set
-
-
 private:
 	HRESULT							Add_Component();
 	void							LoadText(DIALOGTAG eDialogTag);
@@ -55,7 +53,11 @@ private:
 
 	CMissionObjective*				m_pMission = nullptr;
 	CPortrait*						m_pPortrait = nullptr;
+	CNameTag*						m_pNameTag = nullptr;
+
+
 	list<PORTRAITTAG>				m_PortraitList;
+	list<CNameTag*>					m_NameTagList;
 	list<wstring>					m_TextList;
 
 

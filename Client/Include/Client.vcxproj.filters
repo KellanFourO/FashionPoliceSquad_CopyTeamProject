@@ -436,6 +436,18 @@
     <Filter Include="02. GameObject\15. MiniGame">
       <UniqueIdentifier>{e546e874-21d8-46c5-997a-303e628cb41a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\20.UI\06. HPBar\00. Player">
+      <UniqueIdentifier>{4142967b-05db-4a8b-932c-5de0d141a3ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\20.UI\06. HPBar\01. Monster">
+      <UniqueIdentifier>{fc9d2768-11e2-4155-a846-4d1f831dbcb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\20.UI\06. HPBar\02. Boss">
+      <UniqueIdentifier>{90ad2fa4-893b-445b-b28c-89b63b5f539a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\20.UI\01. MyDialog\01. NameTag">
+      <UniqueIdentifier>{48b541d7-806e-4358-8db6-ba0ec926b6c8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -828,12 +840,6 @@
     <ClInclude Include="..\Header\MonsterBombEffect.h">
       <Filter>02. GameObject\06. Effect\02.MonsterBomb</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\UI_HPBarFrame.h">
-      <Filter>02. GameObject\20.UI\06. HPBar</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\UI_HPBarValue.h">
-      <Filter>02. GameObject\20.UI\06. HPBar</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\UI_ShieldFrame.h">
       <Filter>02. GameObject\20.UI\10. Shield</Filter>
     </ClInclude>
@@ -845,9 +851,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\UI_Berserk.h">
       <Filter>02. GameObject\20.UI\11. Berserk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\UI_HPMark.h">
-      <Filter>02. GameObject\20.UI\06. HPBar</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\UI_BerserkFrame.h">
       <Filter>02. GameObject\20.UI\11. Berserk</Filter>
@@ -924,9 +927,6 @@
     <ClInclude Include="..\Header\PlayerBullet.h">
       <Filter>02. GameObject\07. Bullet\00.PlayerBullet</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\UI_MonsterHPBar.h">
-      <Filter>02. GameObject\20.UI\06. HPBar</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\MBulletBombEffect.h">
       <Filter>02. GameObject\06. Effect\00.Particle\03.MBulletExplosion</Filter>
     </ClInclude>
@@ -947,6 +947,27 @@
     </ClInclude>
     <ClInclude Include="..\Header\UI_MyCard.h">
       <Filter>02. GameObject\20.UI\03. MyCard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_HPBarValue.h">
+      <Filter>02. GameObject\20.UI\06. HPBar\00. Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_HPBarFrame.h">
+      <Filter>02. GameObject\20.UI\06. HPBar\00. Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_MonsterHPBar.h">
+      <Filter>02. GameObject\20.UI\06. HPBar\01. Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_HPMark.h">
+      <Filter>02. GameObject\20.UI\06. HPBar\00. Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_BossHPFrame.h">
+      <Filter>02. GameObject\20.UI\06. HPBar\02. Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_BossHPValue.h">
+      <Filter>02. GameObject\20.UI\06. HPBar\02. Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_NameTag.h">
+      <Filter>02. GameObject\20.UI\01. MyDialog\01. NameTag</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1325,12 +1346,6 @@
     <ClCompile Include="..\Code\MonsterBombEffect.cpp">
       <Filter>02. GameObject\06. Effect\02.MonsterBomb</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\UI_HPBarFrame.cpp">
-      <Filter>02. GameObject\20.UI\06. HPBar</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\UI_HPBarValue.cpp">
-      <Filter>02. GameObject\20.UI\06. HPBar</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\UI_ShieldFrame.cpp">
       <Filter>02. GameObject\20.UI\10. Shield</Filter>
     </ClCompile>
@@ -1339,9 +1354,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\UI_ShieldValue.cpp">
       <Filter>02. GameObject\20.UI\10. Shield</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\UI_HPMark.cpp">
-      <Filter>02. GameObject\20.UI\06. HPBar</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_Berserk.cpp">
       <Filter>02. GameObject\20.UI\11. Berserk</Filter>
@@ -1424,9 +1436,6 @@
     <ClCompile Include="..\Code\Rifle_Bullet1.cpp">
       <Filter>02. GameObject\07. Bullet\00.PlayerBullet</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\UI_MonsterHPBar.cpp">
-      <Filter>02. GameObject\20.UI\06. HPBar</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\MBulletBombEffect.cpp">
       <Filter>02. GameObject\06. Effect\00.Particle\03.MBulletExplosion</Filter>
     </ClCompile>
@@ -1453,6 +1462,27 @@
     </ClCompile>
     <ClCompile Include="..\Code\UI_MyCard.cpp">
       <Filter>02. GameObject\20.UI\03. MyCard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_HPBarFrame.cpp">
+      <Filter>02. GameObject\20.UI\06. HPBar\00. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_HPBarValue.cpp">
+      <Filter>02. GameObject\20.UI\06. HPBar\00. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_MonsterHPBar.cpp">
+      <Filter>02. GameObject\20.UI\06. HPBar\01. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_HPMark.cpp">
+      <Filter>02. GameObject\20.UI\06. HPBar\00. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_BossHPFrame.cpp">
+      <Filter>02. GameObject\20.UI\06. HPBar\02. Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_BossHPValue.cpp">
+      <Filter>02. GameObject\20.UI\06. HPBar\02. Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_NameTag.cpp">
+      <Filter>02. GameObject\20.UI\01. MyDialog\01. NameTag</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -33,6 +33,7 @@ HRESULT Engine::CMyDialog::Ready_GameObject(DIALOGTAG eDialogTag)
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	m_pPortrait = CPortrait::Create(m_pGraphicDev);
+	m_pNameTag = CNameTag::Create(m_pGraphicDev);
 
 	_vec3 vPos, vScale;
 	_float fMultiply = 1.f;
@@ -50,8 +51,9 @@ HRESULT Engine::CMyDialog::Ready_GameObject(DIALOGTAG eDialogTag)
 	LoadText(eDialogTag);
 
 	m_pPortrait->Set_PortraitTag(m_PortraitList.front());
-	return S_OK;
+	m_pNameTag->Set_PortraitTag(m_PortraitList.front());
 
+	return S_OK;
 }
 
 Engine::_int Engine::CMyDialog::Update_GameObject(const _float& fTimeDelta)
@@ -67,7 +69,6 @@ Engine::_int Engine::CMyDialog::Update_GameObject(const _float& fTimeDelta)
 	}
 
 	m_fNextTick += fTimeDelta;
-
 
 
 	if (m_fNextTick >= 1.5f)

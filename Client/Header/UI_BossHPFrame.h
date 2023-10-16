@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
-
+#include "Player.h"
+#include "Stage1Boss.h"
 
 
 // TODO Á¤½Â¿ë ÀÛ¼º
@@ -11,13 +12,13 @@ class CUITex;
 class CTexture;
 class CTransform;
 
-class CMissionObjective : public Engine::CGameObject
+class CBossHPFrame : public Engine::CGameObject
 {
 
 private:
-	explicit					 CMissionObjective(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit					 CMissionObjective(const CMissionObjective& rhs);
-	virtual						~CMissionObjective();
+	explicit					 CBossHPFrame(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit					 CBossHPFrame(const CBossHPFrame& rhs);
+	virtual						~CBossHPFrame();
 
 public:
 	virtual HRESULT				Ready_GameObject();
@@ -28,17 +29,18 @@ public:
 public:
 	void						Set_Title(const _tchar* _szTitle) { m_wstrTitle = _szTitle; }
 	void						Set_Objective(const _tchar* _szObjective) { m_wstrObjective = _szObjective; }
-	void						Set_Render(_bool _bRender) { m_bRender = _bRender;}
 
 private:
 	HRESULT						Add_Component();
 
 
 private:
+	_bool						m_bLateInit = true;
+
 	CUITex*						m_pBufferCom = nullptr;
 	CTexture*					m_pTextureCom = nullptr;
-
 	CTransform*					m_pTransformCom = nullptr;
+	CStage1Boss*				m_pBoss = nullptr;
 
 	_matrix						m_matProj, m_matView;
 
@@ -47,10 +49,12 @@ private:
 	wstring						m_wstrTitle;
 	wstring						m_wstrObjective;
 
-	_bool						m_bRender = true;
+	CPlayer*					m_pPlayer = nullptr;
+	UIDATA						m_tInfo;
 
+	_float				m_fX, m_fY, m_fSizeX, m_fSizeY;
 public:
-	static CMissionObjective*			Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CBossHPFrame*			Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
 	virtual void				Free() override;

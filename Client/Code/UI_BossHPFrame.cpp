@@ -1,65 +1,75 @@
 #include "stdafx.h"
-#include "UI_MissionObjective.h"
+#include "UI_BossHPFrame.h"
 
 #include "Export_Utility.h"
 #include "Export_System.h"
 
 
-CMissionObjective::CMissionObjective(LPDIRECT3DDEVICE9 pGraphicDev)
+
+CBossHPFrame::CBossHPFrame(LPDIRECT3DDEVICE9 pGraphicDev)
 	:Engine::CGameObject(pGraphicDev)
 {
+	ZeroMemory(&m_tInfo, sizeof(UIDATA));
 }
 
-CMissionObjective::CMissionObjective(const CMissionObjective& rhs)
+CBossHPFrame::CBossHPFrame(const CBossHPFrame& rhs)
 	: Engine::CGameObject(rhs)
 {
 }
 
-CMissionObjective::~CMissionObjective()
+CBossHPFrame::~CBossHPFrame()
 {
 }
 
-HRESULT Engine::CMissionObjective::Ready_GameObject()
+HRESULT Engine::CBossHPFrame::Ready_GameObject()
 {
 	D3DXMatrixIdentity(&m_matView);
 	D3DXMatrixOrthoLH(&m_matProj, WINCX, WINCY, 0.0f, 100.0f);
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	_float fRatio = 1.2f;
 
-	m_vPos = { 150.f, 50.f, 0.f };
-	m_vScale = { 128.f * fRatio, 32.f * fRatio, 1.f };
+	_float fRatio = 1.f;
 
-	m_vPos.x = m_vPos.x - WINCX * 0.5f; // 150 - 400 = -250
-	m_vPos.y = -m_vPos.y + WINCY * 0.5f; // -50 + 300 = 250
+	m_vPos = { 420, 30, 0.1f };
+	m_vScale = { 250 * fRatio, 10.f * fRatio, 0.f };
 
+	m_fX = m_vPos.x - WINCX * 0.5f; // 150 - 400 = -250
+	m_fY = -m_vPos.y + WINCY * 0.5f; // -50 + 300 = 250
 
-	m_pTransformCom->Set_Scale(m_vScale);
-	m_pTransformCom->Set_Pos(m_vPos);
+	m_pTransformCom->m_vScale.x = m_vScale.x;
+	m_pTransformCom->m_vScale.y = m_vScale.y;
+	m_pTransformCom->m_vInfo[INFO_POS].x = m_fX;
+	m_pTransformCom->m_vInfo[INFO_POS].y = m_fY;
 
-	m_wstrObjective = L"";
-	m_wstrTitle = L"";
+	m_pPlayer = Management()->Get_Player();
 
 	return S_OK;
 }
 
-Engine::_int Engine::CMissionObjective::Update_GameObject(const _float& fTimeDelta)
+Engine::_int Engine::CBossHPFrame::Update_GameObject(const _float& fTimeDelta)
 {
-	if(m_bRender)
 	Engine::Add_RenderGroup(RENDER_UI, this);
+
+	if (m_bLateInit)
+	{
+		m_pBoss = dynamic_cast<CStage1Boss*>(Management()->Get_ObjectList(LAYERTAG::GAMELOGIC,OBJECTTAG::BOSS).back());
+		m_bLateInit = false;
+	}
 
 	_int iExit = __super::Update_GameObject(fTimeDelta);
 
+	if (m_pBoss->Get_Info().bDead)
+		return OBJ_DEAD;
 
 	return 0;
 }
 
-void Engine::CMissionObjective::LateUpdate_GameObject()
+void Engine::CBossHPFrame::LateUpdate_GameObject()
 {
 	CGameObject::LateUpdate_GameObject();
 }
 
-void CMissionObjective::Render_GameObject()
+void CBossHPFrame::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
@@ -77,15 +87,6 @@ void CMissionObjective::Render_GameObject()
 	m_pTextureCom->Render_Textrue();
 	m_pBufferCom->Render_Buffer();
 
-	if (m_wstrObjective != L"")
-	{
-		wstring wstrTempObjective = L" ¡ß " + m_wstrObjective;
-
-		Engine::Render_Font(L"MISSION_FONT", m_wstrTitle.c_str(), &_vec2(20, 20), D3DXCOLOR(D3DCOLOR_ARGB(255, 254, 214, 147)), 6, false);
-		Engine::Render_Font(L"MISSION_FONT", wstrTempObjective.c_str(), &_vec2(20, 60), D3DXCOLOR(D3DCOLOR_ARGB(255, 255, 255, 255)), 20, false);
-
-	}
-
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
@@ -93,7 +94,7 @@ void CMissionObjective::Render_GameObject()
 
 }
 
-HRESULT Engine::CMissionObjective::Add_Component()
+HRESULT Engine::CBossHPFrame::Add_Component()
 {
 	CComponent* pComponent = nullptr;
 
@@ -105,7 +106,7 @@ HRESULT Engine::CMissionObjective::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].emplace(COMPONENTTAG::TRANSFORM, pComponent);
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_MissionUITexture"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_BossHPFrameTexture"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
 
@@ -114,21 +115,21 @@ HRESULT Engine::CMissionObjective::Add_Component()
 }
 
 
-CMissionObjective* CMissionObjective::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CBossHPFrame* CBossHPFrame::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
-	CMissionObjective* pInstance = new CMissionObjective(pGraphicDev);
+	CBossHPFrame* pInstance = new CBossHPFrame(pGraphicDev);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
 		Safe_Release(pInstance);
 
-		MSG_BOX("MissionObjective Create Failed");
+		MSG_BOX("HPBar Create Failed");
 		return nullptr;
 	}
 	return pInstance;
 }
 
-void Engine::CMissionObjective::Free()
+void Engine::CBossHPFrame::Free()
 {
 	__super::Free();
 }

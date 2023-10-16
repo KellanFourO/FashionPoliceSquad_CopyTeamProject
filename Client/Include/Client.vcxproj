@@ -233,6 +233,8 @@
     <ClInclude Include="..\Header\MBulletExplosion.h" />
     <ClInclude Include="..\Header\UI_Berserk.h" />
     <ClInclude Include="..\Header\UI_BerserkFrame.h" />
+    <ClInclude Include="..\Header\UI_BossHPFrame.h" />
+    <ClInclude Include="..\Header\UI_BossHPValue.h" />
     <ClInclude Include="..\Header\UI_BulletInfoCount.h" />
     <ClInclude Include="..\Header\UI_BulletInfoName.h" />
     <ClInclude Include="..\Header\UI_CardList.h" />
@@ -303,6 +305,7 @@
     <ClInclude Include="..\Header\Player_Left.h" />
     <ClInclude Include="..\Header\Player_LevelUp.h" />
     <ClInclude Include="..\Header\Player_Right.h" />
+    <ClInclude Include="..\Header\UI_NameTag.h" />
     <ClInclude Include="..\Header\UI_PlayerFace.h" />
     <ClInclude Include="..\Header\UI_Portrait.h" />
     <ClInclude Include="..\Header\ProgressFrame.h" />
@@ -386,6 +389,8 @@
     <ClCompile Include="..\Code\Stage2.cpp" />
     <ClCompile Include="..\Code\UI_Berserk.cpp" />
     <ClCompile Include="..\Code\UI_BerserkFrame.cpp" />
+    <ClCompile Include="..\Code\UI_BossHPFrame.cpp" />
+    <ClCompile Include="..\Code\UI_BossHPValue.cpp" />
     <ClCompile Include="..\Code\UI_BulletInfoCount.cpp" />
     <ClCompile Include="..\Code\UI_BulletInfoName.cpp" />
     <ClCompile Include="..\Code\UI_CardList.cpp" />
@@ -454,6 +459,7 @@
     <ClCompile Include="..\Code\Player_Left.cpp" />
     <ClCompile Include="..\Code\Player_LevelUp.cpp" />
     <ClCompile Include="..\Code\Player_Right.cpp" />
+    <ClCompile Include="..\Code\UI_NameTag.cpp" />
     <ClCompile Include="..\Code\UI_PlayerFace.cpp" />
     <ClCompile Include="..\Code\UI_Portrait.cpp" />
     <ClCompile Include="..\Code\ProgressFrame.cpp" />
