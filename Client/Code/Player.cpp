@@ -12,9 +12,12 @@
 #include "Player_Right.h"
 #include "Player_LevelUp.h"
 #include "Player_Jump.h"
+#include "Player_Dash.h"
 
 #include "Export_System.h"
 #include "Export_Utility.h"
+
+#include "DashEffect.h"
 
 CPlayer::CPlayer(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev), m_bJump(false),
@@ -222,12 +225,12 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 	m_vMoveDir = { 0.f,0.f,0.f };
 	_vec3 vUp = { 0.f,1.f,0.f };
+	++m_fDashDelay; //Dash 딜레이 프레임 계산 
 
 	_float fMoveSpeed = 0;
 	_bool bMove = false;
-
+	m_bDash = false;
 	vDir.y = 0.f; //y값만 0이 되어야 하기 때문에 재연이가 해놓은거임 점프 때문에
-
 
 	D3DXVec3Cross(&vRight, &vDir, &vUp);
 	D3DXVec3Normalize(&vDir, &vDir);
@@ -235,24 +238,120 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 	if (Engine::Get_DIKeyState(DIK_W) & 0x80)
 	{
+		if (Engine::Get_DIKeyState(DIK_LCONTROL) & 0x80 && m_bDashCheck == false && m_fDashDelay > 20.f)
+		{
+			m_bDashCheck = true;
+
+			CDashEffect* DashEffect = CDashEffect::Create(m_pGraphicDev);
+			DashEffect->Set_ObjectTag(OBJECTTAG::EFFECT);
+			Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::EFFECT, DashEffect);
+
+		}
+
+		if (m_bDashCheck)
+		{
+			m_vMoveDir += vDir * 10.f;
+			bMove = true;
+			m_bDash = true;
+			m_fDashDelay = 0.f;
+
+			m_bDashCount++;
+		}
+
+		if (m_bDashCount > 5 && m_bDashCheck)
+		{
+			m_bDashCheck = false;
+			m_bDashCount = 0;
+		}
+	
 		m_vMoveDir += vDir;
 		fMoveSpeed = INFO.fMoveSpeed;
 		bMove = true;
+		
 	}
 	if (Engine::Get_DIKeyState(DIK_S) & 0x80)
 	{
+		if (Engine::Get_DIKeyState(DIK_LCONTROL) & 0x80 && m_bDashCheck == false && m_fDashDelay > 20.f)
+		{
+			m_bDashCheck = true;
+			CDashEffect* DashEffect = CDashEffect::Create(m_pGraphicDev);
+			DashEffect->Set_ObjectTag(OBJECTTAG::EFFECT);
+			Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::EFFECT, DashEffect);
+		}
+
+		if (m_bDashCheck)
+		{
+			m_vMoveDir -= vDir * 10.f;
+			bMove = true;
+			m_bDash = true;
+			m_fDashDelay = 0.f;
+
+			m_bDashCount++;
+		}
+
+		if (m_bDashCount > 5 && m_bDashCheck)
+		{
+			m_bDashCheck = false;
+			m_bDashCount = 0;
+		}
 		m_vMoveDir -= vDir;
 		fMoveSpeed = INFO.fMoveSpeed;
 		bMove = true;
 	}
 	if (Engine::Get_DIKeyState(DIK_A) & 0x80)
 	{
+		if (Engine::Get_DIKeyState(DIK_LCONTROL) & 0x80 && m_bDashCheck == false && m_fDashDelay > 20.f)
+		{
+			m_bDashCheck = true;
+			CDashEffect* DashEffect = CDashEffect::Create(m_pGraphicDev);
+			DashEffect->Set_ObjectTag(OBJECTTAG::EFFECT);
+			Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::EFFECT, DashEffect);
+		}
+
+		if (m_bDashCheck)
+		{
+			m_vMoveDir += vRight * 10.f;
+			bMove = true;
+			m_bDash = true;
+			m_fDashDelay = 0.f;
+
+			m_bDashCount++;
+		}
+
+		if (m_bDashCount > 5 && m_bDashCheck)
+		{
+			m_bDashCheck = false;
+			m_bDashCount = 0;
+		}
 		m_vMoveDir += vRight;
 		fMoveSpeed = INFO.fMoveSpeed;
 		bMove = true;
 	}
 	if (Engine::Get_DIKeyState(DIK_D) & 0x80)
 	{
+		if (Engine::Get_DIKeyState(DIK_LCONTROL) & 0x80 && m_bDashCheck == false && m_fDashDelay > 20.f)
+		{
+			m_bDashCheck = true;
+			CDashEffect* DashEffect = CDashEffect::Create(m_pGraphicDev);
+			DashEffect->Set_ObjectTag(OBJECTTAG::EFFECT);
+			Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::EFFECT, DashEffect);
+		}
+
+		if (m_bDashCheck)
+		{
+			m_vMoveDir -= vRight * 10.f;
+			bMove = true;
+			m_bDash = true;
+			m_fDashDelay = 0.f;
+
+			m_bDashCount++;
+		}
+
+		if (m_bDashCount > 5 && m_bDashCheck)
+		{
+			m_bDashCheck = false;
+			m_bDashCount = 0;
+		}
 		m_vMoveDir -= vRight;
 		fMoveSpeed = INFO.fMoveSpeed;
 		bMove = true;

@@ -25,10 +25,8 @@ HRESULT Engine::CPaintBulletTrace::Ready_GameObject()
 
 	Set_ObjectTag(OBJECTTAG::PLAYERBULLET);
 	m_pTransformCom->Set_Scale(_vec3{ 1.f, 1.f, 1.f });
-	//m_pTransformCom->Set_Pos(_vec3(_float(rand() % 20), 10.f, _float(rand() % 20)));
  	_vec3 vPos = { 9999.f,9999.f,9999.f };
  	m_pTransformCom->Set_Pos(vPos);
-//
 	m_pTransformCom->Set_Host(this);
 	m_pCollider->Set_Host(this);
 	m_pCollider->Set_Transform(m_pTransformCom);
@@ -107,10 +105,6 @@ Engine::_int Engine::CPaintBulletTrace::Update_GameObject(const _float& fTimeDel
 void Engine::CPaintBulletTrace::LateUpdate_GameObject()
 {
 
-	//_vec3	vPos;
-	//m_pTransformCom->Get_Info(INFO_POS, &vPos);
-	//
-	//__super::Compute_ViewZ(&vPos);
 }
 
 CPaintBulletTrace* CPaintBulletTrace::Create(LPDIRECT3DDEVICE9 pGraphicDev, COLORTAG pColorTag, _vec3 vCreatePos)
