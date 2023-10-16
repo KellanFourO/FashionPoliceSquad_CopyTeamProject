@@ -20,7 +20,7 @@ void CSoundMgr::Initialize()
 	// 사운드를 담당하는 대표객체를 생성하는 함수
 	FMOD_System_Create(&m_pSystem);
 
-	// 1. 시스템 포인터, 2. 사용할 가상채널 수 , 초기화 방식) 
+	// 1. 시스템 포인터, 2. 사용할 가상채널 수 , 초기화 방식)
 	FMOD_System_Init(m_pSystem, 32, FMOD_INIT_NORMAL, NULL);
 
 	LoadSoundFile();
@@ -110,14 +110,14 @@ void CSoundMgr::LoadSoundFile()
 	_finddata_t fd;
 
 	// _findfirst : <io.h>에서 제공하며 사용자가 설정한 경로 내에서 가장 첫 번째 파일을 찾는 함수
-	long handle = _findfirst("../Sound/*.*", &fd);
+	long handle = _findfirst("../Bin/Resource/Sound/*.*", &fd);
 
 	if (handle == -1)
 		return;
 
 	int iResult = 0;
 
-	char szCurPath[128] = "../Sound/";
+	char szCurPath[128] = "../Bin/Resource/Sound/";
 	char szFullPath[128] = "";
 
 	while (iResult != -1)
