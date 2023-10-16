@@ -10,6 +10,7 @@
 #include "Export_Utility.h"
 #include "MonsterBombEffect.h"
 #include "MonsterState.h"
+#include "DustGrey.h"
 
 
 CKickBoardMonster::CKickBoardMonster(LPDIRECT3DDEVICE9 pGraphicDev)

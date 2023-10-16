@@ -11,6 +11,7 @@
 #include "Stage1Boss_ThrowGoldMulti.h"
 #include "Stage1Boss_BrifBigShield.h"
 #include "Stage1Boss_Dead.h"
+#include "DustGrey.h"
 
 #include "Export_System.h"
 #include "Export_Utility.h"
@@ -45,7 +46,7 @@ HRESULT CStage1Boss::Ready_GameObject()
 
 	INFO.MonsterState = m_pStateArray[IDLE];
 	INFO.MonsterState->Initialize(this);
-	INFO.fHP = 5000.f;
+	INFO.fHP = 4800.f;
 	INFO.fMaxHP = 5000.f;
 	m_fSpeed = 100.f;
 	m_fDectedRange = 150.f;
@@ -90,10 +91,18 @@ void CStage1Boss::LateUpdate_GameObject()
 		MBEffect->Set_ObjectTag(OBJECTTAG::EFFECT);
 		Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::EFFECT, MBEffect);
 		MBEffect->Get_Transform()->Set_Pos(m_pTransformCom->m_vInfo[INFO_POS]);
+
+		CDustGrey* DustParticle = CDustGrey::Create(m_pGraphicDev, m_pTransformCom->m_vInfo[INFO_POS], 256);
+		DustParticle->Set_ObjectTag(OBJECTTAG::PARTICLE);
+		Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::PARTICLE, DustParticle);
+		DustParticle->Get_Transform()->Set_Pos(m_pTransformCom->m_vInfo[INFO_POS]);
+
+
 		INFO.MonsterState->Release(this);
 		INFO.MonsterState = m_pStateArray[DEAD];
 		INFO.MonsterState->Initialize(this);
 		INFO.bDead = false;
+		m_bDead2 = true;
 	}   // »ç¸ÁÆÇÁ¤
 	__super::LateUpdate_GameObject();
 }
@@ -105,8 +114,11 @@ void CStage1Boss::Render_GameObject()
 //	m_pCollider->Render_Collider();
 	if (INFO.bHit)
 		m_iTextureIndex = 1;
+	else if (m_bDead2)
+		m_iTextureIndex = 2;
 	else
 		m_iTextureIndex = 0;
+
 
 	m_pTextureCom->Render_Textrue(m_iTextureIndex);
 	m_pBufferCom->Render_Buffer(INFO.MonsterState->Get_CurFrame(), INFO.MonsterState->Get_Ver());
@@ -119,7 +131,7 @@ void CStage1Boss::OnCollisionEnter(CCollider* _pOther)
 // 	if(_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ
 // 		&& dynamic_cast<CBuild_Obj*>(_pOther)->Get_OBJ_ATTRIBUTE() == OBJ_ATTRIBUTE::INTER_OBJ)
 // 	{
-// 
+//
 // 	}
 
 }

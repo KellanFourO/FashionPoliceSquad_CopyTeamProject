@@ -143,14 +143,18 @@ CMonsterState* CStage1Boss_Jump::Update(CMonster* Monster, const float& fDetltaT
 				_vec3 vCreatePos = {vHostPos.x, vHostPos.y - 20.f, vHostPos.z};
 				CGameObject* pShockWave = CJumpShockWaveEffect::Create(m_pHost->Get_GraphicDev(), vCreatePos);
 				Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::EFFECT,pShockWave);
-				for (int i = 0; i < 30; ++i)
+				if (m_ePhase == BOSSPHASE::PHASE_2 || m_ePhase == BOSSPHASE::PHASE_3)
 				{
-					
-					_vec3 vHostPos = m_pHost->Get_Transform()->m_vInfo[INFO_POS];
-					_vec3 vCreatePos = { vHostPos.x, vHostPos.y - 20.f, vHostPos.z };
-					CGameObject* pShockWave2 = CJumpShockWaveEffect2::Create(m_pHost->Get_GraphicDev(), vCreatePos);
-					Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::MONSTERBULLET, pShockWave2);
-					pShockWave2->Set_Angle((i + 1) *12.f);
+
+					for (int i = 0; i < 30; ++i)
+					{
+
+						_vec3 vHostPos = m_pHost->Get_Transform()->m_vInfo[INFO_POS];
+						_vec3 vCreatePos = { vHostPos.x, vHostPos.y - 20.f, vHostPos.z };
+						CGameObject* pShockWave2 = CJumpShockWaveEffect2::Create(m_pHost->Get_GraphicDev(), vCreatePos);
+						Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::MONSTERBULLET, pShockWave2);
+						pShockWave2->Set_Angle((i + 1) * 12.f);
+					}
 				}
 
 				m_bEffect = false;

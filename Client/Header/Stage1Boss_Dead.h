@@ -13,4 +13,5 @@ public:
 	virtual void Release(CMonster* _Monster)override;
 	virtual void Render(CMonster* _Monster)override;
 
+	_float m_fTick = 0.0f;
 };

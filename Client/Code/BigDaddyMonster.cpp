@@ -5,6 +5,7 @@
 #include "BigDaddyMonster_Chase.h"
 #include "BigDaddyMonster_Dead.h"
 #include "BigDaddyMonster_Attack.h"
+#include "DustGrey.h"
 
 #include "Export_System.h"
 #include "Export_Utility.h"
