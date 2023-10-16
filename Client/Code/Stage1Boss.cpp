@@ -2,6 +2,7 @@
 #include "Stage1Boss.h"
 #include "Bullet_GoldBar.h"
 #include "Player.h"
+#include "Build_Obj.h"
 
 #include "Stage1Boss_Idle.h"
 #include "Stage1Boss_ThrowGoldSingle.h"
@@ -119,11 +120,19 @@ void CStage1Boss::OnCollisionEnter(CCollider* _pOther)
 {
 	__super::OnCollisionEnter(_pOther);
 
+// 	if(_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ
+// 		&& dynamic_cast<CBuild_Obj*>(_pOther)->Get_OBJ_ATTRIBUTE() == OBJ_ATTRIBUTE::INTER_OBJ)
+// 	{
+// 
+// 	}
+
 }
 
 void CStage1Boss::OnCollisionStay(CCollider* _pOther)
 {
 	__super::OnCollisionStay(_pOther);
+
+
 
 	// 충돌 밀어내기 후 이벤트 여기다가 구현 ㄱㄱ ! .
 

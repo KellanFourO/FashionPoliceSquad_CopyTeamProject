@@ -78,6 +78,8 @@ void CLobbyStage::LateUpdate_Scene()
 
 
 	CollisionManager()->LateUpdate_Collision();
+
+	Moving_Wall();
 }
 
 void CLobbyStage::Render_Scene()
@@ -212,6 +214,107 @@ HRESULT CLobbyStage::Light_OnOff_Check()
 	}
 	m_pGraphicDev->LightEnable(0, TRUE); // 전역은 무조건 활성화
 
+	return S_OK;
+}
+
+HRESULT CLobbyStage::Moving_Wall()
+{
+	int iCheckTemp = -1;
+
+	if ((CEventMgr::GetInstance()->Get_MiniGameClearCheck(0) == true) ||
+		(CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == true) ||
+		(CEventMgr::GetInstance()->Get_MiniGameClearCheck(2) == true))
+	{
+
+// 		if ((CEventMgr::GetInstance()->Get_MiniGameReadyCheck(1) == true)
+// 			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == false))
+// 		{
+// 			int i = 0;
+// 		}
+
+		if (CEventMgr::GetInstance()->Get_MiniGameClearCheck(0) == true)
+		{
+			iCheckTemp = 0;
+		}
+		if (CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == true)
+		{
+			iCheckTemp = 1;
+		}
+		if (CEventMgr::GetInstance()->Get_MiniGameClearCheck(2) == true)
+		{
+			iCheckTemp = 2;
+		}
+
+		vector<CGameObject*> tempOBJList = Management()->Get_One_Scene(SCENETAG::LOBBY)->Get_Layer(LAYERTAG::ENVIRONMENT)->Get_ObjectList(OBJECTTAG::BUILD_OBJ);
+
+		for (auto& iter : tempOBJList)
+		{
+			CBuild_Obj* BuildOBJTemp = dynamic_cast<CBuild_Obj*>(iter);
+			_vec3 OBJPos = BuildOBJTemp->Get_myOBJPos();
+
+			if ((BuildOBJTemp->Get_OBJ_ATTRIBUTE() == OBJ_ATTRIBUTE::STD_OBJ)
+				&& ((iter->m_iIndex == (m_VecMoving[0]->iIndex - 10000)) ||
+					(iter->m_iIndex == (m_VecMoving[1]->iIndex - 10000)))
+				&& iCheckTemp == 0)
+			{
+				if (m_VecMoving[0]->vPos.y > -50)
+				{
+					m_VecMoving[0]->vPos.y -= 1.f;
+					BuildOBJTemp->Get_TransformCom()->Set_Pos(m_VecMoving[0]->vPos);
+				}
+				if (m_VecMoving[1]->vPos.y > -50)
+				{
+					m_VecMoving[1]->vPos.y -= 1.f;
+					BuildOBJTemp->Get_TransformCom()->Set_Pos(m_VecMoving[1]->vPos);
+				}			
+
+				if (m_VecMoving[0]->vPos.y <= -50)
+				{
+					CEventMgr::GetInstance()->Set_MiniGameReadyCheck(0, false);
+					CEventMgr::GetInstance()->Set_MiniGameReadyCheck(1, true);
+				}
+			}
+
+			if ((BuildOBJTemp->Get_OBJ_ATTRIBUTE() == OBJ_ATTRIBUTE::STD_OBJ)&&
+				(OBJPos.y == m_VecMoving[2]->vPos.y) && (MovingCheck == false))
+			{	//한 번만 수행
+				MovingIndextemp = BuildOBJTemp->m_iIndex;
+				MovingCheck = true;
+			}
+
+			if ((BuildOBJTemp->Get_OBJ_ATTRIBUTE() == OBJ_ATTRIBUTE::STD_OBJ)
+				&& (BuildOBJTemp->m_iIndex == MovingIndextemp) && iCheckTemp == 1)
+			{
+				if (m_VecMoving[2]->vPos.y > -50)
+				{
+					m_VecMoving[2]->vPos.y -= 1.f;
+					BuildOBJTemp->Get_TransformCom()->Set_Pos(m_VecMoving[2]->vPos);
+				}
+
+				if (m_VecMoving[2]->vPos.y <= -50)
+				{
+					CEventMgr::GetInstance()->Set_MiniGameReadyCheck(1, false);
+					CEventMgr::GetInstance()->Set_MiniGameReadyCheck(2, true);
+				}
+			}
+
+			if ((BuildOBJTemp->Get_OBJ_ATTRIBUTE() == OBJ_ATTRIBUTE::STD_OBJ)&&
+				(OBJPos.y == m_VecMoving[3]->vPos.y) && (MovingCheck2 == false))
+			{	//한 번만 수행
+				MovingIndextemp2 = BuildOBJTemp->m_iIndex;
+				MovingCheck2 = true;
+			}
+			if ((BuildOBJTemp->Get_OBJ_ATTRIBUTE() == OBJ_ATTRIBUTE::STD_OBJ)
+				&& (BuildOBJTemp->m_iIndex == MovingIndextemp2) && iCheckTemp == 2)
+			{
+				if (m_VecMoving[3]->vPos.y < 45)
+				{
+					m_VecMoving[3]->vPos.y += 1.f;
+					BuildOBJTemp->Get_TransformCom()->Set_Pos(m_VecMoving[3]->vPos);
+				}
+			}
+		}
+	}
 	return S_OK;
 }
 
@@ -516,7 +619,7 @@ HRESULT CLobbyStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 				LightTemp = iter;
 				m_VecLight.push_back(LightTemp);
 			}
-			if (iter->eOBJ_Attribute == OBJ_ATTRIBUTE::MOVING_OBJ)
+			if (iter->eOBJ_Attribute == OBJ_ATTRIBUTE::STD_OBJ) //Moving_OBJ에 담긴 값이 이상해서 STD_OBJ로 테스트
 			{
 				MovingTemp = new OBJData;
 				MovingTemp = iter;
@@ -699,9 +802,28 @@ void CLobbyStage::Admin_KeyInput()
 
 	_bool CheckTemp = dynamic_cast<CPlayer*>(m_pPlayer)->Get_TriggerCheck();
 	if (Engine::Get_DIKeyState(DIK_F) & 0x80 && (CheckTemp == true))
-	{
-		
+	{	
+		CEventMgr::GetInstance()->Set_MiniGameMode();
+		if ((CEventMgr::GetInstance()->Get_MiniGameReadyCheck(0) == true)
+			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(0) == false))
+		{
+			CEventMgr::GetInstance()->OnMiniGame_Arrow(m_pGraphicDev, SCENETAG::LOBBY);
+			//CEventMgr::GetInstance()->OnPause(TRUE, SCENETAG::LOBBY);
+		}
+		else if ((CEventMgr::GetInstance()->Get_MiniGameReadyCheck(1) == true)
+			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == false))
+		{
+			CEventMgr::GetInstance()->OnMiniGame_KickBoard(m_pGraphicDev, SCENETAG::LOBBY);
+			//CEventMgr::GetInstance()->OnPause(TRUE, SCENETAG::LOBBY);
+		}
+		else if ((CEventMgr::GetInstance()->Get_MiniGameReadyCheck(2) == true)
+			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(2) == false))
+		{
+			CEventMgr::GetInstance()->OnMiniGame_Quiz(m_pGraphicDev, SCENETAG::LOBBY);
+			//CEventMgr::GetInstance()->OnPause(TRUE, SCENETAG::LOBBY);
+		}
 
+		m_bAdminSwitch = false;
 	}
 }
 

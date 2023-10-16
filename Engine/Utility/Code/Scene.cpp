@@ -64,6 +64,12 @@ _int CScene::Update_Scene(const _float& fTimeDelta)
 							Objiter.second[i]->LateUpdate_GameObject();
 						}
 
+						if (Objiter.second[i]->Get_ObjectTag() == OBJECTTAG::MINIGAME)
+						{
+							Objiter.second[i]->Update_GameObject(fTimeDelta);
+							Objiter.second[i]->LateUpdate_GameObject();
+						}
+
 
 						Renderer()->Add_RenderGroup(RENDER_ALPHATEST, Objiter.second[i]);
 						Objiter.second[i]->Render_GameObject();
