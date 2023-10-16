@@ -5,6 +5,7 @@
 #include "RigidBody.h"
 #include <random>
 #include "JumpShockWaveEffect.h"
+#include "JumpShockWaveEffect2.h"
 #include "Export_Utility.h"
 CStage1Boss_Jump::CStage1Boss_Jump()
 {
@@ -47,23 +48,38 @@ void CStage1Boss_Jump::Initialize(CMonster* _Monster)
 	m_eJumpState = JUMP_READY;
 
 	_float m_fTop = 185.f;
-	_float m_fBottom = 85.f;
+	_float m_fBottom = 50.f;
 
-	_float m_fLeft = 42.5f;
+	_float m_fLeft =51.5f;
 	_float m_fRight = 142.5f;
 
-	vJumpPoint[0] = { m_fLeft,25.f,m_fTop };
-	vJumpPoint[1] = { m_fRight,25.f,m_fTop};
-	vJumpPoint[2] = { m_fLeft, 25.f, m_fBottom};
-	vJumpPoint[3] = { m_fRight, 25.f, m_fBottom };
+	vJumpPoint[0] = { m_fLeft,	20.f,	m_fTop	};
+	vJumpPoint[1] = { m_fRight,	20.f,	m_fTop	};
+	vJumpPoint[2] = { m_fLeft,	20.f, m_fBottom	};
+	vJumpPoint[3] = { m_fRight, 20.f, m_fBottom };
 
 	random_device rd;
 	mt19937 gen(rd());
 
 	uniform_int_distribution<int> distribution(0, 3); // 랜덤 시작 부터 마지막
-
 	m_iRandomIndex = distribution(gen);
 
+	while (true)
+	{
+		random_device rd;
+		mt19937 gen(rd());
+
+		uniform_int_distribution<int> distribution(0, 3);
+
+		m_iRandomIndex = distribution(gen);
+
+		if (static_cast<CStage1Boss*>(m_pHost)->Get_OriginIndex() != m_iRandomIndex)
+		{
+			break;
+		}
+	}
+
+	static_cast<CStage1Boss*>(m_pHost)->Set_OriginIndex(m_iRandomIndex);
 }
 
 CMonsterState* CStage1Boss_Jump::Update(CMonster* Monster, const float& fDetltaTime)
@@ -108,7 +124,7 @@ CMonsterState* CStage1Boss_Jump::Update(CMonster* Monster, const float& fDetltaT
 			else
 			{
 				_vec3 vPos = m_pHost->Get_Transform()->m_vInfo[INFO_POS];
-				_vec3 vDir = vJumpPoint[m_iRandomIndex] - vPos;
+				_vec3 vDir = vJumpPoint[static_cast<CStage1Boss*>(m_pHost)->Get_OriginIndex()] - vPos;
 				D3DXVec3Normalize(&vDir, &vDir);
 
 				m_pHost->Get_Transform()->Move_Pos(&vDir, fDetltaTime, m_fJumpSpeed);
@@ -127,6 +143,16 @@ CMonsterState* CStage1Boss_Jump::Update(CMonster* Monster, const float& fDetltaT
 				_vec3 vCreatePos = {vHostPos.x, vHostPos.y - 20.f, vHostPos.z};
 				CGameObject* pShockWave = CJumpShockWaveEffect::Create(m_pHost->Get_GraphicDev(), vCreatePos);
 				Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::EFFECT,pShockWave);
+				for (int i = 0; i < 30; ++i)
+				{
+					
+					_vec3 vHostPos = m_pHost->Get_Transform()->m_vInfo[INFO_POS];
+					_vec3 vCreatePos = { vHostPos.x, vHostPos.y - 20.f, vHostPos.z };
+					CGameObject* pShockWave2 = CJumpShockWaveEffect2::Create(m_pHost->Get_GraphicDev(), vCreatePos);
+					Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::MONSTERBULLET, pShockWave2);
+					pShockWave2->Set_Angle((i + 1) *12.f);
+				}
+
 				m_bEffect = false;
 			}
 
@@ -143,6 +169,8 @@ CMonsterState* CStage1Boss_Jump::Update(CMonster* Monster, const float& fDetltaT
 				m_fTick = 0;
 			}
 		}
+
+
 
 		break;
 	}

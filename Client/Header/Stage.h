@@ -125,6 +125,7 @@ public:
 
 
 	////////////////////////준호 함수, 변수//////////////////////////////
+	_bool				m_bLateInit = true;
 	_bool				m_bSceneChange;
 	_bool				m_bAdminSwitch = true; // 어드민키인풋 레벨업 통제용
 	_float				m_fAdminTick = 0.f;	   // 어드민키인풋 레벨업 통제용

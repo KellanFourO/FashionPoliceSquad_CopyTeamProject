@@ -10,7 +10,8 @@
 #include <utility>
 #include "LoadingStage1.h"
 #include "MonsterBombEffect.h"
-
+#include "MBulletBombEffect.h"
+#include "MBulletExplosion.h"
 
 
 #include "FootRay.h"
@@ -56,12 +57,33 @@ _int CBossStage::Update_Scene(const _float& fTimeDelta)
  		m_bLateInit = false;
  	}
 
-
 	if (!Management()->Get_Scene()->Get_Pause())
 	{
 		m_pBoss->Set_Start(true);
+		m_pMission->Set_Render(false);
+
+		CGameObject* pGameObject = nullptr;
+		CLayer* pLayer = nullptr;
+
+		pLayer = Management()->Get_Layer(LAYERTAG::UI);
+
+		if (m_bOneCreate)
+		{
+			pGameObject = CBossHPFrame::Create(m_pGraphicDev);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+			pGameObject = CBossHPValue::Create(m_pGraphicDev);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+			m_bOneCreate = false;
+		}
+
 	}
 
+	if(m_pBoss->Get_Info().bDead)
+		m_pMission->Set_Render(true);
 	//if (m_bReadyCube)
 	//{
 	//	Octree()->Update_Octree();
@@ -216,12 +238,20 @@ HRESULT CBossStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 
 	//이펙트 파티클
 	{
-		//이펙트
 		pGameObject = CMonsterBombEffect::Create(m_pGraphicDev);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::EFFECT, pGameObject), E_FAIL);
+
+		pGameObject = CMBulletBombEffect::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::EFFECT, pGameObject), E_FAIL);
+
 		//파티클
-		pGameObject = CDustGrey::Create(m_pGraphicDev, _vec3(50.f, 10.f, 25.f), 256);
+		pGameObject = CDustGrey::Create(m_pGraphicDev, _vec3(0.f, 0.f, 0.f), 256);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::PARTICLE, pGameObject), E_FAIL);
+
+		pGameObject = CMBulletExplosion::Create(m_pGraphicDev, _vec3(0.f, 0.f, 0.f), 256);
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::PARTICLE, pGameObject), E_FAIL);
 	}
@@ -263,9 +293,9 @@ HRESULT CBossStage::Ready_Layer_UI(LAYERTAG eLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::CROSSHAIR, pGameObject), E_FAIL);
 
-	pGameObject = CMissionObjective::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MISSION, pGameObject), E_FAIL);
+	m_pMission = CMissionObjective::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(m_pMission, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MISSION, m_pMission), E_FAIL);
 
 	pGameObject = CHPBarFrame::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -318,6 +348,8 @@ HRESULT CBossStage::Ready_Layer_UI(LAYERTAG eLayerTag)
 	pGameObject = CWeaponInfo::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+
 
 	m_mapLayer.insert({ eLayerTag, pLayer });
 

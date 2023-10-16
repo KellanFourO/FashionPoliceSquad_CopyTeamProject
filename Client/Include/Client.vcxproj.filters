@@ -433,17 +433,23 @@
     <Filter Include="02. GameObject\06. Effect\00.Particle\02. ShockWave">
       <UniqueIdentifier>{abe17bfb-ee99-461c-94d8-8e5918b97001}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\06. Effect\05.JumpSmoke2">
+      <UniqueIdentifier>{2fdb7c04-124e-428c-a76b-4f72b53eb167}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02. GameObject\15. MiniGame">
       <UniqueIdentifier>{e546e874-21d8-46c5-997a-303e628cb41a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\15. MiniGame\10. MiniGame_Arrow">
-      <UniqueIdentifier>{4ac3dc4f-d5fd-4377-8e40-93e99122e416}</UniqueIdentifier>
+    <Filter Include="02. GameObject\20.UI\06. HPBar\00. Player">
+      <UniqueIdentifier>{4142967b-05db-4a8b-932c-5de0d141a3ca}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\15. MiniGame\11. MiniGame_KickBoard">
-      <UniqueIdentifier>{67164806-dd78-4469-88dc-3885b751fc6e}</UniqueIdentifier>
+    <Filter Include="02. GameObject\20.UI\06. HPBar\01. Monster">
+      <UniqueIdentifier>{fc9d2768-11e2-4155-a846-4d1f831dbcb9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\15. MiniGame\12. MiniGame_Quiz">
-      <UniqueIdentifier>{094092c4-c1cb-4a7c-aba6-31715e8228fd}</UniqueIdentifier>
+    <Filter Include="02. GameObject\20.UI\06. HPBar\02. Boss">
+      <UniqueIdentifier>{90ad2fa4-893b-445b-b28c-89b63b5f539a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\20.UI\01. MyDialog\01. NameTag">
+      <UniqueIdentifier>{48b541d7-806e-4358-8db6-ba0ec926b6c8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -605,12 +611,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\DullSuitMonster_Idle.h">
       <Filter>02. GameObject\02. Monster\01. DullSuitMonster\99. DullSuitMonster_State\01.DullSuitMonster_Idle</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\UI_MyCard.h">
-      <Filter>02. GameObject\20.UI\01. MyDialog\00. Portrait</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\UI_MyCardTexture.h">
-      <Filter>02. GameObject\20.UI\01. MyDialog\00. Portrait</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\BigDaddyMonster_Idle.h">
       <Filter>02. GameObject\02. Monster\00. BigDaddyMonster\99.BigDaddyMonster_State\01. BigDaddyMonster_Idle</Filter>
@@ -843,12 +843,6 @@
     <ClInclude Include="..\Header\MonsterBombEffect.h">
       <Filter>02. GameObject\06. Effect\02.MonsterBomb</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\UI_HPBarFrame.h">
-      <Filter>02. GameObject\20.UI\06. HPBar</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\UI_HPBarValue.h">
-      <Filter>02. GameObject\20.UI\06. HPBar</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\UI_ShieldFrame.h">
       <Filter>02. GameObject\20.UI\10. Shield</Filter>
     </ClInclude>
@@ -860,9 +854,6 @@
     </ClInclude>
     <ClInclude Include="..\Header\UI_Berserk.h">
       <Filter>02. GameObject\20.UI\11. Berserk</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Header\UI_HPMark.h">
-      <Filter>02. GameObject\20.UI\06. HPBar</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\UI_BerserkFrame.h">
       <Filter>02. GameObject\20.UI\11. Berserk</Filter>
@@ -915,9 +906,6 @@
     <ClInclude Include="..\Header\Stage2.h">
       <Filter>01.Scene\05. Stage2</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\UIMgr.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\UI_CrossHair.h">
       <Filter>02. GameObject\20.UI\02. CrossHair</Filter>
     </ClInclude>
@@ -942,14 +930,17 @@
     <ClInclude Include="..\Header\PlayerBullet.h">
       <Filter>02. GameObject\07. Bullet\00.PlayerBullet</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\UI_MonsterHPBar.h">
-      <Filter>02. GameObject\20.UI\06. HPBar</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\MBulletBombEffect.h">
       <Filter>02. GameObject\06. Effect\00.Particle\03.MBulletExplosion</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\MBulletExplosion.h">
       <Filter>02. GameObject\06. Effect\03.MBulletExplosion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\ShockWave.h">
+      <Filter>02. GameObject\06. Effect\00.Particle\02. ShockWave</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\JumpShockWaveEffect2.h">
+      <Filter>02. GameObject\06. Effect\05.JumpSmoke2</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\FileMgr.h">
       <Filter>04. Manager\11. FileMgr</Filter>
@@ -958,7 +949,34 @@
       <Filter>02. GameObject\06. Effect\00.Particle\02. ShockWave</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\MiniGame.h">
-      <Filter>02. GameObject\15. MiniGame</Filter>
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_MyCardTexture.h">
+      <Filter>02. GameObject\20.UI\03. MyCard\00. MyCardTexture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_MyCard.h">
+      <Filter>02. GameObject\20.UI\03. MyCard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_HPBarValue.h">
+      <Filter>02. GameObject\20.UI\06. HPBar\00. Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_HPBarFrame.h">
+      <Filter>02. GameObject\20.UI\06. HPBar\00. Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_MonsterHPBar.h">
+      <Filter>02. GameObject\20.UI\06. HPBar\01. Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_HPMark.h">
+      <Filter>02. GameObject\20.UI\06. HPBar\00. Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_BossHPFrame.h">
+      <Filter>02. GameObject\20.UI\06. HPBar\02. Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_BossHPValue.h">
+      <Filter>02. GameObject\20.UI\06. HPBar\02. Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_NameTag.h">
+      <Filter>02. GameObject\20.UI\01. MyDialog\01. NameTag</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1096,12 +1114,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\DullSuitMonster_Idle.cpp">
       <Filter>02. GameObject\02. Monster\01. DullSuitMonster\99. DullSuitMonster_State\01.DullSuitMonster_Idle</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\UI_MyCard.cpp">
-      <Filter>02. GameObject\20.UI\01. MyDialog\00. Portrait</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\UI_MyCardTexture.cpp">
-      <Filter>02. GameObject\20.UI\01. MyDialog\00. Portrait</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\DullSuitMonster_Attack.cpp">
       <Filter>02. GameObject\02. Monster\01. DullSuitMonster\99. DullSuitMonster_State\02.DullSuitMonster_Attack</Filter>
@@ -1343,12 +1355,6 @@
     <ClCompile Include="..\Code\MonsterBombEffect.cpp">
       <Filter>02. GameObject\06. Effect\02.MonsterBomb</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\UI_HPBarFrame.cpp">
-      <Filter>02. GameObject\20.UI\06. HPBar</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\UI_HPBarValue.cpp">
-      <Filter>02. GameObject\20.UI\06. HPBar</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\UI_ShieldFrame.cpp">
       <Filter>02. GameObject\20.UI\10. Shield</Filter>
     </ClCompile>
@@ -1357,9 +1363,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\UI_ShieldValue.cpp">
       <Filter>02. GameObject\20.UI\10. Shield</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\UI_HPMark.cpp">
-      <Filter>02. GameObject\20.UI\06. HPBar</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\UI_Berserk.cpp">
       <Filter>02. GameObject\20.UI\11. Berserk</Filter>
@@ -1412,9 +1415,6 @@
     <ClCompile Include="..\Code\Stage2.cpp">
       <Filter>01.Scene\05. Stage2</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\UIMgr.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\UI_CrossHair.cpp">
       <Filter>02. GameObject\20.UI\02. CrossHair</Filter>
     </ClCompile>
@@ -1445,14 +1445,17 @@
     <ClCompile Include="..\Code\Rifle_Bullet1.cpp">
       <Filter>02. GameObject\07. Bullet\00.PlayerBullet</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\UI_MonsterHPBar.cpp">
-      <Filter>02. GameObject\20.UI\06. HPBar</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\MBulletBombEffect.cpp">
       <Filter>02. GameObject\06. Effect\00.Particle\03.MBulletExplosion</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\MBulletExplosion.cpp">
       <Filter>02. GameObject\06. Effect\03.MBulletExplosion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\ShockWave.cpp">
+      <Filter>02. GameObject\06. Effect\00.Particle\02. ShockWave</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\JumpShockWaveEffect2.cpp">
+      <Filter>02. GameObject\06. Effect\05.JumpSmoke2</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\FileMgr.cpp">
       <Filter>04. Manager\11. FileMgr</Filter>
@@ -1460,14 +1463,38 @@
     <ClCompile Include="..\Code\ShockWave.cpp">
       <Filter>02. GameObject\06. Effect\00.Particle\02. ShockWave</Filter>
     </ClCompile>
+    <ClCompile Include="..\Code\MiniGame.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
     <ClCompile Include="..\Code\Ray.cpp">
       <Filter>02. GameObject\01. Player\97.RAY</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\SYRay.cpp">
-      <Filter>02. GameObject\01. Player\97.RAY</Filter>
+    <ClCompile Include="..\Code\UI_MyCardTexture.cpp">
+      <Filter>02. GameObject\20.UI\03. MyCard\00. MyCardTexture</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\MiniGame.cpp">
-      <Filter>02. GameObject\15. MiniGame</Filter>
+    <ClCompile Include="..\Code\UI_MyCard.cpp">
+      <Filter>02. GameObject\20.UI\03. MyCard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_HPBarFrame.cpp">
+      <Filter>02. GameObject\20.UI\06. HPBar\00. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_HPBarValue.cpp">
+      <Filter>02. GameObject\20.UI\06. HPBar\00. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_MonsterHPBar.cpp">
+      <Filter>02. GameObject\20.UI\06. HPBar\01. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_HPMark.cpp">
+      <Filter>02. GameObject\20.UI\06. HPBar\00. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_BossHPFrame.cpp">
+      <Filter>02. GameObject\20.UI\06. HPBar\02. Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_BossHPValue.cpp">
+      <Filter>02. GameObject\20.UI\06. HPBar\02. Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_NameTag.cpp">
+      <Filter>02. GameObject\20.UI\01. MyDialog\01. NameTag</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

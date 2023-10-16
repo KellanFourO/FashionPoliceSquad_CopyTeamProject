@@ -91,7 +91,7 @@ void CBulletInfoName::Render_GameObject()
 
 	if (!m_pPlayer->Get_SceneChange())
 	{
-		Engine::Render_Font(L"UI_WEAPON_NAME", m_pPlayer->Get_Gun()->Get_GunInfo()->m_szGunName, &_vec2(640, 520), D3DXCOLOR(D3DCOLOR_ARGB(255, 255, 255, 255)));
+		Engine::Render_Font(L"UI_WEAPON_NAME", m_pPlayer->Get_Gun()->Get_GunInfo()->m_szGunName, &_vec2(640, 520), D3DXCOLOR(D3DCOLOR_ARGB(255, 255, 255, 255)), 20, false);
 	}
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);

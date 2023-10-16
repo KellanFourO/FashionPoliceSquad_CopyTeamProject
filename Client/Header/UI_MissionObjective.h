@@ -28,6 +28,7 @@ public:
 public:
 	void						Set_Title(const _tchar* _szTitle) { m_wstrTitle = _szTitle; }
 	void						Set_Objective(const _tchar* _szObjective) { m_wstrObjective = _szObjective; }
+	void						Set_Render(_bool _bRender) { m_bRender = _bRender;}
 
 private:
 	HRESULT						Add_Component();
@@ -45,6 +46,8 @@ private:
 
 	wstring						m_wstrTitle;
 	wstring						m_wstrObjective;
+
+	_bool						m_bRender = true;
 
 public:
 	static CMissionObjective*			Create(LPDIRECT3DDEVICE9 pGraphicDev);

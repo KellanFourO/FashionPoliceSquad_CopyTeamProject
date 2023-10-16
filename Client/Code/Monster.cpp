@@ -216,10 +216,9 @@ void CMonster::Init_PlayerTransform()
 		m_bLateInit = false;
 
 		// TODO - 승용 추가
-		if (Set_HP() == E_FAIL)
-		{
-			MSG_BOX("승용 몬스터 HP 에러");
-		}
+		if(m_eObjectTag != OBJECTTAG::BOSS)
+			Set_HP();
+
 		// TODO - 승용 추가 종료
 	}
 }
@@ -286,8 +285,11 @@ void CMonster::StateMachine(const _float& fTimeDelta)
 
 HRESULT CMonster::Set_HP()
 {
-	CMonsterHPBar* pHpBar = CMonsterHPBar::Create(m_pGraphicDev,this);
-	//pHpBar->Set_ObjectTag(OBJECTTAG::UI);
+	CMonsterHPBar* pHpBar = nullptr;
+
+	pHpBar = CMonsterHPBar::Create(m_pGraphicDev,this);
+
+
 	if(pHpBar)
 	Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::UI, pHpBar);
 	else

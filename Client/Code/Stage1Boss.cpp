@@ -2,6 +2,7 @@
 #include "Stage1Boss.h"
 #include "Bullet_GoldBar.h"
 #include "Player.h"
+#include "Build_Obj.h"
 
 #include "Stage1Boss_Idle.h"
 #include "Stage1Boss_ThrowGoldSingle.h"
@@ -44,14 +45,14 @@ HRESULT CStage1Boss::Ready_GameObject()
 
 	INFO.MonsterState = m_pStateArray[IDLE];
 	INFO.MonsterState->Initialize(this);
-	INFO.fHP = 3000.f;
+	INFO.fHP = 5000.f;
 	INFO.fMaxHP = 5000.f;
 	m_fSpeed = 100.f;
 	m_fDectedRange = 150.f;
 	m_fAttackRange = 70.f;
 
 	m_pTransformCom->Set_Pos((_vec3{ 92.5f,25.f,135.f }));
-	m_pTransformCom->Set_Scale({ 20.0f,20.0f,20.0f });
+	m_pTransformCom->Set_Scale({ 15.0f,15.0f,15.0f });
 
 	m_pBufferCom->SetCount(5, 5);
 
@@ -115,11 +116,19 @@ void CStage1Boss::OnCollisionEnter(CCollider* _pOther)
 {
 	__super::OnCollisionEnter(_pOther);
 
+	if(_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ
+		&& dynamic_cast<CBuild_Obj*>(_pOther)->Get_OBJ_ATTRIBUTE() == OBJ_ATTRIBUTE::INTER_OBJ)
+	{
+
+	}
+
 }
 
 void CStage1Boss::OnCollisionStay(CCollider* _pOther)
 {
 	__super::OnCollisionStay(_pOther);
+
+
 
 	// 충돌 밀어내기 후 이벤트 여기다가 구현 ㄱㄱ ! .
 

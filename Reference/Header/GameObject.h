@@ -26,14 +26,13 @@ public:
 	CTransform*							Get_Transform() { return m_pTransformCom; }
 	BULLETTYPE							Get_HitType() { return m_eHitType; }
 	_bool								Get_Dead() { return m_IsDead;}
-	_bool								Get_bRay() { return m_bRay;}
-
-
+	_float								Get_Angle() { return m_fAngle; }
 	// Set
-	void								Set_bRay(_bool _bRay) {m_bRay = _bRay;}
 	void								Set_ObjectTag(OBJECTTAG _eTag) { m_eObjectTag = _eTag; }
 	void								Set_Dead(_bool _IsDead) { m_IsDead = _IsDead; }
 	void								Set_Pause(_bool _bPause) { m_bPause = _bPause; }
+	void								Set_Angle(_float fAngle) { m_fAngle = fAngle; }
+
 
 	const _bool&						IsDead() const { return m_IsDead; }
 	void								Compute_ViewZ(const _vec3* pPos);
@@ -59,11 +58,10 @@ protected:
 	OBJECTTAG							m_eObjectTag=OBJECTTAG::OBJECT_END;
 	BULLETTYPE							m_eHitType = BULLETTYPE::BULLETTYPE_END;
 
-
+	_vec3								m_vCamPos;
 	_bool								m_bPause = false;
-	_bool								m_bRay = false; // 레이캐스트용
 
-	_vec3								m_vCamPos = {0.f,0.f,0.f};
+	_float								m_fAngle = 0.f;
 public:
 	_uint								m_iIndex = 100;
 	CTransform*							m_pTransformCom = nullptr;

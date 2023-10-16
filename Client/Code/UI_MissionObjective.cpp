@@ -45,7 +45,7 @@ HRESULT Engine::CMissionObjective::Ready_GameObject()
 
 Engine::_int Engine::CMissionObjective::Update_GameObject(const _float& fTimeDelta)
 {
-
+	if(m_bRender)
 	Engine::Add_RenderGroup(RENDER_UI, this);
 
 	_int iExit = __super::Update_GameObject(fTimeDelta);
@@ -81,8 +81,9 @@ void CMissionObjective::Render_GameObject()
 	{
 		wstring wstrTempObjective = L" ¡ß " + m_wstrObjective;
 
-		Engine::Render_Font(L"MISSION_FONT", m_wstrTitle.c_str(), &_vec2(20, 20), D3DXCOLOR(D3DCOLOR_ARGB(255, 254, 214, 147)));
-		Engine::Render_Font(L"MISSION_FONT", wstrTempObjective.c_str(), &_vec2(20, 60), D3DXCOLOR(D3DCOLOR_ARGB(255, 255, 255, 255)));
+		Engine::Render_Font(L"MISSION_FONT", m_wstrTitle.c_str(), &_vec2(20, 20), D3DXCOLOR(D3DCOLOR_ARGB(255, 254, 214, 147)), 6, false);
+		Engine::Render_Font(L"MISSION_FONT", wstrTempObjective.c_str(), &_vec2(20, 60), D3DXCOLOR(D3DCOLOR_ARGB(255, 255, 255, 255)), 20, false);
+
 	}
 
 

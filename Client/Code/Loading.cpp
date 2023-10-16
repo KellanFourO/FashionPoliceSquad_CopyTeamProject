@@ -69,6 +69,8 @@ _uint CLoading::Loading_For_Stage()
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_MonsterBombEffectTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/MonsterBomb/MonsterBomb%d.png", 15)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_MBulletBombEffectTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Explosion5/%d.dds", 87)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_JumpShockWaveEffectTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/SY/JumpShockWave/JumpShockWave%d.png", 9)), E_FAIL);
+	//보스 충격파 공격 effect겸 attack
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_JumpShockWaveEffectTexture2", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Explosion9/%d.dds", 79)), E_FAIL);
 	Set_Value(3);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Player", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player0.png")), E_FAIL);
 	Set_Value(3);
@@ -130,6 +132,7 @@ _uint CLoading::Loading_For_Stage()
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_DialogTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/DIALOUGE/DIALOG_1_Fix1.png")), E_FAIL);
 		Set_Value(3);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_PortraitTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-des.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_NameTagTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/DIALOUGE/UI_21.png")), E_FAIL);
 		Set_Value(3);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CrossHairTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/CROSSHAIR/UI-crosshair_2.png")), E_FAIL);
 
@@ -149,6 +152,8 @@ _uint CLoading::Loading_For_Stage()
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_HPMarkTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HP_BAR/Hp_Mark.png")), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_MonsterHPBarTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HP_BAR/VALUE_Monster1.png")), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_MonsterHPFrameTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HP_BAR/HP_Monster.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_BossHPBarTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HP_BAR/Boss_HPValue.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_BossHPFrameTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HP_BAR/Boss_HPFrame.png")), E_FAIL);
 
 
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_ShieldFrameTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/UI/HP_BAR/HP_Shield.png")), E_FAIL);
@@ -252,6 +257,7 @@ _uint CLoading::Loading_For_MapTool()
 
 _uint CLoading::Loading_For_Lobby()
 {
+	Set_Value(100);
 	m_bFinish = true;
 	return 0;
 }
