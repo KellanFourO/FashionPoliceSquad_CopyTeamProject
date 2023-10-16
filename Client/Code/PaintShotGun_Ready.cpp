@@ -33,7 +33,7 @@ CPlayerGunState* CPaintShotGun_Ready::Update(CPlayerGun* ShotGun, const float& f
 
 
 
-	if (m_fBehaviorTime >= 0.2f) {
+	if (m_fBehaviorTime >= 0.05f) {
 	    m_pHost->Set_Ready(true);
 	    return dynamic_cast<CPaintShotGun*>(m_pHost)->Get_State(0); // Idle
 	}

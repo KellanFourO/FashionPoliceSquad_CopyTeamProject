@@ -3,6 +3,7 @@
 
 #include "Export_Utility.h"
 #include "EffectTex.h"
+#include "SoundMgr.h"
 
 CPaintBulletTrace::CPaintBulletTrace(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
@@ -181,6 +182,7 @@ void CPaintBulletTrace::OnCollisionEnter(CCollider* _pOther)
 	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE || _pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ)
 	{
 		m_bCollision = true;
+		CSoundMgr::GetInstance()->PlaySoundW(L"PaintBulletTrace.wav",SOUND_EFFECT,10);
 	}
 }
 

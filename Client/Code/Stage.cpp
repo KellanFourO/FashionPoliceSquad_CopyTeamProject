@@ -12,6 +12,7 @@
 #include "MonsterBombEffect.h"
 #include "MBulletBombEffect.h"
 #include "MBulletExplosion.h"
+#include "SoundMgr.h"
 
 #include "FootRay.h"
 
@@ -44,6 +45,8 @@ HRESULT CStage::Ready_Scene()
 
 	//TODO - 승용추가 크로스헤어 추가, 기본 커서 안보이게
 	ShowCursor(FALSE);
+
+	CSoundMgr::GetInstance()->PlayBGM(L"MainBGM1.wav", 0.25);
 
 	return S_OK;
 }

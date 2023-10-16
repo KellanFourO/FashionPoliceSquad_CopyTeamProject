@@ -14,6 +14,8 @@
 #include "Player_Jump.h"
 #include "Player_Dash.h"
 
+#include "SoundMgr.h"
+
 #include "Export_System.h"
 #include "Export_Utility.h"
 
@@ -102,6 +104,7 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 		m_bLateInit = false;
 	}
 
+	
 
 	StateMachine(fTimeDelta);
 
@@ -358,10 +361,27 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	}
 	if (bMove)
 	{
+		m_fStepTick += fTimeDelta;
+
+		if (m_fStepTick > 0.1f && m_bStep && !m_bJump)
+		{
+			SoundMgr()->PlaySoundW(L"Footstep_01.wav",SOUND_PLAYER,8);			
+			m_fStepTick = 0.f;
+			m_bStep = false;
+		}
+
+		if (m_fStepTick > 0.1f && !m_bStep && !m_bJump)
+		{
+			SoundMgr()->PlaySoundW(L"Footstep_02.wav", SOUND_PLAYER, 8);
+			m_fStepTick = 0.f;
+			m_bStep = true;
+		}
+	
 		if (m_Speed_Cheat_ON) {
 			fMoveSpeed *= 4.f;			//¼Óµµ¾÷
 		}
 		m_pTransformCom->Move_Pos(&m_vMoveDir, fTimeDelta, fMoveSpeed);
+
 		bMove = false;
 	}
 
@@ -388,10 +408,13 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80 && m_bJump == false && m_fJumpTick >= 1.5f)
 	{
 		m_bJump = true;
+		SoundMgr()->StopSound(SOUND_PLAYER);
+		SoundMgr()->PlaySoundW(L"Jump.wav",SOUND_PLAYER,10);
 		//		m_fSpeed_Vertical = INFO.fJumpHight;
 		m_fJumpTick = 0.f;
 		m_pRigidBody->Set_Force(_vec3{ 0.f,50.f,0.f });
 
+		m_bOnGround = false;
 
 		if (m_Speed_Cheat_ON)
 		{
@@ -476,6 +499,7 @@ void CPlayer::Mouse_Input(const _float& fTimeDelta)
 	if (dwMouseMove = Engine::Get_DIMouseState(DIM_LB) && m_pGun->Get_Ready())
 	{
 		m_pGun->Set_Fire(true);
+	
 	}
 
 	if (dwMouseMove = Engine::Get_DIMouseState(DIM_RB) && m_pGun->Get_Ready())
@@ -716,8 +740,15 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 			else
 				m_pTransformCom->Translate(_vec3(-fRadiusX, 0.f, 0.f));
 		}
-		m_bJump = false;
 
+
+		if (m_bJump)
+		{
+			SoundMgr()->PlaySoundW(L"Landing.wav",SOUND_PLAYER2,10);
+			m_bOnGround = true;
+		}
+		m_bJump = false;
+		
 	}
 
 	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::O_TRIGGER){

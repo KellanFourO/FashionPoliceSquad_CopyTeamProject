@@ -91,7 +91,7 @@ void CBulletInfoCount::Render_GameObject()
 	if (!m_pPlayer->Get_SceneChange())
 	{
 		const WCHAR* pInfiniteSymbol = L"¡Ä";
-		Engine::Render_Font(L"UI_FONT", pInfiniteSymbol, &_vec2(670, 550), D3DXCOLOR(D3DCOLOR_ARGB(255, 130, 245, 209)), 20, false);
+		Engine::Render_Font(L"UI_FONT", to_wstring(m_pPlayer->Get_Gun()->Get_GunInfo()->m_iCurrentBullet).c_str(), &_vec2(670, 550), D3DXCOLOR(D3DCOLOR_ARGB(255, 130, 245, 209)), 20, false);
 		Engine::Render_Font(L"UI_FONT", pInfiniteSymbol, &_vec2(730, 550), D3DXCOLOR(D3DCOLOR_ARGB(255, 130, 245, 209)), 20, false);
 	}
 

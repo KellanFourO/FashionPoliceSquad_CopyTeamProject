@@ -124,6 +124,8 @@ void CBigDaddyMonster::ReadyState()
 
 void CBigDaddyMonster::OnCollisionEnter(CCollider* _pOther)
 {
+
+
 	__super::OnCollisionEnter(_pOther);
 
 
