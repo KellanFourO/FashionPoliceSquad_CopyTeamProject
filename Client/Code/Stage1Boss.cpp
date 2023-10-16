@@ -17,7 +17,7 @@
 
 #include "MonsterBombEffect.h"
 #include "BossState.h"
-
+#include "DustGrey.h"
 
 CStage1Boss::CStage1Boss(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
@@ -90,6 +90,12 @@ void CStage1Boss::LateUpdate_GameObject()
 		MBEffect->Set_ObjectTag(OBJECTTAG::EFFECT);
 		Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::EFFECT, MBEffect);
 		MBEffect->Get_Transform()->Set_Pos(m_pTransformCom->m_vInfo[INFO_POS]);
+
+		CDustGrey* DustParticle = CDustGrey::Create(m_pGraphicDev, m_pTransformCom->m_vInfo[INFO_POS], 256);
+		DustParticle->Set_ObjectTag(OBJECTTAG::PARTICLE);
+		Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::PARTICLE, DustParticle);
+		DustParticle->Get_Transform()->Set_Pos(m_pTransformCom->m_vInfo[INFO_POS]);
+
 		INFO.MonsterState->Release(this);
 		INFO.MonsterState = m_pStateArray[DEAD];
 		INFO.MonsterState->Initialize(this);

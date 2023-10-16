@@ -8,6 +8,7 @@
 #include "Export_System.h"
 #include "Export_Utility.h"
 #include "MonsterBombEffect.h"
+#include "DustGrey.h"
 
 #include "MonsterState.h"
 
