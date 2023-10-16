@@ -2,6 +2,7 @@
 #include "PaintShotGun_Lazer.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
+#include "SoundMgr.h"
 
 CPaintShotGun_Lazer::CPaintShotGun_Lazer()
 {
@@ -19,7 +20,7 @@ void CPaintShotGun_Lazer::Initialize(CPlayerGun* ShotGun)
     m_fMoveDownMax = -0.2f;
     m_pHost->Add_GunMoveDown(m_fMoveDownMax);
     //ShotGun->m_fGunMoveDown += m_fMoveDownMax;
-
+    SoundMgr()->PlaySoundW(L"ShotGun_Lazer.wav", SOUND_GUN, 10);
 }
 
 CPlayerGunState* CPaintShotGun_Lazer::Update(CPlayerGun* ShotGun, const float& fTimeDelta)
@@ -54,6 +55,8 @@ void CPaintShotGun_Lazer::Release(CPlayerGun* ShotGun)
     m_pHost->Reset_GunMoveDown();
     m_pHost->Reset_GunMoveRight();
     m_fBehaviorTime = 0.f;
+
+    SoundMgr()->StopSound(SOUND_GUN);
 	//ShotGun->m_fGunMoveRight = 3.f;
 	//ShotGun->m_fGunMoveDown = 1.f;
     //dynamic_cast<CPaintShotGun*>(ShotGun)->m_bLazer = false;

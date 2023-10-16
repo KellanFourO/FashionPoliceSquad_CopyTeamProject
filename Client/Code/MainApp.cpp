@@ -29,7 +29,7 @@ HRESULT CMainApp::Ready_MainApp()
 	m_pGraphicDev->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTEXF_POINT);
 
 	CSoundMgr::GetInstance()->Initialize();
-	CSoundMgr::GetInstance()->PlayBGM(L"MainBGM1.wav",5);
+	
 
 	return S_OK;
 }

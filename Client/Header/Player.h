@@ -89,8 +89,11 @@ private:
 	_bool			m_bLateInit = true;
 	_bool			m_bFire = true; // 총쏘는 시간 제어용
 	_bool			m_bstair = false; // 계단 
+	_bool			m_bStep = true;
+	_bool			m_bOnGround = true;
 	_float			m_fTime_HP_Release;
 	_float			m_fHP_Reduction = 5.f; // HP 감소 속도
+	_float			m_fStepTick = 0.f;
 	_float			m_fJumpTick;		//
 	_float			m_fJumpCount;		//
 	_float			m_fSpeed_Vertical;	//점프 관련

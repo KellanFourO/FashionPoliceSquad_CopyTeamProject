@@ -40,7 +40,7 @@ void CPaintShotGun_Shot::Initialize(CPlayerGun* ShotGun)
     //ShotGun->m_fGunMoveRight += m_fMoveRightMax;
     //ShotGun->m_fGunMoveDown -= m_fMoveUpMax;
 
-
+    SoundMgr()->PlaySoundW(L"ShotGun_Fire.wav", SOUND_GUN,10);
 }
 
 CPlayerGunState* CPaintShotGun_Shot::Update(CPlayerGun* ShotGun, const float& fTimeDelta)
@@ -59,6 +59,7 @@ CPlayerGunState* CPaintShotGun_Shot::Update(CPlayerGun* ShotGun, const float& fT
     if (m_bAttack)
     {
 		m_pHost->Fire();
+        
         dynamic_cast<CPaintShotGun*>(m_pHost)->Get_Flash()->Set_Fire(true);
         dynamic_cast<CPaintShotGun*>(m_pHost)->Set_Index(1);
 
@@ -87,4 +88,5 @@ void CPaintShotGun_Shot::Release(CPlayerGun* ShotGun)
     m_fBehaviorTime = 0.f;
     //ShotGun->m_fGunMoveRight = 3.f;
     //ShotGun->m_fGunMoveDown = 1.f;
+    SoundMgr()->StopSound(SOUND_GUN);
 }
