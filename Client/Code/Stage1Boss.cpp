@@ -45,7 +45,7 @@ HRESULT CStage1Boss::Ready_GameObject()
 
 	INFO.MonsterState = m_pStateArray[IDLE];
 	INFO.MonsterState->Initialize(this);
-	INFO.fHP = 3000.f;
+	INFO.fHP = 5000.f;
 	INFO.fMaxHP = 5000.f;
 	m_fSpeed = 100.f;
 	m_fDectedRange = 150.f;

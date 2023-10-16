@@ -82,7 +82,7 @@ _int CLogo::Update_Scene(const _float& fTimeDelta)
 			}
 
 			if (m_pLoadingID == CLoading::LOADING_STAGE) {
-				CScene* pScene = CBossStage::Create(m_pGraphicDev);
+				CScene* pScene = CStage::Create(m_pGraphicDev);
 				NULL_CHECK_RETURN(pScene, E_FAIL);
 
 				pScene->Set_MainPlayer(m_pPlayer);
@@ -93,8 +93,8 @@ _int CLogo::Update_Scene(const _float& fTimeDelta)
 
 				map<SCENETAG, CScene*>		m_MapSceneTemp;
 				m_MapSceneTemp = Engine::CManagement::GetInstance()->Get_MapScene();
-				pScene->Set_SceneTag(SCENETAG::BOSS_STAGE);
-				m_MapSceneTemp.emplace(SCENETAG::BOSS_STAGE, pScene);
+				pScene->Set_SceneTag(SCENETAG::STAGE);
+				m_MapSceneTemp.emplace(SCENETAG::STAGE, pScene);
 				Engine::CManagement::GetInstance()->Set_MapScene(m_MapSceneTemp);
 
 				return 0;
