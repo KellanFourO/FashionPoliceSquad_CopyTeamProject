@@ -21,14 +21,17 @@ CJumpShockWaveEffect2::~CJumpShockWaveEffect2()
 
 HRESULT Engine::CJumpShockWaveEffect2::Ready_GameObject()
 {
-	m_eObjectTag = OBJECTTAG::EFFECT;
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
+	Set_ObjectTag(OBJECTTAG::MONSTERBULLET);
 
-	m_pTransformCom->Set_Scale(_vec3{ 1.f, 1.f, 1.f });
-
+	_vec3 vPos = Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::BOSS).back()->m_pTransformCom->m_vInfo[INFO_POS];
+	m_fSpeed = 0.5f;
 	m_pPlayerTransform = Management()->Get_Player()->Get_Transform();
-
+	
+	m_pTransformCom->Set_Scale(_vec3{ 2.f, 2.f, 2.f });
+	m_pTransformCom->Set_Pos(vPos);
+	m_pTransformCom->Set_Host(this);
 	m_pCollider->Set_Host(this);
 	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
 
@@ -37,16 +40,25 @@ HRESULT Engine::CJumpShockWaveEffect2::Ready_GameObject()
 
 Engine::_int Engine::CJumpShockWaveEffect2::Update_GameObject(const _float& fTimeDelta)
 {
-	
-	m_fFrame += 78.f * fTimeDelta;
+	//m_pCollider->SetCenterPos(m_pTransformCom->m_vInfo[INFO_POS]);
+	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
+
+	m_fFrame += 77.f * fTimeDelta;
 	m_fEffectDieTime += fTimeDelta;
 
-	if (78.f < m_fFrame)
-		m_fFrame = 78.f;
+	float fRadian;
 
-	m_pTransformCom->Set_Scale(*m_pTransformCom->Get_Scale() * 1.01f);
+	fRadian = 3.14 * m_fAngle / 180.f;
+
+	m_pTransformCom->m_vInfo[INFO_POS].x += m_fSpeed * cosf(fRadian);
+	m_pTransformCom->m_vInfo[INFO_POS].z -= m_fSpeed * sinf(fRadian);
+
+	if (77.f <= m_fFrame)
+		m_fFrame = 77.f;
+	m_pTransformCom->Set_Scale(*m_pTransformCom->Get_Scale()*1.02f);
 	if (m_fEffectDieTime > 2.f)
 		return OBJ_DEAD;
+
 
 
 	_vec3 vPlayerPos, vMyPos, vLook;
@@ -64,7 +76,7 @@ Engine::_int Engine::CJumpShockWaveEffect2::Update_GameObject(const _float& fTim
 
 	_int iExit = __super::Update_GameObject(fTimeDelta);
 
-	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
 
 	return iExit;
 }
@@ -104,6 +116,35 @@ void CJumpShockWaveEffect2::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 }
+
+void CJumpShockWaveEffect2::OnCollisionEnter(CCollider* _pOther)
+{
+	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYER)
+	{
+		dynamic_cast<CPlayer*>(_pOther->Get_Host())->Attacked(m_fDMG);
+		
+		//TODO 플레이어 총알 오브젝트 풀링 할거면 여기서
+	}
+	else
+		return;
+}
+
+void CJumpShockWaveEffect2::OnCollisionStay(CCollider* _pOther)
+{
+	
+// 	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYER)
+// 	{
+// 		dynamic_cast<CPlayer*>(_pOther->Get_Host())->Attacked(m_fDMG);
+// 		//TODO 플레이어 총알 오브젝트 풀링 할거면 여기서
+// 	}
+// 	else
+// 		return;
+}
+
+void CJumpShockWaveEffect2::OnCollisionExit(CCollider* _pOther)
+{
+}
+
 
 void Engine::CJumpShockWaveEffect2::Free()
 {

@@ -47,10 +47,10 @@ void CStage1Boss_Jump::Initialize(CMonster* _Monster)
 	m_iVer = 1;
 	m_eJumpState = JUMP_READY;
 
-	_float m_fTop = 185.f;
-	_float m_fBottom = 85.f;
+	_float m_fTop = 170.f;//185
+	_float m_fBottom = 51.f;// ÀÌÀü 85.f
 
-	_float m_fLeft = 42.5f;
+	_float m_fLeft =51.5f;
 	_float m_fRight = 142.5f;
 
 	vJumpPoint[0] = { m_fLeft,25.f,m_fTop };
@@ -128,15 +128,14 @@ CMonsterState* CStage1Boss_Jump::Update(CMonster* Monster, const float& fDetltaT
 				_vec3 vCreatePos = {vHostPos.x, vHostPos.y - 20.f, vHostPos.z};
 				CGameObject* pShockWave = CJumpShockWaveEffect::Create(m_pHost->Get_GraphicDev(), vCreatePos);
 				Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::EFFECT,pShockWave);
-				for (int i = 0; i < 36; ++i)
+				for (int i = 0; i < 30; ++i)
 				{
-					_float angleInDegrees = 360.0f / 36.0f * i;
-					_float angleInRadians = angleInDegrees * (3.14159265f / 180.0f);
+					
 					_vec3 vHostPos = m_pHost->Get_Transform()->m_vInfo[INFO_POS];
-					_vec3 vCreatePos = { vHostPos.x*cos(angleInRadians), vHostPos.y - 20.f, vHostPos.z*sin(angleInRadians) };
+					_vec3 vCreatePos = { vHostPos.x, vHostPos.y - 20.f, vHostPos.z };
 					CGameObject* pShockWave2 = CJumpShockWaveEffect2::Create(m_pHost->Get_GraphicDev(), vCreatePos);
 					Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::MONSTERBULLET, pShockWave2);
-
+					pShockWave2->Set_Angle((i + 1) *12.f);
 				}
 
 				m_bEffect = false;
@@ -155,6 +154,31 @@ CMonsterState* CStage1Boss_Jump::Update(CMonster* Monster, const float& fDetltaT
 				m_fTick = 0;
 			}
 		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 		break;
 	}

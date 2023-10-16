@@ -70,7 +70,7 @@ _uint CLoading::Loading_For_Stage()
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_MBulletBombEffectTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Explosion5/%d.dds", 87)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_JumpShockWaveEffectTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/SY/JumpShockWave/JumpShockWave%d.png", 9)), E_FAIL);
 	//보스 충격파 공격 effect겸 attack
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_JumpShockWaveEffectTexture2", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Explosion9/%d.dds", 78)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_JumpShockWaveEffectTexture2", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Explosion9/%d.dds", 79)), E_FAIL);
 	Set_Value(3);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Player", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Player0.png")), E_FAIL);
 	Set_Value(3);

@@ -26,11 +26,13 @@ public:
 	CTransform*							Get_Transform() { return m_pTransformCom; }
 	BULLETTYPE							Get_HitType() { return m_eHitType; }
 	_bool								Get_Dead() { return m_IsDead;}
-
+	_float								Get_Angle() { return m_fAngle; }
 	// Set
 	void								Set_ObjectTag(OBJECTTAG _eTag) { m_eObjectTag = _eTag; }
 	void								Set_Dead(_bool _IsDead) { m_IsDead = _IsDead; }
 	void								Set_Pause(_bool _bPause) { m_bPause = _bPause; }
+	void								Set_Angle(_float fAngle) { m_fAngle = fAngle; }
+
 
 	const _bool&						IsDead() const { return m_IsDead; }
 	void								Compute_ViewZ(const _vec3* pPos);
@@ -58,7 +60,7 @@ protected:
 
 
 	_bool								m_bPause = false;
-
+	_float								m_fAngle = 0.f;
 	_vec3								m_vCamPos = {0.f,0.f,0.f};
 public:
 	_uint								m_iIndex = 100;

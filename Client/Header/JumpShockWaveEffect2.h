@@ -23,6 +23,10 @@ public:
 	virtual void			LateUpdate_GameObject() override;
 	virtual void			Render_GameObject() override;
 
+public:
+	virtual void						OnCollisionEnter(CCollider* _pOther);
+	virtual void						OnCollisionStay(CCollider* _pOther);
+	virtual void						OnCollisionExit(CCollider* _pOther);
 private:
 	HRESULT					Add_Component();
 
@@ -33,8 +37,12 @@ private:
 	CTexture*			m_pTextureCom = nullptr;
 	_float				m_fLoop = 0.f;
 	_float				m_fFrame = 0.f;
-
+	//_float				m_fAngle = 0.f;
+	_float				m_fDMG = 10.f;
+	_float				m_fSpeed = 0.f;
 	_float				m_fEffectDieTime = 0.f;
+
+
 
 public:
 	static CJumpShockWaveEffect2* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vCreatePos);
