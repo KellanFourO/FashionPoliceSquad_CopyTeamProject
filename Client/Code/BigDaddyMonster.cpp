@@ -90,6 +90,7 @@ void CBigDaddyMonster::LateUpdate_GameObject()
 		Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::PARTICLE, DustParticle);
 		DustParticle->Get_Transform()->Set_Pos(m_pTransformCom->m_vInfo[INFO_POS]);
 
+
 		INFO.MonsterState = m_pStateArray[DEAD];
 		INFO.MonsterState->Initialize(this);
 		INFO.bDead = false;
@@ -124,6 +125,8 @@ void CBigDaddyMonster::ReadyState()
 
 void CBigDaddyMonster::OnCollisionEnter(CCollider* _pOther)
 {
+
+
 	__super::OnCollisionEnter(_pOther);
 
 

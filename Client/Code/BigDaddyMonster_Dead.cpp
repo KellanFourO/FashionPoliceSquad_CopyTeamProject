@@ -21,6 +21,7 @@ void CBigDaddyMonster_Dead::Initialize(CMonster* _Monster)
 	m_fCurFrame = m_fMinFrame;
 	m_iVer = 4;
 
+	SoundMgr()->PlaySound(L"BigDaddyDead.wav",SOUND_MONSTER,1.f);
 }
 
 CMonsterState* CBigDaddyMonster_Dead::Update(CMonster* Monster, const float& fDetltaTime)
@@ -41,6 +42,7 @@ CMonsterState* CBigDaddyMonster_Dead::Update(CMonster* Monster, const float& fDe
 
 void CBigDaddyMonster_Dead::Release(CMonster* _Monster)
 {
+	SoundMgr()->StopSound(SOUND_MONSTER);
 }
 
 void CBigDaddyMonster_Dead::LateUpdate(CMonster* _Monster)

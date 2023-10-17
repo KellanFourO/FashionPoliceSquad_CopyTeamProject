@@ -31,6 +31,7 @@ void CTailorAssertRifle_Shot::Initialize(CPlayerGun* Rifle)
     m_pHost->Add_GunMoveRight(m_fMoveRightMax);
     m_pHost->Reduce_GunMoveDown(m_fMoveUpMax);
 
+    SoundMgr()->PlaySoundW(L"Rifle_Fire.wav",SOUND_GUN,10);
 
 }
 
@@ -68,4 +69,6 @@ void CTailorAssertRifle_Shot::Release(CPlayerGun* Rifle)
     m_pHost->Reset_GunMoveDown();
     m_pHost->Reset_GunMoveRight();
     m_pHost->Set_Scale(m_vBaseScale);
+
+    SoundMgr()->StopSound(SOUND_GUN);
 }

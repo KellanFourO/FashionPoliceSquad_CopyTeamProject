@@ -17,6 +17,7 @@ void CPlayer_Hit::Initialize(CPlayer* Player)
 {
     m_pHost = Player;
     StateID = PlayerStateID::Player_Hit;
+    SoundMgr()->PlaySoundW(L"Junho_Hit.mp3",SOUND_PLAYER2,1.f);
 }
 
 CPlayerState* CPlayer_Hit::Update(CPlayer* Player, const float& fTimeDelta)
@@ -32,4 +33,5 @@ CPlayerState* CPlayer_Hit::Update(CPlayer* Player, const float& fTimeDelta)
 void CPlayer_Hit::Release(CPlayer* Player)
 {
     m_fBehaviorTime = 0.f;
+    SoundMgr()->StopSound(SOUND_PLAYER2);
 }

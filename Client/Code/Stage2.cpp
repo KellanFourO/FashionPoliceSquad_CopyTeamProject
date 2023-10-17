@@ -34,12 +34,13 @@ HRESULT CStage2::Ready_Scene()
 	FAILED_CHECK_RETURN(Ready_Layer_UI(LAYERTAG::UI), E_FAIL);
 
 	Load_Data_C(L"../Bin/Data/CPoint/CPointData", OBJECTTAG::BUILD_OBJ); //TODO
-	
+
 	srand(GetTickCount64());
 
 	//TODO - 승용추가 크로스헤어 추가, 기본 커서 안보이게
 	ShowCursor(FALSE);
 
+	CSoundMgr::GetInstance()->PlayBGM(L"NightBGM1.wav", 0.25);
 	m_eSceneTag = SCENETAG::STAGE2;
 	return S_OK;
 }
@@ -168,11 +169,11 @@ HRESULT CStage2::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 
 		dynamic_cast<CPlayer*>(m_pPlayer)->Set_SceneChange(false);
 		dynamic_cast<CPlayer*>(m_pPlayer)->SetGun(pLayer);
-		
+
 		_vec3 vPlayerPos, vPlayerLook;
 		m_pPlayer->Get_Transform()->Set_Pos(198.5f,12.0f,249.5f);
 		vPlayerPos = { 198.5f, 12.0f, 249.5f };
-		
+
 		if (m_Starting_Point != nullptr) {
 			vPlayerLook = m_Starting_Point->vPos - vPlayerPos;
 			D3DXVec3Normalize(&vPlayerLook, &vPlayerLook);
@@ -377,7 +378,7 @@ HRESULT CStage2::Light_OnOff_Check()
 
 	vector<OBJData*> SortLight;
 
-	for (int i = 0; i != m_VecLight.size(); ++i)		
+	for (int i = 0; i != m_VecLight.size(); ++i)
 	{
 		vtoLight = m_VecLight[i]->vPos - vPlayerPos;
 		LightDistance = D3DXVec3Length(&vtoLight);
@@ -393,12 +394,12 @@ HRESULT CStage2::Light_OnOff_Check()
 			if (!(fAngle < stdFov)) //시야각 안에 있으면
 			{
 				SortLight.push_back(m_VecLight[i]);
-			}		
+			}
 		}
 	}
 
 	while (SortLight.size() > 8) {
-		
+
 		_float maxDistance = -1.f;
 		int maxIndex = -1;
 
@@ -406,9 +407,9 @@ HRESULT CStage2::Light_OnOff_Check()
 
 			_vec3 vtoLight = SortLight[i]->vPos - vPlayerPos;
 			_float distance = D3DXVec3Length(&vtoLight);
-			
+
 			if (distance > maxDistance) {
-			
+
 				maxDistance = distance;
 				maxIndex = i;
 			}
@@ -421,11 +422,11 @@ HRESULT CStage2::Light_OnOff_Check()
 	if (SortLight.size() <= 8)
 	{
 		for (int i = 0; i < m_VecLight.size(); ++i) {
-			
+
 			bool lightEnabled = false;
 
 			for (int j = 0; j < SortLight.size(); ++j) {
-			
+
 				if (m_VecLight[i]->iIndex == SortLight[j]->iIndex) {
 					lightEnabled = true;
 					break;
@@ -701,6 +702,8 @@ CStage2* CStage2::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CStage2::Free()
 {
+	SoundMgr()->StopAll();
+
 	for (int i = 0; i < m_VecCubeData.size(); ++i)
 	{
 		Safe_Delete(m_VecCubeData[i]);

@@ -60,7 +60,6 @@ protected:
 
 	_vec3								m_vCamPos;
 	_bool								m_bPause = false;
-
 	_float								m_fAngle = 0.f;
 public:
 	_uint								m_iIndex = 100;

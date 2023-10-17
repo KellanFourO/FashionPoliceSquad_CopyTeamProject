@@ -17,7 +17,7 @@ HRESULT CMBulletExplosion::Ready_GameObject(_vec3 vOriginPos, _int numParticles)
 
 	//m_pTransformCom->Set_Scale({ 1.f,1.f,1.f });
 	//m_pTransformCom->Translate(_vec3(0.f, 10.f, 0.f));
-	
+
 
 	srand(_ulong(time(NULL)));
 	m_pBoungingBox.m_vMin = _vec3(-5.0f,-5.0f,-5.0f);
@@ -35,6 +35,7 @@ HRESULT CMBulletExplosion::Ready_GameObject(_vec3 vOriginPos, _int numParticles)
 	_tchar* pPath = L"../Bin/Resource/Texture/Particles/MBulletExplosion1.png";
 
 	CPSystem::Ready_GameObject(pPath);
+	SoundMgr()->PlaySoundW(L"BigDaddyBriefcaseParticle.wav",SOUND_EFFECT2,1);
 
 	return S_OK;
 }
@@ -52,7 +53,10 @@ _int CMBulletExplosion::Update_GameObject(const _float& fTimeDelta)
 			iter.age += fTimeDelta;
 
 			if (iter.age > iter.lifeTime)
+			{
 				iter.isAlive = false;
+				SoundMgr()->StopSound(SOUND_EFFECT2);
+			}
 
 			// 경계 범위를 벗어났는지 여부 확인
 			if (m_pBoungingBox.m_vMax.x + m_pTransformCom->m_vInfo[INFO_POS].x < iter.position.x  || m_pBoungingBox.m_vMin.x + m_pTransformCom->m_vInfo[INFO_POS].x> iter.position.x  ||
@@ -61,6 +65,7 @@ _int CMBulletExplosion::Update_GameObject(const _float& fTimeDelta)
 			{
 				// 재활용
 				iter.isAlive = false;
+				SoundMgr()->StopSound(SOUND_EFFECT2);
 				//ResetParticle(&iter);
 			}
 
@@ -107,12 +112,12 @@ void CMBulletExplosion::ResetParticle(Attribute* attribute)
 	attribute->isAlive = true;
 	attribute->position = m_pTransformCom->m_vInfo[INFO_POS];
 
-	
+
 	D3DXVECTOR3 min = _vec3(-1.f, -1.f, -1.f);
 	D3DXVECTOR3 max = _vec3(1.f, 1.f, 1.f);
-	
+
 	GetRandomVector(&attribute->velocity, &min, &max);
-	
+
 	//구체를 만들기 위한 정규화
 	D3DXVec3Normalize(&attribute->velocity, &attribute->velocity);
 	attribute->velocity *= 7.f;

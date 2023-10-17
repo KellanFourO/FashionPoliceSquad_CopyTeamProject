@@ -89,19 +89,27 @@ private:
 	_bool			m_bLateInit = true;
 	_bool			m_bFire = true; // 총쏘는 시간 제어용
 	_bool			m_bstair = false; // 계단 
+	_bool			m_bStep = true;
+	_bool			m_bOnGround = true;
+	_bool			m_bDash = false; // 대쉬! 
+	_bool			m_bTriggerCheck = false; //유진 추가 트리거충돌감지용
+
 	_float			m_fTime_HP_Release;
 	_float			m_fHP_Reduction = 5.f; // HP 감소 속도
+	_float			m_fStepTick = 0.f;
 	_float			m_fJumpTick;		//
 	_float			m_fJumpCount;		//
 	_float			m_fSpeed_Vertical;	//점프 관련
 	_float			m_fTall;			//키
 	_float			m_fXmove; // 플레이어 바라보는 방향
-
+	_float			m_fDashDelay; //대쉬 딜레이 연속으로 눌리는거 방지
 	_vec3			m_vMoveDir;
 
 	CPlayerGun*		m_pGun = nullptr; // 장비중인 총
+	
+	_bool			m_bDashCheck = false;
+	_uint			m_bDashCount = 0;
 
-	_bool			m_bTriggerCheck = false; //유진 추가 트리거충돌감지용
 	_uint			m_iTriggerTime = 0;
 
 	vector<CPlayerGun*> m_vecPlayerGun;
@@ -110,6 +118,7 @@ private:			//TODO 테스트 변수
 	_float			m_fTime_HP_Test = 0.f;
 	_float			m_fTime_Level_Test = 0.f;
 	_float			m_fTime_DEAD_Test = 0.f;
+
 	_bool			m_Speed_Cheat_ON = false;
 
 public:

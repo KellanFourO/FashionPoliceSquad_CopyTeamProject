@@ -215,6 +215,7 @@
     <ClInclude Include="..\Header\BrifCase_2.h" />
     <ClInclude Include="..\Header\BigDaddyMonster.h" />
     <ClInclude Include="..\Header\Bullet.h" />
+    <ClInclude Include="..\Header\DashEffect.h" />
     <ClInclude Include="..\Header\DullSuitMonsterState.h" />
     <ClInclude Include="..\Header\DullSuitMonster_Attack.h" />
     <ClInclude Include="..\Header\DullSuitMonster.h" />
@@ -234,6 +235,7 @@
     <ClInclude Include="..\Header\Mini_Player.h" />
     <ClInclude Include="..\Header\Mini_StateIcon.h" />
     <ClInclude Include="..\Header\Mini_TimeBar.h" />
+    <ClInclude Include="..\Header\Player_Dash.h" />
     <ClInclude Include="..\Header\ShockWave.h" />
     <ClInclude Include="..\Header\Stage2.h" />
     <ClInclude Include="..\Header\MBulletBombEffect.h" />
@@ -377,6 +379,7 @@
     <ClCompile Include="..\Code\BrifCase_2.cpp" />
     <ClCompile Include="..\Code\BigDaddyMonster.cpp" />
     <ClCompile Include="..\Code\Bullet.cpp" />
+    <ClCompile Include="..\Code\DashEffect.cpp" />
     <ClCompile Include="..\Code\JumpShockWaveEffect2.cpp" />
     <ClCompile Include="..\Code\FileMgr.cpp" />
     <ClCompile Include="..\Code\MBulletBombEffect.cpp" />
@@ -388,6 +391,7 @@
     <ClCompile Include="..\Code\Mini_Player.cpp" />
     <ClCompile Include="..\Code\Mini_StateIcon.cpp" />
     <ClCompile Include="..\Code\Mini_TimeBar.cpp" />
+    <ClCompile Include="..\Code\Player_Dash.cpp" />
     <ClCompile Include="..\Code\Ray.cpp" />
     <ClCompile Include="..\Code\ShockWave.cpp" />
     <ClCompile Include="..\Code\Trigger.cpp" />

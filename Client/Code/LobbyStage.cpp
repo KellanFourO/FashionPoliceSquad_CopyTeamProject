@@ -41,6 +41,13 @@ HRESULT CLobbyStage::Ready_Scene()
 	ShowCursor(FALSE);
 
 	m_eSceneTag = SCENETAG::LOBBY;
+
+
+	//SoundMgr()->PlayBGM(L"LobbyBGM1.mp3",0.25f);	//Good
+	//SoundMgr()->PlayBGM(L"LobbyBGM2.mp3", 0.25f);	//Good
+	SoundMgr()->PlayBGM(L"LobbyBGM3.mp3", 0.25f);	//Good
+	//SoundMgr()->PlayBGM(L"LobbyBGM4.mp3", 0.25f); //
+
 	return S_OK;
 }
 
@@ -268,7 +275,7 @@ HRESULT CLobbyStage::Moving_Wall()
 				{
 					m_VecMoving[1]->vPos.y -= 1.f;
 					BuildOBJTemp->Get_TransformCom()->Set_Pos(m_VecMoving[1]->vPos);
-				}			
+				}
 
 				if (m_VecMoving[0]->vPos.y <= -50)
 				{
@@ -818,7 +825,7 @@ void CLobbyStage::Admin_KeyInput()
 
 	_bool CheckTemp = dynamic_cast<CPlayer*>(m_pPlayer)->Get_TriggerCheck();
 	if (Engine::Get_DIKeyState(DIK_F) & 0x80 && (CheckTemp == true))
-	{	
+	{
 		CEventMgr::GetInstance()->Set_MiniGameMode();
 		if ((CEventMgr::GetInstance()->Get_MiniGameReadyCheck(0) == true)
 			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(0) == false))
@@ -856,6 +863,8 @@ CLobbyStage* CLobbyStage::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CLobbyStage::Free()
 {
+	SoundMgr()->StopAll();
+
 	for (int i = 0; i < m_VecCubeData.size(); ++i)
 	{
 		Safe_Delete(m_VecCubeData[i]);
