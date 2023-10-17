@@ -4,14 +4,14 @@
 #include "Mini_Player.h"
 
 
+
 BEGIN(Engine)
 
-class UITex;
+class CUITex;
 class CTexture;
 class CTransform;
 
-
-class CMainGame_KickBoard :    public CGameObject
+class CMainGame_KickBoard :  public CGameObject
 {
 private:
 	explicit	CMainGame_KickBoard(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -19,6 +19,8 @@ private:
 	virtual		~CMainGame_KickBoard();
 
 public:
+	enum class KickBoard_GameState { ING, LOSE, CLEAR, State_END };
+
 	virtual HRESULT			Ready_GameObject();
 	virtual void			Render_GameObject() override;
 	virtual _int			Update_GameObject(const _float& fTimeDelta) override;
@@ -26,6 +28,7 @@ public:
 
 private:
 	HRESULT					Add_Component();
+	HRESULT					GameState_Update();
 	void					KeyInput();
 
 private:
@@ -35,30 +38,23 @@ private:
 
 	_matrix					m_matProj, m_matView;
 
+	CMini_Player*			m_pPlayer = nullptr;
+	//vector<CMini_Arrow*>	m_pVecArrow;
 
-//	CMini_Arrow*			m_pArrow = nullptr;
-// 	CMini_StateIcon*		m_pStateIcon = nullptr;
-// 	CMini_Cursor*			m_pCursor = nullptr;
-// 
-// 	vector<CMini_Arrow*>	m_pVecArrow;
+	KickBoard_GameState		m_eGameState = KickBoard_GameState::State_END;
 
 	_bool					m_ClearCheck = false;
-
 
 	//Å° ¾ÃÈû ¹æÁö¿ë
 	bool m_bLeftPressed = false;
 	bool m_bRightPressed = false;
 
-
 public:
 	static CMainGame_KickBoard* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 
 private:
-	virtual void				Free() override;
-
+	virtual void			Free() override;
 
 };
 
-
-
-END;
+END

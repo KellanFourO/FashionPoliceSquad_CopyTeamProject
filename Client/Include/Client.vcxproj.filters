@@ -1005,9 +1005,6 @@
     <ClInclude Include="..\Header\UI_NameTag.h">
       <Filter>02. GameObject\20.UI\01. MyDialog\01. NameTag</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\MiniGame.h">
-      <Filter>02. GameObject\15. MiniGame</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\MainGame_Arrow.h">
       <Filter>02. GameObject\15. MiniGame\1. ARROW</Filter>
     </ClInclude>
@@ -1549,9 +1546,6 @@
     </ClCompile>
     <ClCompile Include="..\Code\UI_NameTag.cpp">
       <Filter>02. GameObject\20.UI\01. MyDialog\01. NameTag</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Code\MiniGame.cpp">
-      <Filter>02. GameObject\15. MiniGame</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\MainGame_Arrow.cpp">
       <Filter>02. GameObject\15. MiniGame\1. ARROW</Filter>

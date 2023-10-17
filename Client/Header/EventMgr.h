@@ -1,9 +1,12 @@
 #pragma once
 #include "Engine_Define.h"
 #include "Base.h"
+
 #include "UI_CardList.h"
 #include "UI_MyDialog.h"
+
 #include "MainGame_Arrow.h"
+#include "MainGame_KickBoard.h"
 
 BEGIN(Engine)
 
@@ -28,9 +31,10 @@ public:
 	HRESULT		OnMiniGame_KickBoard(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag);
 	HRESULT		OnMiniGame_Quiz(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag);
 
-	HRESULT		OffMiniGame_Arrow(SCENETAG eSceneTag);
-	HRESULT		OffMiniGame_KickBoard(SCENETAG eSceneTag);
-	HRESULT		OffMiniGame_Quiz(SCENETAG eSceneTag);
+	HRESULT		OffMiniGame_Arrow(SCENETAG eSceneTag, _bool ClearCheck);
+	HRESULT		OffMiniGame_KickBoard(SCENETAG eSceneTag, _bool ClearCheck);
+	HRESULT		OffMiniGame_Quiz(SCENETAG eSceneTag, _bool ClearCheck);
+													//True가 클리어
 
 	_bool		Get_MiniGameMode() { return m_bMiniGame_Mode; }
 	void		Set_MiniGameMode() { m_bMiniGame_Mode == true; }
@@ -47,8 +51,8 @@ private:
 	_bool m_bMiniGame_ReadyCheck[3] = { true, false, false }; //앞번호가 클리어되면 레디 True
 	_bool m_bMiniGame_ClearCheck[3] = { false, false, false }; //클리어 여부 체크
 
-	CMainGame_Arrow* pGame_Arrow = nullptr;
-
+	CMainGame_Arrow*		pGame_Arrow = nullptr;
+	CMainGame_KickBoard*	pGame_KickBoard = nullptr;
 
 private:
 	virtual		void	Free();

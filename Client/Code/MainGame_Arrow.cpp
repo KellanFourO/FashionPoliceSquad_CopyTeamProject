@@ -59,6 +59,7 @@ HRESULT CMainGame_Arrow::Ready_GameObject()
 
 		m_pVecArrow.push_back(pArrow);
 	}
+	m_pCopyVector = m_pVecArrow;
 
 	//Arrow 위치 바탕으로 Cursor 만들기
 	_vec3 m_vCursorPos = m_pVecArrow.back()->Get_ArrowPos();
@@ -83,6 +84,9 @@ HRESULT CMainGame_Arrow::Ready_GameObject()
 
 	m_pTransformCom->Set_Scale(vScale);
 	m_pTransformCom->Set_Pos(vPos);
+
+	m_eGameState = CMainGame_Arrow::ArrowGameState::ING;
+
 	return S_OK;
 }
 
@@ -131,6 +135,8 @@ _int CMainGame_Arrow::Update_GameObject(const _float& fTimeDelta)
 
 		Engine::Add_RenderGroup(RENDER_UI, this);
 		
+		GameState_Update();
+
 		KeyInput();
 		State_Icon_Update();
 
@@ -167,6 +173,11 @@ void CMainGame_Arrow::LateUpdate_GameObject()
 		m_pCursor->LateUpdate_GameObject();
 		m_pTimeBar2->LateUpdate_GameObject();
 		m_pTimeBar->LateUpdate_GameObject();
+
+		if (m_pTimeBar2->Get_TimeOverCheck() == true)
+		{
+			m_eGameState = CMainGame_Arrow::ArrowGameState::LOSE;
+		}
 	}
 }
 
@@ -215,11 +226,29 @@ HRESULT CMainGame_Arrow::State_Icon_Update()
 	return S_OK;
 }
 
+HRESULT CMainGame_Arrow::GameState_Update()
+{
+	if (m_eGameState == CMainGame_Arrow::ArrowGameState::CLEAR)
+	{
+		MSG_BOX("Clear!");
+		CEventMgr::GetInstance()->OffMiniGame_Arrow(SCENETAG::LOBBY, true);
+		//Safe_Release(*this);
+	}
+
+	if (m_eGameState == CMainGame_Arrow::ArrowGameState::LOSE)
+	{
+		MSG_BOX("Lose...");
+		CEventMgr::GetInstance()->OffMiniGame_Arrow(SCENETAG::LOBBY, false);
+		//Safe_Release(*this);
+	}
+	return S_OK;
+}
+
 void CMainGame_Arrow::KeyInput()
 {
 	if (Engine::Get_DIKeyState(DIK_RETURN) & 0x80)
 	{
-		CEventMgr::GetInstance()->OffMiniGame_Arrow(SCENETAG::LOBBY);
+		CEventMgr::GetInstance()->OffMiniGame_Arrow(SCENETAG::LOBBY, true);
 	}
 
 	if ((Engine::Get_DIKeyState(DIK_UP) & 0x80) ||
@@ -264,8 +293,7 @@ void CMainGame_Arrow::KeyInput()
 		{
 			if (m_pVecArrow.size() <= 1)
 			{
-				MSG_BOX("Clear!");
-				CEventMgr::GetInstance()->OffMiniGame_Arrow(SCENETAG::LOBBY);
+				m_eGameState = CMainGame_Arrow::ArrowGameState::CLEAR;
 			}
 			else {
 				// CMini_Arrow* lastElementPtr = m_pVecArrow.back();
@@ -308,7 +336,7 @@ CMainGame_Arrow* CMainGame_Arrow::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	{
 		Safe_Release(pInstance);
 
-		MSG_BOX("MyDialog Create Failed");
+		MSG_BOX("MiniGame_Arrow Create Failed");
 		return nullptr;
 	}
 	return pInstance;
@@ -317,6 +345,18 @@ CMainGame_Arrow* CMainGame_Arrow::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 void CMainGame_Arrow::Free()
 {
 
+	if (!m_pCopyVector.empty())
+	{
+		for (int i = 0; i != m_pCopyVector.size(); )
+		{
+			Safe_Release(m_pCopyVector[i]);
+		}
+	}
+
+	Safe_Release(m_pCursor);
+	Safe_Release(m_pStateIcon);
+	Safe_Release(m_pTimeBar);
+	Safe_Release(m_pTimeBar2);
 
 	__super::Free();
 }
