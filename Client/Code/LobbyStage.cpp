@@ -29,9 +29,11 @@ HRESULT CLobbyStage::Ready_Scene()
 	FAILED_CHECK_RETURN(Ready_Layer_Camera(LAYERTAG::CAMERA), E_FAIL);
 
 	FAILED_CHECK_RETURN(Ready_Layer_UI(LAYERTAG::UI), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_MINIGAME(LAYERTAG::MINIGAME), E_FAIL);
 
 	Load_Data_T(L"../Bin/Data/Trigger/TriggerData", OBJECTTAG::O_TRIGGER); //TODO Æ®¸®°Å
 
+	Add_Light();
 
 	srand(GetTickCount64());
 
@@ -320,6 +322,7 @@ HRESULT CLobbyStage::Moving_Wall()
 					BuildOBJTemp->Get_TransformCom()->Set_Pos(m_VecMoving[3]->vPos);
 				}
 			}
+
 		}
 	}
 	return S_OK;
@@ -533,6 +536,20 @@ HRESULT CLobbyStage::Ready_Layer_UI(LAYERTAG eLayerTag)
 
 	return S_OK;
 }
+
+HRESULT CLobbyStage::Ready_Layer_MINIGAME(LAYERTAG eLayerTag)
+{
+	Engine::CLayer* pLayer = Engine::CLayer::Create(eLayerTag);
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	//Engine::CGameObject* pGameObject = nullptr;
+
+	
+	m_mapLayer.insert({ eLayerTag, pLayer });
+
+	return S_OK;
+}
+
 
 HRESULT CLobbyStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 {
@@ -815,19 +832,16 @@ void CLobbyStage::Admin_KeyInput()
 			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(0) == false))
 		{
 			CEventMgr::GetInstance()->OnMiniGame_Arrow(m_pGraphicDev, SCENETAG::LOBBY);
-			//CEventMgr::GetInstance()->OnPause(TRUE, SCENETAG::LOBBY);
 		}
 		else if ((CEventMgr::GetInstance()->Get_MiniGameReadyCheck(1) == true)
 			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == false))
 		{
 			CEventMgr::GetInstance()->OnMiniGame_KickBoard(m_pGraphicDev, SCENETAG::LOBBY);
-			//CEventMgr::GetInstance()->OnPause(TRUE, SCENETAG::LOBBY);
 		}
 		else if ((CEventMgr::GetInstance()->Get_MiniGameReadyCheck(2) == true)
 			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(2) == false))
 		{
 			CEventMgr::GetInstance()->OnMiniGame_Quiz(m_pGraphicDev, SCENETAG::LOBBY);
-			//CEventMgr::GetInstance()->OnPause(TRUE, SCENETAG::LOBBY);
 		}
 
 		m_bAdminSwitch = false;
