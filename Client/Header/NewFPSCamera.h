@@ -119,7 +119,7 @@ public:
 		const _float& fFov = D3DXToRadian(60.f),
 		const _float& fAspect = (float)WINCX / WINCY,
 		const _float& fNear = 0.1f,
-		const _float& fFar = 512.f);
+		const _float& fFar = 1000.f);
 
 private:
 	virtual void Free();

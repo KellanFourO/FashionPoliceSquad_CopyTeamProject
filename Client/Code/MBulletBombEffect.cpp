@@ -21,13 +21,13 @@ CMBulletBombEffect::~CMBulletBombEffect()
 
 HRESULT Engine::CMBulletBombEffect::Ready_GameObject()
 {
-	m_eObjectTag = OBJECTTAG::EFFECT;
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	
+	Set_ObjectTag(OBJECTTAG::MONSTERBULLET);
 	m_pTransformCom->Set_Scale(_vec3{ 6.f, 6.f, 6.f });
 
-
+	m_pCollider->Set_Host(this);
+	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
 
 	return S_OK;
 }
@@ -62,6 +62,26 @@ Engine::_int Engine::CMBulletBombEffect::Update_GameObject(const _float& fTimeDe
 void Engine::CMBulletBombEffect::LateUpdate_GameObject()
 {
 	
+}
+
+void CMBulletBombEffect::OnCollisionEnter(CCollider* _pOther)
+{
+	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYER)
+	{
+		dynamic_cast<CPlayer*>(_pOther->Get_Host())->Attacked(10.f);
+
+		//TODO 플레이어 총알 오브젝트 풀링 할거면 여기서
+	}
+	else
+		return;
+}
+
+void CMBulletBombEffect::OnCollisionStay(CCollider* _pOther)
+{
+}
+
+void CMBulletBombEffect::OnCollisionExit(CCollider* _pOther)
+{
 }
 
 CMBulletBombEffect* CMBulletBombEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -114,6 +134,11 @@ HRESULT Engine::CMBulletBombEffect::Add_Component()
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_MBulletBombEffectTexture"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
+
+	pComponent = m_pCollider = dynamic_cast<CCollider*>(Engine::ProtoMgr()->Clone_Proto(L"Proto_Collider"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].emplace(COMPONENTTAG::COLLIDER, pComponent);
+
 
 	/*pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(Engine::Clone_Proto(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);

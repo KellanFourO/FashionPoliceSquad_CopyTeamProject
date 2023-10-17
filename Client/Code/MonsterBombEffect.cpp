@@ -120,6 +120,8 @@ HRESULT Engine::CMonsterBombEffect::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
 
+	
+
 	for (_uint i = 0; i < ID_END; ++i)
 		for (auto& iter : m_mapComponent[i])
 			iter.second->Init_Property(this);

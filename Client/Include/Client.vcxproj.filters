@@ -199,9 +199,6 @@
     <Filter Include="02. GameObject\02. Monster\03. Stage1Boss\99. Stage1Boss_State\05. Stage1Boss_BrifBigShield">
       <UniqueIdentifier>{4d4a2ef5-65e0-4cd4-8223-2c73d760d3e8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\02. Monster\03. Smoker">
-      <UniqueIdentifier>{39dcff9d-080e-46cd-a4d5-0dfe77ae68ce}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\02. Monster\01. DullSuitMonster">
       <UniqueIdentifier>{9681e598-cfc7-4b20-9efa-6f2bbbbede41}</UniqueIdentifier>
     </Filter>
@@ -456,6 +453,18 @@
     </Filter>
     <Filter Include="02. GameObject\06. Effect\06.Dash">
       <UniqueIdentifier>{05f95524-f77b-4f2b-88d7-7e0286573dd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\04.BossBigDaddy">
+      <UniqueIdentifier>{0d6db340-a168-4cf6-ba36-effc8cd98656}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\04.BossBigDaddy\00.BossBigDaddy_Idle">
+      <UniqueIdentifier>{a079445c-7a34-45a4-9397-9a301c0b12a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\04.BossBigDaddy\01.BossBigDaddy_Attack">
+      <UniqueIdentifier>{0e1f1ce9-9366-4e21-a35a-a18e46bc96ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\04.BossBigDaddy\02.BossBigDaddy_Dead">
+      <UniqueIdentifier>{14ffc50d-11bd-4a06-950e-564bc541aae3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -990,6 +999,21 @@
     <ClInclude Include="..\Header\DashEffect.h">
       <Filter>02. GameObject\06. Effect\06.Dash</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\BossBigDaddy.h">
+      <Filter>02. GameObject\02. Monster\04.BossBigDaddy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BossBigDaddy_Idle.h">
+      <Filter>02. GameObject\02. Monster\04.BossBigDaddy\00.BossBigDaddy_Idle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BossBigDaddy_Dead.h">
+      <Filter>02. GameObject\02. Monster\04.BossBigDaddy\02.BossBigDaddy_Dead</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BossBigDaddy_Attack.h">
+      <Filter>02. GameObject\02. Monster\04.BossBigDaddy\01.BossBigDaddy_Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BossBigDaddyState.h">
+      <Filter>02. GameObject\02. Monster\04.BossBigDaddy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1513,6 +1537,18 @@
     </ClCompile>
     <ClCompile Include="..\Code\DashEffect.cpp">
       <Filter>02. GameObject\06. Effect\06.Dash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossBigDaddy.cpp">
+      <Filter>02. GameObject\02. Monster\04.BossBigDaddy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossBigDaddy_Idle.cpp">
+      <Filter>02. GameObject\02. Monster\04.BossBigDaddy\00.BossBigDaddy_Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossBigDaddy_Attack.cpp">
+      <Filter>02. GameObject\02. Monster\04.BossBigDaddy\01.BossBigDaddy_Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossBigDaddy_Dead.cpp">
+      <Filter>02. GameObject\02. Monster\04.BossBigDaddy\02.BossBigDaddy_Dead</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

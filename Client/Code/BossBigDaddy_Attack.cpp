@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "BigDaddyMonster_Attack.h"
+#include "BossBigDaddy_Attack.h"
 #include "SYTex.h"
 #include "Texture.h"
 
@@ -9,17 +9,17 @@
 #include "BrifCase.h"
 
 
-CBigDaddyMonster_Attack::CBigDaddyMonster_Attack()
+CBossBigDaddy_Attack::CBossBigDaddy_Attack()
 {
 
 
 }
 
-CBigDaddyMonster_Attack::~CBigDaddyMonster_Attack()
+CBossBigDaddy_Attack::~CBossBigDaddy_Attack()
 {
 }
 
-void CBigDaddyMonster_Attack::Initialize(CMonster* _Monster)
+void CBossBigDaddy_Attack::Initialize(CMonster* _Monster)
 {
 	m_pHost = (_Monster);
 	m_fMinFrame = 1.0f;
@@ -29,12 +29,12 @@ void CBigDaddyMonster_Attack::Initialize(CMonster* _Monster)
 	m_iVer = 2;
 }
 
-CMonsterState* CBigDaddyMonster_Attack::Update(CMonster* Monster, const float& fDetltaTime)
+CMonsterState* CBossBigDaddy_Attack::Update(CMonster* Monster, const float& fDetltaTime)
 {
 
 	switch (m_eAttack)
 	{
-	case CBigDaddyMonster_Attack::READY1:
+	case CBossBigDaddy_Attack::READY1:
 		{
 			m_fTick += fDetltaTime;
 
@@ -48,7 +48,7 @@ CMonsterState* CBigDaddyMonster_Attack::Update(CMonster* Monster, const float& f
 			break;
 		}
 
-	case CBigDaddyMonster_Attack::READY2:
+	case CBossBigDaddy_Attack::READY2:
 		{
 		m_fTick += fDetltaTime;
 
@@ -65,7 +65,7 @@ CMonsterState* CBigDaddyMonster_Attack::Update(CMonster* Monster, const float& f
 		break;
 		}
 
-	case CBigDaddyMonster_Attack::THROW:
+	case CBossBigDaddy_Attack::THROW:
 		{
 			m_fTick += fDetltaTime;
 			
@@ -79,7 +79,7 @@ CMonsterState* CBigDaddyMonster_Attack::Update(CMonster* Monster, const float& f
 			break;
 		}
 
-	case CBigDaddyMonster_Attack::THROWEND:
+	case CBossBigDaddy_Attack::THROWEND:
 		{
 			m_fTick += fDetltaTime;
 
@@ -87,7 +87,7 @@ CMonsterState* CBigDaddyMonster_Attack::Update(CMonster* Monster, const float& f
 			{
 				//TODO 만약 던진 후 플레이어가 공격범위에 없을시 추격 상태로 변경
 				if (!m_pHost->ChaseCatch())
-					return dynamic_cast<CBigDaddyMonster*>(m_pHost)->Get_State(1);
+					return dynamic_cast<CBossBigDaddy*>(m_pHost)->Get_State(1);
 				else
 				{
 					m_eAttack = READY1;
@@ -108,21 +108,21 @@ CMonsterState* CBigDaddyMonster_Attack::Update(CMonster* Monster, const float& f
 	return nullptr;
 }
 
-void CBigDaddyMonster_Attack::Release(CMonster* _Monster)
+void CBossBigDaddy_Attack::Release(CMonster* _Monster)
 {
 
 }
 
-void CBigDaddyMonster_Attack::LateUpdate(CMonster* _Monster)
+void CBossBigDaddy_Attack::LateUpdate(CMonster* _Monster)
 {
 }
 
-void CBigDaddyMonster_Attack::Render(CMonster* _Monster)
+void CBossBigDaddy_Attack::Render(CMonster* _Monster)
 {
 
 }
 
-CBullet* CBigDaddyMonster_Attack::LoadBullet()
+CBullet* CBossBigDaddy_Attack::LoadBullet()
 {
 		CBullet* pBullet = CBrifCase::Create(m_pHost->Get_GraphicDev(), m_pHost->Get_Transform(), m_pHost->Get_PlayerTransform());
 		Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::MONSTERBULLET, pBullet);

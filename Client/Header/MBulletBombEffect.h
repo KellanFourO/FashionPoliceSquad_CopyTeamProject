@@ -22,7 +22,10 @@ public:
 	virtual HRESULT Ready_GameObject() override;
 	virtual _int Update_GameObject(const _float& fTimeDelta) override;
 	virtual void LateUpdate_GameObject() override;
-
+public:
+	virtual void		OnCollisionEnter(CCollider* _pOther);
+	virtual void		OnCollisionStay(CCollider* _pOther);
+	virtual void		OnCollisionExit(CCollider* _pOther);
 private:
 	HRESULT					Add_Component();
 
