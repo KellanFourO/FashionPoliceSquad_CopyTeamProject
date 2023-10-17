@@ -28,8 +28,7 @@ HRESULT CMainApp::Ready_MainApp()
 	m_pGraphicDev->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTEXF_LINEAR);
 	m_pGraphicDev->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTEXF_POINT);
 
-	CSoundMgr::GetInstance()->Initialize();
-	
+
 
 	return S_OK;
 }

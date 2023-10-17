@@ -46,6 +46,7 @@ _uint CLoading::Loading_For_Stage()
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_RigidBody", CRigidBody::Create(m_pGraphicDev)), E_FAIL);
 	Set_Value(3);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CubeTex", CCubeTex::Create(m_pGraphicDev)), E_FAIL);
+	CSoundMgr::GetInstance()->Initialize();
 	Set_Value(3);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_PlaneTex", CRcTex::Create(m_pGraphicDev)), E_FAIL);
@@ -107,6 +108,8 @@ _uint CLoading::Loading_For_Stage()
 
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_MuzzleFlash", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Guns/muzzleflash2.png")), E_FAIL);
 		Set_Value(3);
+	CSoundMgr::GetInstance()->Initialize();
+
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_MuzzleFlash2", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Guns/muzzleflash1.png")), E_FAIL);
 		Set_Value(3);
 

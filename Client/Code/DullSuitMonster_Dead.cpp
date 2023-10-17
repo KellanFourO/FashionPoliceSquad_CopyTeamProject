@@ -21,6 +21,7 @@ void CDullSuitMonster_Dead::Initialize(CMonster* _Monster)
 	m_fCurFrame = m_fMinFrame;
 
 	m_iVer = 3;
+	SoundMgr()->PlaySound(L"DullSuitDead.wav",SOUND_MONSTER,0.5);
 }
 
 CMonsterState* CDullSuitMonster_Dead::Update(CMonster* Monster, const float& fDetltaTime)
@@ -45,6 +46,7 @@ void CDullSuitMonster_Dead::LateUpdate(CMonster* _Monster)
 
 void CDullSuitMonster_Dead::Release(CMonster* _Monster)
 {
+	SoundMgr()->StopSound(SOUND_MONSTER);
 }
 
 void CDullSuitMonster_Dead::Render(CMonster* _Monster)

@@ -4,6 +4,7 @@
 #include "Export_Utility.h"
 #include "EffectTex.h"
 
+
 CMBulletBombEffect::CMBulletBombEffect(LPDIRECT3DDEVICE9 pGraphicDev)
 	: CGameObject(pGraphicDev)
 {
@@ -24,11 +25,11 @@ HRESULT Engine::CMBulletBombEffect::Ready_GameObject()
 	m_eObjectTag = OBJECTTAG::EFFECT;
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	
+
 	m_pTransformCom->Set_Scale(_vec3{ 6.f, 6.f, 6.f });
 
 
-
+	SoundMgr()->PlaySoundW(L"BigDaddyBriefcaseExplosion_01.wav",SOUND_EFFECT,0.5f);
 	return S_OK;
 }
 
@@ -45,12 +46,15 @@ Engine::_int Engine::CMBulletBombEffect::Update_GameObject(const _float& fTimeDe
 
 	_float fAngle = atan2f(vLook.x, vLook.z);
 	m_pTransformCom->Set_Rotate(ROT_Y, fAngle + D3DX_PI);
-	
+
 
 	m_fFrame +=87.f* fTimeDelta;
 
 	if (87.f < m_fFrame)
+	{
+		//SoundMgr()->StopSound(SOUND_EFFECT);
 		return OBJ_DEAD;
+	}
 
 	_int iExit = __super::Update_GameObject(fTimeDelta);
 
@@ -61,7 +65,7 @@ Engine::_int Engine::CMBulletBombEffect::Update_GameObject(const _float& fTimeDe
 
 void Engine::CMBulletBombEffect::LateUpdate_GameObject()
 {
-	
+
 }
 
 CMBulletBombEffect* CMBulletBombEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev)

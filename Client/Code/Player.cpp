@@ -104,7 +104,7 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 		m_bLateInit = false;
 	}
 
-	
+
 
 	StateMachine(fTimeDelta);
 
@@ -228,7 +228,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 	m_vMoveDir = { 0.f,0.f,0.f };
 	_vec3 vUp = { 0.f,1.f,0.f };
-	++m_fDashDelay; //Dash 딜레이 프레임 계산 
+	++m_fDashDelay; //Dash 딜레이 프레임 계산
 
 	_float fMoveSpeed = 0;
 	_bool bMove = false;
@@ -248,6 +248,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 			CDashEffect* DashEffect = CDashEffect::Create(m_pGraphicDev);
 			DashEffect->Set_ObjectTag(OBJECTTAG::EFFECT);
 			Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::EFFECT, DashEffect);
+			SoundMgr()->PlaySoundW(L"Player_Dash.wav", SOUND_PLAYER3, 1);
 
 		}
 
@@ -266,11 +267,11 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 			m_bDashCheck = false;
 			m_bDashCount = 0;
 		}
-	
+
 		m_vMoveDir += vDir;
 		fMoveSpeed = INFO.fMoveSpeed;
 		bMove = true;
-		
+
 	}
 	if (Engine::Get_DIKeyState(DIK_S) & 0x80)
 	{
@@ -280,6 +281,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 			CDashEffect* DashEffect = CDashEffect::Create(m_pGraphicDev);
 			DashEffect->Set_ObjectTag(OBJECTTAG::EFFECT);
 			Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::EFFECT, DashEffect);
+			SoundMgr()->PlaySoundW(L"Player_Dash.wav", SOUND_PLAYER3, 1);
 		}
 
 		if (m_bDashCheck)
@@ -309,6 +311,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 			CDashEffect* DashEffect = CDashEffect::Create(m_pGraphicDev);
 			DashEffect->Set_ObjectTag(OBJECTTAG::EFFECT);
 			Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::EFFECT, DashEffect);
+			SoundMgr()->PlaySoundW(L"Player_Dash.wav", SOUND_PLAYER3, 1);
 		}
 
 		if (m_bDashCheck)
@@ -338,6 +341,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 			CDashEffect* DashEffect = CDashEffect::Create(m_pGraphicDev);
 			DashEffect->Set_ObjectTag(OBJECTTAG::EFFECT);
 			Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::EFFECT, DashEffect);
+			SoundMgr()->PlaySoundW(L"Player_Dash.wav", SOUND_PLAYER3, 1);
 		}
 
 		if (m_bDashCheck)
@@ -365,18 +369,18 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 		if (m_fStepTick > 0.1f && m_bStep && !m_bJump)
 		{
-			SoundMgr()->PlaySoundW(L"Footstep_01.wav",SOUND_PLAYER,8);			
+			SoundMgr()->PlaySoundW(L"Footstep_01.wav",SOUND_PLAYER,30);
 			m_fStepTick = 0.f;
 			m_bStep = false;
 		}
 
 		if (m_fStepTick > 0.1f && !m_bStep && !m_bJump)
 		{
-			SoundMgr()->PlaySoundW(L"Footstep_02.wav", SOUND_PLAYER, 8);
+			SoundMgr()->PlaySoundW(L"Footstep_02.wav", SOUND_PLAYER, 30);
 			m_fStepTick = 0.f;
 			m_bStep = true;
 		}
-	
+
 		if (m_Speed_Cheat_ON) {
 			fMoveSpeed *= 4.f;			//속도업
 		}
@@ -499,7 +503,7 @@ void CPlayer::Mouse_Input(const _float& fTimeDelta)
 	if (dwMouseMove = Engine::Get_DIMouseState(DIM_LB) && m_pGun->Get_Ready())
 	{
 		m_pGun->Set_Fire(true);
-	
+
 	}
 
 	if (dwMouseMove = Engine::Get_DIMouseState(DIM_RB) && m_pGun->Get_Ready())
@@ -685,10 +689,10 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 
 		//테스트
 // 		int testtemp = 0;
-// 
-// 		if (vThisPos.y > vOtherPos.y) 
+//
+// 		if (vThisPos.y > vOtherPos.y)
 // 		{ testtemp = 1; }
-// 
+//
 // 		if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ)
 // 		{
 // 			testtemp = 2;
@@ -748,11 +752,11 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 			m_bOnGround = true;
 		}
 		m_bJump = false;
-		
+
 	}
 
 	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::O_TRIGGER){
-		
+
 		if (m_bTriggerCheck == false)
 		{
 			m_bTriggerCheck = true;
@@ -773,7 +777,7 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 void CPlayer::OnCollisionStay(CCollider* _pOther)
 {
 
-	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE|| 
+	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE||
 		(_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ &&
 			_pOther->Get_OBJAttribute() != OBJ_ATTRIBUTE::ForPaint_OBJ) )
 	{
