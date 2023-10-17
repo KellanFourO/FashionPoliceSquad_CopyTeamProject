@@ -17,7 +17,8 @@ END
 
 class CBelt : public Engine::CGameObject
 {
-	enum BELTSTATE { IDLE, ATTACK, CHARGEATTACK, CHARGE, ROPE, BELTSTATE_END};
+	//todo			  0		1		2		3			4		5
+	enum BELTSTATE { IDLE, READY, ATTACK, CHARGEATTACK, CHARGE, ROPE, BELTSTATE_END};
 
 private:
 	explicit CBelt(LPDIRECT3DDEVICE9 pGraphicDev);
@@ -32,10 +33,15 @@ public:
 
 public:
 	CBeltState* Get_State(_int _index) { return m_pStateArray[_index]; }
+	CPlayer*	Get_Host() { return m_pPlayer;}
 	CTransform* Get_HostTransform() { return m_pPlayerTransform;}
 	_vec3		Get_StartPos() { return m_vStartPos;}
+	_vec3		Get_EndPos() { return m_vEndPos;}
 	CBuild_Obj* Get_TargetObj() { return m_pTargetObj;}
+	CGameObject* Get_Target() { return m_pTarget;}
 
+
+	void		Set_Target(CGameObject* _pObj) { m_pTarget = _pObj;}
 	void		Set_TargetObj(CBuild_Obj* _pObj) { m_pTargetObj = _pObj;}
 
 private:
@@ -77,6 +83,7 @@ public:
 
 	CPlayer*		m_pPlayer = nullptr;
 	CBuild_Obj*		m_pTargetObj = nullptr;
+	CGameObject*	m_pTarget = nullptr;
 
 
 public:

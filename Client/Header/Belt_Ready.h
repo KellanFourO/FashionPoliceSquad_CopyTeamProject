@@ -1,10 +1,10 @@
 #pragma once
 #include "BeltState.h"
-class CBelt_ChargeAttack : public CBeltState
+class CBelt_Ready : public CBeltState
 {
 public:
-	CBelt_ChargeAttack();
-	virtual ~CBelt_ChargeAttack();
+	CBelt_Ready();
+	virtual ~CBelt_Ready();
 
 public:
 	virtual void Initialize(CBelt* _Belt) override;
@@ -12,21 +12,15 @@ public:
 	virtual void Release(CBelt* _Belt) override;
 
 private:
-	_bool TargetStateChange();
-
-
-public:
+	_bool	RopeActionTest();
 
 	_bool m_bAttack = false;
 
 	_float m_fMoveRightSum;
 	_float m_fMoveDownSum;
-	_float m_fMoveRightMax;
-	_float m_fMoveUpMax;
+	_float m_fRotationMax;
+	_float m_fRotate;
 
-	_float m_fRotateMax;
-	_float 	m_fRotate;
-
-	_vec3			m_vPrePos;
+	//_vec3			m_vPrePos;
 
 };

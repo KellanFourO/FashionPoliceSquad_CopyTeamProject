@@ -206,8 +206,9 @@
     <ClInclude Include="..\Header\Belt.h" />
     <ClInclude Include="..\Header\Belt_Attack.h" />
     <ClInclude Include="..\Header\Belt_Charge.h" />
-    <ClInclude Include="..\Header\Belt_Idle.h" />
     <ClInclude Include="..\Header\Belt_ChargeAttack.h" />
+    <ClInclude Include="..\Header\Belt_Idle.h" />
+    <ClInclude Include="..\Header\Belt_Ready.h" />
     <ClInclude Include="..\Header\Belt_Rope.h" />
     <ClInclude Include="..\Header\BigDaddyMonster_Attack.h" />
     <ClInclude Include="..\Header\BossStage.h" />
@@ -365,8 +366,9 @@
     <ClCompile Include="..\Code\Belt.cpp" />
     <ClCompile Include="..\Code\Belt_Attack.cpp" />
     <ClCompile Include="..\Code\Belt_Charge.cpp" />
-    <ClCompile Include="..\Code\Belt_Idle.cpp" />
     <ClCompile Include="..\Code\Belt_ChargeAttack.cpp" />
+    <ClCompile Include="..\Code\Belt_Idle.cpp" />
+    <ClCompile Include="..\Code\Belt_Ready.cpp" />
     <ClCompile Include="..\Code\Belt_Rope.cpp" />
     <ClCompile Include="..\Code\BigDaddyMonster_Attack.cpp" />
     <ClCompile Include="..\Code\BossStage.cpp" />

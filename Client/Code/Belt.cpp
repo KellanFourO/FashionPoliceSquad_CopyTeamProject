@@ -8,6 +8,7 @@
 #include "Belt_Idle.h"
 #include "Belt_Attack.h"
 #include "Belt_Charge.h"
+#include "Belt_Ready.h"
 #include "Belt_ChargeAttack.h"
 #include "Belt_Rope.h"
 
@@ -68,16 +69,15 @@ Engine::_int CBelt::Update_GameObject(const _float& fTimeDelta)
 {
 	Engine::Add_RenderGroup(RENDER_ALPHA, this);
 
-
 	if (m_bLateInit)
 	{
 		m_pPlayer = dynamic_cast<CPlayer*>(Management()->Get_ObjectList(LAYERTAG::GAMELOGIC,OBJECTTAG::PLAYER).back());
-		m_pPlayerTransform = m_pPlayer->Get_Transform();
 		m_bLateInit = false;
 	}
-	Rope();
 
-	StateMachine(fTimeDelta);
+	//Rope();
+
+
 
 	_vec3	vPlayerPos, vPlayerUp;
 
@@ -100,12 +100,14 @@ Engine::_int CBelt::Update_GameObject(const _float& fTimeDelta)
 	m_pTransformCom->Set_Scale(m_vBeltScale);
 	m_pTransformCom->Set_Pos(m_vStartPos);
 
+
 	Key_Input();
 	Mouse_Input(fTimeDelta);
 
 	m_vEndPos = m_vStartPos + m_fRange * m_vPlayerLook;
 	m_pCollider->SetCenterPos(m_vEndPos);
 
+	StateMachine(fTimeDelta);
 	__super::Update_GameObject(fTimeDelta);
 
 	return OBJ_NOEVENT;
@@ -120,7 +122,20 @@ void CBelt::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 
-	m_pTextureCom->Render_Textrue();
+	if (m_bHit)
+	{
+		m_pTextureCom->Render_Textrue(2);
+	}
+	else
+	{
+		m_pTextureCom->Render_Textrue(0);
+	}
+
+	if (m_bCharged)
+	{
+		m_pTextureCom->Render_Textrue(1);
+	}
+
 	m_pBufferCom->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
@@ -193,11 +208,12 @@ void CBelt::Rope()
 
 void CBelt::ReadyState()
 {
-	m_pStateArray[IDLE] = new CBelt_Idle;
-	m_pStateArray[ATTACK] = new CBelt_Attack;
-	m_pStateArray[CHARGEATTACK] = new CBelt_ChargeAttack;
-	m_pStateArray[CHARGE] = new CBelt_Charge;
-	m_pStateArray[ROPE] = new CBelt_Rope;
+	m_pStateArray[IDLE] = new CBelt_Idle;						//0
+	m_pStateArray[ATTACK] = new CBelt_Attack;					//1
+	m_pStateArray[READY] = new CBelt_Ready;						//2
+	m_pStateArray[CHARGEATTACK] = new CBelt_ChargeAttack;		//3
+	m_pStateArray[CHARGE] = new CBelt_Charge;					//4
+	m_pStateArray[ROPE] = new CBelt_Rope;						//5
 
 }
 

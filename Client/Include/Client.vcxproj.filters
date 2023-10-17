@@ -537,7 +537,7 @@
     <ClInclude Include="..\Header\Belt_Idle.h">
       <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Belt_ChargeAttack.h">
+    <ClInclude Include="..\Header\Belt_Ready.h">
       <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Belt_Rope.h">
@@ -993,6 +993,9 @@
     <ClInclude Include="..\Header\SYRay.h">
       <Filter>02. GameObject\01. Player\97.RAY</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Belt_ChargeAttack.h">
+      <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1064,7 +1067,7 @@
     <ClCompile Include="..\Code\Belt_Idle.cpp">
       <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Belt_ChargeAttack.cpp">
+    <ClCompile Include="..\Code\Belt_Ready.cpp">
       <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Belt_Rope.cpp">
@@ -1519,6 +1522,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\SYRay.cpp">
       <Filter>02. GameObject\01. Player\97.RAY</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Belt_ChargeAttack.cpp">
+      <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -3,11 +3,7 @@
 #include "BeltState.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
-
-#include "Stage.h"
-#include "LobbyStage.h"
-#include "BossStage.h"
-#include "Stage2.h"
+#include "Monster.h"
 
 CBelt_Attack::CBelt_Attack()
 {
@@ -36,7 +32,7 @@ void CBelt_Attack::Initialize(CBelt* Belt)
     m_fRotateMax = -10.f;
     m_fRotate = 20.f;
 
-    m_bAttack = false;
+    m_bAttack = true;
 
     m_pHost = Belt;
 
@@ -44,6 +40,8 @@ void CBelt_Attack::Initialize(CBelt* Belt)
     Belt->m_fBeltMoveDown -= m_fMoveUpMax;
 
     Belt->m_pTransformCom->RotateAxis(Belt->m_vPlayerLook, D3DXToRadian(m_fRotateMax));
+
+    SoundMgr()->PlaySoundW(L"Player_BeltAttack.wav",SOUND_PLAYER2, 1.f);
 }
 
 CBeltState* CBelt_Attack::Update(CBelt* Belt, const float& fTimeDelta)
@@ -55,7 +53,7 @@ CBeltState* CBelt_Attack::Update(CBelt* Belt, const float& fTimeDelta)
 
     if (TargetStateChange())
     {
-        return m_pHost->Get_State(4);
+        return m_pHost->Get_State(5);
     }
 
     auto& MonsterList = Management()->Get_ObjectList(LAYERTAG::GAMELOGIC,OBJECTTAG::MONSTER);
@@ -67,8 +65,11 @@ CBeltState* CBelt_Attack::Update(CBelt* Belt, const float& fTimeDelta)
         {
             if (CollisionManager()->CollisionRayToCube(m_pHost->Get_Collider(), iter->Get_Collider(), m_pHost->Get_StartPos()))
             {
-                static_cast<CMonster*>(iter)->Attacked(m_pHost->m_fDmg);
-                return m_pHost->Get_State(0); // IDLE
+                if (m_bAttack)
+                {
+                    static_cast<CMonster*>(iter)->Attacked(m_pHost->m_fDmg);
+                    m_bAttack = false;
+                }
             }
         }
     }
@@ -77,18 +78,35 @@ CBeltState* CBelt_Attack::Update(CBelt* Belt, const float& fTimeDelta)
     {
         if (CollisionManager()->CollisionRayToCube(m_pHost->Get_Collider(), BossList.back()->Get_Collider(), m_pHost->Get_StartPos()))
         {
-            static_cast<CMonster*>(BossList.back())->Attacked(m_pHost->m_fDmg);
+            if (m_bAttack)
+            {
+                static_cast<CMonster*>(BossList.back())->Attacked(m_pHost->m_fDmg);
+                m_bAttack = false;
+            }
         }
     }
 
 
     if (m_fBehaviorTime >= 0.3f)
     {
+        _vec3 vStartPos, vEndPos, vPlayerUp;
+        vStartPos = m_pHost->Get_StartPos();
+        vEndPos = m_pHost->Get_EndPos();
+
+        m_pHost->Get_HostTransform()->Get_Info(INFO_UP, &vPlayerUp);
+
+        _float fLength = 0.f;
+
+        fLength = D3DXVec3Length(&(vEndPos - vStartPos));
         Belt->m_vBeltScale *= 1.007f;
+
+        Belt->m_vBeltScale.z = Belt->m_vBeltScale.z + fLength;
+
+
         Belt->m_fBeltMoveRight -= m_fMoveRightSum;
         Belt->m_fBeltMoveDown += m_fMoveDownSum;
         Belt->m_bHit = false;
-        Belt->m_pTransformCom->RotateAxis(Belt->m_vPlayerLook, D3DXToRadian(m_fRotateMax += m_fRotate * fTimeDelta));
+        Belt->m_pTransformCom->RotateAxis(vPlayerUp, D3DXToRadian(m_fRotateMax += m_fRotate * fTimeDelta));
 
 
 
@@ -110,7 +128,10 @@ void CBelt_Attack::Release(CBelt* Belt)
 
     Belt->m_pTransformCom->RotateAxis(_vec3{ 0.f,0.f,0.f }, 0);
 
+    m_fBehaviorTime = 0.f;
+    m_bAttack = true;
     //Belt->m_vBeltScale = { 0.11f,0.11f,0.11f };
+    SoundMgr()->StopSound(SOUND_PLAYER2);
 }
 
 _bool CBelt_Attack::TargetStateChange()
