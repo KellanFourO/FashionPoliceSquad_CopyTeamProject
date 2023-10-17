@@ -234,6 +234,7 @@
     <ClInclude Include="..\Header\Stage2.h" />
     <ClInclude Include="..\Header\MBulletBombEffect.h" />
     <ClInclude Include="..\Header\MBulletExplosion.h" />
+    <ClInclude Include="..\Header\SYRay.h" />
     <ClInclude Include="..\Header\UI_Berserk.h" />
     <ClInclude Include="..\Header\UI_BerserkFrame.h" />
     <ClInclude Include="..\Header\UI_BossHPFrame.h" />
@@ -382,6 +383,7 @@
     <ClCompile Include="..\Code\Player_Dash.cpp" />
     <ClCompile Include="..\Code\Ray.cpp" />
     <ClCompile Include="..\Code\ShockWave.cpp" />
+    <ClCompile Include="..\Code\SYRay.cpp" />
     <ClCompile Include="..\Code\Trigger.cpp" />
     <ClCompile Include="..\Code\DullSuitMonster_Attack.cpp" />
     <ClCompile Include="..\Code\DullSuitMonster.cpp" />

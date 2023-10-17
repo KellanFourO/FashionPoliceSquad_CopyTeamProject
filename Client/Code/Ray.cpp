@@ -25,7 +25,7 @@ HRESULT CRay::Ready_GameObject()
 	m_eObjectTag = OBJECTTAG::RAY_LASER;
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_pTransformCom->Set_Scale(_vec3(5.f, 5.f, 5.f));
+	m_pTransformCom->Set_Scale(_vec3(1.f, 1.f, 1.f));
 	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_POS], *m_pTransformCom->Get_Scale());
 	m_pPlayerTransform = dynamic_cast<CTransform*>(Management()->Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
 
@@ -60,7 +60,7 @@ void CRay::OnCollisionEnter(CCollider* _pOther)
 		_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BOSS)
 	{
 
-		_vec3 vHitPoint = _pOther->GetCenterPos();//충돌 지점 계산 
+		_vec3 vHitPoint = _pOther->GetCenterPos();//충돌 지점 계산
 
 		_float fDistanceToHit = D3DXVec3Length(&(vHitPoint - _pOther->GetCenterPos()));
 		m_pTransformCom->Set_Scale(_vec3(0.1f, 0.1f, fDistanceToHit));
@@ -107,39 +107,39 @@ _bool CRay::PerformRaycast(_vec3 vStart, _vec3 vDir, _vec3& vHitPoint, _float fR
 
 	// TODO: 레이캐스트와 충돌 검출 코드 구현 (맵 또는 객체와의 충돌 검출)
 // 	_vec3 vEnd = vStart + vDir * fRayLength;
-// 
+//
 // 	// AABB의 최소 점과 최대 점 가져오기
 // 	_vec3 vMin = m_pCollider->Get_Min();
 // 	_vec3 vMax = m_pCollider->Get_Max();
-// 
+//
 // 	// Ray의 역방향 벡터
 // 	_vec3 vInvDir = 1.0f / vDir;
-// 
+//
 // 	// Ray의 t 값 계산
 // 	_vec3 tMin = (vMin - vStart) * vInvDir;
 // 	_vec3 tMax = (vMax - vStart) * vInvDir;
-// 
+//
 // 	// tMin과 tMax 정렬
 // 	if (tMin.x > tMax.x) std::swap(tMin.x, tMax.x);
 // 	if (tMin.y > tMax.y) std::swap(tMin.y, tMax.y);
 // 	if (tMin.z > tMax.z) std::swap(tMin.z, tMax.z);
-// 
+//
 // 	// tMax의 최소 값이 tMin의 최대 값보다 작으면 교차하지 않음
 // 	if (tMax.x < tMin.y || tMax.x < tMin.z ||
 // 		tMax.y < tMin.x || tMax.y < tMin.z ||
 // 		tMax.z < tMin.x || tMax.z < tMin.y) {
 // 		return false;
 // 	}
-// 
+//
 // 	// Ray의 시작점에서부터 가장 작은 t 값 선택
 // 	_float tHit = (tMin.x > tMin.y) ? tMin.x : tMin.y;
 // 	tHit = (tMin.z > tHit) ? tMin.z : tHit;
-// 
+//
 // 	// tHit이 0보다 작거나 tHit이 Ray 길이를 초과하면 교차하지 않음
 // 	if (tHit < 0.0f || tHit > fRayLength) {
 // 		return false;
 // 	}
-// 
+//
 // 	// 교차 지점 계산
 // 	vHitPoint = vStart + vDir * tHit;
 

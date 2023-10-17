@@ -14,6 +14,7 @@
 #include "Player_Jump.h"
 #include "Player_Dash.h"
 
+
 #include "SoundMgr.h"
 
 #include "Export_System.h"
@@ -84,6 +85,10 @@ HRESULT CPlayer::Ready_GameObject()
 	//INFO.vPos = { 20.f,5.f,20.f };
 	INFO.fStartDir = 0.f;//생각처럼 잘 안댐...
 
+	for (int i = 0; i < 3; ++i)
+	{
+		m_bMonsterEncounter[i] = false;
+	}
 
 	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
 
@@ -100,11 +105,17 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 
 	if (m_bLateInit)
 	{
+		m_pRay = CSYRay::Create(m_pGraphicDev,this);
+		Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::RAY_LASER, m_pRay);
+
 		SetGun();
 		m_bLateInit = false;
 	}
 
+	_vec3 vRayPos;
+	// 플레이어가 보는 방향 기준, 플레이어 위치에서 + 100 인 위치를 하나 찍고싶은거야.
 
+	//CollisionManager()->CollisionRayToCube()
 
 	StateMachine(fTimeDelta);
 
@@ -118,7 +129,7 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	m_fTime_HP_Test += fTimeDelta;
 
 	Key_Input(fTimeDelta);
-
+	PlayerRay();
 
 	//m_pGun->Update_GameObject(fTimeDelta);
 
@@ -210,6 +221,36 @@ void CPlayer::SetGun(CLayer* _pLayer)
 
 	//
 	m_pGun = m_vecPlayerGun[0];
+
+}
+
+void CPlayer::PlayerRay()
+{
+	_vec3 vOriginPos, vEndPos, vTargetPos;
+
+	_vec3 vDir;
+
+	m_pTransformCom->Get_Info(INFO_POS,&vOriginPos);
+	m_pTransformCom->Get_Info(INFO_LOOK,&vDir);
+
+	vEndPos = vOriginPos + m_fRayLength * vDir;
+
+	m_pRay->Get_Transform()->Set_Pos(vOriginPos);
+	m_pRay->Get_Collider()->SetCenterPos(vEndPos);
+
+
+
+	//auto& ObjList = Management()->Get_ObjectList(LAYERTAG::GAMELOGIC,OBJECTTAG::MONSTER);
+	//for (auto iter : ObjList)
+	//{
+	//	vTargetPos = iter->Get_Transform()->m_vInfo[INFO_POS];
+	//
+	//	if (CollisionManager()->CollisionRayToCube(m_pRay->Get_Collider(), iter->Get_Collider(), vOriginPos))
+	//	{
+	//		dynamic_cast<CMonster*>(iter)->Attacked(1.f);
+	//	}
+	//}
+
 
 }
 
@@ -411,6 +452,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 	if (Engine::Get_DIKeyState(DIK_SPACE) & 0x80 && m_bJump == false && m_fJumpTick >= 1.5f)
 	{
+
 		m_bJump = true;
 		SoundMgr()->StopSound(SOUND_PLAYER);
 		SoundMgr()->PlaySoundW(L"Jump.wav",SOUND_PLAYER,10);

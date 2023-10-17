@@ -59,8 +59,8 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 
 	if (m_bLateInit)
 	{
-		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev,m_eSceneTag, DIALOGTAG::STORY_ST1_INTRO);
-		CEventMgr::GetInstance()->OnPause(true,m_eSceneTag);
+		//CEventMgr::GetInstance()->OnDialog(m_pGraphicDev,m_eSceneTag, DIALOGTAG::STORY_ST1_INTRO);
+		//CEventMgr::GetInstance()->OnPause(true,m_eSceneTag);
 		m_bLateInit = false;
 	}
 
