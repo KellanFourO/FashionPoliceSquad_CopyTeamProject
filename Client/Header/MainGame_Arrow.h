@@ -23,6 +23,7 @@ private:
 
 public:
 	enum MINIGAME_ARROW_STATEICON { STATEICON_NOP = 0, STATEICON_NORMAL, STATEICON_GOOD, STATEICON_PERPECT };
+	enum class ArrowGameState { ING, LOSE, CLEAR, State_END };
 
 	virtual HRESULT			Ready_GameObject();
 	virtual void			Render_GameObject() override;
@@ -31,8 +32,10 @@ public:
 
 private:
 	HRESULT					Add_Component();
-	HRESULT					State_Icon_Update();
 	void					KeyInput();
+	
+	HRESULT					State_Icon_Update();
+	HRESULT					GameState_Update();
 
 private:
 	CUITex*					m_pBufferCom = nullptr;
@@ -53,23 +56,18 @@ private:
 	CMini_TimeBar*			m_pTimeBar2 = nullptr;
 
 	vector<CMini_Arrow*>	m_pVecArrow;
+	vector<CMini_Arrow*>	m_pCopyVector;
 
 	MINIGAME_ARROW_TYPE		m_myKeyType = MINIGAME_ARROW_TYPE::MINIGAME_ARROW_END;
+	ArrowGameState			m_eGameState = ArrowGameState::State_END;
 
 	_bool					m_ClearCheck = false;
-
-
-
 
 	//Å° ¾ÃÈû ¹æÁö¿ë
 	bool m_bUpPressed = false;
 	bool m_bDownPressed = false;
 	bool m_bLeftPressed = false;
 	bool m_bRightPressed = false;
-
-
-
-
 
 public:
 	static CMainGame_Arrow* Create(LPDIRECT3DDEVICE9 pGraphicDev);

@@ -72,7 +72,7 @@ HRESULT CMini_TimeBar::Ready_GameObject()
 void CMini_TimeBar::Time_Count()
 {
 	if ((m_fTimeCount > 0) && (m_iTextureIndex == 1)) {
-		m_fTimeCount-= 0.25f;
+		m_fTimeCount-= 0.20f;
 
 		_vec3 vPos, vScale;
 
@@ -81,6 +81,10 @@ void CMini_TimeBar::Time_Count()
 
 		m_pTransformCom->Set_Pos(vPos);
 		m_pTransformCom->Set_Scale(vScale);
+	}
+	if (m_fTimeCount <= 0)
+	{
+		m_bTimeOverCheck = true;
 	}
 }
 

@@ -322,6 +322,7 @@ HRESULT CLobbyStage::Moving_Wall()
 					BuildOBJTemp->Get_TransformCom()->Set_Pos(m_VecMoving[3]->vPos);
 				}
 			}
+
 		}
 	}
 	return S_OK;
