@@ -1,15 +1,21 @@
 #pragma once
 #include "BeltState.h"
-class CBelt_ATTACK : public CBeltState
+class CBelt_Attack : public CBeltState
 {
 public:
-	CBelt_ATTACK();
-	virtual ~CBelt_ATTACK();
+	CBelt_Attack();
+	virtual ~CBelt_Attack();
 
 public:
 	virtual void Initialize(CBelt* _Belt) override;
 	virtual CBeltState* Update(CBelt* Belt, const float& fDetltaTime) override;
 	virtual void Release(CBelt* _Belt) override;
+
+private:
+	_bool TargetStateChange();
+
+
+public:
 
 	_bool m_bAttack = false;
 
@@ -17,7 +23,7 @@ public:
 	_float m_fMoveDownSum;
 	_float m_fMoveRightMax;
 	_float m_fMoveUpMax;
-	
+
 	_float m_fRotateMax;
 	_float 	m_fRotate;
 

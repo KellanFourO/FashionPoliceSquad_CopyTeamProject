@@ -1,38 +1,31 @@
 #include "stdafx.h"
-#include "..\Header\Belt_NORMAL.h"
-#include "BeltState.h"
-#include "Belt_NORMAL.h"
-#include "Belt_ATTACK.h"
-#include "Belt_CHARGE.h"
+#include "Belt_ChargeAttack.h"
 
 #include "Export_System.h"
 #include "Export_Utility.h"
 
-//#include "BrifCase.h"
-//#include "..\Header\Belt_NORMAL_Walk.h"
-//#include "..\Header\Belt_NORMAL_Attack.h"
-
-CBelt_NORMAL::CBelt_NORMAL()
+CBelt_ChargeAttack::CBelt_ChargeAttack()
 {
 
 
 }
 
-CBelt_NORMAL::~CBelt_NORMAL()
+CBelt_ChargeAttack::~CBelt_ChargeAttack()
 {
 }
-void CBelt_NORMAL::Initialize(CBelt* Belt)
+void CBelt_ChargeAttack::Initialize(CBelt* Belt)
 {
     m_fBehaviorTime = 0.f;
     m_fMoveDownSum = - 0.1f;
     m_fRotationMax = D3DXToRadian(-30);
-    m_fRotate = D3DXToRadian(1);    
+    m_fRotate = D3DXToRadian(1);
     m_bAttack = false;
 
+    m_pHost = Belt;
     Belt->m_pTransformCom->Rotation(ROT_Z, m_fRotationMax);
 }
 
-CBeltState* CBelt_NORMAL::Update(CBelt* Belt, const float& fTimeDelta)
+CBeltState* CBelt_ChargeAttack::Update(CBelt* Belt, const float& fTimeDelta)
 {
     m_fBehaviorTime += fTimeDelta;
     if (m_fBehaviorTime >= 0.02f) {
@@ -43,22 +36,19 @@ CBeltState* CBelt_NORMAL::Update(CBelt* Belt, const float& fTimeDelta)
         }
     }
     if (!(Engine::Get_DIKeyState(DIK_LSHIFT) & 0x80)) {
-        return new CBelt_ATTACK;
+        return m_pHost->Get_State(1); // Attack;
     }
     if (m_fBehaviorTime >= 2.f) {
         if (Engine::Get_DIKeyState(DIK_LSHIFT) & 0x80) {
-            return new CBelt_CHARGE;
+            return m_pHost->Get_State(1);
         }
     }
 
-   
-    //return new CBelt_NORMAL;
-   
 
     return nullptr;
 }
 
-void CBelt_NORMAL::Release(CBelt* Belt)
+void CBelt_ChargeAttack::Release(CBelt* Belt)
 {
    // Belt->m_fBeltMoveRight = 4;
    //Belt->m_fBeltMoveDown = 1.5f;

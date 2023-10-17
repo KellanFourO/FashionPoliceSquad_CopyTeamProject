@@ -1,10 +1,10 @@
 #pragma once
 #include "BeltState.h"
-class CBelt_SWING : public CBeltState
+class CBelt_ChargeAttack : public CBeltState
 {
 public:
-	CBelt_SWING();
-	virtual ~CBelt_SWING();
+	CBelt_ChargeAttack();
+	virtual ~CBelt_ChargeAttack();
 
 public:
 	virtual void Initialize(CBelt* _Belt) override;
@@ -13,6 +13,11 @@ public:
 
 	_bool m_bAttack = false;
 
-	_vec3			m_vPrePos;
+	_float m_fMoveRightSum;
+	_float m_fMoveDownSum;
+	_float m_fRotationMax;
+	_float m_fRotate;
+
+	//_vec3			m_vPrePos;
 
 };
