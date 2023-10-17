@@ -316,5 +316,7 @@ CMainGame_Arrow* CMainGame_Arrow::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CMainGame_Arrow::Free()
 {
+
+
 	__super::Free();
 }

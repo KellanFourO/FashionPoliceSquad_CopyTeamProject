@@ -474,8 +474,8 @@
     </Filter>
     <Filter Include="02. GameObject\15. MiniGame\1. ARROW\4.Mini_TimeBar">
       <UniqueIdentifier>{2b2f9e73-e460-40db-90f4-c38169cd4ade}</UniqueIdentifier>
-	</Filter>
-	<Filter Include="02. GameObject\01. Player\99. PlayerState\09.Player_Dash">
+    </Filter>
+    <Filter Include="02. GameObject\01. Player\99. PlayerState\09.Player_Dash">
       <UniqueIdentifier>{a29000ab-32a9-4152-a45a-f3c57ad74b0b}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. GameObject\06. Effect\06.Dash">
@@ -1025,12 +1025,15 @@
     </ClInclude>
     <ClInclude Include="..\Header\Mini_Cursor.h">
       <Filter>02. GameObject\15. MiniGame\1. ARROW\3.Mini_Cursor</Filter>
-	</ClInclude>
-	<ClInclude Include="..\Header\Player_Dash.h">
+    </ClInclude>
+    <ClInclude Include="..\Header\Player_Dash.h">
       <Filter>02. GameObject\01. Player\99. PlayerState\09.Player_Dash</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\DashEffect.h">
       <Filter>02. GameObject\06. Effect\06.Dash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MainGame_KickBoard.h">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1567,12 +1570,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\Mini_TimeBar.cpp">
       <Filter>02. GameObject\15. MiniGame\1. ARROW\4.Mini_TimeBar</Filter>
-	</ClCompile>
-	<ClCompile Include="..\Code\Player_Dash.cpp">
+    </ClCompile>
+    <ClCompile Include="..\Code\Player_Dash.cpp">
       <Filter>02. GameObject\01. Player\99. PlayerState\09.Player_Dash</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\DashEffect.cpp">
       <Filter>02. GameObject\06. Effect\06.Dash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MainGame_KickBoard.cpp">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

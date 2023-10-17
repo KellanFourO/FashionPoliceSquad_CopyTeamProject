@@ -59,16 +59,11 @@ private:
 	_bool					m_ClearCheck = false;
 
 
-
-
 	//Å° ¾ÃÈû ¹æÁö¿ë
 	bool m_bUpPressed = false;
 	bool m_bDownPressed = false;
 	bool m_bLeftPressed = false;
 	bool m_bRightPressed = false;
-
-
-
 
 
 public:
