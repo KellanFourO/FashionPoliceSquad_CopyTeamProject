@@ -71,6 +71,7 @@ bool CInputDev::Key_Pressing(_ubyte byKeyID)
 bool CInputDev::Key_Down(_ubyte byKeyID)
 {
 	// 이전에는 눌린 적이 없고 현재 눌렸을 경우
+
 	if (!m_byKeyData[byKeyID] && (m_byKeyState[byKeyID] & 0x80))
 	{
 		m_byKeyData[byKeyID] = !m_byKeyData[byKeyID]; //true

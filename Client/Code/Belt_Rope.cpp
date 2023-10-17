@@ -49,34 +49,53 @@ CBeltState* CBelt_Rope::Update(CBelt* Belt, const float& fTimeDelta)
     fAngle = acosf(fAngle);
     fAngle = D3DXToDegree(fAngle);
 
-    _vec3 vRopeStartPos = vPlayerPos;
-    _float fRopeLength;
-
-    m_fRopeLength = fLength;
-    m_fRopeAngle = fAngle;
-
-    m_fTime += fTimeDelta;
-
-    vRopeStartPos.x = vPlayerPos.x + m_fRopeLength * sin(m_fRopeAngle + m_fAmplitude * sin(m_fFrequency * m_fTime));
-
-    m_vTargetPos = vRopeStartPos + _vec3(0.0f, -m_fRopeLength, 0.0f);
+    _float fForce = 1.f * m_pHost->Get_Host()->Get_INFO()->fMoveSpeed;
 
 
-    _float fTensionAccel = CalculateTensionAccel(m_vPlayerVelocity);
-    vPlayerPos = UpdatePlayerPos(vPlayerPos, m_vPlayerVelocity, fTensionAccel, fTimeDelta);
 
-    m_vPrevPlayerPos = vPlayerPos;
+     m_pHost->Get_Host()->Get_Transform()->Move_Pos(&vDir, fTimeDelta, fLength);
 
-    m_pHost->Get_HostTransform()->Set_Pos(vPlayerPos);
+	if (Key_Down(DIK_SPACE))
+	{
+        _vec3 vForce;
+        vForce = vDir * fLength;
 
-
-    if(Key_Down(DIK_SPACE))
-    {
-        _vec3 vAccel = {fTensionAccel,fTensionAccel,fTensionAccel};
-        m_pHost->Get_Host()->Get_RigidBody()->Add_Force(vAccel);
+        m_pHost->Get_Host()->Get_RigidBody()->Add_Force(vForce);
         return m_pHost->Get_State(0);
-
     }
+
+
+//     _vec3 vRopeStartPos = vPlayerPos;
+//     _float fRopeLength;
+//
+//     m_fRopeLength = fLength;
+//     m_fRopeAngle = fAngle;
+//
+//     m_fTime += fTimeDelta;
+//
+//     vRopeStartPos.x = vPlayerPos.x + m_fRopeLength * sin(m_fRopeAngle + m_fAmplitude * sin(m_fFrequency * m_fTime));
+//
+//     m_vTargetPos = vRopeStartPos + _vec3(0.0f, -m_fRopeLength, 0.0f);
+//
+//
+//     _float fTensionAccel = CalculateTensionAccel(m_vPlayerVelocity);
+//     vPlayerPos = UpdatePlayerPos(vPlayerPos, m_vPlayerVelocity, fTensionAccel, fTimeDelta);
+//
+//     m_vPrevPlayerPos = vPlayerPos;
+//
+//     m_pHost->Get_HostTransform()->Set_Pos(vPlayerPos);
+//     m_fTime = 0.f;
+//
+//
+//
+//
+//     if(Key_Down(DIK_SPACE))
+//     {
+//         _vec3 vAccel = {fTensionAccel,fTensionAccel,fTensionAccel};
+//         m_pHost->Get_Host()->Get_RigidBody()->Add_Force(vAccel);
+//         return m_pHost->Get_State(0);
+//
+//     }
 
     //_float fScala = D3DXVec3Dot(&v)
 
