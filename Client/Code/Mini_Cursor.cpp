@@ -34,38 +34,32 @@ HRESULT CMini_Cursor::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::BUFFER, pComponent);
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Mini_Player_Texture"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Mini_Cursor_Texture"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
 
 	return S_OK;
 }
 
-HRESULT CMini_Cursor::Ready_GameObject()
+HRESULT CMini_Cursor::Ready_GameObject(_vec3 pPos)
 {
 	D3DXMatrixIdentity(&m_ViewMatrix);
 	D3DXMatrixOrthoLH(&m_ProjMatrix, WINCX, WINCY, 0.0f, 100.f);
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
+	m_pTransformCom->Set_Pos(pPos);
+
 	_vec3 vPos, vScale;
-	_float fMultiply = 0.2f;
+	_float fMultiply = 1.f;
 
-	vPos = { 150.f, 50.f, 0.f };
-	vScale = { 283.f * fMultiply, 251.f * fMultiply, 1.f };
-
-	vPos.x = vPos.x - WINCX * 0.5f;
-	vPos.y = -vPos.y + WINCY * 0.5f;
+	vScale = { 26.f * fMultiply, 26.f * fMultiply, 1.f };
 
 	m_pTransformCom->Set_Scale(vScale);
-	m_pTransformCom->Set_Pos(vPos);
 
 	// -1 ~ 1 -> 0 ~ 2
 
-	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/MiniGame/3_KickBoard/portrait-notneon_des", 1);
 	return S_OK;
 }
-
-
 
 
 _int CMini_Cursor::Update_GameObject(const _float& fTimeDelta)
@@ -94,7 +88,7 @@ void CMini_Cursor::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
 
-	m_pTextureCom->Render_Textrue(m_iTextureIndex);
+	m_pTextureCom->Render_Textrue(0);
 	m_pBufferCom->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
@@ -102,17 +96,20 @@ void CMini_Cursor::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 }
 
+void CMini_Cursor::Set_Pos_ArrowPoint(_vec3 ArrowPoint)
+{
+	m_pTransformCom->Set_Pos(ArrowPoint);
+}
 
-
-CMini_Cursor* CMini_Cursor::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CMini_Cursor* CMini_Cursor::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 pPos)
 {
 	CMini_Cursor* pInstance = new CMini_Cursor(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_GameObject()))
+	if (FAILED(pInstance->Ready_GameObject(pPos)))
 	{
 		Safe_Release(pInstance);
 
-		MSG_BOX("MINIGame_Player Create Fail");
+		MSG_BOX("MINIGame_Cursor Create Fail");
 		return nullptr;
 	}
 

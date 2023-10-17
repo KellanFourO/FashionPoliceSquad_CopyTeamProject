@@ -55,45 +55,53 @@ void CEventMgr::OnPause(_bool bPause, SCENETAG eSceneTag)
 	}
 }
 
-void CEventMgr::OnMiniGame_Arrow(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag)
+HRESULT CEventMgr::OnMiniGame_Arrow(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag)
 {
 	vector<CGameObject*> TempVector = Management()->Get_One_Scene(eSceneTag)->Get_Layer(LAYERTAG::MINIGAME)->Get_ObjectList(OBJECTTAG::MINIGAME);
 	TempVector.clear();
 
+	Set_MiniGameReadyCheck(0, FALSE);  //다시 못 들어오게 
+
 	pGame_Arrow = Engine::CMainGame_Arrow::Create(pGraphicDev);
+	NULL_CHECK_RETURN(pGame_Arrow, E_FAIL);
 
 	OnPause(TRUE, SCENETAG::LOBBY);
 	
 	Management()->Get_One_Scene(eSceneTag)->Get_Layer(LAYERTAG::MINIGAME)->Add_GameObject(OBJECTTAG::MINIGAME, pGame_Arrow);
+	
+	return S_OK;
 }
 
-void CEventMgr::OnMiniGame_KickBoard(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag)
+HRESULT CEventMgr::OnMiniGame_KickBoard(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag)
 {
 	m_bMiniGame_ClearCheck[1] = true;
 	//OnPause(FALSE, SCENETAG::LOBBY);
+	return S_OK;
 }
 
-void CEventMgr::OnMiniGame_Quiz(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag)
+HRESULT CEventMgr::OnMiniGame_Quiz(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag)
 {
 	m_bMiniGame_ClearCheck[2] = true;
 	//OnPause(FALSE, SCENETAG::LOBBY);
+	return S_OK;
 }
 
 
 
 
-void CEventMgr::OffMiniGame_Arrow(SCENETAG eSceneTag)
+HRESULT CEventMgr::OffMiniGame_Arrow(SCENETAG eSceneTag)
 {
 	Set_MiniGameClearCheck(0, TRUE);
 	OnPause(FALSE, SCENETAG::LOBBY);	
+	return S_OK;
 }
-void CEventMgr::OffMiniGame_KickBoard(SCENETAG eSceneTag)
+HRESULT CEventMgr::OffMiniGame_KickBoard(SCENETAG eSceneTag)
 {
-
+	return S_OK;
 }
-void CEventMgr::OffMiniGame_Quiz(SCENETAG eSceneTag)
+HRESULT CEventMgr::OffMiniGame_Quiz(SCENETAG eSceneTag)
 {
-
+	return S_OK;
 }
 
 

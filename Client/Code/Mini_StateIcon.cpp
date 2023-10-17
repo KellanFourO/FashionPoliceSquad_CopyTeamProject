@@ -42,31 +42,11 @@ HRESULT CMini_StateIcon::Add_Component()
 	return S_OK;
 }
 
-HRESULT CMini_StateIcon::Change_State()
+HRESULT CMini_StateIcon::Change_State(_int m_iTex)
 {
-	if (m_TimingCheck < 100)
-	{
-		m_iTextureIndex = 0;
-	}
-	else if ((m_TimingCheck >= 100) && (m_TimingCheck < 200))
-	{
-		m_iTextureIndex = 1;
-	}
-	else if ((m_TimingCheck >= 200) && (m_TimingCheck < 300))
-	{
-		m_iTextureIndex = 2;
-	}
-	else if ((m_TimingCheck >= 300) && (m_TimingCheck < 400))
-	{
-		m_iTextureIndex = 3;
-	}
-	else if (m_TimingCheck >= 400)
-	{
-		m_TimingCheck = 0;
-	}
+	m_iTexIndex = m_iTex;
 
-	m_TimingCheck++;
-	return E_NOTIMPL;
+	return S_OK;
 }
 
 HRESULT CMini_StateIcon::Ready_GameObject()
@@ -79,7 +59,7 @@ HRESULT CMini_StateIcon::Ready_GameObject()
 	_float fMultiply = 1.f;
 
 	vPos = { 400.f, 300.f, 0.f };
-	vScale = { 150.f * fMultiply, 150.f * fMultiply, 1.f };
+	vScale = { 180.f * fMultiply, 180.f * fMultiply, 1.f };
 
 	vPos.x = vPos.x - WINCX * 0.5f;
 	vPos.y = -vPos.y + WINCY * 0.5f;
@@ -98,8 +78,6 @@ HRESULT CMini_StateIcon::Ready_GameObject()
 
 _int CMini_StateIcon::Update_GameObject(const _float& fTimeDelta)
 {
-
-	Change_State();
 
 	Engine::Add_RenderGroup(RENDER_UI, this);
 	int iExit = __super::Update_GameObject(fTimeDelta);
@@ -125,7 +103,7 @@ void CMini_StateIcon::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
 
-	m_pTextureCom->Render_Textrue(m_iTextureIndex);
+	m_pTextureCom->Render_Textrue(m_iTexIndex);
 	m_pBufferCom->Render_Buffer();
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);

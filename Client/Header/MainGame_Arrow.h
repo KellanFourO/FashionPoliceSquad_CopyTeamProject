@@ -22,6 +22,8 @@ private:
 	virtual		~CMainGame_Arrow();
 
 public:
+	enum MINIGAME_ARROW_STATEICON { STATEICON_NOP = 0, STATEICON_NORMAL, STATEICON_GOOD, STATEICON_PERPECT };
+
 	virtual HRESULT			Ready_GameObject();
 	virtual void			Render_GameObject() override;
 	virtual _int			Update_GameObject(const _float& fTimeDelta) override;
@@ -29,6 +31,7 @@ public:
 
 private:
 	HRESULT					Add_Component();
+	HRESULT					State_Icon_Update();
 	void					KeyInput();
 
 private:
@@ -38,18 +41,34 @@ private:
 
 	_matrix					m_matProj, m_matView;
 
+	_bool					m_NOP_Mode = false; //Æ²·ÈÀ½!
+	_int					m_iCountNop = 0;
+
 	_int					m_ArrowCount = 30;
 
 	//CMini_Arrow*			m_pArrow = nullptr;
 	CMini_StateIcon*		m_pStateIcon = nullptr;
 	CMini_Cursor*			m_pCursor = nullptr;
 	CMini_TimeBar*			m_pTimeBar = nullptr;
+	CMini_TimeBar*			m_pTimeBar2 = nullptr;
 
-	vector<CMini_Arrow*>		m_pVecArrow;
+	vector<CMini_Arrow*>	m_pVecArrow;
 
-
+	MINIGAME_ARROW_TYPE		m_myKeyType = MINIGAME_ARROW_TYPE::MINIGAME_ARROW_END;
 
 	_bool					m_ClearCheck = false;
+
+
+
+
+	//Å° ¾ÃÈû ¹æÁö¿ë
+	bool m_bUpPressed = false;
+	bool m_bDownPressed = false;
+	bool m_bLeftPressed = false;
+	bool m_bRightPressed = false;
+
+
+
 
 
 public:

@@ -24,6 +24,9 @@ public:
 	virtual void		LateUpdate_GameObject() override;
 	virtual void		Render_GameObject() override;
 
+	_vec3				Get_ArrowPos() { return m_vPos; }
+	MINIGAME_ARROW_TYPE	Get_AroowType() { return m_eArrowType; }
+
 private:
 	HRESULT				Add_Component();
 
@@ -38,6 +41,8 @@ private:
 
 	_int					m_iTextureIndex = 0; //몇 번째 텍스쳐
 	_int					m_iArrowIndex;
+
+	_vec3					m_vPos;
 
 	MINIGAME_ARROW_TYPE		m_eArrowType = MINIGAME_ARROW_TYPE::MINIGAME_ARROW_END;
 

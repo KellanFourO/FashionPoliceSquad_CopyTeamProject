@@ -22,24 +22,24 @@ public:
 	virtual _int		Update_GameObject(const _float& fTimeDelta) override;
 	virtual void		LateUpdate_GameObject() override;
 	virtual void		Render_GameObject() override;
+	
+	HRESULT				Change_State(_int m_iTex);
 
 private:
 	HRESULT				Add_Component();
-	HRESULT				Change_State();
 
 private:
 	CUITex*					m_pBufferCom = nullptr;
 	CTexture*				m_pTextureCom = nullptr;
 	CTransform*				m_pTransformCom = nullptr;
 
-	_int					m_iTextureIndex = 0;
+	_int					m_iTexIndex = 0;
 
 private:
 	_float					m_fX, m_fY, m_fSizeX, m_fSizeY;
 	_matrix					m_ViewMatrix, m_ProjMatrix;
 
 	_bool					m_ClearCheck = false;
-	_uint					m_TimingCheck = false; //Render Test¿ë
 
 public:
 	static CMini_StateIcon* Create(LPDIRECT3DDEVICE9 pGraphicDev);

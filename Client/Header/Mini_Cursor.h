@@ -18,10 +18,13 @@ private:
 	virtual				~CMini_Cursor();
 
 public:
-	virtual HRESULT		Ready_GameObject() override;
+	virtual HRESULT		Ready_GameObject(_vec3 pPos);
 	virtual _int		Update_GameObject(const _float& fTimeDelta) override;
 	virtual void		LateUpdate_GameObject() override;
 	virtual void		Render_GameObject() override;
+
+	CTransform*&		Get_TransformCom() { return m_pTransformCom; }
+	void				Set_Pos_ArrowPoint(_vec3 ArrowPoint);
 
 private:
 	HRESULT				Add_Component();
@@ -40,7 +43,7 @@ private:
 
 
 public:
-	static CMini_Cursor* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CMini_Cursor* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 pPos);
 private:
 	virtual void		 Free();
 

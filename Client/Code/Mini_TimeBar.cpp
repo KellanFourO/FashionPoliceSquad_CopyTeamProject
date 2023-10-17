@@ -34,7 +34,7 @@ HRESULT CMini_TimeBar::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::BUFFER, pComponent);
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Mini_Player_Texture"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Mini_TimeBar_Texture"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
 
@@ -48,28 +48,47 @@ HRESULT CMini_TimeBar::Ready_GameObject()
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	_vec3 vPos, vScale;
-	_float fMultiply = 0.2f;
+	_float fMultiply = 1.f;
 
-	vPos = { 150.f, 50.f, 0.f };
-	vScale = { 283.f * fMultiply, 251.f * fMultiply, 1.f };
+	vPos = { 200.f, 300.f, 0.f };
+	vScale = { 15.f * fMultiply, 150.f * fMultiply, 1.f };
 
 	vPos.x = vPos.x - WINCX * 0.5f;
 	vPos.y = -vPos.y + WINCY * 0.5f;
+
+	m_vStartPos = vPos;
+	m_vStartScale = vScale;
 
 	m_pTransformCom->Set_Scale(vScale);
 	m_pTransformCom->Set_Pos(vPos);
 
 	// -1 ~ 1 -> 0 ~ 2
 
-	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/MiniGame/3_KickBoard/portrait-notneon_des", 1);
 	return S_OK;
 }
 
 
 
+void CMini_TimeBar::Time_Count()
+{
+	if ((m_fTimeCount > 0) && (m_iTextureIndex == 1)) {
+		m_fTimeCount-= 0.25f;
+
+		_vec3 vPos, vScale;
+
+		vPos = { m_vStartPos.x, (m_vStartPos.y - (m_fTimeFullCount - m_fTimeCount)), m_vStartPos.z };
+		vScale = { m_vStartScale.x, (m_vStartScale.y - (m_fTimeFullCount - m_fTimeCount)), m_vStartScale.z };
+
+		m_pTransformCom->Set_Pos(vPos);
+		m_pTransformCom->Set_Scale(vScale);
+	}
+}
+
 
 _int CMini_TimeBar::Update_GameObject(const _float& fTimeDelta)
 {
+	Time_Count();
+
 	Engine::Add_RenderGroup(RENDER_UI, this);
 	int iExit = __super::Update_GameObject(fTimeDelta);
 
@@ -104,9 +123,11 @@ void CMini_TimeBar::Render_GameObject()
 
 
 
-CMini_TimeBar* CMini_TimeBar::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CMini_TimeBar* CMini_TimeBar::Create(LPDIRECT3DDEVICE9 pGraphicDev, int m_iText)
 {
 	CMini_TimeBar* pInstance = new CMini_TimeBar(pGraphicDev);
+
+	pInstance->Set_TextureNumber(m_iText);
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{

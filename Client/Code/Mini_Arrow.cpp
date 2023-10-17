@@ -96,6 +96,8 @@ HRESULT CMini_Arrow::Ready_GameObject(int iRandomNumber)
 	vPos.x = vPos.x - WINCX * 0.5f;
 	vPos.y = -vPos.y + WINCY * 0.5f;
 
+	m_vPos = vPos;
+
 	m_pTransformCom->Set_Scale(vScale);
 	m_pTransformCom->Set_Pos(vPos);
 
@@ -153,7 +155,7 @@ CMini_Arrow* CMini_Arrow::Create(LPDIRECT3DDEVICE9 pGraphicDev, _int iIndex, _in
 	{
 		Safe_Release(pInstance);
 
-		MSG_BOX("MINIGame_Player Create Fail");
+		MSG_BOX("MINIGame_Arrow Create Fail");
 		return nullptr;
 	}
 
