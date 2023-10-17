@@ -46,7 +46,7 @@ HRESULT CStage::Ready_Scene()
 	//TODO - 승용추가 크로스헤어 추가, 기본 커서 안보이게
 	ShowCursor(FALSE);
 
-	//CSoundMgr::GetInstance()->PlayBGM(L"MainBGM1.wav", 0.15);
+	CSoundMgr::GetInstance()->PlayBGM(L"MainBGM1.wav", 0.15);
 
 	return S_OK;
 }
