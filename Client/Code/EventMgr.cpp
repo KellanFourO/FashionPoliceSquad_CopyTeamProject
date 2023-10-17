@@ -117,10 +117,12 @@ HRESULT CEventMgr::OffMiniGame_KickBoard(SCENETAG eSceneTag, _bool ClearCheck)
 	if (ClearCheck == true)
 	{
 		Set_MiniGameClearCheck(1, TRUE);
+		Set_MiniGameReadyCheck(2, TRUE); //다음 놈 도전용
 		OnPause(FALSE, SCENETAG::LOBBY);
 	}
 	if (ClearCheck == false)
 	{
+		Set_MiniGameClearCheck(1, FALSE);
 		Set_MiniGameReadyCheck(1, TRUE); //재도전 해야 하니까
 		OnPause(FALSE, SCENETAG::LOBBY);
 	}

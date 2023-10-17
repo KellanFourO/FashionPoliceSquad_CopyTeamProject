@@ -27,15 +27,15 @@ HRESULT CMainGame_KickBoard::Ready_GameObject()
 	D3DXMatrixOrthoLH(&m_matProj, WINCX, WINCY, 0.0f, 100.0f);
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	//TimeBar 만들기
-// 	m_pTimeBar2 = CMini_TimeBar::Create(m_pGraphicDev, 1);
-// 	NULL_CHECK_RETURN(m_pTimeBar2, E_FAIL);
+	//Player 만들기
+	m_pPlayer = CMini_Player::Create(m_pGraphicDev);
+ 	NULL_CHECK_RETURN(m_pPlayer, E_FAIL);
 
 	_vec3 vPos, vScale;
 	_float fMultiply = 1.f;
 
-	vPos = { 400.f, 300.f, 0.f };
-	vScale = { 250.f * fMultiply, 250.f * fMultiply, 1.f };
+	vPos = { 400.f, 370.f, 0.f };
+	vScale = { 300.f * fMultiply, 200.f * fMultiply, 1.f };
 
 	vPos.x = vPos.x - WINCX * 0.5f;
 	vPos.y = -vPos.y + WINCY * 0.5f;
@@ -67,8 +67,10 @@ void CMainGame_KickBoard::Render_GameObject()
 		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 
-// 		m_pStateIcon->Render_GameObject();
-// 
+
+
+ 		m_pPlayer->Render_GameObject();
+ 
 	}
 }
 
@@ -85,8 +87,9 @@ _int CMainGame_KickBoard::Update_GameObject(const _float& fTimeDelta)
 
  		__super::Update_GameObject(fTimeDelta);
 
-// 		m_pStateIcon->Update_GameObject(fTimeDelta);
-// 
+
+ 		m_pPlayer->Update_GameObject(fTimeDelta);
+ 
 	}
 
 	return _int();
@@ -97,12 +100,15 @@ void CMainGame_KickBoard::LateUpdate_GameObject()
 	if (!m_ClearCheck) {
 		CGameObject::LateUpdate_GameObject();
 
-// 		m_pStateIcon->LateUpdate_GameObject();
-// 
-// 		if (m_pTimeBar2->Get_TimeOverCheck() == true)
-// 		{
-// 			m_eGameState = CMainGame_KickBoard::ArrowGameState::LOSE;
-// 		}
+ 		
+		m_pPlayer->LateUpdate_GameObject();
+ 
+
+		
+		//if (m_pTimeBar2->Get_TimeOverCheck() == true)
+ 		//{
+ 		//	m_eGameState = CMainGame_KickBoard::ArrowGameState::LOSE;
+ 		//}
 	}
 }
 
@@ -147,10 +153,39 @@ void CMainGame_KickBoard::KeyInput()
 {
 	if (Engine::Get_DIKeyState(DIK_RETURN) & 0x80)
 	{
-		CEventMgr::GetInstance()->OffMiniGame_Arrow(SCENETAG::LOBBY, true);
+		CEventMgr::GetInstance()->OffMiniGame_KickBoard(SCENETAG::LOBBY, true);
 	}
 
+	if (Engine::Get_DIKeyState(DIK_RIGHT) & 0x80 ||
+		Engine::Get_DIKeyState(DIK_LEFT) & 0x80)
+	{
+		//_vec3 DirTemp = m_pPlayer->Get_Player_Dir();
 
+		if (Engine::Get_DIKeyState(DIK_RIGHT) & 0x80 && !m_bLeftPressed)
+		{
+			m_bLeftPressed = true;
+
+// 			if (DirTemp == DIK_RIGHT)
+// 			{
+// 
+// 			}
+
+
+		}
+		if (Engine::Get_DIKeyState(DIK_LEFT) & 0x80 && !m_bRightPressed)
+		{
+			m_bRightPressed = true;
+		}
+	}
+
+	if (!(Engine::Get_DIKeyState(DIK_UP) & 0x80))
+	{
+		m_bLeftPressed = false;
+	}
+	if (!(Engine::Get_DIKeyState(DIK_DOWN) & 0x80))
+	{
+		m_bRightPressed = false;
+	}
 }
 
 CMainGame_KickBoard* CMainGame_KickBoard::Create(LPDIRECT3DDEVICE9 pGraphicDev)

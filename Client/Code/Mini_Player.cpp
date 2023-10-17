@@ -41,6 +41,25 @@ HRESULT CMini_Player::Add_Component()
 	return S_OK;
 }
 
+void CMini_Player::Set_Move()
+{
+	if (m_ePlayer_Dir == MINIGAME_Player_Dir::LEFT)
+	{ 
+		m_PlayerPos.x -= fSpeed;
+
+	}
+	else if (m_ePlayer_Dir == MINIGAME_Player_Dir::RIGHT)
+	{
+		m_PlayerPos.x += fSpeed;
+	}
+
+	m_pTransformCom->Set_Pos(m_PlayerPos);
+}
+
+void CMini_Player::Set_Dir()
+{
+}
+
 HRESULT CMini_Player::Ready_GameObject()
 {
 	D3DXMatrixIdentity(&m_ViewMatrix);
@@ -48,25 +67,24 @@ HRESULT CMini_Player::Ready_GameObject()
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	_vec3 vPos, vScale;
-	_float fMultiply = 0.2f;
+	_float fMultiply = 1.f;
 
-	vPos = { 150.f, 50.f, 0.f };
-	vScale = { 283.f * fMultiply, 251.f * fMultiply, 1.f };
+	vPos = { 400.f, 400.f, 0.f };
+	vScale = { 30.f * fMultiply, 30.f * fMultiply, 1.f };
 
 	vPos.x = vPos.x - WINCX * 0.5f;
 	vPos.y = -vPos.y + WINCY * 0.5f;
+
+	m_PlayerPos = vPos;
+	m_PlayerScale = vScale;
 
 	m_pTransformCom->Set_Scale(vScale);
 	m_pTransformCom->Set_Pos(vPos);
 
 	// -1 ~ 1 -> 0 ~ 2
 
-	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/MiniGame/3_KickBoard/portrait-notneon_des", 1);
 	return S_OK;
 }
-
-
-
 
 _int CMini_Player::Update_GameObject(const _float& fTimeDelta)
 {

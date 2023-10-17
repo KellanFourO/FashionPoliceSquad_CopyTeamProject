@@ -26,6 +26,10 @@ public:
 private:
 	HRESULT				Add_Component();
 
+public:
+	MINIGAME_Player_Dir Get_Player_Dir() { return m_ePlayer_Dir; }
+	void				Set_Move();
+	void				Set_Dir();
 
 private:
 	CUITex*					m_pBufferCom = nullptr;
@@ -34,10 +38,15 @@ private:
 
 	_int					m_iTextureIndex = 1;
 
+	_vec3					m_PlayerPos;
+	_vec3					m_PlayerScale;
+	_float					fSpeed = 1.f;
+
 private:
 	_float					m_fX, m_fY, m_fSizeX, m_fSizeY;
 	_matrix					m_ViewMatrix, m_ProjMatrix;
 
+	MINIGAME_Player_Dir		m_ePlayer_Dir = MINIGAME_Player_Dir::RIGHT;
 
 public:
 	static CMini_Player* Create(LPDIRECT3DDEVICE9 pGraphicDev);

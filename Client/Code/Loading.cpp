@@ -63,7 +63,8 @@ _uint CLoading::Loading_For_Stage()
 	Set_Value(3);
 	
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_MainGame_KickBoard_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/MiniGame/3_KickBoard/BackGround.png", 1)), E_FAIL);
-	
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Mini_Player_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/MiniGame/3_KickBoard/neon_des%d.png", 4)), E_FAIL);
+
 	Set_Value(3);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_SYTex", CSYTex::Create(m_pGraphicDev)), E_FAIL);

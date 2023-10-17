@@ -39,7 +39,7 @@ private:
 	_matrix					m_matProj, m_matView;
 
 	CMini_Player*			m_pPlayer = nullptr;
-	//vector<CMini_Arrow*>	m_pVecArrow;
+
 
 	KickBoard_GameState		m_eGameState = KickBoard_GameState::State_END;
 
