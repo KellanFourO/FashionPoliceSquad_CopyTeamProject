@@ -28,7 +28,6 @@ CBigDaddyMonster::~CBigDaddyMonster()
 
 HRESULT CBigDaddyMonster::Ready_GameObject()
 {
-	//Set_ObjectTag(OBJECTTAG::MONSTER);
 	__super::Ready_GameObject();
 
 	Set_ObjectTag(OBJECTTAG::MONSTER);

@@ -289,7 +289,6 @@ namespace Engine
 		_vec3 vRayDir;
 	}RAY;
 
-
 }
 
 #endif // Engine_Struct_h__

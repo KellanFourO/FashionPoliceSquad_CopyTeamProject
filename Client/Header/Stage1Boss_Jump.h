@@ -1,5 +1,6 @@
 #pragma once
 #include "Stage1BossState.h"
+#include "Engine_Define.h"
 class CStage1Boss_Jump : public CStage1BossState
 {
 public:

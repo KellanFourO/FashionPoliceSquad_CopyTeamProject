@@ -27,7 +27,6 @@ CBossBigDaddy::~CBossBigDaddy()
 
 HRESULT CBossBigDaddy::Ready_GameObject()
 {
-	//Set_ObjectTag(OBJECTTAG::MONSTER);
 	__super::Ready_GameObject();
 
 	Set_ObjectTag(OBJECTTAG::MONSTER);
@@ -45,19 +44,19 @@ HRESULT CBossBigDaddy::Ready_GameObject()
 	m_fDectedRange = 150.f; //! 탐색 범위
 	m_fAttackRange = 100.f; //! 공격 범위
 
-	m_pTransformCom->Set_Scale({ 5.0f,5.0f,5.0f });
+	m_pTransformCom->Set_Scale({ 3.0f,3.0f,3.0f });
 
 	//Set_Pos((_vec3{ 120.f,4.f,28.f }));
-	m_pTransformCom->Set_Pos((_vec3{ 198.5f,10.0f,235.5f }));
+	//m_pTransformCom->Set_Pos((_vec3{ 198.5f,10.0f,235.5f }));
 
 	m_pBufferCom->SetCount(4, 1);
-	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/Monster/loose-suit-boss1-sprites.png", 1);
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/Monster/loose-suit-bossHit.png", 1);
 
 	m_pCollider->Set_Host(this);
 	m_pCollider->Set_Transform(m_pTransformCom);
-	m_pRigidBody->Set_Host(this);
-	m_pRigidBody->Set_Transform(m_pTransformCom);
-
+	
+	_vec3 vPos = Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::BOSS).back()->m_pTransformCom->m_vInfo[INFO_POS];
+	m_pTransformCom->Set_Pos(vPos);
 
 	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
 	m_eHitType = BULLETTYPE::ASSERTRIFLE_BULLET;
@@ -69,6 +68,8 @@ HRESULT CBossBigDaddy::Ready_GameObject()
 
 _int CBossBigDaddy::Update_GameObject(const _float& fTimeDelta)
 {
+	_vec3 vPos = Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::BOSS).back()->m_pTransformCom->m_vInfo[INFO_POS];
+	m_pTransformCom->Set_Pos(vPos);
 	__super::Update_GameObject(fTimeDelta);
 
 	return OBJ_NOEVENT;
@@ -153,13 +154,9 @@ HRESULT CBossBigDaddy::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_DYNAMIC].emplace(COMPONENTTAG::TRANSFORM, pComponent);
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_suit"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_BossBigDaddy"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
-
-	pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(Engine::Clone_Proto(L"Proto_Calculator"));
-	NULL_CHECK_RETURN(pComponent, E_FAIL);
-	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::CALCULATOR, pComponent);
 
 	pComponent = m_pCollider = dynamic_cast<CCollider*>(Engine::ProtoMgr()->Clone_Proto(L"Proto_Collider"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);

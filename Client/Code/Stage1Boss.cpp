@@ -192,6 +192,7 @@ void CStage1Boss::PhaseChange()
 	if (fRatio < 0.6 && fRatio > 0.3)
 	{
 		dynamic_cast<CStage1BossState*>(INFO.MonsterState)->m_ePhase = BOSSPHASE::PHASE_2;
+		
 	}
 	else if (fRatio < 0.3)
 	{

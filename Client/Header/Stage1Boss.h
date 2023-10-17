@@ -55,7 +55,8 @@ private:
 
 public:
 	static CStage1Boss*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
-
+public:
+	
 private:
 	virtual void Free();
 };

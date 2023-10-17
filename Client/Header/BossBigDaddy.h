@@ -10,7 +10,7 @@ class CMonsterState;
 
 class CBossBigDaddy : public CMonster
 {
-	enum BIGDADDYSTATE { IDLE, CHASE, ATTACK, DEAD, BIGDADDYSTATE_END };
+	enum BIGDADDYSTATE { IDLE, ATTACK, DEAD, BIGDADDYSTATE_END };
 
 private:
 	explicit			CBossBigDaddy(LPDIRECT3DDEVICE9 pGraphicDev);
