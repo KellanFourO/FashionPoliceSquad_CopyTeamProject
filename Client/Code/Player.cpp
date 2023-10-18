@@ -708,7 +708,8 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 {
 	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE ||
 		(_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ &&
-			_pOther->Get_OBJAttribute() != OBJ_ATTRIBUTE::ForPaint_OBJ))
+			_pOther->Get_OBJAttribute() != OBJ_ATTRIBUTE::ForPaint_OBJ&&
+			_pOther->Get_OBJAttribute() != OBJ_ATTRIBUTE::C_POINT_OBJ))
 	{
 
 		_vec3	vOtherPos = _pOther->GetCenterPos();
@@ -823,7 +824,8 @@ void CPlayer::OnCollisionStay(CCollider* _pOther)
 
 	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE||
 		(_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ &&
-			_pOther->Get_OBJAttribute() != OBJ_ATTRIBUTE::ForPaint_OBJ) )
+			_pOther->Get_OBJAttribute() != OBJ_ATTRIBUTE::ForPaint_OBJ &&
+			_pOther->Get_OBJAttribute() != OBJ_ATTRIBUTE::C_POINT_OBJ))
 	{
 
 		_vec3	vOtherPos = _pOther->GetCenterPos();

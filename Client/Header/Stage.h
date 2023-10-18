@@ -87,6 +87,7 @@ private:
 	HRESULT				Ready_Layer_UI(LAYERTAG eLayerTag);
 	
 	HRESULT				Trigger_Check_For_Create_Monster();
+	HRESULT				Create_Monster(int iNum);
 
 private:
 	CLayer*				m_pLayer = nullptr;  //Environment
@@ -122,6 +123,9 @@ private:
 	SORTTEX*						m_defSortTex = nullptr; //텍스쳐 정렬용
 	vector<SORTTEX*>				m_pTexForSort;			//텍스쳐 정렬용
 
+	bool							m_bFirstCreat = false;
+	bool							m_bSecondCreat = false;
+	bool							m_bThirdCreat = false;
 
 	/////////////////////승용 함수, 변수/////////////////////////////////
 public:
