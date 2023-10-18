@@ -70,6 +70,11 @@ Engine::_int Engine::CMonsterHPBar::Update_GameObject(const _float& fTimeDelta)
 	m_pTransformCom->m_vScale.y = m_vScale.y;
 	m_pTransformCom->m_vScale.z = m_vScale.z;
 
+	if (m_pMonster && m_pMonster->Get_Info().bDead)
+	{
+		return OBJ_DEAD;
+	}
+
 	m_pTransformCom->m_vInfo[INFO_POS].x = m_pMonster->Get_Transform()->m_vInfo[INFO_POS].x + fResult;
 	m_pTransformCom->m_vInfo[INFO_POS].y = m_pMonster->Get_Transform()->m_vInfo[INFO_POS].y + 5.f;
 	m_pTransformCom->m_vInfo[INFO_POS].z = m_pMonster->Get_Transform()->m_vInfo[INFO_POS].z;

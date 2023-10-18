@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Monster.h"
 #include "Export_Utility.h"
+#include "Stage1Boss.h"
 
 CBullet::CBullet(LPDIRECT3DDEVICE9 pGraphicDev):CGameObject(pGraphicDev)
 {
@@ -110,7 +111,11 @@ void CBullet::OnCollisionEnter(CCollider* _pOther)
 	else if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BOSS)
 	{
 		//TODO 몬스터 총알 오브젝트 풀링 할거면 여기서
-		dynamic_cast<CMonster*>(_pOther->Get_Host())->Attacked(m_fDmg);
+		if (!CStage1Boss::m_bBossPhase2)
+		{
+			dynamic_cast<CMonster*>(_pOther->Get_Host())->Attacked(m_fDmg);
+
+		}
 		m_bDead = true;
 	}
 

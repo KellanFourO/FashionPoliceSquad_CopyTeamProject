@@ -19,7 +19,7 @@
 #include "MonsterBombEffect.h"
 #include "BossState.h"
 
-
+_bool CStage1Boss::m_bBossPhase2 = false;
 CStage1Boss::CStage1Boss(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {
@@ -57,7 +57,7 @@ HRESULT CStage1Boss::Ready_GameObject()
 	m_pBufferCom->SetCount(5, 5);
 
 	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/Monster/boss 1 - hugo bauss sprite1_Hit.png", 1);
-	
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/Monster/hugo bauss transformed1.png", 1);
 
 
 	m_pCollider->Set_Host(this);

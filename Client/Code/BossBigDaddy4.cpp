@@ -68,9 +68,25 @@ HRESULT CBossBigDaddy4::Ready_GameObject()
 
 _int CBossBigDaddy4::Update_GameObject(const _float& fTimeDelta)
 {
-	_vec3 vPos = Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::BOSS).back()->m_pTransformCom->m_vInfo[INFO_POS];
-	_vec3 SettingPos = { vPos.x +8.f,vPos.y -10.f,vPos.z };
-	m_pTransformCom->Set_Pos(SettingPos);
+	_vec3 vBossPos = Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::BOSS).back()->m_pTransformCom->m_vInfo[INFO_POS];
+	_vec3 vBossLook = Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::BOSS).back()->m_pTransformCom->m_vInfo[INFO_LOOK];
+	_vec3 vBossUp = Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::BOSS).back()->m_pTransformCom->m_vInfo[INFO_UP];
+
+	D3DXVec3Normalize(&vBossLook, &vBossLook);
+	_vec3 vBossLeft;
+
+	D3DXVec3Cross(&vBossLeft, &vBossUp, &vBossLook);
+	D3DXVec3Normalize(&vBossUp, &vBossUp);
+	D3DXVec3Normalize(&vBossLeft, &vBossLeft);
+
+	_vec3 vBossRight = -vBossLeft;
+	_vec3 vBossDown = -vBossUp;
+
+	_vec3 vStartPos = vBossPos + (vBossLook * 1.5f) + (vBossLeft * 8.f) + (vBossDown *10.f);
+
+	m_pTransformCom->Set_Pos(vStartPos);
+
+	//m_pTransformCom->Set_Rotate(ROT_Y, vBossAngle);
 	__super::Update_GameObject(fTimeDelta);
 	if (INFO.bDead) {
 		//CMonsterBombEffect* MBEffect = CMonsterBombEffect::Create(m_pGraphicDev);
@@ -86,6 +102,9 @@ _int CBossBigDaddy4::Update_GameObject(const _float& fTimeDelta)
 		CStage1Boss_BrifBigShield::m_bcheck4 = true;
 		return OBJ_DEAD;
 	}   // »ç¸ÁÆÇÁ¤
+
+	Add_RenderGroup(RENDER_ALPHATEST, this);
+
 	return OBJ_NOEVENT;
 }
 

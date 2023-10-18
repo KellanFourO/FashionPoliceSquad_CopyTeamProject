@@ -8,6 +8,7 @@
 #include "BossBigDaddy2.h"
 #include "BossBigDaddy3.h"
 #include "BossBigDaddy4.h"
+#include "Stage1Boss.h"
 
 bool CStage1Boss_BrifBigShield::m_bcheck1 = false;
 bool CStage1Boss_BrifBigShield::m_bcheck2 = false;
@@ -28,6 +29,7 @@ CStage1Boss_BrifBigShield::~CStage1Boss_BrifBigShield()
 
 void CStage1Boss_BrifBigShield::Initialize(CMonster* _Monster)
 {
+	CStage1Boss::m_bBossPhase2 = true;
 	m_pHost = _Monster;
 
 	
@@ -67,7 +69,7 @@ CMonsterState* CStage1Boss_BrifBigShield::Update(CMonster* Monster, const float&
 		if (m_fTick > 1)
 		{
 			++m_fCurFrame;
-			if (m_fCurFrame == m_fMaxFrame)
+			if (m_fCurFrame > m_fMaxFrame)
 			{
 				m_fCurFrame = m_fMinFrame;
 			}
@@ -100,7 +102,7 @@ CMonsterState* CStage1Boss_BrifBigShield::Update(CMonster* Monster, const float&
 		if (m_fTick > 1)
 		{
 			++m_fCurFrame;
-			if (m_fCurFrame == m_fMaxFrame)
+			if (m_fCurFrame > m_fMaxFrame)
 			{
 				m_fCurFrame = m_fMinFrame;
 			}
@@ -128,7 +130,7 @@ CMonsterState* CStage1Boss_BrifBigShield::Update(CMonster* Monster, const float&
 		if (m_fTick > 1)
 		{
 			++m_fCurFrame;
-			if (m_fCurFrame == m_fMaxFrame)
+			if (m_fCurFrame > m_fMaxFrame)
 			{
 				m_fCurFrame = m_fMinFrame;
 			}
@@ -144,6 +146,7 @@ CMonsterState* CStage1Boss_BrifBigShield::Update(CMonster* Monster, const float&
 	case CStage1Boss_BrifBigShield::ALL_DEAD:
 		{
 			m_bAllDead = true;
+			CStage1Boss::m_bBossPhase2 = false;
 			m_fTick += fDetltaTime;
 			if (m_fTick > m_fAgainTime)
 			{

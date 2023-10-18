@@ -3,7 +3,7 @@
 #include "GameObject.h"
 #include "Monster.h"
 #include "BrifCase.h"
-
+#include "Stage1Boss.h"
 
 class CMonsterState;
 
@@ -37,7 +37,6 @@ public:
 private:
 	HRESULT				Add_Component();
 	_int				m_iIndex = 0;
-
 
 private:
 	CMonsterState*		  m_pStateArray[BIGDADDYSTATE_END];

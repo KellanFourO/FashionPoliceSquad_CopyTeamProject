@@ -64,7 +64,7 @@ Engine::_int CBrifCase::Update_GameObject(const _float& fTimeDelta)
 		MBExplosion->Get_Transform()->Set_Pos(m_pTransformCom->m_vInfo[INFO_POS]);
 		
 		CMBulletBombEffect* MBulletEffect = CMBulletBombEffect::Create(m_pGraphicDev);
-		Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::MONSTERBULLET, MBulletEffect);
+		Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::EFFECT, MBulletEffect);
 		MBulletEffect->Get_Transform()->Set_Pos(m_pTransformCom->m_vInfo[INFO_POS]);
 		
 		return OBJ_DEAD;
