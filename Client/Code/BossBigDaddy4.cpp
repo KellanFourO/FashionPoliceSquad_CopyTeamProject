@@ -44,7 +44,7 @@ HRESULT CBossBigDaddy4::Ready_GameObject()
 	m_fDectedRange = 150.f; //! 탐색 범위
 	m_fAttackRange = 100.f; //! 공격 범위
 
-	m_pTransformCom->Set_Scale({ 10.0f,10.0f,10.0f });
+	m_pTransformCom->Set_Scale({ 6.0f,12.0f,10.0f });
 
 	//Set_Pos((_vec3{ 120.f,4.f,28.f }));
 	//m_pTransformCom->Set_Pos((_vec3{ 198.5f,10.0f,235.5f }));
@@ -82,7 +82,7 @@ _int CBossBigDaddy4::Update_GameObject(const _float& fTimeDelta)
 	_vec3 vBossRight = -vBossLeft;
 	_vec3 vBossDown = -vBossUp;
 
-	_vec3 vStartPos = vBossPos + (vBossLook * 1.5f) + (vBossLeft * 8.f) + (vBossDown *10.f);
+	_vec3 vStartPos = vBossPos + (-vBossLook * 1.5f) + (vBossLeft * 9.f) + (vBossDown *12.f);
 
 	m_pTransformCom->Set_Pos(vStartPos);
 
@@ -110,8 +110,12 @@ _int CBossBigDaddy4::Update_GameObject(const _float& fTimeDelta)
 
 void CBossBigDaddy4::LateUpdate_GameObject()
 {
-
 	__super::LateUpdate_GameObject();
+	_vec3	vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	__super::Compute_ViewZ(&vPos);
+
 
 }
 

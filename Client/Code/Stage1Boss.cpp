@@ -103,6 +103,10 @@ void CStage1Boss::LateUpdate_GameObject()
 		m_bDead2 = true;
 	}   // »ç¸ÁÆÇÁ¤
 	__super::LateUpdate_GameObject();
+	_vec3	vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	__super::Compute_ViewZ(&vPos);
 }
 
 void CStage1Boss::Render_GameObject()

@@ -83,7 +83,11 @@ Engine::_int Engine::CJumpShockWaveEffect2::Update_GameObject(const _float& fTim
 
 void Engine::CJumpShockWaveEffect2::LateUpdate_GameObject()
 {
+	__super::LateUpdate_GameObject();
+	_vec3	vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
 
+	__super::Compute_ViewZ(&vPos);
 }
 
 CJumpShockWaveEffect2* CJumpShockWaveEffect2::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vCreatePos)

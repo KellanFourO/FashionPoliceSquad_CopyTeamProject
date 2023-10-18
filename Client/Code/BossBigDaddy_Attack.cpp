@@ -31,7 +31,7 @@ void CBossBigDaddy_Attack::Initialize(CMonster* _Monster)
 
 CMonsterState* CBossBigDaddy_Attack::Update(CMonster* Monster, const float& fDetltaTime)
 {
-
+	_vec3 Temp = { 0.f, 5.f,0.f };
 	switch (m_eAttack)
 	{
 	case CBossBigDaddy_Attack::READY1:
@@ -59,7 +59,7 @@ CMonsterState* CBossBigDaddy_Attack::Update(CMonster* Monster, const float& fDet
 			m_eAttack = THROW;
 			m_fTick = 0.f;
 			m_pHost->Set_Bullet(LoadBullet());
-			static_cast<CBrifCase*>(m_pHost->Get_MonsterBullet())->Shot(m_pHost->Get_Info().vPos);
+			static_cast<CBrifCase*>(m_pHost->Get_MonsterBullet())->Shot(m_pHost->Get_Transform()->m_vInfo[INFO_POS]+Temp);
 
 		}
 		break;
