@@ -117,7 +117,7 @@ HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Font_Jinji", L"±Ã¼­", 30, 30, FW_HEAVY), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"UI_WEAPON_NAME", L"../Bin/Font/Montserrat-Bold.ttf", 12, 12, FW_BOLD), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"UI_FONT", L"../Bin/Font/Montserrat-Bold.ttf", 27, 27, FW_REGULAR), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"DIALOG_FONT", L"../Bin/Font/Montserrat-Bold.ttf", 11, 13, FW_REGULAR), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"DIALOG_FONT", L"../Bin/Font/Montserrat-Bold.ttf", 11, 18, FW_REGULAR), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"MISSION_FONT", L"../Bin/Font/Montserrat-Bold.ttf", 11, 13, FW_BOLD), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"TEST_FONT", L"../Bin/Font/Montserrat-Bold.ttf", 11, 13, FW_BOLD), E_FAIL);
 

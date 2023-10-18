@@ -89,7 +89,6 @@ void CBullet::Destroy(const _float& fTimeDelta)
 
 void CBullet::OnCollisionEnter(CCollider* _pOther)
 {
-
 	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYER)
 	{
 		dynamic_cast<CPlayer*>(_pOther->Get_Host())->Attacked(m_fDmg);

@@ -4,6 +4,7 @@
 
 #include "UI_CardList.h"
 #include "UI_MyDialog.h"
+#include "Item.h"
 
 #include "MainGame_Arrow.h"
 #include "MainGame_KickBoard.h"
@@ -24,7 +25,7 @@ public:
 	void	OnCard(LPDIRECT3DDEVICE9 pGraphicDev,SCENETAG eSceneTag, DIALOGTAG eDialogTag); // 카드 생성 및 기타 이벤트
 	void	OnDialog(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag, DIALOGTAG eDialogTag); // 다이얼로그 생성
 	void	OnPause(_bool bPause, SCENETAG eSceneTag);
-
+	void	OnDropItem(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag, _int iCount);
 
 	//유진 추가
 	HRESULT		OnMiniGame_Arrow(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag);

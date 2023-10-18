@@ -164,6 +164,10 @@ void CMyDialog::LoadText(DIALOGTAG eDialogTag)
 		break;
 	case Engine::DIALOGTAG::STORY_ST2_CONCLU:
 		fin.open(L"../Bin/Data/UI/STORY_ST2_CONCLU.dat");
+	case Engine::DIALOGTAG::SKILL_DASH:
+		fin.open(L"../Bin/Data/UI/SKILL_DASH.dat");
+	case Engine::DIALOGTAG::SKILL_ROPE:
+		fin.open(L"../Bin/Data/UI/SKILL_ROPE.dat");
 		break;
 
 
@@ -186,10 +190,10 @@ void CMyDialog::LoadText(DIALOGTAG eDialogTag)
 			_tchar szKey[MAX_PATH] = L"";
 			_tchar szText[MAX_PATH] = L"";
 
-			getline(iss, token, L','); // ','를 구분자로 사용하여 값을 자름
+			getline(iss, token, L'|'); // ','를 구분자로 사용하여 값을 자름
 			_tcscpy_s(szKey, MAX_PATH, token.c_str());
 
-			getline(iss, token, L',');
+			getline(iss, token, L'|');
 			_tcscpy_s(szText, MAX_PATH, token.c_str());
 			iValue = _ttoi(szKey);
 			PORTRAITTAG readPortrait = static_cast<PORTRAITTAG>(iValue);
@@ -221,7 +225,7 @@ void CMyDialog::KeyInput()
 				case Engine::DIALOGTAG::STORY_ST1_DEVELOP:
 					m_pMission->Set_Title(L"QUEST");
 					m_pMission->Set_Objective(L"목적지로 가자");
-
+					CEventMgr::GetInstance()->OnCard(m_pGraphicDev,SCENETAG::STAGE, DIALOGTAG::STORY_ST1_DEVELOP);
 					break;
 				case Engine::DIALOGTAG::STORY_ST1_CONCLU:
 					break;
@@ -240,6 +244,7 @@ void CMyDialog::KeyInput()
 				case Engine::DIALOGTAG::STORY_LOBBY_CONCLU:
 					m_pMission->Set_Title(L"QUEST");
 					m_pMission->Set_Objective(L"악의 근원을 퇴치하라");
+					CEventMgr::GetInstance()->OnCard(m_pGraphicDev, SCENETAG::LOBBY, DIALOGTAG::STORY_LOBBY_CONCLU);
 					break;
 				case Engine::DIALOGTAG::ST1_BOSS_INTRO:
 					m_pMission->Set_Title(L"QUEST");
@@ -252,6 +257,7 @@ void CMyDialog::KeyInput()
 				case Engine::DIALOGTAG::STORY_ST2_INTRO:
 					m_pMission->Set_Title(L"QUEST");
 					m_pMission->Set_Objective(L"범죄자들을 퇴치하라");
+					CEventMgr::GetInstance()->OnDropItem(m_pGraphicDev,SCENETAG::STAGE2, 30);
 					break;
 				case Engine::DIALOGTAG::STORY_ST2_CONCLU:
 					m_pMission->Set_Title(L"END");

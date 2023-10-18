@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "UI_MyCard.h"
-
+#include "EventMgr.h"
 #include "Export_Utility.h"
 #include "Export_System.h"
 #include <random>
@@ -37,8 +37,9 @@ HRESULT Engine::CMyCard::Ready_GameObject(_float StartX)
 
 	m_fSpeed = 200.f;
 	m_fMultiply = 0.3f;
-	m_fMaxMoveY = 0.f;
-	m_fMinMoveY = -200.f;
+	m_fMaxMoveY = 420.f;
+	m_fCenterMoveY = 0.f;
+	m_fMinMoveY = -420.f;
 
 	m_bface = false;  // 카드 앞면 뒷면
 	m_bStart = true; // 레벨업 시에만 부를 예정
@@ -92,6 +93,9 @@ Engine::_int Engine::CMyCard::Update_GameObject(const _float& fTimeDelta)
 	_int iExit = __super::Update_GameObject(fTimeDelta);
 	m_fTimeDelta = fTimeDelta;
 
+	if(m_IsDead)
+	return OBJ_DEAD;
+
 	return 0;
 }
 
@@ -131,34 +135,6 @@ void CMyCard::Render_GameObject()
 		m_pBufferCom->Render_Buffer();
 	}
 
-
-	//// 빨간색 선을 그리기 위한 D3DXLine 인터페이스 생성
-	//LPD3DXLINE pLine;
-	//D3DXCreateLine(m_pGraphicDev, &pLine);
-
-	//// 빨간색 선의 색상 설정 (D3DCOLOR_XRGB 함수를 사용하여 색상을 지정)
-	//D3DCOLOR redColor = D3DCOLOR_XRGB(255, 0, 0);
-
-	//// 선의 시작점과 끝점 설정 (m_tRect의 네 점을 연결하여 사각형 경계를 그립니다)
-	//D3DXVECTOR2 points[5] =
-	//{
-	//	D3DXVECTOR2(static_cast<FLOAT>(m_tRect.left), static_cast<FLOAT>(m_tRect.top)),
-	//	D3DXVECTOR2(static_cast<FLOAT>(m_tRect.right), static_cast<FLOAT>(m_tRect.top)),
-	//	D3DXVECTOR2(static_cast<FLOAT>(m_tRect.right), static_cast<FLOAT>(m_tRect.bottom)),
-	//	D3DXVECTOR2(static_cast<FLOAT>(m_tRect.left), static_cast<FLOAT>(m_tRect.bottom)),
-	//	D3DXVECTOR2(static_cast<FLOAT>(m_tRect.left), static_cast<FLOAT>(m_tRect.top)) // 마지막 점은 시작점과 같습니다.
-	//};
-
-	//// 선 그리기
-	//pLine->Begin();
-	//pLine->Draw(points, 5, redColor);
-	//pLine->End();
-
-	//// ... 나머지 렌더링 코드 ...
-
-	//// D3DXLine 인터페이스 해제
-	//Safe_Release(pLine);
-
 	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
@@ -191,11 +167,12 @@ HRESULT Engine::CMyCard::Add_Component()
 void CMyCard::CardAnimation(const _float& fTimeDelta)
 {
 
-	if (m_vPos.y >= m_fMaxMoveY & !m_bPicking)
+	if (m_vPos.y > m_fCenterMoveY && !m_bPicking)
 	{
 		m_vPos.y -= m_fSpeed * fTimeDelta;
 
 		m_pTransformCom->Set_Pos(m_vPos);
+
 
 		//m_tRect.top += m_fSpeed * fTimeDelta;
 		//m_tRect.bottom += m_fSpeed * fTimeDelta;
@@ -272,7 +249,7 @@ void CMyCard::CardPicking(const _float& fTimeDelta)
 	{
 		if (CardOpen(fTimeDelta))
 		{
-			if (m_vPos.y >= m_fMinMoveY)
+			if (m_vPos.y < m_fMaxMoveY) // m_vPos.y >= - 200
 			{
 				m_vPos.y += m_fSpeed * fTimeDelta;
 
@@ -307,17 +284,29 @@ void CMyCard::CardPicking(const _float& fTimeDelta)
 						break;
 					case Engine::CARD_TYPE::CARD_TYPE_END:
 						break;
-					default:
-						break;
 					}
 				}
-
-				//m_tRect.top -= m_fSpeed * fTimeDelta;
-				//m_tRect.bottom -= m_fSpeed * fTimeDelta;
 			}
+			else
+			{
+				if (m_eCardType == CARD_TYPE::FORCE && !m_bOnDialog)
+				{
+					CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::STAGE, DIALOGTAG::SKILL_DASH);
+					m_bOnDialog = true;
+				}
+				else if (m_eCardType == CARD_TYPE::SPEED && !m_bOnDialog)
+				{
+					CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::STAGE, DIALOGTAG::SKILL_ROPE);
+					m_bOnDialog = true;
+				}
+
+				m_IsDead = true;
+			}
+
 		}
 		//TODO - 승용 . 여기서 능력치 추가 한후 사라져야함.
 	}
+
 }
 
 // void CMyCard::RandomCard()
@@ -369,9 +358,10 @@ void CMyCard::SelectTexture()
 
 
 
-CMyCard* CMyCard::Create(LPDIRECT3DDEVICE9 pGraphicDev, _float StartX, CARD_DIR Dir)
+CMyCard* CMyCard::Create(LPDIRECT3DDEVICE9 pGraphicDev, _float StartX, CARD_DIR Dir, CARD_TYPE eCardType)
 {
 	CMyCard* pInstance = new CMyCard(pGraphicDev);
+	pInstance->m_eCardType = eCardType;
 
 	if (FAILED(pInstance->Ready_GameObject(StartX)))
 	{

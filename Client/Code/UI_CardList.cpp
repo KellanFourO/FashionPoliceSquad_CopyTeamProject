@@ -24,7 +24,7 @@ HRESULT Engine::CCardList::Ready_GameObject()
 
 	switch (m_eDialogTag)
 	{
-	case Engine::DIALOGTAG::STORY_ST1_CONCLU:
+	case Engine::DIALOGTAG::STORY_ST1_DEVELOP:
 
 		for (int i = 0; i < 3; ++i)
 		{
@@ -32,9 +32,7 @@ HRESULT Engine::CCardList::Ready_GameObject()
 			{
 				case (int)CARD_DIR::CARD_LEFT:
 				{
-					CMyCard* pCard = CMyCard::Create(m_pGraphicDev, 150.f, CARD_DIR::CARD_LEFT);
-					pCard->Set_CardType(CARD_TYPE::SPEED);
-					//pCard->Set_CardType()
+					CMyCard* pCard = CMyCard::Create(m_pGraphicDev, 150.f, CARD_DIR::CARD_LEFT, CARD_TYPE::SPEED);
 					NULL_CHECK_RETURN(pCard, E_FAIL);
 					m_vecCard.push_back(pCard);
 					break;
@@ -42,8 +40,7 @@ HRESULT Engine::CCardList::Ready_GameObject()
 
 				case (int)CARD_DIR::CARD_CENTER:
 				{
-					CMyCard* pCard = CMyCard::Create(m_pGraphicDev, 400.f, CARD_DIR::CARD_CENTER);
-					pCard->Set_CardType(CARD_TYPE::BOMB);
+					CMyCard* pCard = CMyCard::Create(m_pGraphicDev, 400.f, CARD_DIR::CARD_CENTER, CARD_TYPE::BOMB);
 					NULL_CHECK_RETURN(pCard, E_FAIL);
 					m_vecCard.push_back(pCard);
 					break;
@@ -52,8 +49,7 @@ HRESULT Engine::CCardList::Ready_GameObject()
 				case (int)CARD_DIR::CARD_RIGHT:
 				{
 
-					CMyCard* pCard = CMyCard::Create(m_pGraphicDev, 650.f, CARD_DIR::CARD_RIGHT);
-					pCard->Set_CardType(CARD_TYPE::INTELLIGENCE);
+					CMyCard* pCard = CMyCard::Create(m_pGraphicDev, 650.f, CARD_DIR::CARD_RIGHT, CARD_TYPE::INTELLIGENCE);
 					NULL_CHECK_RETURN(pCard, E_FAIL);
 					m_vecCard.push_back(pCard);
 					break;
@@ -61,15 +57,14 @@ HRESULT Engine::CCardList::Ready_GameObject()
 			}
 		}
 		break;
-	case Engine::DIALOGTAG::STORY_ST1_DEVELOP:
+	case Engine::DIALOGTAG::STORY_LOBBY_CONCLU:
 		for (int i = 0; i < 3; ++i)
 		{
 			switch (i)
 			{
 			case (int)CARD_DIR::CARD_LEFT:
 			{
-				CMyCard* pCard = CMyCard::Create(m_pGraphicDev, 150.f, CARD_DIR::CARD_LEFT);
-				pCard->Set_CardType(CARD_TYPE::FORCE);
+				CMyCard* pCard = CMyCard::Create(m_pGraphicDev, 150.f, CARD_DIR::CARD_LEFT, CARD_TYPE::FORCE);
 				NULL_CHECK_RETURN(pCard, E_FAIL);
 				m_vecCard.push_back(pCard);
 				break;
@@ -77,8 +72,7 @@ HRESULT Engine::CCardList::Ready_GameObject()
 
 			case (int)CARD_DIR::CARD_CENTER:
 			{
-				CMyCard* pCard = CMyCard::Create(m_pGraphicDev, 400.f, CARD_DIR::CARD_CENTER);
-				pCard->Set_CardType(CARD_TYPE::STRENGTH);
+				CMyCard* pCard = CMyCard::Create(m_pGraphicDev, 400.f, CARD_DIR::CARD_CENTER, CARD_TYPE::STRENGTH);
 				NULL_CHECK_RETURN(pCard, E_FAIL);
 				m_vecCard.push_back(pCard);
 				break;
@@ -87,8 +81,7 @@ HRESULT Engine::CCardList::Ready_GameObject()
 			case (int)CARD_DIR::CARD_RIGHT:
 			{
 
-				CMyCard* pCard = CMyCard::Create(m_pGraphicDev, 650.f, CARD_DIR::CARD_RIGHT);
-				pCard->Set_CardType(CARD_TYPE::BONUS);
+				CMyCard* pCard = CMyCard::Create(m_pGraphicDev, 650.f, CARD_DIR::CARD_RIGHT, CARD_TYPE::BONUS);
 				NULL_CHECK_RETURN(pCard, E_FAIL);
 				m_vecCard.push_back(pCard);
 				break;
@@ -106,20 +99,19 @@ HRESULT Engine::CCardList::Ready_GameObject()
 
 Engine::_int Engine::CCardList::Update_GameObject(const _float& fTimeDelta)
 {
-
-	_int iExit = __super::Update_GameObject(fTimeDelta);
-
+	_int IExit;
+	__super::Update_GameObject(fTimeDelta);
 	KeyInput();
 
 	for (int i = 0; i < m_vecCard.size(); ++i)
 	{
-		m_vecCard[i]->Update_GameObject(fTimeDelta);
+		IExit = m_vecCard[i]->Update_GameObject(fTimeDelta);
 	}
 
 	if (m_bPicking)
 		m_iLateTick++;
 
-	return 0;
+	return IExit;
 }
 
 void Engine::CCardList::LateUpdate_GameObject()
@@ -154,14 +146,14 @@ void CCardList::KeyInput()
 	else if (Engine::Get_DIKeyState(DIK_F2) & 0x80)
 	{
 		m_vecCard[(int)CARD_DIR::CARD_CENTER]->Set_Picking(TRUE);
-		m_vecCard[(int)CARD_DIR::CARD_LEFT]->Set_RealPick(TRUE);
+		m_vecCard[(int)CARD_DIR::CARD_CENTER]->Set_RealPick(TRUE);
 		m_bPicking = TRUE;
 	}
 
 	else if (Engine::Get_DIKeyState(DIK_F3) & 0x80)
 	{
 		m_vecCard[(int)CARD_DIR::CARD_RIGHT]->Set_Picking(TRUE);
-		m_vecCard[(int)CARD_DIR::CARD_LEFT]->Set_RealPick(TRUE);
+		m_vecCard[(int)CARD_DIR::CARD_RIGHT]->Set_RealPick(TRUE);
 		m_bPicking = TRUE;
 	}
 }

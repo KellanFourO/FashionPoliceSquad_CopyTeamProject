@@ -52,9 +52,10 @@ private:
 	_matrix						m_matProj, m_matView;
 
 	_bool						m_bStart, m_bface, m_bPicking;
+	_bool						m_bOnDialog = false;
 	_bool						m_bRealPick = false;
 
-	_float						m_fSpeed, m_fMultiply, m_fMinMoveY, m_fMaxMoveY, m_fAngle, m_fTimeDelta;
+	_float						m_fSpeed, m_fMultiply, m_fMinMoveY, m_fCenterMoveY, m_fMaxMoveY, m_fAngle, m_fTimeDelta;
 
 	_vec3						m_vPos, m_vScale;
 	RECT						m_tRect;
@@ -63,7 +64,7 @@ private:
 	CARD_TYPE					m_eCardType = CARD_TYPE::CARD_TYPE_END;
 
 public:
-	static CMyCard*			Create(LPDIRECT3DDEVICE9 pGraphicDev, _float StartX, CARD_DIR Dir);
+	static CMyCard*			Create(LPDIRECT3DDEVICE9 pGraphicDev, _float StartX, CARD_DIR Dir, CARD_TYPE eCardType);
 
 private:
 	virtual void				Free() override;
