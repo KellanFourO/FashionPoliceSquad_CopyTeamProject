@@ -14,7 +14,7 @@
 #include "Player_Jump.h"
 #include "Player_Dash.h"
 
-
+#include "Trigger.h"
 #include "SoundMgr.h"
 
 #include "Export_System.h"
@@ -708,7 +708,8 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 {
 	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE ||
 		(_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ &&
-			_pOther->Get_OBJAttribute() != OBJ_ATTRIBUTE::ForPaint_OBJ))
+			_pOther->Get_OBJAttribute() != OBJ_ATTRIBUTE::ForPaint_OBJ&&
+			_pOther->Get_OBJAttribute() != OBJ_ATTRIBUTE::C_POINT_OBJ))
 	{
 
 		_vec3	vOtherPos = _pOther->GetCenterPos();
@@ -801,6 +802,8 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 
 		if (m_bTriggerCheck == false)
 		{
+			m_eTrName = dynamic_cast<CTrigger*>(_pOther->Get_Host())->Get_TR_NUMBER();
+			m_eTrState = dynamic_cast<CTrigger*>(_pOther->Get_Host())->Get_TR_STATE();
 			m_bTriggerCheck = true;
 		}
 	}
@@ -821,7 +824,8 @@ void CPlayer::OnCollisionStay(CCollider* _pOther)
 
 	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE||
 		(_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ &&
-			_pOther->Get_OBJAttribute() != OBJ_ATTRIBUTE::ForPaint_OBJ) )
+			_pOther->Get_OBJAttribute() != OBJ_ATTRIBUTE::ForPaint_OBJ &&
+			_pOther->Get_OBJAttribute() != OBJ_ATTRIBUTE::C_POINT_OBJ))
 	{
 
 		_vec3	vOtherPos = _pOther->GetCenterPos();

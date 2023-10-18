@@ -199,9 +199,6 @@
     <Filter Include="02. GameObject\02. Monster\03. Stage1Boss\99. Stage1Boss_State\05. Stage1Boss_BrifBigShield">
       <UniqueIdentifier>{4d4a2ef5-65e0-4cd4-8223-2c73d760d3e8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\02. Monster\03. Smoker">
-      <UniqueIdentifier>{39dcff9d-080e-46cd-a4d5-0dfe77ae68ce}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. GameObject\02. Monster\01. DullSuitMonster">
       <UniqueIdentifier>{9681e598-cfc7-4b20-9efa-6f2bbbbede41}</UniqueIdentifier>
     </Filter>
@@ -481,8 +478,35 @@
     <Filter Include="02. GameObject\06. Effect\06.Dash">
       <UniqueIdentifier>{05f95524-f77b-4f2b-88d7-7e0286573dd7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. GameObject\20.UI\12. Rope">
+    <Filter Include="02. GameObject\02. Monster\04.BossBigDaddy">
+      <UniqueIdentifier>{0d6db340-a168-4cf6-ba36-effc8cd98656}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\04.BossBigDaddy\00.BossBigDaddy_Idle">
+      <UniqueIdentifier>{a079445c-7a34-45a4-9397-9a301c0b12a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\04.BossBigDaddy\01.BossBigDaddy_Attack">
+      <UniqueIdentifier>{0e1f1ce9-9366-4e21-a35a-a18e46bc96ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\02. Monster\04.BossBigDaddy\02.BossBigDaddy_Dead">
+      <UniqueIdentifier>{14ffc50d-11bd-4a06-950e-564bc541aae3}</UniqueIdentifier>
+	</Filter>
+	<Filter Include="02. GameObject\20.UI\12. Rope">
       <UniqueIdentifier>{8b3f4258-965b-4d3f-8c46-c233ed61d0c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\2. KICKBOARD\2.Mini_Enemy">
+      <UniqueIdentifier>{203b8913-cc82-45b4-b8b7-eeba495307a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\2. KICKBOARD\3.Mini_Gold">
+      <UniqueIdentifier>{d0871711-2cfa-4c0c-966c-46040a71a615}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\2. KICKBOARD\4.Mini_Timer">
+      <UniqueIdentifier>{fe751f39-32b1-4440-b6f9-e6969801f857}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\2. KICKBOARD\5.Mini_Score">
+      <UniqueIdentifier>{7984b3fc-57d3-4bb8-a64f-0b70bdde8f12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\2. KICKBOARD\6.Mini_Effect">
+      <UniqueIdentifier>{8e629cd6-5f0a-4119-a0da-8d868ac3687f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1032,7 +1056,31 @@
     <ClInclude Include="..\Header\DashEffect.h">
       <Filter>02. GameObject\06. Effect\06.Dash</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\SYRay.h">
+    <ClInclude Include="..\Header\BossBigDaddy.h">
+      <Filter>02. GameObject\02. Monster\04.BossBigDaddy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BossBigDaddy_Idle.h">
+      <Filter>02. GameObject\02. Monster\04.BossBigDaddy\00.BossBigDaddy_Idle</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BossBigDaddy_Dead.h">
+      <Filter>02. GameObject\02. Monster\04.BossBigDaddy\02.BossBigDaddy_Dead</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BossBigDaddy_Attack.h">
+      <Filter>02. GameObject\02. Monster\04.BossBigDaddy\01.BossBigDaddy_Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BossBigDaddyState.h">
+      <Filter>02. GameObject\02. Monster\04.BossBigDaddy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BossBigDaddy2.h">
+      <Filter>02. GameObject\02. Monster\04.BossBigDaddy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BossBigDaddy3.h">
+      <Filter>02. GameObject\02. Monster\04.BossBigDaddy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BossBigDaddy4.h">
+      <Filter>02. GameObject\02. Monster\04.BossBigDaddy</Filter>
+	</ClInclude>
+	<ClInclude Include="..\Header\SYRay.h">
       <Filter>02. GameObject\01. Player\97.RAY</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Belt_ChargeAttack.h">
@@ -1043,6 +1091,21 @@
     </ClInclude>
     <ClInclude Include="..\Header\UI_Rope.h">
       <Filter>02. GameObject\20.UI\12. Rope</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Mini_Enemy.h">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\2.Mini_Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Mini_Gold.h">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\3.Mini_Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Mini_Effect.h">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\6.Mini_Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Mini_Timer.h">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\4.Mini_Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Mini_Score.h">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\5.Mini_Score</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1583,7 +1646,28 @@
     <ClCompile Include="..\Code\DashEffect.cpp">
       <Filter>02. GameObject\06. Effect\06.Dash</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\SYRay.cpp">
+    <ClCompile Include="..\Code\BossBigDaddy.cpp">
+      <Filter>02. GameObject\02. Monster\04.BossBigDaddy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossBigDaddy_Idle.cpp">
+      <Filter>02. GameObject\02. Monster\04.BossBigDaddy\00.BossBigDaddy_Idle</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossBigDaddy_Attack.cpp">
+      <Filter>02. GameObject\02. Monster\04.BossBigDaddy\01.BossBigDaddy_Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossBigDaddy_Dead.cpp">
+      <Filter>02. GameObject\02. Monster\04.BossBigDaddy\02.BossBigDaddy_Dead</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossBigDaddy2.cpp">
+      <Filter>02. GameObject\02. Monster\04.BossBigDaddy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossBigDaddy3.cpp">
+      <Filter>02. GameObject\02. Monster\04.BossBigDaddy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossBigDaddy4.cpp">
+      <Filter>02. GameObject\02. Monster\04.BossBigDaddy</Filter>
+	</ClCompile>
+	<ClCompile Include="..\Code\SYRay.cpp">
       <Filter>02. GameObject\01. Player\97.RAY</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Belt_ChargeAttack.cpp">
@@ -1594,6 +1678,21 @@
     </ClCompile>
     <ClCompile Include="..\Code\UI_Rope.cpp">
       <Filter>02. GameObject\20.UI\12. Rope</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mini_Enemy.cpp">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\2.Mini_Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mini_Gold.cpp">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\3.Mini_Gold</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mini_Effect.cpp">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\6.Mini_Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mini_Timer.cpp">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\4.Mini_Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mini_Score.cpp">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\5.Mini_Score</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

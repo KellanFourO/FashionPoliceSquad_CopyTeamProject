@@ -83,12 +83,22 @@ public:
 	_bool			Get_TriggerCheck() { return m_bTriggerCheck; } //유진 추가
 	void			Set_TriggerCheck() { m_bTriggerCheck = !m_bTriggerCheck; }
 
+	void			Set_TR_NUMBER(TRIGGER_NUMBER eName) { m_eTrName = eName; }
+	void			Set_TR_STATE(TRIGGER_STATE eState) { m_eTrState = eState; }
+
+	TRIGGER_NUMBER	Get_TR_NUMBER() { return m_eTrName; } //고유값
+	TRIGGER_STATE	Get_TR_STATE() { return m_eTrState; } //전, 진행, 후
+
+
 private:
 	CRcTex*			m_pBufferCom = nullptr;
 	CTexture*		m_pTextureCom = nullptr;
 	CRigidBody*		m_pRigidBody = nullptr;
 	Player_INFO		INFO;
 	CSYRay*			m_pRay = nullptr;
+
+	TRIGGER_NUMBER	m_eTrName = TRIGGER_NUMBER::TR_END;
+	TRIGGER_STATE	m_eTrState = TRIGGER_STATE::TR_BEFORE;
 
 	_bool			m_bSceneChange = false; // 플레이어 신 넘어갈때 제어용
 	_bool			m_bJump = false;

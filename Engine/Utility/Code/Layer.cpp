@@ -85,7 +85,7 @@ _int CLayer::Update_Layer(const _float& fTimeDelta)
 
  		for (auto iter2 = iter.second.begin(); iter2 != iter.second.end();)
  		{
-
+			//todo iter2 vector<GameObject*>
  			if (*iter2 != nullptr)
  			{
 

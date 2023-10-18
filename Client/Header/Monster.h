@@ -57,7 +57,10 @@ public:
 	_float				Get_Speed() { return m_fSpeed; }
 	_float				Get_Length() { return D3DXVec3Length(&(m_pPlayerTransform->m_vInfo[INFO_POS] - m_pTransformCom->m_vInfo[INFO_POS]));}
 	_bool				Get_Start() { return m_bStart; }
+	_int				Get_MonsterIndex() { return m_iMonsterIndex; }
 
+
+	void				Set_MonsterIndex(_int _iIndex) { m_iMonsterIndex = _iIndex; }
 	void				Set_Start(_bool _bStart) { m_bStart = _bStart; }
 	void				Set_Info(Mob_INFO _INFO);
 	HRESULT				Set_HP();
@@ -102,6 +105,7 @@ protected:
 	_float					m_fVerDevide = 0.f;
 	_float					m_fHorDevide = 0.f;
 	_int					m_iTextureIndex = 0;
+	_int					m_iMonsterIndex = 0;
 
 	_float					m_fAnimateTime = 0;
 	_float					m_fHitTime = 0;

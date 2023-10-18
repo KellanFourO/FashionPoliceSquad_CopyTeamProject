@@ -272,9 +272,9 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
             }
 
             //지금은 중복 검사하는 쪽으로 설정, 중복 불가하게 하고 싶으면 첫 줄 주석
-            if (/*(!CheckDuplicateCube(CursorTemp, m_vCursor_Size) &&   */             
+            if ((!CheckDuplicateCube(CursorTemp, m_vCursor_Size) &&                
                 (CursorTemp.x > -1) && (CursorTemp.y > -1)
-                && (CursorTemp.z > -1) && (m_Build_time_Check2 == false))
+                && (CursorTemp.z > -1) && (m_Build_time_Check2 == false)))
             {
                 m_Build_time_Check2 = true;
 
@@ -334,13 +334,6 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
                     {
                         m_VecOBJData.push_back(OBJTemp);  // C_POINT 빼곤 다 담겨야함
                     }
-
-                    if (eAttribute == OBJ_ATTRIBUTE::LIGHT_OBJ)
-                    {
-                        OBJTemp3 = new OBJData(*OBJTemp);
-                        m_VecLight.push_back(OBJTemp3); //상동
-                    }
-
                     if (eAttribute == OBJ_ATTRIBUTE::C_POINT_OBJ)
                     {
                         OBJ_C_POINT->defOBJData = *OBJTemp;
@@ -620,10 +613,9 @@ HRESULT CMapTool::Delete_Map()
     // 1. 맵툴이 가지고 있는 create-delete & save-load 용 벡터
     // 2. Create 시 생성되어 Layer 가 갖게 되는 GameObject 벡터
 
-    // 3개 더 추가
+    // 더 추가
     // 3. (해당 시) 트리거 OBJ 벡터
-    // 4. (해당 시) 무빙 OBJ 벡터
-    // 5. (해당 시) CPoint OBJ 벡터
+    // 4. (해당 시) CPoint OBJ 벡터
 
     if (Engine::Get_DIMouseState(DIM_RB))
     {
@@ -766,27 +758,6 @@ HRESULT CMapTool::Delete_Map()
                         }
                     }
 
-                }
-            }
-
-
-            if (bOBJ_DeleteCheck == true)
-            {
-                if (!m_VecLight.empty())
-                {
-                    for (auto& iter = m_VecLight.begin(); iter != m_VecLight.end();)
-                    {
-                        if ((*iter)->iIndex == IndexTemp)
-                        {
-                            delete* iter;
-                            iter = m_VecLight.erase(iter);
-                            bOBJ_DeleteCheck = false;
-                        }
-                        else
-                        {
-                            ++iter;
-                        }
-                    }
                 }
             }
         }

@@ -219,7 +219,7 @@ HRESULT CMainGame_Arrow::State_Icon_Update()
 		else if ((m_pVecArrow.size() >= 0) && (m_pVecArrow.size() < 10))
 			m_pStateIcon->Change_State(STATEICON_PERPECT);
 	}	
-	if (m_iCountNop > 10) { 
+	if (m_iCountNop > 20) { 
 		m_NOP_Mode = false;
 		m_iCountNop = 0;
 	}
@@ -232,14 +232,12 @@ HRESULT CMainGame_Arrow::GameState_Update()
 	{
 		MSG_BOX("Clear!");
 		CEventMgr::GetInstance()->OffMiniGame_Arrow(SCENETAG::LOBBY, true);
-		//Safe_Release(*this);
 	}
 
 	if (m_eGameState == CMainGame_Arrow::ArrowGameState::LOSE)
 	{
 		MSG_BOX("Lose...");
 		CEventMgr::GetInstance()->OffMiniGame_Arrow(SCENETAG::LOBBY, false);
-		//Safe_Release(*this);
 	}
 	return S_OK;
 }
@@ -351,6 +349,7 @@ void CMainGame_Arrow::Free()
 		{
 			Safe_Release(m_pCopyVector[i]);
 		}
+		m_pCopyVector.clear();
 	}
 
 	Safe_Release(m_pCursor);

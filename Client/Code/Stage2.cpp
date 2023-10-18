@@ -33,8 +33,6 @@ HRESULT CStage2::Ready_Scene()
 
 	FAILED_CHECK_RETURN(Ready_Layer_UI(LAYERTAG::UI), E_FAIL);
 
-	Load_Data_C(L"../Bin/Data/CPoint/CPointData", OBJECTTAG::BUILD_OBJ); //TODO
-
 	srand(GetTickCount64());
 
 	//TODO - 승용추가 크로스헤어 추가, 기본 커서 안보이게
@@ -145,6 +143,8 @@ HRESULT CStage2::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 
 	Engine::CGameObject* pGameObject = nullptr;
 
+	Load_Data_C(L"../Bin/Data/CPoint/Stage2/C_all/CPointData", OBJECTTAG::BUILD_OBJ);
+
 	{
 		// Player
 		m_pPlayer = pGameObject = Management()->Get_Player();
@@ -191,18 +191,28 @@ HRESULT CStage2::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::RAY, pGameObject), E_FAIL);
 		dynamic_cast<CFootRay*>(pGameObject)->Set_Host(m_pPlayer);
 
-		//
-		//pGameObject = CRay::Create(m_pGraphicDev);
-		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::RAY, pGameObject), E_FAIL);
-		//pGameObject = CBigDaddyMonster::Create(m_pGraphicDev);
-		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
-
-		//pGameObject = CStage1Boss::Create(m_pGraphicDev);
-		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::BOSS, pGameObject), E_FAIL);
-
+		//몬스터
+		for (auto& iter : m_VecCreatePoint)
+		{
+			if (iter->eMonsterType == MonsterType::BIGDADDY)
+			{
+				pGameObject = CBigDaddyMonster::Create(m_pGraphicDev, iter->defOBJData.vPos);
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+			}
+			if (iter->eMonsterType == MonsterType::DULLSUIT)
+			{
+				pGameObject = CDullSuitMonster::Create(m_pGraphicDev, iter->defOBJData.vPos);
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+			}
+			if (iter->eMonsterType == MonsterType::KCIKBOARD)
+			{
+				pGameObject = CKickBoardMonster::Create(m_pGraphicDev, iter->defOBJData.vPos);
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+			}
+		}
 
 		pGameObject = Management()->Get_ShotGunFlash();
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);

@@ -34,7 +34,6 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev)
 	Render_Alpha(pGraphicDev);
 
 	Render_UI(pGraphicDev);
-
 	Clear_RenderGroup();
 }
 

@@ -36,7 +36,7 @@ CMonsterState* CStage1Boss_Idle::Update(CMonster* Monster, const float& fDetltaT
 
 	if (m_fCurFrame > m_fMaxFrame)
 	{
-		m_fCurFrame = m_fMinFrame;
+		m_fCurFrame = m_fMinFrame;	
 	}
 
 	if (m_pHost->Get_Start() && m_fCurFrame == m_fMinFrame)

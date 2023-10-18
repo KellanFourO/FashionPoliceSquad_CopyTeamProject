@@ -19,7 +19,7 @@
 #include "MonsterBombEffect.h"
 #include "BossState.h"
 
-
+_bool CStage1Boss::m_bBossPhase2 = false;
 CStage1Boss::CStage1Boss(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {
@@ -46,7 +46,7 @@ HRESULT CStage1Boss::Ready_GameObject()
 
 	INFO.MonsterState = m_pStateArray[IDLE];
 	INFO.MonsterState->Initialize(this);
-	INFO.fHP = 4800.f;
+	INFO.fHP = 3000.f;
 	INFO.fMaxHP = 5000.f;
 	m_fSpeed = 10.f;
 	m_fDectedRange = 150.f;
@@ -54,7 +54,6 @@ HRESULT CStage1Boss::Ready_GameObject()
 
 	m_pTransformCom->Set_Pos((_vec3{ 92.5f,25.f,135.f }));
 	m_pTransformCom->Set_Scale({ 15.0f,15.0f,15.0f });
-
 	m_pBufferCom->SetCount(5, 5);
 
 	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/Monster/boss 1 - hugo bauss sprite1_Hit.png", 1);
@@ -78,7 +77,6 @@ _int CStage1Boss::Update_GameObject(const _float& fTimeDelta)
 
 	__super::Update_GameObject(fTimeDelta);
 	PhaseChange();
-
 	return OBJ_NOEVENT;
 }
 
@@ -105,6 +103,10 @@ void CStage1Boss::LateUpdate_GameObject()
 		m_bDead2 = true;
 	}   // »ç¸ÁÆÇÁ¤
 	__super::LateUpdate_GameObject();
+	_vec3	vPos;
+	m_pTransformCom->Get_Info(INFO_POS, &vPos);
+
+	__super::Compute_ViewZ(&vPos);
 }
 
 void CStage1Boss::Render_GameObject()
@@ -192,6 +194,14 @@ void CStage1Boss::PhaseChange()
 	if (fRatio < 0.6 && fRatio > 0.3)
 	{
 		dynamic_cast<CStage1BossState*>(INFO.MonsterState)->m_ePhase = BOSSPHASE::PHASE_2;
+		if (!m_bMonsterSpawn)
+		{
+			INFO.MonsterState->Release(this);
+			INFO.MonsterState = m_pStateArray[BRIFSHIELD];
+			INFO.MonsterState->Initialize(this);
+			m_bMonsterSpawn = true;
+		}
+		
 	}
 	else if (fRatio < 0.3)
 	{

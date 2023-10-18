@@ -3,6 +3,7 @@
 #include "SYTex.h"
 #include "Texture.h"
 #include "Export_Utility.h"
+#include "Stage1Boss_BrifBigShield.h"
 
 CStage1Boss_ThrowGoldMulti::CStage1Boss_ThrowGoldMulti()
 : m_fThrowSpeed(0.f),m_iBulletCount(0),m_iThrowCount(0),m_iCountTick(0),m_bThrow(false)
@@ -76,7 +77,10 @@ CMonsterState* CStage1Boss_ThrowGoldMulti::Update(CMonster* Monster, const float
 			m_eThrowstate = THROWREADY;
 			m_fTick = 0;
 			++m_iCountTick;
-
+			if (m_ePhase == BOSSPHASE::PHASE_2 && !CStage1Boss_BrifBigShield::m_bAllDead)
+			{
+				return dynamic_cast<CStage1Boss*>(m_pHost)->Get_State(5);
+			}
 			if (m_iCountTick >= m_iThrowCount)
 			{
 				m_iCountTick = 0;

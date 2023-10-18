@@ -64,6 +64,11 @@ _uint CLoading::Loading_For_Stage()
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_MainGame_KickBoard_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/MiniGame/3_KickBoard/BackGround.png", 1)), E_FAIL);
 
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Mini_Player_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/MiniGame/3_KickBoard/neon_des%d.png", 4)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Mini_Enemy_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/MiniGame/3_KickBoard/criminals%d.png", 9)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Mini_Gold_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/MiniGame/3_KickBoard/Coin%d.png", 6)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Mini_Number_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/MiniGame/3_KickBoard/NumberFont%d.png", 12)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Mini_Number_Texture2", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/MiniGame/3_KickBoard/NumberFont%d.png", 12)), E_FAIL);
 	Set_Value(3);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_SYTex", CSYTex::Create(m_pGraphicDev)), E_FAIL);
@@ -90,6 +95,7 @@ _uint CLoading::Loading_For_Stage()
 
 
 	{
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_BossBigDaddy", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/loose-suit-boss1-sprites.png")), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_suit", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/loose-suit-spritesheet.png")), E_FAIL);
 		Set_Value(3);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_BrifCase", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/briefcase-projectile-02.png")), E_FAIL);
@@ -98,7 +104,7 @@ _uint CLoading::Loading_For_Stage()
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_suit_2", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/dull_suit4.png")), E_FAIL);
 		Set_Value(3);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_KickBoardMonster", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/neonshirt-v1_Resize.png")), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Stage1Boss", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/boss 1 - hugo bauss sprite1.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Stage1Boss", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/boss 1 - hugo bauss sprite2.png")), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Stage1Bullet", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/gold-bar-projectile_0.png")), E_FAIL);
 		Set_Value(3);
 	}

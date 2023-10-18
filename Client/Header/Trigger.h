@@ -29,7 +29,13 @@ public:
 	void			Set_TR_CASE(TRIGGER_CASE eCase) { m_eTRCase = eCase; }
 	void			Set_TR_TYPE(TRIGGER_TYPE eType) { m_eTRType = eType; }
 	void			Set_TR_NUMBER(TRIGGER_NUMBER eName) { m_eTrName = eName; }
+	void			Set_TR_STATE(TRIGGER_STATE eState) { m_eTrState = eState; }
 	void			Set_IndexNumber(_uint iIndex) { m_iIndex = iIndex; }
+
+	TRIGGER_CASE	Get_TR_CASE() { return m_eTRCase; } //한번두번
+	TRIGGER_TYPE	Get_TR_TYPE() { return m_eTRType; } //무빙 UI 등
+	TRIGGER_NUMBER	Get_TR_NUMBER() { return m_eTrName; } //고유값   <중요>
+	TRIGGER_STATE	Get_TR_STATE() { return m_eTrState; } //전, 진행, 후   <중요>
 
 protected:
 	virtual HRESULT	Add_Component();
@@ -47,7 +53,7 @@ private:
 	TRIGGER_CASE		m_eTRCase = TRIGGER_CASE::TR_CASE_END;
 	TRIGGER_TYPE		m_eTRType = TRIGGER_TYPE::TR_TYPE_END;
 	TRIGGER_NUMBER		m_eTrName = TRIGGER_NUMBER::TR_END;
-
+	TRIGGER_STATE		m_eTrState = TRIGGER_STATE::TR_BEFORE;
 
 public:
 	static  CTrigger* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 pMouse_Pos, _uint iIndex,

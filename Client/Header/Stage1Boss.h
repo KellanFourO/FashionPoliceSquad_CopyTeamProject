@@ -52,10 +52,13 @@ private:
 	CMonsterState*			m_pStateArray[STAGE1_BOSSSTATE_END];
 	_int					m_iOriginIndex = 0;
 	_bool					m_bDead2 = false; // 죽었을 때, 이미지 변경을 위한 불변수
+	_bool					m_bMonsterSpawn = false;
+	
 
 public:
 	static CStage1Boss*		Create(LPDIRECT3DDEVICE9 pGraphicDev);
-
+public:
+	static _bool			m_bBossPhase2;
 private:
 	virtual void Free();
 };
