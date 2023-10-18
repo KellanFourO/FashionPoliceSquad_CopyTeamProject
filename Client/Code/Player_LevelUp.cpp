@@ -19,7 +19,6 @@ void CPlayer_LevelUp::Initialize(CPlayer* Player)
 {
     m_pHost = Player;
     StateID = PlayerStateID::Player_Lv_Up;
-    CEventMgr::GetInstance()->OnLevelUp(m_pHost->Get_GraphicDev(), SCENETAG::STAGE);
 }
 
 CPlayerState* CPlayer_LevelUp::Update(CPlayer* Player, const float& fTimeDelta)

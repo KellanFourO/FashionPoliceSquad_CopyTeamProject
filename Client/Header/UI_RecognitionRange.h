@@ -10,8 +10,6 @@ class CTransform;
 
 class CRecognitionRange : public Engine::CGameObject
 {
-	enum TextureTag { SEARCH, NOSEARCH, MATCH, NOMATCH, STUN, STUNRING, POS, TEXTURETAG_END };
-
 private:
 	explicit CRecognitionRange(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit CRecognitionRange(const CRecognitionRange& rhs);
@@ -26,32 +24,26 @@ public:
 public:
 
 	//CTexture*							Get_Texture() { return m_pTextureCom; }
-
 public:
+	_bool					Get_bTargetPos() { return m_bTargetPos;}
 
-	void					Set_Target(CGameObject* pTarget) { m_pTarget = pTarget; }
-	void					Set_Pos(const _vec3& vPos) { m_fX = vPos.x; m_fY = vPos.y; };
+	void					Set_Target(CGameObject* pTarget) { m_pTarget = pTarget; m_bTargetPos = true; }
+	void					Set_TargetPos(const _vec3& vPos) { m_vTargetPos = vPos;}
+
 
 private:
 	HRESULT					Add_Component();
 
 	void					UI_Translate();
 
-	void					Sprite_Function(const _float& fTimeDelta);
-	void					Font_Function(const _float& fTimeDelta);
-
-	void					NonTargetUI_Function();
-	void					TargetUI_Function();
+	void					destinationUI();
+	void					RecogUI();
+	void					TargetUI();
+	void					TextureSet();
 
 
 private:
-	CTexture*			m_pFrontTextureCom = nullptr;
-	CTexture*			m_pBackTextureCom  = nullptr;
-
-
-
-	IDirect3DBaseTexture9* m_pTextureArray[TEXTURETAG_END];
-
+	CTexture*			m_pTextureCom = nullptr;
 	CTransform*			m_pTransformCom = nullptr;
 	CUITex*				m_pBufferCom = nullptr;
 
@@ -60,10 +52,13 @@ private:
 
 	CGameObject*		m_pTarget;
 
+	_vec3				m_vTargetPos;
+	UI_TYPE				m_eUIType;
 
+	_bool				m_bTargetPos = false;
 
 public:
-	static CRecognitionRange* Create(LPDIRECT3DDEVICE9 pGraphicDev, CGameObject* pTarget);
+	static CRecognitionRange* Create(LPDIRECT3DDEVICE9 pGraphicDev, CGameObject* pTarget = nullptr, UI_TYPE eUIType = UI_TYPE::UI_TYPE_END);
 
 private:
 	virtual void Free() override;

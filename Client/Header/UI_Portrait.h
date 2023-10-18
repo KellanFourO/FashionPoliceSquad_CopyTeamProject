@@ -52,7 +52,7 @@ private:
 
 	PORTRAITTAG							m_ePortrait;
 
-	_int								m_iTextureIndex = 1;
+	_int								m_iTextureIndex = 0;
 
 private:
 	_float								m_fX, m_fY, m_fSizeX, m_fSizeY;

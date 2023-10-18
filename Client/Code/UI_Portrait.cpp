@@ -81,14 +81,16 @@ HRESULT CPortrait::Ready_GameObject()
 
 	// -1 ~ 1 -> 0 ~ 2
 
-	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-des-neon.png", 1);	//1
-	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-haley.png", 1);		//2
-	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-deepcoat.png", 1);	//3
-	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-bauss.png", 1);		//4
-	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-turncoat.png", 1);	//5
-	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-des-dull.png", 1);	//6
-	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-mystery.png", 1);	//7
-	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-phone.png", 1);		//8
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-des-neon.png", 1);				//1
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-haley.png", 1);					//2
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-deepcoat.png", 1);				//3
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-bauss.png", 1);					//4
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-turncoat.png", 1);				//5
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-des-dull.png", 1);				//6
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-mystery.png", 1);				//7
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-phone.png", 1);					//8
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-hacker-transformed.png", 1);		//9
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/PORTRAIT/portrait-dispatch.png", 1);				//10
 
 
 	return S_OK;
@@ -164,6 +166,12 @@ void CPortrait::SetPortrait()
 		break;
 	case Engine::PORTRAITTAG::PORT_PHONE:
 		m_iTextureIndex = 8;
+		break;
+	case Engine::PORTRAITTAG::PORT_HACKER:
+		m_iTextureIndex = 9;
+		break;
+	case Engine::PORTRAITTAG::PORT_HEADQUATER:
+		m_iTextureIndex = 10;
 		break;
 	}
 

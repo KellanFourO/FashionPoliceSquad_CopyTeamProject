@@ -29,9 +29,10 @@ private:
 	CARD_DIR					m_eDir;
 	_bool						m_bPicking = FALSE;
 	int							m_iLateTick = 0;
+	DIALOGTAG					m_eDialogTag = DIALOGTAG::DIALOGTAG_END;
 
 public:
-	static CCardList*			Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CCardList*			Create(LPDIRECT3DDEVICE9 pGraphicDev, DIALOGTAG eDialogTag);
 
 private:
 	virtual void				Free() override;

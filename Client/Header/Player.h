@@ -52,11 +52,16 @@ public:
 	_float			Get_XMove() { return m_fXmove;}
 
 	_bool			Get_SceneChange() { return m_bSceneChange;}
+	_bool			Get_bRopeSkill() { return m_bRopeSkillOn;}
 
 	void			Set_SceneChange(_bool _bSceneChange) { m_bSceneChange = _bSceneChange;}
 	void			SetGun(CLayer* _pLayer = nullptr);
 	void			ClearGunList() { m_vecPlayerGun.clear(); }
 	void			PlayerRay();
+
+
+	void			DashOn() { m_bDashSkillOn = true;}
+	void			RopeOn() { m_bRopeSkillOn = true; }
 
 private:
 	HRESULT			Add_Component();
@@ -106,6 +111,9 @@ private:
 	_bool			m_bOnGround = true;
 	_bool			m_bDash = false; // 대쉬!
 	_bool			m_bTriggerCheck = false; //유진 추가 트리거충돌감지용
+
+	_bool			m_bDashSkillOn = false;
+	_bool			m_bRopeSkillOn = false;
 
 	_float			m_fTime_HP_Release;
 	_float			m_fHP_Reduction = 5.f; // HP 감소 속도

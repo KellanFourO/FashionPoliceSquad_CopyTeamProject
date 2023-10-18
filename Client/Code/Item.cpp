@@ -29,6 +29,7 @@ HRESULT CItem::Ready_GameObject()
 	INFO.vPos = _vec3(10.f, 0.5f, 10.f);
 	m_bDead = false;
 
+	m_pPlayerTranformCom = Management()->Get_Player()->Get_Transform();
 	return S_OK;
 }
 
@@ -38,10 +39,9 @@ _int CItem::Update_GameObject(const _float& fTimeDelta)
 		Engine::Add_RenderGroup(RENDER_NONALPHA, this);
 		m_pTransformCom->Set_Pos(INFO.vPos);
 		__super::Update_GameObject(fTimeDelta);
-		CTransform* pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
-		NULL_CHECK_RETURN(pPlayerTransCom, -1); // 플레이어 가져오기
+
 		_vec3 vPlayerPos, vMyPos, vPlayerPos_Rel;
-		pPlayerTransCom->Get_Info(INFO_POS, &vPlayerPos);
+		m_pPlayerTranformCom->Get_Info(INFO_POS, &vPlayerPos);
 		m_pTransformCom->Get_Info(INFO_POS, &vMyPos);
 		vPlayerPos_Rel = vPlayerPos - vMyPos;
 		_float Distatnce = D3DXVec3Length(&vPlayerPos_Rel);
@@ -56,9 +56,8 @@ _int CItem::Update_GameObject(const _float& fTimeDelta)
 		m_pTransformCom->Set_Rotate(ROT_Y, fAngle + D3DX_PI); // 자전
 		m_pTransformCom->Set_Scale(_vec3(3.f, 3.f, 3.f));
 
-
-
 	}
+
 	return OBJ_NOEVENT;
 }
 
@@ -97,8 +96,8 @@ HRESULT CItem::Add_Component()
 
 void CItem::Item_Enter()
 {
-	CManagement* Manager;
-	CPlayer* pPlayer = dynamic_cast<CPlayer*>(Manager->GetInstance()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER).front());
+
+	CPlayer* pPlayer = Management()->Get_Player();
 	//pPlayer->Item_Get(INFO.Item_ID);
 
 	switch(INFO.Item_ID) {
@@ -132,7 +131,7 @@ CItem* CItem::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
 		Safe_Release(pInstance);
-		MSG_BOX("Player Create Failed");
+		MSG_BOX("Item Create Failed");
 
 		return nullptr;
 	}

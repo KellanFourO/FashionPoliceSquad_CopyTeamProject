@@ -32,19 +32,19 @@ private:
 	void			Item_Enter();
 
 	_bool			m_bDead;
-	
+
 
 private:
 	CRcTex*		m_pBufferCom = nullptr; // 텍스처를 그리기위한 버퍼 컴포넌트
 	CTransform* m_pTransformCom = nullptr; // 이동 컴포넌트
 	CTexture*	m_pTextureCom = nullptr; // 텍스쳐 컴포넌트
 
-
+	CTransform* m_pPlayerTranformCom = nullptr;
 
 public:
 	Item_Info		INFO;
 	void			Set_INFO(Item_Info _INFO) { INFO = _INFO; }
-	
+
 public:
 	static CItem* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 private:

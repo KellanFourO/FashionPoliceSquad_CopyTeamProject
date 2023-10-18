@@ -46,12 +46,12 @@ HRESULT CStage2::Ready_Scene()
 _int CStage2::Update_Scene(const _float& fTimeDelta)
 {
 	_int	iExit = __super::Update_Scene(fTimeDelta);
-// 	if (m_bLateInit)
-// 	{
-// 		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::STAGE2, DIALOGTAG::ST1_BOSS_START);
-// 		CEventMgr::GetInstance()->OnPause(true, SCENETAG::STAGE2);
-// 		m_bLateInit = false;
-// 	}
+ 	if (m_bLateInit)
+ 	{
+ 		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::STAGE2, DIALOGTAG::STORY_ST2_INTRO);
+ 		CEventMgr::GetInstance()->OnPause(true, SCENETAG::STAGE2);
+ 		m_bLateInit = false;
+ 	}
 
 	//if (m_bReadyCube)
 	//{
@@ -773,18 +773,7 @@ HRESULT CStage2::Load_Data_T(const TCHAR* pFilePath, OBJECTTAG eTag)
 
 void CStage2::Admin_KeyInput()
 {
-	if (Engine::Get_DIKeyState(DIK_F9) & 0x80 && m_bAdminSwitch)
-	{
-		CEventMgr::GetInstance()->OnLevelUp(m_pGraphicDev, SCENETAG::STAGE2);
-		CEventMgr::GetInstance()->OnPause(true, SCENETAG::STAGE2);
-		m_bAdminSwitch = false;
-	}
 
-	if (Engine::Get_DIKeyState(DIK_F8) & 0x80 && m_bAdminSwitch)
-	{
-		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::STAGE2, DIALOGTAG::QUEST_1);
-		m_bAdminSwitch = false;
-	}
 }
 
 CStage2* CStage2::Create(LPDIRECT3DDEVICE9 pGraphicDev)

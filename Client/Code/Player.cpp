@@ -282,7 +282,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 	if (Engine::Get_DIKeyState(DIK_W) & 0x80)
 	{
-		if (Engine::Get_DIKeyState(DIK_LCONTROL) & 0x80 && m_bDashCheck == false && m_fDashDelay > 20.f)
+		if (Engine::Get_DIKeyState(DIK_LCONTROL) & 0x80 && m_bDashCheck == false && m_bDashSkillOn && m_fDashDelay > 20.f)
 		{
 			m_bDashCheck = true;
 
@@ -316,7 +316,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	}
 	if (Engine::Get_DIKeyState(DIK_S) & 0x80)
 	{
-		if (Engine::Get_DIKeyState(DIK_LCONTROL) & 0x80 && m_bDashCheck == false && m_fDashDelay > 20.f)
+		if (Engine::Get_DIKeyState(DIK_LCONTROL) & 0x80 && m_bDashCheck == false && m_bDashSkillOn && m_fDashDelay > 20.f)
 		{
 			m_bDashCheck = true;
 			CDashEffect* DashEffect = CDashEffect::Create(m_pGraphicDev);
@@ -346,7 +346,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	}
 	if (Engine::Get_DIKeyState(DIK_A) & 0x80)
 	{
-		if (Engine::Get_DIKeyState(DIK_LCONTROL) & 0x80 && m_bDashCheck == false && m_fDashDelay > 20.f)
+		if (Engine::Get_DIKeyState(DIK_LCONTROL) & 0x80 && m_bDashCheck == false && m_bDashSkillOn && m_fDashDelay > 20.f)
 		{
 			m_bDashCheck = true;
 			CDashEffect* DashEffect = CDashEffect::Create(m_pGraphicDev);
@@ -376,7 +376,7 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 	}
 	if (Engine::Get_DIKeyState(DIK_D) & 0x80)
 	{
-		if (Engine::Get_DIKeyState(DIK_LCONTROL) & 0x80 && m_bDashCheck == false && m_fDashDelay > 20.f)
+		if (Engine::Get_DIKeyState(DIK_LCONTROL) & 0x80 && m_bDashCheck == false && m_bDashSkillOn && m_fDashDelay > 20.f)
 		{
 			m_bDashCheck = true;
 			CDashEffect* DashEffect = CDashEffect::Create(m_pGraphicDev);
