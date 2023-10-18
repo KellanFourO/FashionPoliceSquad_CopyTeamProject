@@ -9,6 +9,21 @@ private:
 	virtual ~CNewFPSCamera();
 
 public:
+	// Camera Shake
+	struct CameraShaking
+	{
+		_bool		m_bShaking; // 흔들림 상태
+		_float		m_fShakeElipsedTime; // 중첩시간
+
+		_float		m_fAmplitude; // 진폭
+		_float		m_fDuration;  // 흔드는 시간
+		_float		m_fFrequency; // 흔드는 속도
+
+		_vec3		m_vOriginPos; // 원래 있던 위치
+	}CAMSHAKE;
+
+
+public:
 	HRESULT Ready_GameObject(const _vec3* pEye,
 		const _vec3* pAt,
 		const _vec3* pUp,
@@ -40,24 +55,13 @@ public:
 
 public:
 	void		Set_Fix(_bool _Fix) { m_bFix = _Fix; }
-	//void		Set_ShakeForce(_float _ShakeTime, _float _Amplitude, _float _Duration, _float _Frequency);
+	void		Set_ShakeForce(_float _ShakeTime, _float _Amplitude, _float _Duration, _float _Frequency);
 	void		Reset_ShakeForce();
 
 public:
 	void		Shake_Camera();
-	void		Drunk_Camera();
 
 private:
-	// Camera Shake
-	_bool		m_bShaking; // 흔들림 상태
-	_float		m_fShakeElipsedTime; // 중첩시간
-
-	_float		m_fAmplitude; // 진폭
-	_float		m_fDuration;  // 흔드는 시간
-	_float		m_fFrequency; // 흔드는 속도
-
-	_vec3		m_vOriginPos; // 원래 있던 위치
-
 	CAMERAID	m_eCamera_Mode; // 카메라 모드 상태
 	bool		m_bCameraCheck;
 

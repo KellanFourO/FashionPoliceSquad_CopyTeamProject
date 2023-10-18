@@ -162,8 +162,6 @@ namespace Engine
 		IDirect3DBaseTexture9*  tTexture;
 	}SORTTEX;
 
-
-
 	typedef struct tagCubeSize
 	{
 		_float					fX = VTXITV;
