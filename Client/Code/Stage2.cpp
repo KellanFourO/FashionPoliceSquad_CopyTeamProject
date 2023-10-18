@@ -35,6 +35,8 @@ HRESULT CStage2::Ready_Scene()
 
 	srand(GetTickCount64());
 
+	Load_Data_T(L"../Bin/Data/Trigger/Stage2/TriggerData", OBJECTTAG::O_TRIGGER);
+
 	//TODO - 승용추가 크로스헤어 추가, 기본 커서 안보이게
 	ShowCursor(FALSE);
 
@@ -78,6 +80,9 @@ void CStage2::LateUpdate_Scene()
 	__super::LateUpdate_Scene();
 
 	CollisionManager()->LateUpdate_Collision();
+
+	Check_Trigger();
+
 }
 
 void CStage2::Render_Scene()
@@ -138,7 +143,7 @@ HRESULT CStage2::Ready_Layer_Environment(LAYERTAG eLayerTag)
 
 HRESULT CStage2::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 {
-	Engine::CLayer* pLayer = Engine::CLayer::Create(eLayerTag);
+	Engine::CLayer* pLayer = m_pGLayer = Engine::CLayer::Create(eLayerTag);
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
 	Engine::CGameObject* pGameObject = nullptr;
@@ -488,7 +493,7 @@ HRESULT CStage2::Check_Trigger()
 					iter->eTrSTATE = TRIGGER_STATE::TR_AFTER;
 					Create_Monster(iCountNum);
 				}
-				else if ((iter->eTrName == TRIGGER_NUMBER::TR2) && (iter->eTrSTATE == TRIGGER_STATE::TR_BEFORE))
+				else if ((iter->eTrName == TRIGGER_NUMBER::TR3) && (iter->eTrSTATE == TRIGGER_STATE::TR_BEFORE))
 				{
 					iCountNum = 3;
 					Load_Data_C(L"../Bin/Data/CPoint/Stage2/C3/CPointData", OBJECTTAG::BUILD_OBJ, iCountNum);
