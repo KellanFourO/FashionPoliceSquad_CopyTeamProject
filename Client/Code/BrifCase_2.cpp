@@ -44,6 +44,9 @@ HRESULT CBrifCase_2::Ready_GameObject()
 	m_fFrame = 0.f;
 	m_fSpeed_Vertical = 0.1f;
 
+
+	SoundMgr()->PlaySoundW(L"DullSuitBriefCaseThrow.wav",SOUND_MONSTER,0.5f);
+
 	return S_OK;
 }
 
@@ -175,5 +178,6 @@ CBrifCase_2* CBrifCase_2::Create(LPDIRECT3DDEVICE9 pGraphicDev, CTransform* pHos
 
 void CBrifCase_2::Free()
 {
+	SoundMgr()->StopSound(SOUND_MONSTER);
 	__super::Free();
 }

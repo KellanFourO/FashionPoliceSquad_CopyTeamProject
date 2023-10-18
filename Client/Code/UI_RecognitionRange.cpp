@@ -5,7 +5,7 @@
 #include "Export_System.h"
 #include "Engine_Enum.h"
 #include "Monster.h"
-
+#include "FontMgr.h"
 
 #include <DirectXMath.h>
 
@@ -34,13 +34,11 @@ HRESULT Engine::CRecognitionRange::Ready_GameObject()
 
 	TextureSet();
 
-	if (!m_pFrustum)
-	{
-
-
-		m_pFrustum = new CFrustum;
-		m_pFrustum->MakeFrustum(Management()->Get_Camera()->Get_ViewProj());
-	}
+	//if (!m_pFrustum)
+	//{
+	//	m_pFrustum = new CFrustum;
+	//	m_pFrustum->MakeFrustum(Management()->Get_Camera()->Get_ViewProj());
+	//}
 
 
 	m_pPlayerTransformCom = Management()->Get_Player()->Get_Transform();
@@ -48,7 +46,7 @@ HRESULT Engine::CRecognitionRange::Ready_GameObject()
 	switch (m_eUIType)
 	{
 	case Engine::UI_TYPE::DESTINATION:
-		m_pTransformCom->Set_Scale(_vec3(6.f, 6.f,1.f));
+		m_pTransformCom->Set_Scale(_vec3(10.f, 10.f,1.f));
 		break;
 	case Engine::UI_TYPE::TARGETPOS:
 		m_pTransformCom->Set_Scale(_vec3(8.f, 8.f, 1.f));
@@ -64,6 +62,7 @@ HRESULT Engine::CRecognitionRange::Ready_GameObject()
 Engine::_int Engine::CRecognitionRange::Update_GameObject(const _float& fTimeDelta)
 {
 	//	TODO - 몬스터의 상태값을 가져온다고 가정한상황 ( 발견, 미발견, 스턴 )
+	if(m_eUIType != UI_TYPE::DESTINATION)
 	DistanceRender();
 
 	//AngleRender();
@@ -76,6 +75,8 @@ Engine::_int Engine::CRecognitionRange::Update_GameObject(const _float& fTimeDel
 
 	if(m_bDistanceRender && m_bAngleRender)
 	Engine::Add_RenderGroup(RENDER_UI, this);
+	else if (m_eUIType == UI_TYPE::DESTINATION)
+		Engine::Add_RenderGroup(RENDER_UI, this);
 
 	switch (m_eUIType)
 	{
@@ -195,9 +196,28 @@ void CRecognitionRange::DestinationUI(const _float& fTimeDelta)
 	vWindowPos.y *= WINCY * 0.5f;
 
 	m_pTransformCom->Set_Pos(vWindowPos);
-	m_pTransformCom->Set_Scale(_vec3(6.f, 6.f, 1.f));
+	m_pTransformCom->Set_Scale(_vec3(10.f, 10.f, 1.f));
 
 
+	_vec3 vPlayerPos;
+	m_pPlayerTransformCom->Get_Info(INFO_POS,&vPlayerPos);
+
+	_vec3 vPlayerToDesti = m_vTargetPos - vPlayerPos;
+
+	m_fDestinationDistance = D3DXVec3Length(&vPlayerToDesti);
+	//todo 시작 지점으로부터 287
+
+ 	D3DVIEWPORT9 ViewPort;
+ 	m_pGraphicDev->GetViewport(&ViewPort);
+
+ 	_vec3 vScreenPos;
+ 	D3DXVec3Project(&vScreenPos,&m_vTargetPos,&ViewPort,&matProj,&matView,m_pTransformCom->Get_WorldMatrix());
+
+ 	m_vDestinationTextPos.x = vScreenPos.x;
+ 	m_vDestinationTextPos.y = -vScreenPos.y;
+ 	m_vDestinationTextPos.y = m_vDestinationTextPos.y + 5.f;
+	//_D3DVECTOR = {x=440.264557 y=32.0448914 z=0.999643147 }
+	_int i = 0;
 }
 
 void CRecognitionRange::RecogUI(const _float& fTimeDelta)
@@ -290,7 +310,7 @@ void CRecognitionRange::TextureSet()
 	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Recog/Match.png", 1);			//todo index = 2 히트타입과 총알타입이 일치
 	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Recog/NoMatch.png", 1);		//todo index = 3 히트타입과 총알타입이 불일치
 	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Recog/ObjectiveIcon1.png", 1); //todo index = 4 몬스터 위치 표시 UI
-	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Recog/Destination.png", 1);	//todo index = 5 몬스터 위치 표시 UI
+	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Recog/Destination.png", 1);	//todo index = 5 목적지 위치 표시 UI
 }
 
 void CRecognitionRange::DestinationRender()
@@ -308,6 +328,9 @@ void CRecognitionRange::DestinationRender()
 	m_pTextureCom->Render_Textrue(5); // 목표지점 UI 인덱스
 	m_pBufferCom->Render_Buffer();
 
+	//TODO UI 위쪽에 거리를 표시해주는 폰트를 출력하려했으나 느낌이 오래걸릴 것 같아 다른 작업하러감
+	//CFontMgr::GetInstance()->Render_Font(L"MISSION_FONT",to_wstring(m_fDestinationDistance).c_str(),&_vec2(m_vDestinationTextPos.x,m_vDestinationTextPos.y), D3DXCOLOR(D3DCOLOR_ARGB(255, 130, 245, 209)),20,false);
+	//Engine::Render_Font(L"DIALOG_FONT", L"로딩 중...", &_vec2(400, 550), D3DXCOLOR(D3DCOLOR_ARGB(255, 255, 255, 255)), 20, false);
 	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);

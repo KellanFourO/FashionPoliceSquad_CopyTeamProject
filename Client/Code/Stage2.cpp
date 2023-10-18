@@ -8,8 +8,11 @@
 #include <sstream>
 #include <utility>
 #include "LoadingStage1.h"
-
 #include "FootRay.h"
+#include <windows.h>
+
+
+
 CStage2::CStage2(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
 {
@@ -54,6 +57,39 @@ _int CStage2::Update_Scene(const _float& fTimeDelta)
  		CEventMgr::GetInstance()->OnPause(true, SCENETAG::STAGE2);
  		m_bLateInit = false;
  	}
+
+	if (m_pLayer->Get_ObjectList(OBJECTTAG::MONSTER).size() == 0 && m_bEnd)
+	{
+		SoundMgr()->StopAll();
+		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::STAGE2, DIALOGTAG::STORY_ST2_CONCLU);
+		CEventMgr::GetInstance()->OnPause(true, SCENETAG::STAGE2);
+		SoundMgr()->PlayBGM(L"EndBGM.wav",1.f);
+		m_bEnd = false;
+	}
+
+	if (!m_bEnd)
+	{
+		if (!m_bVideo)
+		{
+			m_hVideo = MCIWndCreate(g_hWnd,			// 부모 윈도우의 핸들
+				nullptr,		// MCI윈도우를 사용하는 인스턴스 핸들
+				WS_CHILD | WS_VISIBLE | MCIWNDF_NOPLAYBAR, // 윈도우 모양 설정(WS_CHILD : 자식 창 형태, WS_VISIBLE : 그 즉시 그리기, MCIWNDF_NOPLAYBAR : 플레이바를 출력하지 않음)
+				L"../Bin/Resource/Video/Wildlife.wmv"); // 재생할 파일의 경로
+
+	// MoveWindow : 동영상을 재생할 크기를 설정, 설정하지 않을 경우 동영상의 원래 크기대로 출력
+			MoveWindow(m_hVideo, 0, 0, WINCX, WINCY, FALSE);
+
+			MCIWndPlay(m_hVideo);
+
+			m_bVideo = true;
+		}
+
+		if (MCIWndGetLength(m_hVideo) <= MCIWndGetPosition(m_hVideo)
+			|| Key_Down(DIK_RETURN))
+		{
+			return 0;
+		}
+	}
 
 	//if (m_bReadyCube)
 	//{
@@ -502,8 +538,8 @@ HRESULT CStage2::Check_Trigger()
 				}
 				// 				else if ((iter->eTrName == TRIGGER_NUMBER::TR3) && (m_bFourthCreat == false))
 				// 				{
-				// 					//여기에 다이얼로그 추가 
-				// 					
+				// 					//여기에 다이얼로그 추가
+				//
 				// 					m_bFourthCreat = true;
 				// 				}
 			}
@@ -781,6 +817,8 @@ void CStage2::Admin_KeyInput()
 
 }
 
+
+
 CStage2* CStage2::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CStage2* pInstance = new CStage2(pGraphicDev);
@@ -817,7 +855,7 @@ void CStage2::Free()
 	//}
 	//m_VecCreatePoint.clear();
 
-
+	MCIWndClose(m_hVideo);
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	//m_pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, FALSE);

@@ -20,6 +20,7 @@ void CTailorAssertRifle_Reload::Initialize(CPlayerGun* Rifle)
     m_fMoveDownSum = -0.06f;
     m_fMoveDownMax = 0.5f;
     m_pHost->Add_GunMoveDown(m_fMoveDownMax);
+    SoundMgr()->PlaySoundW(L"Rifle_Reload.wav",SOUND_PLAYER2,1.f);
 }
 
 CPlayerGunState* CTailorAssertRifle_Reload::Update(CPlayerGun* Rifle, const float& fTimeDelta)
@@ -51,4 +52,6 @@ void CTailorAssertRifle_Reload::Release(CPlayerGun* Rifle)
     m_fBehaviorTime = 0.f;
 	m_pHost->Reset_GunMoveDown();
 	m_pHost->Reset_GunMoveRight();
+
+    SoundMgr()->StopSound(SOUND_PLAYER2);
 }

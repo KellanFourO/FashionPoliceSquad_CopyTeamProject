@@ -338,6 +338,11 @@ HRESULT CStage::Ready_Layer_UI(LAYERTAG eLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
 
+//todo 테스트용이었음
+// 	pGameObject = CRecognitionRange::Create(m_pGraphicDev, nullptr, UI_TYPE::DESTINATION);
+//
+// 	static_cast<CRecognitionRange*>(pGameObject)->Set_TargetPos(_vec3(206.62f, 15.f, 246.38f));
+// 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ eLayerTag, pLayer });
 
@@ -351,7 +356,7 @@ HRESULT CStage::Check_Trigger()
 		int iCountNum = -1;
 		_vec3 PlayerPos;
 		Management()->Get_Player()->Get_Transform()->Get_Info(INFO_POS, &PlayerPos);
-		
+
 		for (auto& iter : m_TriggerDataTemp)
 		{
 			_float MinX = (iter->vPos.x) - (iter->vSize.x * 0.5f);
@@ -386,9 +391,14 @@ HRESULT CStage::Check_Trigger()
 				}
 				else if ((iter->eTrName == TRIGGER_NUMBER::TR3) && (iter->eTrSTATE == TRIGGER_STATE::TR_BEFORE))
 				{
-					//여기에 다이얼로그 추가 
+					//여기에 다이얼로그 추가
+					CEventMgr::GetInstance()->OnDialog(m_pGraphicDev,SCENETAG::STAGE, DIALOGTAG::STORY_ST1_DEVELOP);
+					CEventMgr::GetInstance()->OnPause(true, SCENETAG::STAGE);
 
+					CRecognitionRange* pRecogUI = CRecognitionRange::Create(m_pGraphicDev,nullptr,UI_TYPE::DESTINATION);
 
+					pRecogUI->Set_TargetPos(_vec3(206.62f, 15.f, 246.38f));
+					m_pLayer->Add_GameObject(OBJECTTAG::UI,pRecogUI);
 					iter->eTrSTATE = TRIGGER_STATE::TR_AFTER;
  				}
 			}
@@ -431,28 +441,28 @@ HRESULT CStage::Create_Monster(int iNum)
 // HRESULT CStage::Trigger_Check_For_Create_Monster()
 // {
 // 	_bool CheckTemp = dynamic_cast<CPlayer*>(m_pPlayer)->Get_TriggerCheck();
-// 	
+//
 // 	TRIGGER_NUMBER	m_eTrName = TRIGGER_NUMBER::TR_END;
 // 	TRIGGER_STATE	m_eTrState = TRIGGER_STATE::TR_STATE_END;
-// 
+//
 // 	if (CheckTemp == true)
 // 	{
 // 		m_eTrName = dynamic_cast<CPlayer*>(m_pPlayer)->Get_TR_NUMBER();
 // 		m_eTrState = dynamic_cast<CPlayer*>(m_pPlayer)->Get_TR_STATE();
 // 	}
-// 
+//
 // 	if ((m_eTrName != TRIGGER_NUMBER::TR_END) && (m_eTrState != TRIGGER_STATE::TR_STATE_END))
 // 	{
 // 		dynamic_cast<CPlayer*>(m_pPlayer)->Set_TR_STATE(TRIGGER_STATE::TR_NOW);
 // 		int iCountNum = 1;
-// 
+//
 // 		if ((m_eTrName == TRIGGER_NUMBER::TR0) && (m_bFirstCreat == false))
 // 		{
 // 			iCountNum = 1;
 // 			Load_Data_C(L"../Bin/Data/CPoint/Stage1/C1/CPointData", OBJECTTAG::BUILD_OBJ, iCountNum);
 // 			m_bFirstCreat = true;
 // 			Create_Monster(iCountNum);
-// 		}	
+// 		}
 // 		else if ((m_eTrName == TRIGGER_NUMBER::TR1) && (m_bSecondCreat == false))
 // 		{
 // 			iCountNum = 2;
@@ -470,7 +480,7 @@ HRESULT CStage::Create_Monster(int iNum)
 // 			Create_Monster(iCountNum);
 // 		}
 // 	}
-// 		
+//
 // 	return S_OK;
 // }
 

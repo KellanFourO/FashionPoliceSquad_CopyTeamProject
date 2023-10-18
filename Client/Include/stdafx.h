@@ -30,6 +30,8 @@
 #include <process.h>
 #include <iostream>
 #include <tchar.h>
+#include <Vfw.h>
+#pragma comment(lib, "Vfw32.lib")
 
 //#ifdef _DEBUG
 //
@@ -37,9 +39,9 @@
 //#include <stdlib.h>
 //#include <crtdbg.h>
 //
-//#ifndef DBG_NEW 
-//#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ ) 
-//#define new DBG_NEW 
+//#ifndef DBG_NEW
+//#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+//#define new DBG_NEW
 //
 //#endif
 //#endif

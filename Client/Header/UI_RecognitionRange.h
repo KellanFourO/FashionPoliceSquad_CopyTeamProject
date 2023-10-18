@@ -28,8 +28,8 @@ public:
 public:
 	_bool					Get_bTargetPos() { return m_bTargetPos;}
 
-	void					Set_Target(CGameObject* pTarget) { m_pTarget = pTarget; m_bTargetPos = true; }
-	void					Set_TargetPos(const _vec3& vPos) { m_vTargetPos = vPos;}
+	void					Set_Target(CGameObject* pTarget) { m_pTarget = pTarget;}
+	void					Set_TargetPos(const _vec3& vPos) {m_vTargetPos = vPos; m_bTargetPos = true;	}
 	void					Set_RecogTextureIndex(_int _iIndex) { m_iRecogTextureIndex = _iIndex;}
 
 private:
@@ -66,6 +66,9 @@ private:
 	_float				m_fRecogHitTypeLifeTime = 3.f;
 	_int				m_iRecogTextureIndex = 0.f;
 
+
+	_float				m_fDestinationDistance;
+	_vec2				m_vDestinationTextPos;
 
 	_matrix				m_matProj, m_matView;
 

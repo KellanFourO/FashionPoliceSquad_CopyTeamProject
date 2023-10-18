@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Monster.h"
 #include "Export_Utility.h"
+#include "Export_System.h"
 #include "Stage1Boss.h"
 
 CBullet::CBullet(LPDIRECT3DDEVICE9 pGraphicDev):CGameObject(pGraphicDev)
@@ -92,7 +93,16 @@ void CBullet::OnCollisionEnter(CCollider* _pOther)
 {
 	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYER)
 	{
-		dynamic_cast<CPlayer*>(_pOther->Get_Host())->Attacked(m_fDmg);
+		if (m_eObjectTag == OBJECTTAG::BOSSBULLET)
+		{
+			SoundMgr()->PlaySoundW(L"BossBulletHit.wav",SOUND_PLAYER2,0.5f);
+			dynamic_cast<CPlayer*>(_pOther->Get_Host())->Attacked(m_fDmg);
+		}
+		else
+		{
+			dynamic_cast<CPlayer*>(_pOther->Get_Host())->Attacked(m_fDmg);
+		}
+
 		m_bDead = true;
 		//TODO 플레이어 총알 오브젝트 풀링 할거면 여기서
 	}
@@ -117,6 +127,7 @@ void CBullet::OnCollisionEnter(CCollider* _pOther)
 		//TODO 몬스터 총알 오브젝트 풀링 할거면 여기서
 		if (!CStage1Boss::m_bBossPhase2)
 		{
+			SoundMgr()->PlaySound(L"BossHit.wav",SOUND_BOSS, 1.f);
 			dynamic_cast<CMonster*>(_pOther->Get_Host())->Attacked(m_fDmg);
 
 		}
@@ -168,5 +179,14 @@ void CBullet::Fire(_vec3 vShotPos, _vec3 vShotDir)
 
 void CBullet::Free()
 {
+	if (m_eObjectTag == OBJECTTAG::BOSSBULLET)
+	{
+		SoundMgr()->StopSound(SOUND_PLAYER2);
+	}
+	else if (m_eObjectTag == OBJECTTAG::PLAYERBULLET)
+	{
+		SoundMgr()->StopSound(SOUND_BOSS);
+	}
+
 	__super::Free();
 }

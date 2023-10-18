@@ -48,6 +48,7 @@ private:
 
 	_bool							m_bDialog;
 	_bool							m_bLateInit = true;
+	_bool							m_bSound = true;
 	DIALOGTAG						m_eDialog;
 
 
