@@ -26,6 +26,7 @@ HRESULT Engine::CRopeUI::Ready_GameObject()
 	m_vPos = { 1.f, 1.f, 0.1f };
 	m_vScale = { 5.f, 5.f, 5.f };
 
+
 	m_pTransformCom->Set_Scale(m_vScale);
 	m_pTransformCom->Set_Pos(m_vPos);
 
@@ -60,7 +61,15 @@ Engine::_int Engine::CRopeUI::Update_GameObject(const _float& fTimeDelta)
 		m_pTransformCom->m_vScale.z = m_vScale.z;
 
 		m_pTransformCom->m_vInfo[INFO_POS].x = m_pBelt->Get_Target()->Get_Transform()->m_vInfo[INFO_POS].x;
-		m_pTransformCom->m_vInfo[INFO_POS].y = m_pBelt->Get_Target()->Get_Transform()->m_vInfo[INFO_POS].y - 10.f;
+
+		if (Management()->Get_Scene()->Get_SceneTag() == SCENETAG::BOSS_STAGE)
+		{
+			m_pTransformCom->m_vInfo[INFO_POS].y = m_pBelt->Get_Target()->Get_Transform()->m_vInfo[INFO_POS].y - 10.f;
+		}
+		else
+		{
+			m_pTransformCom->m_vInfo[INFO_POS].y = m_pBelt->Get_Target()->Get_Transform()->m_vInfo[INFO_POS].y - 2.f;
+		}
 		m_pTransformCom->m_vInfo[INFO_POS].z = m_pBelt->Get_Target()->Get_Transform()->m_vInfo[INFO_POS].z;
 	}
 

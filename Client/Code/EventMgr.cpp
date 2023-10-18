@@ -2,7 +2,7 @@
 
 #include "Export_System.h"
 #include "Export_Utility.h"
-
+#include <random>
 IMPLEMENT_SINGLETON(CEventMgr)
 
 CEventMgr::CEventMgr()
@@ -19,10 +19,11 @@ void CEventMgr::GetEventColider()
 {
 }
 
-void CEventMgr::OnLevelUp(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag)
+void CEventMgr::OnCard(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag, DIALOGTAG eDialogTag)
 {
+
 	Engine::CCardList* pCardList = nullptr;
-	pCardList = Engine::CCardList::Create(pGraphicDev);
+	pCardList = Engine::CCardList::Create(pGraphicDev, eDialogTag);
 
 	NULL_CHECK(pCardList);
 
@@ -57,6 +58,43 @@ void CEventMgr::OnPause(_bool bPause, SCENETAG eSceneTag)
 	}
 }
 
+void CEventMgr::OnDropItem(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag, _int iCount)
+{
+	CItem* pItem = nullptr;
+	CLayer* pLayer = Management()->Get_One_Scene(eSceneTag)->Get_Layer(LAYERTAG::GAMELOGIC);
+	CPlayer* pPlayer = Management()->Get_Player();
+
+	_vec3 vPlayerPos = pPlayer->Get_Transform()->m_vInfo[INFO_POS];
+	_vec3 vPlayerRight = pPlayer->Get_Transform()->m_vInfo[INFO_RIGHT];
+	_vec3 vPlayerUp = pPlayer->Get_Transform()->m_vInfo[INFO_UP];
+	_vec3 vPlayerLook = pPlayer->Get_Transform()->m_vInfo[INFO_LOOK];
+
+	for (int i = 0; i < iCount; ++i)
+	{
+		random_device rd;
+		mt19937 gen(rd());
+
+		uniform_int_distribution<int> distributionID(0, 4);
+
+
+		pItem = CItem::Create(pGraphicDev);
+		pLayer->Add_GameObject(OBJECTTAG::ITEM,pItem);
+
+		_vec3 vRandomPos;
+
+		vRandomPos.x = vPlayerPos.x + static_cast<float>(rand()) / RAND_MAX * 100 * 2 - 100;
+		vRandomPos.y = vPlayerPos.y;
+		vRandomPos.z = vPlayerPos.z + static_cast<float>(rand()) / RAND_MAX * 100 * 2 - 100;
+
+		Item_Info tInfo;
+		tInfo.Item_ID = static_cast<ItemID>(distributionID(gen));
+		tInfo.vPos = vRandomPos;
+
+		pItem->Set_INFO(tInfo);
+	}
+
+}
+
 HRESULT CEventMgr::OnMiniGame_Arrow(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag)
 {
 	m_eMiniGameState = CEventMgr::MiniGameState::PLAY_NOW;
@@ -67,9 +105,9 @@ HRESULT CEventMgr::OnMiniGame_Arrow(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSce
 	NULL_CHECK_RETURN(pGame_Arrow, E_FAIL);
 
 	OnPause(TRUE, SCENETAG::LOBBY);
-	
+
 	Management()->Get_One_Scene(eSceneTag)->Get_Layer(LAYERTAG::MINIGAME)->Add_GameObject(OBJECTTAG::MINIGAME, pGame_Arrow);
-	
+
 	return S_OK;
 }
 
@@ -106,7 +144,7 @@ HRESULT CEventMgr::OffMiniGame_Arrow(SCENETAG eSceneTag, _bool ClearCheck)
 	{
 		Set_MiniGameClearCheck(0, FALSE);
 		OnPause(FALSE, SCENETAG::LOBBY);
-	} 
+	}
 	return S_OK;
 }
 HRESULT CEventMgr::OffMiniGame_KickBoard(SCENETAG eSceneTag, _bool ClearCheck)

@@ -130,6 +130,7 @@ namespace Engine
 
 	}OBJData;
 
+	#pragma pack(push, 1) // 구조체 패킹을 1바이트로 설정
 	typedef struct tagTriggerInfo
 	{
 		TRIGGER_NUMBER			eTrName;		//트리거 이름 열거체
@@ -141,6 +142,7 @@ namespace Engine
 		TRIGGER_STATE			eTrSTATE;		//발동 전, 중, 후
 
 	}TRIGGER;
+	#pragma pack(pop) // 기본 패킹으로 복원
 
 	typedef struct tagCreatePoint
 	{

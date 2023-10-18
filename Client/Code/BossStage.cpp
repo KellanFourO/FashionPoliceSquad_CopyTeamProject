@@ -113,6 +113,38 @@ void CBossStage::Render_Scene()
 {
 }
 
+HRESULT CBossStage::Create_Monster()
+{
+	if (m_bCreateMonster == false)
+	{
+		Engine::CGameObject* pGameObject = nullptr;
+
+		for (auto& iter : m_VecCreatePoint)
+		{
+			if (iter->eMonsterType == MonsterType::BIGDADDY)
+			{
+				pGameObject = CBigDaddyMonster::Create(m_pGraphicDev, iter->defOBJData.vPos);
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+			}
+			if (iter->eMonsterType == MonsterType::DULLSUIT)
+			{
+				pGameObject = CDullSuitMonster::Create(m_pGraphicDev, iter->defOBJData.vPos);
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+			}
+			if (iter->eMonsterType == MonsterType::KCIKBOARD)
+			{
+				pGameObject = CKickBoardMonster::Create(m_pGraphicDev, iter->defOBJData.vPos);
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+			}
+		}
+		m_bCreateMonster = true;
+	}
+	return S_OK;
+}
+
 HRESULT CBossStage::Ready_LightInfo()
 {
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);
@@ -589,12 +621,6 @@ HRESULT CBossStage::Load_Data_T(const TCHAR* pFilePath, OBJECTTAG eTag)
 
 void CBossStage::Admin_KeyInput()
 {
-	if (Engine::Get_DIKeyState(DIK_F4) & 0x80 && m_bAdminSwitch)
-	{
-		CEventMgr::GetInstance()->OnLevelUp(m_pGraphicDev, SCENETAG::BOSS_STAGE);
-		CEventMgr::GetInstance()->OnPause(true, SCENETAG::BOSS_STAGE);
-		m_bAdminSwitch = false;
-	}
 
 	if (Engine::Get_DIKeyState(DIK_F9) & 0x80 && m_bAdminSwitch)
 	{
@@ -602,11 +628,6 @@ void CBossStage::Admin_KeyInput()
 		m_bAdminSwitch = false;
 	}
 
-	if (Engine::Get_DIKeyState(DIK_F8) & 0x80 && m_bAdminSwitch)
-	{
-		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::BOSS_STAGE, DIALOGTAG::QUEST_1);
-		m_bAdminSwitch = false;
-	}
 
 	if (Engine::Get_DIKeyState(DIK_M) & 0x80 && m_bAdminSwitch)
 	{

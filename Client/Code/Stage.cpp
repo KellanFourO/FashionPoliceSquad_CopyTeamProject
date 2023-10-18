@@ -41,8 +41,10 @@ HRESULT CStage::Ready_Scene()
 		
 	srand(GetTickCount64());
 
-	//Load_Data_T(L"../Bin/Data/Trigger/Stage1/TriggerData", OBJECTTAG::O_TRIGGER);
-	Load_Data_C(L"../Bin/Data/CPoint/Stage1/C0/CPointData", OBJECTTAG::BUILD_CUBE, 0);
+	//Load_Data_T(L"../Bin/Data/Trigger/Stage1/T0/TriggerData", OBJECTTAG::O_TRIGGER);
+	//Load_Data_T(L"../Bin/Data/Trigger/Stage1/T1/TriggerData", OBJECTTAG::O_TRIGGER);
+	//Load_Data_T(L"../Bin/Data/Trigger/Stage1/T2/TriggerData", OBJECTTAG::O_TRIGGER);
+
 
 	//TODO - 승용추가 크로스헤어 추가, 기본 커서 안보이게
 	ShowCursor(FALSE);
@@ -60,8 +62,8 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 
 	if (m_bLateInit)
 	{
-		//CEventMgr::GetInstance()->OnDialog(m_pGraphicDev,m_eSceneTag, DIALOGTAG::STORY_ST1_INTRO);
-		//CEventMgr::GetInstance()->OnPause(true,m_eSceneTag);
+		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev,m_eSceneTag, DIALOGTAG::STORY_ST1_DEVELOP);
+		CEventMgr::GetInstance()->OnPause(true,m_eSceneTag);
 		m_bLateInit = false;
 	}
 
@@ -88,7 +90,7 @@ void CStage::LateUpdate_Scene()
 
 	Admin_KeyInput();
 
-	Trigger_Check_For_Create_Monster();
+	//Trigger_Check_For_Create_Monster();
 
 }
 
@@ -160,6 +162,8 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 
 	Engine::CGameObject* pGameObject = nullptr;
 
+	Load_Data_C(L"../Bin/Data/CPoint/Stage1/C_all/CPointData", OBJECTTAG::BUILD_OBJ, 0);
+
 	{
 		// Player
 		CGameObject* pPlayer = m_pPlayer = pGameObject = Management()->Get_Player();
@@ -200,7 +204,7 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		// 벨트임
 
 	}
-	{
+	
 		//for (int i = 0; i < 6; i++) {
 		//	pGameObject = CItem::Create(m_pGraphicDev);
 		//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -210,9 +214,7 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		//	dynamic_cast<CItem*>(pGameObject)->Set_INFO(Item_Info);
 		//	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::ITEM, pGameObject), E_FAIL);	//아이템 배치
 		//}
-	}
-	// 아이템
-
+	
 	//몬스터
 	for (auto& iter : m_VecCreatePoint[0])
 	{
@@ -236,7 +238,10 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		}
 	}
 
+	// 아이템
+
 	m_mapLayer.insert({ eLayerTag, pLayer });
+
 
 	return S_OK;
 }
@@ -352,54 +357,63 @@ HRESULT CStage::Trigger_Check_For_Create_Monster()
 	if ((m_eTrName != TRIGGER_NUMBER::TR_END) && (m_eTrState != TRIGGER_STATE::TR_STATE_END))
 	{
 		dynamic_cast<CPlayer*>(m_pPlayer)->Set_TR_STATE(TRIGGER_STATE::TR_NOW);
-		int iCountNum = -1;
+		int iCountNum = 1;
 
-		if (m_eTrName == TRIGGER_NUMBER::TR0)
+		if ((m_eTrName == TRIGGER_NUMBER::TR0) && (m_bFirstCreat == false))
 		{
 			iCountNum = 1;
 			Load_Data_C(L"../Bin/Data/CPoint/Stage1/C1/CPointData", OBJECTTAG::BUILD_OBJ, iCountNum);
-			dynamic_cast<CPlayer*>(m_pPlayer)->Set_TR_STATE(TRIGGER_STATE::TR_AFTER);
-			dynamic_cast<CPlayer*>(m_pPlayer)->Set_TR_NUMBER(TRIGGER_NUMBER::TR_END);
+			m_bFirstCreat = true;
+			Create_Monster(iCountNum);
 		}	
-		if (m_eTrName == TRIGGER_NUMBER::TR1)
+		else if ((m_eTrName == TRIGGER_NUMBER::TR1) && (m_bSecondCreat == false))
 		{
 			iCountNum = 2;
 			Load_Data_C(L"../Bin/Data/CPoint/Stage1/C2/CPointData", OBJECTTAG::BUILD_OBJ, iCountNum);
-			dynamic_cast<CPlayer*>(m_pPlayer)->Set_TR_STATE(TRIGGER_STATE::TR_AFTER);
-			dynamic_cast<CPlayer*>(m_pPlayer)->Set_TR_NUMBER(TRIGGER_NUMBER::TR_END);
+			m_bSecondCreat = true;
+			Create_Monster(iCountNum);
 		}
-		if (m_eTrName == TRIGGER_NUMBER::TR2)
+		else if ((m_eTrName == TRIGGER_NUMBER::TR2) && (m_bThirdCreat == false))
 		{
 			iCountNum = 3;
 			Load_Data_C(L"../Bin/Data/CPoint/Stage1/C3/CPointData", OBJECTTAG::BUILD_OBJ, iCountNum);
-			dynamic_cast<CPlayer*>(m_pPlayer)->Set_TR_STATE(TRIGGER_STATE::TR_AFTER);
-			dynamic_cast<CPlayer*>(m_pPlayer)->Set_TR_NUMBER(TRIGGER_NUMBER::TR_END);
-		}
-
-		Engine::CGameObject* pGameObject = nullptr;
-
-		for (auto& iter : m_VecCreatePoint[iCountNum])
-		{
-			if (iter->eMonsterType == MonsterType::BIGDADDY)
-			{
-				pGameObject = CBigDaddyMonster::Create(m_pGraphicDev, iter->defOBJData.vPos);
-				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
-			}
-			if (iter->eMonsterType == MonsterType::DULLSUIT)
-			{
-				pGameObject = CDullSuitMonster::Create(m_pGraphicDev, iter->defOBJData.vPos);
-				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
-			}
-			if (iter->eMonsterType == MonsterType::KCIKBOARD)
-			{
-				pGameObject = CKickBoardMonster::Create(m_pGraphicDev, iter->defOBJData.vPos);
-				NULL_CHECK_RETURN(pGameObject, E_FAIL);
-				FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
-			}
+// 			dynamic_cast<CPlayer*>(m_pPlayer)->Set_TR_STATE(TRIGGER_STATE::TR_AFTER);
+// 			dynamic_cast<CPlayer*>(m_pPlayer)->Set_TR_NUMBER(TRIGGER_NUMBER::TR_END);
+			m_bThirdCreat = true;
+			Create_Monster(iCountNum);
 		}
 	}
+		
+	return S_OK;
+}
+
+HRESULT CStage::Create_Monster(int iNum)
+{
+	Engine::CGameObject* pGameObject = nullptr;
+
+	for (auto& iter : m_VecCreatePoint[iNum])
+	{
+		if (iter->eMonsterType == MonsterType::BIGDADDY)
+		{
+			pGameObject = CBigDaddyMonster::Create(m_pGraphicDev, iter->defOBJData.vPos);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+		}
+		if (iter->eMonsterType == MonsterType::DULLSUIT)
+		{
+			pGameObject = CDullSuitMonster::Create(m_pGraphicDev, iter->defOBJData.vPos);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+		}
+		if (iter->eMonsterType == MonsterType::KCIKBOARD)
+		{
+			pGameObject = CKickBoardMonster::Create(m_pGraphicDev, iter->defOBJData.vPos);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+		}
+	}
+
+	m_mapLayer.emplace(LAYERTAG::GAMELOGIC, m_pLayer);
 
 	return S_OK;
 }
@@ -570,6 +584,8 @@ HRESULT CStage::Load_Data_C(const TCHAR* pFilePath, OBJECTTAG eTag, int CountNum
 
 HRESULT CStage::Load_Data_T(const TCHAR* pFilePath, OBJECTTAG eTag)
 {
+	m_TriggerDataTemp.clear();
+
 	//파일 개방해서 받아오기
 	string m_strText = "TriggerData";
 
@@ -629,19 +645,19 @@ void CStage::Admin_KeyInput()
 {
 	if (Engine::Get_DIKeyState(DIK_F4) & 0x80 && m_bAdminSwitch)
 	{
-		CEventMgr::GetInstance()->OnLevelUp(m_pGraphicDev, SCENETAG::STAGE);
-		CEventMgr::GetInstance()->OnPause(true,SCENETAG::STAGE);
-		m_bAdminSwitch = false;
-	}
-	if (Engine::Get_DIKeyState(DIK_F9) & 0x80 && m_bAdminSwitch)
-	{
-		CEventMgr::GetInstance()->OnPause(false, SCENETAG::STAGE);
+		CEventMgr::GetInstance()->OnCard(m_pGraphicDev, SCENETAG::STAGE, DIALOGTAG::STORY_ST1_DEVELOP);
 		m_bAdminSwitch = false;
 	}
 
-	if (Engine::Get_DIKeyState(DIK_F8) & 0x80 && m_bAdminSwitch)
+	if (Engine::Get_DIKeyState(DIK_F5) & 0x80 && m_bAdminSwitch)
 	{
-		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::STAGE, DIALOGTAG::STORY_ST1_INTRO);
+		CEventMgr::GetInstance()->OnCard(m_pGraphicDev, SCENETAG::STAGE, DIALOGTAG::STORY_LOBBY_CONCLU);
+		m_bAdminSwitch = false;
+	}
+
+	if (Engine::Get_DIKeyState(DIK_F9) & 0x80 && m_bAdminSwitch)
+	{
+		CEventMgr::GetInstance()->OnPause(false, SCENETAG::STAGE);
 		m_bAdminSwitch = false;
 	}
 

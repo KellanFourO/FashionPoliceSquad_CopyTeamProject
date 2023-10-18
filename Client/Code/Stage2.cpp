@@ -33,8 +33,6 @@ HRESULT CStage2::Ready_Scene()
 
 	FAILED_CHECK_RETURN(Ready_Layer_UI(LAYERTAG::UI), E_FAIL);
 
-	Load_Data_C(L"../Bin/Data/CPoint/CPointData", OBJECTTAG::BUILD_OBJ); //TODO
-
 	srand(GetTickCount64());
 
 	//TODO - 승용추가 크로스헤어 추가, 기본 커서 안보이게
@@ -48,12 +46,12 @@ HRESULT CStage2::Ready_Scene()
 _int CStage2::Update_Scene(const _float& fTimeDelta)
 {
 	_int	iExit = __super::Update_Scene(fTimeDelta);
-// 	if (m_bLateInit)
-// 	{
-// 		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::STAGE2, DIALOGTAG::ST1_BOSS_START);
-// 		CEventMgr::GetInstance()->OnPause(true, SCENETAG::STAGE2);
-// 		m_bLateInit = false;
-// 	}
+ 	if (m_bLateInit)
+ 	{
+ 		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::STAGE2, DIALOGTAG::STORY_ST2_INTRO);
+ 		CEventMgr::GetInstance()->OnPause(true, SCENETAG::STAGE2);
+ 		m_bLateInit = false;
+ 	}
 
 	//if (m_bReadyCube)
 	//{
@@ -145,6 +143,8 @@ HRESULT CStage2::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 
 	Engine::CGameObject* pGameObject = nullptr;
 
+	Load_Data_C(L"../Bin/Data/CPoint/Stage2/C_all/CPointData", OBJECTTAG::BUILD_OBJ);
+
 	{
 		// Player
 		m_pPlayer = pGameObject = Management()->Get_Player();
@@ -191,18 +191,28 @@ HRESULT CStage2::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::RAY, pGameObject), E_FAIL);
 		dynamic_cast<CFootRay*>(pGameObject)->Set_Host(m_pPlayer);
 
-		//
-		//pGameObject = CRay::Create(m_pGraphicDev);
-		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::RAY, pGameObject), E_FAIL);
-		//pGameObject = CBigDaddyMonster::Create(m_pGraphicDev);
-		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
-
-		//pGameObject = CStage1Boss::Create(m_pGraphicDev);
-		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::BOSS, pGameObject), E_FAIL);
-
+		//몬스터
+		for (auto& iter : m_VecCreatePoint)
+		{
+			if (iter->eMonsterType == MonsterType::BIGDADDY)
+			{
+				pGameObject = CBigDaddyMonster::Create(m_pGraphicDev, iter->defOBJData.vPos);
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+			}
+			if (iter->eMonsterType == MonsterType::DULLSUIT)
+			{
+				pGameObject = CDullSuitMonster::Create(m_pGraphicDev, iter->defOBJData.vPos);
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+			}
+			if (iter->eMonsterType == MonsterType::KCIKBOARD)
+			{
+				pGameObject = CKickBoardMonster::Create(m_pGraphicDev, iter->defOBJData.vPos);
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+			}
+		}
 
 		pGameObject = Management()->Get_ShotGunFlash();
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -676,18 +686,7 @@ HRESULT CStage2::Load_Data_T(const TCHAR* pFilePath, OBJECTTAG eTag)
 
 void CStage2::Admin_KeyInput()
 {
-	if (Engine::Get_DIKeyState(DIK_F9) & 0x80 && m_bAdminSwitch)
-	{
-		CEventMgr::GetInstance()->OnLevelUp(m_pGraphicDev, SCENETAG::STAGE2);
-		CEventMgr::GetInstance()->OnPause(true, SCENETAG::STAGE2);
-		m_bAdminSwitch = false;
-	}
 
-	if (Engine::Get_DIKeyState(DIK_F8) & 0x80 && m_bAdminSwitch)
-	{
-		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::STAGE2, DIALOGTAG::QUEST_1);
-		m_bAdminSwitch = false;
-	}
 }
 
 CStage2* CStage2::Create(LPDIRECT3DDEVICE9 pGraphicDev)

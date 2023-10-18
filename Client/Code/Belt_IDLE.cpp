@@ -5,8 +5,6 @@
 
 CBelt_Idle::CBelt_Idle()
 {
-
-
 }
 
 CBelt_Idle::~CBelt_Idle()
@@ -35,7 +33,7 @@ CBeltState* CBelt_Idle::Update(CBelt* Belt, const float& fTimeDelta)
 
 
 
-	if (!ObjList.empty())
+	if (!ObjList.empty() && m_pHost->Get_Host()->Get_bRopeSkill())
 	{
 		for (auto iter : ObjList)
 		{
@@ -49,7 +47,7 @@ CBeltState* CBelt_Idle::Update(CBelt* Belt, const float& fTimeDelta)
 		}
 	}
 
-    if (m_pHost->Get_Target() && !CollisionManager()->CollisionRayToCube(m_pHost->Get_Collider(), m_pHost->Get_Target()->Get_Collider(), m_pHost->Get_StartPos()))
+    if (m_pHost->Get_Host()->Get_bRopeSkill() && m_pHost->Get_Target() && !CollisionManager()->CollisionRayToCube(m_pHost->Get_Collider(), m_pHost->Get_Target()->Get_Collider(), m_pHost->Get_StartPos()))
     {
         m_pHost->Set_Target(nullptr);
     }

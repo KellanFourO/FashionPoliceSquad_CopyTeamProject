@@ -8,8 +8,6 @@
 
 CBelt_Rope::CBelt_Rope()
 {
-
-
 }
 
 CBelt_Rope::~CBelt_Rope()
@@ -18,7 +16,25 @@ CBelt_Rope::~CBelt_Rope()
 void CBelt_Rope::Initialize(CBelt* Belt)
 {
     m_pHost = Belt;
+    Belt->m_vBeltScale = { 0.2f,0.2f,0.2f };
     m_bDashCheck = false;
+
+	Belt->m_fBeltMoveRight = 4.f;
+	Belt->m_fBeltMoveDown = 1.2f;
+
+	m_fMoveRightSum = -0.06f;
+	m_fMoveDownSum = 0.013f;
+	m_fMoveRightMax = 1.5f;
+	m_fMoveUpMax = 0.16f;
+
+	m_fRotateMax = -10.f;
+	m_fRotate = 20.f;
+
+	Belt->m_fBeltMoveRight -= m_fMoveRightMax;
+	Belt->m_fBeltMoveDown -= m_fMoveUpMax;
+
+    Belt->m_pTransformCom->RotateAxis(Belt->m_vPlayerLook, D3DXToRadian(m_fRotateMax));
+    SoundMgr()->PlaySoundW(L"Player_BeltAttack.wav", SOUND_PLAYER2, 1.f);
 
     m_pHost->Get_Target()->Get_Transform()->Get_Info(INFO_POS,&m_vTargetPos);
 }
@@ -27,17 +43,30 @@ CBeltState* CBelt_Rope::Update(CBelt* Belt, const float& fTimeDelta)
 {
     m_fBehaviorTime += fTimeDelta;
 
-    _vec3 vPlayerPos, vDir, vPlayerLook;
+    _vec3 vPlayerPos, vDir, vPlayerLook, vPlayerUp;
     m_pHost->Get_HostTransform()->Get_Info(INFO_POS, &vPlayerPos);
     m_pHost->Get_HostTransform()->Get_Info(INFO_LOOK, &vPlayerLook);
+    m_pHost->Get_HostTransform()->Get_Info(INFO_UP, &vPlayerUp);
+
+
+
+
 
     m_vPlayerVelocity = vPlayerPos - m_vPrevPlayerPos;
 
     vDir = m_vTargetPos - vPlayerPos; // 타겟을 바라보는 방향
 
 
+
     _float fLength;
     fLength = D3DXVec3Length(&vDir);
+
+
+
+
+
+	Belt->m_bHit = false;
+
 
     D3DXVec3Normalize(&vDir, &vDir);
     D3DXVec3Normalize(&vPlayerLook,&vPlayerLook);
@@ -51,6 +80,7 @@ CBeltState* CBelt_Rope::Update(CBelt* Belt, const float& fTimeDelta)
     fAngle = D3DXToDegree(fAngle);
 
     _float fForce = 1.f * m_pHost->Get_Host()->Get_INFO()->fMoveSpeed;
+
 
 
 
