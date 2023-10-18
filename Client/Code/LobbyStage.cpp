@@ -829,9 +829,9 @@ void CLobbyStage::Admin_KeyInput()
 		{
 			CEventMgr::GetInstance()->OnMiniGame_KickBoard(m_pGraphicDev, SCENETAG::LOBBY);
 		}
-		else if ((CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == true)
-			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(2) == false)
-			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(0) == true))
+		else if ((CEventMgr::GetInstance()->Get_MiniGameClearCheck(0) == true)
+			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == true)
+			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(2) == false))
 		{
 			CEventMgr::GetInstance()->OnMiniGame_Quiz(m_pGraphicDev, SCENETAG::LOBBY);
 		}

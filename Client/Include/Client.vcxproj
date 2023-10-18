@@ -239,6 +239,7 @@
     <ClInclude Include="..\Header\LobbyStage.h" />
     <ClInclude Include="..\Header\MainGame_Arrow.h" />
     <ClInclude Include="..\Header\MainGame_KickBoard.h" />
+    <ClInclude Include="..\Header\MainGame_Quiz.h" />
     <ClInclude Include="..\Header\Mini_Arrow.h" />
     <ClInclude Include="..\Header\Mini_Effect.h" />
     <ClInclude Include="..\Header\Mini_Cursor.h" />
@@ -407,6 +408,7 @@
     <ClCompile Include="..\Code\JumpShockWaveEffect2.cpp" />
     <ClCompile Include="..\Code\FileMgr.cpp" />
     <ClCompile Include="..\Code\MainGame_KickBoard.cpp" />
+    <ClCompile Include="..\Code\MainGame_Quiz.cpp" />
     <ClCompile Include="..\Code\MBulletBombEffect.cpp" />
     <ClCompile Include="..\Code\MBulletExplosion.cpp" />
     <ClCompile Include="..\Code\MainGame_Arrow.cpp" />
