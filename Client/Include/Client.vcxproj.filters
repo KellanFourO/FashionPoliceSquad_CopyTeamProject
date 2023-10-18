@@ -481,6 +481,21 @@
     <Filter Include="02. GameObject\06. Effect\06.Dash">
       <UniqueIdentifier>{05f95524-f77b-4f2b-88d7-7e0286573dd7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\2. KICKBOARD\2.Mini_Enemy">
+      <UniqueIdentifier>{203b8913-cc82-45b4-b8b7-eeba495307a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\2. KICKBOARD\3.Mini_Gold">
+      <UniqueIdentifier>{d0871711-2cfa-4c0c-966c-46040a71a615}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\2. KICKBOARD\4.Mini_Timer">
+      <UniqueIdentifier>{fe751f39-32b1-4440-b6f9-e6969801f857}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\2. KICKBOARD\5.Mini_Score">
+      <UniqueIdentifier>{7984b3fc-57d3-4bb8-a64f-0b70bdde8f12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\2. KICKBOARD\6.Mini_Effect">
+      <UniqueIdentifier>{8e629cd6-5f0a-4119-a0da-8d868ac3687f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -1032,6 +1047,21 @@
     <ClInclude Include="..\Header\MainGame_KickBoard.h">
       <Filter>02. GameObject\15. MiniGame\2. KICKBOARD</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\Mini_Enemy.h">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\2.Mini_Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Mini_Gold.h">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\3.Mini_Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Mini_Effect.h">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\6.Mini_Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Mini_Timer.h">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\4.Mini_Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Mini_Score.h">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\5.Mini_Score</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1573,6 +1603,21 @@
     </ClCompile>
     <ClCompile Include="..\Code\MainGame_KickBoard.cpp">
       <Filter>02. GameObject\15. MiniGame\2. KICKBOARD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mini_Enemy.cpp">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\2.Mini_Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mini_Gold.cpp">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\3.Mini_Gold</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mini_Effect.cpp">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\6.Mini_Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mini_Timer.cpp">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\4.Mini_Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mini_Score.cpp">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\5.Mini_Score</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

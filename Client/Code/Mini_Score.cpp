@@ -1,28 +1,26 @@
 
 #include "stdafx.h"
-#include "Mini_Player.h"
+#include "Mini_Score.h"
 
 #include "Export_System.h"
 #include "Export_Utility.h"
 
 
-CMini_Player::CMini_Player(LPDIRECT3DDEVICE9 pGraphicDev)
+CMini_Score::CMini_Score(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 {
 }
 
-CMini_Player::CMini_Player(const CMini_Player& rhs)
+CMini_Score::CMini_Score(const CMini_Score& rhs)
 	: Engine::CGameObject(rhs)
 {
 }
 
-CMini_Player::~CMini_Player()
+CMini_Score::~CMini_Score()
 {
 }
 
-
-
-HRESULT CMini_Player::Add_Component()
+HRESULT CMini_Score::Add_Component()
 {
 	CComponent* pComponent = nullptr;
 
@@ -34,74 +32,38 @@ HRESULT CMini_Player::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::BUFFER, pComponent);
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Mini_Player_Texture"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Mini_Number_Texture"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
 
 	return S_OK;
 }
 
-void CMini_Player::Set_Damage()
+void CMini_Score::Set_TexNum(float m_Tex)
 {
-	if (m_ePlayer_Dir == MINIGAME_Player_Dir::LEFT)
-	{
-		m_PlayerPos.x += m_DamageCount;
-	}
-	else if (m_ePlayer_Dir == MINIGAME_Player_Dir::RIGHT)
-	{
-		m_PlayerPos.x -= m_DamageCount;
-	}	
-	--m_DamageCount;
-
-	if (m_DamageCount <= 0) { m_DamageCount = 0; }
-
-	m_pTransformCom->Set_Pos(m_PlayerPos);
+	m_iTextureIndex = m_Tex;
 }
 
-void CMini_Player::Set_Move()
-{
-	if ((m_ePlayer_Dir == MINIGAME_Player_Dir::LEFT) 
-		 && (m_PlayerPos.x > m_PlayerRect.Left_X))
-	{ 
-		m_PlayerPos.x -= fSpeed;
-
-	}
-	else if ((m_ePlayer_Dir == MINIGAME_Player_Dir::RIGHT)
-		&& (m_PlayerPos.x < m_PlayerRect.Right_X))
-	{
-		m_PlayerPos.x += fSpeed;
-	}
-
-	m_pTransformCom->Set_Pos(m_PlayerPos);
-}
-
-void CMini_Player::Set_Dir()
-{
-	if (m_ePlayer_Dir == MINIGAME_Player_Dir::LEFT)
-	{
-		m_ePlayer_Dir = MINIGAME_Player_Dir::RIGHT;
-		m_iTextureIndex = 2;
-	}
-	else if (m_ePlayer_Dir == MINIGAME_Player_Dir::RIGHT)
-	{
-		m_ePlayer_Dir = MINIGAME_Player_Dir::LEFT;
-		m_iTextureIndex = 3;
-	}
-}
-
-HRESULT CMini_Player::Ready_GameObject()
+HRESULT CMini_Score::Ready_GameObject(float pPos_X, int Count)
 {
 	D3DXMatrixIdentity(&m_ViewMatrix);
 	D3DXMatrixOrthoLH(&m_ProjMatrix, WINCX, WINCY, 0.0f, 100.f);
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
+	m_STDCount = Count;
+
 	_vec3 vPos, vScale;
 	_float fMultiply = 1.f;
-	m_PlayerSize = 40.f;
 
-	vPos = { 400.f, 445.f, 0.f };
-	vScale = { m_PlayerSize * fMultiply, m_PlayerSize * fMultiply, 1.f };
-
+	if (Count == 0)
+	{
+		vPos = { pPos_X - 5.f, 150.f, 0.f };
+		vScale = { 20.f * fMultiply, 20.f * fMultiply, 1.f };
+	}
+	else {
+		vPos = { pPos_X, 150.f, 0.f };
+		vScale = { 15.f * fMultiply, 15.f * fMultiply, 1.f };
+	}
 	vPos.x = vPos.x - WINCX * 0.5f;
 	vPos.y = -vPos.y + WINCY * 0.5f;
 
@@ -116,30 +78,20 @@ HRESULT CMini_Player::Ready_GameObject()
 	return S_OK;
 }
 
-_int CMini_Player::Update_GameObject(const _float& fTimeDelta)
+_int CMini_Score::Update_GameObject(const _float& fTimeDelta)
 {
 	Engine::Add_RenderGroup(RENDER_UI, this);
 	int iExit = __super::Update_GameObject(fTimeDelta);
 
-	if (m_DamageCount == 0)
-	{
-		Set_Move();
-	}
-	if (m_DamageCount != 0)
-	{
-		Set_Damage();
-	}
-
-
 	return 0;
 }
 
-void CMini_Player::LateUpdate_GameObject()
+void CMini_Score::LateUpdate_GameObject()
 {
 	__super::LateUpdate_GameObject();
 }
 
-void CMini_Player::Render_GameObject()
+void CMini_Score::Render_GameObject()
 {
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_ViewMatrix);
@@ -161,12 +113,11 @@ void CMini_Player::Render_GameObject()
 }
 
 
-
-CMini_Player* CMini_Player::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CMini_Score* CMini_Score::Create(LPDIRECT3DDEVICE9 pGraphicDev, float pPos_X, int Count)
 {
-	CMini_Player* pInstance = new CMini_Player(pGraphicDev);
+	CMini_Score* pInstance = new CMini_Score(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_GameObject()))
+	if (FAILED(pInstance->Ready_GameObject(pPos_X, Count)))
 	{
 		Safe_Release(pInstance);
 
@@ -177,7 +128,7 @@ CMini_Player* CMini_Player::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	return pInstance;
 }
 
-void CMini_Player::Free()
+void CMini_Score::Free()
 {
 	__super::Free();
 }

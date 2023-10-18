@@ -884,8 +884,6 @@ void CLobbyStage::Free()
 	//}
 	//m_VecCreatePoint.clear();
 
-
-
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	//m_pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, FALSE);
 

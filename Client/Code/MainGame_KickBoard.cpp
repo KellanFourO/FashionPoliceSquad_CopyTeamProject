@@ -27,6 +27,9 @@ HRESULT CMainGame_KickBoard::Ready_GameObject()
 	D3DXMatrixOrthoLH(&m_matProj, WINCX, WINCY, 0.0f, 100.0f);
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
+	m_eGameState = CMainGame_KickBoard::KickBoard_GameState::ING;
+	
+
 	//Player 만들기
 	m_pPlayer = CMini_Player::Create(m_pGraphicDev);
  	NULL_CHECK_RETURN(m_pPlayer, E_FAIL);
@@ -34,14 +37,40 @@ HRESULT CMainGame_KickBoard::Ready_GameObject()
 	_vec3 vPos, vScale;
 	_float fMultiply = 1.f;
 
-	vPos = { 400.f, 370.f, 0.f };
+	vPos = { 400.f, 300.f, 0.f };
 	vScale = { 300.f * fMultiply, 200.f * fMultiply, 1.f };
 
 	vPos.x = vPos.x - WINCX * 0.5f;
 	vPos.y = -vPos.y + WINCY * 0.5f;
 
+	m_defRect.Up_Y = vPos.y + (vScale.y * 0.9f);
+	m_defRect.Down_Y = vPos.y - (vScale.y * 0.9f);
+	m_defRect.Left_X = vPos.x - (vScale.x * 0.9f);
+	m_defRect.Right_X = vPos.x + (vScale.x * 0.9f);
+
+	RectSizeX = fabs(m_defRect.Right_X - m_defRect.Left_X);
+	STDPointX = RectSizeX / 20;
+
 	m_pTransformCom->Set_Scale(vScale);
 	m_pTransformCom->Set_Pos(vPos);
+
+	m_pPlayer->Set_Rect(m_defRect);
+
+	//Timer 만들기
+	for (int i = 0; i != m_Timer_Score_Num; ++i)
+	{
+		float fsize = 15.f + 5.f;
+		m_pTimer[i] = CMini_Timer::Create(m_pGraphicDev, 150.f + (i * fsize), i);
+		NULL_CHECK_RETURN(m_pTimer[i], E_FAIL);
+	}
+	//Score 만들기
+	for (int i = 0; i != m_Timer_Score_Num; ++i)
+	{
+		float fsize = 15.f + 5.f;
+		m_pScore[i] = CMini_Score::Create(m_pGraphicDev, 600.f + (i * fsize), i);
+		NULL_CHECK_RETURN(m_pScore[i], E_FAIL);
+	}
+
 	return S_OK;
 }
 
@@ -68,9 +97,31 @@ void CMainGame_KickBoard::Render_GameObject()
 		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 
 
+		if (!m_vecGold.empty()) {
+			for (auto& iter : m_vecGold)
+			{
+				iter->Render_GameObject();
+			}
+		}
+
+		if (!m_vecEnemy.empty()) {
+			for (auto& iter : m_vecEnemy)
+			{
+				iter->Render_GameObject();
+			}
+		}
+ 
+		for (int i = 0; i != m_Timer_Score_Num; ++i)
+		{
+			m_pTimer[i]->Render_GameObject();
+		}
+
+		for (int i = 0; i != m_Timer_Score_Num; ++i)
+		{
+			m_pScore[i]->Render_GameObject();
+		}
 
  		m_pPlayer->Render_GameObject();
- 
 	}
 }
 
@@ -82,27 +133,136 @@ _int CMainGame_KickBoard::Update_GameObject(const _float& fTimeDelta)
 
 		Engine::Add_RenderGroup(RENDER_UI, this);
 
- 		GameState_Update();
+		TimeCheck();
+		CoinCount();
+
+		Collisoin_Check();
+		GameState_Update();
+
 		KeyInput();
+
 
  		__super::Update_GameObject(fTimeDelta);
 
+		if (!m_vecGold.empty()) {
+			for (auto& iter : m_vecGold)
+			{
+				iter->Update_GameObject(fTimeDelta);
+			}
+		}
+
+		if (!m_vecEnemy.empty()) {
+			for (auto& iter : m_vecEnemy)
+			{
+				iter->Update_GameObject(fTimeDelta);
+			}
+		}
+
+		for (int i = 0; i != m_Timer_Score_Num; ++i)
+		{
+			m_pTimer[i]->Update_GameObject(fTimeDelta);
+		}
+
+		for (int i = 0; i != m_Timer_Score_Num; ++i)
+		{
+			m_pScore[i]->Update_GameObject(fTimeDelta);
+		}
 
  		m_pPlayer->Update_GameObject(fTimeDelta);
- 
+
+		//ENEMY 생성 (한 번에 둘!)
+		if (m_EnemyCreatCount % 400 == 0) {
+			random_device rd;
+			mt19937 gen(rd());
+
+			// 정수 분포 (예: 0 이상 3 이하의 난수)
+			uniform_int_distribution<int> distribution(1, 10); //ENEMY 생성위치
+			uniform_int_distribution<int> distribution2(0, 8); //ENEMY 텍스쳐
+
+			int r_Point = distribution(gen);
+			int r_Point2 = distribution(gen);
+			while(r_Point == r_Point2)
+			{
+				r_Point2 = distribution(gen);
+			}
+
+			int r_TexType = distribution2(gen);
+			int r_TexType2 = distribution2(gen);
+			while (r_TexType == r_TexType2)
+			{
+				r_TexType2 = distribution2(gen);
+			}
+
+			CMini_Enemy* m_pEnemy = CMini_Enemy::Create(
+				m_pGraphicDev, (m_defRect.Left_X + ((STDPointX * 2) * r_Point)), r_TexType);
+			NULL_CHECK_RETURN(m_pEnemy, E_FAIL);
+
+			m_vecEnemy.push_back(m_pEnemy);
+
+			CMini_Enemy* m_pEnemy2 = CMini_Enemy::Create(
+				m_pGraphicDev, (m_defRect.Left_X + ((STDPointX * 2) * r_Point2)), r_TexType2);
+			NULL_CHECK_RETURN(m_pEnemy2, E_FAIL);
+
+			m_vecEnemy.push_back(m_pEnemy2);
+
+			m_EnemyCreatCount = 0;
+		}
+		m_EnemyCreatCount++;
+
+		//Gold 생성
+		if (m_GoldCreatCount % 300 == 0) {
+			random_device rd;
+			mt19937 gen(rd());
+
+			// 정수 분포 (예: 0 이상 3 이하의 난수)
+			uniform_int_distribution<int> distribution(1, 20); //ENEMY 생성위치
+
+			int r_Point = distribution(gen);
+
+			CMini_Gold* m_pGold = CMini_Gold::Create(
+				m_pGraphicDev, (m_defRect.Left_X + (STDPointX * r_Point)));
+			NULL_CHECK_RETURN(m_pGold, E_FAIL);
+
+			m_vecGold.push_back(m_pGold);
+
+			m_GoldCreatCount = 0;
+		}
+		m_GoldCreatCount++;
 	}
 
-	return _int();
+	return 0;
 }
 
 void CMainGame_KickBoard::LateUpdate_GameObject()
 {
 	if (!m_ClearCheck) {
 		CGameObject::LateUpdate_GameObject();
-
- 		
-		m_pPlayer->LateUpdate_GameObject();
  
+		if (!m_vecGold.empty()) {
+			for (auto& iter : m_vecGold)
+			{
+				iter->LateUpdate_GameObject();
+			}
+		}
+
+		if (!m_vecEnemy.empty()) {
+			for (auto& iter : m_vecEnemy)
+			{
+				iter->LateUpdate_GameObject();
+			}
+		}
+
+		for (int i = 0; i != m_Timer_Score_Num; ++i)
+		{
+			m_pTimer[i]->LateUpdate_GameObject();
+		}
+
+		for (int i = 0; i != m_Timer_Score_Num; ++i)
+		{
+			m_pScore[i]->LateUpdate_GameObject();
+		}
+
+		m_pPlayer->LateUpdate_GameObject();
 
 		
 		//if (m_pTimeBar2->Get_TimeOverCheck() == true)
@@ -137,14 +297,12 @@ HRESULT CMainGame_KickBoard::GameState_Update()
 	{
 		MSG_BOX("Clear!");
 		CEventMgr::GetInstance()->OffMiniGame_KickBoard(SCENETAG::LOBBY, true);
-		//Safe_Release(*this);
 	}
 
 	if (m_eGameState == CMainGame_KickBoard::KickBoard_GameState::LOSE)
 	{
 		MSG_BOX("Lose...");
 		CEventMgr::GetInstance()->OffMiniGame_KickBoard(SCENETAG::LOBBY, false);
-		//Safe_Release(*this);
 	}
 	return S_OK;
 }
@@ -156,36 +314,83 @@ void CMainGame_KickBoard::KeyInput()
 		CEventMgr::GetInstance()->OffMiniGame_KickBoard(SCENETAG::LOBBY, true);
 	}
 
-	if (Engine::Get_DIKeyState(DIK_RIGHT) & 0x80 ||
-		Engine::Get_DIKeyState(DIK_LEFT) & 0x80)
+ 	if (Engine::Get_DIMouseState(DIM_LB) & 0x80  &&  m_bMousePressed == false)
+ 	{
+ 		m_pPlayer->Set_Dir();
+		m_bMousePressed = true;
+ 	}
+	if (!(Engine::Get_DIMouseState(DIM_LB) & 0x80))
 	{
-		//_vec3 DirTemp = m_pPlayer->Get_Player_Dir();
+		m_bMousePressed = false;
+	}
+}
 
-		if (Engine::Get_DIKeyState(DIK_RIGHT) & 0x80 && !m_bLeftPressed)
+void CMainGame_KickBoard::TimeCheck()
+{
+	if (m_RealTime > 0) {
+		--m_TimeFrame;
+
+		if (m_TimeFrame == 0)
 		{
-			m_bLeftPressed = true;
-
-// 			if (DirTemp == DIK_RIGHT)
-// 			{
-// 
-// 			}
-
-
+			--m_RealTime;
+			m_TimeFrame = 60;
 		}
-		if (Engine::Get_DIKeyState(DIK_LEFT) & 0x80 && !m_bRightPressed)
+	}
+	_int	Ten_Num = m_RealTime / 10;
+	_int	One_Num = m_RealTime % 10;
+
+	m_pTimer[1]->Set_TexNum(Ten_Num);
+	m_pTimer[2]->Set_TexNum(One_Num);
+
+	if ((m_RealTime <= 0) && m_iMyCoinCount < 10)
+	{
+		m_eGameState = CMainGame_KickBoard::KickBoard_GameState::LOSE;
+	}
+	if ((m_RealTime > 0) && m_iMyCoinCount >= 10)
+	{
+		m_eGameState = CMainGame_KickBoard::KickBoard_GameState::CLEAR;
+	}
+}
+
+void CMainGame_KickBoard::CoinCount()
+{
+
+	_int	Ten_Num2 = m_iMyCoinCount / 10;
+	_int	One_Num2 = m_iMyCoinCount % 10;
+
+	m_pScore[1]->Set_TexNum(Ten_Num2);
+	m_pScore[2]->Set_TexNum(Ten_Num2);
+}
+
+void CMainGame_KickBoard::Collisoin_Check()
+{
+	_vec3 PlayerPos = m_pPlayer->Get_Pos();
+	_float PlayerSize = m_pPlayer->Get_Size();
+
+
+	//Player-Enemy
+	for (auto& iter : m_vecEnemy)
+	{
+		if (fabs(iter->Get_Pos().x - PlayerPos.x) < ((iter->Get_Size() * 0.5f) + (PlayerSize * 0.5f))
+			&& fabs(iter->Get_Pos().y - PlayerPos.y) < ((iter->Get_Size() * 0.5f) + (PlayerSize * 0.5f))\
+			&& iter->Get_Dead() != CMini_Enemy::EnemyState::Dead)
 		{
-			m_bRightPressed = true;
+			m_pPlayer->Set_DamageCount();
 		}
 	}
 
-	if (!(Engine::Get_DIKeyState(DIK_UP) & 0x80))
+	//Player-Gold
+	for (auto& iter : m_vecGold)
 	{
-		m_bLeftPressed = false;
+		if (fabs(iter->Get_Pos().x - PlayerPos.x) < ((iter->Get_Size() * 0.5f) + (PlayerSize * 0.5f))
+			&& fabs(iter->Get_Pos().y - PlayerPos.y) < ((iter->Get_Size() * 0.5f) + (PlayerSize * 0.5f))\
+			&& iter->Get_Dead() != CMini_Gold::GoldState::Dead)
+		{
+			m_iMyCoinCount++;
+			iter->Set_Dead();
+		}
 	}
-	if (!(Engine::Get_DIKeyState(DIK_DOWN) & 0x80))
-	{
-		m_bRightPressed = false;
-	}
+
 }
 
 CMainGame_KickBoard* CMainGame_KickBoard::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -204,19 +409,29 @@ CMainGame_KickBoard* CMainGame_KickBoard::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CMainGame_KickBoard::Free()
 {
-// 	if (!m_pCopyVector.empty())
-// 	{
-// 		for (int i = 0; i != m_pCopyVector.size(); )
-// 		{
-// 			Safe_Release(m_pCopyVector[i]);
-// 		}
-// 	}
+	if (!m_vecEnemy.empty())
+	{
+		for (int i = 0; i != m_vecEnemy.size(); )
+		{
+			Safe_Release(m_vecEnemy[i]);
+		}
+		m_vecEnemy.clear();
+	}
+	if (!m_vecGold.empty())
+	{
+		for (int i = 0; i != m_vecGold.size(); )
+		{
+			Safe_Release(m_vecGold[i]);
+		}
+		m_vecGold.clear();
+	}
 
-
-
+	for (int i = 0; i != m_Timer_Score_Num; ++i)
+	{
+		Safe_Release(m_pTimer[i]);
+		Safe_Release(m_pScore[i]);
+	}
+	Safe_Release(m_pPlayer);
 
 	__super::Free();
-
-
-
 }

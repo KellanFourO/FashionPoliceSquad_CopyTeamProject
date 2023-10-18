@@ -1,4 +1,6 @@
 #include "EventMgr.h"
+
+#include "Export_System.h"
 #include "Export_Utility.h"
 
 IMPLEMENT_SINGLETON(CEventMgr)
@@ -134,9 +136,8 @@ HRESULT CEventMgr::OffMiniGame_Quiz(SCENETAG eSceneTag, _bool ClearCheck)
 }
 
 
-
-
 void CEventMgr::Free()
 {
-
+	Safe_Release(pGame_Arrow);
+	Safe_Release(pGame_KickBoard);
 }
