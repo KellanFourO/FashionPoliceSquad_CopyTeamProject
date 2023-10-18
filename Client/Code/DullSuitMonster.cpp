@@ -26,9 +26,11 @@ CDullSuitMonster::~CDullSuitMonster()
 {
 }
 
-HRESULT CDullSuitMonster::Ready_GameObject()
+HRESULT CDullSuitMonster::Ready_GameObject(_vec3 pPoint)
 {
     __super::Ready_GameObject();
+
+	m_StartingPoint = pPoint;
 
     INFO.iMobType = MonsterType::DULLSUIT;
     FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
@@ -39,12 +41,15 @@ HRESULT CDullSuitMonster::Ready_GameObject()
     INFO.MonsterState->Initialize(this);
     INFO.fHP = 80.f;
     INFO.fMaxHP = 80.f;
-    INFO.vPos = { 40.f,4.f,20.f };
+    //INFO.vPos = { 40.f,4.f,20.f };
 
-    m_fDectedRange = 150.f;
-    m_fAttackRange = 70.f;
+    //유진 70, 50으로 수정함
+    m_fDectedRange = 70.f;
+    m_fAttackRange = 50.f;
 
-    m_pTransformCom->Set_Pos(INFO.vPos);
+    //m_pTransformCom->Set_Pos(INFO.vPos);
+    m_pTransformCom->Set_Pos(m_StartingPoint);
+
     m_pTransformCom->Set_Scale(_vec3{3.f,4.5f,3.f });
 
     m_pBufferCom->SetCount(4,4);
@@ -185,11 +190,11 @@ HRESULT CDullSuitMonster::Add_Component()
     return S_OK;
 }
 
-CDullSuitMonster* CDullSuitMonster::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CDullSuitMonster* CDullSuitMonster::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 pPoint)
 {
     CDullSuitMonster* pInstance = new CDullSuitMonster(pGraphicDev);
 
-    if (FAILED(pInstance->Ready_GameObject()))
+    if (FAILED(pInstance->Ready_GameObject(pPoint)))
     {
         Safe_Release(pInstance);
         MSG_BOX("DullSuitMonster Create Failed");

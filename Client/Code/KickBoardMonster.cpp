@@ -27,9 +27,11 @@ CKickBoardMonster::~CKickBoardMonster()
 {
 }
 
-HRESULT CKickBoardMonster::Ready_GameObject()
+HRESULT CKickBoardMonster::Ready_GameObject(_vec3 pPoint)
 {
     __super::Ready_GameObject();
+
+    m_StartingPoint = pPoint;
 
     Set_ObjectTag(OBJECTTAG::MONSTER);
     INFO.iMobType = MonsterType::KCIKBOARD;
@@ -41,15 +43,17 @@ HRESULT CKickBoardMonster::Ready_GameObject()
     INFO.MonsterState->Initialize(this);
     INFO.fHP = 100.f;
     INFO.fMaxHP = 100.f;
-    INFO.vPos = { 200.f,4.f,30.f }; // 470이엇음
+    //INFO.vPos = { 200.f,4.f,30.f }; // 470이엇음
 
+	//유진 70, 20으로 수정함
     m_fDectedRange = 70.f;
     m_fAttackRange = 20.f;
     m_fSpeed = 25.f;
 
 
     m_pTransformCom->Set_Scale({ 5.0f,5.0f, 5.0f });
-    m_pTransformCom->Set_Pos(INFO.vPos);
+    //m_pTransformCom->Set_Pos(INFO.vPos);
+    m_pTransformCom->Set_Pos(m_StartingPoint);
 
     m_pBufferCom->SetCount(5, 4);
     m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/Monster/neonshirt-v1_Resize_Hit.png", 1);
@@ -243,11 +247,11 @@ HRESULT CKickBoardMonster::Add_Component()
     return S_OK;
 }
 
-CKickBoardMonster* CKickBoardMonster::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CKickBoardMonster* CKickBoardMonster::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 pPoint)
 {
     CKickBoardMonster* pInstance = new CKickBoardMonster(pGraphicDev);
 
-    if (FAILED(pInstance->Ready_GameObject()))
+    if (FAILED(pInstance->Ready_GameObject(pPoint)))
     {
         Safe_Release(pInstance);
         MSG_BOX("KickBoardMonster Create Failed");

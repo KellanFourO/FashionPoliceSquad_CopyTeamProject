@@ -4,6 +4,7 @@
 
 #include "Export_System.h"
 #include "Export_Utility.h"
+#include "DashEffect.h"
 
 CBelt_Rope::CBelt_Rope()
 {
@@ -16,8 +17,8 @@ CBelt_Rope::~CBelt_Rope()
 }
 void CBelt_Rope::Initialize(CBelt* Belt)
 {
-    m_bAttack = false;
     m_pHost = Belt;
+    m_bDashCheck = false;
 
     m_pHost->Get_Target()->Get_Transform()->Get_Info(INFO_POS,&m_vTargetPos);
 }
@@ -59,8 +60,23 @@ CBeltState* CBelt_Rope::Update(CBelt* Belt, const float& fTimeDelta)
 	{
         _vec3 vForce;
         vForce = vDir * fLength;
+		CDashEffect* DashEffect = CDashEffect::Create(m_pHost->Get_GraphicDev());
+		DashEffect->Set_ObjectTag(OBJECTTAG::EFFECT);
+		Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::EFFECT, DashEffect);
+		SoundMgr()->PlaySoundW(L"Player_Dash.wav", SOUND_PLAYER3, 1);
 
-        m_pHost->Get_Host()->Get_RigidBody()->Add_Force(vForce);
+        m_pHost->Get_Host()->Get_RigidBody()->Add_Force(vForce * 2);
+
+        m_bDashCheck = true;
+
+        if (m_bDashCheck)
+        {
+            m_bDashCheck = false;
+
+            _vec3 vForce = vDir * 10.f;
+            m_pHost->Get_Host()->Get_RigidBody()->Add_Force(vForce);
+        }
+
         return m_pHost->Get_State(0);
     }
 

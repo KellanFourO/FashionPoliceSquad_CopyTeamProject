@@ -14,7 +14,7 @@
 #include "Player_Jump.h"
 #include "Player_Dash.h"
 
-
+#include "Trigger.h"
 #include "SoundMgr.h"
 
 #include "Export_System.h"
@@ -801,6 +801,8 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 
 		if (m_bTriggerCheck == false)
 		{
+			m_eTrName = dynamic_cast<CTrigger*>(_pOther->Get_Host())->Get_TR_NUMBER();
+			m_eTrState = dynamic_cast<CTrigger*>(_pOther->Get_Host())->Get_TR_STATE();
 			m_bTriggerCheck = true;
 		}
 	}

@@ -26,7 +26,7 @@ private:
 	virtual				~CDullSuitMonster();
 
 public:
-	virtual HRESULT		Ready_GameObject() override;
+	virtual HRESULT		Ready_GameObject(_vec3 pPoint);
 	virtual _int		Update_GameObject(const _float& fTimeDelta) override;
 	virtual void		LateUpdate_GameObject() override;
 	virtual void		Render_GameObject() override;
@@ -44,10 +44,11 @@ private:
 	HRESULT				Add_Component();
 
 private:
+	_vec3				m_StartingPoint;
 	CMonsterState*		m_pStateArray[DULLSUITSTATE_END];
 
 public:
-	static CDullSuitMonster* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CDullSuitMonster* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 pPoint);
 
 private:
 	virtual void Free();

@@ -38,10 +38,11 @@ HRESULT CStage::Ready_Scene()
 	FAILED_CHECK_RETURN(Ready_Layer_Camera(LAYERTAG::CAMERA), E_FAIL);
 
 	FAILED_CHECK_RETURN(Ready_Layer_UI(LAYERTAG::UI), E_FAIL);
-
-	//Load_Data_C(L"../Bin/Data/CPoint/CPointData", OBJECTTAG::BUILD_OBJ); //TODO
-
+		
 	srand(GetTickCount64());
+
+	//Load_Data_T(L"../Bin/Data/Trigger/Stage1/TriggerData", OBJECTTAG::O_TRIGGER);
+	Load_Data_C(L"../Bin/Data/CPoint/Stage1/C0/CPointData", OBJECTTAG::BUILD_CUBE, 0);
 
 	//TODO - 승용추가 크로스헤어 추가, 기본 커서 안보이게
 	ShowCursor(FALSE);
@@ -87,7 +88,7 @@ void CStage::LateUpdate_Scene()
 
 	Admin_KeyInput();
 
-
+	Trigger_Check_For_Create_Monster();
 
 }
 
@@ -146,7 +147,7 @@ HRESULT CStage::Ready_Layer_Environment(LAYERTAG eLayerTag)
 
 	Load_Data(L"../Bin/Data/Map/MapData", OBJECTTAG::BUILD_CUBE);		// 큐브텍스
 	Load_Data(L"../Bin/Data/OBJ/OBJData", OBJECTTAG::BUILD_OBJ);		//TODO 얘는 섞여있다 큐브텍스랑 rcTEXT
-
+		
 	m_mapLayer.insert({ eLayerTag, m_pLayer });
 
 	return S_OK;
@@ -161,7 +162,7 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 
 	{
 		// Player
-		CGameObject* pPlayer = pGameObject = Management()->Get_Player();
+		CGameObject* pPlayer = m_pPlayer = pGameObject = Management()->Get_Player();
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER, pGameObject), E_FAIL);	//플레이어
 
@@ -178,12 +179,6 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		pGameObject = Management()->Get_RifleHand();
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_HAND, pGameObject), E_FAIL);
-
-		//FootRay
-		//pGameObject = CFootRay::Create(m_pGraphicDev);
-		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::RAY, pGameObject), E_FAIL);
-		//dynamic_cast<CFootRay*>(pGameObject)->Set_Host(pPlayer);
 
 		pGameObject = Management()->Get_ShotGunFlash();
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -204,13 +199,6 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::OBJECT, pGameObject), E_FAIL);	//벨트
 		// 벨트임
 
-		//pGameObject = CInventory::Create(m_pGraphicDev);
-		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::ITEM, pGameObject), E_FAIL);
-		//dynamic_cast<CInventory*>(pGameObject)->Set_Player(dynamic_cast<CPlayer*>(pPlayer));	//인벤토리
-
-
-
 	}
 	{
 		//for (int i = 0; i < 6; i++) {
@@ -226,55 +214,27 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 	// 아이템
 
 	//몬스터
-	//{
-	//	pGameObject = CStage1Boss::Create(m_pGraphicDev);
-	//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::BOSS, pGameObject), E_FAIL);
-	//}
-
-	//pGameObject = CStage1Boss::Create(m_pGraphicDev);
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::BOSS, pGameObject), E_FAIL);
-
-
-
-	for (int i = 0; i < 5; ++i)
+	for (auto& iter : m_VecCreatePoint[0])
 	{
-		pGameObject = CBigDaddyMonster::Create(m_pGraphicDev);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
-
-		pGameObject = CKickBoardMonster::Create(m_pGraphicDev);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
-
-		pGameObject = CDullSuitMonster::Create(m_pGraphicDev);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
-
+		if (iter->eMonsterType == MonsterType::BIGDADDY)
+		{
+			pGameObject = CBigDaddyMonster::Create(m_pGraphicDev, iter->defOBJData.vPos);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+		}
+		if (iter->eMonsterType == MonsterType::DULLSUIT)
+		{
+			pGameObject = CDullSuitMonster::Create(m_pGraphicDev, iter->defOBJData.vPos);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+		}
+		if (iter->eMonsterType == MonsterType::KCIKBOARD)
+		{
+			pGameObject = CKickBoardMonster::Create(m_pGraphicDev, iter->defOBJData.vPos);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+		}
 	}
-
-//이펙트 파티클
-	{
-		//이펙트
-		//pGameObject = CMonsterBombEffect::Create(m_pGraphicDev);
-		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::EFFECT, pGameObject), E_FAIL);
-
-		//pGameObject = CMBulletBombEffect::Create(m_pGraphicDev);
-		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::EFFECT, pGameObject), E_FAIL);
-
-		//파티클
-		//pGameObject = CDustGrey::Create(m_pGraphicDev, _vec3(0.f, 0.f, 0.f), 256);
-		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		//FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::PARTICLE, pGameObject), E_FAIL);
-
-		//pGameObject = CMBulletExplosion::Create(m_pGraphicDev, _vec3(0.f, 0.f, 0.f), 256);
-		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		//FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::PARTICLE, pGameObject), E_FAIL);
-	}
-
 
 	m_mapLayer.insert({ eLayerTag, pLayer });
 
@@ -287,19 +247,6 @@ HRESULT CStage::Ready_Layer_Camera(LAYERTAG eLayerTag)
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
 	Engine::CGameObject* pGameObject = nullptr;
-
-	// FPSCamera
-// 	pGameObject = CFPSCamera::Create(m_pGraphicDev,
-// 		&_vec3(0.f, 10.f, -10.f),
-// 		&_vec3(0.f, 0.f, 1.f),
-// 		&_vec3(0.f, 1.f, 0.f));
-
-	//pGameObject = CNewFPSCamera::Create(m_pGraphicDev,
-	//	&_vec3(0.f, 10.f, -10.f),
-	//	&_vec3(0.f, 0.f, 1.f),
-	//	&_vec3(0.f, 1.f, 0.f));
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::FPSCAMERA, pGameObject), E_FAIL);
 
 	pGameObject = Management()->Get_Camera();
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -379,24 +326,80 @@ HRESULT CStage::Ready_Layer_UI(LAYERTAG eLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
 
-
-
+	pGameObject = CRopeUI::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
 
 
 	m_mapLayer.insert({ eLayerTag, pLayer });
 
-	//승용
-	//Load_UI();
+	return S_OK;
+}
 
-	//pGameObject = CImGuiManager::GetInstance()->Get_UI(L"Checkmark.png");
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+HRESULT CStage::Trigger_Check_For_Create_Monster()
+{
+	_bool CheckTemp = dynamic_cast<CPlayer*>(m_pPlayer)->Get_TriggerCheck();
+	
+	TRIGGER_NUMBER	m_eTrName = TRIGGER_NUMBER::TR_END;
+	TRIGGER_STATE	m_eTrState = TRIGGER_STATE::TR_STATE_END;
 
-	//pGameObject = CUIMgr::GetInstance()->Get_UI(L"electricity-icon.png");
-	//pGameObject = CImGuiManager::GetInstance()->Get_ImguiUI();
+	if (CheckTemp == true)
+	{
+		m_eTrName = dynamic_cast<CPlayer*>(m_pPlayer)->Get_TR_NUMBER();
+		m_eTrState = dynamic_cast<CPlayer*>(m_pPlayer)->Get_TR_STATE();
+	}
 
+	if ((m_eTrName != TRIGGER_NUMBER::TR_END) && (m_eTrState != TRIGGER_STATE::TR_STATE_END))
+	{
+		dynamic_cast<CPlayer*>(m_pPlayer)->Set_TR_STATE(TRIGGER_STATE::TR_NOW);
+		int iCountNum = -1;
 
+		if (m_eTrName == TRIGGER_NUMBER::TR0)
+		{
+			iCountNum = 1;
+			Load_Data_C(L"../Bin/Data/CPoint/Stage1/C1/CPointData", OBJECTTAG::BUILD_OBJ, iCountNum);
+			dynamic_cast<CPlayer*>(m_pPlayer)->Set_TR_STATE(TRIGGER_STATE::TR_AFTER);
+			dynamic_cast<CPlayer*>(m_pPlayer)->Set_TR_NUMBER(TRIGGER_NUMBER::TR_END);
+		}	
+		if (m_eTrName == TRIGGER_NUMBER::TR1)
+		{
+			iCountNum = 2;
+			Load_Data_C(L"../Bin/Data/CPoint/Stage1/C2/CPointData", OBJECTTAG::BUILD_OBJ, iCountNum);
+			dynamic_cast<CPlayer*>(m_pPlayer)->Set_TR_STATE(TRIGGER_STATE::TR_AFTER);
+			dynamic_cast<CPlayer*>(m_pPlayer)->Set_TR_NUMBER(TRIGGER_NUMBER::TR_END);
+		}
+		if (m_eTrName == TRIGGER_NUMBER::TR2)
+		{
+			iCountNum = 3;
+			Load_Data_C(L"../Bin/Data/CPoint/Stage1/C3/CPointData", OBJECTTAG::BUILD_OBJ, iCountNum);
+			dynamic_cast<CPlayer*>(m_pPlayer)->Set_TR_STATE(TRIGGER_STATE::TR_AFTER);
+			dynamic_cast<CPlayer*>(m_pPlayer)->Set_TR_NUMBER(TRIGGER_NUMBER::TR_END);
+		}
 
+		Engine::CGameObject* pGameObject = nullptr;
+
+		for (auto& iter : m_VecCreatePoint[iCountNum])
+		{
+			if (iter->eMonsterType == MonsterType::BIGDADDY)
+			{
+				pGameObject = CBigDaddyMonster::Create(m_pGraphicDev, iter->defOBJData.vPos);
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+			}
+			if (iter->eMonsterType == MonsterType::DULLSUIT)
+			{
+				pGameObject = CDullSuitMonster::Create(m_pGraphicDev, iter->defOBJData.vPos);
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+			}
+			if (iter->eMonsterType == MonsterType::KCIKBOARD)
+			{
+				pGameObject = CKickBoardMonster::Create(m_pGraphicDev, iter->defOBJData.vPos);
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+			}
+		}
+	}
 
 	return S_OK;
 }
@@ -507,7 +510,7 @@ HRESULT CStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 	return S_OK;
 }
 
-HRESULT CStage::Load_Data_C(const TCHAR* pFilePath, OBJECTTAG eTag)
+HRESULT CStage::Load_Data_C(const TCHAR* pFilePath, OBJECTTAG eTag, int CountNum)
 {
 	//파일 개방해서 받아오기
 	string m_strText = "CPointData";
@@ -541,14 +544,14 @@ HRESULT CStage::Load_Data_C(const TCHAR* pFilePath, OBJECTTAG eTag)
 			Safe_Delete(pOBJ);
 			break;
 		}
-		m_VecCreatePoint.push_back(pOBJ);
+		m_VecCreatePoint[CountNum].push_back(pOBJ);
 	}
 	CloseHandle(hFile);
 
 	Engine::CGameObject* pGameObject = nullptr;
 
 	//벡터 내용물만큼 실제 생성해 레이어에 담기
-	for (auto& iter : m_VecCreatePoint)
+	for (auto& iter : m_VecCreatePoint[CountNum])
 	{
 		pGameObject = CBuild_Obj::Create(m_pGraphicDev, iter->defOBJData.vPos, iter->defOBJData.uiTextureNum,
 			iter->defOBJData.vSize, iter->defOBJData.iRotateCount, m_iOBJIndex, iter->defOBJData.eOBJ_TYPE, iter->defOBJData.eOBJ_Attribute);
@@ -622,70 +625,6 @@ HRESULT CStage::Load_Data_T(const TCHAR* pFilePath, OBJECTTAG eTag)
 }
 
 
-
-// HRESULT CStage::Load_UI()
-// {
-// 	Engine::CGameObject* pGameObject = nullptr;
-//
-// 	wifstream fin;
-//
-// 	fin.open(L"../Bin/Data/UI/UIdata.dat");
-//
-// 	if (!fin.fail())
-// 	{
-// 		wstring line;
-//
-// 		while (getline(fin, line)) // 한 줄씩 읽기
-// 		{
-// 			wistringstream iss(line);
-// 			wstring token;
-//
-// 			_tchar szKey[MAX_PATH] = L"";
-// 			_tchar szSizeX[MAX_PATH] = L"";
-// 			_tchar szSizeY[MAX_PATH] = L"";
-// 			_tchar szSizeZ[MAX_PATH] = L"";
-// 			_tchar szPosX[MAX_PATH] = L"";
-// 			_tchar szPosY[MAX_PATH] = L"";
-// 			_tchar szPosZ[MAX_PATH] = L"";
-//
-// 			getline(iss, token, L','); // ','를 구분자로 사용하여 값을 자름
-// 			_tcscpy_s(szKey, MAX_PATH, token.c_str());
-//
-// 			getline(iss, token, L',');
-// 			_tcscpy_s(szSizeX, MAX_PATH, token.c_str());
-//
-// 			getline(iss, token, L',');
-// 			_tcscpy_s(szSizeY, MAX_PATH, token.c_str());
-//
-// 			getline(iss, token, L',');
-// 			_tcscpy_s(szSizeZ, MAX_PATH, token.c_str());
-//
-// 			getline(iss, token, L',');
-// 			_tcscpy_s(szPosX, MAX_PATH, token.c_str());
-//
-// 			getline(iss, token, L',');
-// 			_tcscpy_s(szPosY, MAX_PATH, token.c_str());
-//
-// 			getline(iss, token, L',');
-// 			_tcscpy_s(szPosZ, MAX_PATH, token.c_str());
-//
-// 			if (wcsstr(szKey, L"des"))
-// 			{
-// 				continue;
-// 			}
-// 			pGameObject = CUIMgr::GetInstance()->Get_UI(szKey);
-// 			NULL_CHECK_RETURN(pGameObject, E_FAIL);
-// 			FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
-//
-// 		}
-// 	}
-// 	fin.close();
-//
-// 		m_mapLayer.insert({ LAYERTAG::UI, m_pLayer });
-//
-// 	return S_OK;
-// }
-
 void CStage::Admin_KeyInput()
 {
 	if (Engine::Get_DIKeyState(DIK_F4) & 0x80 && m_bAdminSwitch)
@@ -752,12 +691,14 @@ void CStage::Free()
 	}
 	m_VecOBJData.clear();
 
-	for (int i = 0; i < m_VecCreatePoint.size(); ++i)
-	{
-		Safe_Delete(m_VecCreatePoint[i]);
+	int CountNum = 4;
+	for (int i = 0; i < CountNum; ++i) {
+		for (int j = 0; j < m_VecCreatePoint[CountNum].size(); ++j)
+		{
+			Safe_Delete(m_VecCreatePoint[CountNum][j]);
+		}
+		m_VecCreatePoint[CountNum].clear();
 	}
-	m_VecCreatePoint.clear();
-
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	//m_pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, FALSE);

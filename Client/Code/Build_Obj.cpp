@@ -189,8 +189,9 @@ void CBuild_Obj::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 	if ((m_eAttribute == OBJ_ATTRIBUTE::C_POINT_OBJ)
-		|| (m_eAttribute == OBJ_ATTRIBUTE::STAIR_OBJ)
-		|| (m_eAttribute == OBJ_ATTRIBUTE::ForPaint_OBJ))
+// 		|| (m_eAttribute == OBJ_ATTRIBUTE::STAIR_OBJ)
+// 		|| (m_eAttribute == OBJ_ATTRIBUTE::ForPaint_OBJ)
+		)
 	{	m_pCollider->Render_Collider(); }
 
 	//m_pCollider->Render_Collider(); //

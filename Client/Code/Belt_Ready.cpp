@@ -58,11 +58,11 @@ CBeltState* CBelt_Ready::Update(CBelt* Belt, const float& fTimeDelta)
 	 	 if (Key_Up(DIK_LSHIFT))
 	 	{
 	 		m_fBehaviorTime = 0.f;
-			if (RopeActionTest())
-			{
-				return m_pHost->Get_State(5); // Rope 테스트
-			}
-			else
+// 			if (RopeActionTest())
+// 			{
+// 				return m_pHost->Get_State(5); // Rope 테스트
+// 			}
+			//else
 	 		return m_pHost->Get_State(2); // attack;
 	 	}
 
@@ -82,11 +82,15 @@ _bool CBelt_Ready::RopeActionTest()
 {
 	_vec3 vStartPos = m_pHost->Get_StartPos();
 	auto& MonsterList = Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::MONSTER);
+	auto& ObjList = Management()->Get_ObjectList(LAYERTAG::ENVIRONMENT, OBJECTTAG::BUILD_OBJ);
+
+
 
 	if (!MonsterList.empty())
 	{
 		for (auto iter : MonsterList)
 		{
+
 			if (CollisionManager()->CollisionRayToCube(m_pHost->Get_Collider(), iter->Get_Collider(), m_pHost->Get_StartPos()))
 			{
 				m_pHost->Set_Target(iter);

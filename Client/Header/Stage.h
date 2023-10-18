@@ -59,6 +59,7 @@
 #include "UI_BulletInfoName.h"
 
 #include "UI_WeaponInfo.h"
+#include "UI_Rope.h"
 
 #include "PaintShotGun.h"
 #include "TailorAssertRifle.h"
@@ -84,10 +85,13 @@ private:
 	HRESULT				Ready_Layer_GameLogic(LAYERTAG eLayerTag);
 	HRESULT				Ready_Layer_Camera(LAYERTAG eLayerTag);
 	HRESULT				Ready_Layer_UI(LAYERTAG eLayerTag);
+	
+	HRESULT				Trigger_Check_For_Create_Monster();
 
 private:
 	CLayer*				m_pLayer = nullptr;  //Environment
 	CLayer*				m_pGLayer = nullptr; //GameLogic
+	CGameObject*		m_pPlayer = nullptr;
 
 	//////////////////////유진 함수, 변수////////////////////////
 public:
@@ -98,11 +102,11 @@ public:
 	void				Set_VecOBJData(vector<OBJData*> pVecOBjData) { m_VecOBJData = pVecOBjData; }
 
 	virtual HRESULT		Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag);
-	HRESULT				Load_Data_C(const TCHAR* pFilePath, OBJECTTAG eTag);
+	HRESULT				Load_Data_C(const TCHAR* pFilePath, OBJECTTAG eTag, int CountNum);
 	HRESULT				Load_Data_T(const TCHAR* pFilePath, OBJECTTAG eTag);
 
 private:
-	vector<C_POINT*>			    m_VecCreatePoint;
+	vector<C_POINT*>			    m_VecCreatePoint[4];
 	vector<TRIGGER*>			    m_TriggerDataTemp;
 
 	vector<OBJData*>				m_VecOBJData;

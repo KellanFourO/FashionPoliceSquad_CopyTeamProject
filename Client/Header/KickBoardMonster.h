@@ -28,7 +28,7 @@ private:
 	virtual				~CKickBoardMonster();
 
 public:
-	virtual HRESULT		Ready_GameObject() override;
+	virtual HRESULT		Ready_GameObject(_vec3 pPoint);
 	virtual _int		Update_GameObject(const _float& fTimeDelta) override;
 	virtual void		LateUpdate_GameObject() override;
 	virtual void		Render_GameObject() override;
@@ -53,7 +53,8 @@ private:
 	HRESULT				Add_Component();
 
 private:
-	CMonsterState* m_pStateArray[KICKBOARDSTATE_END];
+	_vec3			m_StartingPoint;
+	CMonsterState*	m_pStateArray[KICKBOARDSTATE_END];
 
 private:
 	_float			m_fBehaviorTime = 0.f; // 행동 줄 시간
@@ -67,7 +68,7 @@ private:
 	_float			m_fAttackTime = 0;
 
 public:
-	static CKickBoardMonster* Create(LPDIRECT3DDEVICE9 pGraphicDev);
+	static CKickBoardMonster* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 pPoint);
 
 private:
 	virtual void Free();

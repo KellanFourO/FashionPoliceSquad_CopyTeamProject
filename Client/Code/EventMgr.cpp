@@ -59,10 +59,9 @@ void CEventMgr::OnPause(_bool bPause, SCENETAG eSceneTag)
 
 HRESULT CEventMgr::OnMiniGame_Arrow(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag)
 {
+	m_eMiniGameState = CEventMgr::MiniGameState::PLAY_NOW;
 	vector<CGameObject*> TempVector = Management()->Get_One_Scene(eSceneTag)->Get_Layer(LAYERTAG::MINIGAME)->Get_ObjectList(OBJECTTAG::MINIGAME);
 	TempVector.clear();
-
-	Set_MiniGameReadyCheck(0, FALSE);  //다시 못 들어오게 
 
 	pGame_Arrow = Engine::CMainGame_Arrow::Create(pGraphicDev);
 	NULL_CHECK_RETURN(pGame_Arrow, E_FAIL);
@@ -76,8 +75,7 @@ HRESULT CEventMgr::OnMiniGame_Arrow(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSce
 
 HRESULT CEventMgr::OnMiniGame_KickBoard(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag)
 {
-	Set_MiniGameReadyCheck(1, FALSE);  //다시 못 들어오게 
-
+	m_eMiniGameState = CEventMgr::MiniGameState::PLAY_NOW;
 	pGame_KickBoard = Engine::CMainGame_KickBoard::Create(pGraphicDev);
 	NULL_CHECK_RETURN(pGame_KickBoard, E_FAIL);
 
@@ -96,36 +94,32 @@ HRESULT CEventMgr::OnMiniGame_Quiz(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eScen
 }
 
 
-
-
 HRESULT CEventMgr::OffMiniGame_Arrow(SCENETAG eSceneTag, _bool ClearCheck)
 {
+	m_eMiniGameState = CEventMgr::MiniGameState::NOT_PLAY;
 	if (ClearCheck == true)
 	{
 		Set_MiniGameClearCheck(0, TRUE);
-		Set_MiniGameReadyCheck(1, TRUE); //다음 놈 도전용
 		OnPause(FALSE, SCENETAG::LOBBY);
 	}
 	if (ClearCheck == false)
 	{
 		Set_MiniGameClearCheck(0, FALSE);
-		Set_MiniGameReadyCheck(0, TRUE); //재도전 해야 하니까
 		OnPause(FALSE, SCENETAG::LOBBY);
 	} 
 	return S_OK;
 }
 HRESULT CEventMgr::OffMiniGame_KickBoard(SCENETAG eSceneTag, _bool ClearCheck)
 {
+	m_eMiniGameState = CEventMgr::MiniGameState::NOT_PLAY;
 	if (ClearCheck == true)
 	{
 		Set_MiniGameClearCheck(1, TRUE);
-		Set_MiniGameReadyCheck(2, TRUE); //다음 놈 도전용
 		OnPause(FALSE, SCENETAG::LOBBY);
 	}
 	if (ClearCheck == false)
 	{
 		Set_MiniGameClearCheck(1, FALSE);
-		Set_MiniGameReadyCheck(1, TRUE); //재도전 해야 하니까
 		OnPause(FALSE, SCENETAG::LOBBY);
 	}
 	return S_OK;
