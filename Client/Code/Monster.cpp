@@ -7,7 +7,7 @@
 #include "UI_MonsterHPBar.h"
 #include "Export_System.h"
 #include "Export_Utility.h"
-
+#include "UI_RecognitionRange.h"
 #include "MonsterState.h"
 
 
@@ -220,8 +220,11 @@ void CMonster::Init_PlayerTransform()
 		m_bLateInit = false;
 
 		// TODO - 승용 추가
-		if(m_eObjectTag != OBJECTTAG::BOSS)
-			Set_HP();
+		if (m_eObjectTag != OBJECTTAG::BOSS)
+		{
+			Set_UI();
+
+		}
 
 		// TODO - 승용 추가 종료
 	}
@@ -287,19 +290,30 @@ void CMonster::StateMachine(const _float& fTimeDelta)
 	}
 }
 
-HRESULT CMonster::Set_HP()
+
+
+HRESULT CMonster::Set_UI()
 {
 	CMonsterHPBar* pHpBar = nullptr;
+	m_pUI_Recognition = nullptr; // 몬스터 머리위 발견, 미발견 상태 UI
+	CRecognitionRange* pTargetUI = nullptr; // 몬스터 머리위 위치 표시 UI
 
-	pHpBar = CMonsterHPBar::Create(m_pGraphicDev,this);
+	CLayer* pLayer = Management()->Get_Layer(LAYERTAG::UI);
 
+	pHpBar = CMonsterHPBar::Create(this->Get_GraphicDev(), this);
+	m_pUI_Recognition = CRecognitionRange::Create(this->Get_GraphicDev(), this, UI_TYPE::RECOG);
+	pTargetUI = CRecognitionRange::Create(this->Get_GraphicDev(), this, UI_TYPE::TARGETPOS);
 
-	if(pHpBar)
-	Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::UI, pHpBar);
-	else
+	if (pHpBar && m_pUI_Recognition && pTargetUI)
+	{
+		pLayer->Add_GameObject(OBJECTTAG::UI, pHpBar);
+		pLayer->Add_GameObject(OBJECTTAG::UI, m_pUI_Recognition);
+		pLayer->Add_GameObject(OBJECTTAG::UI, pTargetUI);
+
+		return S_OK;
+	}
+
 	return E_FAIL;
-
-	return S_OK;
 }
 
 HRESULT CMonster::Add_Component()

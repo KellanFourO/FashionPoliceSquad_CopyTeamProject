@@ -206,8 +206,10 @@ void CLazer::StartPosition()
 		{
 			if (CollisionManager()->CollisionRayToCube(m_pCollider, iter->Get_Collider(), vStartPos))
 			{
-				dynamic_cast<CMonster*>(iter)->Attacked(m_fDmg);
+				static_cast<CMonster*>(iter)->Set_RecogTextureIndex(2);
+				static_cast<CMonster*>(iter)->Attacked(m_fDmg);
 			}
+
 		}
 	}
 

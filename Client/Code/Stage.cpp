@@ -38,7 +38,7 @@ HRESULT CStage::Ready_Scene()
 	FAILED_CHECK_RETURN(Ready_Layer_Camera(LAYERTAG::CAMERA), E_FAIL);
 
 	FAILED_CHECK_RETURN(Ready_Layer_UI(LAYERTAG::UI), E_FAIL);
-		
+
 	srand(GetTickCount64());
 
 	//Load_Data_T(L"../Bin/Data/Trigger/Stage1/T0/TriggerData", OBJECTTAG::O_TRIGGER);
@@ -62,8 +62,8 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 
 	if (m_bLateInit)
 	{
-		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev,m_eSceneTag, DIALOGTAG::STORY_ST1_DEVELOP);
-		CEventMgr::GetInstance()->OnPause(true,m_eSceneTag);
+		//CEventMgr::GetInstance()->OnDialog(m_pGraphicDev,m_eSceneTag, DIALOGTAG::STORY_ST1_DEVELOP);
+		//CEventMgr::GetInstance()->OnPause(true,m_eSceneTag);
 		m_bLateInit = false;
 	}
 
@@ -149,7 +149,7 @@ HRESULT CStage::Ready_Layer_Environment(LAYERTAG eLayerTag)
 
 	Load_Data(L"../Bin/Data/Map/MapData", OBJECTTAG::BUILD_CUBE);		// 큐브텍스
 	Load_Data(L"../Bin/Data/OBJ/OBJData", OBJECTTAG::BUILD_OBJ);		//TODO 얘는 섞여있다 큐브텍스랑 rcTEXT
-		
+
 	m_mapLayer.insert({ eLayerTag, m_pLayer });
 
 	return S_OK;
@@ -204,7 +204,7 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		// 벨트임
 
 	}
-	
+
 		//for (int i = 0; i < 6; i++) {
 		//	pGameObject = CItem::Create(m_pGraphicDev);
 		//	NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -214,7 +214,7 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		//	dynamic_cast<CItem*>(pGameObject)->Set_INFO(Item_Info);
 		//	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::ITEM, pGameObject), E_FAIL);	//아이템 배치
 		//}
-	
+
 	//몬스터
 	for (auto& iter : m_VecCreatePoint[0])
 	{
@@ -344,7 +344,7 @@ HRESULT CStage::Ready_Layer_UI(LAYERTAG eLayerTag)
 HRESULT CStage::Trigger_Check_For_Create_Monster()
 {
 	_bool CheckTemp = dynamic_cast<CPlayer*>(m_pPlayer)->Get_TriggerCheck();
-	
+
 	TRIGGER_NUMBER	m_eTrName = TRIGGER_NUMBER::TR_END;
 	TRIGGER_STATE	m_eTrState = TRIGGER_STATE::TR_STATE_END;
 
@@ -365,7 +365,7 @@ HRESULT CStage::Trigger_Check_For_Create_Monster()
 			Load_Data_C(L"../Bin/Data/CPoint/Stage1/C1/CPointData", OBJECTTAG::BUILD_OBJ, iCountNum);
 			m_bFirstCreat = true;
 			Create_Monster(iCountNum);
-		}	
+		}
 		else if ((m_eTrName == TRIGGER_NUMBER::TR1) && (m_bSecondCreat == false))
 		{
 			iCountNum = 2;
@@ -383,7 +383,7 @@ HRESULT CStage::Trigger_Check_For_Create_Monster()
 			Create_Monster(iCountNum);
 		}
 	}
-		
+
 	return S_OK;
 }
 

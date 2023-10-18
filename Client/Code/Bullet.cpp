@@ -102,7 +102,12 @@ void CBullet::OnCollisionEnter(CCollider* _pOther)
 		if (m_eBulletType == _pOther->Get_Host()->Get_HitType())
 		{
 			dynamic_cast<CMonster*>(_pOther->Get_Host())->Attacked(m_fDmg);
+			dynamic_cast<CMonster*>(_pOther->Get_Host())->Set_RecogTextureIndex(2);
 			m_bDead = true;
+		}
+		else
+		{
+			dynamic_cast<CMonster*>(_pOther->Get_Host())->Set_RecogTextureIndex(3);
 		}
 		//TODO 몬스터 총알 오브젝트 풀링 할거면 여기서
 	}

@@ -61,9 +61,10 @@ public:
 
 
 	void				Set_MonsterIndex(_int _iIndex) { m_iMonsterIndex = _iIndex; }
+	void				Set_RecogTextureIndex(_int _iIndex) { m_pUI_Recognition->Set_RecogTextureIndex(_iIndex);}
 	void				Set_Start(_bool _bStart) { m_bStart = _bStart; }
 	void				Set_Info(Mob_INFO _INFO);
-	HRESULT				Set_HP();
+	HRESULT				Set_UI();
 	void				Set_Pos(_vec3 _vPos);
 	void				Set_TransPos();
 	void				Set_MonsterPos(_vec3 vPos) {}

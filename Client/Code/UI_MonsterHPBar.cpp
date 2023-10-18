@@ -46,39 +46,70 @@ Engine::_int Engine::CMonsterHPBar::Update_GameObject(const _float& fTimeDelta)
 		m_bLateInit = false;
 	}
 
+	DistanceRender();
 
-	Engine::Add_RenderGroup(RENDER_UI, this);
-	_int iExit = __super::Update_GameObject(fTimeDelta);
-
-	_float fMaxHp = m_pMonster->Get_Info().fMaxHP;
-	_float fCurHp = m_pMonster->Get_Info().fHP;
-
-	_float fRatio = fCurHp / fMaxHp;
-	_float fOrigin = m_vScale.x;
-	_float fSecond = fOrigin * fRatio;
-
-	_float fResult = fOrigin - fSecond;
-
-	_vec3 vUItoPlayerDir;
-
-	vUItoPlayerDir = m_pPlayer->Get_Transform()->m_vInfo[INFO_POS] - m_pTransformCom->m_vInfo[INFO_POS];
-	D3DXVec3Normalize(&vUItoPlayerDir, &vUItoPlayerDir);
-	_float fAngle = atan2f(vUItoPlayerDir.x, vUItoPlayerDir.z);
-	m_pTransformCom->Set_Rotate(ROT_Y, fAngle + D3DX_PI);
-
-	m_pTransformCom->m_vScale.x = m_vScale.x * fRatio;
-	m_pTransformCom->m_vScale.y = m_vScale.y;
-	m_pTransformCom->m_vScale.z = m_vScale.z;
-
-	if (m_pMonster && m_pMonster->Get_Info().bDead)
+	if (m_pMonster->Get_Info().bDead)
 	{
 		return OBJ_DEAD;
 	}
 
-	m_pTransformCom->m_vInfo[INFO_POS].x = m_pMonster->Get_Transform()->m_vInfo[INFO_POS].x + fResult;
-	m_pTransformCom->m_vInfo[INFO_POS].y = m_pMonster->Get_Transform()->m_vInfo[INFO_POS].y + 5.f;
-	m_pTransformCom->m_vInfo[INFO_POS].z = m_pMonster->Get_Transform()->m_vInfo[INFO_POS].z;
+	if (m_bDistanceRender)
+	{
+		Engine::Add_RenderGroup(RENDER_UI, this);
 
+		_int iExit = __super::Update_GameObject(fTimeDelta);
+
+		_float fMaxHp = m_pMonster->Get_Info().fMaxHP;
+		_float fCurHp = m_pMonster->Get_Info().fHP;
+
+		_float fRatio = fCurHp / fMaxHp;
+		_float fOrigin = m_vScale.x;
+		_float fSecond = fOrigin * fRatio;
+
+		_float fResult = fOrigin - fSecond;
+
+		_vec3 vUItoPlayerDir;
+
+		vUItoPlayerDir = m_pPlayer->Get_Transform()->m_vInfo[INFO_POS] - m_pTransformCom->m_vInfo[INFO_POS];
+		D3DXVec3Normalize(&vUItoPlayerDir, &vUItoPlayerDir);
+		_float fAngle = atan2f(vUItoPlayerDir.x, vUItoPlayerDir.z);
+		m_pTransformCom->Set_Rotate(ROT_Y, fAngle + D3DX_PI);
+
+		m_pTransformCom->m_vScale.x = m_vScale.x * fRatio;
+		m_pTransformCom->m_vScale.y = m_vScale.y;
+		m_pTransformCom->m_vScale.z = m_vScale.z;
+
+		if (m_pMonster && m_pMonster->Get_Info().bDead)
+		{
+			return OBJ_DEAD;
+		}
+
+		switch (m_pMonster->Get_Info().iMobType)
+		{
+			case MonsterType::DULLSUIT:
+			{
+				m_fAddY = 3.f;
+				break;
+			}
+			case MonsterType::BIGDADDY:
+			{
+				m_fAddY = 5.f;
+				break;
+			}
+			case MonsterType::KCIKBOARD:
+			{
+				m_fAddY = 4.f;
+				break;
+			}
+		}
+
+
+		m_pTransformCom->m_vInfo[INFO_POS].x = m_pMonster->Get_Transform()->m_vInfo[INFO_POS].x + fResult;
+		m_pTransformCom->m_vInfo[INFO_POS].y = m_pMonster->Get_Transform()->m_vInfo[INFO_POS].y + m_fAddY;
+		m_pTransformCom->m_vInfo[INFO_POS].z = m_pMonster->Get_Transform()->m_vInfo[INFO_POS].z;
+
+
+	}
 	return 0;
 }
 
@@ -89,25 +120,26 @@ void Engine::CMonsterHPBar::LateUpdate_GameObject()
 
 void CMonsterHPBar::Render_GameObject()
 {
+	if (m_bDistanceRender)
+	{
+		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
+		m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_pCamera->Get_View());
+		m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_pCamera->Get_Proj());
 
-	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
-	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_pCamera->Get_View());
-	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_pCamera->Get_Proj());
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+		m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+		m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+		m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
 
-	m_pGraphicDev->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	m_pGraphicDev->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
+		m_pTextureCom->Render_Textrue();
+		m_pBufferCom->Render_Buffer();
 
-	m_pTextureCom->Render_Textrue();
-	m_pBufferCom->Render_Buffer();
-
-	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
-	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-	m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-
+		m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
+		m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+		m_pGraphicDev->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	}
 }
 
 HRESULT Engine::CMonsterHPBar::Add_Component()
@@ -128,6 +160,25 @@ HRESULT Engine::CMonsterHPBar::Add_Component()
 
 
 	return S_OK;
+}
+
+void CMonsterHPBar::DistanceRender()
+{
+	_vec3 vTargetPos = m_pMonster->Get_Transform()->m_vInfo[INFO_POS];
+	_vec3 vPlayerPos = m_pPlayer->Get_Transform()->m_vInfo[INFO_POS];
+
+	_vec3 vPlayerToTarget;
+
+	vPlayerToTarget = vPlayerPos - vTargetPos;
+
+	_float fLength = D3DXVec3Length(&vPlayerToTarget);
+
+	if (fLength < m_fRenderDistance)
+	{
+		m_bDistanceRender = true;
+	}
+	else
+		m_bDistanceRender = false;
 }
 
 

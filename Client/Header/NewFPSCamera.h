@@ -62,7 +62,6 @@ private:
 	bool		m_bCameraCheck;
 
 private:
-
 	_vec3		vLook = { 0.f,0.f,1.f };
 	_vec3		vUp = { 0.f, 1.f, 0.f };
 
