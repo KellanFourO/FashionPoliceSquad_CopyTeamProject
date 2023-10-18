@@ -34,7 +34,8 @@ public:
 	virtual void	LateUpdate_GameObject() override;
 	virtual void	Render_GameObject() override;
 	virtual void	ReadyState();
-
+public:
+	void			PlayerLookAtReset(_vec3 PlayerSettingPos);
 public:
 	virtual void	OnCollisionEnter(CCollider* _pOther);
 	virtual void	OnCollisionStay(CCollider* _pOther);
