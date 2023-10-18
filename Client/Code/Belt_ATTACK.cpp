@@ -51,7 +51,7 @@ CBeltState* CBelt_Attack::Update(CBelt* Belt, const float& fTimeDelta)
 	//                  0       1       2           3       4       5
 	//enum BELTSTATE { IDLE, ATTACK, CHARGEATTACK, CHARGE, ROPE, BELTSTATE_END };
 
-    if (TargetStateChange())
+    if (m_pHost->Get_Host()->Get_bRopeSkill() && TargetStateChange())
     {
         return m_pHost->Get_State(5);
     }

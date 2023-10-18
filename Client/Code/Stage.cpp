@@ -59,7 +59,7 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 
 	if (m_bLateInit)
 	{
-		//CEventMgr::GetInstance()->OnDialog(m_pGraphicDev,m_eSceneTag, DIALOGTAG::STORY_ST1_INTRO);
+		//CEventMgr::GetInstance()->OnDialog(m_pGraphicDev,m_eSceneTag, DIALOGTAG::STORY_ST1_DEVELOP);
 		//CEventMgr::GetInstance()->OnPause(true,m_eSceneTag);
 		m_bLateInit = false;
 	}
@@ -694,19 +694,21 @@ void CStage::Admin_KeyInput()
 {
 	if (Engine::Get_DIKeyState(DIK_F4) & 0x80 && m_bAdminSwitch)
 	{
-		CEventMgr::GetInstance()->OnLevelUp(m_pGraphicDev, SCENETAG::STAGE);
-		CEventMgr::GetInstance()->OnPause(true,SCENETAG::STAGE);
-		m_bAdminSwitch = false;
-	}
-	if (Engine::Get_DIKeyState(DIK_F9) & 0x80 && m_bAdminSwitch)
-	{
-		CEventMgr::GetInstance()->OnPause(false, SCENETAG::STAGE);
+		CEventMgr::GetInstance()->OnCard(m_pGraphicDev, SCENETAG::STAGE, DIALOGTAG::STORY_ST1_DEVELOP);
+		CEventMgr::GetInstance()->OnPause(true, SCENETAG::STAGE);
 		m_bAdminSwitch = false;
 	}
 
-	if (Engine::Get_DIKeyState(DIK_F8) & 0x80 && m_bAdminSwitch)
+	if (Engine::Get_DIKeyState(DIK_F5) & 0x80 && m_bAdminSwitch)
 	{
-		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::STAGE, DIALOGTAG::STORY_ST1_INTRO);
+		CEventMgr::GetInstance()->OnCard(m_pGraphicDev, SCENETAG::STAGE, DIALOGTAG::STORY_LOBBY_CONCLU);
+		CEventMgr::GetInstance()->OnPause(true, SCENETAG::STAGE);
+		m_bAdminSwitch = false;
+	}
+
+	if (Engine::Get_DIKeyState(DIK_F9) & 0x80 && m_bAdminSwitch)
+	{
+		CEventMgr::GetInstance()->OnPause(false, SCENETAG::STAGE);
 		m_bAdminSwitch = false;
 	}
 

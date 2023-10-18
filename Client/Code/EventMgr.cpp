@@ -17,10 +17,13 @@ void CEventMgr::GetEventColider()
 {
 }
 
-void CEventMgr::OnLevelUp(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag)
+void CEventMgr::OnCard(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag, DIALOGTAG eDialogTag)
 {
+
+
+
 	Engine::CCardList* pCardList = nullptr;
-	pCardList = Engine::CCardList::Create(pGraphicDev);
+	pCardList = Engine::CCardList::Create(pGraphicDev, eDialogTag);
 
 	NULL_CHECK(pCardList);
 
@@ -60,21 +63,21 @@ HRESULT CEventMgr::OnMiniGame_Arrow(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSce
 	vector<CGameObject*> TempVector = Management()->Get_One_Scene(eSceneTag)->Get_Layer(LAYERTAG::MINIGAME)->Get_ObjectList(OBJECTTAG::MINIGAME);
 	TempVector.clear();
 
-	Set_MiniGameReadyCheck(0, FALSE);  //다시 못 들어오게 
+	Set_MiniGameReadyCheck(0, FALSE);  //다시 못 들어오게
 
 	pGame_Arrow = Engine::CMainGame_Arrow::Create(pGraphicDev);
 	NULL_CHECK_RETURN(pGame_Arrow, E_FAIL);
 
 	OnPause(TRUE, SCENETAG::LOBBY);
-	
+
 	Management()->Get_One_Scene(eSceneTag)->Get_Layer(LAYERTAG::MINIGAME)->Add_GameObject(OBJECTTAG::MINIGAME, pGame_Arrow);
-	
+
 	return S_OK;
 }
 
 HRESULT CEventMgr::OnMiniGame_KickBoard(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag)
 {
-	Set_MiniGameReadyCheck(1, FALSE);  //다시 못 들어오게 
+	Set_MiniGameReadyCheck(1, FALSE);  //다시 못 들어오게
 
 	pGame_KickBoard = Engine::CMainGame_KickBoard::Create(pGraphicDev);
 	NULL_CHECK_RETURN(pGame_KickBoard, E_FAIL);
@@ -109,7 +112,7 @@ HRESULT CEventMgr::OffMiniGame_Arrow(SCENETAG eSceneTag, _bool ClearCheck)
 		Set_MiniGameClearCheck(0, FALSE);
 		Set_MiniGameReadyCheck(0, TRUE); //재도전 해야 하니까
 		OnPause(FALSE, SCENETAG::LOBBY);
-	} 
+	}
 	return S_OK;
 }
 HRESULT CEventMgr::OffMiniGame_KickBoard(SCENETAG eSceneTag, _bool ClearCheck)

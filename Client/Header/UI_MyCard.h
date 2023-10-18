@@ -29,13 +29,14 @@ public:
 	_bool						Get_Picking() { return m_bPicking; }
 	void						Set_Picking(_bool _bPicking) { m_bPicking = _bPicking; }
 	void						Set_RealPick(_bool _bRealPick) { m_bRealPick = _bRealPick; }
+	void						Set_CardType(CARD_TYPE eCardType) { m_eCardType = eCardType; }
 
 private:
 	HRESULT						Add_Component();
 	void						CardAnimation(const _float& fTimeDelta);
 	_bool						CardOpen(const _float& fTimeDelta);
 	void						CardPicking(const _float& fTimeDelta);
-	void						RandomCard();
+/*	void						RandomCard();*/
 	void						SelectTexture();
 
 
@@ -59,7 +60,7 @@ private:
 	RECT						m_tRect;
 
 	CARD_DIR					m_eCardDir;
-	CARD_TYPE					m_eCardType;
+	CARD_TYPE					m_eCardType = CARD_TYPE::CARD_TYPE_END;
 
 public:
 	static CMyCard*			Create(LPDIRECT3DDEVICE9 pGraphicDev, _float StartX, CARD_DIR Dir);

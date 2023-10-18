@@ -21,36 +21,84 @@ CCardList::~CCardList()
 
 HRESULT Engine::CCardList::Ready_GameObject()
 {
-	for (int i = 0; i < 3; ++i)
+
+	switch (m_eDialogTag)
 	{
-		switch (i)
-		{
-		case (int)CARD_DIR::CARD_LEFT:
-		{
-			CMyCard* pCard = CMyCard::Create(m_pGraphicDev, 150.f, CARD_DIR::CARD_LEFT);
-			NULL_CHECK_RETURN(pCard, E_FAIL);
-			m_vecCard.push_back(pCard);
-			break;
-		}
+	case Engine::DIALOGTAG::STORY_ST1_CONCLU:
 
-		case (int)CARD_DIR::CARD_CENTER:
+		for (int i = 0; i < 3; ++i)
 		{
-			CMyCard* pCard = CMyCard::Create(m_pGraphicDev, 400.f, CARD_DIR::CARD_CENTER);
-			NULL_CHECK_RETURN(pCard, E_FAIL);
-			m_vecCard.push_back(pCard);
-			break;
-		}
+			switch (i)
+			{
+				case (int)CARD_DIR::CARD_LEFT:
+				{
+					CMyCard* pCard = CMyCard::Create(m_pGraphicDev, 150.f, CARD_DIR::CARD_LEFT);
+					pCard->Set_CardType(CARD_TYPE::SPEED);
+					//pCard->Set_CardType()
+					NULL_CHECK_RETURN(pCard, E_FAIL);
+					m_vecCard.push_back(pCard);
+					break;
+				}
 
-		case (int)CARD_DIR::CARD_RIGHT:
+				case (int)CARD_DIR::CARD_CENTER:
+				{
+					CMyCard* pCard = CMyCard::Create(m_pGraphicDev, 400.f, CARD_DIR::CARD_CENTER);
+					pCard->Set_CardType(CARD_TYPE::BOMB);
+					NULL_CHECK_RETURN(pCard, E_FAIL);
+					m_vecCard.push_back(pCard);
+					break;
+				}
+
+				case (int)CARD_DIR::CARD_RIGHT:
+				{
+
+					CMyCard* pCard = CMyCard::Create(m_pGraphicDev, 650.f, CARD_DIR::CARD_RIGHT);
+					pCard->Set_CardType(CARD_TYPE::INTELLIGENCE);
+					NULL_CHECK_RETURN(pCard, E_FAIL);
+					m_vecCard.push_back(pCard);
+					break;
+				}
+			}
+		}
+		break;
+	case Engine::DIALOGTAG::STORY_ST1_DEVELOP:
+		for (int i = 0; i < 3; ++i)
 		{
+			switch (i)
+			{
+			case (int)CARD_DIR::CARD_LEFT:
+			{
+				CMyCard* pCard = CMyCard::Create(m_pGraphicDev, 150.f, CARD_DIR::CARD_LEFT);
+				pCard->Set_CardType(CARD_TYPE::FORCE);
+				NULL_CHECK_RETURN(pCard, E_FAIL);
+				m_vecCard.push_back(pCard);
+				break;
+			}
 
-			CMyCard* pCard = CMyCard::Create(m_pGraphicDev, 650.f, CARD_DIR::CARD_RIGHT);
-			NULL_CHECK_RETURN(pCard, E_FAIL);
-			m_vecCard.push_back(pCard);
-			break;
+			case (int)CARD_DIR::CARD_CENTER:
+			{
+				CMyCard* pCard = CMyCard::Create(m_pGraphicDev, 400.f, CARD_DIR::CARD_CENTER);
+				pCard->Set_CardType(CARD_TYPE::STRENGTH);
+				NULL_CHECK_RETURN(pCard, E_FAIL);
+				m_vecCard.push_back(pCard);
+				break;
+			}
+
+			case (int)CARD_DIR::CARD_RIGHT:
+			{
+
+				CMyCard* pCard = CMyCard::Create(m_pGraphicDev, 650.f, CARD_DIR::CARD_RIGHT);
+				pCard->Set_CardType(CARD_TYPE::BONUS);
+				NULL_CHECK_RETURN(pCard, E_FAIL);
+				m_vecCard.push_back(pCard);
+				break;
+			}
+			}
 		}
-		}
+		break;
 	}
+
+
 
 
 	return S_OK;
@@ -123,10 +171,10 @@ void CCardList::Render_GameObject()
 
 }
 
-CCardList* CCardList::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CCardList* CCardList::Create(LPDIRECT3DDEVICE9 pGraphicDev, DIALOGTAG eDialogTag)
 {
 	CCardList* pInstance = new CCardList(pGraphicDev);
-
+	pInstance->m_eDialogTag = eDialogTag;
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
 		Safe_Release(pInstance);

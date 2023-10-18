@@ -26,6 +26,14 @@ _vec3 UpdatePlayerPos(const _vec3& _vPlayerPos, const _vec3& _vPlayerVelocity, c
 	_float m_fRopeLength = 0.f;
 	_float m_fRopeAngle = 0.f;
 
+	_float m_fMoveRightSum;
+	_float m_fMoveDownSum;
+	_float m_fMoveRightMax;
+	_float m_fMoveUpMax;
+
+	_float m_fRotateMax;
+	_float 	m_fRotate;
+
 	_float m_fAmplitude = 1.0f; //진폭
 	_float m_fFrequency = 1.0f; //주파수
 	_float m_fTime = 0.0f; // 경과시간

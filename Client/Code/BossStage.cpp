@@ -590,12 +590,6 @@ HRESULT CBossStage::Load_Data_T(const TCHAR* pFilePath, OBJECTTAG eTag)
 
 void CBossStage::Admin_KeyInput()
 {
-	if (Engine::Get_DIKeyState(DIK_F4) & 0x80 && m_bAdminSwitch)
-	{
-		CEventMgr::GetInstance()->OnLevelUp(m_pGraphicDev, SCENETAG::BOSS_STAGE);
-		CEventMgr::GetInstance()->OnPause(true, SCENETAG::BOSS_STAGE);
-		m_bAdminSwitch = false;
-	}
 
 	if (Engine::Get_DIKeyState(DIK_F9) & 0x80 && m_bAdminSwitch)
 	{
@@ -603,11 +597,6 @@ void CBossStage::Admin_KeyInput()
 		m_bAdminSwitch = false;
 	}
 
-	if (Engine::Get_DIKeyState(DIK_F8) & 0x80 && m_bAdminSwitch)
-	{
-		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::BOSS_STAGE, DIALOGTAG::QUEST_1);
-		m_bAdminSwitch = false;
-	}
 
 	if (Engine::Get_DIKeyState(DIK_M) & 0x80 && m_bAdminSwitch)
 	{

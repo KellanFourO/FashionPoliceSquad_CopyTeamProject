@@ -8,7 +8,7 @@
 #include "Export_Utility.h"
 #include "Export_System.h"
 #include "Stage1Boss.h"
-
+#include "EventMgr.h"
 
 CMyDialog::CMyDialog(LPDIRECT3DDEVICE9 pGraphicDev)
 	:Engine::CGameObject(pGraphicDev)
@@ -138,20 +138,35 @@ void CMyDialog::LoadText(DIALOGTAG eDialogTag)
 	case Engine::DIALOGTAG::STORY_ST1_DEVELOP:
 		fin.open(L"../Bin/Data/UI/STORY_ST1_DEVELOP.dat");
 		break;
-	case Engine::DIALOGTAG::STORY_ST1_TURN:
-		fin.open(L"../Bin/Data/UI/STORY_ST1_TURN.dat");
-		break;
 	case Engine::DIALOGTAG::STORY_ST1_CONCLU:
 		fin.open(L"../Bin/Data/UI/STORY_ST1_CONCLU.dat");
 		break;
-	case Engine::DIALOGTAG::QUEST_1:
-		fin.open(L"../Bin/Data/UI/QUEST_ST1.dat");
+	case Engine::DIALOGTAG::STORY_LOBBY_INTRO:
+		fin.open(L"../Bin/Data/UI/STORY_LOBBY_INTRO.dat");
 		break;
-	case Engine::DIALOGTAG::QUEST_2:
-		fin.open(L"../Bin/Data/UI/QUEST_ST2.dat");
+	case Engine::DIALOGTAG::STORY_LOBBY_GAME1:
+		fin.open(L"../Bin/Data/UI/STORY_LOBBY_GAME1.dat");
 		break;
-	case Engine::DIALOGTAG::ST1_BOSS_START:
-		fin.open(L"../Bin/Data/UI/ST1_BOSS_START.dat");
+	case Engine::DIALOGTAG::STORY_LOBBY_GAME2:
+		fin.open(L"../Bin/Data/UI/STORY_LOBBY_GAME2.dat");
+		break;
+	case Engine::DIALOGTAG::STORY_LOBBY_CONCLU:
+		fin.open(L"../Bin/Data/UI/STORY_LOBBY_CONCLU.dat");
+		break;
+	case Engine::DIALOGTAG::ST1_BOSS_INTRO:
+		fin.open(L"../Bin/Data/UI/ST1_BOSS_INTRO.dat");
+		break;
+	case Engine::DIALOGTAG::ST1_BOSS_CONCLU:
+		fin.open(L"../Bin/Data/UI/ST1_BOSS_CONCLU.dat");
+		break;
+	case Engine::DIALOGTAG::STORY_ST2_INTRO:
+		fin.open(L"../Bin/Data/UI/STORY_ST2_INTRO.dat");
+		break;
+	case Engine::DIALOGTAG::STORY_ST2_CONCLU:
+		fin.open(L"../Bin/Data/UI/STORY_ST2_CONCLU.dat");
+		break;
+
+
 	}
 
 
@@ -204,17 +219,45 @@ void CMyDialog::KeyInput()
 				m_pMission->Set_Objective(L"JS 아카데미의\n범죄자들을 소탕하라");
 					break;
 				case Engine::DIALOGTAG::STORY_ST1_DEVELOP:
-					break;
-				case Engine::DIALOGTAG::STORY_ST1_TURN:
+					m_pMission->Set_Title(L"QUEST");
+					m_pMission->Set_Objective(L"목적지로 가자");
+
 					break;
 				case Engine::DIALOGTAG::STORY_ST1_CONCLU:
 					break;
-				case Engine::DIALOGTAG::QUEST_1:
+				case Engine::DIALOGTAG::STORY_LOBBY_INTRO:
+					m_pMission->Set_Title(L"QUEST");
+					m_pMission->Set_Objective(L"장애물을 돌파하라");
 					break;
-				case Engine::DIALOGTAG::QUEST_2:
+				case Engine::DIALOGTAG::STORY_LOBBY_GAME1:
+					m_pMission->Set_Title(L"QUEST");
+					m_pMission->Set_Objective(L"시간내에 암호를 해제하라");
 					break;
-				case Engine::DIALOGTAG::ST1_BOSS_START:
+				case Engine::DIALOGTAG::STORY_LOBBY_GAME2:
+					m_pMission->Set_Title(L"QUEST");
+					m_pMission->Set_Objective(L"적들을 피해 보급품을 회수하라");
 					break;
+				case Engine::DIALOGTAG::STORY_LOBBY_CONCLU:
+					m_pMission->Set_Title(L"QUEST");
+					m_pMission->Set_Objective(L"악의 근원을 퇴치하라");
+					break;
+				case Engine::DIALOGTAG::ST1_BOSS_INTRO:
+					m_pMission->Set_Title(L"QUEST");
+					m_pMission->Set_Objective(L"악의 근원을 퇴치하라");
+					break;
+				case Engine::DIALOGTAG::ST1_BOSS_CONCLU:
+					m_pMission->Set_Title(L"QUEST");
+					m_pMission->Set_Objective(L"밖으로 나가자");
+					break;
+				case Engine::DIALOGTAG::STORY_ST2_INTRO:
+					m_pMission->Set_Title(L"QUEST");
+					m_pMission->Set_Objective(L"범죄자들을 퇴치하라");
+					break;
+				case Engine::DIALOGTAG::STORY_ST2_CONCLU:
+					m_pMission->Set_Title(L"END");
+					m_pMission->Set_Objective(L"임무 완료");
+					break;
+
 
 				}
 

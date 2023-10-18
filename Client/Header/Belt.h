@@ -57,6 +57,7 @@ public:
 	CRcTex* m_pBufferCom = nullptr;
 	CTexture* m_pTextureCom = nullptr;
 	CTransform* m_pPlayerTransform = nullptr;
+	CTransform* m_pBeltObjTransform = nullptr;
 
 
 	_float m_fBeltMoveRight = 0.f;

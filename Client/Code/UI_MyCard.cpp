@@ -65,15 +65,15 @@ HRESULT Engine::CMyCard::Ready_GameObject(_float StartX)
 	m_pTransformCom->Set_Scale(m_vScale);
 	m_pTransformCom->Set_Pos(m_vPos);
 
-	m_pTextureFrontCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardBlueEyeDragon.png", 1);
-	m_pTextureFrontCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardFedderMan.png", 2);
-	m_pTextureFrontCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardYugioh.png", 3);
-	m_pTextureFrontCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardOvelisk.png", 4);
-	m_pTextureFrontCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardBonus.png", 5);
-	m_pTextureFrontCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardGreedPot.png", 6);
+	m_pTextureFrontCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardBlueEyeDragon.png", 1); // 대쉬
+	m_pTextureFrontCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardFedderMan.png", 1);// 로프 액션
+	m_pTextureFrontCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardYugioh.png", 1); // 기타
+	m_pTextureFrontCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardOvelisk.png", 1); // 기타
+	m_pTextureFrontCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardBonus.png", 1); // 기타
+	m_pTextureFrontCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardGreedPot.png", 1); // 기타
 
-	RandomCard();
-
+	/*RandomCard();*/
+	SelectTexture();
 
 	return S_OK;
 }
@@ -285,11 +285,11 @@ void CMyCard::CardPicking(const _float& fTimeDelta)
 					switch (m_eCardType)
 					{
 					case Engine::CARD_TYPE::FORCE:
-						pPlayer->Get_INFO()->fAttack = pPlayer->Get_INFO()->fAttack + 1.f;
+						pPlayer->DashOn();
 						m_bRealPick = false;
 						break;
 					case Engine::CARD_TYPE::SPEED:
-						pPlayer->Get_INFO()->fMoveSpeed = pPlayer->Get_INFO()->fMoveSpeed + 1.f;
+						pPlayer->RopeOn();
 						m_bRealPick = false;
 						break;
 					case Engine::CARD_TYPE::INTELLIGENCE:
@@ -320,22 +320,29 @@ void CMyCard::CardPicking(const _float& fTimeDelta)
 	}
 }
 
-void CMyCard::RandomCard()
-{
-	random_device rd;
-	mt19937 gen(rd());
-
-	uniform_int_distribution<int> distribution(0, 5); // 랜덤 시작 부터 마지막
-
-	int iRandomValue = distribution(gen);
-
-	m_eCardType = (CARD_TYPE)iRandomValue;
-
-	SelectTexture();
-}
+// void CMyCard::RandomCard()
+// {
+// 	random_device rd;
+// 	mt19937 gen(rd());
+//
+// 	uniform_int_distribution<int> distribution(0, 5); // 랜덤 시작 부터 마지막
+//
+// 	int iRandomValue = distribution(gen);
+//
+// 	m_eCardType = (CARD_TYPE)iRandomValue;
+//
+// 	SelectTexture();
+// }
 
 void CMyCard::SelectTexture()
 {
+
+	//m_pTextureFrontCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardBlueEyeDragon.png", 1); // 대쉬
+	//m_pTextureFrontCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardFedderMan.png", 1);// 로프 액션
+	//m_pTextureFrontCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardYugioh.png", 1); // 기타
+	//m_pTextureFrontCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardOvelisk.png", 1); // 기타
+	//m_pTextureFrontCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardBonus.png", 1); // 기타
+	//m_pTextureFrontCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/UI/Card/CardGreedPot.png", 1); // 기타
 
 	switch (m_eCardType)
 	{
