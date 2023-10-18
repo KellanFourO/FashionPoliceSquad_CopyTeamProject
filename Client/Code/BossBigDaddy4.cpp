@@ -10,7 +10,7 @@
 #include "Export_Utility.h"
 #include "MonsterBombEffect.h"
 #include "MonsterState.h"
-
+#include "Stage1Boss_BrifBigShield.h"
 CBossBigDaddy4::CBossBigDaddy4(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {
@@ -69,31 +69,28 @@ HRESULT CBossBigDaddy4::Ready_GameObject()
 _int CBossBigDaddy4::Update_GameObject(const _float& fTimeDelta)
 {
 	_vec3 vPos = Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::BOSS).back()->m_pTransformCom->m_vInfo[INFO_POS];
-	_vec3 SettingPos = { vPos.x +8.f,vPos.y -20.f,vPos.z };
+	_vec3 SettingPos = { vPos.x +8.f,vPos.y -10.f,vPos.z };
 	m_pTransformCom->Set_Pos(SettingPos);
 	__super::Update_GameObject(fTimeDelta);
-
-	return OBJ_NOEVENT;
-}
-
-void CBossBigDaddy4::LateUpdate_GameObject()
-{
-
 	if (INFO.bDead) {
 		//CMonsterBombEffect* MBEffect = CMonsterBombEffect::Create(m_pGraphicDev);
 		//MBEffect->Set_ObjectTag(OBJECTTAG::EFFECT);
 		//Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::EFFECT, MBEffect);
 		//MBEffect->Get_Transform()->Set_Pos(m_pTransformCom->m_vInfo[INFO_POS]);
 
-		CDustGrey* DustParticle = CDustGrey::Create(m_pGraphicDev, m_pTransformCom->m_vInfo[INFO_POS],64);
+		CDustGrey* DustParticle = CDustGrey::Create(m_pGraphicDev, m_pTransformCom->m_vInfo[INFO_POS], 64);
 		DustParticle->Set_ObjectTag(OBJECTTAG::PARTICLE);
 		Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::PARTICLE, DustParticle);
 		DustParticle->Get_Transform()->Set_Pos(m_pTransformCom->m_vInfo[INFO_POS]);
 
-		INFO.MonsterState = m_pStateArray[DEAD];
-		INFO.MonsterState->Initialize(this);
-		INFO.bDead = false;
+		CStage1Boss_BrifBigShield::m_bcheck4 = true;
+		return OBJ_DEAD;
 	}   // »ç¸ÁÆÇÁ¤
+	return OBJ_NOEVENT;
+}
+
+void CBossBigDaddy4::LateUpdate_GameObject()
+{
 
 	__super::LateUpdate_GameObject();
 
@@ -117,7 +114,6 @@ void CBossBigDaddy4::Render_GameObject()
 void CBossBigDaddy4::ReadyState()
 {
 	m_pStateArray[IDLE] = new CBossBigDaddy_Idle;
-	m_pStateArray[DEAD] = new CBossBigDaddy_Dead;
 	m_pStateArray[ATTACK] = new CBossBigDaddy_Attack;
 }
 

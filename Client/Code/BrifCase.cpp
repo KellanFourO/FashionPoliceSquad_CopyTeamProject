@@ -50,7 +50,7 @@ HRESULT CBrifCase::Ready_GameObject()
 	m_fAnimateTime = 0.f;
 	m_fFrame = 1.f;
 	m_fSpeed_Vertical = 0.1f;
-
+	m_bDead = false;
 	return S_OK;
 }
 
@@ -62,11 +62,11 @@ Engine::_int CBrifCase::Update_GameObject(const _float& fTimeDelta)
 		MBExplosion->Set_ObjectTag(OBJECTTAG::PARTICLE);
 		Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::PARTICLE, MBExplosion);
 		MBExplosion->Get_Transform()->Set_Pos(m_pTransformCom->m_vInfo[INFO_POS]);
-
+		
 		CMBulletBombEffect* MBulletEffect = CMBulletBombEffect::Create(m_pGraphicDev);
 		Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::MONSTERBULLET, MBulletEffect);
 		MBulletEffect->Get_Transform()->Set_Pos(m_pTransformCom->m_vInfo[INFO_POS]);
-
+		
 		return OBJ_DEAD;
 	}
 

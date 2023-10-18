@@ -22,10 +22,10 @@ CBossBigDaddy_Attack::~CBossBigDaddy_Attack()
 void CBossBigDaddy_Attack::Initialize(CMonster* _Monster)
 {
 	m_pHost = (_Monster);
+	m_eAttack = READY1;
 	m_fMinFrame = 1.0f;
 	m_fMaxFrame = 4.0f;
 	m_fCurFrame = m_fMinFrame;
-
 	m_iVer =1;
 }
 

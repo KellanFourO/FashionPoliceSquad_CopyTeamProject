@@ -36,7 +36,7 @@ Engine::_int Engine::CMBulletBombEffect::Update_GameObject(const _float& fTimeDe
 {
 	m_pPlayerTransform = dynamic_cast<CTransform*>(Management()->Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
 
-	_vec3 vPlayerPos, vMyPos, vLook;
+	_vec3 vPlayerPos, vMyPos, vLook;	
 
 	m_pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);
 	m_pTransformCom->Get_Info(INFO_POS, &vMyPos);
@@ -46,7 +46,7 @@ Engine::_int Engine::CMBulletBombEffect::Update_GameObject(const _float& fTimeDe
 	_float fAngle = atan2f(vLook.x, vLook.z);
 	m_pTransformCom->Set_Rotate(ROT_Y, fAngle + D3DX_PI);
 	
-
+	m_pCollider->SetCenterPos(m_pTransformCom->m_vInfo[INFO_POS]);
 	m_fFrame +=87.f* fTimeDelta;
 
 	if (87.f < m_fFrame)
