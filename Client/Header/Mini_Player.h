@@ -30,7 +30,7 @@ public:
 	void				Set_Rect(M_RECT& pRect) { m_PlayerRect = pRect; }
 	void				Set_Move();
 	void				Set_Damage();
-	void				Set_DamageCount() {	m_DamageCount = 10.f; }
+	void				Set_DamageCount() {	m_DamageCount = 5.f; }
 	void				Set_Dir();
 
 	_vec3				Get_Pos() { return m_PlayerPos; }

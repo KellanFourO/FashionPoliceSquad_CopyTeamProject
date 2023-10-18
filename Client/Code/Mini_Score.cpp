@@ -32,7 +32,7 @@ HRESULT CMini_Score::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::BUFFER, pComponent);
 
-	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Mini_Number_Texture"));
+	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_Mini_Number_Texture2"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
 
@@ -57,7 +57,7 @@ HRESULT CMini_Score::Ready_GameObject(float pPos_X, int Count)
 
 	if (Count == 0)
 	{
-		vPos = { pPos_X - 5.f, 150.f, 0.f };
+		vPos = { pPos_X - 10.f, 150.f, 0.f };
 		vScale = { 20.f * fMultiply, 20.f * fMultiply, 1.f };
 	}
 	else {
@@ -121,7 +121,7 @@ CMini_Score* CMini_Score::Create(LPDIRECT3DDEVICE9 pGraphicDev, float pPos_X, in
 	{
 		Safe_Release(pInstance);
 
-		MSG_BOX("MINIGame_Player Create Fail");
+		MSG_BOX("MINIGame_Score Create Fail");
 		return nullptr;
 	}
 

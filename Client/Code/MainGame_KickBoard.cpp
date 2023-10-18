@@ -210,7 +210,7 @@ _int CMainGame_KickBoard::Update_GameObject(const _float& fTimeDelta)
 		m_EnemyCreatCount++;
 
 		//Gold »ý¼º
-		if (m_GoldCreatCount % 300 == 0) {
+		if (m_GoldCreatCount % 100 == 0) {
 			random_device rd;
 			mt19937 gen(rd());
 
@@ -354,12 +354,20 @@ void CMainGame_KickBoard::TimeCheck()
 
 void CMainGame_KickBoard::CoinCount()
 {
+	if (m_iMyCoinCount == 0)
+	{ 
+		m_pScore[0]->Set_TexNum(10);
+		m_pScore[1]->Set_TexNum(0);
+		m_pScore[2]->Set_TexNum(0);
+	}
+	else {
+		_int	Ten_Num2 = m_iMyCoinCount / 10;
+		_int	One_Num2 = m_iMyCoinCount % 10;
 
-	_int	Ten_Num2 = m_iMyCoinCount / 10;
-	_int	One_Num2 = m_iMyCoinCount % 10;
-
-	m_pScore[1]->Set_TexNum(Ten_Num2);
-	m_pScore[2]->Set_TexNum(Ten_Num2);
+		m_pScore[0]->Set_TexNum(10);
+		m_pScore[1]->Set_TexNum(Ten_Num2);
+		m_pScore[2]->Set_TexNum(One_Num2);
+	}
 }
 
 void CMainGame_KickBoard::Collisoin_Check()
