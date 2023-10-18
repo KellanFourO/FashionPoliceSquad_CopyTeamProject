@@ -4,6 +4,10 @@
 #include "Export_Utility.h"
 #include "SYTex.h"
 #include "Texture.h"
+#include "BossBigDaddy.h"
+#include "BossBigDaddy2.h"
+#include "BossBigDaddy3.h"
+#include "BossBigDaddy4.h"
 
 bool CStage1Boss_BrifBigShield::m_bcheck1 = false;
 bool CStage1Boss_BrifBigShield::m_bcheck2 = false;
@@ -26,23 +30,25 @@ void CStage1Boss_BrifBigShield::Initialize(CMonster* _Monster)
 {
 	m_pHost = _Monster;
 
-	switch (m_ePhase)
-	{
-	case Engine::BOSSPHASE::PHASE_1:
-		break;
-	case Engine::BOSSPHASE::PHASE_2:
-		//BossbigDaddy 哭率1
-		 
-		//BossbigDaddy 哭率2
-		 
-		//BossbigDaddy 坷弗率3
-
-		//BossbigDaddy 坷弗率4
-		break;
-	case Engine::BOSSPHASE::PHASE_3:
-		break;
-
-	}
+	
+	//BossbigDaddy 哭率1
+	CBossBigDaddy* BossBigDaddy = CBossBigDaddy::Create(m_pHost->Get_GraphicDev(),0);
+	BossBigDaddy->Set_ObjectTag(OBJECTTAG::MONSTER);
+	Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::MONSTER, BossBigDaddy);
+	//BossbigDaddy 哭率2
+	CBossBigDaddy2* BossBigDaddy2 = CBossBigDaddy2::Create(m_pHost->Get_GraphicDev(),1);
+	
+	BossBigDaddy2->Set_ObjectTag(OBJECTTAG::MONSTER);
+	Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::MONSTER, BossBigDaddy2);
+	//BossbigDaddy 坷弗率3
+	CBossBigDaddy3* BossBigDaddy3 = CBossBigDaddy3::Create(m_pHost->Get_GraphicDev(),2);
+	BossBigDaddy3->Set_ObjectTag(OBJECTTAG::MONSTER);
+	Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::MONSTER, BossBigDaddy3);
+	//BossbigDaddy 坷弗率4
+	CBossBigDaddy4* BossBigDaddy4 = CBossBigDaddy4::Create(m_pHost->Get_GraphicDev(),3);
+	BossBigDaddy4->Set_ObjectTag(OBJECTTAG::MONSTER);
+	Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::MONSTER, BossBigDaddy4);
+	
 	m_eBossDaddyDie = ALL_LIVE;
 	m_fMinFrame = 4;
 	m_fMaxFrame = 5;
@@ -52,12 +58,22 @@ void CStage1Boss_BrifBigShield::Initialize(CMonster* _Monster)
 
 CMonsterState* CStage1Boss_BrifBigShield::Update(CMonster* Monster, const float& fDetltaTime)
 {
-	
 	m_pHost->Chase_Target(fDetltaTime);
 	switch (m_eBossDaddyDie)
 	{
 	case CStage1Boss_BrifBigShield::ALL_LIVE:
 		{
+		m_fTick += fDetltaTime;
+		if (m_fTick > 1)
+		{
+			++m_fCurFrame;
+			if (m_fCurFrame == m_fMaxFrame)
+			{
+				m_fCurFrame = m_fMinFrame;
+			}
+			m_fTick = 0.f;
+		}
+		
 		if (m_bcheck1 && m_bcheck2 &&!m_bLeftDead)
 			{
 				m_eBossDaddyDie = RIGHT_LIVE;
@@ -68,17 +84,29 @@ CMonsterState* CStage1Boss_BrifBigShield::Update(CMonster* Monster, const float&
 				m_eBossDaddyDie = LEFT_LIVE;
 				m_bRightDead = true;
 			}
+
 		}
 		break;
 	case CStage1Boss_BrifBigShield::LEFT_LIVE:
 		{
 		if (m_bRightDead)
+		{
+			m_fMinFrame = 4;
+			m_fMaxFrame = 5;
+			m_fCurFrame = m_fMinFrame;
+			m_iVer = 4;
+		}
+		m_fTick += fDetltaTime;
+		if (m_fTick > 1)
+		{
+			++m_fCurFrame;
+			if (m_fCurFrame == m_fMaxFrame)
 			{
-				m_fMinFrame = 4;
-				m_fMaxFrame = 5;
 				m_fCurFrame = m_fMinFrame;
-				m_iVer = 4;
 			}
+			m_fTick = 0.f;
+		}
+		
 		if (m_bcheck1 && m_bcheck2 && !m_bLeftDead)
 			{
 				m_bLeftDead = true;
@@ -96,6 +124,16 @@ CMonsterState* CStage1Boss_BrifBigShield::Update(CMonster* Monster, const float&
 				m_fCurFrame = m_fMinFrame;
 				m_iVer = 3;
 			}
+		m_fTick += fDetltaTime;
+		if (m_fTick > 1)
+		{
+			++m_fCurFrame;
+			if (m_fCurFrame == m_fMaxFrame)
+			{
+				m_fCurFrame = m_fMinFrame;
+			}
+			m_fTick = 0.f;
+		}
 		if (m_bcheck3 && m_bcheck4 && !m_bRightDead)
 		{
 			m_bRightDead = true;

@@ -26,7 +26,7 @@ void CBossBigDaddy_Attack::Initialize(CMonster* _Monster)
 	m_fMaxFrame = 4.0f;
 	m_fCurFrame = m_fMinFrame;
 
-	m_iVer = 2;
+	m_iVer =1;
 }
 
 CMonsterState* CBossBigDaddy_Attack::Update(CMonster* Monster, const float& fDetltaTime)
@@ -86,13 +86,7 @@ CMonsterState* CBossBigDaddy_Attack::Update(CMonster* Monster, const float& fDet
 			if (m_fTick >= 1.f)
 			{
 				//TODO 만약 던진 후 플레이어가 공격범위에 없을시 추격 상태로 변경
-				if (!m_pHost->ChaseCatch())
-					return dynamic_cast<CBossBigDaddy*>(m_pHost)->Get_State(1);
-				else
-				{
-					m_eAttack = READY1;
-
-				}
+				m_eAttack = READY1;
 				++m_fCurFrame;
 				m_fTick = 0.f;
 			}

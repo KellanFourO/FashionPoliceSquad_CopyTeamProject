@@ -2,6 +2,10 @@
 #include "BossBigDaddy_Idle.h"
 #include "SYTex.h"
 #include "Texture.h"
+#include "Stage1Boss.h"
+
+#include "Stage1Boss_BrifBigShield.h"
+
 
 CBossBigDaddy_Idle::CBossBigDaddy_Idle()
 {
@@ -25,14 +29,39 @@ void CBossBigDaddy_Idle::Initialize(CMonster* _Monster)
 
 CMonsterState* CBossBigDaddy_Idle::Update(CMonster* Monster, const float& fDetltaTime)
 {
-	if (m_pHost->Detect() || m_pHost->Get_Info().bHit)
+	if (m_pHost->ChaseCatch())
 	{
-		//TODO 플레이어가 일정범위 안에 들어오거나 피격시 추격. Chase 상태로 변경
-		return dynamic_cast<CBossBigDaddy*>(m_pHost)->Get_State(1);
+		//todo 대상이 공격범위 안에 있을시
+
+		switch (m_pHost->Get_MonsterIndex())
+		{
+			case 0:
+			{
+				return dynamic_cast<CBossBigDaddy*>(m_pHost)->Get_State(1); // Attack;
+				break;
+			}
+			case 1:
+			{
+				return dynamic_cast<CBossBigDaddy2*>(m_pHost)->Get_State(1); // Attack;
+				break;
+			}
+			case 2:
+			{
+				return dynamic_cast<CBossBigDaddy3*>(m_pHost)->Get_State(1); // Attack;
+				break;
+			}
+			case 3:
+			{
+				return dynamic_cast<CBossBigDaddy4*>(m_pHost)->Get_State(1); // Attack;
+				break;
+			}
+		
+		}
+
+		
 	}
 
 	return nullptr;
-
 }
 
 void CBossBigDaddy_Idle::Release(CMonster* _Monster)

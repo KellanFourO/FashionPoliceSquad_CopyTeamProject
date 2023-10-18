@@ -8,14 +8,14 @@
 class CMonsterState;
 
 
-class CBossBigDaddy : public CMonster
+class CBossBigDaddy2 : public CMonster
 {
 	enum BIGDADDYSTATE { IDLE, ATTACK, DEAD, BIGDADDYSTATE_END };
 
 private:
-	explicit			CBossBigDaddy(LPDIRECT3DDEVICE9 pGraphicDev);
-	explicit			CBossBigDaddy(CMonster& rhs);
-	virtual				~CBossBigDaddy();
+	explicit			CBossBigDaddy2(LPDIRECT3DDEVICE9 pGraphicDev);
+	explicit			CBossBigDaddy2(CMonster& rhs);
+	virtual				~CBossBigDaddy2();
 
 public:
 	virtual HRESULT		Ready_GameObject() override;
@@ -31,19 +31,18 @@ public:
 
 public:
 	CMonsterState*				Get_State(_int _index) { return m_pStateArray[_index]; }
-	_int						Get_Index() { return m_iIndex; }
-
-
+	_int						GetIndex() { return m_iIndex; }
 private:
 	HRESULT				Add_Component();
-	_int				m_iIndex = 0;
+
 
 
 private:
 	CMonsterState*		  m_pStateArray[BIGDADDYSTATE_END];
+	_int				  m_iIndex = 0;
 
 public:
-	static CBossBigDaddy* Create(LPDIRECT3DDEVICE9 pGraphicDev, _int iIndex);
+	static CBossBigDaddy2* Create(LPDIRECT3DDEVICE9 pGraphicDev, _int iIndex);
 
 private:
 	virtual void Free();

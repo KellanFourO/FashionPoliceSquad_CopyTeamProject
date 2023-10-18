@@ -1,6 +1,10 @@
 #pragma once
 #include "MonsterState.h"
 #include "BossBigDaddy.h"
+#include "BossBigDaddy2.h"
+#include "BossBigDaddy3.h"
+#include "BossBigDaddy4.h"
+
 class CBossBigDaddyState : public CMonsterState
 {
 public:

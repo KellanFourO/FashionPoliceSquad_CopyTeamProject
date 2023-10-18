@@ -52,8 +52,8 @@ _int CBossStage::Update_Scene(const _float& fTimeDelta)
 	_int	iExit = __super::Update_Scene(fTimeDelta);
  	if (m_bLateInit)
  	{
- 		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::BOSS_STAGE, DIALOGTAG::ST1_BOSS_START);
- 		CEventMgr::GetInstance()->OnPause(true, SCENETAG::BOSS_STAGE);
+ 		//CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::BOSS_STAGE, DIALOGTAG::ST1_BOSS_START);
+ 		//CEventMgr::GetInstance()->OnPause(true, SCENETAG::BOSS_STAGE);
  		m_bLateInit = false;
  	}
 

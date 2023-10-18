@@ -1014,6 +1014,15 @@
     <ClInclude Include="..\Header\BossBigDaddyState.h">
       <Filter>02. GameObject\02. Monster\04.BossBigDaddy</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\BossBigDaddy2.h">
+      <Filter>02. GameObject\02. Monster\04.BossBigDaddy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BossBigDaddy3.h">
+      <Filter>02. GameObject\02. Monster\04.BossBigDaddy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\BossBigDaddy4.h">
+      <Filter>02. GameObject\02. Monster\04.BossBigDaddy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1549,6 +1558,15 @@
     </ClCompile>
     <ClCompile Include="..\Code\BossBigDaddy_Dead.cpp">
       <Filter>02. GameObject\02. Monster\04.BossBigDaddy\02.BossBigDaddy_Dead</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossBigDaddy2.cpp">
+      <Filter>02. GameObject\02. Monster\04.BossBigDaddy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossBigDaddy3.cpp">
+      <Filter>02. GameObject\02. Monster\04.BossBigDaddy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\BossBigDaddy4.cpp">
+      <Filter>02. GameObject\02. Monster\04.BossBigDaddy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

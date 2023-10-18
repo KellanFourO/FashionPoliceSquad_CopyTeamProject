@@ -102,9 +102,9 @@ void CBullet::OnCollisionEnter(CCollider* _pOther)
 		if (m_eBulletType == _pOther->Get_Host()->Get_HitType())
 		{
 			dynamic_cast<CMonster*>(_pOther->Get_Host())->Attacked(m_fDmg);
+			m_bDead = true;
 		}
 		//TODO 몬스터 총알 오브젝트 풀링 할거면 여기서
-		m_bDead = true;
 	}
 
 	else if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BOSS)

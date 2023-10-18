@@ -1,31 +1,31 @@
 #include "stdafx.h"
-#include "BossBigDaddy.h"
+#include "BossBigDaddy2.h"
 
 #include "BossBigDaddy_IDLE.h"
 #include "BossBigDaddy_Dead.h"
 #include "BossBigDaddy_Attack.h"
 #include "DustGrey.h"
+
 #include "Export_System.h"
 #include "Export_Utility.h"
 #include "MonsterBombEffect.h"
 #include "MonsterState.h"
-#include "Stage1Boss_BrifBigShield.h"
 
-CBossBigDaddy::CBossBigDaddy(LPDIRECT3DDEVICE9 pGraphicDev)
+CBossBigDaddy2::CBossBigDaddy2(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CMonster(pGraphicDev)
 {
 }
 
-CBossBigDaddy::CBossBigDaddy(CMonster& rhs)
+CBossBigDaddy2::CBossBigDaddy2(CMonster& rhs)
 	: CMonster(rhs)
 {
 }
 
-CBossBigDaddy::~CBossBigDaddy()
+CBossBigDaddy2::~CBossBigDaddy2()
 {
 }
 
-HRESULT CBossBigDaddy::Ready_GameObject()
+HRESULT CBossBigDaddy2::Ready_GameObject()
 {
 	__super::Ready_GameObject();
 
@@ -34,7 +34,7 @@ HRESULT CBossBigDaddy::Ready_GameObject()
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
 	ReadyState();
-	m_iMonsterIndex = 0;
+	m_iMonsterIndex = 1;
 	INFO.MonsterState = m_pStateArray[IDLE];
 	INFO.MonsterState->Initialize(this);
 	INFO.fHP = 100.f;
@@ -66,16 +66,17 @@ HRESULT CBossBigDaddy::Ready_GameObject()
 	return S_OK;
 }
 
-_int CBossBigDaddy::Update_GameObject(const _float& fTimeDelta)
+_int CBossBigDaddy2::Update_GameObject(const _float& fTimeDelta)
 {
 	_vec3 vPos = Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::BOSS).back()->m_pTransformCom->m_vInfo[INFO_POS];
-	_vec3 SettingPos = { vPos.x - 8.f,vPos.y - 20.f,vPos.z };
+	_vec3 SettingPos = { vPos.x -5.f,vPos.y-10.f,vPos.z };
 	m_pTransformCom->Set_Pos(SettingPos);
 	__super::Update_GameObject(fTimeDelta);
 
 	return OBJ_NOEVENT;
 }
-void CBossBigDaddy::LateUpdate_GameObject()
+
+void CBossBigDaddy2::LateUpdate_GameObject()
 {
 
 	if (INFO.bDead) {
@@ -89,7 +90,6 @@ void CBossBigDaddy::LateUpdate_GameObject()
 		Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::PARTICLE, DustParticle);
 		DustParticle->Get_Transform()->Set_Pos(m_pTransformCom->m_vInfo[INFO_POS]);
 
-		CStage1Boss_BrifBigShield::m_bcheck1 = true;
 		INFO.MonsterState = m_pStateArray[DEAD];
 		INFO.MonsterState->Initialize(this);
 		INFO.bDead = false;
@@ -99,9 +99,8 @@ void CBossBigDaddy::LateUpdate_GameObject()
 
 }
 
-void CBossBigDaddy::Render_GameObject()
+void CBossBigDaddy2::Render_GameObject()
 {
-	m_pCollider->Render_Collider();
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 
@@ -115,14 +114,14 @@ void CBossBigDaddy::Render_GameObject()
 
 }
 
-void CBossBigDaddy::ReadyState()
+void CBossBigDaddy2::ReadyState()
 {
 	m_pStateArray[IDLE] = new CBossBigDaddy_Idle;
 	m_pStateArray[DEAD] = new CBossBigDaddy_Dead;
 	m_pStateArray[ATTACK] = new CBossBigDaddy_Attack;
 }
 
-void CBossBigDaddy::OnCollisionEnter(CCollider* _pOther)
+void CBossBigDaddy2::OnCollisionEnter(CCollider* _pOther)
 {
 
 
@@ -132,19 +131,19 @@ void CBossBigDaddy::OnCollisionEnter(CCollider* _pOther)
 
 }
 
-void CBossBigDaddy::OnCollisionStay(CCollider* _pOther)
+void CBossBigDaddy2::OnCollisionStay(CCollider* _pOther)
 {
 	//__super::OnCollisionStay(_pOther);
 
 
 }
 
-void CBossBigDaddy::OnCollisionExit(CCollider* _pOther)
+void CBossBigDaddy2::OnCollisionExit(CCollider* _pOther)
 {
 	//__super::OnCollisionStay(_pOther);
 }
 
-HRESULT CBossBigDaddy::Add_Component()
+HRESULT CBossBigDaddy2::Add_Component()
 {
 	CComponent* pComponent = nullptr;
 
@@ -174,21 +173,21 @@ HRESULT CBossBigDaddy::Add_Component()
 	return S_OK;
 }
 
-CBossBigDaddy* CBossBigDaddy::Create(LPDIRECT3DDEVICE9 pGraphicDev, _int iIndex)
+CBossBigDaddy2* CBossBigDaddy2::Create(LPDIRECT3DDEVICE9 pGraphicDev, _int iIndex)
 {
-	CBossBigDaddy* pInstance = new CBossBigDaddy(pGraphicDev);
+	CBossBigDaddy2* pInstance = new CBossBigDaddy2(pGraphicDev);
 	pInstance->m_iIndex = iIndex;
 
 	if (FAILED(pInstance->Ready_GameObject()))
 	{
 		Safe_Release(pInstance);
-		MSG_BOX("BossBigDaddy Create Failed");
+		MSG_BOX("BrifMonsterBig Create Failed");
 		return nullptr;
 	}
 	return pInstance;
 }
 
-void CBossBigDaddy::Free()
+void CBossBigDaddy2::Free()
 {
 
 

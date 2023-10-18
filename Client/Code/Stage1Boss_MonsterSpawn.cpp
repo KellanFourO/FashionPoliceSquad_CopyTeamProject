@@ -16,7 +16,9 @@ CStage1Boss_MonsterSpawn::~CStage1Boss_MonsterSpawn()
 
 void CStage1Boss_MonsterSpawn::Initialize(CMonster* _Monster)
 {
-
+	
+	
+	m_fCurFrame = m_fMinFrame;
 }
 
 CMonsterState* CStage1Boss_MonsterSpawn::Update(CMonster* Monster, const float& fDetltaTime)

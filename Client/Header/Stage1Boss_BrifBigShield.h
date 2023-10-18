@@ -22,8 +22,11 @@ public:
 	static bool		m_bLeftDead;
 	static bool		m_bRightDead;
 	static bool		m_bAllDead;
+
+
 private:
 	BossDaddyDie		m_eBossDaddyDie;
+	LPDIRECT3DDEVICE9			m_pGraphicDev;
 
 	_float				m_fTick=0.f;
 	_float				m_fAgainTime = 2.f;

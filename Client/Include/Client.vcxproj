@@ -211,6 +211,9 @@
     <ClInclude Include="..\Header\Belt_SWING.h" />
     <ClInclude Include="..\Header\BigDaddyMonster_Attack.h" />
     <ClInclude Include="..\Header\BossBigDaddy.h" />
+    <ClInclude Include="..\Header\BossBigDaddy2.h" />
+    <ClInclude Include="..\Header\BossBigDaddy3.h" />
+    <ClInclude Include="..\Header\BossBigDaddy4.h" />
     <ClInclude Include="..\Header\BossBigDaddyState.h" />
     <ClInclude Include="..\Header\BossBigDaddy_Attack.h" />
     <ClInclude Include="..\Header\BossBigDaddy_Dead.h" />
@@ -374,6 +377,9 @@
     <ClCompile Include="..\Code\Belt_SWING.cpp" />
     <ClCompile Include="..\Code\BigDaddyMonster_Attack.cpp" />
     <ClCompile Include="..\Code\BossBigDaddy.cpp" />
+    <ClCompile Include="..\Code\BossBigDaddy2.cpp" />
+    <ClCompile Include="..\Code\BossBigDaddy3.cpp" />
+    <ClCompile Include="..\Code\BossBigDaddy4.cpp" />
     <ClCompile Include="..\Code\BossBigDaddy_Attack.cpp" />
     <ClCompile Include="..\Code\BossBigDaddy_Dead.cpp" />
     <ClCompile Include="..\Code\BossBigDaddy_Idle.cpp" />
