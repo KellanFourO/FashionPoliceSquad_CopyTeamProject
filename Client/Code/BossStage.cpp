@@ -36,7 +36,7 @@ HRESULT CBossStage::Ready_Scene()
 
 	FAILED_CHECK_RETURN(Ready_Layer_UI(LAYERTAG::UI), E_FAIL);
 
-	Load_Data_C(L"../Bin/Data/CPoint/CPointData", OBJECTTAG::BUILD_OBJ); //TODO
+	Load_Data_C(L"../Bin/Data/CPoint/BossStage/CPointData", OBJECTTAG::BUILD_OBJ); //TODO
 
 	srand(GetTickCount64());
 
