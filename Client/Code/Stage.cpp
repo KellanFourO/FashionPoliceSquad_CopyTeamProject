@@ -41,10 +41,11 @@ HRESULT CStage::Ready_Scene()
 		
 	srand(GetTickCount64());
 
-	//Load_Data_T(L"../Bin/Data/Trigger/Stage1/T0/TriggerData", OBJECTTAG::O_TRIGGER);
-	//Load_Data_T(L"../Bin/Data/Trigger/Stage1/T1/TriggerData", OBJECTTAG::O_TRIGGER);
-	//Load_Data_T(L"../Bin/Data/Trigger/Stage1/T2/TriggerData", OBJECTTAG::O_TRIGGER);
+	Load_Data_T(L"../Bin/Data/Trigger/Stage1/T0/TriggerData", OBJECTTAG::O_TRIGGER);
+	Load_Data_T(L"../Bin/Data/Trigger/Stage1/T1/TriggerData", OBJECTTAG::O_TRIGGER);
+	Load_Data_T(L"../Bin/Data/Trigger/Stage1/T2/TriggerData", OBJECTTAG::O_TRIGGER);
 
+	Load_Data_T(L"../Bin/Data/Trigger/Stage1/T3/TriggerData", OBJECTTAG::O_TRIGGER);
 
 	//TODO - 승용추가 크로스헤어 추가, 기본 커서 안보이게
 	ShowCursor(FALSE);
@@ -89,6 +90,8 @@ void CStage::LateUpdate_Scene()
 	CollisionManager()->LateUpdate_Collision();
 
 	Admin_KeyInput();
+
+	Check_Trigger();
 
 	//Trigger_Check_For_Create_Monster();
 
@@ -162,7 +165,7 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 
 	Engine::CGameObject* pGameObject = nullptr;
 
-	Load_Data_C(L"../Bin/Data/CPoint/Stage1/C_all/CPointData", OBJECTTAG::BUILD_OBJ, 0);
+	Load_Data_C(L"../Bin/Data/CPoint/Stage1/C0/CPointData", OBJECTTAG::BUILD_OBJ, 0);
 
 	{
 		// Player
@@ -341,49 +344,56 @@ HRESULT CStage::Ready_Layer_UI(LAYERTAG eLayerTag)
 	return S_OK;
 }
 
-HRESULT CStage::Trigger_Check_For_Create_Monster()
+HRESULT CStage::Check_Trigger()
 {
-	_bool CheckTemp = dynamic_cast<CPlayer*>(m_pPlayer)->Get_TriggerCheck();
-	
-	TRIGGER_NUMBER	m_eTrName = TRIGGER_NUMBER::TR_END;
-	TRIGGER_STATE	m_eTrState = TRIGGER_STATE::TR_STATE_END;
-
-	if (CheckTemp == true)
+	if (!m_TriggerDataTemp.empty())
 	{
-		m_eTrName = dynamic_cast<CPlayer*>(m_pPlayer)->Get_TR_NUMBER();
-		m_eTrState = dynamic_cast<CPlayer*>(m_pPlayer)->Get_TR_STATE();
-	}
-
-	if ((m_eTrName != TRIGGER_NUMBER::TR_END) && (m_eTrState != TRIGGER_STATE::TR_STATE_END))
-	{
-		dynamic_cast<CPlayer*>(m_pPlayer)->Set_TR_STATE(TRIGGER_STATE::TR_NOW);
-		int iCountNum = 1;
-
-		if ((m_eTrName == TRIGGER_NUMBER::TR0) && (m_bFirstCreat == false))
-		{
-			iCountNum = 1;
-			Load_Data_C(L"../Bin/Data/CPoint/Stage1/C1/CPointData", OBJECTTAG::BUILD_OBJ, iCountNum);
-			m_bFirstCreat = true;
-			Create_Monster(iCountNum);
-		}	
-		else if ((m_eTrName == TRIGGER_NUMBER::TR1) && (m_bSecondCreat == false))
-		{
-			iCountNum = 2;
-			Load_Data_C(L"../Bin/Data/CPoint/Stage1/C2/CPointData", OBJECTTAG::BUILD_OBJ, iCountNum);
-			m_bSecondCreat = true;
-			Create_Monster(iCountNum);
-		}
-		else if ((m_eTrName == TRIGGER_NUMBER::TR2) && (m_bThirdCreat == false))
-		{
-			iCountNum = 3;
-			Load_Data_C(L"../Bin/Data/CPoint/Stage1/C3/CPointData", OBJECTTAG::BUILD_OBJ, iCountNum);
-// 			dynamic_cast<CPlayer*>(m_pPlayer)->Set_TR_STATE(TRIGGER_STATE::TR_AFTER);
-// 			dynamic_cast<CPlayer*>(m_pPlayer)->Set_TR_NUMBER(TRIGGER_NUMBER::TR_END);
-			m_bThirdCreat = true;
-			Create_Monster(iCountNum);
-		}
-	}
+		int iCountNum = -1;
+		_vec3 PlayerPos;
+		Management()->Get_Player()->Get_Transform()->Get_Info(INFO_POS, &PlayerPos);
 		
+		for (auto& iter : m_TriggerDataTemp)
+		{
+			_float MinX = (iter->vPos.x) - (iter->vSize.x * 0.5f);
+			_float MaxX = (iter->vPos.x) + (iter->vSize.x * 0.5f);
+
+			_float MinZ = (iter->vPos.z) - (iter->vSize.z * 0.5f);
+			_float MaxZ = (iter->vPos.z) + (iter->vSize.z * 0.5f);
+
+			if (((PlayerPos.x >= MinX) && (PlayerPos.x <= MaxX))
+				&& ((PlayerPos.z >= MinZ) && (PlayerPos.z <= MaxZ)))
+			{
+				if ((iter->eTrName == TRIGGER_NUMBER::TR0) && (iter->eTrSTATE == TRIGGER_STATE::TR_BEFORE))
+				{
+					iCountNum = 1;
+					Load_Data_C(L"../Bin/Data/CPoint/Stage1/C1/CPointData", OBJECTTAG::BUILD_OBJ, iCountNum);
+					iter->eTrSTATE = TRIGGER_STATE::TR_AFTER;
+					Create_Monster(iCountNum);
+				}
+				else if ((iter->eTrName == TRIGGER_NUMBER::TR1) && (iter->eTrSTATE == TRIGGER_STATE::TR_BEFORE))
+				{
+					iCountNum = 2;
+					Load_Data_C(L"../Bin/Data/CPoint/Stage1/C2/CPointData", OBJECTTAG::BUILD_OBJ, iCountNum);
+					iter->eTrSTATE = TRIGGER_STATE::TR_AFTER;
+					Create_Monster(iCountNum);
+				}
+				else if ((iter->eTrName == TRIGGER_NUMBER::TR2) && (iter->eTrSTATE == TRIGGER_STATE::TR_BEFORE))
+				{
+					iCountNum = 3;
+					Load_Data_C(L"../Bin/Data/CPoint/Stage1/C3/CPointData", OBJECTTAG::BUILD_OBJ, iCountNum);
+					iter->eTrSTATE = TRIGGER_STATE::TR_AFTER;
+					Create_Monster(iCountNum);
+				}
+				else if ((iter->eTrName == TRIGGER_NUMBER::TR3) && (iter->eTrSTATE == TRIGGER_STATE::TR_BEFORE))
+				{
+					//여기에 다이얼로그 추가 
+
+
+					iter->eTrSTATE = TRIGGER_STATE::TR_AFTER;
+ 				}
+			}
+		}
+	}
 	return S_OK;
 }
 
@@ -417,6 +427,53 @@ HRESULT CStage::Create_Monster(int iNum)
 
 	return S_OK;
 }
+
+// HRESULT CStage::Trigger_Check_For_Create_Monster()
+// {
+// 	_bool CheckTemp = dynamic_cast<CPlayer*>(m_pPlayer)->Get_TriggerCheck();
+// 	
+// 	TRIGGER_NUMBER	m_eTrName = TRIGGER_NUMBER::TR_END;
+// 	TRIGGER_STATE	m_eTrState = TRIGGER_STATE::TR_STATE_END;
+// 
+// 	if (CheckTemp == true)
+// 	{
+// 		m_eTrName = dynamic_cast<CPlayer*>(m_pPlayer)->Get_TR_NUMBER();
+// 		m_eTrState = dynamic_cast<CPlayer*>(m_pPlayer)->Get_TR_STATE();
+// 	}
+// 
+// 	if ((m_eTrName != TRIGGER_NUMBER::TR_END) && (m_eTrState != TRIGGER_STATE::TR_STATE_END))
+// 	{
+// 		dynamic_cast<CPlayer*>(m_pPlayer)->Set_TR_STATE(TRIGGER_STATE::TR_NOW);
+// 		int iCountNum = 1;
+// 
+// 		if ((m_eTrName == TRIGGER_NUMBER::TR0) && (m_bFirstCreat == false))
+// 		{
+// 			iCountNum = 1;
+// 			Load_Data_C(L"../Bin/Data/CPoint/Stage1/C1/CPointData", OBJECTTAG::BUILD_OBJ, iCountNum);
+// 			m_bFirstCreat = true;
+// 			Create_Monster(iCountNum);
+// 		}	
+// 		else if ((m_eTrName == TRIGGER_NUMBER::TR1) && (m_bSecondCreat == false))
+// 		{
+// 			iCountNum = 2;
+// 			Load_Data_C(L"../Bin/Data/CPoint/Stage1/C2/CPointData", OBJECTTAG::BUILD_OBJ, iCountNum);
+// 			m_bSecondCreat = true;
+// 			Create_Monster(iCountNum);
+// 		}
+// 		else if ((m_eTrName == TRIGGER_NUMBER::TR2) && (m_bThirdCreat == false))
+// 		{
+// 			iCountNum = 3;
+// 			Load_Data_C(L"../Bin/Data/CPoint/Stage1/C3/CPointData", OBJECTTAG::BUILD_OBJ, iCountNum);
+// // 			dynamic_cast<CPlayer*>(m_pPlayer)->Set_TR_STATE(TRIGGER_STATE::TR_AFTER);
+// // 			dynamic_cast<CPlayer*>(m_pPlayer)->Set_TR_NUMBER(TRIGGER_NUMBER::TR_END);
+// 			m_bThirdCreat = true;
+// 			Create_Monster(iCountNum);
+// 		}
+// 	}
+// 		
+// 	return S_OK;
+// }
+
 
 HRESULT CStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 {
@@ -584,8 +641,6 @@ HRESULT CStage::Load_Data_C(const TCHAR* pFilePath, OBJECTTAG eTag, int CountNum
 
 HRESULT CStage::Load_Data_T(const TCHAR* pFilePath, OBJECTTAG eTag)
 {
-	m_TriggerDataTemp.clear();
-
 	//파일 개방해서 받아오기
 	string m_strText = "TriggerData";
 

@@ -91,6 +91,9 @@ private:
 	HRESULT				Add_Light();
 	HRESULT				Light_OnOff_Check();
 
+	HRESULT				Create_Monster(int iNum);
+	HRESULT				Check_Trigger();
+
 private:
 	CLayer*				m_pLayer = nullptr;  //Environment
 	CLayer*				m_pGLayer = nullptr; //GameLogic
@@ -109,7 +112,7 @@ public:
 	void				Set_VecOBJData(vector<OBJData*> pVecOBjData) { m_VecOBJData = pVecOBjData; }
 
 	virtual HRESULT		Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag);
-	HRESULT				Load_Data_C(const TCHAR* pFilePath, OBJECTTAG eTag);
+	HRESULT				Load_Data_C(const TCHAR* pFilePath, OBJECTTAG eTag, int CountNum);
 	HRESULT				Load_Data_T(const TCHAR* pFilePath, OBJECTTAG eTag);
 
 	vector<IDirect3DCubeTexture9*>& Get_VecTempCube() { return m_VecTempCube; }
@@ -130,7 +133,7 @@ private:
 
 	vector<OBJData*>				m_VecLight;
 
-	vector<C_POINT*>			    m_VecCreatePoint;
+	vector<C_POINT*>			    m_VecCreatePoint[4];
 	vector<TRIGGER*>			    m_TriggerDataTemp;
 
 	SORTCUBE*						m_defSortCube = nullptr;//큐브 정렬용
