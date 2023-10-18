@@ -113,6 +113,38 @@ void CBossStage::Render_Scene()
 {
 }
 
+HRESULT CBossStage::Create_Monster()
+{
+	if (m_bCreateMonster == false)
+	{
+		Engine::CGameObject* pGameObject = nullptr;
+
+		for (auto& iter : m_VecCreatePoint)
+		{
+			if (iter->eMonsterType == MonsterType::BIGDADDY)
+			{
+				pGameObject = CBigDaddyMonster::Create(m_pGraphicDev, iter->defOBJData.vPos);
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+			}
+			if (iter->eMonsterType == MonsterType::DULLSUIT)
+			{
+				pGameObject = CDullSuitMonster::Create(m_pGraphicDev, iter->defOBJData.vPos);
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+			}
+			if (iter->eMonsterType == MonsterType::KCIKBOARD)
+			{
+				pGameObject = CKickBoardMonster::Create(m_pGraphicDev, iter->defOBJData.vPos);
+				NULL_CHECK_RETURN(pGameObject, E_FAIL);
+				FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+			}
+		}
+		m_bCreateMonster = true;
+	}
+	return S_OK;
+}
+
 HRESULT CBossStage::Ready_LightInfo()
 {
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, TRUE);

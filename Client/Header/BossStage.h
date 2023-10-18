@@ -80,6 +80,7 @@ public:
 	virtual void		LateUpdate_Scene();
 	virtual void		Render_Scene();
 
+	HRESULT				Create_Monster();
 private:
 	HRESULT				Ready_LightInfo();
 	HRESULT				Ready_Prototype();
@@ -123,10 +124,12 @@ private:
 	vector<CUBE*>					m_VecCubeData;
 	_uint							m_iCubeIndex = 0;
 
-	SORTCUBE* m_defSortCube = nullptr;//큐브 정렬용
+	SORTCUBE*						m_defSortCube = nullptr;//큐브 정렬용
 	vector<SORTCUBE*>				m_pCubeForSort;			//큐브 정렬용
-	SORTTEX* m_defSortTex = nullptr; //텍스쳐 정렬용
+	SORTTEX*						m_defSortTex = nullptr; //텍스쳐 정렬용
 	vector<SORTTEX*>				m_pTexForSort;			//텍스쳐 정렬용
+
+	_bool							m_bCreateMonster = false;
 
 	CStage1Boss*					m_pBoss = nullptr;
 	CMissionObjective*				m_pMission = nullptr;
