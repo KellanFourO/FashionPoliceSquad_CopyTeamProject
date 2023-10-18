@@ -13,6 +13,7 @@ public:
 	virtual CBeltState* Update(CBelt* Belt, const float& fDetltaTime) = 0;
 	virtual void Release(CBelt* _Belt) = 0;
 
+	CBelt*			m_pHost = nullptr;
 	_float			m_fBehaviorTime = 0.f; // 행동 줄 시간
 
 	_float			m_fCurFrame = 0.f;
@@ -21,6 +22,8 @@ public:
 	_float			m_fAnimateTime = 0;   //애니메이션 관련
 
 	_float			m_fAttackTime = 0;
+
+	_float			m_fChargeTime = 2.f;
 
 
 };

@@ -1,10 +1,10 @@
 #pragma once
 #include "BeltState.h"
-class CBelt_CHARGE : public CBeltState
+class CBelt_Charge : public CBeltState
 {
 public:
-	CBelt_CHARGE();
-	virtual ~CBelt_CHARGE();
+	CBelt_Charge();
+	virtual ~CBelt_Charge();
 
 public:
 	virtual void Initialize(CBelt* _Belt) override;

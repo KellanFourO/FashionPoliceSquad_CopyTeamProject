@@ -567,19 +567,19 @@
     <ClInclude Include="..\Header\BrifCase.h">
       <Filter>02. GameObject\07. Bullet\01.MonsterBullet\00.BrifCase</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Belt_ATTACK.h">
+    <ClInclude Include="..\Header\Belt_Attack.h">
       <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Belt_CHARGE.h">
+    <ClInclude Include="..\Header\Belt_Charge.h">
       <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Belt_IDLE.h">
+    <ClInclude Include="..\Header\Belt_Idle.h">
       <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Belt_NORMAL.h">
+    <ClInclude Include="..\Header\Belt_Ready.h">
       <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Belt_SWING.h">
+    <ClInclude Include="..\Header\Belt_Rope.h">
       <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClInclude>
     <ClInclude Include="BeltState.h">
@@ -1044,6 +1044,12 @@
     <ClInclude Include="..\Header\DashEffect.h">
       <Filter>02. GameObject\06. Effect\06.Dash</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header\SYRay.h">
+      <Filter>02. GameObject\01. Player\97.RAY</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Belt_ChargeAttack.h">
+      <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
+	</ClInclude>
     <ClInclude Include="..\Header\MainGame_KickBoard.h">
       <Filter>02. GameObject\15. MiniGame\2. KICKBOARD</Filter>
     </ClInclude>
@@ -1124,19 +1130,19 @@
     <ClCompile Include="..\Code\BrifCase.cpp">
       <Filter>02. GameObject\07. Bullet\01.MonsterBullet\00.BrifCase</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Belt_ATTACK.cpp">
+    <ClCompile Include="..\Code\Belt_Attack.cpp">
       <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Belt_CHARGE.cpp">
+    <ClCompile Include="..\Code\Belt_Charge.cpp">
       <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Belt_IDLE.cpp">
+    <ClCompile Include="..\Code\Belt_Idle.cpp">
       <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Belt_NORMAL.cpp">
+    <ClCompile Include="..\Code\Belt_Ready.cpp">
       <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Belt_SWING.cpp">
+    <ClCompile Include="..\Code\Belt_Rope.cpp">
       <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Belt.cpp">
@@ -1600,6 +1606,12 @@
     </ClCompile>
     <ClCompile Include="..\Code\DashEffect.cpp">
       <Filter>02. GameObject\06. Effect\06.Dash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\SYRay.cpp">
+      <Filter>02. GameObject\01. Player\97.RAY</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Belt_ChargeAttack.cpp">
+      <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\MainGame_KickBoard.cpp">
       <Filter>02. GameObject\15. MiniGame\2. KICKBOARD</Filter>

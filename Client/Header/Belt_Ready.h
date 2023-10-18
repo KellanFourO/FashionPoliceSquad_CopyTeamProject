@@ -1,15 +1,18 @@
 #pragma once
 #include "BeltState.h"
-class CBelt_NORMAL : public CBeltState
+class CBelt_Ready : public CBeltState
 {
 public:
-	CBelt_NORMAL();
-	virtual ~CBelt_NORMAL();
+	CBelt_Ready();
+	virtual ~CBelt_Ready();
 
 public:
 	virtual void Initialize(CBelt* _Belt) override;
 	virtual CBeltState* Update(CBelt* Belt, const float& fDetltaTime) override;
 	virtual void Release(CBelt* _Belt) override;
+
+private:
+	_bool	RopeActionTest();
 
 	_bool m_bAttack = false;
 

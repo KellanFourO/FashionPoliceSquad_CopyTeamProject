@@ -64,6 +64,7 @@ void CMainApp::LateUpdate_MainApp()
 {
 
 	Engine::LateUpdate_Scene();
+	Engine::LateUpdate_InputDev();
 	//CImGuiManager::GetInstance()->LateUpdate_ImGui(m_pGraphicDev);//
 
 }

@@ -40,8 +40,17 @@ inline _byte			Get_DIKeyState(_ubyte byKeyID);
 inline _byte			Get_DIMouseState(MOUSEKEYSTATE eMouse);
 inline _long			Get_DIMouseMove(MOUSEMOVESTATE eMouseState);
 
+inline _bool			Key_Pressing(_ubyte _byKeyID);
+inline _bool			Key_Down(_ubyte _byKeyID);
+inline _bool			Key_Up(_ubyte _byKeyID);
+
+inline _bool			Mouse_Pressing(MOUSEKEYSTATE eMouse);
+inline _bool			Mouse_Down(MOUSEKEYSTATE eMouse);
+inline _bool			Mouse_Up(MOUSEKEYSTATE eMouse);
+
 inline HRESULT			Ready_InputDev(HINSTANCE hInst, HWND hWnd);
 inline void				Update_InputDev(void);
+inline void				LateUpdate_InputDev();
 
 inline void				Release_System();
 
