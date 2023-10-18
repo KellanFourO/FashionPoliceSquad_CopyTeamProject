@@ -481,6 +481,9 @@
     <Filter Include="02. GameObject\06. Effect\06.Dash">
       <UniqueIdentifier>{05f95524-f77b-4f2b-88d7-7e0286573dd7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\20.UI\12. Rope">
+      <UniqueIdentifier>{8b3f4258-965b-4d3f-8c46-c233ed61d0c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -1034,10 +1037,13 @@
     </ClInclude>
     <ClInclude Include="..\Header\Belt_ChargeAttack.h">
       <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="..\Header\MainGame_KickBoard.h">
       <Filter>02. GameObject\15. MiniGame\2. KICKBOARD</Filter>
-	</ClInclude>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_Rope.h">
+      <Filter>02. GameObject\20.UI\12. Rope</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1585,6 +1591,9 @@
     </ClCompile>
     <ClCompile Include="..\Code\MainGame_KickBoard.cpp">
       <Filter>02. GameObject\15. MiniGame\2. KICKBOARD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_Rope.cpp">
+      <Filter>02. GameObject\20.UI\12. Rope</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

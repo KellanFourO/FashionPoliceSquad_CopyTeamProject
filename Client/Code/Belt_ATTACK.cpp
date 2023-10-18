@@ -69,6 +69,7 @@ CBeltState* CBelt_Attack::Update(CBelt* Belt, const float& fTimeDelta)
                 {
                     static_cast<CMonster*>(iter)->Attacked(m_pHost->m_fDmg);
                     m_bAttack = false;
+
                 }
             }
         }
@@ -82,6 +83,7 @@ CBeltState* CBelt_Attack::Update(CBelt* Belt, const float& fTimeDelta)
             {
                 static_cast<CMonster*>(BossList.back())->Attacked(m_pHost->m_fDmg);
                 m_bAttack = false;
+
             }
         }
     }
@@ -107,8 +109,6 @@ CBeltState* CBelt_Attack::Update(CBelt* Belt, const float& fTimeDelta)
         Belt->m_fBeltMoveDown += m_fMoveDownSum;
         Belt->m_bHit = false;
         Belt->m_pTransformCom->RotateAxis(vPlayerUp, D3DXToRadian(m_fRotateMax += m_fRotate * fTimeDelta));
-
-
 
         if (m_fBehaviorTime >= 0.8){
             return m_pHost->Get_State(0); // IDLE
@@ -146,17 +146,17 @@ _bool CBelt_Attack::TargetStateChange()
         {
             if (CollisionManager()->CollisionRayToCube(m_pHost->Get_Collider(), iter->Get_Collider(), vStartPos))
             {
-                m_pHost->Set_TargetObj(static_cast<CBuild_Obj*>(iter));
+                m_pHost->Set_Target(iter);
                 return true;
             }
             else
             {
-                m_pHost->Set_TargetObj(nullptr);
+                m_pHost->Set_Target(nullptr);
                 continue;
             }
         }
     }
 
-    if(!m_pHost->Get_TargetObj())
+    if(!m_pHost->Get_Target())
         return false;
 }

@@ -61,6 +61,7 @@
 #include "UI_WeaponInfo.h"
 #include "UI_BossHPFrame.h"
 #include "UI_BossHPValue.h"
+#include "UI_Rope.h"
 
 #include "PaintShotGun.h"
 #include "TailorAssertRifle.h"

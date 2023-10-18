@@ -30,6 +30,30 @@ CBeltState* CBelt_Idle::Update(CBelt* Belt, const float& fTimeDelta)
     //todo Key_Down 이전에 눌린적이 없고 현재 눌렀을 경우
     //todo Key_Up 이전에는 눌린 적이 있고 현재 눌리지 않았을 경우
 
+	_vec3 vStartPos = m_pHost->Get_StartPos();
+	auto& ObjList = Management()->Get_ObjectList(LAYERTAG::ENVIRONMENT, OBJECTTAG::BUILD_OBJ);
+
+
+
+	if (!ObjList.empty())
+	{
+		for (auto iter : ObjList)
+		{
+			if (dynamic_cast<CBuild_Obj*>(iter)->Get_OBJ_Interaction() == OBJ_INTERACTION::OBJ_LOCK_OFF)
+			{
+			    if (CollisionManager()->CollisionRayToCube(m_pHost->Get_Collider(), iter->Get_Collider(), m_pHost->Get_StartPos()))
+			    {
+			    	m_pHost->Set_Target(iter);
+			    }
+            }
+		}
+	}
+
+    if (m_pHost->Get_Target() && !CollisionManager()->CollisionRayToCube(m_pHost->Get_Collider(), m_pHost->Get_Target()->Get_Collider(), m_pHost->Get_StartPos()))
+    {
+        m_pHost->Set_Target(nullptr);
+    }
+
 
     if (Key_Down(DIK_LSHIFT))
     {

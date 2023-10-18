@@ -59,6 +59,7 @@
 #include "UI_BulletInfoName.h"
 
 #include "UI_WeaponInfo.h"
+#include "UI_Rope.h"
 
 #include "PaintShotGun.h"
 #include "TailorAssertRifle.h"

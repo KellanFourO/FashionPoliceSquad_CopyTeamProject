@@ -39,6 +39,7 @@ public:
 	_vec3		Get_EndPos() { return m_vEndPos;}
 	CBuild_Obj* Get_TargetObj() { return m_pTargetObj;}
 	CGameObject* Get_Target() { return m_pTarget;}
+	_float		Get_Range() { return m_fRange;}
 
 
 	void		Set_Target(CGameObject* _pObj) { m_pTarget = _pObj;}

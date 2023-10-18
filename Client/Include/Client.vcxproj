@@ -345,6 +345,7 @@
     <ClInclude Include="..\Header\Terrain.h" />
     <ClInclude Include="..\Header\Title.h" />
     <ClInclude Include="..\Header\Trigger.h" />
+    <ClInclude Include="..\Header\UI_Rope.h" />
     <ClInclude Include="..\Header\UI_ShieldFrame.h" />
     <ClInclude Include="..\Header\UI_ShieldMark.h" />
     <ClInclude Include="..\Header\UI_ShieldValue.h" />
@@ -507,6 +508,7 @@
     <ClCompile Include="..\Code\TailorAssertRifle_Walk.cpp" />
     <ClCompile Include="..\Code\Terrain.cpp" />
     <ClCompile Include="..\Code\Title.cpp" />
+    <ClCompile Include="..\Code\UI_Rope.cpp" />
     <ClCompile Include="..\Code\UI_ShieldFrame.cpp" />
     <ClCompile Include="..\Code\UI_ShieldMark.cpp" />
     <ClCompile Include="..\Code\UI_ShieldValue.cpp" />

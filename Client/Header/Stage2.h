@@ -34,17 +34,38 @@
 
 
 //TODO ½Â¿ë
+#include "UI_CardList.h"
+#include "UICamera.h"
 #include "UI_MyDialog.h"
 #include "UI_Portrait.h"
-
-#include "UI_CardList.h"
 #include "UI_CrossHair.h"
+#include "UI_MissionObjective.h"
+
+#include "UI_Berserk.h"
+#include "UI_BerserkFrame.h"
+
+#include "UI_HPBarValue.h"
+#include "UI_HPBarFrame.h"
+#include "UI_HPMark.h"
+
+#include "UI_ShieldFrame.h"
+#include "UI_ShieldValue.h"
+#include "UI_ShieldMark.h"
+
+#include "UI_PlayerFace.h"
+#include "UI_Hat.h"
+
+#include "UI_BulletInfoCount.h"
+#include "UI_BulletInfoName.h"
+
+#include "UI_WeaponInfo.h"
+#include "UI_BossHPFrame.h"
+#include "UI_BossHPValue.h"
+#include "UI_Rope.h"
 
 #include "PaintShotGun.h"
 #include "TailorAssertRifle.h"
 #include "TailorAssertRifleHand.h"
-
-#include "UI_MissionObjective.h"
 
 
 class CStage2 : public Engine::CScene
@@ -73,7 +94,7 @@ private:
 private:
 	CLayer*				m_pLayer = nullptr;  //Environment
 	CLayer*				m_pGLayer = nullptr; //GameLogic
-	
+
 	CGameObject*		m_pPlayer = nullptr;
 	CTransform* m_pPlayerTransform = nullptr;
 	_bool				m_bLateInit = true;

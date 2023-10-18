@@ -518,6 +518,10 @@ HRESULT CLobbyStage::Ready_Layer_UI(LAYERTAG eLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
 
+	pGameObject = CRopeUI::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
 	m_mapLayer.insert({ eLayerTag, pLayer });
 
 	//½Â¿ë
@@ -544,7 +548,7 @@ HRESULT CLobbyStage::Ready_Layer_MINIGAME(LAYERTAG eLayerTag)
 
 	//Engine::CGameObject* pGameObject = nullptr;
 
-	
+
 	m_mapLayer.insert({ eLayerTag, pLayer });
 
 	return S_OK;

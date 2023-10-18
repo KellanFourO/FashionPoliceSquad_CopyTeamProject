@@ -16,7 +16,8 @@ private:
 _float CalculateTensionAccel(const _vec3 vPlayerVelocity);
 _vec3 UpdatePlayerPos(const _vec3& _vPlayerPos, const _vec3& _vPlayerVelocity, const _float fTensionAccel, const _float fTimeDelta);
 
-	_bool m_bAttack = false;
+
+	_bool m_bDashCheck = false;
 
 	_vec3 m_vTargetPos;
 	_vec3 m_vPrevPlayerPos;
