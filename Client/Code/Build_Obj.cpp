@@ -112,16 +112,16 @@ HRESULT CBuild_Obj::Ready_GameObject(_uint pRotate, _vec3 pMouse_Pos, _vec3 Size
 	}
 	m_pTransformCom->Set_Pos(pMouse_Pos);
 	m_myObjPos = pMouse_Pos;
-	
+
 	if (m_eAttribute == OBJ_ATTRIBUTE::DES_OBJ) //속성-파괴일 경우
 	{
-		m_iHp = 30;  
+		m_iHp = 30;
 		m_eInteraction = OBJ_INTERACTION::INTER_NONE;
 	}
 	else if (m_eAttribute == OBJ_ATTRIBUTE::INTER_OBJ) //속성-상호작용일 경우
 	{
 		m_iHp = 99999999;
-		m_eInteraction = OBJ_INTERACTION::OBJ_LOCK_OFF; 
+		m_eInteraction = OBJ_INTERACTION::OBJ_LOCK_OFF;
 		//걸린(엮인?) 순간에만 LOCK_ON, 그 외의 순간엔 LOCK_OFF로 쓰게
 	}
 	else //속성 NONE이거나 LIGHT인 경우
@@ -187,21 +187,22 @@ void CBuild_Obj::Render_GameObject()
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	
+
 	if ((m_eAttribute == OBJ_ATTRIBUTE::C_POINT_OBJ)
-		|| (m_eAttribute == OBJ_ATTRIBUTE::STAIR_OBJ)
-		|| (m_eAttribute == OBJ_ATTRIBUTE::ForPaint_OBJ))
+// 		|| (m_eAttribute == OBJ_ATTRIBUTE::STAIR_OBJ)
+// 		|| (m_eAttribute == OBJ_ATTRIBUTE::ForPaint_OBJ)
+		)
 	{	m_pCollider->Render_Collider(); }
 
 	//m_pCollider->Render_Collider(); //
 	FAILED_CHECK_RETURN(SetUp_Meterial(), );
-	
+
 	Render_Texture();
 
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 }
- 
+
 
 void CBuild_Obj::Render_Texture()
 {
@@ -274,12 +275,12 @@ void CBuild_Obj::BillBoard_X()
  	m_pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);
  	vPlayerPos.x = 0.f;
  	// 이동 코드
- 
+
  	m_pTransformCom->Get_Info(INFO_POS, &m_myObjPos);
  	vPlayerPos_Rel = vPlayerPos - m_myObjPos;
- 
+
  	D3DXVec3Normalize(&vPlayerPos_Rel, &vPlayerPos_Rel);
- 
+
  	_float fAngle = atan2f(vPlayerPos_Rel.y, vPlayerPos_Rel.z);
  	m_pTransformCom->Set_Rotate(ROT_X, fAngle + D3DX_PI);
  	//방향전환 코드 (플레이어 방향)
@@ -294,7 +295,7 @@ void CBuild_Obj::Init_PlayerTransform()
 	}
 }
 
-CBuild_Obj* CBuild_Obj::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 pMouse_Pos, 
+CBuild_Obj* CBuild_Obj::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 pMouse_Pos,
 	_uint TextureNum, _vec3 Size, _uint pRotate, _uint Index, OBJ_TYPE eType, OBJ_ATTRIBUTE eAttri)
 {
 	CBuild_Obj* pInstance = new CBuild_Obj(pGraphicDev);
@@ -303,7 +304,7 @@ CBuild_Obj* CBuild_Obj::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 pMouse_Pos,
 	pInstance->Set_OBJ_ATTRIBUTE(eAttri);
 	pInstance->Set_OBJIndex(Index);
 	pInstance->Set_TextrureNum(TextureNum);
-	
+
 	if (FAILED(pInstance->Ready_GameObject(pRotate, pMouse_Pos, Size)))
 	{
 		Safe_Release(pInstance);

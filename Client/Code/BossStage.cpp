@@ -43,6 +43,7 @@ HRESULT CBossStage::Ready_Scene()
 	//TODO - 승용추가 크로스헤어 추가, 기본 커서 안보이게
 	ShowCursor(FALSE);
 
+	SoundMgr()->PlayBGM(L"BossBGM.wav",0.5f);
 	m_eSceneTag = SCENETAG::BOSS_STAGE;
 	return S_OK;
 }
@@ -349,7 +350,9 @@ HRESULT CBossStage::Ready_Layer_UI(LAYERTAG eLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
 
-
+	pGameObject = CRopeUI::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ eLayerTag, pLayer });
 
@@ -637,6 +640,8 @@ CBossStage* CBossStage::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CBossStage::Free()
 {
+	SoundMgr()->StopAll();
+
 	for (int i = 0; i < m_VecCubeData.size(); ++i)
 	{
 		Safe_Delete(m_VecCubeData[i]);

@@ -177,6 +177,14 @@ namespace Engine
 		_float					fZ;
 	}CUBEROT;
 
+	typedef struct Mini_RectInfo {
+		float Up_Y;
+		float Down_Y;
+		float Left_X;
+		float Right_X;
+	}M_RECT;
+
+
 	typedef struct	Monster_Info {
 		MonsterType			iMobType;	//몬스터 타입
 

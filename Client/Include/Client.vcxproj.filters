@@ -448,6 +448,30 @@
     <Filter Include="02. GameObject\20.UI\01. MyDialog\01. NameTag">
       <UniqueIdentifier>{48b541d7-806e-4358-8db6-ba0ec926b6c8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\1. ARROW">
+      <UniqueIdentifier>{eed656fd-9f68-4f33-b117-a86c89f71640}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\2. KICKBOARD">
+      <UniqueIdentifier>{2d782397-8816-45d3-8a45-48bfd5cf7f38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\3. QUIZ">
+      <UniqueIdentifier>{f0306f9a-d1d8-4b45-8bcd-5ed8b67f0f50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\2. KICKBOARD\1.Mini_Player">
+      <UniqueIdentifier>{df83158b-c16d-46e4-83ef-511bda786c74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\1. ARROW\1.Mini_Arrow">
+      <UniqueIdentifier>{7a815779-c32e-4be7-86fa-709c1054e7aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\1. ARROW\2.Mini_StateIcon">
+      <UniqueIdentifier>{387bc6ca-d2aa-4891-8fb0-1c7c639e9d70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\1. ARROW\3.Mini_Cursor">
+      <UniqueIdentifier>{1d8cbdcb-ea65-4693-8fd5-13ddb811690f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\1. ARROW\4.Mini_TimeBar">
+      <UniqueIdentifier>{2b2f9e73-e460-40db-90f4-c38169cd4ade}</UniqueIdentifier>
+    </Filter>
     <Filter Include="02. GameObject\01. Player\99. PlayerState\09.Player_Dash">
       <UniqueIdentifier>{a29000ab-32a9-4152-a45a-f3c57ad74b0b}</UniqueIdentifier>
     </Filter>
@@ -465,6 +489,24 @@
     </Filter>
     <Filter Include="02. GameObject\02. Monster\04.BossBigDaddy\02.BossBigDaddy_Dead">
       <UniqueIdentifier>{14ffc50d-11bd-4a06-950e-564bc541aae3}</UniqueIdentifier>
+	</Filter>
+	<Filter Include="02. GameObject\20.UI\12. Rope">
+      <UniqueIdentifier>{8b3f4258-965b-4d3f-8c46-c233ed61d0c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\2. KICKBOARD\2.Mini_Enemy">
+      <UniqueIdentifier>{203b8913-cc82-45b4-b8b7-eeba495307a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\2. KICKBOARD\3.Mini_Gold">
+      <UniqueIdentifier>{d0871711-2cfa-4c0c-966c-46040a71a615}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\2. KICKBOARD\4.Mini_Timer">
+      <UniqueIdentifier>{fe751f39-32b1-4440-b6f9-e6969801f857}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\2. KICKBOARD\5.Mini_Score">
+      <UniqueIdentifier>{7984b3fc-57d3-4bb8-a64f-0b70bdde8f12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\2. KICKBOARD\6.Mini_Effect">
+      <UniqueIdentifier>{8e629cd6-5f0a-4119-a0da-8d868ac3687f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -537,19 +579,19 @@
     <ClInclude Include="..\Header\BrifCase.h">
       <Filter>02. GameObject\07. Bullet\01.MonsterBullet\00.BrifCase</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Belt_ATTACK.h">
+    <ClInclude Include="..\Header\Belt_Attack.h">
       <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Belt_CHARGE.h">
+    <ClInclude Include="..\Header\Belt_Charge.h">
       <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Belt_IDLE.h">
+    <ClInclude Include="..\Header\Belt_Idle.h">
       <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Belt_NORMAL.h">
+    <ClInclude Include="..\Header\Belt_Ready.h">
       <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\Belt_SWING.h">
+    <ClInclude Include="..\Header\Belt_Rope.h">
       <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClInclude>
     <ClInclude Include="BeltState.h">
@@ -990,8 +1032,23 @@
     <ClInclude Include="..\Header\UI_NameTag.h">
       <Filter>02. GameObject\20.UI\01. MyDialog\01. NameTag</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\MiniGame.h">
-      <Filter>02. GameObject\15. MiniGame</Filter>
+    <ClInclude Include="..\Header\MainGame_Arrow.h">
+      <Filter>02. GameObject\15. MiniGame\1. ARROW</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Mini_Player.h">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\1.Mini_Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Mini_Arrow.h">
+      <Filter>02. GameObject\15. MiniGame\1. ARROW\1.Mini_Arrow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Mini_StateIcon.h">
+      <Filter>02. GameObject\15. MiniGame\1. ARROW\2.Mini_StateIcon</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Mini_TimeBar.h">
+      <Filter>02. GameObject\15. MiniGame\1. ARROW\4.Mini_TimeBar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Mini_Cursor.h">
+      <Filter>02. GameObject\15. MiniGame\1. ARROW\3.Mini_Cursor</Filter>
     </ClInclude>
     <ClInclude Include="..\Header\Player_Dash.h">
       <Filter>02. GameObject\01. Player\99. PlayerState\09.Player_Dash</Filter>
@@ -1022,6 +1079,33 @@
     </ClInclude>
     <ClInclude Include="..\Header\BossBigDaddy4.h">
       <Filter>02. GameObject\02. Monster\04.BossBigDaddy</Filter>
+	</ClInclude>
+	<ClInclude Include="..\Header\SYRay.h">
+      <Filter>02. GameObject\01. Player\97.RAY</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Belt_ChargeAttack.h">
+      <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MainGame_KickBoard.h">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\UI_Rope.h">
+      <Filter>02. GameObject\20.UI\12. Rope</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Mini_Enemy.h">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\2.Mini_Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Mini_Gold.h">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\3.Mini_Gold</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Mini_Effect.h">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\6.Mini_Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Mini_Timer.h">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\4.Mini_Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\Mini_Score.h">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\5.Mini_Score</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1085,19 +1169,19 @@
     <ClCompile Include="..\Code\BrifCase.cpp">
       <Filter>02. GameObject\07. Bullet\01.MonsterBullet\00.BrifCase</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Belt_ATTACK.cpp">
+    <ClCompile Include="..\Code\Belt_Attack.cpp">
       <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Belt_CHARGE.cpp">
+    <ClCompile Include="..\Code\Belt_Charge.cpp">
       <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Belt_IDLE.cpp">
+    <ClCompile Include="..\Code\Belt_Idle.cpp">
       <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Belt_NORMAL.cpp">
+    <ClCompile Include="..\Code\Belt_Ready.cpp">
       <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\Belt_SWING.cpp">
+    <ClCompile Include="..\Code\Belt_Rope.cpp">
       <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Belt.cpp">
@@ -1538,8 +1622,23 @@
     <ClCompile Include="..\Code\UI_NameTag.cpp">
       <Filter>02. GameObject\20.UI\01. MyDialog\01. NameTag</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\MiniGame.cpp">
-      <Filter>02. GameObject\15. MiniGame</Filter>
+    <ClCompile Include="..\Code\MainGame_Arrow.cpp">
+      <Filter>02. GameObject\15. MiniGame\1. ARROW</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mini_Player.cpp">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\1.Mini_Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mini_Arrow.cpp">
+      <Filter>02. GameObject\15. MiniGame\1. ARROW\1.Mini_Arrow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mini_StateIcon.cpp">
+      <Filter>02. GameObject\15. MiniGame\1. ARROW\2.Mini_StateIcon</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mini_Cursor.cpp">
+      <Filter>02. GameObject\15. MiniGame\1. ARROW\3.Mini_Cursor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mini_TimeBar.cpp">
+      <Filter>02. GameObject\15. MiniGame\1. ARROW\4.Mini_TimeBar</Filter>
     </ClCompile>
     <ClCompile Include="..\Code\Player_Dash.cpp">
       <Filter>02. GameObject\01. Player\99. PlayerState\09.Player_Dash</Filter>
@@ -1567,6 +1666,33 @@
     </ClCompile>
     <ClCompile Include="..\Code\BossBigDaddy4.cpp">
       <Filter>02. GameObject\02. Monster\04.BossBigDaddy</Filter>
+	</ClCompile>
+	<ClCompile Include="..\Code\SYRay.cpp">
+      <Filter>02. GameObject\01. Player\97.RAY</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Belt_ChargeAttack.cpp">
+      <Filter>02. GameObject\01. Player\02. Belt\99.BeltState</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MainGame_KickBoard.cpp">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\UI_Rope.cpp">
+      <Filter>02. GameObject\20.UI\12. Rope</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mini_Enemy.cpp">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\2.Mini_Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mini_Gold.cpp">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\3.Mini_Gold</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mini_Effect.cpp">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\6.Mini_Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mini_Timer.cpp">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\4.Mini_Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\Mini_Score.cpp">
+      <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\5.Mini_Score</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -29,9 +29,11 @@ HRESULT CLobbyStage::Ready_Scene()
 	FAILED_CHECK_RETURN(Ready_Layer_Camera(LAYERTAG::CAMERA), E_FAIL);
 
 	FAILED_CHECK_RETURN(Ready_Layer_UI(LAYERTAG::UI), E_FAIL);
+	FAILED_CHECK_RETURN(Ready_Layer_MINIGAME(LAYERTAG::MINIGAME), E_FAIL);
 
-	Load_Data_T(L"../Bin/Data/Trigger/TriggerData", OBJECTTAG::O_TRIGGER); //TODO 트리거
+	Load_Data_T(L"../Bin/Data/Trigger/Lobby/TriggerData", OBJECTTAG::O_TRIGGER); //TODO 트리거
 
+	Add_Light();
 
 	srand(GetTickCount64());
 
@@ -39,6 +41,13 @@ HRESULT CLobbyStage::Ready_Scene()
 	ShowCursor(FALSE);
 
 	m_eSceneTag = SCENETAG::LOBBY;
+
+
+	//SoundMgr()->PlayBGM(L"LobbyBGM1.mp3",0.25f);	//Good
+	//SoundMgr()->PlayBGM(L"LobbyBGM2.mp3", 0.25f);	//Good
+	SoundMgr()->PlayBGM(L"LobbyBGM3.mp3", 0.25f);	//Good
+	//SoundMgr()->PlayBGM(L"LobbyBGM4.mp3", 0.25f); //
+
 	return S_OK;
 }
 
@@ -226,21 +235,23 @@ HRESULT CLobbyStage::Moving_Wall()
 		(CEventMgr::GetInstance()->Get_MiniGameClearCheck(2) == true))
 	{
 
-// 		if ((CEventMgr::GetInstance()->Get_MiniGameReadyCheck(1) == true)
-// 			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == false))
-// 		{
-// 			int i = 0;
-// 		}
-
-		if (CEventMgr::GetInstance()->Get_MiniGameClearCheck(0) == true)
+		if ((CEventMgr::GetInstance()->Get_MiniGameClearCheck(0) == true)
+			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == false)
+			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(2) == false))
 		{
 			iCheckTemp = 0;
 		}
-		if (CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == true)
+
+		if ((CEventMgr::GetInstance()->Get_MiniGameClearCheck(0) == true)
+			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == true)
+			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(2) == false))
 		{
 			iCheckTemp = 1;
 		}
-		if (CEventMgr::GetInstance()->Get_MiniGameClearCheck(2) == true)
+
+		if ((CEventMgr::GetInstance()->Get_MiniGameClearCheck(0) == true)
+			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == true)
+			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(2) == true))
 		{
 			iCheckTemp = 2;
 		}
@@ -266,51 +277,44 @@ HRESULT CLobbyStage::Moving_Wall()
 				{
 					m_VecMoving[1]->vPos.y -= 1.f;
 					BuildOBJTemp->Get_TransformCom()->Set_Pos(m_VecMoving[1]->vPos);
-				}			
-
-				if (m_VecMoving[0]->vPos.y <= -50)
-				{
-					CEventMgr::GetInstance()->Set_MiniGameReadyCheck(0, false);
-					CEventMgr::GetInstance()->Set_MiniGameReadyCheck(1, true);
 				}
 			}
 
-			if ((BuildOBJTemp->Get_OBJ_ATTRIBUTE() == OBJ_ATTRIBUTE::STD_OBJ)&&
-				(OBJPos.y == m_VecMoving[2]->vPos.y) && (MovingCheck == false))
-			{	//한 번만 수행
-				MovingIndextemp = BuildOBJTemp->m_iIndex;
-				MovingCheck = true;
-			}
-
-			if ((BuildOBJTemp->Get_OBJ_ATTRIBUTE() == OBJ_ATTRIBUTE::STD_OBJ)
-				&& (BuildOBJTemp->m_iIndex == MovingIndextemp) && iCheckTemp == 1)
-			{
-				if (m_VecMoving[2]->vPos.y > -50)
-				{
-					m_VecMoving[2]->vPos.y -= 1.f;
-					BuildOBJTemp->Get_TransformCom()->Set_Pos(m_VecMoving[2]->vPos);
+			{ // 두 번째 문
+				if ((BuildOBJTemp->Get_OBJ_ATTRIBUTE() == OBJ_ATTRIBUTE::STD_OBJ) &&
+					(OBJPos.y == m_VecMoving[2]->vPos.y) && (MovingCheck == false))
+				{	//한 번만 수행
+					MovingIndextemp = BuildOBJTemp->m_iIndex;
+					MovingCheck = true;
 				}
 
-				if (m_VecMoving[2]->vPos.y <= -50)
+				if ((BuildOBJTemp->Get_OBJ_ATTRIBUTE() == OBJ_ATTRIBUTE::STD_OBJ)
+					&& (BuildOBJTemp->m_iIndex == MovingIndextemp) && iCheckTemp == 1)
 				{
-					CEventMgr::GetInstance()->Set_MiniGameReadyCheck(1, false);
-					CEventMgr::GetInstance()->Set_MiniGameReadyCheck(2, true);
+					if (m_VecMoving[2]->vPos.y > -50)
+					{
+						m_VecMoving[2]->vPos.y -= 1.f;
+						BuildOBJTemp->Get_TransformCom()->Set_Pos(m_VecMoving[2]->vPos);
+					}
 				}
 			}
 
-			if ((BuildOBJTemp->Get_OBJ_ATTRIBUTE() == OBJ_ATTRIBUTE::STD_OBJ)&&
-				(OBJPos.y == m_VecMoving[3]->vPos.y) && (MovingCheck2 == false))
-			{	//한 번만 수행
-				MovingIndextemp2 = BuildOBJTemp->m_iIndex;
-				MovingCheck2 = true;
-			}
-			if ((BuildOBJTemp->Get_OBJ_ATTRIBUTE() == OBJ_ATTRIBUTE::STD_OBJ)
-				&& (BuildOBJTemp->m_iIndex == MovingIndextemp2) && iCheckTemp == 2)
-			{
-				if (m_VecMoving[3]->vPos.y < 45)
+			{ //세 번째 문
+				if ((BuildOBJTemp->Get_OBJ_ATTRIBUTE() == OBJ_ATTRIBUTE::STD_OBJ) &&
+					(OBJPos.y == m_VecMoving[3]->vPos.y) && (MovingCheck2 == false))
+				{	//한 번만 수행
+					MovingIndextemp2 = BuildOBJTemp->m_iIndex;
+					MovingCheck2 = true;
+				}
+
+				if ((BuildOBJTemp->Get_OBJ_ATTRIBUTE() == OBJ_ATTRIBUTE::STD_OBJ)
+					&& (BuildOBJTemp->m_iIndex == MovingIndextemp2) && iCheckTemp == 2)
 				{
-					m_VecMoving[3]->vPos.y += 1.f;
-					BuildOBJTemp->Get_TransformCom()->Set_Pos(m_VecMoving[3]->vPos);
+					if (m_VecMoving[3]->vPos.y < 45)
+					{
+						m_VecMoving[3]->vPos.y += 1.f;
+						BuildOBJTemp->Get_TransformCom()->Set_Pos(m_VecMoving[3]->vPos);
+					}
 				}
 			}
 		}
@@ -508,6 +512,10 @@ HRESULT CLobbyStage::Ready_Layer_UI(LAYERTAG eLayerTag)
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
 
+	pGameObject = CRopeUI::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
 	m_mapLayer.insert({ eLayerTag, pLayer });
 
 	//승용
@@ -526,6 +534,20 @@ HRESULT CLobbyStage::Ready_Layer_UI(LAYERTAG eLayerTag)
 
 	return S_OK;
 }
+
+HRESULT CLobbyStage::Ready_Layer_MINIGAME(LAYERTAG eLayerTag)
+{
+	Engine::CLayer* pLayer = Engine::CLayer::Create(eLayerTag);
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	//Engine::CGameObject* pGameObject = nullptr;
+
+
+	m_mapLayer.insert({ eLayerTag, pLayer });
+
+	return S_OK;
+}
+
 
 HRESULT CLobbyStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 {
@@ -801,26 +823,29 @@ void CLobbyStage::Admin_KeyInput()
 	}
 
 	_bool CheckTemp = dynamic_cast<CPlayer*>(m_pPlayer)->Get_TriggerCheck();
-	if (Engine::Get_DIKeyState(DIK_F) & 0x80 && (CheckTemp == true))
-	{	
+	
+	if ((Engine::Get_DIKeyState(DIK_F) & 0x80) && (CheckTemp == true)
+		&& (CEventMgr::GetInstance()->Get_MiniGameState() == CEventMgr::MiniGameState::NOT_PLAY))
+	{
 		CEventMgr::GetInstance()->Set_MiniGameMode();
-		if ((CEventMgr::GetInstance()->Get_MiniGameReadyCheck(0) == true)
-			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(0) == false))
-		{
-			CEventMgr::GetInstance()->OnMiniGame_Arrow(m_pGraphicDev, SCENETAG::LOBBY);
-			//CEventMgr::GetInstance()->OnPause(TRUE, SCENETAG::LOBBY);
-		}
-		else if ((CEventMgr::GetInstance()->Get_MiniGameReadyCheck(1) == true)
-			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == false))
-		{
-			CEventMgr::GetInstance()->OnMiniGame_KickBoard(m_pGraphicDev, SCENETAG::LOBBY);
-			//CEventMgr::GetInstance()->OnPause(TRUE, SCENETAG::LOBBY);
-		}
-		else if ((CEventMgr::GetInstance()->Get_MiniGameReadyCheck(2) == true)
+
+		if ((CEventMgr::GetInstance()->Get_MiniGameClearCheck(0) == false)
+			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == false)
 			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(2) == false))
 		{
+			CEventMgr::GetInstance()->OnMiniGame_Arrow(m_pGraphicDev, SCENETAG::LOBBY);
+		}
+		else if ((CEventMgr::GetInstance()->Get_MiniGameClearCheck(0) == true)
+			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == false)
+			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(2) == false))
+		{
+			CEventMgr::GetInstance()->OnMiniGame_KickBoard(m_pGraphicDev, SCENETAG::LOBBY);
+		}
+		else if ((CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == true)
+			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(2) == false)
+			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(0) == true))
+		{
 			CEventMgr::GetInstance()->OnMiniGame_Quiz(m_pGraphicDev, SCENETAG::LOBBY);
-			//CEventMgr::GetInstance()->OnPause(TRUE, SCENETAG::LOBBY);
 		}
 
 		m_bAdminSwitch = false;
@@ -843,6 +868,8 @@ CLobbyStage* CLobbyStage::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 
 void CLobbyStage::Free()
 {
+	SoundMgr()->StopAll();
+
 	for (int i = 0; i < m_VecCubeData.size(); ++i)
 	{
 		Safe_Delete(m_VecCubeData[i]);
@@ -860,8 +887,6 @@ void CLobbyStage::Free()
 	//	Safe_Delete(m_VecCreatePoint[i]);
 	//}
 	//m_VecCreatePoint.clear();
-
-
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	//m_pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, FALSE);

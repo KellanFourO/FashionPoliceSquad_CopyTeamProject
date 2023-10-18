@@ -1,3 +1,4 @@
+#include "Export_System.h"
 LPDIRECT3DDEVICE9		Get_GraphicDev()
 {
 	return CGraphicDev::GetInstance()->Get_GraphicDev();
@@ -69,6 +70,34 @@ _long	Get_DIMouseMove(MOUSEMOVESTATE eMouseState)
 {
 	return CInputDev::GetInstance()->Get_DIMouseMove(eMouseState);
 }
+_bool Key_Pressing(_ubyte _byKeyID)
+{
+	return CInputDev::GetInstance()->Key_Pressing(_byKeyID);
+}
+_bool Key_Down(_ubyte _byKeyID)
+{
+	return CInputDev::GetInstance()->Key_Down(_byKeyID);
+}
+_bool Key_Up(_ubyte _byKeyID)
+{
+	return CInputDev::GetInstance()->Key_Up(_byKeyID);
+}
+
+_bool		Mouse_Pressing(MOUSEKEYSTATE eMouse)
+{
+	return CInputDev::GetInstance()->Mouse_Pressing(eMouse);
+}
+
+_bool		Mouse_Down(MOUSEKEYSTATE eMouse)
+{
+	return CInputDev::GetInstance()->Mouse_Down(eMouse);
+}
+
+_bool		Mouse_Up(MOUSEKEYSTATE eMouse)
+{
+	return CInputDev::GetInstance()->Mouse_Up(eMouse);
+}
+
 HRESULT	Ready_InputDev(HINSTANCE hInst, HWND hWnd)
 {
 	return CInputDev::GetInstance()->Ready_InputDev(hInst, hWnd);
@@ -76,6 +105,11 @@ HRESULT	Ready_InputDev(HINSTANCE hInst, HWND hWnd)
 void		Update_InputDev(void)
 {
 	CInputDev::GetInstance()->Update_InputDev();
+}
+
+void		LateUpdate_InputDev()
+{
+	CInputDev::GetInstance()->LateUpdate_InputDev();
 }
 
 void	Release_System()

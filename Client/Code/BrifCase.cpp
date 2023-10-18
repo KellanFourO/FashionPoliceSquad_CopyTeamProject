@@ -51,6 +51,7 @@ HRESULT CBrifCase::Ready_GameObject()
 	m_fFrame = 1.f;
 	m_fSpeed_Vertical = 0.1f;
 	m_bDead = false;
+	SoundMgr()->PlaySoundW(L"BigDaddyBriefcaseFlyLoof.wav",SOUND_EFFECT3,0.5f);
 	return S_OK;
 }
 
@@ -67,6 +68,9 @@ Engine::_int CBrifCase::Update_GameObject(const _float& fTimeDelta)
 		Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::EFFECT, MBulletEffect);
 		MBulletEffect->Get_Transform()->Set_Pos(m_pTransformCom->m_vInfo[INFO_POS]);
 		
+
+		SoundMgr()->StopSound(SOUND_EFFECT3);
+
 		return OBJ_DEAD;
 	}
 

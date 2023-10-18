@@ -26,10 +26,11 @@ CBigDaddyMonster::~CBigDaddyMonster()
 {
 }
 
-HRESULT CBigDaddyMonster::Ready_GameObject()
+HRESULT CBigDaddyMonster::Ready_GameObject(_vec3 pPoint)
 {
 	__super::Ready_GameObject();
 
+	m_StartingPoint = pPoint;
 	Set_ObjectTag(OBJECTTAG::MONSTER);
 	INFO.iMobType = MonsterType::BIGDADDY;
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
@@ -41,14 +42,15 @@ HRESULT CBigDaddyMonster::Ready_GameObject()
 	INFO.fHP = 100.f;
 	INFO.fMaxHP = 100.f;
 
-
-	m_fDectedRange = 150.f; //! 탐색 범위
-	m_fAttackRange = 100.f; //! 공격 범위
+	//원래 150, 100이었는데 80, 60으로 수정해봄 - 유진
+	m_fDectedRange = 80.f; //! 탐색 범위
+	m_fAttackRange = 60.f; //! 공격 범위
 
 	m_pTransformCom->Set_Scale({ 5.0f,5.0f,5.0f });
 
 	//Set_Pos((_vec3{ 120.f,4.f,28.f }));
-	m_pTransformCom->Set_Pos((_vec3{ 198.5f,10.0f,235.5f }));
+	//m_pTransformCom->Set_Pos((_vec3{ 198.5f,10.0f,235.5f }));
+	m_pTransformCom->Set_Pos(m_StartingPoint);
 
 	m_pBufferCom->SetCount(4, 4);
 	m_pTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/Monster/loose-suit-spritesheet_hit.png", 1);
@@ -88,6 +90,7 @@ void CBigDaddyMonster::LateUpdate_GameObject()
 		DustParticle->Set_ObjectTag(OBJECTTAG::PARTICLE);
 		Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::PARTICLE, DustParticle);
 		DustParticle->Get_Transform()->Set_Pos(m_pTransformCom->m_vInfo[INFO_POS]);
+
 
 		INFO.MonsterState = m_pStateArray[DEAD];
 		INFO.MonsterState->Initialize(this);
@@ -181,11 +184,11 @@ HRESULT CBigDaddyMonster::Add_Component()
 	return S_OK;
 }
 
-CBigDaddyMonster* CBigDaddyMonster::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+CBigDaddyMonster* CBigDaddyMonster::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 pPoint)
 {
 	CBigDaddyMonster* pInstance = new CBigDaddyMonster(pGraphicDev);
 
-	if (FAILED(pInstance->Ready_GameObject()))
+	if (FAILED(pInstance->Ready_GameObject(pPoint)))
 	{
 		Safe_Release(pInstance);
 		MSG_BOX("BrifMonsterBig Create Failed");

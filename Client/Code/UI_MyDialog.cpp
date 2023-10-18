@@ -74,6 +74,7 @@ Engine::_int Engine::CMyDialog::Update_GameObject(const _float& fTimeDelta)
 	if (m_fNextTick >= 1.5f)
 	{
 		m_bTick = true;
+		SoundMgr()->StopSound(SOUND_DIALOG);
 		m_fNextTick = 0.f;
 	}
 
@@ -88,6 +89,7 @@ void Engine::CMyDialog::LateUpdate_GameObject()
 {
 	CGameObject::LateUpdate_GameObject();
 	m_pPortrait->LateUpdate_GameObject();
+
 }
 
 void CMyDialog::Render_GameObject()
@@ -188,8 +190,10 @@ void CMyDialog::KeyInput()
 {
 	if (Engine::Get_DIKeyState(DIK_RETURN) & 0x80 && m_bTick && m_PortraitList.size() != 0 && m_TextList.size() != 0)
 	{
+		SoundMgr()->PlaySoundW(L"DialogEnter2.mp3", SOUND_DIALOG, 1000);
 		m_PortraitList.pop_front();
 		m_TextList.pop_front();
+
 
 			if (m_PortraitList.size() == 0 || m_TextList.size() == 0)
 			{
@@ -219,6 +223,8 @@ void CMyDialog::KeyInput()
 					Management()->Get_Scene()->Set_Pause(false);
 				}
 
+
+
 				m_IsDead = true;
 				m_pPortrait->Set_Dead(true);
 			}
@@ -227,6 +233,7 @@ void CMyDialog::KeyInput()
 				m_pPortrait->Set_PortraitTag(m_PortraitList.front());
 				m_bTick = false;
 			}
+
 
 	}
 }

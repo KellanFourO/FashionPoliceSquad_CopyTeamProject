@@ -24,10 +24,10 @@ HRESULT Engine::CMonsterBombEffect::Ready_GameObject()
 	m_eObjectTag = OBJECTTAG::EFFECT;
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	
+
 	m_pTransformCom->Set_Scale(_vec3{ 6.f, 6.f, 6.f });
 
-
+	SoundMgr()->PlaySoundW(L"MonsterClean.mp3",SOUND_EFFECT,1.f);
 
 	return S_OK;
 }
@@ -45,7 +45,7 @@ Engine::_int Engine::CMonsterBombEffect::Update_GameObject(const _float& fTimeDe
 
 	_float fAngle = atan2f(vLook.x, vLook.z);
 	m_pTransformCom->Set_Rotate(ROT_Y, fAngle + D3DX_PI);
-	
+
 
 	m_fFrame +=15.f* fTimeDelta;
 
@@ -54,8 +54,11 @@ Engine::_int Engine::CMonsterBombEffect::Update_GameObject(const _float& fTimeDe
 		m_fFrame = 0.f;
 		++m_fLoop;
 	}
-	if(m_fLoop>2.f)
+	if (m_fLoop > 2.f)
+	{
+		SoundMgr()->StopSound(SOUND_EFFECT);
 		return OBJ_DEAD;
+	}
 
 	_int iExit = __super::Update_GameObject(fTimeDelta);
 
@@ -66,7 +69,7 @@ Engine::_int Engine::CMonsterBombEffect::Update_GameObject(const _float& fTimeDe
 
 void Engine::CMonsterBombEffect::LateUpdate_GameObject()
 {
-	
+
 }
 
 CMonsterBombEffect* CMonsterBombEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev)

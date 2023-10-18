@@ -27,10 +27,15 @@ public:
 public:
 	static RAY		GetRay(LPDIRECT3DDEVICE9 _pGraphicDev);
 	static RAY		GetSYRay(LPDIRECT3DDEVICE9 _pGraphicDev, CGameObject* _pGameObject);
-
+	static _bool	RayCast(const CCollider* _pRayCollider, const CCollider* _pTargetCollider, _vec3 vRayPos);
+	void			MouseToWorld();
 	CGameObject*    GetTarget() { return m_pTarget;}
 
+
 private:
+	CUITex*		m_pBufferCom = nullptr;
+	CTexture*	m_pTextureCom = nullptr;
+
 	_bool		m_bLateInit = true;
 	CTransform* m_pPlayerTransform = nullptr;
 	_float		m_fRayLength = 70.0f;

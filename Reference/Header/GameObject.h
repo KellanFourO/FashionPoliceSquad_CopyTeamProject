@@ -23,7 +23,7 @@ public:
 	_uint								Get_iIndex() { return m_iIndex; }
 	CCollider*							Get_Collider() { return m_pCollider; }
 	_bool								Get_Pause() { return m_bPause; }
-	CTransform*							Get_Transform() { return m_pTransformCom; }
+ 	CTransform*							Get_Transform() { return m_pTransformCom; }
 	BULLETTYPE							Get_HitType() { return m_eHitType; }
 	_bool								Get_Dead() { return m_IsDead;}
 	_float								Get_Angle() { return m_fAngle; }
