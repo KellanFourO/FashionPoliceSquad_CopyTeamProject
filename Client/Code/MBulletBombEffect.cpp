@@ -22,11 +22,15 @@ CMBulletBombEffect::~CMBulletBombEffect()
 
 HRESULT Engine::CMBulletBombEffect::Ready_GameObject()
 {
-	m_eObjectTag = OBJECTTAG::EFFECT;
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-
+	Set_ObjectTag(OBJECTTAG::MONSTERBULLET);
 	m_pTransformCom->Set_Scale(_vec3{ 6.f, 6.f, 6.f });
+
+	m_pCollider->Set_Host(this);
+	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
+
+
 
 
 	SoundMgr()->PlaySoundW(L"BigDaddyBriefcaseExplosion_01.wav",SOUND_EFFECT,0.5f);
@@ -37,7 +41,7 @@ Engine::_int Engine::CMBulletBombEffect::Update_GameObject(const _float& fTimeDe
 {
 	m_pPlayerTransform = dynamic_cast<CTransform*>(Management()->Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
 
-	_vec3 vPlayerPos, vMyPos, vLook;
+	_vec3 vPlayerPos, vMyPos, vLook;	
 
 	m_pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);
 	m_pTransformCom->Get_Info(INFO_POS, &vMyPos);
@@ -46,13 +50,14 @@ Engine::_int Engine::CMBulletBombEffect::Update_GameObject(const _float& fTimeDe
 
 	_float fAngle = atan2f(vLook.x, vLook.z);
 	m_pTransformCom->Set_Rotate(ROT_Y, fAngle + D3DX_PI);
+	
+	m_pCollider->SetCenterPos(m_pTransformCom->m_vInfo[INFO_POS]);
 
 
 	m_fFrame +=87.f* fTimeDelta;
 
 	if (87.f < m_fFrame)
 	{
-		//SoundMgr()->StopSound(SOUND_EFFECT);
 		return OBJ_DEAD;
 	}
 
@@ -66,6 +71,26 @@ Engine::_int Engine::CMBulletBombEffect::Update_GameObject(const _float& fTimeDe
 void Engine::CMBulletBombEffect::LateUpdate_GameObject()
 {
 
+}
+
+void CMBulletBombEffect::OnCollisionEnter(CCollider* _pOther)
+{
+	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYER)
+	{
+		dynamic_cast<CPlayer*>(_pOther->Get_Host())->Attacked(10.f);
+
+		//TODO 플레이어 총알 오브젝트 풀링 할거면 여기서
+	}
+	else
+		return;
+}
+
+void CMBulletBombEffect::OnCollisionStay(CCollider* _pOther)
+{
+}
+
+void CMBulletBombEffect::OnCollisionExit(CCollider* _pOther)
+{
 }
 
 CMBulletBombEffect* CMBulletBombEffect::Create(LPDIRECT3DDEVICE9 pGraphicDev)
@@ -118,6 +143,11 @@ HRESULT Engine::CMBulletBombEffect::Add_Component()
 	pComponent = m_pTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_MBulletBombEffectTexture"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
+
+	pComponent = m_pCollider = dynamic_cast<CCollider*>(Engine::ProtoMgr()->Clone_Proto(L"Proto_Collider"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_DYNAMIC].emplace(COMPONENTTAG::COLLIDER, pComponent);
+
 
 	/*pComponent = m_pCalculatorCom = dynamic_cast<CCalculator*>(Engine::Clone_Proto(L"Proto_Calculator"));
 	NULL_CHECK_RETURN(pComponent, E_FAIL);

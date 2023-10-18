@@ -7,6 +7,9 @@
 #include "JumpShockWaveEffect.h"
 #include "JumpShockWaveEffect2.h"
 #include "Export_Utility.h"
+#include "Stage1Boss_BrifBigShield.h"
+
+
 CStage1Boss_Jump::CStage1Boss_Jump()
 {
 
@@ -159,7 +162,10 @@ CMonsterState* CStage1Boss_Jump::Update(CMonster* Monster, const float& fDetltaT
 
 				m_bEffect = false;
 			}
-
+			if (m_ePhase == BOSSPHASE::PHASE_2 && !CStage1Boss_BrifBigShield::m_bAllDead)
+			{
+				return dynamic_cast<CStage1Boss*>(m_pHost)->Get_State(5);
+			}
 			if (m_fTick > m_fAgainTime)
 			{
 				random_device rd;

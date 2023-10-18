@@ -40,6 +40,7 @@ CMonsterState* CDullSuitMonster_Attack::Update(CMonster* Monster, const float& f
 
 		if (m_fTick > 1.f)
 		{
+			
 			++m_fCurFrame;
 			m_eAttack = READY2;
 			m_fTick = 0.f;
@@ -53,10 +54,7 @@ CMonsterState* CDullSuitMonster_Attack::Update(CMonster* Monster, const float& f
 
 		if (m_fTick >= 1.f)
 		{
-			m_pHost->Set_Bullet(LoadBullet());
-			static_cast<CBrifCase_2*>(m_pHost->Get_MonsterBullet())->Shot(m_pHost->Get_Info().vPos);
-
-
+			
 			++m_fCurFrame;
 			m_eAttack = THROW;
 			m_fTick = 0.f;
@@ -70,6 +68,9 @@ CMonsterState* CDullSuitMonster_Attack::Update(CMonster* Monster, const float& f
 
 		if (m_fTick >= 1.f)
 		{
+			m_pHost->Set_Bullet(LoadBullet());
+			static_cast<CBrifCase_2*>(m_pHost->Get_MonsterBullet())->Shot(m_pHost->Get_Info().vPos);
+
 			++m_fCurFrame;
 			m_eAttack = THROWEND;
 			m_fTick = 0.f;

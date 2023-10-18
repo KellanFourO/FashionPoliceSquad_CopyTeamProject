@@ -28,7 +28,6 @@ CBigDaddyMonster::~CBigDaddyMonster()
 
 HRESULT CBigDaddyMonster::Ready_GameObject(_vec3 pPoint)
 {
-	//Set_ObjectTag(OBJECTTAG::MONSTER);
 	__super::Ready_GameObject();
 
 	m_StartingPoint = pPoint;
