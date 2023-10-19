@@ -607,8 +607,7 @@ HRESULT CLobbyStage::Check_Trigger()
 			}
 		}
 	}
-	return S_OK;
-}
+	return S_OK;}
 
 
 

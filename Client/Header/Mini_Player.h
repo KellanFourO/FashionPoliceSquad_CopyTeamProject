@@ -27,6 +27,7 @@ private:
 	HRESULT				Add_Component();
 
 public:
+	void				Set_Pos(_vec3 pPos) { m_PlayerPos = pPos; }
 	void				Set_Rect(M_RECT& pRect) { m_PlayerRect = pRect; }
 	void				Set_Move();
 	void				Set_Damage();

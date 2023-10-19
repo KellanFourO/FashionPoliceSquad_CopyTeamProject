@@ -412,6 +412,34 @@ void CMainGame_KickBoard::Reset()
 	Safe_Release(m_pPlayer);
 	m_pPlayer = CMini_Player::Create(m_pGraphicDev);
 
+
+	_vec3 vPos, vScale;
+	_float fMultiply = 1.f;
+
+	vPos = { 400.f, 300.f, 0.f };
+	vScale = { 300.f * fMultiply, 200.f * fMultiply, 1.f };
+
+	vPos.x = vPos.x - WINCX * 0.5f;
+	vPos.y = -vPos.y + WINCY * 0.5f;
+
+	m_defRect.Up_Y = vPos.y + (vScale.y * 0.9f);
+	m_defRect.Down_Y = vPos.y - (vScale.y * 0.9f);
+	m_defRect.Left_X = vPos.x - (vScale.x * 0.9f);
+	m_defRect.Right_X = vPos.x + (vScale.x * 0.9f);
+
+	RectSizeX = fabs(m_defRect.Right_X - m_defRect.Left_X);
+	STDPointX = RectSizeX / 20;
+
+	m_pTransformCom->Set_Scale(vScale);
+	m_pTransformCom->Set_Pos(vPos);
+
+	_vec3 vPlayerPos = { 400.f, 445.f, 0.f };
+	vPlayerPos.x = vPlayerPos.x - WINCX * 0.5f;
+	vPlayerPos.y = -vPlayerPos.y + WINCY * 0.5f;
+
+	m_pPlayer->Set_Pos(vPlayerPos);
+	m_pPlayer->Set_Rect(m_defRect);
+
 	m_TimeFrame = 60;
 	m_RealTime = 30;
 

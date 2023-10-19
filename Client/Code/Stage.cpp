@@ -92,7 +92,7 @@ void CStage::LateUpdate_Scene()
 	Admin_KeyInput();
 
 	Check_Trigger();
-	//Check_Collision_Water();
+	Check_Collision_Water();
 
 	//Trigger_Check_For_Create_Monster();
 
@@ -416,8 +416,8 @@ HRESULT CStage::Check_Collision_Water()
 			_float MinX = (iter->vPos.x) - (iter->vSize.x * 0.5f);
 			_float MaxX = (iter->vPos.x) + (iter->vSize.x * 0.5f);
 
-			_float MinY = (iter->vPos.y) - (iter->vSize.y * 9.0f);
-			_float MaxY = (iter->vPos.y) + (iter->vSize.y * 9.0f);
+			_float MaxY = (iter->vPos.y) + (iter->vSize.y * 7.0f);
+			_float MinY = (iter->vPos.y) - (iter->vSize.y * 7.0f);
 
 			_float MinZ = (iter->vPos.z) - (iter->vSize.z * 0.5f);
 			_float MaxZ = (iter->vPos.z) + (iter->vSize.z * 0.5f);

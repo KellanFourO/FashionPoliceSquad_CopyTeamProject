@@ -118,6 +118,7 @@ void CStage2::LateUpdate_Scene()
 	CollisionManager()->LateUpdate_Collision();
 
 	Check_Trigger();
+	Check_Collision_Water();
 
 }
 
@@ -556,8 +557,8 @@ HRESULT CStage2::Check_Collision_Water()
 			_float MinX = (iter->vPos.x) - (iter->vSize.x * 0.5f);
 			_float MaxX = (iter->vPos.x) + (iter->vSize.x * 0.5f);
 
-			_float MinY = (iter->vPos.y) - (iter->vSize.y * 9.0f);
-			_float MaxY = (iter->vPos.y) + (iter->vSize.y * 9.0f);
+			_float MaxY = (iter->vPos.y) + (iter->vSize.y * 7.0f);
+			_float MinY = (iter->vPos.y) - (iter->vSize.y * 7.0f);
 
 			_float MinZ = (iter->vPos.z) - (iter->vSize.z * 0.5f);
 			_float MaxZ = (iter->vPos.z) + (iter->vSize.z * 0.5f);
@@ -584,6 +585,7 @@ HRESULT CStage2::Check_Collision_Water()
 	}
 	return S_OK;
 }
+
 
 HRESULT CStage2::Create_Monster(int iNum)
 {
