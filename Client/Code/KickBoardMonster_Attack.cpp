@@ -39,12 +39,12 @@ CMonsterState* CKickBoardMonster_Attack::Update(CMonster* Monster, const float& 
 		m_pHost->Chase_Target(fDetltaTime);
 
 
-		if (m_pHost->ChaseCatch())
-		{
-			++m_fCurFrame;
-			m_eAttack = JUMP;
-			m_fTick = 0.f;
-		}
+ 		if (m_pHost->ChaseCatch())
+ 		{
+ 			++m_fCurFrame;
+ 			m_eAttack = JUMP;
+ 			m_fTick = 0.f;
+ 		}
 		break;
 	}
 
@@ -58,9 +58,12 @@ CMonsterState* CKickBoardMonster_Attack::Update(CMonster* Monster, const float& 
 
 		if (m_bJump)
 		{
-			m_pHost->Get_RigidBodyCom()->Set_Force(_vec3{ vDir.x * 50, 30.f, vDir.z * 50 });
+			m_pHost->Get_RigidBodyCom()->Add_Force(_vec3{ vDir.x, 50.f, vDir.z });
+
 			m_bJump = false;
 		}
+
+		m_pHost->Chase_Target(fDetltaTime);
 
 		if (m_fTick > 0.5f)
 		{

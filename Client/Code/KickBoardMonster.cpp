@@ -33,7 +33,6 @@ HRESULT CKickBoardMonster::Ready_GameObject(_vec3 pPoint)
 
     m_StartingPoint = pPoint;
 
-    Set_ObjectTag(OBJECTTAG::MONSTER);
     INFO.iMobType = MonsterType::KCIKBOARD;
     FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
@@ -48,7 +47,7 @@ HRESULT CKickBoardMonster::Ready_GameObject(_vec3 pPoint)
 	//유진 70, 20으로 수정함
     m_fDectedRange = 70.f;
     m_fAttackRange = 20.f;
-    m_fSpeed = 25.f;
+    m_fSpeed = 35.f;
 
 
     m_pTransformCom->Set_Scale({ 5.0f,5.0f, 5.0f });
@@ -63,9 +62,9 @@ HRESULT CKickBoardMonster::Ready_GameObject(_vec3 pPoint)
 	m_pCollider->Set_Transform(m_pTransformCom);
 	m_pRigidBody->Set_Host(this);
 	m_pRigidBody->Set_Transform(m_pTransformCom);
-
-
 	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
+
+
     m_eHitType = BULLETTYPE::SHOTGUN_RAZER;
     m_pMonsterBullet = nullptr;
     return S_OK;
@@ -108,7 +107,6 @@ void CKickBoardMonster::LateUpdate_GameObject()
         INFO.MonsterState->Initialize(this);
         INFO.bDead = false;
         INFO.bRealDead = true;
-        m_bDead2 = false;
     }   // 사망판정
 
     __super::LateUpdate_GameObject();
@@ -152,18 +150,11 @@ void CKickBoardMonster::OnCollisionEnter(CCollider* _pOther)
     __super::OnCollisionEnter(_pOther);
 
     // 충돌 밀어내기 후 이벤트 여기다가 구현 ㄱㄱ ! .
+	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYER)
+	{
 
-    if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYER)
-    {
-        if(!m_bDead2)
-            return;
-        else
-        {
-            dynamic_cast<CPlayer*>(_pOther->Get_Host())->Attacked(3.f);
-
-        }
-
-    }
+		cout << "워리어 공격" << endl;
+	}
 }
 
 void CKickBoardMonster::OnCollisionStay(CCollider* _pOther)

@@ -41,10 +41,6 @@ HRESULT CMonster::Ready_GameObject()
 
 _int CMonster::Update_GameObject(const _float& fTimeDelta)
 {
-
-
-
-
 	if (INFO.bHit == true) {
 		m_fHitTime += fTimeDelta;
 	}
@@ -155,6 +151,8 @@ void CMonster::OnCollisionEnter(CCollider* _pOther)
 			cout << "워리어 공격" << endl;
 		}
 	}
+
+
 }
 
 void CMonster::OnCollisionStay(CCollider* _pOther)
