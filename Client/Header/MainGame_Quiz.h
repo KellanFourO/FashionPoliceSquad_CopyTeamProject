@@ -1,6 +1,8 @@
 #pragma once
 #include "GameObject.h"
 
+
+
 BEGIN(Engine)
 
 class CUITex;
@@ -16,7 +18,7 @@ private:
 
 public:
 	enum MINIGAME_ARROW_STATEICON { STATEICON_NOP = 0, STATEICON_NORMAL, STATEICON_GOOD, STATEICON_PERPECT };
-	enum class ArrowGameState { ING, LOSE, CLEAR, State_END };
+	enum class QuizGameState { ING, LOSE, CLEAR, State_END };
 
 	virtual HRESULT			Ready_GameObject();
 	virtual void			Render_GameObject() override;
@@ -27,10 +29,11 @@ private:
 	HRESULT					Add_Component();
 	void					KeyInput();
 
-	HRESULT					State_Icon_Update();
 	HRESULT					GameState_Update();
 
 private:
+	QuizGameState			m_eGameState = QuizGameState::State_END;
+
 	CUITex*					m_pBufferCom = nullptr;
 	CTexture*				m_pTextureCom = nullptr;
 	CTransform*				m_pTransformCom = nullptr;

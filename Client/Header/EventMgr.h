@@ -8,6 +8,7 @@
 
 #include "MainGame_Arrow.h"
 #include "MainGame_KickBoard.h"
+#include "MainGame_Quiz.h"
 
 BEGIN(Engine)
 
@@ -29,6 +30,7 @@ public:
 
 
 	enum class MiniGameState { PLAY_NOW, NOT_PLAY };
+
 	//유진 추가
 	HRESULT		OnMiniGame_Arrow(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag);
 	HRESULT		OnMiniGame_KickBoard(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag);
@@ -55,6 +57,7 @@ private:
 
 	CMainGame_Arrow*		pGame_Arrow = nullptr;
 	CMainGame_KickBoard*	pGame_KickBoard = nullptr;
+	CMainGame_Quiz*			pGame_Quiz = nullptr;
 
 private:
 	virtual		void	Free();

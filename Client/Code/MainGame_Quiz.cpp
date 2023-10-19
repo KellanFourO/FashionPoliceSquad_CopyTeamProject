@@ -2,40 +2,10 @@
 #include "stdafx.h"
 #include "MainGame_Quiz.h"
 
-CMainGame_Quiz* CMainGame_Quiz::Create(LPDIRECT3DDEVICE9 pGraphicDev)
-{
-	CMainGame_Quiz* pInstance = new CMainGame_Quiz(pGraphicDev);
+#include "Export_System.h"
+#include "Export_Utility.h"
 
-	if (FAILED(pInstance->Ready_GameObject()))
-	{
-		Safe_Release(pInstance);
-
-		MSG_BOX("MiniGame_Arrow Create Failed");
-		return nullptr;
-	}
-	return pInstance;
-}
-
-void CMainGame_Quiz::Free()
-{
-// 
-// 	if (!m_pCopyVector.empty())
-// 	{
-// 		for (int i = 0; i != m_pCopyVector.size(); )
-// 		{
-// 			Safe_Release(m_pCopyVector[i]);
-// 		}
-// 		m_pCopyVector.clear();
-// 	}
-// 
-// 	Safe_Release(m_pCursor);
-// 	Safe_Release(m_pStateIcon);
-// 	Safe_Release(m_pTimeBar);
-// 	Safe_Release(m_pTimeBar2);
-
-	__super::Free();
-
-}
+#include "EventMgr.h"
 
 CMainGame_Quiz::CMainGame_Quiz(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
@@ -52,6 +22,7 @@ CMainGame_Quiz::~CMainGame_Quiz()
 
 
 }
+
 
 HRESULT CMainGame_Quiz::Ready_GameObject()
 {
@@ -101,11 +72,30 @@ void CMainGame_Quiz::Render_GameObject()
 
 _int CMainGame_Quiz::Update_GameObject(const _float& fTimeDelta)
 {
-	return _int();
+	m_ClearCheck = CEventMgr::GetInstance()->Get_MiniGameClearCheck(2);
+
+	if (!m_ClearCheck) {
+
+		Engine::Add_RenderGroup(RENDER_UI, this);
+
+		GameState_Update();
+
+		KeyInput();
+
+		__super::Update_GameObject(fTimeDelta);
+
+
+
+	}
+
+	return 0;
 }
 
 void CMainGame_Quiz::LateUpdate_GameObject()
 {
+	if (!m_ClearCheck) {
+		CGameObject::LateUpdate_GameObject();
+	}
 }
 
 HRESULT CMainGame_Quiz::Add_Component()
@@ -131,12 +121,54 @@ void CMainGame_Quiz::KeyInput()
 {
 }
 
-HRESULT CMainGame_Quiz::State_Icon_Update()
-{
-	return E_NOTIMPL;
-}
-
 HRESULT CMainGame_Quiz::GameState_Update()
 {
-	return E_NOTIMPL;
+	if (m_eGameState == CMainGame_Quiz::QuizGameState::CLEAR)
+	{
+		MSG_BOX("Clear!");
+		CEventMgr::GetInstance()->OffMiniGame_KickBoard(SCENETAG::LOBBY, true);
+	}
+
+	if (m_eGameState == CMainGame_Quiz::QuizGameState::LOSE)
+	{
+		MSG_BOX("Lose...");
+		CEventMgr::GetInstance()->OffMiniGame_KickBoard(SCENETAG::LOBBY, false);
+	}
+	return S_OK;
+}
+
+
+CMainGame_Quiz* CMainGame_Quiz::Create(LPDIRECT3DDEVICE9 pGraphicDev)
+{
+	CMainGame_Quiz* pInstance = new CMainGame_Quiz(pGraphicDev);
+
+	if (FAILED(pInstance->Ready_GameObject()))
+	{
+		Safe_Release(pInstance);
+
+		MSG_BOX("MiniGame_Arrow Create Failed");
+		return nullptr;
+	}
+	return pInstance;
+}
+
+void CMainGame_Quiz::Free()
+{
+	// 
+	// 	if (!m_pCopyVector.empty())
+	// 	{
+	// 		for (int i = 0; i != m_pCopyVector.size(); )
+	// 		{
+	// 			Safe_Release(m_pCopyVector[i]);
+	// 		}
+	// 		m_pCopyVector.clear();
+	// 	}
+	// 
+	// 	Safe_Release(m_pCursor);
+	// 	Safe_Release(m_pStateIcon);
+	// 	Safe_Release(m_pTimeBar);
+	// 	Safe_Release(m_pTimeBar2);
+
+	__super::Free();
+
 }
