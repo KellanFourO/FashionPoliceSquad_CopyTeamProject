@@ -218,8 +218,8 @@ _uint CLoading::Loading_For_Stage()
 		Management()->Set_Rifle(pRifle);
 		Management()->Set_ShotGun(pShotgun);
 
-		CTailorAssertRifleHand* pHand = CTailorAssertRifleHand::Create(m_pGraphicDev);
-		Management()->Set_RifleHand(pHand);
+		//CTailorAssertRifleHand* pHand = CTailorAssertRifleHand::Create(m_pGraphicDev);
+		//Management()->Set_RifleHand(pHand);
 
 		CBelt* pBelt = CBelt::Create(m_pGraphicDev);
 		Management()->Set_Belt(pBelt);

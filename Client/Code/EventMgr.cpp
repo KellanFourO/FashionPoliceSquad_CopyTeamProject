@@ -187,6 +187,7 @@ HRESULT CEventMgr::OffMiniGame_Arrow(SCENETAG eSceneTag, _bool ClearCheck)
 		Set_MiniGameClearCheck(0, TRUE);
 		SoundMgr()->StopSound(SOUND_BGM);
 		OnPause(FALSE, SCENETAG::LOBBY);
+		SoundMgr()->PlaySoundW(L"MiniGameClear.mp3",SOUND_DIALOG,1.f);
 		SoundMgr()->PlayBGM(L"LobbyBGM3.mp3", 0.25f);
 	}
 	if (ClearCheck == false)
@@ -215,6 +216,7 @@ HRESULT CEventMgr::OffMiniGame_KickBoard(SCENETAG eSceneTag, _bool ClearCheck)
 		Set_MiniGameClearCheck(1, TRUE);
 		SoundMgr()->StopSound(SOUND_BGM);
 		OnPause(FALSE, SCENETAG::LOBBY);
+		SoundMgr()->PlaySoundW(L"MiniGameClear.mp3", SOUND_DIALOG, 1.f);
 		SoundMgr()->PlayBGM(L"LobbyBGM3.mp3", 0.25f);
 	}
 	if (ClearCheck == false)
@@ -240,6 +242,7 @@ HRESULT CEventMgr::OffMiniGame_Quiz(SCENETAG eSceneTag, _bool ClearCheck)
 
 	SoundMgr()->StopSound(SOUND_BGM);
 	OnPause(FALSE, SCENETAG::LOBBY);
+	SoundMgr()->PlaySoundW(L"MiniGameClear.mp3", SOUND_DIALOG, 1.f);
 	SoundMgr()->PlayBGM(L"LobbyBGM3.mp3", 0.25f);
 	return S_OK;
 }
