@@ -53,8 +53,8 @@ _int CBossStage::Update_Scene(const _float& fTimeDelta)
 	_int	iExit = __super::Update_Scene(fTimeDelta);
  	if (m_bLateInit)
  	{
- 		//CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::BOSS_STAGE, DIALOGTAG::ST1_BOSS_START);
- 		//CEventMgr::GetInstance()->OnPause(true, SCENETAG::BOSS_STAGE);
+ 		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::BOSS_STAGE, DIALOGTAG::ST1_BOSS_INTRO);
+ 		CEventMgr::GetInstance()->OnPause(true, SCENETAG::BOSS_STAGE);
  		m_bLateInit = false;
  	}
 
@@ -83,8 +83,13 @@ _int CBossStage::Update_Scene(const _float& fTimeDelta)
 
 	}
 
-	if(m_pBoss->Get_Info().bDead)
+	if (m_pBoss->Get_Info().bDead)
+	{
 		m_pMission->Set_Render(true);
+
+		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::BOSS_STAGE, DIALOGTAG::ST1_BOSS_CONCLU);
+		CEventMgr::GetInstance()->OnPause(true, SCENETAG::BOSS_STAGE);
+	}
 	//if (m_bReadyCube)
 	//{
 	//	Octree()->Update_Octree();
@@ -222,9 +227,9 @@ HRESULT CBossStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_GUN, pGameObject), E_FAIL);
 
-		pGameObject = Management()->Get_RifleHand();
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_HAND, pGameObject), E_FAIL);
+		//pGameObject = Management()->Get_RifleHand();
+		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_HAND, pGameObject), E_FAIL);
 
 		dynamic_cast<CPlayer*>(pPlayer)->Set_SceneChange(false);
 		dynamic_cast<CPlayer*>(pPlayer)->SetGun(pLayer);
@@ -622,9 +627,14 @@ HRESULT CBossStage::Load_Data_T(const TCHAR* pFilePath, OBJECTTAG eTag)
 void CBossStage::Admin_KeyInput()
 {
 
-	if (Engine::Get_DIKeyState(DIK_F9) & 0x80 && m_bAdminSwitch)
+	if (Engine::Get_DIKeyState(DIK_F4) & 0x80 && m_bAdminSwitch)
 	{
-		CEventMgr::GetInstance()->OnPause(false, SCENETAG::BOSS_STAGE);
+		CEventMgr::GetInstance()->OnPause(true, SCENETAG::STAGE);
+		m_bAdminSwitch = false;
+	}
+	if (Engine::Get_DIKeyState(DIK_F5) & 0x80 && m_bAdminSwitch)
+	{
+		CEventMgr::GetInstance()->OnPause(false, SCENETAG::STAGE);
 		m_bAdminSwitch = false;
 	}
 
@@ -635,6 +645,9 @@ void CBossStage::Admin_KeyInput()
 
 	if (Engine::Get_DIKeyState(DIK_M) & 0x80 && m_bAdminSwitch)
 	{
+		Management()->Get_Player()->DashOn();
+		Management()->Get_Player()->RopeOn();
+		Management()->Get_Player()->EncounterOff();
 		CEventMgr::GetInstance()->SceneChange(m_pGraphicDev, SCENETAG::STAGE2);
 		m_bAdminSwitch = false;
 	}

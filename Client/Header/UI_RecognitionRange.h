@@ -37,6 +37,7 @@ private:
 	void					TextureSet();
 
 	void					DestinationUI(const _float& fTimeDelta);
+	void					DestinationSceneFunction();
 	void					RecogUI(const _float& fTimeDelta);
 	void					TargetUI(const _float& fTimeDelta);
 
@@ -86,13 +87,14 @@ private:
 	_bool				m_bTargetPos = false;
 
 	_bool				m_bRecogDetect = false;
+	_bool				m_bDestinationSwitch = true;
 
 
 
 
 public:
 	static CRecognitionRange* Create(LPDIRECT3DDEVICE9 pGraphicDev, CGameObject* pTarget = nullptr, UI_TYPE eUIType = UI_TYPE::UI_TYPE_END);
-
+								
 private:
 	virtual void Free() override;
 };

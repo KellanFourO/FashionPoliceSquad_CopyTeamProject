@@ -12,6 +12,8 @@
 #include "Stage1Boss_ThrowGoldMulti.h"
 #include "Stage1Boss_BrifBigShield.h"
 #include "Stage1Boss_Dead.h"
+
+#include "Stage1BossAuraEffect.h"
 #include "DustGrey.h"
 
 #include "Export_System.h"
@@ -46,7 +48,7 @@ HRESULT CStage1Boss::Ready_GameObject()
 
 	INFO.MonsterState = m_pStateArray[IDLE];
 	INFO.MonsterState->Initialize(this);
-	INFO.fHP = 3000.f;
+	INFO.fHP = 4800.f;
 	INFO.fMaxHP = 5000.f;
 	m_fSpeed = 10.f;
 	m_fDectedRange = 150.f;
@@ -191,6 +193,8 @@ void CStage1Boss::PhaseChange()
 {
 	_float fRatio = INFO.fHP / INFO.fMaxHP;
 
+
+
 	if (fRatio < 0.6 && fRatio > 0.3)
 	{
 		dynamic_cast<CStage1BossState*>(INFO.MonsterState)->m_ePhase = BOSSPHASE::PHASE_2;
@@ -208,6 +212,12 @@ void CStage1Boss::PhaseChange()
 	else if (fRatio < 0.3)
 	{
 		dynamic_cast<CStage1BossState*>(INFO.MonsterState)->m_ePhase = BOSSPHASE::PHASE_3;
+		if (!m_bOnAura)
+		{
+			CGameObject* pGameObject = CStage1BossAuraEffect::Create(m_pGraphicDev, this);
+			Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::EFFECT, pGameObject);
+			m_bOnAura = true;
+		}
 	}
 
 }

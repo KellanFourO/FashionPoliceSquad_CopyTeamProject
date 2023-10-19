@@ -6,6 +6,7 @@
 #include "Engine_Enum.h"
 #include "Monster.h"
 #include "FontMgr.h"
+#include "EventMgr.h"
 
 #include <DirectXMath.h>
 
@@ -135,6 +136,7 @@ void CRecognitionRange::Render_GameObject()
 			if (m_bTargetPos)
 			{
 				DestinationRender();
+				DestinationSceneFunction();
 			}
 			else
 				MSG_BOX("너 목적지UI 타겟셋팅 안했어.");
@@ -205,6 +207,7 @@ void CRecognitionRange::DestinationUI(const _float& fTimeDelta)
 	_vec3 vPlayerToDesti = m_vTargetPos - vPlayerPos;
 
 	m_fDestinationDistance = D3DXVec3Length(&vPlayerToDesti);
+
 	//todo 시작 지점으로부터 287
 
 //  	D3DVIEWPORT9 ViewPort;
@@ -219,6 +222,65 @@ void CRecognitionRange::DestinationUI(const _float& fTimeDelta)
 	//_D3DVECTOR = {x=440.264557 y=32.0448914 z=0.999643147 }
 	_int i = 0;
 
+}
+
+void CRecognitionRange::DestinationSceneFunction()
+{
+	SCENETAG eScene = Management()->Get_Scene()->Get_SceneTag();
+
+	if (m_fDestinationDistance < 15.f && m_bDestinationSwitch)
+	{
+		switch (eScene)
+		{
+			case SCENETAG::STAGE:
+			{
+				auto& ObjList = Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::MONSTER);
+
+				_int ObjCount = ObjList.size();
+
+				if (ObjCount == 0)
+				{
+					CEventMgr::GetInstance()->OnDialog(m_pGraphicDev,eScene,DIALOGTAG::STORY_ST1_CONCLU);
+					CEventMgr::GetInstance()->OnPause(true,eScene);
+					m_bDestinationSwitch = false;
+				}
+
+				break;
+			}
+
+			case SCENETAG::LOBBY:
+			{
+
+				break;
+			}
+
+			case SCENETAG::BOSS_STAGE:
+			{
+
+				break;
+			}
+
+			case SCENETAG::STAGE2:
+			{
+				auto& ObjList = Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::MONSTER);
+
+				_int ObjCount = ObjList.size();
+
+				if (ObjCount == 0)
+				{
+					SoundMgr()->StopSound(SOUND_BGM);
+					SoundMgr()->PlayBGM(L"EndDialogBGM.mp3",1.f);
+					CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, eScene, DIALOGTAG::STORY_ST2_CONCLU);
+					CEventMgr::GetInstance()->OnPause(true, eScene);
+					m_bDestinationSwitch = false;
+				}
+
+				break;
+			}
+		}
+
+
+	}
 }
 
 void CRecognitionRange::RecogUI(const _float& fTimeDelta)

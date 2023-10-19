@@ -137,6 +137,7 @@ private:
 	_bool							MovingCheck2 = false;
 
 	_bool							m_bMiniGameCheck = false; //F키 사용여부
+	_bool							m_bDialog[5];
 
 	vector<CUBE*>					m_VecCubeData;
 	_uint							m_iCubeIndex = 0;

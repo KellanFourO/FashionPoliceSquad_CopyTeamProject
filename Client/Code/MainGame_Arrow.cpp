@@ -75,7 +75,7 @@ HRESULT CMainGame_Arrow::Ready_GameObject()
 	NULL_CHECK_RETURN(m_pTimeBar, E_FAIL);
 
 	_vec3 vPos, vScale;
-	_float fMultiply = 1.f;	
+	_float fMultiply = 1.f;
 
 	vPos = { 400.f, 300.f, 0.f };
 	vScale = { 250.f * fMultiply, 250.f * fMultiply, 1.f };
@@ -136,7 +136,7 @@ _int CMainGame_Arrow::Update_GameObject(const _float& fTimeDelta)
 	if (!m_ClearCheck && !m_LoseCheck) {
 
 		Engine::Add_RenderGroup(RENDER_UI, this);
-		
+
 		GameState_Update();
 
 		KeyInput();
@@ -204,7 +204,7 @@ void CMainGame_Arrow::Reset()
 	uniform_int_distribution<int> distribution(0, 3);
 
 	m_pTimeBar2->Set_TimerReset();
-	
+
 	Safe_Release(m_pCursor);
 
 	if (!m_pVecArrow.empty()) {
@@ -226,9 +226,9 @@ void CMainGame_Arrow::Reset()
 	{
 		int random_number = distribution(gen);
 		int iTempIndex = m_ArrowCount - (m_ArrowCount - i);
-	
+
 		CMini_Arrow* pArrow = CMini_Arrow::Create(m_pGraphicDev, iTempIndex, random_number);
-	
+
 		m_pVecArrow.push_back(pArrow);
 	}
 	m_pCopyVector = m_pVecArrow;
@@ -274,8 +274,8 @@ HRESULT CMainGame_Arrow::State_Icon_Update()
 
 		else if ((m_pVecArrow.size() >= 0) && (m_pVecArrow.size() < 10))
 			m_pStateIcon->Change_State(STATEICON_PERPECT);
-	}	
-	if (m_iCountNop > 20) { 
+	}
+	if (m_iCountNop > 20) {
 		m_NOP_Mode = false;
 		m_iCountNop = 0;
 	}

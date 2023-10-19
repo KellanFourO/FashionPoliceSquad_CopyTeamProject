@@ -30,11 +30,13 @@ public:
 	// Get
 	DIALOGDATA*					Get_Info() { return m_pDialogInfo; }
 	void						Set_EndInput(_bool bEndInput) { m_bEndInput = bEndInput;}
+	_bool						Get_Quiz() { return m_bQuiz;}
 
 private:
 	HRESULT							Add_Component();
 	void							LoadText(DIALOGTAG eDialogTag);
 	void							KeyInput();
+	void							QuizKeyInput();
 
 private:
 	CUITex*							m_pBufferCom = nullptr;
@@ -52,6 +54,8 @@ private:
 	_bool							m_bSound = true;
 	_bool							m_bRenewal = true;
 	_bool							m_bEndInput = false;
+	_bool							m_bQuiz = false;
+	_bool							m_bQuizInput = false;
 	DIALOGTAG						m_eDialog;
 
 

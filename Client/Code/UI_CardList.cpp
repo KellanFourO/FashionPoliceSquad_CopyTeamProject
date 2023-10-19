@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "UI_CardList.h"
-
+#include "EventMgr.h"
 #include "Export_Utility.h"
 #include "Export_System.h"
 #include <random>
@@ -103,13 +103,44 @@ Engine::_int Engine::CCardList::Update_GameObject(const _float& fTimeDelta)
 	__super::Update_GameObject(fTimeDelta);
 	KeyInput();
 
+
+	_int iCount = 0;
+	_int iPickingIndex = 0;
+
 	for (int i = 0; i < m_vecCard.size(); ++i)
 	{
 		IExit = m_vecCard[i]->Update_GameObject(fTimeDelta);
+
+		if(m_vecCard[i]->Get_RealPick())
+		iPickingIndex = i;
+
+		if (m_vecCard[i]->Get_Dialog())
+		{
+			iCount++;
+
+		}
+		else
+			iCount = 0;
+
 	}
+
+	if (iCount == 3)
+	{
+		if (m_vecCard[iPickingIndex]->Get_CardType() == CARD_TYPE::FORCE)
+		{
+			CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::LOBBY, DIALOGTAG::SKILL_DASH);
+		}
+		else if (m_vecCard[iPickingIndex]->Get_CardType() == CARD_TYPE::SPEED)
+		{
+			CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::STAGE, DIALOGTAG::SKILL_ROPE);
+		}
+	}
+
 
 	if (m_bPicking)
 		m_iLateTick++;
+
+
 
 	return IExit;
 }

@@ -13,7 +13,7 @@
 #include "Player_LevelUp.h"
 #include "Player_Jump.h"
 #include "Player_Dash.h"
-
+#include "KickBoardMonster.h"
 #include "EventMgr.h"
 #include "Trigger.h"
 #include "SoundMgr.h"
@@ -44,7 +44,7 @@ HRESULT CPlayer::Ready_GameObject()
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	Set_ObjectTag(OBJECTTAG::PLAYER);
 
-	
+
 
 	ReadyState();
 
@@ -91,7 +91,7 @@ HRESULT CPlayer::Ready_GameObject()
 	{
 		m_bMonsterEncounter[i] = false;
 	}
-	
+
 	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
 
 	//m_pTransformCom->Rotation(ROT_Y,D3DXToRadian(INFO.fStartDir));
@@ -708,12 +708,11 @@ void CPlayer::Attacked(_float _fDamage)
 
 void CPlayer::Healed(_float _iHP)
 {
-	if (INFO.fHP + _iHP <= INFO.fMaxHP + INFO.fMaXHP_Additional) {
-
+	if (INFO.fHP < INFO.fMaxHP) {
 		INFO.fHP += _iHP;
 	}
-	else {
-		INFO.fHP = INFO.fMaxHP + INFO.fMaXHP_Additional;
+	if (INFO.fHP > INFO.fMaxHP) {
+		INFO.fHP = INFO.fMaxHP;
 	}
 	INFO.PlayerState = m_pStateArray[HEAL];
 	INFO.PlayerState->Initialize(this);
@@ -887,6 +886,38 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 		m_bTriggerCheck = false;
 		m_iTriggerTime = 0;
 	}
+
+	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::MONSTER)
+	{
+
+
+		_vec3 vMonsterPos, vMonsterLook, vMyPos;
+		_pOther->Get_Host()->Get_Transform()->Get_Info(INFO_POS, &vMonsterPos);
+		_pOther->Get_Host()->Get_Transform()->Get_Info(INFO_LOOK, &vMonsterLook);
+		m_pTransformCom->Get_Info(INFO_POS, &vMyPos);
+
+		_vec3 vDir = vMyPos - vMonsterPos;
+
+		_float fLength = D3DXVec3Length(&vDir);
+
+		D3DXVec3Normalize(&vDir, &vDir);
+		_vec3 vForce;
+
+		if (dynamic_cast<CMonster*>(_pOther->Get_Host())->Get_Info().iMobType == MonsterType::KCIKBOARD)
+		{
+			vForce = vDir * 10 * fLength;
+			Attacked(3.f);
+		}
+		else
+		{
+			vForce = vDir * 5 * fLength;
+			Attacked(0.f);
+		}
+
+
+		m_pRigidBody->Add_Force(vForce);
+
+	}
 }
 
 void CPlayer::OnCollisionStay(CCollider* _pOther)
@@ -919,8 +950,8 @@ void CPlayer::OnCollisionStay(CCollider* _pOther)
 		//	vThisPos.y += vOtherPos.y;
 		if (fRadiusY == fMinAxis)
 		{
-			if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::MONSTER)
-				return;
+// 			if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::MONSTER)
+// 				return;
 			if (vOtherPos.y < vThisPos.y)
 			{
 				//m_IsJump = false;

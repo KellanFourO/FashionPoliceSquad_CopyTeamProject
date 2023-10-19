@@ -48,7 +48,6 @@ HRESULT CManagement::Change_Scene(CScene* pScene)
 
 		m_pShotGun->AddRef();
 		m_pRifle->AddRef();
-		m_pRifleHand->AddRef();
 		m_pBelt->AddRef();
 
 		m_pRifleFlash->AddRef();

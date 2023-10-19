@@ -38,7 +38,7 @@ CMonsterState* CDullSuitMonster_Attack::Update(CMonster* Monster, const float& f
 	{
 		m_fTick += fDetltaTime;
 
-		if (m_fTick > 1.f)
+		if (m_fTick > 0.5f)
 		{
 			
 			++m_fCurFrame;
@@ -52,7 +52,7 @@ CMonsterState* CDullSuitMonster_Attack::Update(CMonster* Monster, const float& f
 	{
 		m_fTick += fDetltaTime;
 
-		if (m_fTick >= 1.f)
+		if (m_fTick >= 0.5f)
 		{
 			
 			++m_fCurFrame;
@@ -66,7 +66,7 @@ CMonsterState* CDullSuitMonster_Attack::Update(CMonster* Monster, const float& f
 	{
 		m_fTick += fDetltaTime;
 
-		if (m_fTick >= 1.f)
+		if (m_fTick >= 0.5f)
 		{
 			m_pHost->Set_Bullet(LoadBullet());
 			static_cast<CBrifCase_2*>(m_pHost->Get_MonsterBullet())->Shot(m_pHost->Get_Info().vPos);
@@ -82,7 +82,7 @@ CMonsterState* CDullSuitMonster_Attack::Update(CMonster* Monster, const float& f
 	{
 		m_fTick += fDetltaTime;
 
-		if (m_fTick >= 1.f)
+		if (m_fTick >= 0.5f)
 		{
 			//TODO 만약 던진 후 플레이어가 공격범위에 없을시 추격 상태로 변경
 			if (!m_pHost->ChaseCatch())

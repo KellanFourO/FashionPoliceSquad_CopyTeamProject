@@ -63,6 +63,7 @@ public:
 
 	void			DashOn() { m_bDashSkillOn = true;}
 	void			RopeOn() { m_bRopeSkillOn = true; }
+	void			EncounterOff() { for(int i = 0; i < 3; ++i) { m_bMonsterEncounter[i] = true;} }
 
 private:
 	HRESULT			Add_Component();

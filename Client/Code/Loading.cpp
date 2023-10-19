@@ -104,8 +104,9 @@ _uint CLoading::Loading_For_Stage()
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_suit_2", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/dull_suit4.png")), E_FAIL);
 		Set_Value(3);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_KickBoardMonster", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/neonshirt-v1_Resize.png")), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Stage1Boss", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/boss 1 - hugo bauss sprite2.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Stage1Boss", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/boss 1 - hugo bauss sprite3.png")), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Stage1Bullet", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/gold-bar-projectile_0.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Stage1Aura", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Effect/Aura/AuraEdit.png")), E_FAIL);
 		Set_Value(3);
 	}
 	// 몬스터 관련 Ready_Proto
@@ -218,8 +219,8 @@ _uint CLoading::Loading_For_Stage()
 		Management()->Set_Rifle(pRifle);
 		Management()->Set_ShotGun(pShotgun);
 
-		CTailorAssertRifleHand* pHand = CTailorAssertRifleHand::Create(m_pGraphicDev);
-		Management()->Set_RifleHand(pHand);
+		//CTailorAssertRifleHand* pHand = CTailorAssertRifleHand::Create(m_pGraphicDev);
+		//Management()->Set_RifleHand(pHand);
 
 		CBelt* pBelt = CBelt::Create(m_pGraphicDev);
 		Management()->Set_Belt(pBelt);

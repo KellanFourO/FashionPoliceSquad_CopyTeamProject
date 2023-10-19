@@ -49,6 +49,11 @@ HRESULT CLobbyStage::Ready_Scene()
 	SoundMgr()->PlayBGM(L"LobbyBGM3.mp3", 0.25f);	//Good
 	//SoundMgr()->PlayBGM(L"LobbyBGM4.mp3", 0.25f); //
 
+	for (int i = 0; i < 5; ++i)
+	{
+		m_bDialog[i] = true;
+	}
+
 	return S_OK;
 }
 
@@ -110,9 +115,9 @@ HRESULT CLobbyStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_GUN, pGameObject), E_FAIL);
 
-		pGameObject = Management()->Get_RifleHand();
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_HAND, pGameObject), E_FAIL);
+		//pGameObject = Management()->Get_RifleHand();
+		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_HAND, pGameObject), E_FAIL);
 
 		dynamic_cast<CPlayer*>(pPlayer)->Set_SceneChange(false);
 		dynamic_cast<CPlayer*>(pPlayer)->SetGun(pLayer);
@@ -281,6 +286,13 @@ HRESULT CLobbyStage::Ready_Layer_MINIGAME(LAYERTAG eLayerTag)
 _int CLobbyStage::Update_Scene(const _float& fTimeDelta)
 {
 	_int	iExit = __super::Update_Scene(fTimeDelta);
+	if (m_bLateInit)
+	{
+		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::LOBBY, DIALOGTAG::STORY_LOBBY_INTRO);
+		//CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::LOBBY, DIALOGTAG::QUIZ);
+		CEventMgr::GetInstance()->OnPause(true, SCENETAG::LOBBY);
+		m_bLateInit = false;
+	}
 
 	m_fAdminTick += fTimeDelta;
 	if (m_fAdminTick >= 3.f)
@@ -565,6 +577,13 @@ HRESULT CLobbyStage::Check_Trigger()
 				if ((iter->eTrName == TRIGGER_NUMBER::TR0) && (iter->eTrSTATE == TRIGGER_STATE::TR_BEFORE)
 					&& CEventMgr::GetInstance()->Get_MiniGameClearCheck(0) == false)
 				{
+					if (m_bDialog[0])
+					{
+						CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::LOBBY, DIALOGTAG::STORY_LOBBY_GAME1);
+						CEventMgr::GetInstance()->OnPause(true, SCENETAG::LOBBY);
+						m_bDialog[0] = false;
+					}
+
 					iCountNum = 1;
 
 					if (CEventMgr::GetInstance()->Get_MiniGameState() == CEventMgr::MiniGameState::NOT_PLAY && m_bMiniGameCheck == true) {
@@ -576,6 +595,12 @@ HRESULT CLobbyStage::Check_Trigger()
 				else if ((iter->eTrName == TRIGGER_NUMBER::TR1) && (iter->eTrSTATE == TRIGGER_STATE::TR_BEFORE)
 					&& CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == false)
 				{
+					if (m_bDialog[1])
+					{
+						CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::LOBBY, DIALOGTAG::STORY_LOBBY_GAME2);
+						CEventMgr::GetInstance()->OnPause(true, SCENETAG::LOBBY);
+						m_bDialog[1] = false;
+					}
 					iCountNum = 2;
 
 					if (CEventMgr::GetInstance()->Get_MiniGameState() == CEventMgr::MiniGameState::NOT_PLAY && m_bMiniGameCheck == true) {
@@ -587,6 +612,13 @@ HRESULT CLobbyStage::Check_Trigger()
 				else if ((iter->eTrName == TRIGGER_NUMBER::TR2) && (iter->eTrSTATE == TRIGGER_STATE::TR_BEFORE)
 					&& CEventMgr::GetInstance()->Get_MiniGameClearCheck(2) == false)
 				{
+					if (m_bDialog[2])
+					{
+						CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::LOBBY, DIALOGTAG::STORY_LOBBY_CONCLU);
+						CEventMgr::GetInstance()->OnPause(true, SCENETAG::LOBBY);
+						m_bDialog[2] = false;
+					}
+
 					iCountNum = 3;
 
 					if (CEventMgr::GetInstance()->Get_MiniGameState() == CEventMgr::MiniGameState::NOT_PLAY && m_bMiniGameCheck == true) {
@@ -596,11 +628,15 @@ HRESULT CLobbyStage::Check_Trigger()
 					//iter->eTrSTATE = TRIGGER_STATE::TR_AFTER;
 				}
 
-				else if ((iter->eTrName == TRIGGER_NUMBER::TR3) && (iter->eTrSTATE == TRIGGER_STATE::TR_BEFORE))
+				else if ((iter->eTrName == TRIGGER_NUMBER::TR3) && (iter->eTrSTATE == TRIGGER_STATE::TR_BEFORE)) //todo Tr3 문앞  Tr2 바닥올라옴 Tr1 미니게임2 Tr0 미니게임1
 				{
-					iCountNum = 4;
-					
-					MSG_BOX("Test!");
+					if (m_bDialog[3])
+					{
+						iCountNum = 4;
+						CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::LOBBY, DIALOGTAG::STORY_LOBBY_CONCLU2);
+						CEventMgr::GetInstance()->OnPause(true, SCENETAG::LOBBY);
+						m_bDialog[3] = false;
+					}
 
 					iter->eTrSTATE = TRIGGER_STATE::TR_AFTER; //이거 켜면 한번만 트리거 처리가능
 				}
@@ -614,9 +650,14 @@ HRESULT CLobbyStage::Check_Trigger()
 void CLobbyStage::Admin_KeyInput()
 {
 
-	if (Engine::Get_DIKeyState(DIK_F9) & 0x80 && m_bAdminSwitch)
+	if (Engine::Get_DIKeyState(DIK_F4) & 0x80 && m_bAdminSwitch)
 	{
-		CEventMgr::GetInstance()->OnPause(false, SCENETAG::LOBBY);
+		CEventMgr::GetInstance()->OnPause(true, SCENETAG::STAGE);
+		m_bAdminSwitch = false;
+	}
+	if (Engine::Get_DIKeyState(DIK_F5) & 0x80 && m_bAdminSwitch)
+	{
+		CEventMgr::GetInstance()->OnPause(false, SCENETAG::STAGE);
 		m_bAdminSwitch = false;
 	}
 
@@ -627,6 +668,9 @@ void CLobbyStage::Admin_KeyInput()
 
 	if (Engine::Get_DIKeyState(DIK_M) & 0x80 && m_bAdminSwitch)
 	{
+		Management()->Get_Player()->DashOn();
+		Management()->Get_Player()->RopeOn();
+		Management()->Get_Player()->EncounterOff();
 		CEventMgr::GetInstance()->SceneChange(m_pGraphicDev, SCENETAG::BOSS_STAGE);
 		m_bAdminSwitch = false;
 	}
@@ -881,6 +925,9 @@ HRESULT CLobbyStage::Load_Data_T(const TCHAR* pFilePath, OBJECTTAG eTag)
 
 	return S_OK;
 }
+
+
+
 
 
 CLobbyStage* CLobbyStage::Create(LPDIRECT3DDEVICE9 pGraphicDev)

@@ -27,9 +27,12 @@ public:
 
 public:
 	_bool						Get_Picking() { return m_bPicking; }
+	_bool						Get_RealPick() { return m_bRealPick;}
 	void						Set_Picking(_bool _bPicking) { m_bPicking = _bPicking; }
 	void						Set_RealPick(_bool _bRealPick) { m_bRealPick = _bRealPick; }
 	void						Set_CardType(CARD_TYPE eCardType) { m_eCardType = eCardType; }
+	_bool						Get_Dialog() { return m_bOnDialog;}
+	CARD_TYPE					Get_CardType() { return m_eCardType;}
 
 private:
 	HRESULT						Add_Component();

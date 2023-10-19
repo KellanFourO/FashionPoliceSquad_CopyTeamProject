@@ -43,6 +43,8 @@ _int CLoadingStage1::Update_Scene(const _float& fTimeDelta)
 {
 	_int	iExit = __super::Update_Scene(fTimeDelta);
 
+	m_fTick += fTimeDelta; //todo 로딩할 데이터가 없을때의 다이얼로그에서 신을 체인지할때의 엔터 예외처리를 위한 틱
+
 	m_pProgressBar = dynamic_cast<CProgressValue*>(Management()->Get_ObjectList(LAYERTAG::ENVIRONMENT, OBJECTTAG::PROGRESSVALUE).back());
 
 	if (m_pProgressBar)
@@ -50,7 +52,7 @@ _int CLoadingStage1::Update_Scene(const _float& fTimeDelta)
 		m_pProgressBar->Set_Ratio(m_pLoading->Get_Value());
 	}
 
-	if (true == m_pLoading->Get_Finish())
+	if (true == m_pLoading->Get_Finish() && m_fTick > 1.25f)
 	{
 		m_pLoadingID = m_pLoading->Get_LoadingID();
 		map<SCENETAG, CScene*>		m_MapSceneTemp;

@@ -64,6 +64,7 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 	if (m_bLateInit)
 	{
 		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev,m_eSceneTag, DIALOGTAG::STORY_ST1_INTRO);
+		//CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, m_eSceneTag, DIALOGTAG::STORY_ST2_CONCLU); // 아랏죠 테스트
 		CEventMgr::GetInstance()->OnPause(true,m_eSceneTag);
 		m_bLateInit = false;
 	}
@@ -184,9 +185,9 @@ HRESULT CStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_GUN, pGameObject), E_FAIL);
 
 
-		pGameObject = Management()->Get_RifleHand();
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_HAND, pGameObject), E_FAIL);
+		//pGameObject = Management()->Get_RifleHand();
+		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_HAND, pGameObject), E_FAIL);
 
 		pGameObject = Management()->Get_ShotGunFlash();
 		NULL_CHECK_RETURN(pGameObject, E_FAIL);
@@ -428,11 +429,11 @@ HRESULT CStage::Check_Collision_Water()
 			{
 				_vec3 InStagePos1 = { 410.f, 15.f, 455.f };
 				_vec3 InStagePos2 = { 130.f, 20.f, 455.f };
-				
+
 				_float STDPointX = 230.f;
 
 				if (PlayerPos.x < STDPointX)
-				{ 
+				{
 					Management()->Get_Player()->Get_Transform()->Set_Pos(InStagePos2);
 				}
 				else if (PlayerPos.x >= STDPointX)
@@ -756,19 +757,13 @@ HRESULT CStage::Load_Data_T(const TCHAR* pFilePath, OBJECTTAG eTag)
 
 void CStage::Admin_KeyInput()
 {
+
 	if (Engine::Get_DIKeyState(DIK_F4) & 0x80 && m_bAdminSwitch)
 	{
-		CEventMgr::GetInstance()->OnCard(m_pGraphicDev, SCENETAG::STAGE, DIALOGTAG::STORY_ST1_DEVELOP);
+		CEventMgr::GetInstance()->OnPause(true, SCENETAG::STAGE);
 		m_bAdminSwitch = false;
 	}
-
 	if (Engine::Get_DIKeyState(DIK_F5) & 0x80 && m_bAdminSwitch)
-	{
-		CEventMgr::GetInstance()->OnCard(m_pGraphicDev, SCENETAG::STAGE, DIALOGTAG::STORY_LOBBY_CONCLU);
-		m_bAdminSwitch = false;
-	}
-
-	if (Engine::Get_DIKeyState(DIK_F9) & 0x80 && m_bAdminSwitch)
 	{
 		CEventMgr::GetInstance()->OnPause(false, SCENETAG::STAGE);
 		m_bAdminSwitch = false;
@@ -781,6 +776,9 @@ void CStage::Admin_KeyInput()
 
 	if (Engine::Get_DIKeyState(DIK_M) & 0x80 && m_bAdminSwitch)
 	{
+		Management()->Get_Player()->DashOn();
+		Management()->Get_Player()->RopeOn();
+		Management()->Get_Player()->EncounterOff();
 		CEventMgr::GetInstance()->SceneChange(m_pGraphicDev,SCENETAG::LOBBY);
 		m_bAdminSwitch = false;
 	}
