@@ -129,7 +129,7 @@ protected:
 
 	_float					m_fDectedRange = 15.f; // 탐색범위
 	_float					m_fAttackRange = 1.f; // 공격범위
-	_float					m_fSpeed = 8.f;
+	_float					m_fSpeed = 10.f;
 
 
 protected:

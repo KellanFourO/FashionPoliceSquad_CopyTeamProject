@@ -38,7 +38,7 @@ CMonsterState* CBossBigDaddy_Attack::Update(CMonster* Monster, const float& fDet
 		{
 			m_fTick += fDetltaTime;
 
-			if (m_fTick > 1.f)
+			if (m_fTick > 0.5f)
 			{
 				
 				++m_fCurFrame;
@@ -52,7 +52,7 @@ CMonsterState* CBossBigDaddy_Attack::Update(CMonster* Monster, const float& fDet
 		{
 		m_fTick += fDetltaTime;
 
-		if (m_fTick >= 1.f)
+		if (m_fTick >= 0.5f)
 		{
 			
 			++m_fCurFrame;
@@ -69,7 +69,7 @@ CMonsterState* CBossBigDaddy_Attack::Update(CMonster* Monster, const float& fDet
 		{
 			m_fTick += fDetltaTime;
 			
-			if (m_fTick >= 1.f)
+			if (m_fTick >= 0.5f)
 			{
 				
 				++m_fCurFrame;
@@ -83,7 +83,7 @@ CMonsterState* CBossBigDaddy_Attack::Update(CMonster* Monster, const float& fDet
 		{
 			m_fTick += fDetltaTime;
 
-			if (m_fTick >= 1.f)
+			if (m_fTick >= 0.5f)
 			{
 				//TODO 만약 던진 후 플레이어가 공격범위에 없을시 추격 상태로 변경
 				m_eAttack = READY1;

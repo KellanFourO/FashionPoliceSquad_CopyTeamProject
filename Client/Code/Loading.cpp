@@ -104,7 +104,7 @@ _uint CLoading::Loading_For_Stage()
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_suit_2", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/dull_suit4.png")), E_FAIL);
 		Set_Value(3);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_KickBoardMonster", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/neonshirt-v1_Resize.png")), E_FAIL);
-		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Stage1Boss", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/boss 1 - hugo bauss sprite2.png")), E_FAIL);
+		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Stage1Boss", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/boss 1 - hugo bauss sprite3.png")), E_FAIL);
 		FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_Stage1Bullet", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Monster/gold-bar-projectile_0.png")), E_FAIL);
 		Set_Value(3);
 	}

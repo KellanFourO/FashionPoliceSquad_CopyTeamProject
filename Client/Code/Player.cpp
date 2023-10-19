@@ -949,8 +949,8 @@ void CPlayer::OnCollisionStay(CCollider* _pOther)
 		//	vThisPos.y += vOtherPos.y;
 		if (fRadiusY == fMinAxis)
 		{
-			if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::MONSTER)
-				return;
+// 			if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::MONSTER)
+// 				return;
 			if (vOtherPos.y < vThisPos.y)
 			{
 				//m_IsJump = false;

@@ -115,46 +115,44 @@ void CEventMgr::SceneChange(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag)
 
 HRESULT CEventMgr::OnMiniGame_Arrow(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag)
 {
-	if (pGame_Arrow != nullptr)
-	{
-		Safe_Release(pGame_Arrow);
-// 		delete pGame_Arrow;
-// 		pGame_Arrow = nullptr;
-	}
-
 	m_eMiniGameState = CEventMgr::MiniGameState::PLAY_NOW;
 
+	if (pGame_Arrow == nullptr) {
+		pGame_Arrow = Engine::CMainGame_Arrow::Create(pGraphicDev);
+		NULL_CHECK_RETURN(pGame_Arrow, E_FAIL);
 
-	pGame_Arrow = Engine::CMainGame_Arrow::Create(pGraphicDev);
-	NULL_CHECK_RETURN(pGame_Arrow, E_FAIL);
+		Management()->Get_One_Scene(eSceneTag)->Get_Layer(LAYERTAG::MINIGAME)->Add_GameObject(OBJECTTAG::MINIGAME, pGame_Arrow);
+	}
+	else if (pGame_Arrow != nullptr) {
+		pGame_Arrow->Reset();
+		Set_MiniGameLoseCheck(0, FALSE); //재도전은 실패때만
+	}
 
 	SoundMgr()->StopSound(SOUND_BGM);
 	OnPause(TRUE, SCENETAG::LOBBY);
 	SoundMgr()->PlayBGM(L"MiniGame1BGM.mp3",1.f);
-
-	Management()->Get_One_Scene(eSceneTag)->Get_Layer(LAYERTAG::MINIGAME)->Add_GameObject(OBJECTTAG::MINIGAME, pGame_Arrow);
-
+	
+	
 	return S_OK;
 }
 
 HRESULT CEventMgr::OnMiniGame_KickBoard(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag)
 {
-	if (pGame_KickBoard != nullptr)
-	{
-		Safe_Release(pGame_KickBoard);
-// 		delete pGame_KickBoard;
-// 		pGame_KickBoard = nullptr;
-	}
-
 	m_eMiniGameState = CEventMgr::MiniGameState::PLAY_NOW;
 
-	pGame_KickBoard = Engine::CMainGame_KickBoard::Create(pGraphicDev);
-	NULL_CHECK_RETURN(pGame_KickBoard, E_FAIL);
-
-	OnPause(TRUE, SCENETAG::LOBBY);
+	if (pGame_KickBoard == nullptr) {
+		pGame_KickBoard = Engine::CMainGame_KickBoard::Create(pGraphicDev);
+		NULL_CHECK_RETURN(pGame_KickBoard, E_FAIL);
+	
+		Management()->Get_One_Scene(eSceneTag)->Get_Layer(LAYERTAG::MINIGAME)->Add_GameObject(OBJECTTAG::MINIGAME, pGame_KickBoard);
+	}
+	else if (pGame_KickBoard != nullptr) {
+		pGame_KickBoard->Reset();
+		Set_MiniGameLoseCheck(1, FALSE); //재도전은 실패때만
+	}
 
 	SoundMgr()->StopSound(SOUND_BGM);
-	Management()->Get_One_Scene(eSceneTag)->Get_Layer(LAYERTAG::MINIGAME)->Add_GameObject(OBJECTTAG::MINIGAME, pGame_KickBoard);
+	OnPause(TRUE, SCENETAG::LOBBY);
 	SoundMgr()->PlayBGM(L"MiniGame2BGM.mp3", 1.f);
 
 	return S_OK;
@@ -185,7 +183,7 @@ HRESULT CEventMgr::OffMiniGame_Arrow(SCENETAG eSceneTag, _bool ClearCheck)
 	if (ClearCheck == true)
 	{
 		Set_MiniGameClearCheck(0, TRUE);
-		SoundMgr()->StopSound(SOUND_BGM);
+		Set_MiniGameLoseCheck(0, FALSE);
 		OnPause(FALSE, SCENETAG::LOBBY);
 		SoundMgr()->PlaySoundW(L"MiniGameClear.mp3",SOUND_DIALOG,1.f);
 		SoundMgr()->PlayBGM(L"LobbyBGM3.mp3", 0.25f);
@@ -193,18 +191,12 @@ HRESULT CEventMgr::OffMiniGame_Arrow(SCENETAG eSceneTag, _bool ClearCheck)
 	if (ClearCheck == false)
 	{
 		Set_MiniGameClearCheck(0, FALSE);
+		Set_MiniGameLoseCheck(0, TRUE);
 		OnPause(FALSE, SCENETAG::LOBBY);
 	}
 
-// 	if (pGame_Arrow)
-// 	{
-// 		Safe_Release(pGame_Arrow);
-// // 		delete pGame_Arrow;
-// // 		pGame_Arrow = nullptr;
-// 	}
-
 	SoundMgr()->StopSound(SOUND_BGM);
-	SoundMgr()->PlayBGM(L"LobbyBGM3.mp3", 1);
+	SoundMgr()->PlayBGM(L"LobbyBGM3.mp3", 0.25f);
 
 	return S_OK;
 }
@@ -214,7 +206,7 @@ HRESULT CEventMgr::OffMiniGame_KickBoard(SCENETAG eSceneTag, _bool ClearCheck)
 	if (ClearCheck == true)
 	{
 		Set_MiniGameClearCheck(1, TRUE);
-		SoundMgr()->StopSound(SOUND_BGM);
+		Set_MiniGameLoseCheck(1, FALSE);
 		OnPause(FALSE, SCENETAG::LOBBY);
 		SoundMgr()->PlaySoundW(L"MiniGameClear.mp3", SOUND_DIALOG, 1.f);
 		SoundMgr()->PlayBGM(L"LobbyBGM3.mp3", 0.25f);
@@ -222,18 +214,12 @@ HRESULT CEventMgr::OffMiniGame_KickBoard(SCENETAG eSceneTag, _bool ClearCheck)
 	if (ClearCheck == false)
 	{
 		Set_MiniGameClearCheck(1, FALSE);
+		Set_MiniGameLoseCheck(1, TRUE);
 		OnPause(FALSE, SCENETAG::LOBBY);
 	}
 
-// 	if (pGame_KickBoard)
-// 	{
-// 		Safe_Release(pGame_KickBoard);
-// // 		delete pGame_KickBoard;
-// // 		pGame_KickBoard = nullptr;
-// 	}
-
 	SoundMgr()->StopSound(SOUND_BGM);
-	SoundMgr()->PlayBGM(L"LobbyBGM3.mp3", 1);
+	SoundMgr()->PlayBGM(L"LobbyBGM3.mp3", 0.25f);
 
 	return S_OK;
 }

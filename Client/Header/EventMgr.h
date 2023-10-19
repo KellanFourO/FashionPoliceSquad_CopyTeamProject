@@ -48,11 +48,15 @@ public:
 	_bool		Get_MiniGameClearCheck(_uint iNumber) { return m_bMiniGame_ClearCheck[iNumber]; }
 	void		Set_MiniGameClearCheck(_uint iNumber, _bool _TrueOrFalse) { m_bMiniGame_ClearCheck[iNumber] = _TrueOrFalse; }
 
+	_bool		Get_MiniGameLoseCheck(_uint iNumber) { return m_bMiniGame_LoseCheck[iNumber]; }
+	void		Set_MiniGameLoseCheck(_uint iNumber, _bool _TrueOrFalse) { m_bMiniGame_LoseCheck[iNumber] = _TrueOrFalse; }
+
 	MiniGameState	Get_MiniGameState() { return m_eMiniGameState; }
 
 private:
 	_bool					m_bMiniGame_Mode;
 	_bool					m_bMiniGame_ClearCheck[3] = { false, false, false }; //클리어 여부 체크
+	_bool					m_bMiniGame_LoseCheck[3] = { false, false, false }; //졌는지 여부 체크
 
 	MiniGameState			m_eMiniGameState = MiniGameState::NOT_PLAY;
 
