@@ -23,7 +23,7 @@ HRESULT CMainApp::Ready_MainApp()
 	FAILED_CHECK_RETURN(SetUp_DefaultSetting(&m_pGraphicDev), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Scene(m_pGraphicDev, &m_pManagementClass), E_FAIL);
 
-	CImGuiManager::GetInstance()->SetUp_ImGui(m_pGraphicDev);//
+	//CImGuiManager::GetInstance()->SetUp_ImGui(m_pGraphicDev);//
 
 	m_pGraphicDev->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTEXF_LINEAR);
 	m_pGraphicDev->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTEXF_POINT);
@@ -42,17 +42,17 @@ int CMainApp::Update_MainApp(const _float& fTimeDelta)
 	if (GetAsyncKeyState(VK_F5) & 0x8000)
 	{
 
-		CImGuiManager::GetInstance()->Set_Switch(true);//
+		//CImGuiManager::GetInstance()->Set_Switch(true);//
 
 	}
 
 	if (GetAsyncKeyState(VK_F6) & 0x8000)
 	{
 
-		CImGuiManager::GetInstance()->Set_Switch(false);//
+		//CImGuiManager::GetInstance()->Set_Switch(false);//
 	}
 
-	CImGuiManager::GetInstance()->Update_ImGui(fTimeDelta);//
+	//CImGuiManager::GetInstance()->Update_ImGui(fTimeDelta);//
 
 
 
@@ -65,7 +65,7 @@ void CMainApp::LateUpdate_MainApp()
 
 	Engine::LateUpdate_Scene();
 	Engine::LateUpdate_InputDev();
-	CImGuiManager::GetInstance()->LateUpdate_ImGui(m_pGraphicDev);//
+	//CImGuiManager::GetInstance()->LateUpdate_ImGui(m_pGraphicDev);//
 
 }
 
@@ -76,7 +76,7 @@ void CMainApp::Render_MainApp()
 	Engine::Render_Scene(m_pGraphicDev);
 
 
-	CImGuiManager::GetInstance()->Render_ImGui(m_pGraphicDev);//
+	//CImGuiManager::GetInstance()->Render_ImGui(m_pGraphicDev);//
 
 
 	Engine::Render_End();

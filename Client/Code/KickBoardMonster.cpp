@@ -48,7 +48,7 @@ HRESULT CKickBoardMonster::Ready_GameObject(_vec3 pPoint)
 	//유진 70, 20으로 수정함
     m_fDectedRange = 70.f;
     m_fAttackRange = 20.f;
-    m_fSpeed = 25.f;
+    m_fSpeed = 35.f;
 
 
     m_pTransformCom->Set_Scale({ 5.0f,5.0f, 5.0f });
