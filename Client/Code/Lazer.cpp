@@ -202,15 +202,22 @@ void CLazer::StartPosition()
 
 	for (auto iter : ObjList)
 	{
-		if (iter->Get_HitType() == BULLETTYPE::SHOTGUN_RAZER && m_bFire)
+		if (m_bFire)
 		{
-			if (CollisionManager()->CollisionRayToCube(m_pCollider, iter->Get_Collider(), vStartPos))
+			if (iter->Get_HitType() == BULLETTYPE::SHOTGUN_RAZER && m_bFire)
 			{
-				static_cast<CMonster*>(iter)->Set_RecogTextureIndex(2);
-				static_cast<CMonster*>(iter)->Attacked(m_fDmg);
+				if (CollisionManager()->CollisionRayToCube(m_pCollider, iter->Get_Collider(), vStartPos))
+				{
+					static_cast<CMonster*>(iter)->Set_RecogTextureIndex(2);
+					static_cast<CMonster*>(iter)->Attacked(m_fDmg);
+				}
 			}
-
+			else
+			{
+				static_cast<CMonster*>(iter)->Set_RecogTextureIndex(3);
+			}
 		}
+
 	}
 
 
