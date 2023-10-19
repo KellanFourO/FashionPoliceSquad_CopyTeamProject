@@ -48,7 +48,7 @@ void CRay::LateUpdate_GameObject()
 
 void CRay::Render_GameObject()
 {
-	m_pCollider->Render_Collider();
+	//m_pCollider->Render_Collider();
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, &m_pTransformCom->WorldMatrix());
 }
 

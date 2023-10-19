@@ -99,7 +99,7 @@ void CLazer::Render_GameObject()
 {
 	if (m_bFire)
 	{
-		m_pCollider->Render_Collider();
+		//m_pCollider->Render_Collider();
 		m_pGraphicDev->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
 
 		D3DCOLORVALUE Difuse = { 1.f, 0.f, 0.f, 1.f };
