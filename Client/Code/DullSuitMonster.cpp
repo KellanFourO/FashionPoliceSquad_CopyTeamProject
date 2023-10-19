@@ -71,6 +71,16 @@ HRESULT CDullSuitMonster::Ready_GameObject(_vec3 pPoint)
 _int CDullSuitMonster::Update_GameObject(const _float& fTimeDelta)
 {
     __super::Update_GameObject(fTimeDelta);
+
+	if (INFO.bRealDead && m_eObjectTag != OBJECTTAG::BOSS)
+	{
+		m_fDeadTick += fTimeDelta;
+
+		if (m_fDeadTick > 3)
+		{
+			return OBJ_DEAD;
+		}
+	}
 // 	if (INFO.bDead)
 // 	{
 // 		CMonsterBombEffect* MBEffect = CMonsterBombEffect::Create(m_pGraphicDev);
@@ -100,6 +110,7 @@ void CDullSuitMonster::LateUpdate_GameObject()
          INFO.MonsterState = m_pStateArray[DEAD];
          INFO.MonsterState->Initialize(this);
          INFO.bDead = false;
+         INFO.bRealDead= true;
      }   // »ç¸ÁÆÇÁ¤
     __super::LateUpdate_GameObject();
 
