@@ -145,7 +145,7 @@ HRESULT CEventMgr::OnMiniGame_KickBoard(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG 
 // 		delete pGame_KickBoard;
 // 		pGame_KickBoard = nullptr;
 	}
-	
+
 	m_eMiniGameState = CEventMgr::MiniGameState::PLAY_NOW;
 
 	pGame_KickBoard = Engine::CMainGame_KickBoard::Create(pGraphicDev);
@@ -222,7 +222,7 @@ HRESULT CEventMgr::OffMiniGame_KickBoard(SCENETAG eSceneTag, _bool ClearCheck)
 		Set_MiniGameClearCheck(1, FALSE);
 		OnPause(FALSE, SCENETAG::LOBBY);
 	}
-	
+
 // 	if (pGame_KickBoard)
 // 	{
 // 		Safe_Release(pGame_KickBoard);

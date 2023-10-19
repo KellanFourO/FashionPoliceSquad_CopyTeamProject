@@ -136,7 +136,7 @@ namespace Engine
 		TRIGGER_NUMBER			eTrName;		//트리거 이름 열거체
 		_vec3					vSize;			//x, y, z 길이
 		_vec3					vPos;			//x, y, z 중점
-		_uint					iIndex;			
+		_uint					iIndex;
 		TRIGGER_CASE			eTrCase;		//한 번, 두 번, 반복 발동 중
 		TRIGGER_TYPE			eTrType;		//발동 시 어떤 반응을 만들어낼 것인지
 		TRIGGER_STATE			eTrSTATE;		//발동 전, 중, 후
@@ -199,6 +199,7 @@ namespace Engine
 
 		_bool			bAggro;		//어그로 끌린 상태로 시작할지
 		_bool			bDead = false;		//주금
+		_bool			bRealDead = false;
 		_bool			bHit = false;		//쳐맞음
 
 		_int			iFlags;		//이벤트용

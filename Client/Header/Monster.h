@@ -111,6 +111,7 @@ protected:
 	_float					m_fAnimateTime = 0;
 	_float					m_fHitTime = 0;
 	_float					m_fAttackTime = 0;
+	_float					m_fDeadTick = 0;
 
 
 

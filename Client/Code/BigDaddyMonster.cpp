@@ -71,7 +71,18 @@ HRESULT CBigDaddyMonster::Ready_GameObject(_vec3 pPoint)
 
 _int CBigDaddyMonster::Update_GameObject(const _float& fTimeDelta)
 {
+
 	__super::Update_GameObject(fTimeDelta);
+
+	if (INFO.bRealDead && m_eObjectTag != OBJECTTAG::BOSS)
+	{
+		m_fDeadTick += fTimeDelta;
+
+		if (m_fDeadTick > 3)
+		{
+			return OBJ_DEAD;
+		}
+	}
 
 	//m_pUI_Recognition->Update_GameObject(fTimeDelta);
 	return OBJ_NOEVENT;
@@ -95,6 +106,7 @@ void CBigDaddyMonster::LateUpdate_GameObject()
 		INFO.MonsterState = m_pStateArray[DEAD];
 		INFO.MonsterState->Initialize(this);
 		INFO.bDead = false;
+		INFO.bRealDead = true;
 	}   // »ç¸ÁÆÇÁ¤
 
 	__super::LateUpdate_GameObject();

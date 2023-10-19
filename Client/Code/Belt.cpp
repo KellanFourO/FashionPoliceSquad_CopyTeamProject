@@ -42,7 +42,7 @@ HRESULT CBelt::Ready_GameObject()
 	m_fBeltMoveRight = 3;
 	m_fBeltMoveDown = 5.f;
 	m_vBeltScale = { 0.3f,0.3f,0.3f };
-
+	m_fDmg = 50.f;
 
 	BeltState = m_pStateArray[IDLE];
 	BeltState->Initialize(this);

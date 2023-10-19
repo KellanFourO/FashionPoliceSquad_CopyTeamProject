@@ -58,6 +58,7 @@ _int CStage2::Update_Scene(const _float& fTimeDelta)
  		m_bLateInit = false;
  	}
 
+
 	//if (m_pLayer->Get_ObjectList(OBJECTTAG::MONSTER).size() == 0 && m_bEnd)
 	//{
 	//	SoundMgr()->StopAll();
@@ -365,6 +366,11 @@ HRESULT CStage2::Ready_Layer_UI(LAYERTAG eLayerTag)
 
 	pGameObject = CRopeUI::Create(m_pGraphicDev);
 	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CRecognitionRange::Create(m_pGraphicDev, nullptr, UI_TYPE::DESTINATION);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	static_cast<CRecognitionRange*>(pGameObject)->Set_TargetPos(_vec3(64.965f, 2.f, 50.675f));
 	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
 
 	m_mapLayer.insert({ eLayerTag, pLayer });
@@ -861,6 +867,18 @@ HRESULT CStage2::Load_Data_T(const TCHAR* pFilePath, OBJECTTAG eTag)
 
 void CStage2::Admin_KeyInput()
 {
+
+	if (Engine::Get_DIKeyState(DIK_F4) & 0x80 && m_bAdminSwitch)
+	{
+		CEventMgr::GetInstance()->OnPause(true, SCENETAG::STAGE);
+		m_bAdminSwitch = false;
+	}
+	if (Engine::Get_DIKeyState(DIK_F5) & 0x80 && m_bAdminSwitch)
+	{
+		CEventMgr::GetInstance()->OnPause(false, SCENETAG::STAGE);
+		m_bAdminSwitch = false;
+	}
+
 	if (Key_Up(DIK_U))
 	{
 		CEventMgr::GetInstance()->OffDialog();
