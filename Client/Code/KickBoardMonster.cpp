@@ -97,6 +97,7 @@ void CKickBoardMonster::LateUpdate_GameObject()
         INFO.MonsterState = m_pStateArray[DEAD];
         INFO.MonsterState->Initialize(this);
         INFO.bDead = false;
+        m_bDead2 = false;
     }   // »ç¸ÁÆÇÁ¤
 
     __super::LateUpdate_GameObject();
@@ -143,7 +144,14 @@ void CKickBoardMonster::OnCollisionEnter(CCollider* _pOther)
 
     if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYER)
     {
-		dynamic_cast<CPlayer*>(_pOther->Get_Host())->Attacked(3.f);
+        if(!m_bDead2)
+            return;
+        else
+        {
+            dynamic_cast<CPlayer*>(_pOther->Get_Host())->Attacked(3.f);
+
+        }
+
     }
 }
 
