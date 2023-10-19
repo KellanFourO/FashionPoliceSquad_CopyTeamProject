@@ -30,7 +30,7 @@ HRESULT CMainGame_Quiz::Ready_GameObject()
 	D3DXMatrixOrthoLH(&m_matProj, WINCX, WINCY, 0.0f, 100.0f);
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_eGameState = CMainGame_KickBoard::KickBoard_GameState::ING;
+	//m_eGameState = CMainGame_KickBoard::KickBoard_GameState::ING;
 
 	//소속객체는 여기서 만들기
 
