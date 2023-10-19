@@ -44,6 +44,7 @@ HRESULT CPlayer::Ready_GameObject()
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 	Set_ObjectTag(OBJECTTAG::PLAYER);
 
+	
 
 	ReadyState();
 
@@ -90,7 +91,7 @@ HRESULT CPlayer::Ready_GameObject()
 	{
 		m_bMonsterEncounter[i] = false;
 	}
-
+	
 	m_pCollider->InitOBB(m_pTransformCom->m_vInfo[INFO_POS], &m_pTransformCom->m_vInfo[INFO_RIGHT], *m_pTransformCom->Get_Scale());
 
 	//m_pTransformCom->Rotation(ROT_Y,D3DXToRadian(INFO.fStartDir));
@@ -186,6 +187,19 @@ void CPlayer::ReadyState()
 	m_pStateArray[HEAL] =		new CPlayer_Heal;
 	m_pStateArray[ARMOR] =		new CPlayer_Armor;
 	m_pStateArray[JUMP] =		new CPlayer_Jump;
+}
+
+void CPlayer::PlayerLookAtReset(_vec3 PlayerSettingPos)
+{
+	D3DXVECTOR3 playerLookAt(0.0f, 0.0f, 1.0f);
+
+	D3DXMATRIX viewMatrix;
+	D3DXVECTOR3 playerPosition = PlayerSettingPos;
+
+	D3DXMatrixLookAtLH(&viewMatrix, &playerPosition, &(playerPosition + playerLookAt), &D3DXVECTOR3(0, 1, 0));
+
+	// 뷰 행렬을 사용하여 DirectX 디바이스에 설정
+	m_pGraphicDev->SetTransform(D3DTS_VIEW, &viewMatrix);
 }
 
 HRESULT CPlayer::Add_Component()
@@ -760,6 +774,12 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 			_pOther->Get_OBJAttribute() != OBJ_ATTRIBUTE::ForPaint_OBJ&&
 			_pOther->Get_OBJAttribute() != OBJ_ATTRIBUTE::C_POINT_OBJ))
 	{
+		if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ)
+		{
+			if (dynamic_cast<CBuild_Obj*>(_pOther->Get_Host())->Get_OBJ_ATTRIBUTE() == OBJ_ATTRIBUTE::INTER_OBJ)
+				return;
+		}
+
 
 		_vec3	vOtherPos = _pOther->GetCenterPos();
 		_float* fOtherAxis = _pOther->GetAxisLen();

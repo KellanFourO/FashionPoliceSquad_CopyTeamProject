@@ -67,6 +67,8 @@ private:
 
 	_float			m_fAttackTime = 0;
 
+	_bool			m_bDead2 = true;
+
 public:
 	static CKickBoardMonster* Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 pPoint);
 
