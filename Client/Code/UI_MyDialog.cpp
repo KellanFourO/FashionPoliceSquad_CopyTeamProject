@@ -153,6 +153,9 @@ void CMyDialog::LoadText(DIALOGTAG eDialogTag)
 	case Engine::DIALOGTAG::STORY_LOBBY_CONCLU:
 		fin.open(L"../Bin/Data/UI/STORY_LOBBY_CONCLU.dat");
 		break;
+	case Engine::DIALOGTAG::STORY_LOBBY_CONCLU2:
+		fin.open(L"../Bin/Data/UI/STORY_LOBBY_CONCLU2.dat");
+		break;
 	case Engine::DIALOGTAG::ST1_BOSS_INTRO:
 		fin.open(L"../Bin/Data/UI/ST1_BOSS_INTRO.dat");
 		break;
@@ -217,7 +220,7 @@ void CMyDialog::LoadText(DIALOGTAG eDialogTag)
 
 void CMyDialog::KeyInput()
 {
-	if (Engine::Get_DIKeyState(DIK_RETURN) & 0x80 && m_bTick && m_PortraitList.size() != 0 && m_TextList.size() != 0)
+	if (Get_DIKeyState(DIK_RETURN) & 0x80 && m_bTick && m_PortraitList.size() != 0 && m_TextList.size() != 0)
 	{
 		SoundMgr()->StopSound(SOUND_DIALOG2);
 
@@ -227,23 +230,18 @@ void CMyDialog::KeyInput()
 			m_bSound = false;
 		}
 
-		if (m_eDialog == DIALOGTAG::STORY_ST1_DEVELOP && m_bRenewal)
-		{
-			if (m_PortraitList.size() == 5)
-			{
-				CGameObject* pGameObject = CRecognitionRange::Create(m_pGraphicDev,nullptr,UI_TYPE::DESTINATION);
-				static_cast<CRecognitionRange*>(pGameObject)->Set_TargetPos(_vec3(206.62f, 15.f, 246.38f));
-				Management()->Get_Scene()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::UI, pGameObject);
-
-				m_bRenewal = false;
-			}
-		}
-
 		m_PortraitList.pop_front();
 		m_TextList.pop_front();
 
+		if (m_eDialog == DIALOGTAG::STORY_ST2_CONCLU && m_PortraitList.size() == 2)
+		{
+			SoundMgr()->PlaySoundW(L"JunHo_Arazzo.mp3",SOUND_DIALOG2, 100.f);
+			m_bSound = false;
+		}
 
-		if (!m_PortraitList.empty())
+
+
+		if (!m_PortraitList.empty() && m_bSound)
 		{
 			switch (m_PortraitList.front())
 			{
@@ -292,6 +290,8 @@ void CMyDialog::KeyInput()
 
 		if (m_PortraitList.size() == 0 || m_TextList.size() == 0 || m_bEndInput)
 		{
+			SCENETAG eScene = Management()->Get_Scene()->Get_SceneTag();
+
 			switch (m_eDialog)
 			{
 			case Engine::DIALOGTAG::STORY_ST1_INTRO:
@@ -299,11 +299,17 @@ void CMyDialog::KeyInput()
 				m_pMission->Set_Objective(L"JS 아카데미의\n범죄자들을 소탕하라");
 				break;
 			case Engine::DIALOGTAG::STORY_ST1_DEVELOP:
+			{
 				m_pMission->Set_Title(L"QUEST");
 				m_pMission->Set_Objective(L"목적지로 가자");
 				CEventMgr::GetInstance()->OnCard(m_pGraphicDev, SCENETAG::STAGE, DIALOGTAG::STORY_ST1_DEVELOP);
+				CGameObject* pGameObject = CRecognitionRange::Create(m_pGraphicDev, nullptr, UI_TYPE::DESTINATION);
+				static_cast<CRecognitionRange*>(pGameObject)->Set_TargetPos(_vec3(206.62f, 15.f, 246.38f));
+				Management()->Get_Scene()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::UI, pGameObject);
 				break;
+			}
 			case Engine::DIALOGTAG::STORY_ST1_CONCLU:
+				CEventMgr::GetInstance()->SceneChange(m_pGraphicDev, SCENETAG::LOBBY);
 				break;
 			case Engine::DIALOGTAG::STORY_LOBBY_INTRO:
 				m_pMission->Set_Title(L"QUEST");
@@ -320,7 +326,10 @@ void CMyDialog::KeyInput()
 			case Engine::DIALOGTAG::STORY_LOBBY_CONCLU:
 				m_pMission->Set_Title(L"QUEST");
 				m_pMission->Set_Objective(L"악의 근원을 퇴치하라");
+				break;
+			case Engine::DIALOGTAG::STORY_LOBBY_CONCLU2:
 				CEventMgr::GetInstance()->OnCard(m_pGraphicDev, SCENETAG::LOBBY, DIALOGTAG::STORY_LOBBY_CONCLU);
+
 				break;
 			case Engine::DIALOGTAG::ST1_BOSS_INTRO:
 				m_pMission->Set_Title(L"QUEST");
@@ -329,6 +338,7 @@ void CMyDialog::KeyInput()
 			case Engine::DIALOGTAG::ST1_BOSS_CONCLU:
 				m_pMission->Set_Title(L"QUEST");
 				m_pMission->Set_Objective(L"밖으로 나가자");
+				CEventMgr::GetInstance()->SceneChange(m_pGraphicDev, SCENETAG::STAGE2);
 				break;
 			case Engine::DIALOGTAG::STORY_ST2_INTRO:
 				m_pMission->Set_Title(L"QUEST");
@@ -336,11 +346,16 @@ void CMyDialog::KeyInput()
 				CEventMgr::GetInstance()->OnDropItem(m_pGraphicDev, SCENETAG::STAGE2, 30);
 				break;
 			case Engine::DIALOGTAG::STORY_ST2_CONCLU:
-				m_pMission->Set_Title(L"END");
-				m_pMission->Set_Objective(L"임무 완료");
-				static_cast<CStage2*>(Management()->Get_Scene())->Set_Video(false);
-				break;
-
+				{
+					m_pMission->Set_Title(L"END");
+					m_pMission->Set_Objective(L"임무 완료");
+					static_cast<CStage2*>(Management()->Get_Scene())->Set_Video(false);
+					break;
+				}
+			case Engine::DIALOGTAG::SKILL_DASH:
+				{
+					CEventMgr::GetInstance()->SceneChange(m_pGraphicDev, SCENETAG::BOSS_STAGE);
+				}
 			}
 
 			if (Management()->Get_Scene()->Get_Pause())

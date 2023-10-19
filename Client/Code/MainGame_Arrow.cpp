@@ -93,7 +93,7 @@ HRESULT CMainGame_Arrow::Ready_GameObject()
 
 void CMainGame_Arrow::Render_GameObject()
 {
-	if (!m_ClearCheck) {
+	if (!m_ClearCheck && !m_LoseCheck) {
 
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 		m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
@@ -131,8 +131,9 @@ void CMainGame_Arrow::Render_GameObject()
 _int CMainGame_Arrow::Update_GameObject(const _float& fTimeDelta)
 {
 	m_ClearCheck = CEventMgr::GetInstance()->Get_MiniGameClearCheck(0);
-		
-	if (!m_ClearCheck) {
+	m_LoseCheck = CEventMgr::GetInstance()->Get_MiniGameLoseCheck(0);
+
+	if (!m_ClearCheck && !m_LoseCheck) {
 
 		Engine::Add_RenderGroup(RENDER_UI, this);
 		
@@ -166,7 +167,7 @@ _int CMainGame_Arrow::Update_GameObject(const _float& fTimeDelta)
 
 void CMainGame_Arrow::LateUpdate_GameObject()
 {
-	if (!m_ClearCheck) {
+	if (!m_ClearCheck && !m_LoseCheck) {
 		CGameObject::LateUpdate_GameObject();
 
 		m_pStateIcon->LateUpdate_GameObject();
@@ -189,6 +190,10 @@ void CMainGame_Arrow::LateUpdate_GameObject()
 
 void CMainGame_Arrow::Reset()
 {
+	m_eGameState = CMainGame_Arrow::ArrowGameState::State_END;
+	m_ClearCheck = false;
+	m_LoseCheck = false;
+
 	// 시드 값으로 사용할 난수 엔진 생성
 	random_device rd;
 
@@ -205,22 +210,30 @@ void CMainGame_Arrow::Reset()
 	if (!m_pVecArrow.empty()) {
 		for (auto& iter : m_pVecArrow)
 		{
-			iter->LateUpdate_GameObject();
+			Safe_Release(iter);
 		}
-
-		for (int i = 0; i != m_ArrowCount; ++i)
+		m_pVecArrow.clear();
+	}
+	if (!m_pCopyVector.empty()) {
+		for (auto& iter : m_pCopyVector)
 		{
-			int random_number = distribution(gen);
-			int iTempIndex = m_ArrowCount - (m_ArrowCount - i);
-
-			CMini_Arrow* pArrow = CMini_Arrow::Create(m_pGraphicDev, iTempIndex, random_number);
-
-			m_pVecArrow.push_back(pArrow);
+			Safe_Release(iter);
 		}
+		m_pCopyVector.clear();
 	}
 
-	_vec3 m_vCursorPos = m_pVecArrow.back()->Get_ArrowPos();
+	for (int i = 0; i != m_ArrowCount; ++i)
+	{
+		int random_number = distribution(gen);
+		int iTempIndex = m_ArrowCount - (m_ArrowCount - i);
+	
+		CMini_Arrow* pArrow = CMini_Arrow::Create(m_pGraphicDev, iTempIndex, random_number);
+	
+		m_pVecArrow.push_back(pArrow);
+	}
+	m_pCopyVector = m_pVecArrow;
 
+	_vec3 m_vCursorPos = m_pVecArrow.back()->Get_ArrowPos();
 	m_pCursor = CMini_Cursor::Create(m_pGraphicDev, m_vCursorPos);
 }
 
@@ -281,7 +294,6 @@ HRESULT CMainGame_Arrow::GameState_Update()
 	{
 		MSG_BOX("Lose...");
 		CEventMgr::GetInstance()->OffMiniGame_Arrow(SCENETAG::LOBBY, false);
-		Reset();
 	}
 	return S_OK;
 }

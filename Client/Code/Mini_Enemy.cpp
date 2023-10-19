@@ -54,7 +54,7 @@ HRESULT CMini_Enemy::Ready_GameObject(_float pPos_X, int TexNum)
 
 	_vec3 vPos, vScale;
 	_float fMultiply = 1.f;
-	m_ENEMYSize = 40.f;
+	m_ENEMYSize = 35.f;
 
 	vPos = { pPos_X, 440.f, 0.f };
 	vScale = { m_ENEMYSize * fMultiply, (m_ENEMYSize + 10.f) * fMultiply, 1.f };

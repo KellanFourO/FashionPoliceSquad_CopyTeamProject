@@ -68,6 +68,25 @@ HRESULT CLayer::Delete_GameObject(OBJECTTAG eObjTag, CGameObject* pGameObject, _
 	return S_OK;
 }
 
+HRESULT CLayer::Delete_GameObject2(OBJECTTAG eObjTag, CGameObject* pGameObject)
+{
+	for (auto iter = m_mapObject.begin(); iter != m_mapObject.end(); ) {
+		auto& objectVector = iter->second;
+
+		if (objectVector.front()->Get_iIndex() == pGameObject->Get_iIndex()) {
+			auto toErase = iter;
+			++iter;
+
+			m_mapObject.erase(toErase);
+		}
+		else {
+			++iter;
+		}
+	}
+
+	return S_OK;
+}
+
 
 HRESULT CLayer::Ready_Layer()
 {

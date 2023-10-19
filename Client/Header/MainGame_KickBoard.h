@@ -29,14 +29,15 @@ public:
 	virtual _int			Update_GameObject(const _float& fTimeDelta) override;
 	virtual void			LateUpdate_GameObject() override;
 
+	void					Collisoin_Check();
+	void					Reset();
+
 private:
 	HRESULT					Add_Component();
 	HRESULT					GameState_Update();
 	void					KeyInput();
 	void					TimeCheck();
 	void					CoinCount();
-
-	void					Collisoin_Check();
 
 private:
 
@@ -69,6 +70,7 @@ private:
 	_int					m_GoldCreatCount = 0;
 	
 	_bool					m_ClearCheck = false;
+	_bool					m_LoseCheck = false;
 
 
 

@@ -43,6 +43,8 @@ _int CMonster::Update_GameObject(const _float& fTimeDelta)
 {
 
 
+
+
 	if (INFO.bHit == true) {
 		m_fHitTime += fTimeDelta;
 	}

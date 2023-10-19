@@ -75,6 +75,16 @@ _int CKickBoardMonster::Update_GameObject(const _float& fTimeDelta)
 {
     __super::Update_GameObject(fTimeDelta);
 
+	if (INFO.bRealDead && m_eObjectTag != OBJECTTAG::BOSS)
+	{
+		m_fDeadTick += fTimeDelta;
+
+		if (m_fDeadTick > 3)
+		{
+			return OBJ_DEAD;
+		}
+	}
+
     m_pRigidBody->Update_RigidBody(fTimeDelta);
     return OBJ_NOEVENT;
 }
@@ -97,6 +107,7 @@ void CKickBoardMonster::LateUpdate_GameObject()
         INFO.MonsterState = m_pStateArray[DEAD];
         INFO.MonsterState->Initialize(this);
         INFO.bDead = false;
+        INFO.bRealDead = true;
         m_bDead2 = false;
     }   // »ç¸ÁÆÇÁ¤
 
