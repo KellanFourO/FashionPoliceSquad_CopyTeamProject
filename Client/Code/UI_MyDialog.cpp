@@ -153,6 +153,9 @@ void CMyDialog::LoadText(DIALOGTAG eDialogTag)
 	case Engine::DIALOGTAG::STORY_LOBBY_CONCLU:
 		fin.open(L"../Bin/Data/UI/STORY_LOBBY_CONCLU.dat");
 		break;
+	case Engine::DIALOGTAG::STORY_LOBBY_CONCLU2:
+		fin.open(L"../Bin/Data/UI/STORY_LOBBY_CONCLU2.dat");
+		break;
 	case Engine::DIALOGTAG::ST1_BOSS_INTRO:
 		fin.open(L"../Bin/Data/UI/ST1_BOSS_INTRO.dat");
 		break;
@@ -323,7 +326,10 @@ void CMyDialog::KeyInput()
 			case Engine::DIALOGTAG::STORY_LOBBY_CONCLU:
 				m_pMission->Set_Title(L"QUEST");
 				m_pMission->Set_Objective(L"악의 근원을 퇴치하라");
+				break;
+			case Engine::DIALOGTAG::STORY_LOBBY_CONCLU2:
 				CEventMgr::GetInstance()->OnCard(m_pGraphicDev, SCENETAG::LOBBY, DIALOGTAG::STORY_LOBBY_CONCLU);
+
 				break;
 			case Engine::DIALOGTAG::ST1_BOSS_INTRO:
 				m_pMission->Set_Title(L"QUEST");
@@ -345,6 +351,10 @@ void CMyDialog::KeyInput()
 					m_pMission->Set_Objective(L"임무 완료");
 					static_cast<CStage2*>(Management()->Get_Scene())->Set_Video(false);
 					break;
+				}
+			case Engine::DIALOGTAG::SKILL_DASH:
+				{
+					CEventMgr::GetInstance()->SceneChange(m_pGraphicDev, SCENETAG::BOSS_STAGE);
 				}
 			}
 

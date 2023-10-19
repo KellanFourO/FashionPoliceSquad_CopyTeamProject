@@ -93,6 +93,7 @@ private:
 
 	HRESULT				Create_Monster(int iNum);
 	HRESULT				Check_Trigger();
+	HRESULT				Check_Collision_Water();
 
 private:
 	CLayer*				m_pLayer = nullptr;  //Environment
@@ -126,12 +127,14 @@ private:
 	vector<IDirect3DBaseTexture9*>	m_VecTempPlane;
 
 	vector<OBJData*>				m_VecOBJData;
+
 	_uint							m_iOBJIndex = 0;
 
 	vector<CUBE*>					m_VecCubeData;
 	_uint							m_iCubeIndex = 0;
 
 	vector<OBJData*>				m_VecLight;
+	vector<OBJData*>				m_VecWater;
 
 	vector<C_POINT*>			    m_VecCreatePoint[4];
 	vector<TRIGGER*>			    m_TriggerDataTemp;

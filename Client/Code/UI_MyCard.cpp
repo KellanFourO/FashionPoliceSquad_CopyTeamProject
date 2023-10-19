@@ -289,17 +289,7 @@ void CMyCard::CardPicking(const _float& fTimeDelta)
 			}
 			else
 			{
-				if (m_eCardType == CARD_TYPE::FORCE && !m_bOnDialog)
-				{
-					CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::STAGE, DIALOGTAG::SKILL_DASH);
-					m_bOnDialog = true;
-				}
-				else if (m_eCardType == CARD_TYPE::SPEED && !m_bOnDialog)
-				{
-					CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::STAGE, DIALOGTAG::SKILL_ROPE);
-					m_bOnDialog = true;
-				}
-
+				m_bOnDialog = true;
 				m_IsDead = true;
 			}
 
