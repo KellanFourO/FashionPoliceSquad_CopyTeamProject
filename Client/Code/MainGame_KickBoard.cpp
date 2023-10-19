@@ -342,11 +342,11 @@ void CMainGame_KickBoard::TimeCheck()
 	m_pTimer[1]->Set_TexNum(Ten_Num);
 	m_pTimer[2]->Set_TexNum(One_Num);
 
-	if ((m_RealTime <= 0) && m_iMyCoinCount < 10)
+	if ((m_RealTime <= 0) && m_iMyCoinCount < 5)
 	{
 		m_eGameState = CMainGame_KickBoard::KickBoard_GameState::LOSE;
 	}
-	if ((m_RealTime > 0) && m_iMyCoinCount >= 10)
+	if ((m_RealTime > 0) && m_iMyCoinCount >= 5)
 	{
 		m_eGameState = CMainGame_KickBoard::KickBoard_GameState::CLEAR;
 	}

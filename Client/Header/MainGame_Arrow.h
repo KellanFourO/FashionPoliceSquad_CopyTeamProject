@@ -30,6 +30,8 @@ public:
 	virtual _int			Update_GameObject(const _float& fTimeDelta) override;
 	virtual void			LateUpdate_GameObject() override;
 
+	void					Reset();
+
 private:
 	HRESULT					Add_Component();
 	void					KeyInput();
