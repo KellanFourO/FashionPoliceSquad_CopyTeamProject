@@ -25,7 +25,7 @@ HRESULT CBrifCase_2::Ready_GameObject()
 	Set_ObjectTag(OBJECTTAG::MONSTERBULLET);
 
 	m_vPos = m_pHostTransform->m_vInfo[INFO_POS];
-	m_fDmg = 10.f;
+	m_fDmg = 5.f;
 
 	m_pTransformCom->Set_Host(this);
 	m_pTransformCom->Set_Pos(m_vPos);

@@ -143,8 +143,7 @@ void CKickBoardMonster::OnCollisionEnter(CCollider* _pOther)
 
     if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYER)
     {
-
-        cout << "워리어 공격" << endl;
+		dynamic_cast<CPlayer*>(_pOther->Get_Host())->Attacked(3.f);
     }
 }
 

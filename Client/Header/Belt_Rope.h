@@ -13,8 +13,8 @@ public:
 
 private:
 
-_float CalculateTensionAccel(const _vec3 vPlayerVelocity);
-_vec3 UpdatePlayerPos(const _vec3& _vPlayerPos, const _vec3& _vPlayerVelocity, const _float fTensionAccel, const _float fTimeDelta);
+	_float CalculateTensionAccel(const _vec3 vPlayerVelocity);
+	_vec3 UpdatePlayerPos(const _vec3& _vPlayerPos, const _float& _vPlayerVelocity, const _float fTimeDelta);
 
 
 	_bool m_bDashCheck = false;
