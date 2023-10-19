@@ -334,7 +334,7 @@ HRESULT CMapTool::Build_Map() //Cube거나 OBJ 거나
                     {
                         m_VecOBJData.push_back(OBJTemp);  // C_POINT 빼곤 다 담겨야함
                     }
-                    if (eAttribute == OBJ_ATTRIBUTE::C_POINT_OBJ)
+                      if (eAttribute == OBJ_ATTRIBUTE::C_POINT_OBJ)
                     {
                         OBJ_C_POINT->defOBJData = *OBJTemp;
                         OBJ_C_POINT->eMonsterType = CImGuiManager::GetInstance()->Get_MonsterType();

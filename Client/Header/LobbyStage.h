@@ -92,6 +92,7 @@ private:
 	HRESULT				Add_Light();
 	HRESULT				Light_OnOff_Check();
 
+	HRESULT				Check_Trigger();
 	HRESULT				Moving_Wall();
 
 private:
@@ -134,6 +135,8 @@ private:
 	_bool							MovingCheck = false;
 	_float							MovingIndextemp2;
 	_bool							MovingCheck2 = false;
+
+	_bool							m_bMiniGameCheck = false; //F키 사용여부
 
 	vector<CUBE*>					m_VecCubeData;
 	_uint							m_iCubeIndex = 0;

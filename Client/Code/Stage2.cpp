@@ -536,18 +536,54 @@ HRESULT CStage2::Check_Trigger()
 					iter->eTrSTATE = TRIGGER_STATE::TR_AFTER;
 					Create_Monster(iCountNum);
 				}
-				// 				else if ((iter->eTrName == TRIGGER_NUMBER::TR3) && (m_bFourthCreat == false))
-				// 				{
-				// 					//여기에 다이얼로그 추가
-				//
-				// 					m_bFourthCreat = true;
-				// 				}
 			}
 		}
 	}
 	return S_OK;
 }
 
+
+HRESULT CStage2::Check_Collision_Water()
+{
+	if (!m_VecWater.empty())
+	{
+		int iCountNum = -1;
+		_vec3 PlayerPos;
+		Management()->Get_Player()->Get_Transform()->Get_Info(INFO_POS, &PlayerPos);
+
+		for (auto& iter : m_VecWater)
+		{
+			_float MinX = (iter->vPos.x) - (iter->vSize.x * 0.5f);
+			_float MaxX = (iter->vPos.x) + (iter->vSize.x * 0.5f);
+
+			_float MinY = (iter->vPos.y) - (iter->vSize.y * 9.0f);
+			_float MaxY = (iter->vPos.y) + (iter->vSize.y * 9.0f);
+
+			_float MinZ = (iter->vPos.z) - (iter->vSize.z * 0.5f);
+			_float MaxZ = (iter->vPos.z) + (iter->vSize.z * 0.5f);
+
+			if (((PlayerPos.x >= MinX) && (PlayerPos.x <= MaxX))
+				&& ((PlayerPos.z >= MinZ) && (PlayerPos.z <= MaxZ))
+				&& ((PlayerPos.y >= MinY) && (PlayerPos.y <= MaxY)))
+			{
+				_vec3 InStagePos1 = { 410.f, 15.f, 455.f };
+				_vec3 InStagePos2 = { 130.f, 20.f, 455.f };
+
+				_float STDPointX = 230.f;
+
+				if (PlayerPos.x < STDPointX)
+				{
+					Management()->Get_Player()->Get_Transform()->Set_Pos(InStagePos2);
+				}
+				else if (PlayerPos.x >= STDPointX)
+				{
+					Management()->Get_Player()->Get_Transform()->Set_Pos(InStagePos1);
+				}
+			}
+		}
+	}
+	return S_OK;
+}
 
 HRESULT CStage2::Create_Monster(int iNum)
 {
@@ -634,6 +670,7 @@ HRESULT CStage2::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 	}
 
 	OBJData* LightTemp = nullptr;
+	OBJData* FogTemp = nullptr;
 
 	if (eTag == OBJECTTAG::BUILD_OBJ) {
 		string m_strText = "OBJData";
@@ -675,6 +712,13 @@ HRESULT CStage2::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 				m_VecLight.push_back(LightTemp);
 			}
 
+			if (iter->eOBJ_Attribute == OBJ_ATTRIBUTE::FOG_OBJ)
+			{
+				OBJData* FogTemp = new OBJData;
+				FogTemp = iter;
+				m_VecWater.push_back(FogTemp);
+			}
+
 			if (iter->eOBJ_Attribute == OBJ_ATTRIBUTE::STD_OBJ)
 			{
 				OBJData* STDTemp = new OBJData;
@@ -692,6 +736,9 @@ HRESULT CStage2::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 
 	delete LightTemp;
 	LightTemp = nullptr;
+
+	delete FogTemp;
+	FogTemp = nullptr;
 
 	return S_OK;
 }

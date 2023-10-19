@@ -92,6 +92,7 @@ void CStage::LateUpdate_Scene()
 	Admin_KeyInput();
 
 	Check_Trigger();
+	Check_Collision_Water();
 
 	//Trigger_Check_For_Create_Monster();
 
@@ -402,6 +403,48 @@ HRESULT CStage::Check_Trigger()
 	return S_OK;
 }
 
+HRESULT CStage::Check_Collision_Water()
+{
+	if (!m_VecWater.empty())
+	{
+		int iCountNum = -1;
+		_vec3 PlayerPos;
+		Management()->Get_Player()->Get_Transform()->Get_Info(INFO_POS, &PlayerPos);
+
+		for (auto& iter : m_VecWater)
+		{
+			_float MinX = (iter->vPos.x) - (iter->vSize.x * 0.5f);
+			_float MaxX = (iter->vPos.x) + (iter->vSize.x * 0.5f);
+
+			_float MinY = (iter->vPos.y) - (iter->vSize.y * 9.0f);
+			_float MaxY = (iter->vPos.y) + (iter->vSize.y * 9.0f);
+
+			_float MinZ = (iter->vPos.z) - (iter->vSize.z * 0.5f);
+			_float MaxZ = (iter->vPos.z) + (iter->vSize.z * 0.5f);
+
+			if (((PlayerPos.x >= MinX) && (PlayerPos.x <= MaxX))
+				&& ((PlayerPos.z >= MinZ) && (PlayerPos.z <= MaxZ))
+				&& ((PlayerPos.y >= MinY) && (PlayerPos.y <= MaxY)))
+			{
+				_vec3 InStagePos1 = { 410.f, 15.f, 455.f };
+				_vec3 InStagePos2 = { 130.f, 20.f, 455.f };
+				
+				_float STDPointX = 230.f;
+
+				if (PlayerPos.x < STDPointX)
+				{ 
+					Management()->Get_Player()->Get_Transform()->Set_Pos(InStagePos2);
+				}
+				else if (PlayerPos.x >= STDPointX)
+				{
+					Management()->Get_Player()->Get_Transform()->Set_Pos(InStagePos1);
+				}
+			}
+		}
+	}
+	return S_OK;
+}
+
 HRESULT CStage::Create_Monster(int iNum)
 {
 	Engine::CGameObject* pGameObject = nullptr;
@@ -531,6 +574,7 @@ HRESULT CStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 	}
 
 	OBJData* LightTemp = nullptr;
+	OBJData* FogTemp = nullptr;
 
 	if (eTag == OBJECTTAG::BUILD_OBJ) {
 		string m_strText = "OBJData";
@@ -567,9 +611,15 @@ HRESULT CStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 
 			if (iter->eOBJ_Attribute == OBJ_ATTRIBUTE::LIGHT_OBJ)
 			{
-				OBJData* LightTemp = new OBJData;
+				LightTemp = new OBJData;
 				LightTemp = iter;
 				m_VecLight.push_back(LightTemp);
+			}
+			if (iter->eOBJ_Attribute == OBJ_ATTRIBUTE::FOG_OBJ)
+			{
+				FogTemp = new OBJData;
+				FogTemp = iter;
+				m_VecWater.push_back(FogTemp);
 			}
 
 			m_iOBJIndex++;
@@ -582,6 +632,9 @@ HRESULT CStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 
 	delete LightTemp;
 	LightTemp = nullptr;
+
+	delete FogTemp;
+	FogTemp = nullptr;
 
 	return S_OK;
 }
@@ -761,11 +814,11 @@ void CStage::Free()
 	}
 	m_VecCubeData.clear();
 
-	for (int i = 0; i < m_VecOBJData.size(); ++i)
-	{
-		Safe_Delete(m_VecOBJData[i]);
-	}
-	m_VecOBJData.clear();
+// 	for (int i = 0; i < m_VecOBJData.size(); ++i)
+// 	{
+// 		Safe_Delete(m_VecOBJData[i]);
+// 	}
+// 	m_VecOBJData.clear();
 
 	int CountNum = 4;
 	for (int i = 0; i < CountNum; ++i) {
