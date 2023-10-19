@@ -130,7 +130,7 @@ void CPaintBulletTrace::Render_GameObject()
 	m_pGraphicDev->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	m_pGraphicDev->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 	//m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, FALSE);
-	m_pCollider->Render_Collider();
+	//m_pCollider->Render_Collider();
 
 	m_pTextureCom->Render_Textrue(_ulong(m_fFrame));
 	m_pEffectBufferCom->Render_Buffer();

@@ -171,7 +171,15 @@ void CMyDialog::LoadText(DIALOGTAG eDialogTag)
 	case Engine::DIALOGTAG::SKILL_ROPE:
 		fin.open(L"../Bin/Data/UI/SKILL_ROPE.dat");
 		break;
-
+	case Engine::DIALOGTAG::ENCOUNTER_DULLSUIT:
+		fin.open(L"../Bin/Data/UI/ENCOUNT_DULLSUIT.dat");
+		break;
+	case Engine::DIALOGTAG::ENCOUNTER_BIGDADDY:
+		fin.open(L"../Bin/Data/UI/ENCOUNT_BIGDADDY.dat");
+		break;
+	case Engine::DIALOGTAG::ENCOUNTER_KICKBOARD:
+		fin.open(L"../Bin/Data/UI/ENCOUNT_KICKBOARD.dat");
+		break;
 
 	}
 
@@ -219,120 +227,135 @@ void CMyDialog::KeyInput()
 			m_bSound = false;
 		}
 
-		switch (m_PortraitList.front())
+		if (m_eDialog == DIALOGTAG::STORY_ST1_DEVELOP && m_bRenewal)
 		{
-		case PORTRAITTAG::PORT_DES:
-				SoundMgr()->PlaySoundW(L"Player_Mumbo.wav", SOUND_DIALOG2, 1.f);
-			break;
+			if (m_PortraitList.size() == 5)
+			{
+				CGameObject* pGameObject = CRecognitionRange::Create(m_pGraphicDev,nullptr,UI_TYPE::DESTINATION);
+				static_cast<CRecognitionRange*>(pGameObject)->Set_TargetPos(_vec3(206.62f, 15.f, 246.38f));
+				Management()->Get_Scene()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::UI, pGameObject);
 
-		case PORTRAITTAG::PORT_DESDULL:
-				SoundMgr()->PlaySoundW(L"Player_Mumbo.wav", SOUND_DIALOG2, 1.f);
-			break;
-
-		case PORTRAITTAG::PORT_HALEY:
-			SoundMgr()->PlaySoundW(L"Haley_Mumbo.wav", SOUND_DIALOG2, 1.f);
-			break;
-
-		case PORTRAITTAG::PORT_HACKER:
-			SoundMgr()->PlaySoundW(L"Hacker_Mumbo.wav", SOUND_DIALOG2, 1.f);
-			break;
-
-		case PORTRAITTAG::PORT_HEADQUATER:
-			SoundMgr()->PlaySoundW(L"HeadQuater_Mumbo.wav", SOUND_DIALOG2, 1.f);
-			break;
-
-		case PORTRAITTAG::PORT_MYSTERY:
-			SoundMgr()->PlaySoundW(L"Mystery_Sound.wav", SOUND_DIALOG2, 1.f);
-			break;
-
-		case PORTRAITTAG::PORT_PHONE:
-			SoundMgr()->PlaySoundW(L"Phone_Sound.wav", SOUND_DIALOG2, 1.f);
-			break;
-
-		case PORTRAITTAG::PORT_TURNCOAT:
-			SoundMgr()->PlaySoundW(L"TurnCoat_Mumbo.wav", SOUND_DIALOG2, 1.f);
-			break;
-
-		case PORTRAITTAG::PORT_BAUSS:
-			SoundMgr()->PlaySoundW(L"Boss_Mumbo.wav", SOUND_DIALOG2, 1.f);
-			break;
+				m_bRenewal = false;
+			}
 		}
 
-		SoundMgr()->PlaySoundW(L"DialogEnter2.mp3", SOUND_DIALOG, 1000);
 		m_PortraitList.pop_front();
 		m_TextList.pop_front();
 
-
-			if (m_PortraitList.size() == 0 || m_TextList.size() == 0)
+		if (!m_PortraitList.empty())
+		{
+			switch (m_PortraitList.front())
 			{
-				switch (m_eDialog)
-				{
-				case Engine::DIALOGTAG::STORY_ST1_INTRO:
+			case PORTRAITTAG::PORT_DES:
+				SoundMgr()->PlaySoundW(L"Player_Mumbo.wav", SOUND_DIALOG2, 1.f);
+				break;
+
+			case PORTRAITTAG::PORT_DESDULL:
+				SoundMgr()->PlaySoundW(L"Player_Mumbo.wav", SOUND_DIALOG2, 1.f);
+				break;
+
+			case PORTRAITTAG::PORT_HALEY:
+				SoundMgr()->PlaySoundW(L"Haley_Mumbo.wav", SOUND_DIALOG2, 1.f);
+				break;
+
+			case PORTRAITTAG::PORT_HACKER:
+				SoundMgr()->PlaySoundW(L"Hacker_Mumbo.wav", SOUND_DIALOG2, 1.f);
+				break;
+
+			case PORTRAITTAG::PORT_HEADQUATER:
+				SoundMgr()->PlaySoundW(L"HeadQuater_Mumbo.wav", SOUND_DIALOG2, 1.f);
+				break;
+
+			case PORTRAITTAG::PORT_MYSTERY:
+				SoundMgr()->PlaySoundW(L"Mystery_Sound.wav", SOUND_DIALOG2, 1.f);
+				break;
+
+			case PORTRAITTAG::PORT_PHONE:
+				SoundMgr()->PlaySoundW(L"Phone_Sound.wav", SOUND_DIALOG2, 1.f);
+				break;
+
+			case PORTRAITTAG::PORT_TURNCOAT:
+				SoundMgr()->PlaySoundW(L"TurnCoat_Mumbo.wav", SOUND_DIALOG2, 1.f);
+				break;
+
+			case PORTRAITTAG::PORT_BAUSS:
+				SoundMgr()->PlaySoundW(L"Boss_Mumbo.wav", SOUND_DIALOG2, 1.f);
+				break;
+			}
+		}
+
+
+		SoundMgr()->PlaySoundW(L"DialogEnter2.mp3", SOUND_DIALOG, 1000);
+
+
+
+		if (m_PortraitList.size() == 0 || m_TextList.size() == 0)
+		{
+			switch (m_eDialog)
+			{
+			case Engine::DIALOGTAG::STORY_ST1_INTRO:
 				m_pMission->Set_Title(L"QUEST");
 				m_pMission->Set_Objective(L"JS 아카데미의\n범죄자들을 소탕하라");
-					break;
-				case Engine::DIALOGTAG::STORY_ST1_DEVELOP:
-					m_pMission->Set_Title(L"QUEST");
-					m_pMission->Set_Objective(L"목적지로 가자");
-					CEventMgr::GetInstance()->OnCard(m_pGraphicDev,SCENETAG::STAGE, DIALOGTAG::STORY_ST1_DEVELOP);
-					break;
-				case Engine::DIALOGTAG::STORY_ST1_CONCLU:
-					break;
-				case Engine::DIALOGTAG::STORY_LOBBY_INTRO:
-					m_pMission->Set_Title(L"QUEST");
-					m_pMission->Set_Objective(L"장애물을 돌파하라");
-					break;
-				case Engine::DIALOGTAG::STORY_LOBBY_GAME1:
-					m_pMission->Set_Title(L"QUEST");
-					m_pMission->Set_Objective(L"시간내에 암호를 해제하라");
-					break;
-				case Engine::DIALOGTAG::STORY_LOBBY_GAME2:
-					m_pMission->Set_Title(L"QUEST");
-					m_pMission->Set_Objective(L"적들을 피해 보급품을 회수하라");
-					break;
-				case Engine::DIALOGTAG::STORY_LOBBY_CONCLU:
-					m_pMission->Set_Title(L"QUEST");
-					m_pMission->Set_Objective(L"악의 근원을 퇴치하라");
-					CEventMgr::GetInstance()->OnCard(m_pGraphicDev, SCENETAG::LOBBY, DIALOGTAG::STORY_LOBBY_CONCLU);
-					break;
-				case Engine::DIALOGTAG::ST1_BOSS_INTRO:
-					m_pMission->Set_Title(L"QUEST");
-					m_pMission->Set_Objective(L"악의 근원을 퇴치하라");
-					break;
-				case Engine::DIALOGTAG::ST1_BOSS_CONCLU:
-					m_pMission->Set_Title(L"QUEST");
-					m_pMission->Set_Objective(L"밖으로 나가자");
-					break;
-				case Engine::DIALOGTAG::STORY_ST2_INTRO:
-					m_pMission->Set_Title(L"QUEST");
-					m_pMission->Set_Objective(L"범죄자들을 퇴치하라");
-					CEventMgr::GetInstance()->OnDropItem(m_pGraphicDev,SCENETAG::STAGE2, 30);
-					break;
-				case Engine::DIALOGTAG::STORY_ST2_CONCLU:
-					m_pMission->Set_Title(L"END");
-					m_pMission->Set_Objective(L"임무 완료");
-					static_cast<CStage2*>(Management()->Get_Scene())->Set_Video(false);
-					break;
+				break;
+			case Engine::DIALOGTAG::STORY_ST1_DEVELOP:
+				m_pMission->Set_Title(L"QUEST");
+				m_pMission->Set_Objective(L"목적지로 가자");
+				CEventMgr::GetInstance()->OnCard(m_pGraphicDev, SCENETAG::STAGE, DIALOGTAG::STORY_ST1_DEVELOP);
+				break;
+			case Engine::DIALOGTAG::STORY_ST1_CONCLU:
+				break;
+			case Engine::DIALOGTAG::STORY_LOBBY_INTRO:
+				m_pMission->Set_Title(L"QUEST");
+				m_pMission->Set_Objective(L"장애물을 돌파하라");
+				break;
+			case Engine::DIALOGTAG::STORY_LOBBY_GAME1:
+				m_pMission->Set_Title(L"QUEST");
+				m_pMission->Set_Objective(L"시간내에 암호를 해제하라");
+				break;
+			case Engine::DIALOGTAG::STORY_LOBBY_GAME2:
+				m_pMission->Set_Title(L"QUEST");
+				m_pMission->Set_Objective(L"적들을 피해 보급품을 회수하라");
+				break;
+			case Engine::DIALOGTAG::STORY_LOBBY_CONCLU:
+				m_pMission->Set_Title(L"QUEST");
+				m_pMission->Set_Objective(L"악의 근원을 퇴치하라");
+				CEventMgr::GetInstance()->OnCard(m_pGraphicDev, SCENETAG::LOBBY, DIALOGTAG::STORY_LOBBY_CONCLU);
+				break;
+			case Engine::DIALOGTAG::ST1_BOSS_INTRO:
+				m_pMission->Set_Title(L"QUEST");
+				m_pMission->Set_Objective(L"악의 근원을 퇴치하라");
+				break;
+			case Engine::DIALOGTAG::ST1_BOSS_CONCLU:
+				m_pMission->Set_Title(L"QUEST");
+				m_pMission->Set_Objective(L"밖으로 나가자");
+				break;
+			case Engine::DIALOGTAG::STORY_ST2_INTRO:
+				m_pMission->Set_Title(L"QUEST");
+				m_pMission->Set_Objective(L"범죄자들을 퇴치하라");
+				CEventMgr::GetInstance()->OnDropItem(m_pGraphicDev, SCENETAG::STAGE2, 30);
+				break;
+			case Engine::DIALOGTAG::STORY_ST2_CONCLU:
+				m_pMission->Set_Title(L"END");
+				m_pMission->Set_Objective(L"임무 완료");
+				static_cast<CStage2*>(Management()->Get_Scene())->Set_Video(false);
+				break;
 
-
-				}
-
-				if (Management()->Get_Scene()->Get_Pause())
-				{
-					Management()->Get_Scene()->Set_Pause(false);
-				}
-
-
-
-				m_IsDead = true;
-				m_pPortrait->Set_Dead(true);
 			}
-			else
+
+			if (Management()->Get_Scene()->Get_Pause())
 			{
-				m_pPortrait->Set_PortraitTag(m_PortraitList.front());
-				m_bTick = false;
+				Management()->Get_Scene()->Set_Pause(false);
 			}
 
+
+			m_IsDead = true;
+			m_pPortrait->Set_Dead(true);
+		}
+		else
+		{
+			m_pPortrait->Set_PortraitTag(m_PortraitList.front());
+			m_bTick = false;
+		}
 
 	}
 }
