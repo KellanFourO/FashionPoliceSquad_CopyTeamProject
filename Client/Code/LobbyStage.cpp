@@ -800,17 +800,14 @@ void CLobbyStage::Admin_KeyInput()
 		m_bAdminSwitch = false;
 	}
 
+	if (Key_Up(DIK_U))
+	{
+		CEventMgr::GetInstance()->OffDialog();
+	}
+
 	if (Engine::Get_DIKeyState(DIK_M) & 0x80 && m_bAdminSwitch)
 	{
-		CLoadingStage1* pScene = nullptr;
-		pScene = CLoadingStage1::Create(m_pGraphicDev, SCENETAG::BOSS_STAGE);
-
-		//CUIMgr::GetInstance()->DestroyInstance();
-		Management()->Get_Player()->Set_SceneChange(true);
-		Management()->Set_SYSceneChange(true);
-		Management()->Change_Scene(pScene);
-
-
+		CEventMgr::GetInstance()->SceneChange(m_pGraphicDev, SCENETAG::BOSS_STAGE);
 		m_bAdminSwitch = false;
 	}
 
@@ -825,30 +822,19 @@ void CLobbyStage::Admin_KeyInput()
 			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == false)
 			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(2) == false))
 		{
-			SoundMgr()->StopSound(SOUND_BGM);
 			CEventMgr::GetInstance()->OnMiniGame_Arrow(m_pGraphicDev, SCENETAG::LOBBY);
-			SoundMgr()->PlayBGM(L"MiniGame1BGM.mp3",1.f);
 		}
 		else if ((CEventMgr::GetInstance()->Get_MiniGameClearCheck(0) == true)
 			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == false)
 			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(2) == false))
 		{
-			SoundMgr()->StopSound(SOUND_BGM);
 			CEventMgr::GetInstance()->OnMiniGame_KickBoard(m_pGraphicDev, SCENETAG::LOBBY);
-			SoundMgr()->PlayBGM(L"MiniGame2BGM.mp3", 1.f);
 		}
 		else if ((CEventMgr::GetInstance()->Get_MiniGameClearCheck(0) == true)
 			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == true)
 			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(2) == false))
 		{
-			SoundMgr()->StopSound(SOUND_BGM);
 			CEventMgr::GetInstance()->OnMiniGame_Quiz(m_pGraphicDev, SCENETAG::LOBBY);
-			SoundMgr()->PlayBGM(L"QuizBGM.mp3", 1.f);
-		}
-		else
-		{
-			SoundMgr()->StopSound(SOUND_BGM);
-			SoundMgr()->PlayBGM(L"LobbyBGM3.mp3", 1);
 		}
 
 		m_bAdminSwitch = false;
@@ -862,7 +848,7 @@ CLobbyStage* CLobbyStage::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	if (FAILED(pInstance->Ready_Scene()))
 	{
 		Safe_Release(pInstance);
-		MSG_BOX("BossStage Create Failed");
+		MSG_BOX("LobbyStage Create Failed");
 		return nullptr;
 	}
 

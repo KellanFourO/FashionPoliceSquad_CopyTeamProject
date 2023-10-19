@@ -29,6 +29,7 @@ public:
 public:
 	// Get
 	DIALOGDATA*					Get_Info() { return m_pDialogInfo; }
+	void						Set_EndInput(_bool bEndInput) { m_bEndInput = bEndInput;}
 
 private:
 	HRESULT							Add_Component();
@@ -50,6 +51,7 @@ private:
 	_bool							m_bLateInit = true;
 	_bool							m_bSound = true;
 	_bool							m_bRenewal = true;
+	_bool							m_bEndInput = false;
 	DIALOGTAG						m_eDialog;
 
 
