@@ -143,7 +143,7 @@ private:
 	bool								m_bPlaneType			= false;
 	OBJ_TYPE							m_eOBJType				= OBJ_TYPE::OBJ_TYPE_END;
 
-	int									m_forObjAttribute		= 7; //0 ~ 9
+	int									m_forObjAttribute		= 7; //0 ~ 10
 	OBJ_ATTRIBUTE						m_eOBJ_Attribute		= OBJ_ATTRIBUTE::ATTRIBUTE_END;
 
 	int									m_forMobType			= 4; // 0 ~ 4
