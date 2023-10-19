@@ -95,7 +95,7 @@ CBeltState* CBelt_Rope::Update(CBelt* Belt, const float& fTimeDelta)
 		Management()->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::EFFECT, DashEffect);
 		SoundMgr()->PlaySoundW(L"Player_Dash.wav", SOUND_PLAYER3, 1);
 
-        m_pHost->Get_Host()->Get_RigidBody()->Add_Force(vForce * 3);
+        m_pHost->Get_Host()->Get_RigidBody()->Add_Force(vForce * 2);
 
         m_bDashCheck = true;
 

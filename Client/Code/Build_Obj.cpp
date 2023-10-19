@@ -219,10 +219,10 @@ void CBuild_Obj::Render_Texture()
 			m_pBufferRcCom->Render_Buffer();
 		}
 	}
-	else if (m_eAttribute == OBJ_ATTRIBUTE::C_POINT_OBJ)
-	{
-		m_pBufferCubeCom->Render_Buffer();
-	}
+// 	else if (m_eAttribute == OBJ_ATTRIBUTE::C_POINT_OBJ)
+// 	{
+// 		m_pBufferCubeCom->Render_Buffer();
+// 	}
 }
 
 HRESULT CBuild_Obj::SetUp_Meterial()
