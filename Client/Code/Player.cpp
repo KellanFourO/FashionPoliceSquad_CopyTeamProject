@@ -708,12 +708,11 @@ void CPlayer::Attacked(_float _fDamage)
 
 void CPlayer::Healed(_float _iHP)
 {
-	if (INFO.fHP + _iHP <= INFO.fMaxHP + INFO.fMaXHP_Additional) {
-
+	if (INFO.fHP < INFO.fMaxHP) {
 		INFO.fHP += _iHP;
 	}
-	else {
-		INFO.fHP = INFO.fMaxHP + INFO.fMaXHP_Additional;
+	if (INFO.fHP > INFO.fMaxHP) {
+		INFO.fHP = INFO.fMaxHP;
 	}
 	INFO.PlayerState = m_pStateArray[HEAL];
 	INFO.PlayerState->Initialize(this);
