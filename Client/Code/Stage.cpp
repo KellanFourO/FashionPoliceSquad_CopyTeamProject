@@ -64,6 +64,7 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 	if (m_bLateInit)
 	{
 		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev,m_eSceneTag, DIALOGTAG::STORY_ST1_INTRO);
+		//CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, m_eSceneTag, DIALOGTAG::STORY_ST2_CONCLU); // 아랏죠 테스트
 		CEventMgr::GetInstance()->OnPause(true,m_eSceneTag);
 		m_bLateInit = false;
 	}
@@ -428,11 +429,11 @@ HRESULT CStage::Check_Collision_Water()
 			{
 				_vec3 InStagePos1 = { 410.f, 15.f, 455.f };
 				_vec3 InStagePos2 = { 130.f, 20.f, 455.f };
-				
+
 				_float STDPointX = 230.f;
 
 				if (PlayerPos.x < STDPointX)
-				{ 
+				{
 					Management()->Get_Player()->Get_Transform()->Set_Pos(InStagePos2);
 				}
 				else if (PlayerPos.x >= STDPointX)

@@ -49,7 +49,7 @@ HRESULT CLobbyStage::Ready_Scene()
 	SoundMgr()->PlayBGM(L"LobbyBGM3.mp3", 0.25f);	//Good
 	//SoundMgr()->PlayBGM(L"LobbyBGM4.mp3", 0.25f); //
 
-	for (int i = 0; i < 4; ++i)
+	for (int i = 0; i < 5; ++i)
 	{
 		m_bDialog[i] = true;
 	}
@@ -289,6 +289,7 @@ _int CLobbyStage::Update_Scene(const _float& fTimeDelta)
 	if (m_bLateInit)
 	{
 		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::LOBBY, DIALOGTAG::STORY_LOBBY_INTRO);
+		//CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::LOBBY, DIALOGTAG::QUIZ);
 		CEventMgr::GetInstance()->OnPause(true, SCENETAG::LOBBY);
 		m_bLateInit = false;
 	}
@@ -636,6 +637,7 @@ HRESULT CLobbyStage::Check_Trigger()
 						CEventMgr::GetInstance()->OnPause(true, SCENETAG::LOBBY);
 						m_bDialog[3] = false;
 					}
+
 					iter->eTrSTATE = TRIGGER_STATE::TR_AFTER; //이거 켜면 한번만 트리거 처리가능
 				}
 			}

@@ -131,8 +131,8 @@ HRESULT CEventMgr::OnMiniGame_Arrow(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSce
 	SoundMgr()->StopSound(SOUND_BGM);
 	OnPause(TRUE, SCENETAG::LOBBY);
 	SoundMgr()->PlayBGM(L"MiniGame1BGM.mp3",1.f);
-	
-	
+
+
 	return S_OK;
 }
 
@@ -143,7 +143,7 @@ HRESULT CEventMgr::OnMiniGame_KickBoard(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG 
 	if (pGame_KickBoard == nullptr) {
 		pGame_KickBoard = Engine::CMainGame_KickBoard::Create(pGraphicDev);
 		NULL_CHECK_RETURN(pGame_KickBoard, E_FAIL);
-	
+
 		Management()->Get_One_Scene(eSceneTag)->Get_Layer(LAYERTAG::MINIGAME)->Add_GameObject(OBJECTTAG::MINIGAME, pGame_KickBoard);
 	}
 	else if (pGame_KickBoard != nullptr) {
@@ -160,7 +160,10 @@ HRESULT CEventMgr::OnMiniGame_KickBoard(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG 
 
 HRESULT CEventMgr::OnMiniGame_Quiz(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag)
 {
-	m_bMiniGame_ClearCheck[2] = true;
+	m_eMiniGameState = CEventMgr::MiniGameState::PLAY_NOW;
+
+	OnDialog(pGraphicDev,eSceneTag,DIALOGTAG::QUIZ);
+	OnPause(TRUE,SCENETAG::LOBBY);
 
 	SoundMgr()->StopSound(SOUND_BGM);
 	OnPause(FALSE, SCENETAG::LOBBY);
@@ -225,11 +228,32 @@ HRESULT CEventMgr::OffMiniGame_KickBoard(SCENETAG eSceneTag, _bool ClearCheck)
 }
 HRESULT CEventMgr::OffMiniGame_Quiz(SCENETAG eSceneTag, _bool ClearCheck)
 {
+	m_eMiniGameState = CEventMgr::MiniGameState::NOT_PLAY;
+
+	if (ClearCheck == true)
+	{
+		Set_MiniGameClearCheck(0, TRUE);
+		Set_MiniGameLoseCheck(0, FALSE);
+		Set_MiniGameClearCheck(1, TRUE);
+		Set_MiniGameLoseCheck(1, FALSE);
+		Set_MiniGameClearCheck(2, TRUE);
+		Set_MiniGameLoseCheck(2, FALSE);
+		Set_MiniGameClearCheck(3, TRUE);
+		Set_MiniGameLoseCheck(3, FALSE);
+		OnPause(FALSE, SCENETAG::LOBBY);
+		SoundMgr()->PlaySoundW(L"MiniGameClear.mp3", SOUND_DIALOG, 1.f);
+		SoundMgr()->PlayBGM(L"LobbyBGM3.mp3", 0.25f);
+	}
+	if (ClearCheck == false)
+	{
+		Set_MiniGameClearCheck(1, FALSE);
+		Set_MiniGameLoseCheck(1, TRUE);
+		OnPause(FALSE, SCENETAG::LOBBY);
+	}
 
 	SoundMgr()->StopSound(SOUND_BGM);
-	OnPause(FALSE, SCENETAG::LOBBY);
-	SoundMgr()->PlaySoundW(L"MiniGameClear.mp3", SOUND_DIALOG, 1.f);
 	SoundMgr()->PlayBGM(L"LobbyBGM3.mp3", 0.25f);
+
 	return S_OK;
 }
 
@@ -241,4 +265,5 @@ void CEventMgr::Free()
 
 	if (pGame_KickBoard != nullptr)
 	Safe_Release(pGame_KickBoard);
+
 }

@@ -78,7 +78,12 @@ Engine::_int Engine::CMyDialog::Update_GameObject(const _float& fTimeDelta)
 		m_fNextTick = 0.f;
 	}
 
-	KeyInput();
+	if (m_eDialog == DIALOGTAG::QUIZ)
+	{
+		QuizKeyInput();
+	}
+	else
+		KeyInput();
 
 
 	m_pPortrait->Update_GameObject(fTimeDelta);
@@ -117,6 +122,18 @@ void CMyDialog::Render_GameObject()
 	if (m_TextList.size() != 0)
 	{
 			Engine::Render_Font(L"TEST_FONT", m_TextList.front().c_str(), &_vec2(250, 40), D3DXCOLOR(D3DCOLOR_ARGB(255, 255, 255, 255)), 20, true);
+	}
+
+	if (m_eDialog == DIALOGTAG::STORY_ST2_CONCLU && m_PortraitList.size() == 3)
+	{
+		Render_Font(L"DIALOG_FONT", L"너네선비형", &_vec2(100.f, 100.f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 20, false);
+		m_bSound = false;
+	}
+
+	if (m_eDialog == DIALOGTAG::STORY_ST2_CONCLU && m_PortraitList.size() == 2)
+	{
+		Render_Font(L"DIALOG_FONT", L"버거형", &_vec2(100.f, 100.f), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), 20, false);
+		m_bSound = false;
 	}
 
 	m_pGraphicDev->SetRenderState(D3DRS_ZENABLE, TRUE);
@@ -183,6 +200,9 @@ void CMyDialog::LoadText(DIALOGTAG eDialogTag)
 	case Engine::DIALOGTAG::ENCOUNTER_KICKBOARD:
 		fin.open(L"../Bin/Data/UI/ENCOUNT_KICKBOARD.dat");
 		break;
+	case Engine::DIALOGTAG::QUIZ:
+		fin.open(L"../Bin/Data/UI/QUIZ.dat");
+		break;
 
 	}
 
@@ -233,12 +253,12 @@ void CMyDialog::KeyInput()
 		m_PortraitList.pop_front();
 		m_TextList.pop_front();
 
+
 		if (m_eDialog == DIALOGTAG::STORY_ST2_CONCLU && m_PortraitList.size() == 2)
 		{
-			SoundMgr()->PlaySoundW(L"JunHo_Arazzo.mp3",SOUND_DIALOG2, 100.f);
+			SoundMgr()->PlaySoundW(L"JunHo_Arazzo.mp3", SOUND_DIALOG2, 1.f);
 			m_bSound = false;
 		}
-
 
 
 		if (!m_PortraitList.empty() && m_bSound)
@@ -372,6 +392,72 @@ void CMyDialog::KeyInput()
 			m_pPortrait->Set_PortraitTag(m_PortraitList.front());
 			m_bTick = false;
 		}
+
+	}
+}
+
+void CMyDialog::QuizKeyInput()
+{
+
+	if (m_PortraitList.size() == 1)
+	{
+		if (Get_DIKeyState(DIK_1) & 0x80)
+		{
+			m_bQuiz = false;
+			m_bQuizInput = true;
+			SoundMgr()->PlaySoundW(L"MiniGameFailed.mp3",SOUND_DIALOG2, 1.f);
+		}
+		else if (Get_DIKeyState(DIK_2) & 0x80)
+		{
+			m_bQuiz = true;
+			m_bQuizInput = true;
+			SoundMgr()->PlaySoundW(L"MiniGameClear.mp3", SOUND_DIALOG2, 1.f);
+		}
+		else if (Get_DIKeyState(DIK_3) & 0x80)
+		{
+			m_bQuiz = false;
+			m_bQuizInput = true;
+			SoundMgr()->PlaySoundW(L"MiniGameFailed.mp3", SOUND_DIALOG2, 1.f);
+		}
+
+		if (m_bQuizInput)
+		{
+			CEventMgr::GetInstance()->OffMiniGame_Quiz(SCENETAG::LOBBY, m_bQuiz);
+
+			if (Management()->Get_Scene()->Get_Pause())
+			{
+				Management()->Get_Scene()->Set_Pause(false);
+			}
+			m_IsDead = true;
+			m_pPortrait->Set_Dead(true);
+		}
+	}
+
+	else if (Get_DIKeyState(DIK_RETURN) & 0x80 && m_bTick && m_PortraitList.size() != 0 && m_TextList.size() != 0)
+	{
+		SoundMgr()->StopSound(SOUND_DIALOG2);
+
+		m_PortraitList.pop_front();
+		m_TextList.pop_front();
+
+		if (!m_PortraitList.empty() && m_bSound)
+		{
+			switch (m_PortraitList.front())
+			{
+			case PORTRAITTAG::PORT_DES:
+				SoundMgr()->PlaySoundW(L"Player_Mumbo.wav", SOUND_DIALOG2, 1.f);
+				break;
+
+			case PORTRAITTAG::PORT_MYSTERY:
+				SoundMgr()->PlaySoundW(L"Mystery_Sound.wav", SOUND_DIALOG2, 1.f);
+				break;
+			}
+		}
+
+		SoundMgr()->PlaySoundW(L"DialogEnter2.mp3", SOUND_DIALOG, 1000);
+
+		m_pPortrait->Set_PortraitTag(m_PortraitList.front());
+		m_bTick = false;
 
 	}
 }
