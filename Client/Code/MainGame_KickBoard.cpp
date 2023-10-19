@@ -76,7 +76,7 @@ HRESULT CMainGame_KickBoard::Ready_GameObject()
 
 void CMainGame_KickBoard::Render_GameObject()
 {
-	if (!m_ClearCheck) {
+	if (!m_ClearCheck && !m_LoseCheck) {
 
 		m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 		m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_matView);
@@ -128,8 +128,10 @@ void CMainGame_KickBoard::Render_GameObject()
 _int CMainGame_KickBoard::Update_GameObject(const _float& fTimeDelta)
 {
 	m_ClearCheck = CEventMgr::GetInstance()->Get_MiniGameClearCheck(1);
+	m_LoseCheck = CEventMgr::GetInstance()->Get_MiniGameLoseCheck(1);
 
-	if (!m_ClearCheck) {
+
+	if (!m_ClearCheck && !m_LoseCheck) {
 
 		Engine::Add_RenderGroup(RENDER_UI, this);
 
@@ -235,7 +237,7 @@ _int CMainGame_KickBoard::Update_GameObject(const _float& fTimeDelta)
 
 void CMainGame_KickBoard::LateUpdate_GameObject()
 {
-	if (!m_ClearCheck) {
+	if (!m_ClearCheck && !m_LoseCheck) {
 		CGameObject::LateUpdate_GameObject();
  
 		if (!m_vecGold.empty()) {
@@ -400,6 +402,25 @@ void CMainGame_KickBoard::Collisoin_Check()
 	}
 
 }
+
+void CMainGame_KickBoard::Reset()
+{
+	m_eGameState = CMainGame_KickBoard::KickBoard_GameState::State_END;
+	m_ClearCheck = false;
+	m_LoseCheck = false;
+
+	Safe_Release(m_pPlayer);
+	m_pPlayer = CMini_Player::Create(m_pGraphicDev);
+
+	m_TimeFrame = 60;
+	m_RealTime = 30;
+
+	m_EnemyCreatCount = 0;
+	m_GoldCreatCount = 0;
+
+	m_iMyCoinCount = 0;
+}
+
 
 CMainGame_KickBoard* CMainGame_KickBoard::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {

@@ -64,6 +64,7 @@ private:
 	ArrowGameState			m_eGameState = ArrowGameState::State_END;
 
 	_bool					m_ClearCheck = false;
+	_bool					m_LoseCheck = false;
 
 
 	//Å° ¾ÃÈû ¹æÁö¿ë

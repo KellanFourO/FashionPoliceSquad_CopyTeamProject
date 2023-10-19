@@ -545,8 +545,7 @@ HRESULT CLobbyStage::Moving_Wall()
 
 HRESULT CLobbyStage::Check_Trigger()
 {
-	if (!m_TriggerDataTemp.empty() && m_bMiniGameCheck == true )
-									// F키를 누르면 동작하게 해놓음
+	if (!m_TriggerDataTemp.empty())
 	{
 		int iCountNum = -1;
 		_vec3 PlayerPos;
@@ -568,10 +567,8 @@ HRESULT CLobbyStage::Check_Trigger()
 				{
 					iCountNum = 1;
 
-					if (CEventMgr::GetInstance()->Get_MiniGameState() == CEventMgr::MiniGameState::NOT_PLAY) {
-						SoundMgr()->StopSound(SOUND_BGM);
+					if (CEventMgr::GetInstance()->Get_MiniGameState() == CEventMgr::MiniGameState::NOT_PLAY && m_bMiniGameCheck == true) {
 						CEventMgr::GetInstance()->OnMiniGame_Arrow(m_pGraphicDev, SCENETAG::LOBBY);
-						SoundMgr()->PlayBGM(L"MiniGame1BGM.mp3", 1.f);
 					}
 
 					//iter->eTrSTATE = TRIGGER_STATE::TR_AFTER;
@@ -581,10 +578,8 @@ HRESULT CLobbyStage::Check_Trigger()
 				{
 					iCountNum = 2;
 
-					if (CEventMgr::GetInstance()->Get_MiniGameState() == CEventMgr::MiniGameState::NOT_PLAY) {
-						SoundMgr()->StopSound(SOUND_BGM);
+					if (CEventMgr::GetInstance()->Get_MiniGameState() == CEventMgr::MiniGameState::NOT_PLAY && m_bMiniGameCheck == true) {
 						CEventMgr::GetInstance()->OnMiniGame_KickBoard(m_pGraphicDev, SCENETAG::LOBBY);
-						SoundMgr()->PlayBGM(L"MiniGame2BGM.mp3", 1.f);
 					}
 
 					//iter->eTrSTATE = TRIGGER_STATE::TR_AFTER;
@@ -594,10 +589,8 @@ HRESULT CLobbyStage::Check_Trigger()
 				{
 					iCountNum = 3;
 
-					if (CEventMgr::GetInstance()->Get_MiniGameState() == CEventMgr::MiniGameState::NOT_PLAY) {
-						SoundMgr()->StopSound(SOUND_BGM);
+					if (CEventMgr::GetInstance()->Get_MiniGameState() == CEventMgr::MiniGameState::NOT_PLAY && m_bMiniGameCheck == true) {
 						CEventMgr::GetInstance()->OnMiniGame_Quiz(m_pGraphicDev, SCENETAG::LOBBY);
-						SoundMgr()->PlayBGM(L"QuizBGM.mp3", 1.f);
 					}
 
 					//iter->eTrSTATE = TRIGGER_STATE::TR_AFTER;

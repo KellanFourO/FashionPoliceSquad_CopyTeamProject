@@ -92,7 +92,7 @@ void CStage::LateUpdate_Scene()
 	Admin_KeyInput();
 
 	Check_Trigger();
-	Check_Collision_Water();
+	//Check_Collision_Water();
 
 	//Trigger_Check_For_Create_Monster();
 

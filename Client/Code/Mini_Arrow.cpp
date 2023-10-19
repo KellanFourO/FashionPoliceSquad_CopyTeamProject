@@ -85,18 +85,12 @@ HRESULT CMini_Arrow::Ready_GameObject(int iRandomNumber)
 
 	if (m_iArrowIndex < 10) { //0~9
 		vPos = { 200.f + (m_iArrowIndex * (StdSize + StdDistance)), 480.f, 0.f };
-
-		//vPos = { 200.f + (m_iArrowIndex * (StdSize + StdDistance)), 120.f, 0.f };
 	}
 	else if ((m_iArrowIndex >= 10) && (m_iArrowIndex < 20)) { //10~19
 		vPos = { 600.f, 480.f - ((m_iArrowIndex - 10) * (StdSize + StdDistance)), 0.f };
-
-		//vPos = { 600.f, 120.f + ((m_iArrowIndex - 10) * (StdSize + StdDistance)), 0.f };
 	}
 	else if ((m_iArrowIndex >= 20) && (m_iArrowIndex < 30)) { //20~29
 		vPos = { 600.f - ((m_iArrowIndex - (20 - 1)) * (StdSize + StdDistance)), 120.f, 0.f };
-
-		//vPos = { 600.f - ((m_iArrowIndex - (20 - 1)) * (StdSize + StdDistance)), 480.f, 0.f };
 	}
 
 	vScale = { StdSize * fMultiply, StdSize * fMultiply, 1.f };
@@ -113,8 +107,6 @@ HRESULT CMini_Arrow::Ready_GameObject(int iRandomNumber)
 
 	return S_OK;
 }
-
-
 
 
 _int CMini_Arrow::Update_GameObject(const _float& fTimeDelta)
