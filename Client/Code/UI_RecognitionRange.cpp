@@ -76,7 +76,8 @@ Engine::_int Engine::CRecognitionRange::Update_GameObject(const _float& fTimeDel
 	if(m_bDistanceRender && m_bAngleRender)
 	Engine::Add_RenderGroup(RENDER_UI, this);
 	else if (m_eUIType == UI_TYPE::DESTINATION)
-		Engine::Add_RenderGroup(RENDER_UI, this);
+	Engine::Add_RenderGroup(RENDER_UI, this);
+
 
 	switch (m_eUIType)
 	{
@@ -184,7 +185,6 @@ void CRecognitionRange::DestinationUI(const _float& fTimeDelta)
 	m_pGraphicDev->GetTransform(D3DTS_PROJECTION, &matProj);
 
 
-
 	_vec3 vWindowPos = m_vTargetPos;
 
 	vWindowPos.y += 5.f;
@@ -207,17 +207,18 @@ void CRecognitionRange::DestinationUI(const _float& fTimeDelta)
 	m_fDestinationDistance = D3DXVec3Length(&vPlayerToDesti);
 	//todo 시작 지점으로부터 287
 
- 	D3DVIEWPORT9 ViewPort;
- 	m_pGraphicDev->GetViewport(&ViewPort);
-
- 	_vec3 vScreenPos;
- 	D3DXVec3Project(&vScreenPos,&m_vTargetPos,&ViewPort,&matProj,&matView,m_pTransformCom->Get_WorldMatrix());
-
- 	m_vDestinationTextPos.x = vScreenPos.x;
- 	m_vDestinationTextPos.y = -vScreenPos.y;
- 	m_vDestinationTextPos.y = m_vDestinationTextPos.y + 5.f;
+//  	D3DVIEWPORT9 ViewPort;
+//  	m_pGraphicDev->GetViewport(&ViewPort);
+//
+//  	_vec3 vScreenPos;
+//  	D3DXVec3Project(&vScreenPos,&m_vTargetPos,&ViewPort,&matProj,&matView,m_pTransformCom->Get_WorldMatrix());
+//
+//  	m_vDestinationTextPos.x = vScreenPos.x;
+//  	m_vDestinationTextPos.y = -vScreenPos.y;
+//  	m_vDestinationTextPos.y = m_vDestinationTextPos.y + 5.f;
 	//_D3DVECTOR = {x=440.264557 y=32.0448914 z=0.999643147 }
 	_int i = 0;
+
 }
 
 void CRecognitionRange::RecogUI(const _float& fTimeDelta)

@@ -63,7 +63,7 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 
 	if (m_bLateInit)
 	{
-		//CEventMgr::GetInstance()->OnDialog(m_pGraphicDev,m_eSceneTag, DIALOGTAG::STORY_ST1_DEVELOP);
+		//CEventMgr::GetInstance()->OnDialog(m_pGraphicDev,m_eSceneTag, DIALOGTAG::STORY_ST1_INTRO);
 		//CEventMgr::GetInstance()->OnPause(true,m_eSceneTag);
 		m_bLateInit = false;
 	}
@@ -392,13 +392,8 @@ HRESULT CStage::Check_Trigger()
 				else if ((iter->eTrName == TRIGGER_NUMBER::TR3) && (iter->eTrSTATE == TRIGGER_STATE::TR_BEFORE))
 				{
 					//여기에 다이얼로그 추가
-					CEventMgr::GetInstance()->OnDialog(m_pGraphicDev,SCENETAG::STAGE, DIALOGTAG::STORY_ST1_DEVELOP);
+					CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::STAGE, DIALOGTAG::STORY_ST1_DEVELOP);
 					CEventMgr::GetInstance()->OnPause(true, SCENETAG::STAGE);
-
-					CRecognitionRange* pRecogUI = CRecognitionRange::Create(m_pGraphicDev,nullptr,UI_TYPE::DESTINATION);
-
-					pRecogUI->Set_TargetPos(_vec3(206.62f, 15.f, 246.38f));
-					m_pLayer->Add_GameObject(OBJECTTAG::UI,pRecogUI);
 					iter->eTrSTATE = TRIGGER_STATE::TR_AFTER;
  				}
 			}

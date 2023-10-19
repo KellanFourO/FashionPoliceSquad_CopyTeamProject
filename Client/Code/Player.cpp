@@ -14,6 +14,7 @@
 #include "Player_Jump.h"
 #include "Player_Dash.h"
 
+#include "EventMgr.h"
 #include "Trigger.h"
 #include "SoundMgr.h"
 
@@ -129,7 +130,29 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 	m_fTime_HP_Test += fTimeDelta;
 
 	Key_Input(fTimeDelta);
-	PlayerRay();
+
+	if (m_bEncounterSearch)
+	{
+		_int iCount = 0;
+
+		for (int i = 0; i < 3; ++i)
+		{
+			if (!m_bMonsterEncounter[i])
+			{
+				PlayerRay();
+
+				iCount--;
+			}
+			else if (m_bMonsterEncounter[i])
+			{
+				iCount++;
+			}
+		}
+
+		if(iCount == 3)
+		m_bEncounterSearch = false;
+	}
+
 
 	//m_pGun->Update_GameObject(fTimeDelta);
 
@@ -238,18 +261,44 @@ void CPlayer::PlayerRay()
 	m_pRay->Get_Transform()->Set_Pos(vOriginPos);
 	m_pRay->Get_Collider()->SetCenterPos(vEndPos);
 
+	auto& ObjList = Management()->Get_ObjectList(LAYERTAG::GAMELOGIC,OBJECTTAG::MONSTER);
+	for (auto iter : ObjList)
+	{
+		vTargetPos = iter->Get_Transform()->m_vInfo[INFO_POS];
 
+		if (CollisionManager()->CollisionRayToCube(m_pRay->Get_Collider(), iter->Get_Collider(), vOriginPos))
+		{
+			MonsterType tType = static_cast<CMonster*>(iter)->Get_Info().iMobType;
 
-	//auto& ObjList = Management()->Get_ObjectList(LAYERTAG::GAMELOGIC,OBJECTTAG::MONSTER);
-	//for (auto iter : ObjList)
-	//{
-	//	vTargetPos = iter->Get_Transform()->m_vInfo[INFO_POS];
-	//
-	//	if (CollisionManager()->CollisionRayToCube(m_pRay->Get_Collider(), iter->Get_Collider(), vOriginPos))
-	//	{
-	//		dynamic_cast<CMonster*>(iter)->Attacked(1.f);
-	//	}
-	//}
+			if(m_bMonsterEncounter[0] && tType == MonsterType::DULLSUIT)
+				continue;
+			else if(m_bMonsterEncounter[1] && tType == MonsterType::BIGDADDY)
+				continue;
+			else if(m_bMonsterEncounter[2] && tType == MonsterType::KCIKBOARD)
+				continue;
+
+			switch (tType)
+			{
+				case MonsterType::DULLSUIT:
+					m_bMonsterEncounter[0] = true;
+					CEventMgr::GetInstance()->OnDialog(m_pGraphicDev,Management()->Get_Scene()->Get_SceneTag(), DIALOGTAG::ENCOUNTER_DULLSUIT);
+					CEventMgr::GetInstance()->OnPause(true,Management()->Get_Scene()->Get_SceneTag());
+					break;
+
+				case MonsterType::BIGDADDY:
+					m_bMonsterEncounter[1] = true;
+					CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, Management()->Get_Scene()->Get_SceneTag(), DIALOGTAG::ENCOUNTER_BIGDADDY);
+					CEventMgr::GetInstance()->OnPause(true, Management()->Get_Scene()->Get_SceneTag());
+					break;
+
+				case MonsterType::KCIKBOARD:
+					m_bMonsterEncounter[2] = true;
+					CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, Management()->Get_Scene()->Get_SceneTag(), DIALOGTAG::ENCOUNTER_KICKBOARD);
+					CEventMgr::GetInstance()->OnPause(true, Management()->Get_Scene()->Get_SceneTag());
+					break;
+			}
+		}
+	}
 
 
 }
