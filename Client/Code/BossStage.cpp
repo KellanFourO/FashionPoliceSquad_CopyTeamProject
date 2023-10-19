@@ -229,7 +229,7 @@ HRESULT CBossStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		dynamic_cast<CPlayer*>(pPlayer)->Set_SceneChange(false);
 		dynamic_cast<CPlayer*>(pPlayer)->SetGun(pLayer);
 		pPlayer->Get_Transform()->Set_Pos(92.5f,10.0f,10.0f);
-		//Management()->Get_Player()->PlayerLookAtReset(_vec3(92.5f, 10.0f, 10.0f));
+		//oManagement()->Get_Player()->PlayerLookAtReset(_vec3(92.5f, 10.0f, 10.0f));
 
 		//FootRay
 		pGameObject = CFootRay::Create(m_pGraphicDev);

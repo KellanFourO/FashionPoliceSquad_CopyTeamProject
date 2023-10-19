@@ -725,6 +725,12 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 			_pOther->Get_OBJAttribute() != OBJ_ATTRIBUTE::ForPaint_OBJ&&
 			_pOther->Get_OBJAttribute() != OBJ_ATTRIBUTE::C_POINT_OBJ))
 	{
+		if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ)
+		{
+			if (dynamic_cast<CBuild_Obj*>(_pOther->Get_Host())->Get_OBJ_ATTRIBUTE() == OBJ_ATTRIBUTE::INTER_OBJ)
+				return;
+		}
+
 
 		_vec3	vOtherPos = _pOther->GetCenterPos();
 		_float* fOtherAxis = _pOther->GetAxisLen();

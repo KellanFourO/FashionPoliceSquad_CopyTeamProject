@@ -26,12 +26,12 @@ HRESULT Engine::CHPBarValue::Ready_GameObject()
 	D3DXMatrixOrthoLH(&m_matProj, WINCX, WINCY, 0.0f, 100.0f);
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
 
-	m_vPos = { 220.f, 580.f, 0.1f };
+	m_vPos = { 230.f, 580.f, 0.1f };
 	m_vScale = { 59.f, 4.f, 0.f };
 
 	m_pTransformCom->Set_Scale(m_vScale);
 	m_pTransformCom->Set_Pos(m_vPos);
-
+	m_pTransformCom->RotateAxis(m_pTransformCom->m_vInfo[INFO_UP], D3DXToRadian(180));
 	m_pPlayer = Management()->Get_Player();
 
 	return S_OK;
