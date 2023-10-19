@@ -82,7 +82,7 @@ CBeltState* CBelt_Rope::Update(CBelt* Belt, const float& fTimeDelta)
     _float fForce = 1.f * m_pHost->Get_Host()->Get_INFO()->fMoveSpeed;
 
 
-
+	_vec3 newPos = UpdatePlayerPos(m_pHost->Get_HostTransform()->m_vInfo[INFO_POS], fForce, fTimeDelta);
 
      m_pHost->Get_Host()->Get_Transform()->Move_Pos(&vDir, fTimeDelta, fLength);
 
@@ -182,14 +182,14 @@ _float CBelt_Rope::CalculateTensionAccel(const _vec3 vPlayerVelocity)
      return fTensionAccel;
 }
 
-_vec3 CBelt_Rope::UpdatePlayerPos(const _vec3& _vPlayerPos, const _vec3& _vPlayerVelocity, const _float fTensionAccel, const _float fTimeDelta)
+_vec3 CBelt_Rope::UpdatePlayerPos(const _vec3& _vPlayerPos, const _float& _vPlayerVelocity, const _float fTimeDelta)
 {
 	_vec3 vNewPos = _vPlayerPos;
 
 	// 간단한 위치 업데이트 예시
-    vNewPos.x += _vPlayerVelocity.x * fTimeDelta;
-    vNewPos.y += (_vPlayerVelocity.y - fTensionAccel) * fTimeDelta;
-    vNewPos.z += _vPlayerVelocity.z * fTimeDelta;
+    vNewPos.x += _vPlayerVelocity * fTimeDelta;
+    vNewPos.y += (_vPlayerVelocity) * fTimeDelta;
+    vNewPos.z += _vPlayerVelocity * fTimeDelta;
 
 	return vNewPos;
 }

@@ -861,7 +861,10 @@ HRESULT CStage2::Load_Data_T(const TCHAR* pFilePath, OBJECTTAG eTag)
 
 void CStage2::Admin_KeyInput()
 {
-
+	if (Key_Up(DIK_U))
+	{
+		CEventMgr::GetInstance()->OffDialog();
+	}
 }
 
 

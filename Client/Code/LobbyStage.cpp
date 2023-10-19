@@ -619,7 +619,6 @@ HRESULT CLobbyStage::Check_Trigger()
 
 
 
-
 void CLobbyStage::Admin_KeyInput()
 {
 
@@ -629,19 +628,17 @@ void CLobbyStage::Admin_KeyInput()
 		m_bAdminSwitch = false;
 	}
 
+	if (Key_Up(DIK_U))
+	{
+		CEventMgr::GetInstance()->OffDialog();
+	}
+
 	if (Engine::Get_DIKeyState(DIK_M) & 0x80 && m_bAdminSwitch)
 	{
-		CLoadingStage1* pScene = nullptr;
-		pScene = CLoadingStage1::Create(m_pGraphicDev, SCENETAG::BOSS_STAGE);
-
-		//CUIMgr::GetInstance()->DestroyInstance();
-		Management()->Get_Player()->Set_SceneChange(true);
-		Management()->Set_SYSceneChange(true);
-		Management()->Change_Scene(pScene);
-
-
+		CEventMgr::GetInstance()->SceneChange(m_pGraphicDev, SCENETAG::BOSS_STAGE);
 		m_bAdminSwitch = false;
 	}
+
 
 	_bool CheckTemp = dynamic_cast<CPlayer*>(m_pPlayer)->Get_TriggerCheck();
 
@@ -655,7 +652,6 @@ void CLobbyStage::Admin_KeyInput()
 	{
 		m_bMiniGameCheck = false;
 	}
-	
 }
 
 HRESULT CLobbyStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
@@ -894,6 +890,7 @@ HRESULT CLobbyStage::Load_Data_T(const TCHAR* pFilePath, OBJECTTAG eTag)
 	return S_OK;
 }
 
+
 CLobbyStage* CLobbyStage::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CLobbyStage* pInstance = new CLobbyStage(pGraphicDev);
@@ -901,7 +898,7 @@ CLobbyStage* CLobbyStage::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 	if (FAILED(pInstance->Ready_Scene()))
 	{
 		Safe_Release(pInstance);
-		MSG_BOX("BossStage Create Failed");
+		MSG_BOX("LobbyStage Create Failed");
 		return nullptr;
 	}
 

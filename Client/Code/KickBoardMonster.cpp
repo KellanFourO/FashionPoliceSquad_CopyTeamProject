@@ -97,6 +97,7 @@ void CKickBoardMonster::LateUpdate_GameObject()
         INFO.MonsterState = m_pStateArray[DEAD];
         INFO.MonsterState->Initialize(this);
         INFO.bDead = false;
+        m_bDead2 = false;
     }   // 사망판정
 
     __super::LateUpdate_GameObject();
@@ -143,8 +144,14 @@ void CKickBoardMonster::OnCollisionEnter(CCollider* _pOther)
 
     if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::PLAYER)
     {
+        if(!m_bDead2)
+            return;
+        else
+        {
+            dynamic_cast<CPlayer*>(_pOther->Get_Host())->Attacked(3.f);
 
-        cout << "워리어 공격" << endl;
+        }
+
     }
 }
 

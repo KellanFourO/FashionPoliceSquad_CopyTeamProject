@@ -229,8 +229,7 @@ HRESULT CBossStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		dynamic_cast<CPlayer*>(pPlayer)->Set_SceneChange(false);
 		dynamic_cast<CPlayer*>(pPlayer)->SetGun(pLayer);
 		pPlayer->Get_Transform()->Set_Pos(92.5f,10.0f,10.0f);
-
-
+		//oManagement()->Get_Player()->PlayerLookAtReset(_vec3(92.5f, 10.0f, 10.0f));
 
 		//FootRay
 		pGameObject = CFootRay::Create(m_pGraphicDev);
@@ -629,18 +628,14 @@ void CBossStage::Admin_KeyInput()
 		m_bAdminSwitch = false;
 	}
 
+	if (Key_Up(DIK_U))
+	{
+		CEventMgr::GetInstance()->OffDialog();
+	}
 
 	if (Engine::Get_DIKeyState(DIK_M) & 0x80 && m_bAdminSwitch)
 	{
-		CLoadingStage1* pScene = nullptr;
-		pScene = CLoadingStage1::Create(m_pGraphicDev, SCENETAG::STAGE2);
-
-		//CUIMgr::GetInstance()->DestroyInstance();
-		Management()->Get_Player()->Set_SceneChange(true);
-		Management()->Set_SYSceneChange(true);
-		Management()->Change_Scene(pScene);
-
-
+		CEventMgr::GetInstance()->SceneChange(m_pGraphicDev, SCENETAG::STAGE2);
 		m_bAdminSwitch = false;
 	}
 }

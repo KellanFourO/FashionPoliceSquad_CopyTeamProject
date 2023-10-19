@@ -242,6 +242,7 @@ void CMyDialog::KeyInput()
 		m_PortraitList.pop_front();
 		m_TextList.pop_front();
 
+
 		if (!m_PortraitList.empty())
 		{
 			switch (m_PortraitList.front())
@@ -289,7 +290,7 @@ void CMyDialog::KeyInput()
 
 
 
-		if (m_PortraitList.size() == 0 || m_TextList.size() == 0)
+		if (m_PortraitList.size() == 0 || m_TextList.size() == 0 || m_bEndInput)
 		{
 			switch (m_eDialog)
 			{
