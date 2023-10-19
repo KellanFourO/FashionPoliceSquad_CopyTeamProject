@@ -27,7 +27,8 @@ public:
 	void	OnDialog(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag, DIALOGTAG eDialogTag); // 다이얼로그 생성
 	void	OnPause(_bool bPause, SCENETAG eSceneTag);
 	void	OnDropItem(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag, _int iCount);
-
+	void	OffDialog();
+	void	SceneChange(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag);
 
 	enum class MiniGameState { PLAY_NOW, NOT_PLAY };
 
@@ -58,6 +59,9 @@ private:
 	CMainGame_Arrow*		pGame_Arrow = nullptr;
 	CMainGame_KickBoard*	pGame_KickBoard = nullptr;
 	CMainGame_Quiz*			pGame_Quiz = nullptr;
+
+	CMyDialog*				m_pDialog = nullptr;
+
 
 private:
 	virtual		void	Free();

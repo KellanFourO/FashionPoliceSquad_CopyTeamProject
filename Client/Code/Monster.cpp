@@ -375,8 +375,6 @@ void CMonster::Set_TransPos()
 
 void CMonster::Chase_Target(const _float& fTimeDelta)
 {
-
-
 	_vec3 vPlayerPos, vMyPos, vPlayerPos_Rel;
 
 	m_pPlayerTransform->Get_Info(INFO_POS, &vPlayerPos);

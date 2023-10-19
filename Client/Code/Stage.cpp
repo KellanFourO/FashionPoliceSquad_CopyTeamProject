@@ -63,8 +63,8 @@ _int CStage::Update_Scene(const _float& fTimeDelta)
 
 	if (m_bLateInit)
 	{
-		//CEventMgr::GetInstance()->OnDialog(m_pGraphicDev,m_eSceneTag, DIALOGTAG::STORY_ST1_INTRO);
-		//CEventMgr::GetInstance()->OnPause(true,m_eSceneTag);
+		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev,m_eSceneTag, DIALOGTAG::STORY_ST1_INTRO);
+		CEventMgr::GetInstance()->OnPause(true,m_eSceneTag);
 		m_bLateInit = false;
 	}
 
@@ -721,17 +721,14 @@ void CStage::Admin_KeyInput()
 		m_bAdminSwitch = false;
 	}
 
+	if (Engine::Get_DIKeyState(DIK_U) & 0x80)
+	{
+		CEventMgr::GetInstance()->OffDialog();
+	}
+
 	if (Engine::Get_DIKeyState(DIK_M) & 0x80 && m_bAdminSwitch)
 	{
-		CLoadingStage1* pScene = nullptr;
-		pScene = CLoadingStage1::Create(m_pGraphicDev, SCENETAG::LOBBY);
-
-		//CUIMgr::GetInstance()->DestroyInstance();
-		Management()->Get_Player()->Set_SceneChange(true);
-		Management()->Set_SYSceneChange(true);
-		Management()->Change_Scene(pScene);
-
-
+		CEventMgr::GetInstance()->SceneChange(m_pGraphicDev,SCENETAG::LOBBY);
 		m_bAdminSwitch = false;
 	}
 }

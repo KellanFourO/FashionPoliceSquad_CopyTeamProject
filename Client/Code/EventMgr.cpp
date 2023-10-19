@@ -3,6 +3,7 @@
 #include "Export_System.h"
 #include "Export_Utility.h"
 #include <random>
+#include "LoadingStage1.h"
 IMPLEMENT_SINGLETON(CEventMgr)
 
 CEventMgr::CEventMgr()
@@ -41,12 +42,12 @@ void CEventMgr::OnDialog(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag, DIAL
 	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
 	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PORTRAIT, pGameObject), E_FAIL);
 
-	CMyDialog* pDialog = nullptr;
-	pDialog = CMyDialog::Create(pGraphicDev, eDialogTag);
+	m_pDialog = nullptr;
+	m_pDialog = CMyDialog::Create(pGraphicDev, eDialogTag);
 
-	NULL_CHECK(pDialog);
+	NULL_CHECK(m_pDialog);
 
-	Management()->Get_One_Scene(eSceneTag)->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::DIALOG, pDialog);
+	Management()->Get_One_Scene(eSceneTag)->Get_Layer(LAYERTAG::UI)->Add_GameObject(OBJECTTAG::DIALOG, m_pDialog);
 
 }
 
@@ -95,6 +96,23 @@ void CEventMgr::OnDropItem(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag, _i
 
 }
 
+void CEventMgr::OffDialog()
+{
+	m_pDialog->Set_EndInput(true);
+}
+
+void CEventMgr::SceneChange(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag)
+{
+		CLoadingStage1* pScene = nullptr;
+
+		pScene = CLoadingStage1::Create(pGraphicDev, eSceneTag);
+
+		//CUIMgr::GetInstance()->DestroyInstance();
+		Management()->Get_Player()->Set_SceneChange(true);
+		Management()->Set_SYSceneChange(true);
+		Management()->Change_Scene(pScene);
+}
+
 HRESULT CEventMgr::OnMiniGame_Arrow(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag)
 {
 	m_eMiniGameState = CEventMgr::MiniGameState::PLAY_NOW;
@@ -104,7 +122,9 @@ HRESULT CEventMgr::OnMiniGame_Arrow(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSce
 	pGame_Arrow = Engine::CMainGame_Arrow::Create(pGraphicDev);
 	NULL_CHECK_RETURN(pGame_Arrow, E_FAIL);
 
+	SoundMgr()->StopSound(SOUND_BGM);
 	OnPause(TRUE, SCENETAG::LOBBY);
+	SoundMgr()->PlayBGM(L"MiniGame1BGM.mp3",1.f);
 
 	Management()->Get_One_Scene(eSceneTag)->Get_Layer(LAYERTAG::MINIGAME)->Add_GameObject(OBJECTTAG::MINIGAME, pGame_Arrow);
 
@@ -119,7 +139,9 @@ HRESULT CEventMgr::OnMiniGame_KickBoard(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG 
 
 	OnPause(TRUE, SCENETAG::LOBBY);
 
+	SoundMgr()->StopSound(SOUND_BGM);
 	Management()->Get_One_Scene(eSceneTag)->Get_Layer(LAYERTAG::MINIGAME)->Add_GameObject(OBJECTTAG::MINIGAME, pGame_KickBoard);
+	SoundMgr()->PlayBGM(L"MiniGame2BGM.mp3", 1.f);
 
 	return S_OK;
 }
@@ -128,14 +150,15 @@ HRESULT CEventMgr::OnMiniGame_Quiz(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eScen
 {
 	m_bMiniGame_ClearCheck[2] = true;
 
+	SoundMgr()->StopSound(SOUND_BGM);
 	OnPause(FALSE, SCENETAG::LOBBY);
-
+	SoundMgr()->PlayBGM(L"QuizBGM.mp3", 1.f);
 // 	m_eMiniGameState = CEventMgr::MiniGameState::PLAY_NOW;
 // 	pGame_Quiz = Engine::CMainGame_Quiz::Create(pGraphicDev);
 // 	NULL_CHECK_RETURN(pGame_Quiz, E_FAIL);
-// 
+//
 // 	OnPause(TRUE, SCENETAG::LOBBY);
-// 
+//
 // 	Management()->Get_One_Scene(eSceneTag)->Get_Layer(LAYERTAG::MINIGAME)->Add_GameObject(OBJECTTAG::MINIGAME, pGame_KickBoard);
 
 	return S_OK;
@@ -148,7 +171,9 @@ HRESULT CEventMgr::OffMiniGame_Arrow(SCENETAG eSceneTag, _bool ClearCheck)
 	if (ClearCheck == true)
 	{
 		Set_MiniGameClearCheck(0, TRUE);
+		SoundMgr()->StopSound(SOUND_BGM);
 		OnPause(FALSE, SCENETAG::LOBBY);
+		SoundMgr()->PlayBGM(L"LobbyBGM3.mp3", 0.25f);
 	}
 	if (ClearCheck == false)
 	{
@@ -163,7 +188,9 @@ HRESULT CEventMgr::OffMiniGame_KickBoard(SCENETAG eSceneTag, _bool ClearCheck)
 	if (ClearCheck == true)
 	{
 		Set_MiniGameClearCheck(1, TRUE);
+		SoundMgr()->StopSound(SOUND_BGM);
 		OnPause(FALSE, SCENETAG::LOBBY);
+		SoundMgr()->PlayBGM(L"LobbyBGM3.mp3", 0.25f);
 	}
 	if (ClearCheck == false)
 	{
@@ -175,6 +202,10 @@ HRESULT CEventMgr::OffMiniGame_KickBoard(SCENETAG eSceneTag, _bool ClearCheck)
 }
 HRESULT CEventMgr::OffMiniGame_Quiz(SCENETAG eSceneTag, _bool ClearCheck)
 {
+
+	SoundMgr()->StopSound(SOUND_BGM);
+	OnPause(FALSE, SCENETAG::LOBBY);
+	SoundMgr()->PlayBGM(L"LobbyBGM3.mp3", 0.25f);
 	return S_OK;
 }
 
