@@ -89,6 +89,7 @@ private:
 	//HRESULT				Trigger_Check_For_Create_Monster();
 	HRESULT				Create_Monster(int iNum);
 	HRESULT				Check_Trigger();
+	HRESULT				Check_Collision_Water();
 
 private:
 	CLayer*				m_pLayer = nullptr;  //Environment
@@ -115,6 +116,7 @@ private:
 	_uint							m_iOBJIndex = 0;
 
 	vector<OBJData*>				m_VecLight;
+	vector<OBJData*>				m_VecWater;
 
 	vector<CUBE*>					m_VecCubeData;
 	_uint							m_iCubeIndex = 0;

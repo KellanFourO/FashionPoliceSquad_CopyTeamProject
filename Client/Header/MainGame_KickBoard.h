@@ -16,7 +16,7 @@ class CTransform;
 
 class CMainGame_KickBoard :  public CGameObject
 {
-private:
+public:
 	explicit	CMainGame_KickBoard(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit	CMainGame_KickBoard(const CMainGame_KickBoard& rhs);
 	virtual		~CMainGame_KickBoard();

@@ -16,7 +16,7 @@ class CTransform;
 
 class CMainGame_Arrow :  public CGameObject
 {
-private:
+public:
 	explicit	CMainGame_Arrow(LPDIRECT3DDEVICE9 pGraphicDev);
 	explicit	CMainGame_Arrow(const CMainGame_Arrow& rhs);
 	virtual		~CMainGame_Arrow();

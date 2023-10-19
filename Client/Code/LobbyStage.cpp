@@ -31,7 +31,8 @@ HRESULT CLobbyStage::Ready_Scene()
 	FAILED_CHECK_RETURN(Ready_Layer_UI(LAYERTAG::UI), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Layer_MINIGAME(LAYERTAG::MINIGAME), E_FAIL);
 
-	Load_Data_T(L"../Bin/Data/Trigger/Lobby/TriggerData", OBJECTTAG::O_TRIGGER); //TODO 트리거
+	Load_Data_T(L"../Bin/Data/Trigger/Lobby/T1/TriggerData", OBJECTTAG::O_TRIGGER); //TODO 트리거
+	Load_Data_T(L"../Bin/Data/Trigger/Lobby/T2/TriggerData", OBJECTTAG::O_TRIGGER); //TODO 트리거
 
 	Add_Light();
 
@@ -51,20 +52,235 @@ HRESULT CLobbyStage::Ready_Scene()
 	return S_OK;
 }
 
+HRESULT CLobbyStage::Ready_Prototype()
+{
+	//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_UITex", CUITex::Create(m_pGraphicDev)), E_FAIL);
+	return S_OK;
+}
+
+HRESULT CLobbyStage::Ready_Layer_Environment(LAYERTAG eLayerTag)
+{
+	m_pLayer = Engine::CLayer::Create(eLayerTag);
+	NULL_CHECK_RETURN(m_pLayer, E_FAIL);
+
+	Engine::CGameObject* pGameObject = nullptr;
+	Engine::CGameObject* pTemp = nullptr;
+
+	pTemp = pGameObject;
+
+	// SkyBox
+	pGameObject = CSkyBox::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::SKYBOX, pGameObject), E_FAIL);
+
+	pTemp = pGameObject;
+
+
+
+	Load_Data(L"../Bin/Data/Map/Lobby/MapData", OBJECTTAG::BUILD_CUBE);
+	Load_Data(L"../Bin/Data/OBJ/Lobby/OBJData", OBJECTTAG::BUILD_OBJ);
+
+	m_mapLayer.insert({ eLayerTag, m_pLayer });
+
+	return S_OK;
+}
+
+HRESULT CLobbyStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
+{
+	Engine::CLayer* pLayer = m_pGLayer = Engine::CLayer::Create(eLayerTag);
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	Engine::CGameObject* pGameObject = nullptr;
+
+	{
+		// Player
+		CGameObject* pPlayer = m_pPlayer = pGameObject = Management()->Get_Player();
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER, pGameObject), E_FAIL);	//플레이어
+
+		dynamic_cast<CPlayer*>(pPlayer)->ClearGunList();
+
+
+		pGameObject = Management()->Get_ShotGun();
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_GUN, pGameObject), E_FAIL);
+
+
+		pGameObject = Management()->Get_Rifle();
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_GUN, pGameObject), E_FAIL);
+
+		pGameObject = Management()->Get_RifleHand();
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_HAND, pGameObject), E_FAIL);
+
+		dynamic_cast<CPlayer*>(pPlayer)->Set_SceneChange(false);
+		dynamic_cast<CPlayer*>(pPlayer)->SetGun(pLayer);
+		pPlayer->Get_Transform()->Set_Pos(20.f, 5.0f, 20.0f);
+
+		//FootRay
+		pGameObject = CFootRay::Create(m_pGraphicDev);
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::RAY, pGameObject), E_FAIL);
+		dynamic_cast<CFootRay*>(pGameObject)->Set_Host(pPlayer);
+
+		//
+		//pGameObject = CRay::Create(m_pGraphicDev);
+		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::RAY, pGameObject), E_FAIL);
+		//pGameObject = CStage1Boss::Create(m_pGraphicDev);
+		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::BOSS, pGameObject), E_FAIL);
+
+		pGameObject = Management()->Get_ShotGunFlash();
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::EFFECT, pGameObject), E_FAIL);	//샷건섬광
+
+		pGameObject = Management()->Get_RifleFlash();
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::EFFECT, pGameObject), E_FAIL);	//라이플 섬광
+
+		pGameObject = Management()->Get_Lazer();
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_LAZER, pGameObject), E_FAIL);
+
+		pGameObject = Management()->Get_Belt();
+		NULL_CHECK_RETURN(pGameObject, E_FAIL);
+		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::OBJECT, pGameObject), E_FAIL);	//벨트
+	}
+
+	m_mapLayer.insert({ eLayerTag, pLayer });
+
+	return S_OK;
+}
+
+HRESULT CLobbyStage::Ready_Layer_Camera(LAYERTAG eLayerTag)
+{
+	Engine::CLayer* pLayer = Engine::CLayer::Create(eLayerTag);
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	Engine::CGameObject* pGameObject = nullptr;
+
+
+	pGameObject = Management()->Get_Camera();
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::FPSCAMERA, pGameObject), E_FAIL);
+
+
+
+	m_mapLayer.insert({ eLayerTag, pLayer });
+	//CImGuiManager::GetInstance()->Set_Cam(dynamic_cast<CDynamicCamera*>(pGameObject));
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject), E_FAIL);
+	return S_OK;
+}
+
+HRESULT CLobbyStage::Ready_Layer_UI(LAYERTAG eLayerTag)
+{
+	Engine::CLayer* pLayer = Engine::CLayer::Create(eLayerTag);
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	Engine::CGameObject* pGameObject = nullptr;
+
+	pGameObject = CCrossHair::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::CROSSHAIR, pGameObject), E_FAIL);
+
+	pGameObject = CMissionObjective::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MISSION, pGameObject), E_FAIL);
+
+	pGameObject = CHPBarFrame::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CHPBarValue::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CHPMark::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CShieldFrame::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CShieldValue::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CShieldMark::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CBerserkFrame_UI::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CBerserk_UI::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CPlayerFace::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CHat::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CBulletInfoName::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CBulletInfoCount::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CWeaponInfo::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	pGameObject = CRopeUI::Create(m_pGraphicDev);
+	NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	m_mapLayer.insert({ eLayerTag, pLayer });
+
+	//승용
+
+	//Load_UI();
+
+	//pGameObject = CImGuiManager::GetInstance()->Get_UI(L"Checkmark.png");
+	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
+	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
+
+	//pGameObject = CUIMgr::GetInstance()->Get_UI(L"electricity-icon.png");
+	//pGameObject = CImGuiManager::GetInstance()->Get_ImguiUI();
+
+
+
+
+	return S_OK;
+}
+
+HRESULT CLobbyStage::Ready_Layer_MINIGAME(LAYERTAG eLayerTag)
+{
+	Engine::CLayer* pLayer = Engine::CLayer::Create(eLayerTag);
+	NULL_CHECK_RETURN(pLayer, E_FAIL);
+
+	//Engine::CGameObject* pGameObject = nullptr;
+
+
+	m_mapLayer.insert({ eLayerTag, pLayer });
+
+	return S_OK;
+}
+
+
 _int CLobbyStage::Update_Scene(const _float& fTimeDelta)
 {
 	_int	iExit = __super::Update_Scene(fTimeDelta);
-	//if (m_bLateInit)
-	//{
-	//	CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::LOBBY, DIALOGTAG::ST1_BOSS_START);
-	//	CEventMgr::GetInstance()->OnPause(true, SCENETAG::LOBBY);
-	//	m_bLateInit = false;
-	//}
-
-	//if (m_bReadyCube)
-	//{
-	//	Octree()->Update_Octree();
-	//}
 
 	m_fAdminTick += fTimeDelta;
 	if (m_fAdminTick >= 3.f)
@@ -76,6 +292,7 @@ _int CLobbyStage::Update_Scene(const _float& fTimeDelta)
 
 
 	Light_OnOff_Check();
+	Check_Trigger();
 
 	Admin_KeyInput();
 	return iExit;
@@ -326,232 +543,116 @@ HRESULT CLobbyStage::Moving_Wall()
 	return S_OK;
 }
 
-
-HRESULT CLobbyStage::Ready_Prototype()
+HRESULT CLobbyStage::Check_Trigger()
 {
-	//FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_UITex", CUITex::Create(m_pGraphicDev)), E_FAIL);
-	return S_OK;
-}
-
-HRESULT CLobbyStage::Ready_Layer_Environment(LAYERTAG eLayerTag)
-{
-	m_pLayer = Engine::CLayer::Create(eLayerTag);
-	NULL_CHECK_RETURN(m_pLayer, E_FAIL);
-
-	Engine::CGameObject* pGameObject = nullptr;
-	Engine::CGameObject* pTemp = nullptr;
-
-	pTemp = pGameObject;
-
-	// SkyBox
-	pGameObject = CSkyBox::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(m_pLayer->Add_GameObject(OBJECTTAG::SKYBOX, pGameObject), E_FAIL);
-
-	pTemp = pGameObject;
-
-
-
-	Load_Data(L"../Bin/Data/Map/Lobby/MapData", OBJECTTAG::BUILD_CUBE);
-	Load_Data(L"../Bin/Data/OBJ/Lobby/OBJData", OBJECTTAG::BUILD_OBJ);
-
-	m_mapLayer.insert({ eLayerTag, m_pLayer });
-
-	return S_OK;
-}
-
-HRESULT CLobbyStage::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
-{
-	Engine::CLayer* pLayer = m_pGLayer = Engine::CLayer::Create(eLayerTag);
-	NULL_CHECK_RETURN(pLayer, E_FAIL);
-
-	Engine::CGameObject* pGameObject = nullptr;
-
+	if (!m_TriggerDataTemp.empty() && m_bMiniGameCheck == true )
+									// F키를 누르면 동작하게 해놓음
 	{
-		// Player
-		CGameObject* pPlayer = m_pPlayer = pGameObject = Management()->Get_Player();
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER, pGameObject), E_FAIL);	//플레이어
+		int iCountNum = -1;
+		_vec3 PlayerPos;
+		Management()->Get_Player()->Get_Transform()->Get_Info(INFO_POS, &PlayerPos);
 
-		dynamic_cast<CPlayer*>(pPlayer)->ClearGunList();
+		for (auto& iter : m_TriggerDataTemp)
+		{
+			_float MinX = (iter->vPos.x) - (iter->vSize.x * 0.5f);
+			_float MaxX = (iter->vPos.x) + (iter->vSize.x * 0.5f);
+
+			_float MinZ = (iter->vPos.z) - (iter->vSize.z * 0.5f);
+			_float MaxZ = (iter->vPos.z) + (iter->vSize.z * 0.5f);
+
+			if (((PlayerPos.x >= MinX) && (PlayerPos.x <= MaxX))
+				&& ((PlayerPos.z >= MinZ) && (PlayerPos.z <= MaxZ)))
+			{
+				if ((iter->eTrName == TRIGGER_NUMBER::TR0) && (iter->eTrSTATE == TRIGGER_STATE::TR_BEFORE)
+					&& CEventMgr::GetInstance()->Get_MiniGameClearCheck(0) == false)
+				{
+					iCountNum = 1;
+
+					if (CEventMgr::GetInstance()->Get_MiniGameState() == CEventMgr::MiniGameState::NOT_PLAY) {
+						SoundMgr()->StopSound(SOUND_BGM);
+						CEventMgr::GetInstance()->OnMiniGame_Arrow(m_pGraphicDev, SCENETAG::LOBBY);
+						SoundMgr()->PlayBGM(L"MiniGame1BGM.mp3", 1.f);
+					}
+
+					//iter->eTrSTATE = TRIGGER_STATE::TR_AFTER;
+				}
+				else if ((iter->eTrName == TRIGGER_NUMBER::TR1) && (iter->eTrSTATE == TRIGGER_STATE::TR_BEFORE)
+					&& CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == false)
+				{
+					iCountNum = 2;
+
+					if (CEventMgr::GetInstance()->Get_MiniGameState() == CEventMgr::MiniGameState::NOT_PLAY) {
+						SoundMgr()->StopSound(SOUND_BGM);
+						CEventMgr::GetInstance()->OnMiniGame_KickBoard(m_pGraphicDev, SCENETAG::LOBBY);
+						SoundMgr()->PlayBGM(L"MiniGame2BGM.mp3", 1.f);
+					}
+
+					//iter->eTrSTATE = TRIGGER_STATE::TR_AFTER;
+				}
+				else if ((iter->eTrName == TRIGGER_NUMBER::TR2) && (iter->eTrSTATE == TRIGGER_STATE::TR_BEFORE)
+					&& CEventMgr::GetInstance()->Get_MiniGameClearCheck(2) == false)
+				{
+					iCountNum = 3;
+
+					if (CEventMgr::GetInstance()->Get_MiniGameState() == CEventMgr::MiniGameState::NOT_PLAY) {
+						SoundMgr()->StopSound(SOUND_BGM);
+						CEventMgr::GetInstance()->OnMiniGame_Quiz(m_pGraphicDev, SCENETAG::LOBBY);
+						SoundMgr()->PlayBGM(L"QuizBGM.mp3", 1.f);
+					}
+
+					//iter->eTrSTATE = TRIGGER_STATE::TR_AFTER;
+				}
+
+				else if ((iter->eTrName == TRIGGER_NUMBER::TR3) && (iter->eTrSTATE == TRIGGER_STATE::TR_BEFORE))
+				{
+					iCountNum = 4;
+					
+					MSG_BOX("Test!");
+
+					iter->eTrSTATE = TRIGGER_STATE::TR_AFTER; //이거 켜면 한번만 트리거 처리가능
+				}
+			}
+		}
+	}
+	return S_OK;
+}
 
 
-		pGameObject = Management()->Get_ShotGun();
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_GUN, pGameObject), E_FAIL);
 
+void CLobbyStage::Admin_KeyInput()
+{
 
-		pGameObject = Management()->Get_Rifle();
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_GUN, pGameObject), E_FAIL);
-
-		pGameObject = Management()->Get_RifleHand();
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_HAND, pGameObject), E_FAIL);
-
-		dynamic_cast<CPlayer*>(pPlayer)->Set_SceneChange(false);
-		dynamic_cast<CPlayer*>(pPlayer)->SetGun(pLayer);
-		pPlayer->Get_Transform()->Set_Pos(20.f,5.0f,20.0f);
-
-		//FootRay
-		pGameObject = CFootRay::Create(m_pGraphicDev);
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::RAY, pGameObject), E_FAIL);
-		dynamic_cast<CFootRay*>(pGameObject)->Set_Host(pPlayer);
-
-		//
-		//pGameObject = CRay::Create(m_pGraphicDev);
-		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::RAY, pGameObject), E_FAIL);
-		//pGameObject = CStage1Boss::Create(m_pGraphicDev);
-		//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::BOSS, pGameObject), E_FAIL);
-
-		pGameObject = Management()->Get_ShotGunFlash();
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::EFFECT, pGameObject), E_FAIL);	//샷건섬광
-
-		pGameObject = Management()->Get_RifleFlash();
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::EFFECT, pGameObject), E_FAIL);	//라이플 섬광
-
-		pGameObject = Management()->Get_Lazer();
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::PLAYER_LAZER, pGameObject), E_FAIL);
-
-		pGameObject = Management()->Get_Belt();
-		NULL_CHECK_RETURN(pGameObject, E_FAIL);
-		FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::OBJECT, pGameObject), E_FAIL);	//벨트
+	if (Engine::Get_DIKeyState(DIK_F9) & 0x80 && m_bAdminSwitch)
+	{
+		CEventMgr::GetInstance()->OnPause(false, SCENETAG::LOBBY);
+		m_bAdminSwitch = false;
 	}
 
-	m_mapLayer.insert({ eLayerTag, pLayer });
+	if (Key_Up(DIK_U))
+	{
+		CEventMgr::GetInstance()->OffDialog();
+	}
 
-	return S_OK;
+	if (Engine::Get_DIKeyState(DIK_M) & 0x80 && m_bAdminSwitch)
+	{
+		CEventMgr::GetInstance()->SceneChange(m_pGraphicDev, SCENETAG::BOSS_STAGE);
+		m_bAdminSwitch = false;
+	}
+
+
+	_bool CheckTemp = dynamic_cast<CPlayer*>(m_pPlayer)->Get_TriggerCheck();
+
+	if ((Engine::Get_DIKeyState(DIK_F) & 0x80) && (CheckTemp == true)
+		&& (CEventMgr::GetInstance()->Get_MiniGameState() == CEventMgr::MiniGameState::NOT_PLAY))
+	{
+		m_bMiniGameCheck = true;
+		m_bAdminSwitch = false;
+	}
+	if (!(Engine::Get_DIKeyState(DIK_F) & 0x80))
+	{
+		m_bMiniGameCheck = false;
+	}
 }
-
-HRESULT CLobbyStage::Ready_Layer_Camera(LAYERTAG eLayerTag)
-{
-	Engine::CLayer* pLayer = Engine::CLayer::Create(eLayerTag);
-	NULL_CHECK_RETURN(pLayer, E_FAIL);
-
-	Engine::CGameObject* pGameObject = nullptr;
-
-
-	pGameObject = Management()->Get_Camera();
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::FPSCAMERA, pGameObject), E_FAIL);
-
-
-
-	m_mapLayer.insert({ eLayerTag, pLayer });
-	//CImGuiManager::GetInstance()->Set_Cam(dynamic_cast<CDynamicCamera*>(pGameObject));
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(L"DynamicCamera", pGameObject), E_FAIL);
-	return S_OK;
-}
-
-HRESULT CLobbyStage::Ready_Layer_UI(LAYERTAG eLayerTag)
-{
-	Engine::CLayer* pLayer = Engine::CLayer::Create(eLayerTag);
-	NULL_CHECK_RETURN(pLayer, E_FAIL);
-
-	Engine::CGameObject* pGameObject = nullptr;
-
-	pGameObject = CCrossHair::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::CROSSHAIR, pGameObject), E_FAIL);
-
-	pGameObject = CMissionObjective::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::MISSION, pGameObject), E_FAIL);
-
-	pGameObject = CHPBarFrame::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
-
-	pGameObject = CHPBarValue::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
-
-	pGameObject = CHPMark::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
-
-	pGameObject = CShieldFrame::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
-
-	pGameObject = CShieldValue::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
-
-	pGameObject = CShieldMark::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
-
-	pGameObject = CBerserkFrame_UI::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
-
-	pGameObject = CBerserk_UI::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
-
-	pGameObject = CPlayerFace::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
-
-	pGameObject = CHat::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
-
-	pGameObject = CBulletInfoName::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
-
-	pGameObject = CBulletInfoCount::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
-
-	pGameObject = CWeaponInfo::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
-
-	pGameObject = CRopeUI::Create(m_pGraphicDev);
-	NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
-
-	m_mapLayer.insert({ eLayerTag, pLayer });
-
-	//승용
-
-	//Load_UI();
-
-	//pGameObject = CImGuiManager::GetInstance()->Get_UI(L"Checkmark.png");
-	//NULL_CHECK_RETURN(pGameObject, E_FAIL);
-	//FAILED_CHECK_RETURN(pLayer->Add_GameObject(OBJECTTAG::UI, pGameObject), E_FAIL);
-
-	//pGameObject = CUIMgr::GetInstance()->Get_UI(L"electricity-icon.png");
-	//pGameObject = CImGuiManager::GetInstance()->Get_ImguiUI();
-
-
-
-
-	return S_OK;
-}
-
-HRESULT CLobbyStage::Ready_Layer_MINIGAME(LAYERTAG eLayerTag)
-{
-	Engine::CLayer* pLayer = Engine::CLayer::Create(eLayerTag);
-	NULL_CHECK_RETURN(pLayer, E_FAIL);
-
-	//Engine::CGameObject* pGameObject = nullptr;
-
-
-	m_mapLayer.insert({ eLayerTag, pLayer });
-
-	return S_OK;
-}
-
 
 HRESULT CLobbyStage::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 {
@@ -789,57 +890,6 @@ HRESULT CLobbyStage::Load_Data_T(const TCHAR* pFilePath, OBJECTTAG eTag)
 	return S_OK;
 }
 
-
-
-void CLobbyStage::Admin_KeyInput()
-{
-
-	if (Engine::Get_DIKeyState(DIK_F9) & 0x80 && m_bAdminSwitch)
-	{
-		CEventMgr::GetInstance()->OnPause(false, SCENETAG::LOBBY);
-		m_bAdminSwitch = false;
-	}
-
-	if (Key_Up(DIK_U))
-	{
-		CEventMgr::GetInstance()->OffDialog();
-	}
-
-	if (Engine::Get_DIKeyState(DIK_M) & 0x80 && m_bAdminSwitch)
-	{
-		CEventMgr::GetInstance()->SceneChange(m_pGraphicDev, SCENETAG::BOSS_STAGE);
-		m_bAdminSwitch = false;
-	}
-
-	_bool CheckTemp = dynamic_cast<CPlayer*>(m_pPlayer)->Get_TriggerCheck();
-
-	if ((Engine::Get_DIKeyState(DIK_F) & 0x80) && (CheckTemp == true)
-		&& (CEventMgr::GetInstance()->Get_MiniGameState() == CEventMgr::MiniGameState::NOT_PLAY))
-	{
-		CEventMgr::GetInstance()->Set_MiniGameMode();
-
-		if ((CEventMgr::GetInstance()->Get_MiniGameClearCheck(0) == false)
-			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == false)
-			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(2) == false))
-		{
-			CEventMgr::GetInstance()->OnMiniGame_Arrow(m_pGraphicDev, SCENETAG::LOBBY);
-		}
-		else if ((CEventMgr::GetInstance()->Get_MiniGameClearCheck(0) == true)
-			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == false)
-			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(2) == false))
-		{
-			CEventMgr::GetInstance()->OnMiniGame_KickBoard(m_pGraphicDev, SCENETAG::LOBBY);
-		}
-		else if ((CEventMgr::GetInstance()->Get_MiniGameClearCheck(0) == true)
-			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == true)
-			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(2) == false))
-		{
-			CEventMgr::GetInstance()->OnMiniGame_Quiz(m_pGraphicDev, SCENETAG::LOBBY);
-		}
-
-		m_bAdminSwitch = false;
-	}
-}
 
 CLobbyStage* CLobbyStage::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
