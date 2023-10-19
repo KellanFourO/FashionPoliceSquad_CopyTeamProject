@@ -99,7 +99,7 @@ void CLazer::Render_GameObject()
 {
 	if (m_bFire)
 	{
-		m_pCollider->Render_Collider();
+		//m_pCollider->Render_Collider();
 		m_pGraphicDev->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
 
 		D3DCOLORVALUE Difuse = { 1.f, 0.f, 0.f, 1.f };
@@ -206,8 +206,10 @@ void CLazer::StartPosition()
 		{
 			if (CollisionManager()->CollisionRayToCube(m_pCollider, iter->Get_Collider(), vStartPos))
 			{
-				dynamic_cast<CMonster*>(iter)->Attacked(m_fDmg);
+				static_cast<CMonster*>(iter)->Set_RecogTextureIndex(2);
+				static_cast<CMonster*>(iter)->Attacked(m_fDmg);
 			}
+
 		}
 	}
 

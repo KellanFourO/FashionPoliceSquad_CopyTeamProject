@@ -76,14 +76,14 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\Bin\Export\$(Configuration)\$(PlatformTarget)\</OutDir>
     <IntDir>..\Bin\Intermediate\$(Configuration)\$(PlatformTarget)\</IntDir>
-    <IncludePath>$(DXSDK_DIR)Include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(DXSDK_DIR)Include\;C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)Lib\$(PlatformTarget)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\Bin\Export\$(Configuration)\$(PlatformTarget)\</OutDir>
     <IntDir>..\Bin\Intermediate\$(Configuration)\$(PlatformTarget)\</IntDir>
-    <IncludePath>$(DXSDK_DIR)Include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(DXSDK_DIR)Include\;C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\um;$(IncludePath)</IncludePath>
     <LibraryPath>$(DXSDK_DIR)Lib\$(PlatformTarget)\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -114,7 +114,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;System.lib;Utility.lib;shlwapi.lib;fmodex_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;System.lib;Utility.lib;shlwapi.lib;fmodex_vc.lib;mfplat.lib;mfuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)\Reference\Library\Engine\$(Configuration)\$(PlatformTarget)\;$(SolutionDir)\Reference\Library\FMod\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
@@ -142,7 +142,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;System.lib;Utility.lib;shlwapi.lib;fmodex_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d9.lib;d3dx9.lib;dxguid.lib;System.lib;Utility.lib;shlwapi.lib;fmodex_vc.lib;mfplat.lib;mfuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)\Reference\Library\Engine\$(Configuration)\$(PlatformTarget)\;$(SolutionDir)\Reference\Library\FMod\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
     </Link>
@@ -239,6 +239,7 @@
     <ClInclude Include="..\Header\LobbyStage.h" />
     <ClInclude Include="..\Header\MainGame_Arrow.h" />
     <ClInclude Include="..\Header\MainGame_KickBoard.h" />
+    <ClInclude Include="..\Header\MainGame_Quiz.h" />
     <ClInclude Include="..\Header\Mini_Arrow.h" />
     <ClInclude Include="..\Header\Mini_Effect.h" />
     <ClInclude Include="..\Header\Mini_Cursor.h" />
@@ -407,6 +408,7 @@
     <ClCompile Include="..\Code\JumpShockWaveEffect2.cpp" />
     <ClCompile Include="..\Code\FileMgr.cpp" />
     <ClCompile Include="..\Code\MainGame_KickBoard.cpp" />
+    <ClCompile Include="..\Code\MainGame_Quiz.cpp" />
     <ClCompile Include="..\Code\MBulletBombEffect.cpp" />
     <ClCompile Include="..\Code\MBulletExplosion.cpp" />
     <ClCompile Include="..\Code\MainGame_Arrow.cpp" />

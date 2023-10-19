@@ -295,6 +295,7 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 						ImGui::RadioButton(u8"계단 OBJ", &m_forObjAttribute, 8);
  						ImGui::RadioButton(u8"기준 OBJ", &m_forObjAttribute, 4); 
 						ImGui::RadioButton(u8"페인트용 OBJ", &m_forObjAttribute, 9);
+						ImGui::RadioButton(u8"안개 OBJ", &m_forObjAttribute, 10);
 						ImGui::RadioButton(u8"단순 장식OBJ", &m_forObjAttribute, 7);
 
 
@@ -329,6 +330,9 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 							break;
 						case 9:
 							m_eOBJ_Attribute = OBJ_ATTRIBUTE::ForPaint_OBJ;
+							break;
+						case 10:
+							m_eOBJ_Attribute = OBJ_ATTRIBUTE::FOG_OBJ;
 							break;
 						default:
 							m_eOBJ_Attribute = OBJ_ATTRIBUTE::NONE_OBJ;

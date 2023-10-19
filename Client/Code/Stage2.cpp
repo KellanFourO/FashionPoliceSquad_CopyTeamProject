@@ -8,8 +8,11 @@
 #include <sstream>
 #include <utility>
 #include "LoadingStage1.h"
-
 #include "FootRay.h"
+#include <windows.h>
+
+
+
 CStage2::CStage2(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev)
 {
@@ -35,6 +38,8 @@ HRESULT CStage2::Ready_Scene()
 
 	srand(GetTickCount64());
 
+	Load_Data_T(L"../Bin/Data/Trigger/Stage2/TriggerData", OBJECTTAG::O_TRIGGER);
+
 	//TODO - 승용추가 크로스헤어 추가, 기본 커서 안보이게
 	ShowCursor(FALSE);
 
@@ -52,6 +57,39 @@ _int CStage2::Update_Scene(const _float& fTimeDelta)
  		CEventMgr::GetInstance()->OnPause(true, SCENETAG::STAGE2);
  		m_bLateInit = false;
  	}
+
+	//if (m_pLayer->Get_ObjectList(OBJECTTAG::MONSTER).size() == 0 && m_bEnd)
+	//{
+	//	SoundMgr()->StopAll();
+	//	CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::STAGE2, DIALOGTAG::STORY_ST2_CONCLU);
+	//	CEventMgr::GetInstance()->OnPause(true, SCENETAG::STAGE2);
+	//	SoundMgr()->PlayBGM(L"EndBGM.wav",1.f);
+	//	m_bEnd = false;
+	//}
+	//
+	//if (!m_bEnd)
+	//{
+	//	if (!m_bVideo)
+	//	{
+	//		m_hVideo = MCIWndCreate(g_hWnd,			// 부모 윈도우의 핸들
+	//			nullptr,		// MCI윈도우를 사용하는 인스턴스 핸들
+	//			WS_CHILD | WS_VISIBLE | MCIWNDF_NOPLAYBAR, // 윈도우 모양 설정(WS_CHILD : 자식 창 형태, WS_VISIBLE : 그 즉시 그리기, MCIWNDF_NOPLAYBAR : 플레이바를 출력하지 않음)
+	//			L"../Bin/Resource/Video/Wildlife.wmv"); // 재생할 파일의 경로
+	//
+	//// MoveWindow : 동영상을 재생할 크기를 설정, 설정하지 않을 경우 동영상의 원래 크기대로 출력
+	//		MoveWindow(m_hVideo, 0, 0, WINCX, WINCY, FALSE);
+	//
+	//		MCIWndPlay(m_hVideo);
+	//
+	//		m_bVideo = true;
+	//	}
+	//
+	//	if (MCIWndGetLength(m_hVideo) <= MCIWndGetPosition(m_hVideo)
+	//		|| Key_Down(DIK_RETURN))
+	//	{
+	//		return 0;
+	//	}
+	//}
 
 	//if (m_bReadyCube)
 	//{
@@ -78,6 +116,9 @@ void CStage2::LateUpdate_Scene()
 	__super::LateUpdate_Scene();
 
 	CollisionManager()->LateUpdate_Collision();
+
+	Check_Trigger();
+
 }
 
 void CStage2::Render_Scene()
@@ -138,12 +179,12 @@ HRESULT CStage2::Ready_Layer_Environment(LAYERTAG eLayerTag)
 
 HRESULT CStage2::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 {
-	Engine::CLayer* pLayer = Engine::CLayer::Create(eLayerTag);
+	Engine::CLayer* pLayer = m_pGLayer = Engine::CLayer::Create(eLayerTag);
 	NULL_CHECK_RETURN(pLayer, E_FAIL);
 
 	Engine::CGameObject* pGameObject = nullptr;
 
-	Load_Data_C(L"../Bin/Data/CPoint/Stage2/C_all/CPointData", OBJECTTAG::BUILD_OBJ);
+	Load_Data_C(L"../Bin/Data/CPoint/Stage2/C0/CPointData", OBJECTTAG::BUILD_OBJ, 0);
 
 	{
 		// Player
@@ -192,7 +233,7 @@ HRESULT CStage2::Ready_Layer_GameLogic(LAYERTAG eLayerTag)
 		dynamic_cast<CFootRay*>(pGameObject)->Set_Host(m_pPlayer);
 
 		//몬스터
-		for (auto& iter : m_VecCreatePoint)
+		for (auto& iter : m_VecCreatePoint[0])
 		{
 			if (iter->eMonsterType == MonsterType::BIGDADDY)
 			{
@@ -455,6 +496,93 @@ HRESULT CStage2::Light_OnOff_Check()
 }
 
 
+HRESULT CStage2::Check_Trigger()
+{
+	if (!m_TriggerDataTemp.empty())
+	{
+		int iCountNum = -1;
+		_vec3 PlayerPos;
+		Management()->Get_Player()->Get_Transform()->Get_Info(INFO_POS, &PlayerPos);
+
+		for (auto& iter : m_TriggerDataTemp)
+		{
+			_float MinX = (iter->vPos.x) - (iter->vSize.x * 0.5f);
+			_float MaxX = (iter->vPos.x) + (iter->vSize.x * 0.5f);
+
+			_float MinZ = (iter->vPos.z) - (iter->vSize.z * 0.5f);
+			_float MaxZ = (iter->vPos.z) + (iter->vSize.z * 0.5f);
+
+			if (((PlayerPos.x >= MinX) && (PlayerPos.x <= MaxX))
+				&& ((PlayerPos.z >= MinZ) && (PlayerPos.z <= MaxZ)))
+			{
+				if ((iter->eTrName == TRIGGER_NUMBER::TR0) && (iter->eTrSTATE == TRIGGER_STATE::TR_BEFORE))
+				{
+					iCountNum = 1;
+					Load_Data_C(L"../Bin/Data/CPoint/Stage2/C1/CPointData", OBJECTTAG::BUILD_OBJ, iCountNum);
+					iter->eTrSTATE = TRIGGER_STATE::TR_AFTER;
+					Create_Monster(iCountNum);
+				}
+				else if ((iter->eTrName == TRIGGER_NUMBER::TR1) && (iter->eTrSTATE == TRIGGER_STATE::TR_BEFORE))
+				{
+					iCountNum = 2;
+					Load_Data_C(L"../Bin/Data/CPoint/Stage2/C2/CPointData", OBJECTTAG::BUILD_OBJ, iCountNum);
+					iter->eTrSTATE = TRIGGER_STATE::TR_AFTER;
+					Create_Monster(iCountNum);
+				}
+				else if ((iter->eTrName == TRIGGER_NUMBER::TR3) && (iter->eTrSTATE == TRIGGER_STATE::TR_BEFORE))
+				{
+					iCountNum = 3;
+					Load_Data_C(L"../Bin/Data/CPoint/Stage2/C3/CPointData", OBJECTTAG::BUILD_OBJ, iCountNum);
+					iter->eTrSTATE = TRIGGER_STATE::TR_AFTER;
+					Create_Monster(iCountNum);
+				}
+				// 				else if ((iter->eTrName == TRIGGER_NUMBER::TR3) && (m_bFourthCreat == false))
+				// 				{
+				// 					//여기에 다이얼로그 추가
+				//
+				// 					m_bFourthCreat = true;
+				// 				}
+			}
+		}
+	}
+	return S_OK;
+}
+
+
+HRESULT CStage2::Create_Monster(int iNum)
+{
+	Engine::CGameObject* pGameObject = nullptr;
+
+	for (auto& iter : m_VecCreatePoint[iNum])
+	{
+		if (iter->eMonsterType == MonsterType::BIGDADDY)
+		{
+			pGameObject = CBigDaddyMonster::Create(m_pGraphicDev, iter->defOBJData.vPos);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+		}
+		if (iter->eMonsterType == MonsterType::DULLSUIT)
+		{
+			pGameObject = CDullSuitMonster::Create(m_pGraphicDev, iter->defOBJData.vPos);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+		}
+		if (iter->eMonsterType == MonsterType::KCIKBOARD)
+		{
+			pGameObject = CKickBoardMonster::Create(m_pGraphicDev, iter->defOBJData.vPos);
+			NULL_CHECK_RETURN(pGameObject, E_FAIL);
+			FAILED_CHECK_RETURN(m_pGLayer->Add_GameObject(OBJECTTAG::MONSTER, pGameObject), E_FAIL);
+		}
+	}
+
+	m_mapLayer.emplace(LAYERTAG::GAMELOGIC, m_pLayer);
+
+	return S_OK;
+}
+
+
+
+
 HRESULT CStage2::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 {
 	HANDLE		hFile = CreateFile(pFilePath, GENERIC_READ, 0, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, 0);
@@ -569,7 +697,7 @@ HRESULT CStage2::Load_Data(const TCHAR* pFilePath, OBJECTTAG eTag)
 }
 
 
-HRESULT CStage2::Load_Data_C(const TCHAR* pFilePath, OBJECTTAG eTag)
+HRESULT CStage2::Load_Data_C(const TCHAR* pFilePath, OBJECTTAG eTag, int CountNum)
 {
 	//파일 개방해서 받아오기
 	string m_strText = "CPointData";
@@ -603,14 +731,14 @@ HRESULT CStage2::Load_Data_C(const TCHAR* pFilePath, OBJECTTAG eTag)
 			Safe_Delete(pOBJ);
 			break;
 		}
-		m_VecCreatePoint.push_back(pOBJ);
+		m_VecCreatePoint[CountNum].push_back(pOBJ);
 	}
 	CloseHandle(hFile);
 
 	Engine::CGameObject* pGameObject = nullptr;
 
 	//벡터 내용물만큼 실제 생성해 레이어에 담기
-	for (auto& iter : m_VecCreatePoint)
+	for (auto& iter : m_VecCreatePoint[CountNum])
 	{
 		pGameObject = CBuild_Obj::Create(m_pGraphicDev, iter->defOBJData.vPos, iter->defOBJData.uiTextureNum,
 			iter->defOBJData.vSize, iter->defOBJData.iRotateCount, m_iOBJIndex, iter->defOBJData.eOBJ_TYPE, iter->defOBJData.eOBJ_Attribute);
@@ -689,6 +817,8 @@ void CStage2::Admin_KeyInput()
 
 }
 
+
+
 CStage2* CStage2::Create(LPDIRECT3DDEVICE9 pGraphicDev)
 {
 	CStage2* pInstance = new CStage2(pGraphicDev);
@@ -725,7 +855,7 @@ void CStage2::Free()
 	//}
 	//m_VecCreatePoint.clear();
 
-
+	MCIWndClose(m_hVideo);
 
 	m_pGraphicDev->SetRenderState(D3DRS_LIGHTING, FALSE);
 	//m_pGraphicDev->SetRenderState(D3DRS_STENCILENABLE, FALSE);

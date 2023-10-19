@@ -21,6 +21,8 @@ void CStage1Boss_Dead::Initialize(CMonster* _Monster)
 	m_fMaxFrame = 5;
 	m_fCurFrame = m_fMinFrame;
 
+	SoundMgr()->PlaySoundW(L"BossDead.wav",SOUND_BOSS, 1.f);
+
 }
 
 CMonsterState* CStage1Boss_Dead::Update(CMonster* Monster, const float& fDetltaTime)
@@ -47,6 +49,7 @@ void CStage1Boss_Dead::LateUpdate(CMonster* _Monster)
 
 void CStage1Boss_Dead::Release(CMonster* _Monster)
 {
+	SoundMgr()->StopSound(SOUND_BOSS);
 }
 
 void CStage1Boss_Dead::Render(CMonster* _Monster)

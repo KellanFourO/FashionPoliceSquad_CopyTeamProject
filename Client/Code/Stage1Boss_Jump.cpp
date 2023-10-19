@@ -120,6 +120,7 @@ CMonsterState* CStage1Boss_Jump::Update(CMonster* Monster, const float& fDetltaT
 
 			if (m_bJump)
 				{
+					SoundMgr()->PlaySoundW(L"Boss_Jump1.mp3",SOUND_BOSS, 1.f);
 					m_pHost->Get_RigidBodyCom()->Set_Force(_vec3{ 0.f,100.f,0.f});
 
 					m_bJump = false;
@@ -139,6 +140,7 @@ CMonsterState* CStage1Boss_Jump::Update(CMonster* Monster, const float& fDetltaT
 	case CStage1Boss_Jump::JUMP_END:
 		{
 			m_fTick += fDetltaTime;
+			SoundMgr()->StopSound(SOUND_BOSS);
 
 			if (m_bEffect)
 			{
@@ -157,6 +159,8 @@ CMonsterState* CStage1Boss_Jump::Update(CMonster* Monster, const float& fDetltaT
 						CGameObject* pShockWave2 = CJumpShockWaveEffect2::Create(m_pHost->Get_GraphicDev(), vCreatePos);
 						Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::MONSTERBULLET, pShockWave2);
 						pShockWave2->Set_Angle((i + 1) * 12.f);
+
+						SoundMgr()->PlaySoundW(L"Boss_JumpExplosion.mp3",SOUND_BOSS2,1.f);
 					}
 				}
 
@@ -210,6 +214,6 @@ void CStage1Boss_Jump::ShockWave()
 		_vec3 vRadius = { m_fShockRadius, m_fShockRadius , m_fShockRadius };
 		_vec3 vBossPos = m_pHost->Get_TransformCom()->m_vInfo[INFO_POS];
 
-
+		SoundMgr()->StopSound(SOUND_BOSS2);
 	}
 }

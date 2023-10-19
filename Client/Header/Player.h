@@ -146,6 +146,7 @@ private:			//TODO 테스트 변수
 	_bool			m_Speed_Cheat_ON = false;
 
 	_bool			m_bMonsterEncounter[3];
+	_bool			m_bEncounterSearch = true;
 
 public:
 	static CPlayer* Create(LPDIRECT3DDEVICE9 pGraphicDev);

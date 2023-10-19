@@ -66,7 +66,7 @@ void CSYRay::LateUpdate_GameObject()
 
 void CSYRay::Render_GameObject()
 {
-	m_pCollider->Render_Collider();
+	//m_pCollider->Render_Collider();
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 
 }

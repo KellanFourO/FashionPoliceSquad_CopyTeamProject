@@ -26,6 +26,11 @@ public:
 	void				Set_TextureNumber(int _iTex) { m_iTextureIndex = _iTex; }
 	_bool				Get_TimeOverCheck() { return m_bTimeOverCheck; }
 
+	void				Set_TimerReset() {
+		m_fTimeCount = m_fTimeFullCount;
+		m_bTimeOverCheck = false;
+	}
+
 private:
 	HRESULT				Add_Component();
 	void				Time_Count();

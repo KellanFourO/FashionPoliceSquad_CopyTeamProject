@@ -29,13 +29,13 @@ HRESULT CNewFPSCamera::Ready_GameObject(const _vec3* pEye, const _vec3* pAt, con
 
 	// Camera Shake
 	m_bCameraCheck = false;
-	m_bShaking = false; // Èçµé¸² »óÅÂ
-	m_fShakeElipsedTime = 0.f; // ÁßÃ¸½Ã°£
+	CAMSHAKE.m_bShaking = false; // Èçµé¸² »óÅÂ
+	CAMSHAKE.m_fShakeElipsedTime = 0.f; // ÁßÃ¸½Ã°£
 
-	m_fAmplitude = 0.005f; // ÁøÆø
-	m_fDuration = 0.1f;  // Èçµå´Â ½Ã°£
-	m_fFrequency = 1.f; // Èçµå´Â ¼Óµµ
-	m_vOriginPos = _vec3(0.f, 0.f, 0.f);
+	CAMSHAKE.m_fAmplitude = 0.005f; // ÁøÆø
+	CAMSHAKE.m_fDuration = 0.1f;  // Èçµå´Â ½Ã°£
+	CAMSHAKE.m_fFrequency = 1.f; // Èçµå´Â ¼Óµµ
+	CAMSHAKE.m_vOriginPos = _vec3(0.f, 0.f, 0.f);
 
 	Add_Component();
 	FAILED_CHECK_RETURN(CCamera::Ready_GameObject(), E_FAIL);
@@ -74,20 +74,20 @@ Engine::_int CNewFPSCamera::Update_GameObject(const _float& fTimeDelta)
 		break;
 	}
 
-	if (m_bShaking)
+	if (CAMSHAKE.m_bShaking)
 	{
-		m_fShakeElipsedTime += fTimeDelta;
+		CAMSHAKE.m_fShakeElipsedTime += fTimeDelta;
 
-		if (m_fShakeElipsedTime < m_fDuration)
+		if (CAMSHAKE.m_fShakeElipsedTime < CAMSHAKE.m_fDuration)
 		{
-			_float X = m_fAmplitude * cosf(m_fShakeElipsedTime * m_fFrequency + (((_float)rand() / (_float)RAND_MAX) * D3DX_PI));
-			_float Y = m_fAmplitude * -sinf(m_fShakeElipsedTime * m_fFrequency + (((_float)rand() / (_float)RAND_MAX) * D3DX_PI));
+			_float X = CAMSHAKE.m_fAmplitude * cosf(CAMSHAKE.m_fShakeElipsedTime * CAMSHAKE.m_fFrequency + (((_float)rand() / (_float)RAND_MAX) * D3DX_PI));
+			_float Y = CAMSHAKE.m_fAmplitude * -sinf(CAMSHAKE.m_fShakeElipsedTime * CAMSHAKE.m_fFrequency + (((_float)rand() / (_float)RAND_MAX) * D3DX_PI));
 			m_vEye += _vec3(X, Y, 0);
 		}
 		else
 		{
-			m_vEye = m_vOriginPos;
-			m_bShaking = false;
+			m_vEye = CAMSHAKE.m_vOriginPos;
+			CAMSHAKE.m_bShaking = false;
 		}
 	}
 
@@ -124,50 +124,6 @@ void CNewFPSCamera::Check_KeyInput(const _float& fTimeDelta)
 {
 	_matrix		matCamWorld;
 	D3DXMatrixInverse(&matCamWorld, nullptr, &m_matView);
-
-// 	if (Engine::Get_DIKeyState(DIK_T) & 0x80)
-// 	{
-// 		_vec3	vLook;
-// 		memcpy(&vLook, &matCamWorld.m[2][0], sizeof(_vec3));
-//
-// 		_vec3	vLength = *D3DXVec3Normalize(&vLook, &vLook) * m_fSpeed * fTimeDelta;
-//
-// 		m_vEye += vLength;
-// 		m_vAt += vLength;
-// 	}
-//
-// 	if (Engine::Get_DIKeyState(DIK_G) & 0x80)
-// 	{
-// 		_vec3	vLook;
-// 		memcpy(&vLook, &matCamWorld.m[2][0], sizeof(_vec3));
-//
-// 		_vec3	vLength = *D3DXVec3Normalize(&vLook, &vLook) * m_fSpeed * fTimeDelta;
-//
-// 		m_vEye -= vLength;
-// 		m_vAt -= vLength;
-// 	}
-//
-// 	if (Engine::Get_DIKeyState(DIK_F) & 0x80)
-// 	{
-// 		_vec3	vRight;
-// 		memcpy(&vRight, &matCamWorld.m[0][0], sizeof(_vec3));
-//
-// 		_vec3	vLength = *D3DXVec3Normalize(&vRight, &vRight) * m_fSpeed * fTimeDelta;
-//
-// 		m_vEye -= vLength;
-// 		m_vAt  -= vLength;
-// 	}
-//
-// 	if (Engine::Get_DIKeyState(DIK_H) & 0x80)
-// 	{
-// 		_vec3	vRight;
-// 		memcpy(&vRight, &matCamWorld.m[0][0], sizeof(_vec3));
-//
-// 		_vec3	vLength = *D3DXVec3Normalize(&vRight, &vRight) * m_fSpeed * fTimeDelta;
-//
-// 		m_vEye += vLength;
-// 		m_vAt  += vLength;
-// 	}
 
 
 	if (Engine::Get_DIKeyState(DIK_TAB) & 0x80)
@@ -411,32 +367,22 @@ void CNewFPSCamera::Third_Camera()
 
 void CNewFPSCamera::Reset_ShakeForce()
 {
-	m_fShakeElipsedTime = 0.f; // ÁßÃ¸½Ã°£
+	CAMSHAKE.m_fShakeElipsedTime = 0.f; // ÁßÃ¸½Ã°£
 
-	m_fAmplitude = 0.f; // ÁøÆø
-	m_fDuration = 0.f;  // Èçµå´Â ½Ã°£
-	m_fFrequency = 0.f; // Èçµå´Â ¼Óµµ
+	CAMSHAKE.m_fAmplitude = 0.f; // ÁøÆø
+	CAMSHAKE.m_fDuration = 0.f;  // Èçµå´Â ½Ã°£
+	CAMSHAKE.m_fFrequency = 0.f; // Èçµå´Â ¼Óµµ
 }
 
 void CNewFPSCamera::Shake_Camera()
 {
-// 	CComponent* pComponent = Management()->Get_Scene()->Get_MainPlayer()->Get_TransformCom();
-//
-// 	_vec3	vPlayerPos = static_cast<CTransform*>(pComponent)->m_vInfo[INFO_POS];
-//
-// 	m_fShakeElipsedTime = 0.f;
-// 	m_vOriginPos = vPlayerPos;
-// 	m_bShaking = true;
-}
+ 	CComponent* pComponent = Management()->Get_Player()->Get_Transform();
 
-void CNewFPSCamera::Drunk_Camera()
-{
-// 	CComponent* pComponent = Management()->Get_Scene()->Get_MainPlayer()->Get_TransformCom();
-//
-// 	_vec3	vPlayerPos = static_cast<CTransform*>(pComponent)->m_vInfo[INFO_POS];
-//
-// 	m_fShakeElipsedTime = 0.f;
-// 	m_vOriginPos = vPlayerPos;
+ 	_vec3	vPlayerPos = static_cast<CTransform*>(pComponent)->m_vInfo[INFO_POS];
+
+ 	CAMSHAKE.m_fShakeElipsedTime = 0.f;
+ 	CAMSHAKE.m_vOriginPos = vPlayerPos;
+ 	CAMSHAKE.m_bShaking = true;
 }
 
 
@@ -527,7 +473,7 @@ void CNewFPSCamera::GetViewMatrix(_matrix* V)
 	D3DXVec3Cross(&m_vRight_D, &m_vUp_D, &m_vLook_D);
 	D3DXVec3Normalize(&m_vRight_D, &m_vRight_D);
 
-	// ºä Çà·ÄÀ² ±¸¼ºÇÑ´Ù .
+	// ºä Çà·Ä ±¸¼º
 	float x = -D3DXVec3Dot(&m_vRight_D, &m_vPos_D);
 	float y = -D3DXVec3Dot(&m_vUp_D, &m_vPos_D);
 	float z = -D3DXVec3Dot(&m_vLook_D, &m_vPos_D);

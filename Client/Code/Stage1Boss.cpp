@@ -3,6 +3,7 @@
 #include "Bullet_GoldBar.h"
 #include "Player.h"
 #include "Build_Obj.h"
+#include "BossStage.h"
 
 #include "Stage1Boss_Idle.h"
 #include "Stage1Boss_ThrowGoldSingle.h"
@@ -36,7 +37,6 @@ CStage1Boss::~CStage1Boss()
 
 HRESULT CStage1Boss::Ready_GameObject()
 {
-	__super::Ready_GameObject();
 
 	Set_ObjectTag(OBJECTTAG::BOSS);
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
@@ -200,8 +200,10 @@ void CStage1Boss::PhaseChange()
 			INFO.MonsterState = m_pStateArray[BRIFSHIELD];
 			INFO.MonsterState->Initialize(this);
 			m_bMonsterSpawn = true;
+
+			dynamic_cast<CBossStage*>(Engine::Management()->Get_One_Scene(SCENETAG::BOSS_STAGE))->Create_Monster();
 		}
-		
+
 	}
 	else if (fRatio < 0.3)
 	{

@@ -20,6 +20,7 @@ CMainGame_Arrow::CMainGame_Arrow(const CMainGame_Arrow& rhs)
 
 CMainGame_Arrow::~CMainGame_Arrow()
 {
+	Free();
 }
 
 
@@ -155,6 +156,11 @@ _int CMainGame_Arrow::Update_GameObject(const _float& fTimeDelta)
 		m_pTimeBar->Update_GameObject(fTimeDelta);
 	}
 
+// 	if (m_eGameState == CMainGame_Arrow::ArrowGameState::LOSE)
+// 	{
+// 		return OBJ_DEAD;
+// 	}
+
 	return _int();
 }
 
@@ -179,6 +185,43 @@ void CMainGame_Arrow::LateUpdate_GameObject()
 			m_eGameState = CMainGame_Arrow::ArrowGameState::LOSE;
 		}
 	}
+}
+
+void CMainGame_Arrow::Reset()
+{
+	// 시드 값으로 사용할 난수 엔진 생성
+	random_device rd;
+
+	// 시드 값을 사용하여 유사 난수 엔진 생성
+	mt19937 gen(rd());
+
+	// 정수 분포 (예: 0 이상 3 이하의 난수)
+	uniform_int_distribution<int> distribution(0, 3);
+
+	m_pTimeBar2->Set_TimerReset();
+	
+	Safe_Release(m_pCursor);
+
+	if (!m_pVecArrow.empty()) {
+		for (auto& iter : m_pVecArrow)
+		{
+			iter->LateUpdate_GameObject();
+		}
+
+		for (int i = 0; i != m_ArrowCount; ++i)
+		{
+			int random_number = distribution(gen);
+			int iTempIndex = m_ArrowCount - (m_ArrowCount - i);
+
+			CMini_Arrow* pArrow = CMini_Arrow::Create(m_pGraphicDev, iTempIndex, random_number);
+
+			m_pVecArrow.push_back(pArrow);
+		}
+	}
+
+	_vec3 m_vCursorPos = m_pVecArrow.back()->Get_ArrowPos();
+
+	m_pCursor = CMini_Cursor::Create(m_pGraphicDev, m_vCursorPos);
 }
 
 HRESULT CMainGame_Arrow::Add_Component()
@@ -238,6 +281,7 @@ HRESULT CMainGame_Arrow::GameState_Update()
 	{
 		MSG_BOX("Lose...");
 		CEventMgr::GetInstance()->OffMiniGame_Arrow(SCENETAG::LOBBY, false);
+		Reset();
 	}
 	return S_OK;
 }

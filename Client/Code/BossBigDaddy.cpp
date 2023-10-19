@@ -54,7 +54,7 @@ HRESULT CBossBigDaddy::Ready_GameObject()
 
 	m_pCollider->Set_Host(this);
 	m_pCollider->Set_Transform(m_pTransformCom);
-	
+
 	_vec3 vPos = Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::BOSS).back()->m_pTransformCom->m_vInfo[INFO_POS];
 	m_pTransformCom->Set_Pos(vPos);
 
@@ -83,7 +83,7 @@ _int CBossBigDaddy::Update_GameObject(const _float& fTimeDelta)
 	_vec3 vBossDown = -vBossUp;
 
 	_vec3 vStartPos = vBossPos + (-vBossLook * 1.5f) + (vBossRight * 9.f) + (vBossDown * 12.f);
-	
+
 	m_pTransformCom->Set_Pos(vStartPos);
 
 
@@ -120,7 +120,7 @@ void CBossBigDaddy::LateUpdate_GameObject()
 
 void CBossBigDaddy::Render_GameObject()
 {
-	m_pCollider->Render_Collider();
+	//m_pCollider->Render_Collider();
 
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 

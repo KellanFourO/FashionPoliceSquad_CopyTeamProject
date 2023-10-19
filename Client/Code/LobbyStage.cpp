@@ -228,32 +228,36 @@ HRESULT CLobbyStage::Light_OnOff_Check()
 
 HRESULT CLobbyStage::Moving_Wall()
 {
-	int iCheckTemp = -1;
+	int iClearCheckTemp = -1;
 
 	if ((CEventMgr::GetInstance()->Get_MiniGameClearCheck(0) == true) ||
 		(CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == true) ||
 		(CEventMgr::GetInstance()->Get_MiniGameClearCheck(2) == true))
 	{
+		_bool MiniGame1Clear = CEventMgr::GetInstance()->Get_MiniGameClearCheck(0);
+		_bool MiniGame2Clear = CEventMgr::GetInstance()->Get_MiniGameClearCheck(1);
+		_bool MiniGame3Clear = CEventMgr::GetInstance()->Get_MiniGameClearCheck(2);
 
-		if ((CEventMgr::GetInstance()->Get_MiniGameClearCheck(0) == true)
-			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == false)
-			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(2) == false))
+
+		if ((MiniGame1Clear == true)
+			&& (MiniGame2Clear == false)
+			&& (MiniGame3Clear == false))
 		{
-			iCheckTemp = 0;
+			iClearCheckTemp = 0;
 		}
 
-		if ((CEventMgr::GetInstance()->Get_MiniGameClearCheck(0) == true)
-			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == true)
-			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(2) == false))
+		if ((MiniGame1Clear == true)
+			&& (MiniGame2Clear == true)
+			&& (MiniGame3Clear == false))
 		{
-			iCheckTemp = 1;
+			iClearCheckTemp = 1;
 		}
 
-		if ((CEventMgr::GetInstance()->Get_MiniGameClearCheck(0) == true)
-			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == true)
-			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(2) == true))
+		if ((MiniGame1Clear == true)
+			&& (MiniGame2Clear == true)
+			&& (MiniGame3Clear == true))
 		{
-			iCheckTemp = 2;
+			iClearCheckTemp = 2;
 		}
 
 		vector<CGameObject*> tempOBJList = Management()->Get_One_Scene(SCENETAG::LOBBY)->Get_Layer(LAYERTAG::ENVIRONMENT)->Get_ObjectList(OBJECTTAG::BUILD_OBJ);
@@ -266,7 +270,7 @@ HRESULT CLobbyStage::Moving_Wall()
 			if ((BuildOBJTemp->Get_OBJ_ATTRIBUTE() == OBJ_ATTRIBUTE::STD_OBJ)
 				&& ((iter->m_iIndex == (m_VecMoving[0]->iIndex - 10000)) ||
 					(iter->m_iIndex == (m_VecMoving[1]->iIndex - 10000)))
-				&& iCheckTemp == 0)
+				&& iClearCheckTemp == 0)
 			{
 				if (m_VecMoving[0]->vPos.y > -50)
 				{
@@ -289,7 +293,7 @@ HRESULT CLobbyStage::Moving_Wall()
 				}
 
 				if ((BuildOBJTemp->Get_OBJ_ATTRIBUTE() == OBJ_ATTRIBUTE::STD_OBJ)
-					&& (BuildOBJTemp->m_iIndex == MovingIndextemp) && iCheckTemp == 1)
+					&& (BuildOBJTemp->m_iIndex == MovingIndextemp) && iClearCheckTemp == 1)
 				{
 					if (m_VecMoving[2]->vPos.y > -50)
 					{
@@ -308,7 +312,7 @@ HRESULT CLobbyStage::Moving_Wall()
 				}
 
 				if ((BuildOBJTemp->Get_OBJ_ATTRIBUTE() == OBJ_ATTRIBUTE::STD_OBJ)
-					&& (BuildOBJTemp->m_iIndex == MovingIndextemp2) && iCheckTemp == 2)
+					&& (BuildOBJTemp->m_iIndex == MovingIndextemp2) && iClearCheckTemp == 2)
 				{
 					if (m_VecMoving[3]->vPos.y < 45)
 					{
@@ -811,7 +815,7 @@ void CLobbyStage::Admin_KeyInput()
 	}
 
 	_bool CheckTemp = dynamic_cast<CPlayer*>(m_pPlayer)->Get_TriggerCheck();
-	
+
 	if ((Engine::Get_DIKeyState(DIK_F) & 0x80) && (CheckTemp == true)
 		&& (CEventMgr::GetInstance()->Get_MiniGameState() == CEventMgr::MiniGameState::NOT_PLAY))
 	{
@@ -821,19 +825,30 @@ void CLobbyStage::Admin_KeyInput()
 			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == false)
 			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(2) == false))
 		{
+			SoundMgr()->StopSound(SOUND_BGM);
 			CEventMgr::GetInstance()->OnMiniGame_Arrow(m_pGraphicDev, SCENETAG::LOBBY);
+			SoundMgr()->PlayBGM(L"MiniGame1BGM.mp3",1.f);
 		}
 		else if ((CEventMgr::GetInstance()->Get_MiniGameClearCheck(0) == true)
 			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == false)
 			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(2) == false))
 		{
+			SoundMgr()->StopSound(SOUND_BGM);
 			CEventMgr::GetInstance()->OnMiniGame_KickBoard(m_pGraphicDev, SCENETAG::LOBBY);
+			SoundMgr()->PlayBGM(L"MiniGame2BGM.mp3", 1.f);
 		}
-		else if ((CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == true)
-			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(2) == false)
-			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(0) == true))
+		else if ((CEventMgr::GetInstance()->Get_MiniGameClearCheck(0) == true)
+			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(1) == true)
+			&& (CEventMgr::GetInstance()->Get_MiniGameClearCheck(2) == false))
 		{
+			SoundMgr()->StopSound(SOUND_BGM);
 			CEventMgr::GetInstance()->OnMiniGame_Quiz(m_pGraphicDev, SCENETAG::LOBBY);
+			SoundMgr()->PlayBGM(L"QuizBGM.mp3", 1.f);
+		}
+		else
+		{
+			SoundMgr()->StopSound(SOUND_BGM);
+			SoundMgr()->PlayBGM(L"LobbyBGM3.mp3", 1);
 		}
 
 		m_bAdminSwitch = false;

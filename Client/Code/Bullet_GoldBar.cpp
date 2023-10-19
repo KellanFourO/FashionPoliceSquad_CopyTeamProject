@@ -28,7 +28,7 @@ HRESULT CBullet_GoldBar::Ready_GameObject()
 	_vec3 vPos = Management()->Get_ObjectList(LAYERTAG::GAMELOGIC, OBJECTTAG::BOSS).back()->m_pTransformCom->m_vInfo[INFO_POS];
 	m_fDmg = 10.f;
 
-	Set_ObjectTag(OBJECTTAG::MONSTERBULLET);
+	Set_ObjectTag(OBJECTTAG::BOSSBULLET);
 // 	CTransform* pPlayerTransCom = dynamic_cast<CTransform*>(Engine::Get_Component(ID_DYNAMIC, LAYERTAG::GAMELOGIC, OBJECTTAG::PLAYER, COMPONENTTAG::TRANSFORM));
 //
 // 	_vec3 vPlayerPos, vPlayerPos_Rel;
@@ -179,5 +179,6 @@ CBullet_GoldBar* CBullet_GoldBar::Create(LPDIRECT3DDEVICE9 pGraphicDev, _vec3 vT
 
 void CBullet_GoldBar::Free()
 {
+	SoundMgr()->StopSound(SOUND_BOSS2);
 	__super::Free();
 }

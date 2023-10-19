@@ -127,7 +127,17 @@ HRESULT CEventMgr::OnMiniGame_KickBoard(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG 
 HRESULT CEventMgr::OnMiniGame_Quiz(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag)
 {
 	m_bMiniGame_ClearCheck[2] = true;
-	//OnPause(FALSE, SCENETAG::LOBBY);
+
+	OnPause(FALSE, SCENETAG::LOBBY);
+
+// 	m_eMiniGameState = CEventMgr::MiniGameState::PLAY_NOW;
+// 	pGame_Quiz = Engine::CMainGame_Quiz::Create(pGraphicDev);
+// 	NULL_CHECK_RETURN(pGame_Quiz, E_FAIL);
+// 
+// 	OnPause(TRUE, SCENETAG::LOBBY);
+// 
+// 	Management()->Get_One_Scene(eSceneTag)->Get_Layer(LAYERTAG::MINIGAME)->Add_GameObject(OBJECTTAG::MINIGAME, pGame_KickBoard);
+
 	return S_OK;
 }
 
@@ -160,6 +170,7 @@ HRESULT CEventMgr::OffMiniGame_KickBoard(SCENETAG eSceneTag, _bool ClearCheck)
 		Set_MiniGameClearCheck(1, FALSE);
 		OnPause(FALSE, SCENETAG::LOBBY);
 	}
+	//Safe_Release(pGame_KickBoard);
 	return S_OK;
 }
 HRESULT CEventMgr::OffMiniGame_Quiz(SCENETAG eSceneTag, _bool ClearCheck)
@@ -170,6 +181,9 @@ HRESULT CEventMgr::OffMiniGame_Quiz(SCENETAG eSceneTag, _bool ClearCheck)
 
 void CEventMgr::Free()
 {
+	if (pGame_Arrow != nullptr)
 	Safe_Release(pGame_Arrow);
+
+	if (pGame_KickBoard != nullptr)
 	Safe_Release(pGame_KickBoard);
 }
