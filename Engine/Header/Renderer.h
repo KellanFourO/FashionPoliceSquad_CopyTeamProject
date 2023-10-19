@@ -23,6 +23,7 @@ public:
 	void	Render_UI			(LPDIRECT3DDEVICE9& pGraphicDev);
 	void	Render_Block		(LPDIRECT3DDEVICE9& pGraphicDev);
 	void    Render_Alphatest	(LPDIRECT3DDEVICE9& pGraphicDev);
+	void    Render_MiniGame		(LPDIRECT3DDEVICE9& pGraphicDev);
 private:
 	list<CGameObject*>			m_RenderGroup[RENDER_END];
 

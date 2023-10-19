@@ -286,13 +286,13 @@ HRESULT CMainGame_Arrow::GameState_Update()
 {
 	if (m_eGameState == CMainGame_Arrow::ArrowGameState::CLEAR)
 	{
-		MSG_BOX("Clear!");
+		CEventMgr::GetInstance()->Call_MiniGameResult(3, 0);
 		CEventMgr::GetInstance()->OffMiniGame_Arrow(SCENETAG::LOBBY, true);
 	}
 
 	if (m_eGameState == CMainGame_Arrow::ArrowGameState::LOSE)
 	{
-		MSG_BOX("Lose...");
+		CEventMgr::GetInstance()->Call_MiniGameResult(3, 1);
 		CEventMgr::GetInstance()->OffMiniGame_Arrow(SCENETAG::LOBBY, false);
 	}
 	return S_OK;

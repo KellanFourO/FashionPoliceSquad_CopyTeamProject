@@ -34,6 +34,8 @@ void CRenderer::Render_GameObject(LPDIRECT3DDEVICE9& pGraphicDev)
 	Render_Alpha(pGraphicDev);
 
 	Render_UI(pGraphicDev);
+	Render_MiniGame(pGraphicDev);
+
 	Clear_RenderGroup();
 }
 
@@ -87,12 +89,13 @@ void CRenderer::Render_Alpha(LPDIRECT3DDEVICE9& pGraphicDev)
 
 void CRenderer::Render_UI(LPDIRECT3DDEVICE9& pGraphicDev)
 {
-
-
 	for (auto& iter : m_RenderGroup[RENDER_UI])
 		iter->Render_GameObject();
-
-
+}
+void CRenderer::Render_MiniGame(LPDIRECT3DDEVICE9& pGraphicDev)
+{
+	for (auto& iter : m_RenderGroup[RENDER_MINIGAME])
+		iter->Render_GameObject();
 }
 
 void CRenderer::Render_Block(LPDIRECT3DDEVICE9& pGraphicDev)

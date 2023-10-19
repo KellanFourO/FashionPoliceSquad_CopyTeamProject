@@ -511,6 +511,9 @@
     <Filter Include="02. GameObject\06. Effect\30.BossAuraEffect">
       <UniqueIdentifier>{4beabdcb-0ba7-4250-adbd-5ed736c9ac7a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. GameObject\15. MiniGame\4. Result">
+      <UniqueIdentifier>{6c87c01b-9b71-4018-97c3-d63b76eaa518}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -1110,11 +1113,14 @@
     <ClInclude Include="..\Header\Mini_Score.h">
       <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\5.Mini_Score</Filter>
     </ClInclude>
-    <ClInclude Include="..\Header\MainGame_Quiz.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="..\Header\Stage1BossAuraEffect.h">
       <Filter>02. GameObject\06. Effect\30.BossAuraEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MainGame_Quiz.h">
+      <Filter>02. GameObject\15. MiniGame\3. QUIZ</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header\MiniGameResult.h">
+      <Filter>02. GameObject\15. MiniGame\4. Result</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1703,11 +1709,14 @@
     <ClCompile Include="..\Code\Mini_Score.cpp">
       <Filter>02. GameObject\15. MiniGame\2. KICKBOARD\5.Mini_Score</Filter>
     </ClCompile>
-    <ClCompile Include="..\Code\MainGame_Quiz.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\Code\Stage1BossAuraEffect.cpp">
       <Filter>02. GameObject\06. Effect\30.BossAuraEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MainGame_Quiz.cpp">
+      <Filter>02. GameObject\15. MiniGame\3. QUIZ</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Code\MiniGameResult.cpp">
+      <Filter>02. GameObject\15. MiniGame\4. Result</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

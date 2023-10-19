@@ -117,14 +117,20 @@ HRESULT CEventMgr::OnMiniGame_Arrow(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSce
 {
 	m_eMiniGameState = CEventMgr::MiniGameState::PLAY_NOW;
 
-	if (pGame_Arrow == nullptr) {
-		pGame_Arrow = Engine::CMainGame_Arrow::Create(pGraphicDev);
-		NULL_CHECK_RETURN(pGame_Arrow, E_FAIL);
-
-		Management()->Get_One_Scene(eSceneTag)->Get_Layer(LAYERTAG::MINIGAME)->Add_GameObject(OBJECTTAG::MINIGAME, pGame_Arrow);
+	if (m_pMiniGameResult == nullptr)
+	{
+		m_pMiniGameResult = CMiniGameResult::Create(pGraphicDev);
+		Management()->Get_One_Scene(eSceneTag)->Get_Layer(LAYERTAG::MINIGAME)->Add_GameObject(OBJECTTAG::MINIGAME, m_pMiniGameResult);
 	}
-	else if (pGame_Arrow != nullptr) {
-		pGame_Arrow->Reset();
+
+	if (m_pGame_Arrow == nullptr) {
+		m_pGame_Arrow = Engine::CMainGame_Arrow::Create(pGraphicDev);
+		NULL_CHECK_RETURN(m_pGame_Arrow, E_FAIL);
+
+		Management()->Get_One_Scene(eSceneTag)->Get_Layer(LAYERTAG::MINIGAME)->Add_GameObject(OBJECTTAG::MINIGAME, m_pGame_Arrow);
+	}
+	else if (m_pGame_Arrow != nullptr) {
+		m_pGame_Arrow->Reset();
 		Set_MiniGameLoseCheck(0, FALSE); //재도전은 실패때만
 	}
 
@@ -140,14 +146,14 @@ HRESULT CEventMgr::OnMiniGame_KickBoard(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG 
 {
 	m_eMiniGameState = CEventMgr::MiniGameState::PLAY_NOW;
 
-	if (pGame_KickBoard == nullptr) {
-		pGame_KickBoard = Engine::CMainGame_KickBoard::Create(pGraphicDev);
-		NULL_CHECK_RETURN(pGame_KickBoard, E_FAIL);
+	if (m_pGame_KickBoard == nullptr) {
+		m_pGame_KickBoard = Engine::CMainGame_KickBoard::Create(pGraphicDev);
+		NULL_CHECK_RETURN(m_pGame_KickBoard, E_FAIL);
 
-		Management()->Get_One_Scene(eSceneTag)->Get_Layer(LAYERTAG::MINIGAME)->Add_GameObject(OBJECTTAG::MINIGAME, pGame_KickBoard);
+		Management()->Get_One_Scene(eSceneTag)->Get_Layer(LAYERTAG::MINIGAME)->Add_GameObject(OBJECTTAG::MINIGAME, m_pGame_KickBoard);
 	}
-	else if (pGame_KickBoard != nullptr) {
-		pGame_KickBoard->Reset();
+	else if (m_pGame_KickBoard != nullptr) {
+		m_pGame_KickBoard->Reset();
 		Set_MiniGameLoseCheck(1, FALSE); //재도전은 실패때만
 	}
 
@@ -168,13 +174,6 @@ HRESULT CEventMgr::OnMiniGame_Quiz(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eScen
 	SoundMgr()->StopSound(SOUND_BGM);
 	OnPause(FALSE, SCENETAG::LOBBY);
 	SoundMgr()->PlayBGM(L"QuizBGM.mp3", 1.f);
-// 	m_eMiniGameState = CEventMgr::MiniGameState::PLAY_NOW;
-// 	pGame_Quiz = Engine::CMainGame_Quiz::Create(pGraphicDev);
-// 	NULL_CHECK_RETURN(pGame_Quiz, E_FAIL);
-//
-// 	OnPause(TRUE, SCENETAG::LOBBY);
-//
-// 	Management()->Get_One_Scene(eSceneTag)->Get_Layer(LAYERTAG::MINIGAME)->Add_GameObject(OBJECTTAG::MINIGAME, pGame_KickBoard);
 
 	return S_OK;
 }
@@ -257,13 +256,21 @@ HRESULT CEventMgr::OffMiniGame_Quiz(SCENETAG eSceneTag, _bool ClearCheck)
 	return S_OK;
 }
 
+void CEventMgr::Call_MiniGameResult(_int iTimeSec, _int TexNum)
+{
+	m_pMiniGameResult->Call(iTimeSec, TexNum);
+	//TimSec에는 몇 초, TexNum에는 Clear 면 0, Lose 이면 1
+}
+
 
 void CEventMgr::Free()
 {
-	if (pGame_Arrow != nullptr)
-	Safe_Release(pGame_Arrow);
+	if (m_pGame_Arrow != nullptr)
+	Safe_Release(m_pGame_Arrow);
 
-	if (pGame_KickBoard != nullptr)
-	Safe_Release(pGame_KickBoard);
+	if (m_pGame_KickBoard != nullptr)
+	Safe_Release(m_pGame_KickBoard);
 
+	if (m_pMiniGameResult != nullptr)
+	Safe_Release(m_pMiniGameResult);
 }

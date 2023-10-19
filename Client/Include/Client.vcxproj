@@ -240,6 +240,7 @@
     <ClInclude Include="..\Header\MainGame_Arrow.h" />
     <ClInclude Include="..\Header\MainGame_KickBoard.h" />
     <ClInclude Include="..\Header\MainGame_Quiz.h" />
+    <ClInclude Include="..\Header\MiniGameResult.h" />
     <ClInclude Include="..\Header\Mini_Arrow.h" />
     <ClInclude Include="..\Header\Mini_Effect.h" />
     <ClInclude Include="..\Header\Mini_Cursor.h" />
@@ -405,6 +406,7 @@
     <ClCompile Include="..\Code\BrifCase_2.cpp" />
     <ClCompile Include="..\Code\BigDaddyMonster.cpp" />
     <ClCompile Include="..\Code\Bullet.cpp" />
+    <ClCompile Include="..\Code\MiniGameResult.cpp" />
     <ClCompile Include="..\Code\DashEffect.cpp" />
     <ClCompile Include="..\Code\JumpShockWaveEffect2.cpp" />
     <ClCompile Include="..\Code\FileMgr.cpp" />

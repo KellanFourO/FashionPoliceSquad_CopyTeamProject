@@ -405,18 +405,21 @@ void CMyDialog::QuizKeyInput()
 		{
 			m_bQuiz = false;
 			m_bQuizInput = true;
+			CEventMgr::GetInstance()->Call_MiniGameResult(2, 1);
 			SoundMgr()->PlaySoundW(L"MiniGameFailed.mp3",SOUND_DIALOG2, 1.f);
 		}
 		else if (Get_DIKeyState(DIK_2) & 0x80)
 		{
 			m_bQuiz = true;
 			m_bQuizInput = true;
+			CEventMgr::GetInstance()->Call_MiniGameResult(2, 0);
 			SoundMgr()->PlaySoundW(L"MiniGameClear.mp3", SOUND_DIALOG2, 1.f);
 		}
 		else if (Get_DIKeyState(DIK_3) & 0x80)
 		{
 			m_bQuiz = false;
 			m_bQuizInput = true;
+			CEventMgr::GetInstance()->Call_MiniGameResult(2, 1);
 			SoundMgr()->PlaySoundW(L"MiniGameFailed.mp3", SOUND_DIALOG2, 1.f);
 		}
 

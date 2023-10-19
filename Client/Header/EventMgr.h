@@ -6,6 +6,8 @@
 #include "UI_MyDialog.h"
 #include "Item.h"
 
+#include "MiniGameResult.h"
+
 #include "MainGame_Arrow.h"
 #include "MainGame_KickBoard.h"
 #include "MainGame_Quiz.h"
@@ -53,17 +55,22 @@ public:
 
 	MiniGameState	Get_MiniGameState() { return m_eMiniGameState; }
 
+	void		Call_MiniGameResult(_int iTimeSec, _int TexNum);
+
 private:
+
+
 	_bool					m_bMiniGame_Mode;
 	_bool					m_bMiniGame_ClearCheck[3] = { false, false, false }; //클리어 여부 체크
 	_bool					m_bMiniGame_LoseCheck[3] = { false, false, false }; //졌는지 여부 체크
 
 	MiniGameState			m_eMiniGameState = MiniGameState::NOT_PLAY;
 
-	CMainGame_Arrow*		pGame_Arrow = nullptr;
-	CMainGame_KickBoard*	pGame_KickBoard = nullptr;
-	CMainGame_Quiz*			pGame_Quiz = nullptr;
+	CMainGame_Arrow*		m_pGame_Arrow = nullptr;
+	CMainGame_KickBoard*	m_pGame_KickBoard = nullptr;
+	CMainGame_Quiz*			m_pGame_Quiz = nullptr;
 
+	CMiniGameResult*		m_pMiniGameResult = nullptr;
 	CMyDialog*				m_pDialog = nullptr;
 
 

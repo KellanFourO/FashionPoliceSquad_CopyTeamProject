@@ -90,14 +90,14 @@ _int CScene::Update_Scene(const _float& fTimeDelta)
 		}
 		else
 		{
-			if (iter.first != LAYERTAG::MINIGAME)
-			{
+// 			if (iter.first != LAYERTAG::MINIGAME)
+// 			{
 				if (iter.first == LAYERTAG::CAMERA)
 				{
 					dynamic_cast<CNewFPSCamera*>(iter.second->Get_ObjectList(OBJECTTAG::FPSCAMERA).back())->Set_Fix(true);
 				}
 				iResult = iter.second->Update_Layer(fTimeDelta);
-			}
+//			}
 		}
 
 		if (iResult & 0x80000000)
