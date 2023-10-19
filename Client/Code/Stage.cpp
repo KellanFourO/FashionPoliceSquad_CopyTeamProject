@@ -703,19 +703,13 @@ HRESULT CStage::Load_Data_T(const TCHAR* pFilePath, OBJECTTAG eTag)
 
 void CStage::Admin_KeyInput()
 {
+
 	if (Engine::Get_DIKeyState(DIK_F4) & 0x80 && m_bAdminSwitch)
 	{
-		CEventMgr::GetInstance()->OnCard(m_pGraphicDev, SCENETAG::STAGE, DIALOGTAG::STORY_ST1_DEVELOP);
+		CEventMgr::GetInstance()->OnPause(true, SCENETAG::STAGE);
 		m_bAdminSwitch = false;
 	}
-
 	if (Engine::Get_DIKeyState(DIK_F5) & 0x80 && m_bAdminSwitch)
-	{
-		CEventMgr::GetInstance()->OnCard(m_pGraphicDev, SCENETAG::STAGE, DIALOGTAG::STORY_LOBBY_CONCLU);
-		m_bAdminSwitch = false;
-	}
-
-	if (Engine::Get_DIKeyState(DIK_F9) & 0x80 && m_bAdminSwitch)
 	{
 		CEventMgr::GetInstance()->OnPause(false, SCENETAG::STAGE);
 		m_bAdminSwitch = false;
@@ -728,6 +722,9 @@ void CStage::Admin_KeyInput()
 
 	if (Engine::Get_DIKeyState(DIK_M) & 0x80 && m_bAdminSwitch)
 	{
+		Management()->Get_Player()->DashOn();
+		Management()->Get_Player()->RopeOn();
+		Management()->Get_Player()->EncounterOff();
 		CEventMgr::GetInstance()->SceneChange(m_pGraphicDev,SCENETAG::LOBBY);
 		m_bAdminSwitch = false;
 	}

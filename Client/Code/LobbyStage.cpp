@@ -54,12 +54,12 @@ HRESULT CLobbyStage::Ready_Scene()
 _int CLobbyStage::Update_Scene(const _float& fTimeDelta)
 {
 	_int	iExit = __super::Update_Scene(fTimeDelta);
-	//if (m_bLateInit)
-	//{
-	//	CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::LOBBY, DIALOGTAG::ST1_BOSS_START);
-	//	CEventMgr::GetInstance()->OnPause(true, SCENETAG::LOBBY);
-	//	m_bLateInit = false;
-	//}
+	if (m_bLateInit)
+	{
+		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::LOBBY, DIALOGTAG::STORY_LOBBY_INTRO);
+		CEventMgr::GetInstance()->OnPause(true, SCENETAG::LOBBY);
+		m_bLateInit = false;
+	}
 
 	//if (m_bReadyCube)
 	//{
@@ -794,9 +794,14 @@ HRESULT CLobbyStage::Load_Data_T(const TCHAR* pFilePath, OBJECTTAG eTag)
 void CLobbyStage::Admin_KeyInput()
 {
 
-	if (Engine::Get_DIKeyState(DIK_F9) & 0x80 && m_bAdminSwitch)
+	if (Engine::Get_DIKeyState(DIK_F4) & 0x80 && m_bAdminSwitch)
 	{
-		CEventMgr::GetInstance()->OnPause(false, SCENETAG::LOBBY);
+		CEventMgr::GetInstance()->OnPause(true, SCENETAG::STAGE);
+		m_bAdminSwitch = false;
+	}
+	if (Engine::Get_DIKeyState(DIK_F5) & 0x80 && m_bAdminSwitch)
+	{
+		CEventMgr::GetInstance()->OnPause(false, SCENETAG::STAGE);
 		m_bAdminSwitch = false;
 	}
 
@@ -807,6 +812,9 @@ void CLobbyStage::Admin_KeyInput()
 
 	if (Engine::Get_DIKeyState(DIK_M) & 0x80 && m_bAdminSwitch)
 	{
+		Management()->Get_Player()->DashOn();
+		Management()->Get_Player()->RopeOn();
+		Management()->Get_Player()->EncounterOff();
 		CEventMgr::GetInstance()->SceneChange(m_pGraphicDev, SCENETAG::BOSS_STAGE);
 		m_bAdminSwitch = false;
 	}

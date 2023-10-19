@@ -42,6 +42,8 @@ private:
 	_int						m_CheckPoint;
 	CProgressValue*				m_pProgressBar = nullptr;
 
+	_float						m_fTick = 0.f;
+
 
 public:
 	static CLoadingStage1* Create(LPDIRECT3DDEVICE9 pGraphicDev, SCENETAG eSceneTag);
