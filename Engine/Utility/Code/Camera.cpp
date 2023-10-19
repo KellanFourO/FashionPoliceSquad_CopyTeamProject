@@ -29,6 +29,9 @@ _int CCamera::Update_GameObject(const _float& fTimeDelta)
 
 	D3DXMatrixPerspectiveFovLH(&m_matProj, m_fFov, m_fAspect, m_fNear, m_fFar);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_matProj);
+
+	m_matViewProj = m_matView * m_matProj;
+
 	return 0;
 }
 

@@ -24,9 +24,9 @@ public:
 	virtual _int				Update_GameObject(const _float& fTimeDelta) override;
 	virtual void				LateUpdate_GameObject() override;
 
-
 private:
 	HRESULT						Add_Component();
+	void						DistanceRender();
 
 
 private:
@@ -34,6 +34,7 @@ private:
 	CUITex*						m_pBufferCom = nullptr;
 	CTexture*					m_pTextureCom = nullptr;
 	_bool						m_bLateInit = true;
+	_bool						m_bDistanceRender = false;
 
 	CTransform*					m_pTransformCom = nullptr;
 	CNewFPSCamera*				m_pCamera = nullptr;
@@ -41,7 +42,8 @@ private:
 	_matrix						m_matProj, m_matView;
 
 	_vec3						m_vPos, m_vScale;
-
+	_float						m_fRenderDistance = 150.f;
+	_float						m_fAddY = 5.f;
 	CMonster*					m_pMonster = nullptr;
 	CPlayer*					m_pPlayer = nullptr;
 	UIDATA						m_tInfo;

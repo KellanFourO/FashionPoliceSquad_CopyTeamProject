@@ -141,9 +141,17 @@ private:
 	SORTTEX*						m_defSortTex = nullptr; //텍스쳐 정렬용
 	vector<SORTTEX*>				m_pTexForSort;			//텍스쳐 정렬용
 
+
+	//todo 동영상 변수
+	const wchar_t* videoFilePath = L"../Bin/Resource/Video/Test.mp4";
+	HWND			m_hVideo;
+
 public:
 	void				Admin_KeyInput();
+	void				Set_Video(_bool _bVideo) { m_bVideo = _bVideo;}
 
+	_bool				m_bEnd = true;
+	_bool				m_bVideo = true;
 	_bool				m_bAdminSwitch = true; // 어드민키인풋 레벨업 통제용
 	_float				m_fAdminTick = 0.f;	   // 어드민키인풋 레벨업 통제용
 

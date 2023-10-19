@@ -140,6 +140,8 @@ void CStage1Boss_ThrowGoldSingle::LoadBullet()
 
 		CGameObject* pBullet = CBullet_GoldBar::Create(m_pHost->Get_GraphicDev(), vBulletDir, m_fBulletSpeed);
 		Management()->Get_Layer(LAYERTAG::GAMELOGIC)->Add_GameObject(OBJECTTAG::BOSSBULLET, pBullet);
+
+		SoundMgr()->PlaySoundW(L"BossBullet1.wav", SOUND_BOSS2, 0.5f);
 	}
 
 	m_iCountTick++;

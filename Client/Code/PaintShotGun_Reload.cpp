@@ -27,6 +27,8 @@ void CPaintShotGun_Reload::Initialize(CPlayerGun* ShotGun)
     m_fMoveDownSum = -0.06f;
     m_fMoveDownMax = 0.5f;
     m_pHost->Add_GunMoveDown(m_fMoveDownMax);
+
+    SoundMgr()->PlaySoundW(L"ShotGun_Reload.wav",SOUND_PLAYER2, 1.f);
 }
 
 CPlayerGunState* CPaintShotGun_Reload::Update(CPlayerGun* ShotGun, const float& fTimeDelta)
@@ -84,4 +86,6 @@ void CPaintShotGun_Reload::Release(CPlayerGun* ShotGun)
     m_fBehaviorTime = 0.f;
 	//ShotGun->m_fGunMoveRight = 3.f;
 	//ShotGun->m_fGunMoveDown = 1.f;
+
+    SoundMgr()->StopSound(SOUND_PLAYER2);
 }

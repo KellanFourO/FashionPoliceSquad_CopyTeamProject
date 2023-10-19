@@ -37,7 +37,6 @@ CStage1Boss::~CStage1Boss()
 
 HRESULT CStage1Boss::Ready_GameObject()
 {
-	__super::Ready_GameObject();
 
 	Set_ObjectTag(OBJECTTAG::BOSS);
 	FAILED_CHECK_RETURN(Add_Component(), E_FAIL);
@@ -204,7 +203,7 @@ void CStage1Boss::PhaseChange()
 
 			dynamic_cast<CBossStage*>(Engine::Management()->Get_One_Scene(SCENETAG::BOSS_STAGE))->Create_Monster();
 		}
-		
+
 	}
 	else if (fRatio < 0.3)
 	{

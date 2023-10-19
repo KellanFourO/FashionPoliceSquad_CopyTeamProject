@@ -164,8 +164,10 @@ void CMyDialog::LoadText(DIALOGTAG eDialogTag)
 		break;
 	case Engine::DIALOGTAG::STORY_ST2_CONCLU:
 		fin.open(L"../Bin/Data/UI/STORY_ST2_CONCLU.dat");
+		break;
 	case Engine::DIALOGTAG::SKILL_DASH:
 		fin.open(L"../Bin/Data/UI/SKILL_DASH.dat");
+		break;
 	case Engine::DIALOGTAG::SKILL_ROPE:
 		fin.open(L"../Bin/Data/UI/SKILL_ROPE.dat");
 		break;
@@ -209,6 +211,53 @@ void CMyDialog::KeyInput()
 {
 	if (Engine::Get_DIKeyState(DIK_RETURN) & 0x80 && m_bTick && m_PortraitList.size() != 0 && m_TextList.size() != 0)
 	{
+		SoundMgr()->StopSound(SOUND_DIALOG2);
+
+		if (m_eDialog == DIALOGTAG::ST1_BOSS_INTRO && m_bSound)
+		{
+			SoundMgr()->PlaySoundW(L"PlayerCough.wav", SOUND_DIALOG2, 1.f);
+			m_bSound = false;
+		}
+
+		switch (m_PortraitList.front())
+		{
+		case PORTRAITTAG::PORT_DES:
+				SoundMgr()->PlaySoundW(L"Player_Mumbo.wav", SOUND_DIALOG2, 1.f);
+			break;
+
+		case PORTRAITTAG::PORT_DESDULL:
+				SoundMgr()->PlaySoundW(L"Player_Mumbo.wav", SOUND_DIALOG2, 1.f);
+			break;
+
+		case PORTRAITTAG::PORT_HALEY:
+			SoundMgr()->PlaySoundW(L"Haley_Mumbo.wav", SOUND_DIALOG2, 1.f);
+			break;
+
+		case PORTRAITTAG::PORT_HACKER:
+			SoundMgr()->PlaySoundW(L"Hacker_Mumbo.wav", SOUND_DIALOG2, 1.f);
+			break;
+
+		case PORTRAITTAG::PORT_HEADQUATER:
+			SoundMgr()->PlaySoundW(L"HeadQuater_Mumbo.wav", SOUND_DIALOG2, 1.f);
+			break;
+
+		case PORTRAITTAG::PORT_MYSTERY:
+			SoundMgr()->PlaySoundW(L"Mystery_Sound.wav", SOUND_DIALOG2, 1.f);
+			break;
+
+		case PORTRAITTAG::PORT_PHONE:
+			SoundMgr()->PlaySoundW(L"Phone_Sound.wav", SOUND_DIALOG2, 1.f);
+			break;
+
+		case PORTRAITTAG::PORT_TURNCOAT:
+			SoundMgr()->PlaySoundW(L"TurnCoat_Mumbo.wav", SOUND_DIALOG2, 1.f);
+			break;
+
+		case PORTRAITTAG::PORT_BAUSS:
+			SoundMgr()->PlaySoundW(L"Boss_Mumbo.wav", SOUND_DIALOG2, 1.f);
+			break;
+		}
+
 		SoundMgr()->PlaySoundW(L"DialogEnter2.mp3", SOUND_DIALOG, 1000);
 		m_PortraitList.pop_front();
 		m_TextList.pop_front();
@@ -262,6 +311,7 @@ void CMyDialog::KeyInput()
 				case Engine::DIALOGTAG::STORY_ST2_CONCLU:
 					m_pMission->Set_Title(L"END");
 					m_pMission->Set_Objective(L"임무 완료");
+					static_cast<CStage2*>(Management()->Get_Scene())->Set_Video(false);
 					break;
 
 
