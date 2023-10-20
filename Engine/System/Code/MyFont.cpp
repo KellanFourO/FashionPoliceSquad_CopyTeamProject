@@ -53,36 +53,36 @@ void CMyFont::Render_Font(const _tchar * pString, const _vec2 * pPos, D3DXCOLOR 
 	//TODO 매개변수로 들어온 문자속도에 따라 텍스트애니메이션을 하고싶었지만 시간이없으니 보류
 
 	m_pSprite->Begin(D3DXSPRITE_ALPHABLEND);
-	m_pFont->DrawTextW(m_pSprite, pString, lstrlen(pString), &rc, DT_NOCLIP, Color);
-// 	_int iLineHeight = 0; //! 줄 높이
-// 	const _tchar* pCurrentLine = pString; //! 들어온 문자열
-//
-//
-// 	while (*pCurrentLine != '\0') { //! '\0' = 문자열의 끝
-// 		int lineWidth = 0;
-//
-// 		// 텍스트 Max 길이
-// 		while (lineWidth < maxWidth && pCurrentLine[lineWidth] != '\0' && pCurrentLine[lineWidth] != '\n') {
-// 			lineWidth++;
-// 		}
-//
-// 		RECT lineRect = rc;
-// 		lineRect.right = rc.left + lineWidth;
-//
-// 		m_pFont->DrawTextW(m_pSprite, pCurrentLine, lineWidth, &lineRect, DT_NOCLIP, Color);
-//
-// 		rc.top += iLineHeight;
-// 		rc.bottom += iLineHeight;
-//
-// 		// 다음 줄로 이동
-// 		if (pCurrentLine[lineWidth] == '\n') {
-// 			pCurrentLine += lineWidth + 1;
-// 		}
-// 		else {
-// 			pCurrentLine += lineWidth;
-// 		}
-//
-// 	}
+
+	_int iLineHeight = 20; //! 줄 높이1
+	const _tchar* pCurrentLine = pString; //! 들어온 문자열
+
+
+	while (*pCurrentLine != '\0') { //! '\0' = 문자열의 끝
+		int lineWidth = 0;
+
+		// 텍스트 Max 길이
+		while (lineWidth < maxWidth && pCurrentLine[lineWidth] != '\0' && pCurrentLine[lineWidth] != '\n') {
+			lineWidth++;
+		}
+
+		RECT lineRect = rc;
+		lineRect.right = rc.left + lineWidth;
+
+		m_pFont->DrawTextW(m_pSprite, pCurrentLine, lineWidth, &lineRect, DT_NOCLIP, Color);
+
+		rc.top += iLineHeight;
+		rc.bottom += iLineHeight;
+
+		// 다음 줄로 이동
+		if (pCurrentLine[lineWidth] == '\n') {
+			pCurrentLine += lineWidth + 1;
+		}
+		else {
+			pCurrentLine += lineWidth;
+		}
+
+	}
 	m_pSprite->End();
 }
 
