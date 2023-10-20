@@ -79,8 +79,8 @@ void CBackGround::Render_GameObject()
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_ViewMatrix);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_ProjMatrix);
 
-	//m_pBackTextureCom->Render_Textrue(0);
-	//m_pBufferCom->Render_Buffer();
+	m_pBackTextureCom->Render_Textrue(0);
+	m_pBufferCom->Render_Buffer();
 
 	m_pTextureCom->Render_Textrue(0);
 	m_pBufferCom->Render_Buffer();
@@ -105,9 +105,9 @@ HRESULT CBackGround::Add_Component()
 	NULL_CHECK_RETURN(pComponent, E_FAIL);
 	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
 
-	//pComponent = m_pBackTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_LogoBackTexture"));
-	//NULL_CHECK_RETURN(pComponent, E_FAIL);
-	//m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
+	pComponent = m_pBackTextureCom = dynamic_cast<CTexture*>(Engine::Clone_Proto(L"Proto_LogoBackTexture"));
+	NULL_CHECK_RETURN(pComponent, E_FAIL);
+	m_mapComponent[ID_STATIC].emplace(COMPONENTTAG::TEXTURE, pComponent);
 
 	return S_OK;
 }

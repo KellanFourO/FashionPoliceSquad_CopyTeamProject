@@ -31,7 +31,7 @@ private:
 	CRcTex* m_pBufferCom = nullptr;
 	CTexture* m_pTextureCom = nullptr;
 	CTransform* m_pTransformCom = nullptr;
-	//CTexture* m_pBackTextureCom = nullptr;
+	CTexture* m_pBackTextureCom = nullptr;
 
 private:
 	_float		m_fX, m_fY, m_fSizeX, m_fSizeY;

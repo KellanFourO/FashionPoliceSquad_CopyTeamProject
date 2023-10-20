@@ -93,7 +93,7 @@ HRESULT CProgressValue::Ready_GameObject()
 
 Engine::_int CProgressValue::Update_GameObject(const _float& fTimeDelta)
 {
-	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+	Engine::Add_RenderGroup(RENDER_MINIGAME, this);
 	__super::Update_GameObject(fTimeDelta);
 
 
