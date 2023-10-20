@@ -552,7 +552,8 @@ void CPlayer::Key_Input(const _float& fTimeDelta)
 
 	if (Engine::Get_DIKeyState(DIK_O) & 0x80)
 	{
-		Healed(40);
+		/*Healed(40);*/
+		INFO.fHP = INFO.fMaxHP;
 	}
 	if ((Engine::Get_DIKeyState(DIK_P) & 0x80))
 	{

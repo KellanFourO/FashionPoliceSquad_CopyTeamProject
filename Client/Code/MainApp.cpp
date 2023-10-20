@@ -110,13 +110,8 @@ HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 	//이걸 켜면 조명 START .. Stage에서 켰으므로 여기에선 손대지 말 것.
 
 	//wstring Filepath = L"../Bin/Font/netmarbleM.ttf";
-	if (AddFontResourceEx(L"..\\Bin\\Font\\netmarbleM.ttf", FR_NOT_ENUM, NULL) > 0)
-	{
-		MSG_BOX("성공");
-	}
-	else {
-		MSG_BOX("실패");
-	}
+	AddFontResourceEx(L"..\\Bin\\Font\\netmarbleM.ttf", FR_NOT_ENUM, NULL);
+	
 
 
 	// InputDev
