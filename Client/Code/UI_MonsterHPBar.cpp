@@ -73,7 +73,9 @@ Engine::_int Engine::CMonsterHPBar::Update_GameObject(const _float& fTimeDelta)
 		vUItoPlayerDir = m_pPlayer->Get_Transform()->m_vInfo[INFO_POS] - m_pTransformCom->m_vInfo[INFO_POS];
 		D3DXVec3Normalize(&vUItoPlayerDir, &vUItoPlayerDir);
 		_float fAngle = atan2f(vUItoPlayerDir.x, vUItoPlayerDir.z);
-		m_pTransformCom->Set_Rotate(ROT_Y, fAngle + D3DX_PI);
+		m_pTransformCom->Set_Rotate(ROT_Y, fAngle);
+		if (m_pPlayer->Get_Transform()->m_vInfo[INFO_POS].z < m_pTransformCom->m_vInfo[INFO_POS].z)
+			fAngle += D3DX_PI;
 
 		m_pTransformCom->m_vScale.x = m_vScale.x * fRatio;
 		m_pTransformCom->m_vScale.y = m_vScale.y;
@@ -102,13 +104,18 @@ Engine::_int Engine::CMonsterHPBar::Update_GameObject(const _float& fTimeDelta)
 				break;
 			}
 		}
-
-
-		m_pTransformCom->m_vInfo[INFO_POS].x = m_pMonster->Get_Transform()->m_vInfo[INFO_POS].x + fResult;
-		m_pTransformCom->m_vInfo[INFO_POS].y = m_pMonster->Get_Transform()->m_vInfo[INFO_POS].y + m_fAddY;
-		m_pTransformCom->m_vInfo[INFO_POS].z = m_pMonster->Get_Transform()->m_vInfo[INFO_POS].z;
-
-
+		if (m_pPlayer->Get_Transform()->m_vInfo[INFO_POS].z >= m_pTransformCom->m_vInfo[INFO_POS].z)
+		{
+			m_pTransformCom->m_vInfo[INFO_POS].x = m_pMonster->Get_Transform()->m_vInfo[INFO_POS].x + fResult;
+			m_pTransformCom->m_vInfo[INFO_POS].y = m_pMonster->Get_Transform()->m_vInfo[INFO_POS].y + m_fAddY;
+			m_pTransformCom->m_vInfo[INFO_POS].z = m_pMonster->Get_Transform()->m_vInfo[INFO_POS].z;
+		}
+		else if (m_pPlayer->Get_Transform()->m_vInfo[INFO_POS].z < m_pTransformCom->m_vInfo[INFO_POS].z)
+		{
+			m_pTransformCom->m_vInfo[INFO_POS].x = m_pMonster->Get_Transform()->m_vInfo[INFO_POS].x - fResult;
+			m_pTransformCom->m_vInfo[INFO_POS].y = m_pMonster->Get_Transform()->m_vInfo[INFO_POS].y + m_fAddY;
+			m_pTransformCom->m_vInfo[INFO_POS].z = m_pMonster->Get_Transform()->m_vInfo[INFO_POS].z;
+		}
 	}
 	return 0;
 }
