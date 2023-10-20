@@ -232,15 +232,15 @@ HRESULT CEventMgr::OffMiniGame_Quiz(SCENETAG eSceneTag, _bool ClearCheck)
 
 	if (ClearCheck == true)
 	{
-		Set_MiniGameClearCheck(3, TRUE);
-		Set_MiniGameLoseCheck(3, FALSE);
+		Set_MiniGameClearCheck(2, TRUE);
+		Set_MiniGameLoseCheck(2, FALSE);
 		OnPause(FALSE, SCENETAG::LOBBY);
 		SoundMgr()->PlaySoundW(L"MiniGameClear.mp3", SOUND_DIALOG, 1.f);
 	}
 	if (ClearCheck == false)
 	{
-		Set_MiniGameClearCheck(1, FALSE);
-		Set_MiniGameLoseCheck(1, TRUE);
+		Set_MiniGameClearCheck(2, FALSE);
+		Set_MiniGameLoseCheck(2, TRUE);
 		OnPause(FALSE, SCENETAG::LOBBY);
 		SoundMgr()->PlaySoundW(L"MiniGameFailed.mp3", SOUND_DIALOG2, 1.f);
 	}
