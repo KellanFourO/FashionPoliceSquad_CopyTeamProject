@@ -157,6 +157,7 @@ public:
 	_bool				m_bVideo = true;
 	_bool				m_bAdminSwitch = true; // 어드민키인풋 레벨업 통제용
 	_float				m_fAdminTick = 0.f;	   // 어드민키인풋 레벨업 통제용
+	_float				m_fDialogTick = 0.f;
 
 public:
 	static CStage2*		Create(LPDIRECT3DDEVICE9 pGraphicDev);

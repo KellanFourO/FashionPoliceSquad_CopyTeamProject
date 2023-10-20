@@ -51,12 +51,18 @@ HRESULT CStage2::Ready_Scene()
 _int CStage2::Update_Scene(const _float& fTimeDelta)
 {
 	_int	iExit = __super::Update_Scene(fTimeDelta);
- 	if (m_bLateInit)
+
+
+	if(m_bLateInit)
+	m_fDialogTick += fTimeDelta;
+
+ 	if (m_bLateInit && m_fDialogTick > 0.25)
  	{
  		CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::STAGE2, DIALOGTAG::STORY_ST2_INTRO);
  		CEventMgr::GetInstance()->OnPause(true, SCENETAG::STAGE2);
  		m_bLateInit = false;
  	}
+
 
 
 	//if (m_pLayer->Get_ObjectList(OBJECTTAG::MONSTER).size() == 0 && m_bEnd)

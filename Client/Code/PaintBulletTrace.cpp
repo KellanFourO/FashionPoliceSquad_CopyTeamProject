@@ -61,7 +61,7 @@ Engine::_int Engine::CPaintBulletTrace::Update_GameObject(const _float& fTimeDel
 	_int iExit = __super::Update_GameObject(fTimeDelta);
 
 	if(m_bCollision)
-	Engine::Add_RenderGroup(RENDER_ALPHA, this);
+	Engine::Add_RenderGroup(RENDER_ALPHATEST, this);
 
 
 // 	m_fFrame += 87.f * fTimeDelta;

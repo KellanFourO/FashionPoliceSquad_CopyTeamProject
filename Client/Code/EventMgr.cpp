@@ -188,13 +188,14 @@ HRESULT CEventMgr::OffMiniGame_Arrow(SCENETAG eSceneTag, _bool ClearCheck)
 		Set_MiniGameLoseCheck(0, FALSE);
 		OnPause(FALSE, SCENETAG::LOBBY);
 		SoundMgr()->PlaySoundW(L"MiniGameClear.mp3",SOUND_DIALOG,1.f);
-		SoundMgr()->PlayBGM(L"LobbyBGM3.mp3", 0.25f);
+
 	}
 	if (ClearCheck == false)
 	{
 		Set_MiniGameClearCheck(0, FALSE);
 		Set_MiniGameLoseCheck(0, TRUE);
 		OnPause(FALSE, SCENETAG::LOBBY);
+		SoundMgr()->PlaySoundW(L"MiniGameFailed.mp3", SOUND_DIALOG2, 1.f);
 	}
 
 	SoundMgr()->StopSound(SOUND_BGM);
@@ -211,13 +212,13 @@ HRESULT CEventMgr::OffMiniGame_KickBoard(SCENETAG eSceneTag, _bool ClearCheck)
 		Set_MiniGameLoseCheck(1, FALSE);
 		OnPause(FALSE, SCENETAG::LOBBY);
 		SoundMgr()->PlaySoundW(L"MiniGameClear.mp3", SOUND_DIALOG, 1.f);
-		SoundMgr()->PlayBGM(L"LobbyBGM3.mp3", 0.25f);
 	}
 	if (ClearCheck == false)
 	{
 		Set_MiniGameClearCheck(1, FALSE);
 		Set_MiniGameLoseCheck(1, TRUE);
 		OnPause(FALSE, SCENETAG::LOBBY);
+		SoundMgr()->PlaySoundW(L"MiniGameFailed.mp3", SOUND_DIALOG2, 1.f);
 	}
 
 	SoundMgr()->StopSound(SOUND_BGM);
@@ -231,23 +232,17 @@ HRESULT CEventMgr::OffMiniGame_Quiz(SCENETAG eSceneTag, _bool ClearCheck)
 
 	if (ClearCheck == true)
 	{
-		Set_MiniGameClearCheck(0, TRUE);
-		Set_MiniGameLoseCheck(0, FALSE);
-		Set_MiniGameClearCheck(1, TRUE);
-		Set_MiniGameLoseCheck(1, FALSE);
-		Set_MiniGameClearCheck(2, TRUE);
-		Set_MiniGameLoseCheck(2, FALSE);
 		Set_MiniGameClearCheck(3, TRUE);
 		Set_MiniGameLoseCheck(3, FALSE);
 		OnPause(FALSE, SCENETAG::LOBBY);
 		SoundMgr()->PlaySoundW(L"MiniGameClear.mp3", SOUND_DIALOG, 1.f);
-		SoundMgr()->PlayBGM(L"LobbyBGM3.mp3", 0.25f);
 	}
 	if (ClearCheck == false)
 	{
 		Set_MiniGameClearCheck(1, FALSE);
 		Set_MiniGameLoseCheck(1, TRUE);
 		OnPause(FALSE, SCENETAG::LOBBY);
+		SoundMgr()->PlaySoundW(L"MiniGameFailed.mp3", SOUND_DIALOG2, 1.f);
 	}
 
 	SoundMgr()->StopSound(SOUND_BGM);

@@ -37,7 +37,7 @@ HRESULT Engine::CMyCard::Ready_GameObject(_float StartX)
 
 	m_fSpeed = 200.f;
 	m_fMultiply = 0.3f;
-	m_fMaxMoveY = 420.f;
+	m_fMaxMoveY = 500.f;
 	m_fCenterMoveY = 0.f;
 	m_fMinMoveY = -420.f;
 

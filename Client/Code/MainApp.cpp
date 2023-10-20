@@ -109,17 +109,20 @@ HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 	(*ppGraphicDev)->SetRenderState(D3DRS_LIGHTING, FALSE);
 	//이걸 켜면 조명 START .. Stage에서 켰으므로 여기에선 손대지 말 것.
 
+	wstring Filepath = L"../Bin/Font/netmarbleM.ttf";
+	AddFontResourceEx(Filepath.c_str(), FR_NOT_ENUM, NULL);
+
 
 	// InputDev
 	FAILED_CHECK_RETURN(Engine::Ready_InputDev(g_hInst, g_hWnd), E_FAIL);
 
 	// Font
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Font_Jinji", L"궁서", 30, 30, FW_HEAVY), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"UI_WEAPON_NAME", L"../Bin/Font/Montserrat-Bold.ttf", 12, 12, FW_BOLD), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"UI_FONT", L"../Bin/Font/Montserrat-Bold.ttf", 27, 27, FW_REGULAR), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"DIALOG_FONT", L"../Bin/Font/Montserrat-Bold.ttf", 11, 18, FW_REGULAR), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"MISSION_FONT", L"../Bin/Font/Montserrat-Bold.ttf", 11, 13, FW_BOLD), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"TEST_FONT", L"../Bin/Font/Montserrat-Bold.ttf", 11, 13, FW_BOLD), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"UI_WEAPON_NAME", L"netmarbleM", 12, 12, FW_BOLD), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"UI_FONT", L"netmarbleM", 27, 27, FW_BOLD), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"DIALOG_FONT", L"netmarbleM", 15, 15, FW_BOLD), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"MISSION_FONT", L"netmarbleM", 15, 15, FW_BOLD), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"TEST_FONT", L"netmarbleM", 15, 15, FW_BOLD), E_FAIL);
 
 	return S_OK;
 }

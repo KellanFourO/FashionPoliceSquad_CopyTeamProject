@@ -44,6 +44,7 @@ HRESULT CMyFont::Ready_Font(const _tchar * pFontType,
 	return S_OK;
 }
 
+
 void CMyFont::Render_Font(const _tchar * pString, const _vec2 * pPos, D3DXCOLOR Color, _int maxWidth, _float _fTextSpeed, _bool _bAnimation)
 {
 	RECT rc{ (_long)pPos->x, (_long)pPos->y };
@@ -53,7 +54,7 @@ void CMyFont::Render_Font(const _tchar * pString, const _vec2 * pPos, D3DXCOLOR 
 
 	m_pSprite->Begin(D3DXSPRITE_ALPHABLEND);
 
-	_int iLineHeight = 20; //! 줄 높이
+	_int iLineHeight = 30; //! 줄 높이
 	const _tchar* pCurrentLine = pString; //! 들어온 문자열
 
 
