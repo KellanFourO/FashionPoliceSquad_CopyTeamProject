@@ -440,6 +440,19 @@ void CMainGame_KickBoard::Reset()
 	m_pPlayer->Set_Pos(vPlayerPos);
 	m_pPlayer->Set_Rect(m_defRect);
 
+	if (!m_vecEnemy.empty())
+	{
+		for (auto& iter : m_vecEnemy)
+			Safe_Release(iter);
+		m_vecEnemy.clear();
+	}
+	if (!m_vecGold.empty())
+	{
+		for (auto& iter : m_vecGold)
+			Safe_Release(iter);
+		m_vecGold.clear();
+	}
+
 	m_TimeFrame = 60;
 	m_RealTime = 30;
 
