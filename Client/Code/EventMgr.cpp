@@ -231,12 +231,7 @@ HRESULT CEventMgr::OffMiniGame_Quiz(SCENETAG eSceneTag, _bool ClearCheck)
 
 	if (ClearCheck == true)
 	{
-		Set_MiniGameClearCheck(0, TRUE);
-		Set_MiniGameLoseCheck(0, FALSE);
-		Set_MiniGameClearCheck(1, TRUE);
-		Set_MiniGameLoseCheck(1, FALSE);
-		Set_MiniGameClearCheck(2, TRUE);
-		Set_MiniGameLoseCheck(2, FALSE);
+		
 		Set_MiniGameClearCheck(3, TRUE);
 		Set_MiniGameLoseCheck(3, FALSE);
 		OnPause(FALSE, SCENETAG::LOBBY);
