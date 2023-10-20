@@ -52,7 +52,7 @@ _uint CLoading::Loading_For_Stage()
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_PlaneTex", CRcTex::Create(m_pGraphicDev)), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_EffectTex", CEffectTex::Create(m_pGraphicDev)), E_FAIL)
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CubeTexture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Bin/Resource/Texture/Obj/CubeType/Box_Full%d.dds", OBJ_TYPE::CUBE_TYPE, 10)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_PlaneTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Obj/PlaneType/PlaneType_%d.png", OBJ_TYPE::PLANE_TYPE, 57)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_PlaneTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Obj/PlaneType/PlaneType_%d.png", OBJ_TYPE::PLANE_TYPE, 66)), E_FAIL);
 	Set_Value(3);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_MainGame_Arrow_Texture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/MiniGame/1_Arrow/BackGround.png", 1)), E_FAIL);
@@ -261,7 +261,7 @@ _uint CLoading::Loading_For_MapTool()
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_PlaneTex", CRcTex::Create(m_pGraphicDev)), E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CubeTexture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Bin/Resource/Texture/Obj/CubeType/Box_Full%d.dds", OBJ_TYPE::CUBE_TYPE, 10)), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_PlaneTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Obj/PlaneType/PlaneType_%d.png", OBJ_TYPE::PLANE_TYPE, 57)), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_PlaneTexture", CTexture::Create(m_pGraphicDev, TEX_NORMAL, L"../Bin/Resource/Texture/Obj/PlaneType/PlaneType_%d.png", OBJ_TYPE::PLANE_TYPE, 66)), E_FAIL);
 
 	FAILED_CHECK_RETURN(Engine::Ready_Proto(L"Proto_CursorTexture", CTexture::Create(m_pGraphicDev, TEX_CUBE, L"../Bin/Resource/Texture/Cursor/MapCursor%d.dds", 1)), E_FAIL);
 

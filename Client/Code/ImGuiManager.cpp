@@ -454,9 +454,9 @@ void CImGuiManager::LateUpdate_ImGui(LPDIRECT3DDEVICE9 pGraphicDev)
 
 							for (int i = 0; i < 1; i++) //가로줄(행) 갯수
 							{
-								for (int j = 0; j < 60; j++) //세로줄(열) 갯수
+								for (int j = 0; j < 70; j++) //세로줄(열) 갯수
 								{
-									_int iIndex = (60 * i + j) + planeTextureStartIndex;
+									_int iIndex = (70 * i + j) + planeTextureStartIndex;
 
 									if (iIndex >= planeTextureStartIndex && iIndex < planeTextureStartIndex + m_pPlaneTextureObj.size())
 									{
