@@ -113,7 +113,9 @@ Engine::_int CPlayer::Update_GameObject(const _float& fTimeDelta)
 		SetGun();
 		m_bLateInit = false;
 	}
-
+	if (INFO.fHP > 80.f) {
+		INFO.fHP = 80.f;
+	}
 	_vec3 vRayPos;
 	// 플레이어가 보는 방향 기준, 플레이어 위치에서 + 100 인 위치를 하나 찍고싶은거야.
 
@@ -676,22 +678,29 @@ void CPlayer::Attacked(_float _fDamage)
 {
 
 	_float fDamage = _fDamage;
-	if (INFO.fArmor > fDamage) {
+
+	_bool ArmorCheck = false;
+
+	if (INFO.fArmor > fDamage)
+	{
 		INFO.fArmor -= fDamage;
 	}
-	else {
-		INFO.fArmor = 0;
+	else
+	{
 		fDamage -= INFO.fArmor;
+		INFO.fArmor = 0;
+		ArmorCheck = true;
 	}
-	// 아머 계산
 
-	if (INFO.fHP - fDamage > 0) {
+
+	if (INFO.fHP - fDamage > 0 && ArmorCheck)
+	{
 		INFO.fHP -= fDamage;
 	}
-	else {
-		INFO.fHP = 0;
-		INFO.bGameOver = true;
-	}
+	// 아머 계산float fDamage = _fDamage;
+	
+	
+	
 
 	// 체력 계산
 	INFO.PlayerState = m_pStateArray[HIT];
@@ -918,23 +927,23 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 		m_pRigidBody->Add_Force(vForce);
 
 	}
-	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ
-		&& _pOther->Get_OBJAttribute() == OBJ_ATTRIBUTE::FOG_OBJ)
-	{
-		_vec3 InStagePos1 = { 410.f, 15.f, 455.f };
-		_vec3 InStagePos2 = { 130.f, 20.f, 455.f };
-
-		_float STDPointX = 230.f;
-
-		if (m_pTransformCom->m_vInfo[INFO_POS].x < STDPointX)
-		{
-			Management()->Get_Player()->Get_Transform()->Set_Pos(InStagePos2);
-		}
-		else if (m_pTransformCom->m_vInfo[INFO_POS].x >= STDPointX)
-		{
-			Management()->Get_Player()->Get_Transform()->Set_Pos(InStagePos1);
-		}
-	}
+// 	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ
+// 		&& _pOther->Get_OBJAttribute() == OBJ_ATTRIBUTE::FOG_OBJ)
+// 	{
+// 		_vec3 InStagePos1 = { 410.f, 15.f, 455.f };
+// 		_vec3 InStagePos2 = { 130.f, 20.f, 455.f };
+// 
+// 		_float STDPointX = 230.f;
+// 
+// 		if (m_pTransformCom->m_vInfo[INFO_POS].x < STDPointX)
+// 		{
+// 			Management()->Get_Player()->Get_Transform()->Set_Pos(InStagePos2);
+// 		}
+// 		else if (m_pTransformCom->m_vInfo[INFO_POS].x >= STDPointX)
+// 		{
+// 			Management()->Get_Player()->Get_Transform()->Set_Pos(InStagePos1);
+// 		}
+// 	}
 }
 
 void CPlayer::OnCollisionStay(CCollider* _pOther)

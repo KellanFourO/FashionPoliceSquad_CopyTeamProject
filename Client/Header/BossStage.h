@@ -130,7 +130,7 @@ private:
 	vector<SORTTEX*>				m_pTexForSort;			//텍스쳐 정렬용
 
 	_bool							m_bCreateMonster = false;
-
+	_bool							m_DiaLog = false;
 	CStage1Boss*					m_pBoss = nullptr;
 	CMissionObjective*				m_pMission = nullptr;
 public:

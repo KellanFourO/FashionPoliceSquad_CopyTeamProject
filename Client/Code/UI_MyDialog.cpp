@@ -71,7 +71,7 @@ Engine::_int Engine::CMyDialog::Update_GameObject(const _float& fTimeDelta)
 	m_fNextTick += fTimeDelta;
 
 
-	if (m_fNextTick >= 1.5f)
+	if (m_fNextTick >= 2.2f)
 	{
 		m_bTick = true;
 		SoundMgr()->StopSound(SOUND_DIALOG);

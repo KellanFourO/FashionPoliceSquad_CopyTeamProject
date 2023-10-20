@@ -114,8 +114,8 @@ private:
 	_bool			m_bDash = false; // 대쉬!
 	_bool			m_bTriggerCheck = false; //유진 추가 트리거충돌감지용
 
-	_bool			m_bDashSkillOn = false;
-	_bool			m_bRopeSkillOn = false;
+	_bool			m_bDashSkillOn = true;
+	_bool			m_bRopeSkillOn = true;
 
 	_float			m_fTime_HP_Release;
 	_float			m_fHP_Reduction = 5.f; // HP 감소 속도

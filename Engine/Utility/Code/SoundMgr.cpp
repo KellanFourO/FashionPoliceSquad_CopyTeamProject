@@ -38,10 +38,6 @@ void CSoundMgr::Release()
 	FMOD_System_Close(m_pSystem);
 }
 
-
-
-
-
 void CSoundMgr::PlaySound(TCHAR* pSoundKey, CHANNELID eID, float fVolume)
 {
 	map<TCHAR*, FMOD_SOUND*>::iterator iter;

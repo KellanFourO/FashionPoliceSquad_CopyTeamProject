@@ -83,15 +83,16 @@ _int CBossStage::Update_Scene(const _float& fTimeDelta)
 
 	}
 
-	if (m_pBoss->Get_Info().bDead)
+	if (m_pBoss->Get_Info().bRealDead)
 	{
 		m_fDialogTick += fTimeDelta;
 		m_pMission->Set_Render(true);
 
-		if (m_fDialogTick > 3)
+		if (m_fDialogTick > 3&&!m_DiaLog)
 		{
 			CEventMgr::GetInstance()->OnDialog(m_pGraphicDev, SCENETAG::BOSS_STAGE, DIALOGTAG::ST1_BOSS_CONCLU);
 			CEventMgr::GetInstance()->OnPause(true, SCENETAG::BOSS_STAGE);
+			m_DiaLog = true;
 		}
 
 	}

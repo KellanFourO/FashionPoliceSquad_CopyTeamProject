@@ -40,13 +40,13 @@ void CStage1Boss_ThrowGoldSingle::Initialize(CMonster* _Monster)
 	case Engine::BOSSPHASE::PHASE_2:
 		m_iThrowCount = 8;
 		m_iBulletCount = 4;
-		m_fBulletSpeed = 140.f;
+		m_fBulletSpeed = 130.f;
 		m_fThrowSpeed = 0.15f;
 		break;
 	case Engine::BOSSPHASE::PHASE_3:
 		m_iThrowCount = 8;
 		m_iBulletCount = 6;
-		m_fBulletSpeed = 170.f;
+		m_fBulletSpeed = 150.f;
 		m_fThrowSpeed = 0.10f;
 		break;
 	}

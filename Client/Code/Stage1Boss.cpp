@@ -102,6 +102,7 @@ void CStage1Boss::LateUpdate_GameObject()
 		INFO.MonsterState = m_pStateArray[DEAD];
 		INFO.MonsterState->Initialize(this);
 		INFO.bDead = false;
+		INFO.bRealDead = true;
 		m_bDead2 = true;
 	}   // »ç¸ÁÆÇÁ¤
 	__super::LateUpdate_GameObject();
