@@ -552,43 +552,7 @@ HRESULT CStage2::Check_Trigger()
 
 HRESULT CStage2::Check_Collision_Water()
 {
-	if (!m_VecWater.empty())
-	{
-		int iCountNum = -1;
-		_vec3 PlayerPos;
-		Management()->Get_Player()->Get_Transform()->Get_Info(INFO_POS, &PlayerPos);
 
-		for (auto& iter : m_VecWater)
-		{
-			_float MinX = (iter->vPos.x) - (iter->vSize.x * 0.5f);
-			_float MaxX = (iter->vPos.x) + (iter->vSize.x * 0.5f);
-
-			_float MaxY = (iter->vPos.y) + (iter->vSize.y * 7.0f);
-			_float MinY = (iter->vPos.y) - (iter->vSize.y * 7.0f);
-
-			_float MinZ = (iter->vPos.z) - (iter->vSize.z * 0.5f);
-			_float MaxZ = (iter->vPos.z) + (iter->vSize.z * 0.5f);
-
-			if (((PlayerPos.x >= MinX) && (PlayerPos.x <= MaxX))
-				&& ((PlayerPos.z >= MinZ) && (PlayerPos.z <= MaxZ))
-				&& ((PlayerPos.y >= MinY) && (PlayerPos.y <= MaxY)))
-			{
-				_vec3 InStagePos1 = { 410.f, 15.f, 455.f };
-				_vec3 InStagePos2 = { 130.f, 20.f, 455.f };
-
-				_float STDPointX = 230.f;
-
-				if (PlayerPos.x < STDPointX)
-				{
-					Management()->Get_Player()->Get_Transform()->Set_Pos(InStagePos2);
-				}
-				else if (PlayerPos.x >= STDPointX)
-				{
-					Management()->Get_Player()->Get_Transform()->Set_Pos(InStagePos1);
-				}
-			}
-		}
-	}
 	return S_OK;
 }
 

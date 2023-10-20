@@ -771,7 +771,6 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE ||
 		(_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ &&
 			_pOther->Get_OBJAttribute() != OBJ_ATTRIBUTE::ForPaint_OBJ&&
-			_pOther->Get_OBJAttribute() != OBJ_ATTRIBUTE::FOG_OBJ &&
 			_pOther->Get_OBJAttribute() != OBJ_ATTRIBUTE::C_POINT_OBJ))
 	{
 		if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ)
@@ -918,6 +917,23 @@ void CPlayer::OnCollisionEnter(CCollider* _pOther)
 		m_pRigidBody->Add_Force(vForce);
 
 	}
+	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ
+		&& _pOther->Get_OBJAttribute() == OBJ_ATTRIBUTE::FOG_OBJ)
+	{
+		_vec3 InStagePos1 = { 410.f, 15.f, 455.f };
+		_vec3 InStagePos2 = { 130.f, 20.f, 455.f };
+
+		_float STDPointX = 230.f;
+
+		if (m_pTransformCom->m_vInfo[INFO_POS].x < STDPointX)
+		{
+			Management()->Get_Player()->Get_Transform()->Set_Pos(InStagePos2);
+		}
+		else if (m_pTransformCom->m_vInfo[INFO_POS].x >= STDPointX)
+		{
+			Management()->Get_Player()->Get_Transform()->Set_Pos(InStagePos1);
+		}
+	}
 }
 
 void CPlayer::OnCollisionStay(CCollider* _pOther)
@@ -926,7 +942,6 @@ void CPlayer::OnCollisionStay(CCollider* _pOther)
 	if (_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_CUBE||
 		(_pOther->Get_Host()->Get_ObjectTag() == OBJECTTAG::BUILD_OBJ &&
 			_pOther->Get_OBJAttribute() != OBJ_ATTRIBUTE::ForPaint_OBJ &&
-			_pOther->Get_OBJAttribute() != OBJ_ATTRIBUTE::FOG_OBJ &&
 			_pOther->Get_OBJAttribute() != OBJ_ATTRIBUTE::C_POINT_OBJ))
 	{
 
