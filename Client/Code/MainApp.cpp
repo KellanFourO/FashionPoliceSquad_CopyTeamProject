@@ -120,7 +120,7 @@ HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 	// Font
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Font_Jinji", L"±Ã¼­", 30, 30, FW_HEAVY), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"UI_WEAPON_NAME", L"netmarble", 10, 20, FW_BOLD), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"UI_FONT", L"netmarble", 10, 20, FW_BOLD), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"UI_FONT", L"netmarble", 15, 30, FW_BOLD), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"DIALOG_FONT", L"netmarble", 10, 20, FW_BOLD), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"MISSION_FONT", L"netmarble", 8, 16, FW_BOLD), E_FAIL);
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"TEST_FONT", L"netmarble", 10, 20, FW_BOLD), E_FAIL);
