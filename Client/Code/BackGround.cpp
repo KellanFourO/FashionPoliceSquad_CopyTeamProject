@@ -4,6 +4,8 @@
 #include "Export_System.h"
 #include "Export_Utility.h"
 
+
+_int CBackGround::m_iBufferIndex = 0;
 CBackGround::CBackGround(LPDIRECT3DDEVICE9 pGraphicDev)
 	: Engine::CGameObject(pGraphicDev)
 {
@@ -42,6 +44,10 @@ HRESULT CBackGround::Ready_GameObject()
 	m_pTransformCom->Set_Scale(vScale);
 	m_pTransformCom->Set_Pos(vPos);
 
+	m_pBackTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/BackBuffer/skybox-v1-dusk.png", 1);
+	m_pBackTextureCom->Ready_Texture(TEXTUREID::TEX_NORMAL, L"../Bin/Resource/Texture/BackBuffer/skybox-dusk.png", 1);
+
+	m_iBufferIndex = 0;
 	return S_OK;
 }
 
@@ -75,11 +81,19 @@ void CBackGround::LateUpdate_GameObject()
 
 void CBackGround::Render_GameObject()
 {
+// 	if (Management()->Get_Scene()->Get_SceneTag() == SCENETAG::BOSS_STAGE)
+// 		m_iBufferIndex = 1;
+// 	else if (Management()->Get_Scene()->Get_SceneTag() == SCENETAG::STAGE2)
+// 		m_iBufferIndex = 2;
+// 	else
+// 		m_iBufferIndex = 0;
+
+
 	m_pGraphicDev->SetTransform(D3DTS_WORLD, m_pTransformCom->Get_WorldMatrix());
 	m_pGraphicDev->SetTransform(D3DTS_VIEW, &m_ViewMatrix);
 	m_pGraphicDev->SetTransform(D3DTS_PROJECTION, &m_ProjMatrix);
 
-	m_pBackTextureCom->Render_Textrue(0);
+	m_pBackTextureCom->Render_Textrue(m_iBufferIndex);
 	m_pBufferCom->Render_Buffer();
 
 	m_pTextureCom->Render_Textrue(0);

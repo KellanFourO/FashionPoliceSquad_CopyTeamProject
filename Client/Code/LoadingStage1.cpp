@@ -4,7 +4,7 @@
 #include "Export_Utility.h"
 #include "Player.h"
 #include "BossStage.h"
-
+#include "BackGround.h"
 
 CLoadingStage1::CLoadingStage1(LPDIRECT3DDEVICE9 pGraphicDev)
 	:CScene(pGraphicDev), m_pLoading(nullptr)
@@ -23,10 +23,14 @@ HRESULT CLoadingStage1::Ready_Scene(SCENETAG eSceneTag)
 	if (eSceneTag == SCENETAG::STAGE2)
 	{
 		m_pLoading = CLoading::Create(m_pGraphicDev, CLoading::LOADING_STAGE2);
+		CBackGround::m_iBufferIndex = 2;
+
 	}
 	else if (eSceneTag == SCENETAG::BOSS_STAGE)
 	{
 		m_pLoading = CLoading::Create(m_pGraphicDev, CLoading::LOADING_BOSS);
+		CBackGround::m_iBufferIndex = 1;
+
 	}
 	else if (eSceneTag == SCENETAG::LOBBY)
 	{

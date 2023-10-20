@@ -30,13 +30,14 @@ private:
 private:
 	CRcTex* m_pBufferCom = nullptr;
 	CTexture* m_pTextureCom = nullptr;
-	CTransform* m_pTransformCom = nullptr;
 	CTexture* m_pBackTextureCom = nullptr;
+	CTransform* m_pTransformCom = nullptr;
 
 private:
 	_float		m_fX, m_fY, m_fSizeX, m_fSizeY;
 	_matrix		m_ViewMatrix, m_ProjMatrix;
-
+public:
+	static _int		m_iBufferIndex;
 public:
 	static CBackGround* Create(LPDIRECT3DDEVICE9 pGraphicDev);
 private:

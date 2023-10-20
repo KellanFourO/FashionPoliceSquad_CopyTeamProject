@@ -72,11 +72,11 @@ void CMainApp::LateUpdate_MainApp()
 void CMainApp::Render_MainApp()
 {
 	Engine::Render_Begin(D3DXCOLOR(0.f, 0.f, 1.f, 1.f));
-	Engine::Render_Font(L"UI_FONT", to_wstring(m_fFPS).c_str(), &_vec2(500, 20), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),20, false);
+	//Engine::Render_Font(L"UI_FONT", to_wstring(m_fFPS).c_str(), &_vec2(500, 20), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),20, false);
 	Engine::Render_Scene(m_pGraphicDev);
 
 
-	CImGuiManager::GetInstance()->Render_ImGui(m_pGraphicDev);//
+	CImGuiManager::GetInstance()->Render_ImGui(m_pGraphicDev);
 
 
 	Engine::Render_End();
