@@ -136,9 +136,9 @@ void CProgressValue::Render_GameObject()
 
 
 	if (m_fValueRatio != 100)
-		Engine::Render_Font(L"DIALOG_FONT", L"로딩 중...", &_vec2(370, 545), D3DXCOLOR(D3DCOLOR_ARGB(255, 255, 255, 255)),20, false);
+		Engine::Render_Font(L"LOADING_FONT", L"로딩 중...", &_vec2(370, 545), D3DXCOLOR(D3DCOLOR_ARGB(255, 255, 255, 255)),20, false);
 	else
-		Engine::Render_Font(L"DIALOG_FONT", L"시작하려면 엔터키를 눌러주세요.", &_vec2(250, 545), D3DXCOLOR(D3DCOLOR_ARGB(255, 255, 255, 255)),20, false);
+		Engine::Render_Font(L"LOADING_FONT", L"시작하려면 엔터키를 눌러주세요.", &_vec2(250, 545), D3DXCOLOR(D3DCOLOR_ARGB(255, 255, 255, 255)),20, false);
 
 	wstring wstrTemp = to_wstring((int)m_fValueRatio).c_str();
 	wstrTemp = wstrTemp + L"\%";

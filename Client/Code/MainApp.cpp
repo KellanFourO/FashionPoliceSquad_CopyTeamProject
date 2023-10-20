@@ -23,7 +23,7 @@ HRESULT CMainApp::Ready_MainApp()
 	FAILED_CHECK_RETURN(SetUp_DefaultSetting(&m_pGraphicDev), E_FAIL);
 	FAILED_CHECK_RETURN(Ready_Scene(m_pGraphicDev, &m_pManagementClass), E_FAIL);
 
-	CImGuiManager::GetInstance()->SetUp_ImGui(m_pGraphicDev);//
+	//CImGuiManager::GetInstance()->SetUp_ImGui(m_pGraphicDev);//
 
 	m_pGraphicDev->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTEXF_LINEAR);
 	m_pGraphicDev->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTEXF_POINT);
@@ -42,17 +42,17 @@ int CMainApp::Update_MainApp(const _float& fTimeDelta)
 	if (GetAsyncKeyState(VK_F5) & 0x8000)
 	{
 
-		CImGuiManager::GetInstance()->Set_Switch(true);//
+		//CImGuiManager::GetInstance()->Set_Switch(true);//
 
 	}
 
 	if (GetAsyncKeyState(VK_F6) & 0x8000)
 	{
 
-		CImGuiManager::GetInstance()->Set_Switch(false);//
+		//CImGuiManager::GetInstance()->Set_Switch(false);//
 	}
 
-	CImGuiManager::GetInstance()->Update_ImGui(fTimeDelta);//
+	//CImGuiManager::GetInstance()->Update_ImGui(fTimeDelta);//
 
 
 
@@ -65,7 +65,7 @@ void CMainApp::LateUpdate_MainApp()
 
 	Engine::LateUpdate_Scene();
 	Engine::LateUpdate_InputDev();
-	CImGuiManager::GetInstance()->LateUpdate_ImGui(m_pGraphicDev);//
+	//CImGuiManager::GetInstance()->LateUpdate_ImGui(m_pGraphicDev);//
 
 }
 
@@ -76,7 +76,7 @@ void CMainApp::Render_MainApp()
 	Engine::Render_Scene(m_pGraphicDev);
 
 
-	CImGuiManager::GetInstance()->Render_ImGui(m_pGraphicDev);
+	//CImGuiManager::GetInstance()->Render_ImGui(m_pGraphicDev);
 
 
 	Engine::Render_End();
@@ -109,8 +109,14 @@ HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 	(*ppGraphicDev)->SetRenderState(D3DRS_LIGHTING, FALSE);
 	//이걸 켜면 조명 START .. Stage에서 켰으므로 여기에선 손대지 말 것.
 
-	wstring Filepath = L"../Bin/Font/netmarbleM.ttf";
-	AddFontResourceEx(Filepath.c_str(), FR_NOT_ENUM, NULL);
+	//wstring Filepath = L"../Bin/Font/netmarbleM.ttf";
+	if (AddFontResourceEx(L"..\\Bin\\Font\\netmarbleM.ttf", FR_NOT_ENUM, NULL) > 0)
+	{
+		MSG_BOX("성공");
+	}
+	else {
+		MSG_BOX("실패");
+	}
 
 
 	// InputDev
@@ -118,11 +124,12 @@ HRESULT CMainApp::SetUp_DefaultSetting(LPDIRECT3DDEVICE9* ppGraphicDev)
 
 	// Font
 	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"Font_Jinji", L"궁서", 30, 30, FW_HEAVY), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"UI_WEAPON_NAME", L"netmarbleM", 12, 12, FW_BOLD), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"UI_FONT", L"netmarbleM", 27, 27, FW_BOLD), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"DIALOG_FONT", L"netmarbleM", 15, 15, FW_BOLD), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"MISSION_FONT", L"netmarbleM", 15, 15, FW_BOLD), E_FAIL);
-	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"TEST_FONT", L"netmarbleM", 15, 15, FW_BOLD), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"UI_WEAPON_NAME", L"netmarble", 10, 20, FW_BOLD), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"UI_FONT", L"netmarble", 10, 20, FW_BOLD), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"DIALOG_FONT", L"netmarble", 10, 20, FW_BOLD), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"MISSION_FONT", L"netmarble", 8, 16, FW_BOLD), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"TEST_FONT", L"netmarble", 10, 20, FW_BOLD), E_FAIL);
+	FAILED_CHECK_RETURN(Engine::Ready_Font((*ppGraphicDev), L"LOADING_FONT", L"netmarble", 10, 20, FW_BOLD), E_FAIL);
 
 	return S_OK;
 }
